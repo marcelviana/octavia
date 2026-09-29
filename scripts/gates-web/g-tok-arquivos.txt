@@ -77,3 +77,16 @@ components/content/painel.tsx
 components/content/barra-do-pdf.tsx
 components/content/limite-do-corpo.tsx
 components/content/base-da-pagina.ts
+# I1-PR11 — superfície 6, content editor (folha 6-content-editor): /content/[id]/edit.
+# Commit 1 (gate-first): os que sobrevivem (o corpo do editor, por tipo, e os metadados). O pdf-viewer e o music-text
+# já estão na lista (PR-10) e não mudam nesta PR. O annotation-tools entra enquanto o destino dele é decisão do aval
+# (item 7 do §10 do README da PR): se morrer no commit 2, sai da lista junto.
+app/content/[id]/edit/page.tsx
+components/content-edit-page-client.tsx
+components/content-editor.tsx
+components/editors/content-type-editor.tsx
+components/chord-editor.tsx
+components/tab-editor.tsx
+components/lyrics-editor.tsx
+components/unified-metadata-editor.tsx
+components/annotation-tools.tsx

@@ -1,0 +1,446 @@
+$ node scripts/gates-web/g-tok.mjs --so-arquivos
+## (ii) arquivos redesenhados — scripts/gates-web/g-tok-arquivos.txt
+  ✗ app/content/[id]/edit/page.tsx:62 [cor] "#fff9f0" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:64 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:64 [cor] "#F2EDE5" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:65 [cor] "#1A1F36" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:79 [cor] "#fff9f0" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:81 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:81 [cor] "#F2EDE5" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:82 [cor] "#1A1F36" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:91 [cor] "#fff9f0" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:93 [cor] "#1A1F36" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:94 [cor] "#A69B8E" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:98 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:98 [cor] "#1E5BB8" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:104 [cor] "#A69B8E" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:104 [cor] "#8B7D6F" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:98 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:104 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:93 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:65 [espaçamento] "mt-4" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:82 [espaçamento] "mt-4" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:93 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:94 [espaçamento] "mb-6" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:95 [espaçamento] "space-x-4" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:98 [espaçamento] "px-6" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:98 [espaçamento] "py-2" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:104 [espaçamento] "px-6" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:104 [espaçamento] "py-2" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:64 [tamanho] "w-16" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:64 [tamanho] "h-16" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:81 [tamanho] "w-16" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:81 [tamanho] "h-16" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:64 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:81 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:98 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:104 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:64 [borda] "border-4" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:81 [borda] "border-4" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:62 [valor arbitrário] "bg-[#fff9f0]" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:64 [valor arbitrário] "border-t-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:64 [valor arbitrário] "border-[#F2EDE5]" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:65 [valor arbitrário] "text-[#1A1F36]" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:79 [valor arbitrário] "bg-[#fff9f0]" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:81 [valor arbitrário] "border-t-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:81 [valor arbitrário] "border-[#F2EDE5]" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:82 [valor arbitrário] "text-[#1A1F36]" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:91 [valor arbitrário] "bg-[#fff9f0]" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:93 [valor arbitrário] "text-[#1A1F36]" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:94 [valor arbitrário] "text-[#A69B8E]" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:98 [valor arbitrário] "bg-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:98 [valor arbitrário] "bg-[#1E5BB8]" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:104 [valor arbitrário] "bg-[#A69B8E]" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:104 [valor arbitrário] "bg-[#8B7D6F]" — use a custom property de app/styles/identidade.css
+  ✗ app/content/[id]/edit/page.tsx:9 [inglês, texto JSX] "Loading editor..." ← termo "loading"
+  ✗ app/content/[id]/edit/page.tsx:65 [inglês, texto JSX] "Loading..." ← termo "loading"
+  ✗ app/content/[id]/edit/page.tsx:82 [inglês, texto JSX] "Loading content for editing..." ← termo "loading"
+  ✗ app/content/[id]/edit/page.tsx:93 [inglês, texto JSX] "Content Not Found" ← termo "not found"
+  ✗ app/content/[id]/edit/page.tsx:99 [inglês, texto JSX] "Go Back" ← termo "back"
+  ✗ app/content/[id]/edit/page.tsx:105 [inglês, texto JSX] "Browse Library" ← termo "library"
+  ✗ components/content-edit-page-client.tsx:42 [cor] "#fffcf7" — use a custom property de app/styles/identidade.css
+  ✗ components/content-edit-page-client.tsx:42 [valor arbitrário] "bg-[#fffcf7]" — use a custom property de app/styles/identidade.css
+  ✗ components/content-edit-page-client.tsx:27 [toast] "toast.success(" — nenhum toast entra (I1-D26): a falha é a LinhaDeAviso
+  ✗ components/content-edit-page-client.tsx:31 [toast] "toast.error(" — nenhum toast entra (I1-D26): a falha é a LinhaDeAviso
+  ✗ components/content-edit-page-client.tsx:10 [inglês, texto JSX] "Loading editor..." ← termo "loading"
+  ✗ components/content-editor.tsx:126 [cor] "#000000" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:126 [cor] "#ff0000" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:126 [cor] "#00ff00" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:126 [cor] "#0000ff" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:126 [cor] "#ffff00" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:126 [cor] "#ff00ff" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:126 [cor] "#00ffff" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:126 [cor] "#ffa500" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:129 [cor] "from-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:129 [cor] "via-orange-50" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:129 [cor] "to-yellow-50" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:131 [cor] "bg-white/90" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:131 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:134 [cor] "bg-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:142 [cor] "from-gray-900" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:142 [cor] "to-gray-700" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:149 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:160 [cor] "text-amber-700" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:160 [cor] "bg-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:167 [cor] "from-green-500" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:167 [cor] "to-green-600" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:167 [cor] "from-green-600" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:167 [cor] "to-green-700" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:167 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:182 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:182 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:142 [tamanho de fonte] "text-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:142 [tamanho de fonte] "text-xl" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:146 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:149 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:160 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:131 [espaçamento] "px-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:131 [espaçamento] "py-3" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:132 [espaçamento] "gap-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:133 [espaçamento] "gap-3" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:137 [espaçamento] "space-x-3" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:145 [espaçamento] "space-x-2" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:146 [espaçamento] "px-2" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:146 [espaçamento] "py-0.5" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:150 [espaçamento] "mr-1" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:158 [espaçamento] "space-x-3" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:160 [espaçamento] "gap-1" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:160 [espaçamento] "px-2" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:160 [espaçamento] "py-1" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:169 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:177 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:177 [espaçamento] "p-6" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:179 [espaçamento] "gap-6" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:181 [espaçamento] "space-y-6" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:183 [espaçamento] "p-6" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:71 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:71 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:135 [tamanho] "w-5" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:135 [tamanho] "h-5" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:138 [tamanho] "w-8" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:138 [tamanho] "h-8" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:150 [tamanho] "w-3" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:150 [tamanho] "h-3" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:161 [tamanho] "w-3" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:161 [tamanho] "h-3" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:169 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:169 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:178 [tamanho] "max-w-7xl" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:138 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:160 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:131 [borda] "border-b" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:146 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:182 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/content-editor.tsx:4 [import de ui] "from \"@/components/ui/card\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/content-editor.tsx:5 [import de ui] "from \"@/components/ui/button\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/content-editor.tsx:6 [import de ui] "from \"@/components/ui/label\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/content-editor.tsx:7 [import de ui] "from \"@/components/ui/badge\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/content-editor.tsx:8 [import de ui] "from \"@/components/ui/separator\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/content-editor.tsx:170 [inglês, texto JSX] "Save Changes" ← termo "save"
+  ✗ components/content-editor.tsx:150 [inglês, texto JSX] "Last saved:" ← termo "saved"
+  ✗ components/editors/content-type-editor.tsx:108 [cor] "#A69B8E" — use a custom property de app/styles/identidade.css
+  ✗ components/editors/content-type-editor.tsx:107 [espaçamento] "p-6" — use a custom property de app/styles/identidade.css
+  ✗ components/editors/content-type-editor.tsx:58 [valor arbitrário] "h-[calc(100vh-250px)]" — use a custom property de app/styles/identidade.css
+  ✗ components/editors/content-type-editor.tsx:108 [valor arbitrário] "text-[#A69B8E]" — use a custom property de app/styles/identidade.css
+  ✗ components/editors/content-type-editor.tsx:93 [inglês, texto JSX] ")\n    case ContentType.LYRICS:\n      return (" ← termo "lyrics"
+  ✗ components/editors/content-type-editor.tsx:72 [inglês, atributo] "Sheet music" ← termo "sheet music"
+  ✗ components/chord-editor.tsx:222 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:260 [cor] "text-gray-400" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:308 [cor] "bg-white" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:311 [cor] "text-gray-600" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:312 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:322 [cor] "text-blue-600" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:323 [cor] "bg-gray-100" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:222 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:310 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:311 [tamanho de fonte] "text-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:312 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:115 [espaçamento] "space-y-6" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:121 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:122 [espaçamento] "gap-4" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:140 [espaçamento] "gap-4" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:222 [espaçamento] "mt-1" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:227 [espaçamento] "gap-2" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:249 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:254 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:256 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:257 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:259 [espaçamento] "space-x-2" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:308 [espaçamento] "p-6" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:309 [espaçamento] "mb-6" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:312 [espaçamento] "space-x-4" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:312 [espaçamento] "mt-2" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:319 [espaçamento] "space-y-6" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:322 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:323 [espaçamento] "p-2" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:323 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:249 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:249 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:260 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:260 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:265 [tamanho] "max-w-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:270 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:270 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:308 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:323 [raio] "rounded" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:308 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:293 [valor arbitrário] "min-h-[100px]" — use a custom property de app/styles/identidade.css
+  ✗ components/chord-editor.tsx:4 [import de ui] "from \"@/components/ui/card\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/chord-editor.tsx:5 [import de ui] "from \"@/components/ui/button\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/chord-editor.tsx:6 [import de ui] "from \"@/components/ui/input\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/chord-editor.tsx:7 [import de ui] "from \"@/components/ui/label\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/chord-editor.tsx:8 [import de ui] "from \"@/components/ui/textarea\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/chord-editor.tsx:9 [import de ui] "from \"@/components/ui/select\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/chord-editor.tsx:119 [inglês, texto JSX] "Song Information" ← termo "song"
+  ✗ components/chord-editor.tsx:124 [inglês, texto JSX] "Title" ← termo "title"
+  ✗ components/chord-editor.tsx:132 [inglês, texto JSX] "Artist" ← termo "artist"
+  ✗ components/chord-editor.tsx:142 [inglês, texto JSX] "Key" ← termo "key"
+  ✗ components/chord-editor.tsx:196 [inglês, texto JSX] "Capo" ← termo "capo"
+  ✗ components/chord-editor.tsx:221 [inglês, texto JSX] "Quick Chords" ← termo "chords"
+  ✗ components/chord-editor.tsx:247 [inglês, texto JSX] "Song Sections" ← termo "song"
+  ✗ components/chord-editor.tsx:249 [inglês, texto JSX] "Add Section" ← termo "add"
+  ✗ components/chord-editor.tsx:276 [inglês, texto JSX] "Chord Progression" ← termo "progression"
+  ✗ components/chord-editor.tsx:288 [inglês, texto JSX] "Lyrics" ← termo "lyrics"
+  ✗ components/chord-editor.tsx:313 [inglês, texto JSX] "Key:" ← termo "key"
+  ✗ components/chord-editor.tsx:314 [inglês, texto JSX] "Capo:" ← termo "capo"
+  ✗ components/chord-editor.tsx:323 [inglês, texto JSX] "Chords:" ← termo "chords"
+  ✗ components/chord-editor.tsx:145 [inglês, atributo] "Select key" ← termo "select"
+  ✗ components/chord-editor.tsx:201 [inglês, atributo] "Fret" ← termo "fret"
+  ✗ components/chord-editor.tsx:262 [inglês, atributo] "Section name (e.g., Verse 1, Chorus)" ← termo "name"
+  ✗ components/chord-editor.tsx:290 [inglês, atributo] "Enter lyrics for this section..." ← termo "lyrics"
+  ✗ components/tab-editor.tsx:268 [cor] "#F2EDE5" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:242 [cor] "text-gray-600" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:251 [cor] "text-gray-600" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:271 [cor] "text-gray-600" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:272 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:282 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:222 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:239 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:270 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:271 [tamanho de fonte] "text-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:272 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:281 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:282 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:119 [espaçamento] "space-y-6" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:125 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:126 [espaçamento] "gap-4" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:144 [espaçamento] "gap-4" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:188 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:193 [espaçamento] "space-y-6" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:195 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:196 [espaçamento] "space-y-3" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:199 [espaçamento] "space-x-2" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:216 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:239 [espaçamento] "gap-4" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:241 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:242 [espaçamento] "space-y-1" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:250 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:251 [espaçamento] "space-y-1" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:268 [espaçamento] "p-6" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:269 [espaçamento] "mb-6" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:272 [espaçamento] "space-x-4" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:272 [espaçamento] "mt-2" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:279 [espaçamento] "space-y-6" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:282 [espaçamento] "mb-1" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:188 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:188 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:206 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:206 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:210 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:210 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:268 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:268 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:268 [valor arbitrário] "bg-[#F2EDE5]" — use a custom property de app/styles/identidade.css
+  ✗ components/tab-editor.tsx:4 [import de ui] "from \"@/components/ui/card\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/tab-editor.tsx:5 [import de ui] "from \"@/components/ui/button\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/tab-editor.tsx:6 [import de ui] "from \"@/components/ui/input\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/tab-editor.tsx:7 [import de ui] "from \"@/components/ui/label\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/tab-editor.tsx:8 [import de ui] "from \"@/components/ui/select\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/tab-editor.tsx:128 [inglês, texto JSX] "Title" ← termo "title"
+  ✗ components/tab-editor.tsx:136 [inglês, texto JSX] "Artist" ← termo "artist"
+  ✗ components/tab-editor.tsx:146 [inglês, texto JSX] "Tuning" ← termo "tuning"
+  ✗ components/tab-editor.tsx:152 [inglês, texto JSX] "Standard (EADGBE)" ← termo "standard"
+  ✗ components/tab-editor.tsx:153 [inglês, texto JSX] "Drop D (DADGBE)" ← termo "drop"
+  ✗ components/tab-editor.tsx:154 [inglês, texto JSX] "Open G (DGDGBD)" ← termo "open"
+  ✗ components/tab-editor.tsx:160 [inglês, texto JSX] "Capo" ← termo "capo"
+  ✗ components/tab-editor.tsx:186 [inglês, texto JSX] "Tablature" ← termo "tablature"
+  ✗ components/tab-editor.tsx:188 [inglês, texto JSX] "Add Measure" ← termo "add"
+  ✗ components/tab-editor.tsx:236 [inglês, texto JSX] "Tablature Tips" ← termo "tablature"
+  ✗ components/tab-editor.tsx:273 [inglês, texto JSX] "Tuning:" ← termo "tuning"
+  ✗ components/tab-editor.tsx:274 [inglês, texto JSX] "Capo:" ← termo "capo"
+  ✗ components/tab-editor.tsx:165 [inglês, atributo] "Fret" ← termo "fret"
+  ✗ components/lyrics-editor.tsx:39 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/lyrics-editor.tsx:39 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/lyrics-editor.tsx:21 [espaçamento] "space-y-6" — use a custom property de app/styles/identidade.css
+  ✗ components/lyrics-editor.tsx:28 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ components/lyrics-editor.tsx:41 [espaçamento] "space-y-1" — use a custom property de app/styles/identidade.css
+  ✗ components/lyrics-editor.tsx:37 [valor arbitrário] "min-h-[400px]" — use a custom property de app/styles/identidade.css
+  ✗ components/lyrics-editor.tsx:4 [import de ui] "from \"@/components/ui/card\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/lyrics-editor.tsx:5 [import de ui] "from \"@/components/ui/textarea\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/lyrics-editor.tsx:25 [inglês, texto JSX] "Lyrics Editor" ← termo "lyrics"
+  ✗ components/lyrics-editor.tsx:42 [inglês, texto JSX] "Use [Section Name] for verse, chorus, bridge labels" ← termo "name"
+  ✗ components/lyrics-editor.tsx:44 [inglês, texto JSX] "Use consistent indentation for better structure" ← termo "structure"
+  ✗ components/lyrics-editor.tsx:45 [inglês, texto JSX] "Add timing notes in parentheses if needed" ← termo "notes"
+  ✗ components/lyrics-editor.tsx:32 [inglês, atributo] "Enter your lyrics here...\n\nUse [Verse 1], [Chorus], [Bridge] etc. for section labels\nLeave blank lines between sections\nUse consistent formatting for better readability" ← termo "lyrics"
+  ✗ components/unified-metadata-editor.tsx:119 [cor] "text-gray-600" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:120 [cor] "text-green-600" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:125 [cor] "text-gray-600" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:151 [cor] "bg-white/80" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:151 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:153 [cor] "text-gray-900" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:154 [cor] "text-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:157 [cor] "text-gray-600" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:169 [cor] "bg-blue-50" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:169 [cor] "bg-blue-100" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:173 [cor] "text-blue-600" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:234 [cor] "bg-yellow-50" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:234 [cor] "bg-yellow-100" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:238 [cor] "text-yellow-600" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:316 [cor] "bg-gray-50" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:316 [cor] "bg-gray-100" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:320 [cor] "text-gray-600" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:351 [cor] "text-red-600" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:119 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:125 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:153 [tamanho de fonte] "text-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:157 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:171 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:236 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:318 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:119 [espaçamento] "gap-1" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:151 [espaçamento] "top-24" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:152 [espaçamento] "pb-3" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:153 [espaçamento] "gap-2" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:159 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:164 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:171 [espaçamento] "px-4" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:171 [espaçamento] "py-3" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:172 [espaçamento] "gap-2" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:178 [espaçamento] "px-4" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:178 [espaçamento] "pb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:179 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:189 [espaçamento] "gap-4" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:236 [espaçamento] "px-4" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:236 [espaçamento] "py-3" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:237 [espaçamento] "gap-2" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:243 [espaçamento] "px-4" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:243 [espaçamento] "pb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:244 [espaçamento] "gap-4" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:318 [espaçamento] "px-4" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:318 [espaçamento] "py-3" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:319 [espaçamento] "gap-2" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:325 [espaçamento] "px-4" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:325 [espaçamento] "pb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:326 [espaçamento] "space-y-6" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:330 [espaçamento] "mt-2" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:330 [espaçamento] "space-y-3" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:331 [espaçamento] "space-x-2" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:343 [espaçamento] "gap-2" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:345 [espaçamento] "space-x-1" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:351 [espaçamento] "ml-1" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:375 [espaçamento] "space-y-3" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:376 [espaçamento] "space-x-2" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:382 [espaçamento] "space-x-2" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:387 [espaçamento] "space-x-2" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:120 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:120 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:154 [tamanho] "w-5" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:154 [tamanho] "h-5" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:173 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:173 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:238 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:238 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:320 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:320 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:339 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:339 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:346 [tamanho] "w-3" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:346 [tamanho] "h-3" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:353 [tamanho] "w-3" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:353 [tamanho] "h-3" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:383 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:383 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:169 [raio] "rounded-md" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:234 [raio] "rounded-md" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:316 [raio] "rounded-md" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:151 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:169 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:234 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:316 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:370 [valor arbitrário] "min-h-[80px]" — use a custom property de app/styles/identidade.css
+  ✗ components/unified-metadata-editor.tsx:4 [import de ui] "from \"@/components/ui/card\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/unified-metadata-editor.tsx:5 [import de ui] "from \"@/components/ui/button\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/unified-metadata-editor.tsx:6 [import de ui] "from \"@/components/ui/input\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/unified-metadata-editor.tsx:7 [import de ui] "from \"@/components/ui/label\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/unified-metadata-editor.tsx:8 [import de ui] "from \"@/components/ui/textarea\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/unified-metadata-editor.tsx:9 [import de ui] "from \"@/components/ui/badge\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/unified-metadata-editor.tsx:10 [import de ui] "from \"@/components/ui/select\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/unified-metadata-editor.tsx:11 [import de ui] "from \"@/components/ui/checkbox\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/unified-metadata-editor.tsx:32 [import de ui] "from \"@/components/ui/accordion\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/unified-metadata-editor.tsx:154 [inglês, texto JSX] "Details" ← termo "details"
+  ✗ components/unified-metadata-editor.tsx:157 [inglês, texto JSX] "Organize and categorize your content" ← termo "content"
+  ✗ components/unified-metadata-editor.tsx:181 [inglês, texto JSX] "Title *" ← termo "title"
+  ✗ components/unified-metadata-editor.tsx:191 [inglês, texto JSX] "Artist" ← termo "artist"
+  ✗ components/unified-metadata-editor.tsx:200 [inglês, texto JSX] "Album" ← termo "album"
+  ✗ components/unified-metadata-editor.tsx:210 [inglês, texto JSX] "Genre" ← termo "genre"
+  ✗ components/unified-metadata-editor.tsx:246 [inglês, texto JSX] "Key" ← termo "key"
+  ✗ components/unified-metadata-editor.tsx:292 [inglês, texto JSX] "Difficulty" ← termo "difficulty"
+  ✗ components/unified-metadata-editor.tsx:329 [inglês, texto JSX] "Tags" ← termo "tags"
+  ✗ components/unified-metadata-editor.tsx:364 [inglês, texto JSX] "Notes" ← termo "notes"
+  ✗ components/unified-metadata-editor.tsx:384 [inglês, texto JSX] "Add to favorites" ← termo "favorites"
+  ✗ components/unified-metadata-editor.tsx:393 [inglês, texto JSX] "Make this content public (shareable)" ← termo "content"
+  ✗ components/unified-metadata-editor.tsx:186 [inglês, atributo] "Song title" ← termo "title"
+  ✗ components/unified-metadata-editor.tsx:196 [inglês, atributo] "Artist or composer" ← termo "artist"
+  ✗ components/unified-metadata-editor.tsx:205 [inglês, atributo] "Album or collection" ← termo "album"
+  ✗ components/unified-metadata-editor.tsx:216 [inglês, atributo] "Select genre" ← termo "select"
+  ✗ components/unified-metadata-editor.tsx:252 [inglês, atributo] "Select key" ← termo "select"
+  ✗ components/unified-metadata-editor.tsx:298 [inglês, atributo] "Select difficulty" ← termo "difficulty"
+  ✗ components/unified-metadata-editor.tsx:335 [inglês, atributo] "Add a tag" ← termo "add"
+  ✗ components/unified-metadata-editor.tsx:369 [inglês, atributo] "Add any notes about this content..." ← termo "content"
+  ✗ components/annotation-tools.tsx:49 [cor] "#000000" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:63 [cor] "#ffff00" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:77 [cor] "#000000" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:82 [cor] "#000000" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:89 [cor] "#000000" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:126 [cor] "#000000" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:138 [cor] "#000000" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:158 [cor] "#ffff00" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:158 [cor] "#000000" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:174 [cor] "#000000" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:187 [cor] "bg-white" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:203 [cor] "bg-gray-100" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:204 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:205 [cor] "bg-gray-200" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:228 [cor] "border-gray-300" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:175 [tamanho de fonte] "fontSize: 16" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:252 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:183 [espaçamento] "space-y-6" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:205 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:228 [espaçamento] "p-2" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:247 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:248 [espaçamento] "mb-3" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:249 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:251 [espaçamento] "p-2" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:205 [tamanho] "w-16" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:205 [tamanho] "h-16" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:206 [tamanho] "w-8" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:206 [tamanho] "h-8" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:249 [tamanho] "max-h-40" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:127 [tamanho] "width: 2" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:136 [tamanho] "width: 40" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:137 [tamanho] "height: 40" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:205 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:228 [raio] "rounded" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:251 [raio] "rounded" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:228 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:203 [valor arbitrário] "h-[800px]" — use a custom property de app/styles/identidade.css
+  ✗ components/annotation-tools.tsx:6 [import de ui] "from \"@/components/ui/card\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/annotation-tools.tsx:7 [import de ui] "from \"@/components/ui/button\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/annotation-tools.tsx:8 [import de ui] "from \"@/components/ui/input\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/annotation-tools.tsx:208 [inglês, texto JSX] "No sheet music image available" ← termo "sheet music"
+  ✗ components/annotation-tools.tsx:262 [inglês, texto JSX] "Remove" ← termo "remove"
+  ✗ components/annotation-tools.tsx:194 [inglês, atributo] "Sheet music" ← termo "sheet music"
+  arquivos: 76 · literais de identidade acusados: 339 · toasts: 2 · imports de ui: 30 · textos examinados: 105 · isentos de inglês (scripts/gates-web/g-tok-sem-ingles.txt): 1 · vocabulário: 133 · isenções: 9
+
+G-tok: REPROVA — 440 ocorrência(s)
+# exit: 1

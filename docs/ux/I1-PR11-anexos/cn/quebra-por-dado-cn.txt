@@ -1,0 +1,9 @@
+$ git show origin/main:scripts/gates-web/g-faixa-classificar.mjs > $TMP/classificar-main.mjs
+$ node docs/ux/I1-PR11-anexos/cn/quebra-por-dado-cn.mjs $TMP/classificar-main.mjs
+  tests/gates-web/medicoes/content.json · VIEW-partitura · 711: errata candidata 19 → 0 · quebra por dado 19 (nó: heading:f71b2c7b5945#1 em 2 linhas, +26.2)
+  tests/gates-web/medicoes/content.json · VIEW-carregando-pdf · 711: errata candidata 11 → 0 · quebra por dado 11 (nó: heading:f71b2c7b5945#1 em 2 linhas, +26.2)
+  tests/gates-web/medicoes/content.json · VIEW-erro-pdf · 711: errata candidata 12 → 0 · quebra por dado 12 (nó: heading:f71b2c7b5945#1 em 2 linhas, +26.2)
+(1) 28 JSON · 291 (estado × largura) · divergem além da gaveta: 0 · candidatas que viraram quebra por dado: 42
+(3) fixture sem quebra (VIEW-partitura · 711, o título em 1 linha): velho errata candidata 19 · novo errata candidata 19 · quebra por dado 0 (nós 0)
+CN: PASSA
+# exit: 0

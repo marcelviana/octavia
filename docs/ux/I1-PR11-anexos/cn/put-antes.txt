@@ -1,0 +1,29 @@
+$ CN_GRAVAR=1 pnpm exec vitest run tests/gates/i1-editor-put.test.tsx   # grava tests/gates/fixtures/editor-put-antes.json (código da main 8fe45e8)
+$ pnpm exec vitest run tests/gates/i1-editor-put.test.tsx
+ ✓  web  tests/gates/i1-editor-put.test.tsx (6 tests | 1 skipped) 1019ms
+     ✓ cifra em texto (a forma de hoje da cifra)  584ms
+ Test Files  1 passed (1)
+      Tests  5 passed | 1 skipped (6)
+# exit: 0
+
+$ node -e … (as chaves de cada corpo gravado)
+## cifra em texto (a forma de hoje da cifra) — 1030 bytes
+  topo (14): id, title, artist, album, genre, key, bpm, difficulty, tags, notes, is_favorite, is_public, content_data, updated_at
+  content_data (25): chords, user_id, artist, album, bpm, capo, difficulty, genre, is_favorite, is_public, key, notes, tags, thumbnail_url, time_signature, tuning, created_at, updated_at, file_url, id, title, content_type, content_data, sections, annotations
+  time_signature no corpo: false · content_data.content_data aninhado: true · annotations: []
+## cifra em seções — 978 bytes
+  topo (14): id, title, artist, album, genre, key, bpm, difficulty, tags, notes, is_favorite, is_public, content_data, updated_at
+  content_data (25): chords, sections, user_id, artist, album, bpm, capo, difficulty, genre, is_favorite, is_public, key, notes, tags, thumbnail_url, time_signature, tuning, created_at, updated_at, file_url, id, title, content_type, content_data, annotations
+  time_signature no corpo: false · content_data.content_data aninhado: true · annotations: []
+## letra — 786 bytes
+  topo (14): id, title, artist, album, genre, key, bpm, difficulty, tags, notes, is_favorite, is_public, content_data, updated_at
+  content_data (24): lyrics, user_id, artist, album, bpm, capo, difficulty, genre, is_favorite, is_public, key, notes, tags, thumbnail_url, time_signature, tuning, created_at, updated_at, file_url, id, title, content_type, content_data, annotations
+  time_signature no corpo: false · content_data.content_data aninhado: true · annotations: []
+## tab (tablatura em texto, sem compassos) — 1081 bytes
+  topo (14): id, title, artist, album, genre, key, bpm, difficulty, tags, notes, is_favorite, is_public, content_data, updated_at
+  content_data (25): tablature, user_id, artist, album, bpm, capo, difficulty, genre, is_favorite, is_public, key, notes, tags, thumbnail_url, time_signature, tuning, created_at, updated_at, file_url, id, title, content_type, content_data, measures, annotations
+  time_signature no corpo: false · content_data.content_data aninhado: true · annotations: []
+## partitura (PDF) — 310 bytes
+  topo (14): id, title, artist, album, genre, key, bpm, difficulty, tags, notes, is_favorite, is_public, content_data, updated_at
+  content_data (1): annotations
+  time_signature no corpo: false · content_data.content_data aninhado: false · annotations: []

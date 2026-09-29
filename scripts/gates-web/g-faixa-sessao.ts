@@ -72,9 +72,9 @@ export default async function preparar(_config: FullConfig): Promise<() => Promi
         for (const [L, r] of Object.entries(e.naoAlcancado ?? {})) console.log(`G-faixa · ${id} · ${eid} · ${L}: NÃO ALCANÇADO — ${r}`)
         if (e.inalcancavel) console.log(`G-faixa · ${id} · ${eid}: INALCANÇÁVEL (declarado) — ${e.inalcancavel}`)
       }
-      const r = resumo(junto as never) as Record<string, { e: number; b: number; dl: number; errata: number; nomeAcessivel: number; rolagem: number; reprova: boolean }>
+      const r = resumo(junto as never) as Record<string, { e: number; b: number; dl: number; errata: number; quebraPorDado: number; nomeAcessivel: number; rolagem: number; reprova: boolean }>
       for (const [L, t] of Object.entries(r))
-        console.log(`G-faixa · ${id} · ${L}: (e)=${t.e} · (b)=${t.b} · (d′)=${t.dl} · errata candidata=${t.errata} · saídas: nome-acessível=${t.nomeAcessivel} rolagem=${t.rolagem}${L === '411' ? ' (faixa A)' : ''}`)
+        console.log(`G-faixa · ${id} · ${L}: (e)=${t.e} · (b)=${t.b} · (d′)=${t.dl} · errata candidata=${t.errata} · quebra por dado=${t.quebraPorDado} · saídas: nome-acessível=${t.nomeAcessivel} rolagem=${t.rolagem}${L === '411' ? ' (faixa A)' : ''}`)
     }
     const ids = SUPERFICIES.map((s) => s.id).filter((id) => porSup.has(id))
     console.log(`G-faixa · gravado: ${ids.map((id) => `${id}.json`).join(', ') || 'nada'} → ${saida}`)
