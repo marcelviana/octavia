@@ -8,8 +8,10 @@
 > `Done in 17.3s using pnpm v10.28.0`. **Data**: 2026-09-29.
 > **Convenções**: `[medido]` = comando + saída literal (em `cn/`); `[lido]` = arquivo:linha; `[hipótese]` = o resto.
 > Divergências **a partir de 769** (a PR-10 fechou em 768, §23.7 dela).
-> **Estado**: commit 1 (gate-first, `f5260ec`) com o aval (§10.1) e **commit 2** (a implementação, §13–§19) — aguarda o
-> aceite do Marcel ("rodei"). PR [#346](https://github.com/marcelviana/octavia/pull/346).
+> **Estado**: commit 1 (gate-first, `f5260ec`) com o aval (§10.1), commit 2 (a implementação, `c44c975`, §13–§19), commit
+> 2b (instrumento, `0f31b04`, §20) e **commit 3 (aceite e docs, §21)**. **Veredito do aceite: PASSA — (e) = 0 e (b) = 0 nas
+> três larguras, nos 16 estados medidos da folha 6 (+ `LIB-salvo` da folha 4) e nos 5 do "antes"; errata candidata 0.**
+> PR [#346](https://github.com/marcelviana/octavia/pull/346).
 
 | arquivo | o que é |
 |---|---|
@@ -653,3 +655,180 @@ Os dois estados medidos ganham `rodadasPorEstado` nas três larguras (o `commit`
 | **803** | T | o medidor mede a superfície inteira | medir de novo 4 estados custaria a superfície toda (~56 cargas, perto da cota do `/api/profile`) e regravaria os que passaram | `G_FAIXA_ESTADOS` + a mescla por estado; CN acima |
 
 Próxima divergência: **804**.
+
+---
+
+## 21. Commit 3 — o aceite e o fecho
+
+### 21.1 As decisões, numa tabela
+
+| aval | quando | o quê |
+|---|---|---|
+| commit 1 | 2026-09-29 | as **13** do §10.1 (`LIB-salvo` em módulo; alteração = corpo do `PUT`; status aditivo; casca em todos os estados e um `dynamic`; *Salvar* inativo no envio; partitura = painel da folha 5 + **I1-E19**; tab em painel com as cordas editáveis; acordes de hoje; Tom em letra + **I1-E20**; *Detalhes* sem acordeão; motivo com vírgula; as frases novas; os "sem par" da tab e da letra) e os extras do commit 1 (o teste do `PUT`, a coluna do resumo) |
+| commit 2 | 2026-09-29 | os extras do §10.2 (sessão no editor, a 2ª linha da `LinhaDaTela`, `campo-duas-linhas`/`campo-letra`, `LIB-salvo` na biblioteca, o medidor, a ordem dos acordes, o ícone do *Duplicar*) |
+| 1º "rodei" | 2026-09-29 | OK para o **2b** (§20); divs. 801 e 802 aceitas; a separação *nó velho por componente* × *coincidência de texto* no antes × depois |
+| 2º "rodei" | 2026-09-29 | a rodada por estado; o commit 3 |
+
+**O molde, daqui em diante** (div. 803): quando a rodada inteira do aceite deixa estados de fora por causa do instrumento,
+a correção é uma **rodada parcial** (`G_FAIXA_ESTADOS`) mesclada por estado no JSON da rodada inteira — não uma rodada
+inteira nova; `rodadasPorEstado` diz de onde veio cada medição.
+
+### 21.2 O aceite `[Marcel, 2026-09-29]`
+
+`tests/gates-web/medicoes/content-edit.json`: a rodada inteira (`2026-09-29T19:00:38Z`, commit `c44c975`) + a rodada por
+estado (`2026-09-29T20:58:22Z`, commit `0f31b04+sujo`, em `rodadasPorEstado`: `EDIT-salvando`, `EDIT-salvar-erro`,
+`LIB-salvo`, `EDIT-erro-limite` × três larguras). Veredito verbatim em `cn/g-faixa-aceite.txt`:
+
+```
+$ node scripts/gates-web/g-faixa-veredito.mjs tests/gates-web/medicoes
+## contados à parte (não reprovam): errata candidata 119 · quebra por dado 42 · sem par folha 490 · sem par app 426 (C e B) · não medidos 26
+## erratas candidatas sem cobertura (erratasFaixa, div. 681): 0
+G-faixa: PASSA
+# exit: 0
+```
+
+| estado | 1138 (C) | 711 (B) | 411 (A) | sem par folha/app (C e B, cada) |
+|---|---|---|---|---|
+| `EDIT-cifra` · `-sem-mudancas` · `-salvando` · `-salvar-erro` | 0 · 0 · 0 | 0 · 0 · 0 | 0 · 0 · (d′) 1 | 24/8 |
+| `EDIT-tab` | 0 · 0 · 0 | 0 · 0 · 0 | 0 · 0 · (d′) 7 | 17/11 |
+| `EDIT-letra` | 0 · 0 · 0 | 0 · 0 · 0 | 0 · 0 · (d′) 1 | 12/3 |
+| `EDIT-carregando` · `-carregando-editor` · `-erro-rede` · `-erro-auth` · `-erro-limite` · `-erro-servidor` · `-404` | 0 · 0 · 0 | 0 · 0 · 0 | 0 · 0 · (d′) 1–2 | 1/2 |
+| `LIB-salvo` (folha 4) | 0 · 0 · 0 | 0 · 0 · 0 | 0 · 0 · (d′) 1 | 1/2 |
+| `base-cifra` · `-letra` · `-tab` · `-partitura` · `erro-pdf` (sem folha: a casca-efeito) | 0 · 0 | 0 · 0 | 0 · 0 · (d′) 1 | — |
+| `EDIT-carregando-auth` · `EDIT-sem-usuario` | INALCANÇÁVEL com sessão (declarado) — prova: a pré-verificação sem sessão (§16, 3/3 larguras cada, (e) 0 (b) 0) e o Vitest (`editor-estados.test.tsx`: o ramo `isLoading \|\| !user`) | ← | ← | — |
+
+(célula = (e) · (b) · errata candidata; em A, (e) · (b) · (d′), que é triagem — o (d′) de 411 é a rolagem dentro dos
+painéis marcados, as cordas da tab e a prévia.) **(e) = 0 e (b) = 0 nas três larguras, em todo estado medido; errata
+candidata 0 no `content-edit`** — a I1-E19 e a I1-E20 não têm candidata a cobrir (a E19 não tem seção; a E20 é o texto
+dentro de uma caixa que pareia pela âncora). **Quebra por dado: 0** no `content-edit` (os títulos da fixture cabem numa
+linha); as 42 do total são as da PR-10.
+
+**Sem par** (contados à parte; nunca reprovam), por espécie:
+- **da folha**: os valores de exemplo escritos DENTRO das caixas de campo (*Linha de 120 colunas*, *Teste de régua*, *96*,
+  *4/4*, *Verso curto — controle*, *C7M G7*, *La la la, la la lá*, a letra, o compasso da tab) — no app o valor está no
+  nó do `input`, que pareia pela âncora `campo-*` (div. 790); os placeholders dentro das caixas (*casa*, *álbum ou
+  coleção*, *escolha o gênero*, *escolha*, *adicionar tag*, *notas sobre este conteúdo*); *Dó* (I1-E20); os quatro
+  acordes que a folha tem e o app não (*C7M*, *Dm7*, *G7*, *A7* — decisão 8); a prévia (*tom: Dó* × *tom: C*); em
+  `EDIT-tab` e `EDIT-letra`, o título e o artista da cifra copiados na folha (*Linha de 120 colunas*, *Teste de régua*,
+  *Dó*, *96* — decisão 13); *Padrão (EADGBE)* dentro da caixa da afinação; *Buscar…* (a casca, div. 719);
+- **do app**: a `<nav>` e o campo da busca (div. 719); os quatro acordes de hoje que a folha não tem (*D*, *A*, *E*, *B7*);
+  a prévia da cifra; o *Adicionar tag* (o *+*, sem desenho na folha); na tab, as seis cordas (inputs com o dado), o
+  *compasso 1* e o *Duplicar compasso*.
+
+**A fixture, confirmada pelo hash** (`cn/fixture-hash.txt`): o `GET` fabricado responde no nível da página, antes da
+vigia (não aparece no log); nos três tamanhos, o título medido é o da fixture (*Linha de 120 colunas*, *Trenzinho do
+caipira*, *Batch três*) — **nenhum content real foi lido**; e os textos que provam os estados novos estão lá:
+*Salvando…*, *não foi possível salvar — sem conexão* + *o que você escreveu continua aqui*, *alterações salvas* (com as
+linhas da folha 4), *nada mudou desde que você abriu*, *carregando o editor…*, o motivo do 429.
+
+**Os requests** (três larguras): `prodAbortados` 0; os não-`GET` a `/api/*` são o `POST /api/auth/session` (o cookie; um
+`FALHA` em 1138 — abortado na navegação) e o `PUT /api/content` **`fabricado sem resposta`** (`EDIT-salvando`, segurado;
+`EDIT-salvar-erro`, abortado) e **`fabricado 200`** (`LIB-salvo`) — **nenhum `PUT` saiu**. Contas 0, escritas 0.
+
+### 21.3 `casca-efeito` do editor — antes × depois `[medido]`
+
+`cn/casca-efeito-editor.mjs` (anexo, não gate), o "antes" (`casca-efeito/antes/content-edit.json`, o editor velho,
+`e7ab05f`) × o "depois" (os mesmos cinco estados no `content-edit.json`) — `cn/casca-efeito-editor.txt`:
+
+```
+base-cifra · 1138: casca 9/9 iguais · nó velho por componente 0 · coincidência de texto 14: heading/h1 20 car.; label/label 4 car.; label/label 3 car.; button/button 1 car.; … (10 acordes); texto/section 0 car.
+base-letra · 1138: casca 9/9 iguais · nó velho por componente 0 · coincidência de texto 2: heading/h1 10 car.; texto/section 0 car.
+base-tab · 1138: casca 9/9 iguais · nó velho por componente 0 · coincidência de texto 10: heading/h1 20 car.; label/label 4 car.; label/label 3 car.; textbox/input (6 cordas); texto/section 0 car.
+base-partitura · 1138: casca 9/9 iguais · nó velho por componente 0 · coincidência de texto 3: heading/h1 23 car.; presentation/span 55 car.; texto/section 0 car.
+erro-pdf · 1138: casca 9/9 iguais · nó velho por componente 0 · coincidência de texto 2: heading/h1 23 car.; texto/section 0 car.
+NÓ VELHO POR COMPONENTE: 0 — nas 15 (estado × largura)
+```
+
+**A casca não se moveu**: 9/9 em C e B, 8/8 em A, nos cinco estados. **Nó velho por componente = 0**: nenhum texto de UI
+do editor velho (as 51 frases do código da `main`, `FRASES_VELHAS`) aparece no depois. **Coincidência de texto = 2 a 15 por
+estado × largura** — a mesma chave (papel + hash do texto) dos dois lados porque o TEXTO é o mesmo: o título (dado, `h1`
+nos dois); *Capo* (4) e *BPM* (3), iguais nas duas línguas; os nomes dos acordes rápidos (C, G, Am, F, D, Em, A, E, Dm,
+B7 — o conjunto de hoje); as cordas da tab (dado); a camada de texto do PDF (a fixture); o `section` sem texto; e em A o
+*Adicionar* da casca, que ali empilha abaixo de y = 120. **Div. 805**: a 1ª execução do script contou *Tags* como nó velho
+(15) — é também o rótulo NOVO de *Detalhes* (§5.7, `edit.meta.tags`), igual nas duas línguas; saiu de `FRASES_VELHAS`,
+com a razão no script.
+
+### 21.4 `cn-main`
+
+`cn/cn-main-veredito.txt`: **`G-faixa: REPROVA — 83`**, a mesma — é o web velho (registro).
+
+### 21.5 Estado × alcance × medido
+
+| estado | como (fabricado) | rodada | medido |
+|---|---|---|---|
+| `EDIT-cifra` · `-tab` · `-letra` | `GET` com o exemplo da folha + marcar *Favorita* | inteira | 3/3 |
+| `EDIT-sem-mudancas` | `GET` (cifra) | inteira | 3/3 |
+| `EDIT-salvando` | + *Salvar*, `PUT` segurado | por estado | 3/3 |
+| `EDIT-salvar-erro` | + *Salvar*, `PUT` abortado (rede) | por estado | 3/3 |
+| `LIB-salvo` (folha 4) | + *Salvar*, `PUT` 200 → `/library` com as linhas da folha 4 | por estado | 3/3 |
+| `EDIT-carregando` | `GET` segurado | inteira | 3/3 |
+| `EDIT-carregando-editor` | o *chunk* `content-edit-page-client` segurado (a hipótese casou) | inteira | 3/3 |
+| `EDIT-erro-rede` · `-auth` · `-servidor` · `-404` | `GET` abortado · 401 · 500 · 404 | inteira | 3/3 |
+| `EDIT-erro-limite` | `GET` 429 | inteira (711, 411) + por estado (as três) | 3/3 |
+| `EDIT-carregando-auth` · `EDIT-sem-usuario` | — | — | inalcançáveis com sessão; pré-verificação 3/3 + Vitest |
+| `base-*` · `erro-pdf` | os do 1b (a casca-efeito) | inteira | 3/3 |
+
+### 21.6 As heranças
+
+| herança | destino |
+|---|---|
+| a poluição do `content_data` pelo editor (§1.2: a linha inteira, o `content_data` aninhado, `annotations: []`) — o corpo do `PUT` é gate byte a byte | **Bloco D** |
+| **div. 771**: *Compasso* editável e fora do corpo do `PUT` (com a decisão 2, não ativa o *Salvar*) | **Bloco D** |
+| **div. 776**: a tab sem `measures` abre o compasso-fixture e o grava na 1ª edição | **Bloco D** |
+| **div. 784**: *"Verse 1"* / *"Content"* como nome padrão de seção (valor gravado, em inglês) | **Bloco D** |
+| div. 786: o acorde rápido depende do foco na *Progressão* (o `onBlur` pode zerá-lo antes do clique) — `[hipótese]`, comportamento de antes, não mexido | registrado |
+| a forma do motivo com **travessão** da lista (`lib.erro`, PR-9) × a com **vírgula** do editor (decisão 11) | harmonização — uma frase só no encerramento do bloco |
+| o G-tok (ii): o vocabulário ainda não pega *Preview*, *Measure*, *Untitled*, os gêneros… (div. 785) | a PR de erratas do bloco (o editor já não os tem) |
+| a medição por estado (`G_FAIXA_ESTADOS`, div. 803) | **molde** das próximas superfícies (§21.1) |
+| o invólucro `flex-1 bg-[#fffcf7]` dos corpos velhos que sobram (upload, setlists) | PRs 12–13 |
+
+### 21.7 Divergências — 769 a 805, com destino
+
+| # | destino |
+|---|---|
+| 769 | registrado: o salvar é `PUT /api/content`; o aceite o fabrica |
+| 770 | herança D (§21.6); gate byte a byte |
+| 771 | → decisão 2; herança D |
+| 772 | → decisão 2: consertado (chip só com alteração), teste que reprova na `main` |
+| 773 | → decisão 3: status aditivo; consertado |
+| 774 | → decisão 4: todos os estados na casca |
+| 775 | → decisão 6 + **I1-E19** |
+| 776 | → decisão 7; a fixture é herança D |
+| 777 | → decisão 8 (+ a ordem, 792) |
+| 778 | → decisão 13: sem par, listado |
+| 779 | → decisão 9 + **I1-E20** |
+| 780 | → decisão 10: sem acordeão |
+| 781 | → decisões 7, 10, 12 (nomes acessíveis novos; a alça decorativa saiu) |
+| 782 · 783 | → decisões 11, 12 (frases novas no §5.1 do DESIGN-I1) |
+| 784 | herança D |
+| 785 | registrado (o G-tok); herança |
+| 786 | registrado `[hipótese]`; não mexido |
+| 787 | → decisão 4: um `dynamic` |
+| 788 · 789 | → decisão 3 |
+| 790 | aplicado (âncoras `porRotulo`) |
+| 791 | → decisão 1 (`lib/sinal-salvo.ts`) |
+| 792 · 793 | extras aprovados (§10.2) |
+| 794 | aplicado (o teste com 100 ms) |
+| 795 | aplicado (o clique repetido até o chip) |
+| 796 · 797 · 798 · 799 · 800 | aplicados na pré-verificação (§16) |
+| 801 | → 2b: `exact: true` — os três estados medidos na rodada por estado |
+| **802** | **fechada**: `EDIT-erro-limite` em 1138 passou na rodada por estado, sozinho; a hipótese da recarga do `next dev` (o estado anterior segura o *chunk* do editor) fica **não confirmada** — o instrumento não guarda o que a página recebeu. Registrado |
+| 803 | → 2b: `G_FAIXA_ESTADOS` + a mescla por estado; **molde** (§21.1) |
+| **804** | **T** — a rodada por estado saiu com `commit: 0f31b04…+sujo`: o `content-edit.json` da rodada inteira estava na árvore sem commit (é o arquivo em que ela mescla); nenhum arquivo de código difere — o caso da div. 731 da PR-9. Registrado |
+| **805** | **T** — o antes × depois contou *Tags* como "nó velho" (15): é também o rótulo novo (§5.7); saiu da lista de frases velhas, com a razão no script (§21.3) |
+
+Próxima divergência: **806**.
+
+### 21.8 Contabilidade final da I1-PR-11
+
+| quem | item | valor |
+|---|---|---|
+| executor | requests a `https://octavia.rocks` ou preview · logins · `.env*` abertos · escritas · contas | **0 · 0 · 0 · 0 · 0** |
+| executor | `next dev` **sem** `.env`, porta 3110, **sempre numa cópia da árvore** (sem `.env*`; a 3000 é o `pnpm dev` do Marcel) | commit 2: 1 subida (5 rodadas da pré-verificação, a inércia); commit 2b: 1 (a sonda do seletor, o CN da medição por estado); paradas; cópias removidas |
+| executor | `pnpm build` | numa cópia da árvore, sem `.env` |
+| executor | a `main` para os testes novos | worktree temporária de `8fe45e8` (`--detach`), removida |
+| executor | páginas de fumaça | `app/fumaca-i1pr11/[estado]` só nas cópias; nunca na árvore da PR nem no commit (a fonte é `pre-verificacao/pagina-fumaca.tsx`) |
+| Marcel | rodadas com sessão | 2: a inteira (`content-edit`, sobre `c44c975`) e a por estado (4 estados, sobre `0f31b04`) — contas 0, escritas 0 |
+| todos | `PUT` que saiu | **0** (os do aceite: `fabricado sem resposta` e `fabricado 200`) |
+| — | leitura de content real | **nenhuma** no editor (todo `GET /api/content/g-faixa` fabricado; o hash confirma a fixture); o `LIB-salvo` mostra por um instante a lista da conta (o SSR da `/library`, leitura) antes das linhas fabricadas |
+| — | `packages/identidade` | **não mudou** |

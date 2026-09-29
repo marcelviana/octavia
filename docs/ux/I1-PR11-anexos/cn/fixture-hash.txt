@@ -1,0 +1,12 @@
+$ node -e … (os hashes do content-edit.json contra os textos da fixture — g-faixa-editor-exemplos.ts)
+EDIT-cifra               "Linha de 120 colunas" 1138:sim 711:sim 411:sim
+EDIT-tab                 "Trenzinho do caipira" 1138:sim 711:sim 411:sim
+EDIT-letra               "Batch três" 1138:sim 711:sim 411:sim
+EDIT-salvando            "Salvando…" 1138:sim 711:sim 411:sim
+EDIT-salvar-erro         "não foi possível salvar — sem conexão" 1138:sim 711:sim 411:sim
+EDIT-salvar-erro         "o que você escreveu continua aqui" 1138:sim 711:sim 411:sim
+LIB-salvo                "alterações salvas" 1138:sim 711:sim 411:sim
+LIB-salvo                "Garota de Ipanema" 1138:sim 711:sim 411:sim
+EDIT-erro-limite         "não foi possível carregar o conteúdo — muitas tentativas, tente de novo em instantes" 1138:sim 711:sim 411:sim
+EDIT-carregando-editor   "carregando o editor…" 1138:sim 711:sim 411:sim
+EDIT-sem-mudancas        "nada mudou desde que você abriu" 1138:sim 711:sim 411:sim
