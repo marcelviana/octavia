@@ -16,6 +16,7 @@ import type { Page } from '@playwright/test'
 import { ESTADOS_CONFIRM, ESTADOS_FORGOT, ESTADOS_LOGIN, ESTADOS_SIGNUP, ESTADOS_VERIFY, paraEstados } from './g-faixa-auth'
 import { ESTADOS_DASH, ESTADOS_LIB } from './g-faixa-lista'
 import { ESTADOS_CONTENT, ESTADOS_CONTENT_EDIT, ID_EDITOR, descobrirPorTipo } from './g-faixa-conteudo'
+import { ESTADOS_UPLOAD_ANTES } from './g-faixa-upload'
 
 export interface Estado {
   /** I1-PR6: antes de carregar a rota — rotas fabricadas, o usuário falso (`g-faixa-auth.ts`) */
@@ -89,6 +90,10 @@ export const SUPERFICIES: Superficie[] = [
   // folha, o `PUT /api/content` segurado/abortado/200 — nenhuma leitura de content real, nenhum `PUT` que saia. Mais os
   // cinco estados do 1b da PR-10 (`base-*`, `erro-pdf`), a `casca-efeito` do editor (antes × depois).
   { id: 'content-edit', rota: `/content/${ID_EDITOR}/edit`, sessao: true, publica: false, folha: '6-content-editor', implementada: true, estados: ESTADOS_CONTENT_EDIT },
+  // I1-PR12 (commit 1b): a superfície 7, upload — os estados `base-*` do web velho (o "antes" da casca-efeito), TUDO
+  // fabricado (`g-faixa-upload.ts`): o `POST /api/storage/upload` e o `POST /api/content` respondem no navegador, os
+  // arquivos são gerados em memória, a navegação ao content criado fica segurada. Nenhum `POST` sai.
+  { id: 'add-content', rota: '/add-content', sessao: true, publica: false, folha: '7-upload', implementada: false, estados: ESTADOS_UPLOAD_ANTES },
 ]
 
 /** `G_FAIXA_SUPERFICIES=login,dashboard` restringe a rodada. */

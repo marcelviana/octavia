@@ -9,7 +9,7 @@
 > `Done in 17.2s using pnpm v10.28.0`. **Data**: 2026-09-29.
 > **Convenções**: `[medido]` = comando + saída literal (em `cn/`); `[lido]` = arquivo:linha; `[hipótese]` = o resto.
 > Divergências **a partir de 806** (a PR-11 fechou em 805, §21.7 dela).
-> **Estado**: commit 1 (gate-first), com o aval (§10.1).
+> **Estado**: commit 1 (gate-first), com o aval (§10.1); commit 1b (instrumento, §13) — aguarda o "antes".
 
 | arquivo | o que é |
 |---|---|
@@ -535,3 +535,34 @@ Próxima divergência: **831**.
 | executor | Vitest do upload (o gate e a sonda) | jsdom, `fetch` falso (nada sai); arquivos gerados em memória |
 | — | `packages/identidade` | **não mudou** |
 | — | código do app (`app/`, `components/`, `lib/`, `hooks/`) | **0 linha** — o commit 1 é gate, esperado, o teste do `POST` e docs |
+
+---
+
+## 13. Commit 1b — o instrumento (só medição) `[medido]`
+
+Decisão 1 do aval: o "antes" é do Marcel, sobre o 1b (código do app = `main`).
+
+| arquivo | o quê |
+|---|---|
+| `scripts/gates-web/g-faixa-upload.ts` (novo) | o upload fabricado: o `POST /api/storage/upload` e o `POST /api/content` no `route()` (201, erro, segurado, abortado); os arquivos gerados em memória (`partitura-12-paginas.pdf`, 1,8 MiB; `repertorio.txt`, as quatro músicas da folha); a navegação a `/content/g-faixa-novo` segurada; `clicarAte` (o clique repetido até o efeito — div. 795); os estados `base-criar`, `-arquivo`, `-detalhes`, `-lote`, `-pronto` com os seletores do web velho |
+| `scripts/gates-web/g-faixa-superficies.ts` | a superfície `add-content` (`/add-content`, `implementada: false`, folha `7-upload`) |
+| `scripts/gates-web/COMO-RODAR.md` | "I1-PR12 antes" |
+
+Nenhuma linha de `app/`, `components/`, `lib/`, `hooks/`.
+
+**A fumaça do 1b** (sem sessão): `next dev -p 3110` numa cópia da árvore **sem `.env*`**, com uma página
+`app/fumaca-i1pr12/page.tsx` que monta o `AddContent` (o corpo da rota, sem a casca) e, **só na cópia**, o
+`getValidToken` e o usuário do hook falsos (sem Firebase o upload pararia no token — o que o perfil com sessão não
+faz). Os mesmos `ESTADOS_UPLOAD_ANTES`, com a barreira de escrita no contexto:
+
+```
+base-criar OK Back Upload Add Details Complete Content Type Lyrics Chords Tab Sheet How would you like to add content? Create New Start from scratch and build your content ma
+base-arquivo OK Back Upload Add Details Complete Content Type Lyrics Chords Tab Sheet How would you like to add content? Create New Start from scratch and build your content ma
+base-detalhes OK Back Add Content Details Back Add Metadata Fill in the details for your content Content Details Title * Artist * Album Genre Year Notes Advanced Options Cancel 
+base-lote OK Back Add Content Details Back Import All
+base-pronto OK 🎉 Done! Your music is now part of your library. "Partitura de 12 páginas" by Compositor anônimo Your new content is now available in your library Add Another G
+escritas não fabricadas abortadas: 0
+```
+
+A cópia e o servidor foram removidos depois. O que a fumaça não prova: a rota com a casca e a sessão (é a rodada do
+Marcel).

@@ -216,6 +216,29 @@ G_FAIXA_BASE_URL=http://localhost:3000 G_FAIXA_PERFIL="$HOME/.octavia-g-faixa-pe
 `EDIT-salvar-erro` é abortado no navegador, o do `LIB-salvo` responde 200 no navegador. A rodada fica registrada em
 `rodadasPorEstado` e as linhas do log dela somam-se às da largura. Depois diga **"rodei"**.
 
+## I1-PR12 antes — o upload velho, casca-efeito (Marcel, um comando)
+
+Na árvore `../octavia-i1-pr12`, **no commit 1b** (branch `i1/pr12-upload`; o código do app é o da `main` — o 1b só
+acrescenta o instrumento), com o seu `.env.local` copiado para lá (passo seu), **`pnpm dev`** num terminal que fica aberto
+(porta 3000) e o `✓ Ready`. Perfil de sempre (`~/.octavia-g-faixa-perfil`).
+
+```bash
+G_FAIXA_BASE_URL=http://localhost:3000 G_FAIXA_PERFIL="$HOME/.octavia-g-faixa-perfil" G_FAIXA_SUPERFICIES=add-content G_FAIXA_SAIDA=tests/gates-web/medicoes/casca-efeito/antes pnpm exec playwright test -c playwright.g-faixa.config.ts scripts/gates-web/g-faixa-medir.ts
+```
+
+Mede `/add-content` nas três larguras, cinco estados do web velho: `base-criar` (abre: o passo 1 com o criar),
+`base-arquivo` (*Import from File*: a zona), `base-detalhes` (o upload → o formulário, com o título e o artista da
+folha), `base-lote` (*Batch Import* + o lote da folha → a prévia) e `base-pronto` (o salvar → *Done!*). Grava
+`tests/gates-web/medicoes/casca-efeito/antes/add-content.json`.
+
+**Tudo fabricado no navegador** (`scripts/gates-web/g-faixa-upload.ts`): o `POST /api/storage/upload` responde 201 com
+um `url` fabricado; o `POST /api/content` responde 201 ecoando o corpo; a navegação ao content criado
+(`/content/g-faixa-novo`) fica **segurada** — a tela fica no *Done!*, que hoje pisca. Os arquivos (um PDF de 1,8 MiB e
+o lote `.txt` com as quatro músicas da folha) são **gerados em memória**, nunca lidos do disco; o corpo do `POST` para
+no `route()` e **não sai**. Um `POST` que escapasse cairia na barreira (abortado, a rodada reprova). Lidos de verdade só
+a sessão (`/api/profile`, o `securetoken`). **Cota**: ~16 cargas (5 estados × 3 larguras + o controle). Depois diga
+**"rodei-antes"**.
+
 ## O resto
 
 | o quê | comando |
