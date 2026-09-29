@@ -1,0 +1,5 @@
+$ pnpm build   # numa cópia da árvore, sem .env
+ ✓ Compiled successfully
+├ ƒ /content/[id]/edit                   6.92 kB         281 kB
+├ ƒ /library                             1.43 kB         275 kB
+# exit: 0

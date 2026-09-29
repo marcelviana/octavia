@@ -1,0 +1,4 @@
+$ # fumaça sem sessão (next dev -p 3110, cópia sem .env): /fumaca-i1pr11/EDIT-cifra
+1138: getByRole('button', { name: 'Salvar' }) → 2 ["Voltar sem salvar","Salvar"] · com exact: true → 1
+711: getByRole('button', { name: 'Salvar' }) → 2 ["Voltar sem salvar","Salvar"] · com exact: true → 1
+411: getByRole('button', { name: 'Salvar' }) → 2 ["Voltar sem salvar","Salvar"] · com exact: true → 1

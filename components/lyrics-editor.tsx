@@ -1,8 +1,13 @@
 "use client"
 
+/**
+ * O editor de letra (I1-PR-11; folha 6, `EDIT-letra`): o bloco *Letra* com um campo de `5 × touch.min` em mono; as
+ * *"Formatting tips"* de antes viram só o placeholder (`edit.letra.placeholder`, nota da folha). O estado e o que a
+ * mudança devolve são os de antes (a herança D do §1.2 dos anexos, não tocada).
+ */
 import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Textarea } from "@/components/ui/textarea"
+import { Bloco, Campo, ENTRADA_ALTA } from "@/components/editors/campos"
+import { FRASES_EDIT } from "@/components/editors/frases-editor"
 
 interface LyricsEditorProps {
   content: any
@@ -18,36 +23,17 @@ export function LyricsEditor({ content, onChange }: LyricsEditorProps) {
   }
 
   return (
-    <div className="space-y-6">
-      {/* Editor */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Lyrics Editor</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <Textarea
-              value={lyrics}
-              onChange={(e) => updateLyrics(e.target.value)}
-              placeholder="Enter your lyrics here...
-
-Use [Verse 1], [Chorus], [Bridge] etc. for section labels
-Leave blank lines between sections
-Use consistent formatting for better readability"
-              className="min-h-[400px] font-mono"
-            />
-            <div className="text-sm text-gray-500">
-              <p>Formatting tips:</p>
-              <ul className="list-disc list-inside space-y-1">
-                <li>Use [Section Name] for verse, chorus, bridge labels</li>
-                <li>Leave blank lines to separate sections</li>
-                <li>Use consistent indentation for better structure</li>
-                <li>Add timing notes in parentheses if needed</li>
-              </ul>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+    <Bloco titulo={FRASES_EDIT["edit.letra"]}>
+      <Campo rotulo={FRASES_EDIT["edit.letra"]} id="letra">
+        <textarea
+          id="letra"
+          data-testid="campo-letra"
+          value={lyrics}
+          onChange={(e) => updateLyrics(e.target.value)}
+          placeholder={FRASES_EDIT["edit.letra.placeholder"]}
+          className={`${ENTRADA_ALTA} min-h-campo-letra font-fam-mono font-peso-mono`}
+        />
+      </Campo>
+    </Bloco>
   )
 }

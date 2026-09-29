@@ -463,16 +463,18 @@ export async function getContentById(
     // For client-side queries, use the API route
 
     // Check authentication first
+    // I1-PR-11 (decisão 3 do aval): o erro leva o `status` (aditivo — a mensagem é a de antes); o editor escolhe o
+    // motivo por ele. Sem usuário e sem token são 401.
     const user = await getAuthenticatedUser();
     if (!user) {
-      throw new Error("User not authenticated");
+      throw Object.assign(new Error("User not authenticated"), { status: 401 });
     }
 
     // Get Firebase auth token
     const { getValidToken } = await import("@/lib/auth-manager");
     const { token, error: tokenError } = await getValidToken();
     if (!token) {
-      throw new Error(tokenError || "Authentication failed");
+      throw Object.assign(new Error(tokenError || "Authentication failed"), { status: 401 });
     }
 
     const response = await fetch(`/api/content/${id}`, {
@@ -483,10 +485,10 @@ export async function getContentById(
 
     if (!response.ok) {
       if (response.status === 404) {
-        throw new Error("Content not found");
+        throw Object.assign(new Error("Content not found"), { status: 404 });
       }
       const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.error || `API request failed: ${response.status}`);
+      throw Object.assign(new Error(errorData.error || `API request failed: ${response.status}`), { status: response.status });
     }
 
     return await response.json();
@@ -527,10 +529,11 @@ export async function createContent(content: ContentInsert) {
 
 export async function updateContent(id: string, content: ContentUpdate) {
   try {
+    // I1-PR-11 (decisão 3 do aval): o erro leva o `status` (aditivo), como na carga
     const { getValidToken } = await import("@/lib/auth-manager");
     const { token, error: tokenError } = await getValidToken();
     if (!token) {
-      throw new Error(tokenError || "Authentication failed");
+      throw Object.assign(new Error(tokenError || "Authentication failed"), { status: 401 });
     }
 
     const response = await fetch("/api/content", {
@@ -544,10 +547,10 @@ export async function updateContent(id: string, content: ContentUpdate) {
 
     if (!response.ok) {
       if (response.status === 404) {
-        throw new Error("Content not found");
+        throw Object.assign(new Error("Content not found"), { status: 404 });
       }
       const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.error || `Update failed: ${response.status}`);
+      throw Object.assign(new Error(errorData.error || `Update failed: ${response.status}`), { status: response.status });
     }
 
     clearContentCache();

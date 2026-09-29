@@ -29,6 +29,10 @@
 //        é (b) "rolagem horizontal de contêiner" — salvo o contêiner marcado
 //        `data-rolagem="painel"` (o corpo de conteúdo da resposta 19 da folha),
 //        que conta como (d′).
+//   I1-PR11 (div. 767, herança da I1-PR10): QUEBRA POR DADO, contada à parte das
+//        candidatas (nunca reprova, nunca pede errata) — o nó de dado no lugar do
+//        nó da folha, mesma largura, altura = k × entrelinha (k ≥ 2), e a CASCATA
+//        de Δy abaixo dele (`quebrasPorDado`, `ehCascata`).
 // A faixa A (411) não tem requisito próprio (DESIGN-I1 §4: "o que o G-faixa
 // medir em 411 é saída contada à parte"): o (e) de 411 é contado, não reprova.
 // ERRATA DA I1-D11 [Marcel, 2026-09-28] (I1-PR6, commit 4): "A só não quebra" = (b) = 0 em 411 —
@@ -105,6 +109,42 @@ export function cortes(medicao) {
   return { b: out, rolagem, painel }
 }
 
+/**
+ * I1-PR11 (div. 767): a QUEBRA POR DADO — o nó de dado (sem par por texto dos dois lados: o texto real não é o da
+ * folha) que ocupa o MESMO lugar do nó da folha (|Δx|, |Δy|, |Δw| ≤ 4) e está mais alto por ter quebrado linha: altura
+ * = k × entrelinha, k inteiro ≥ 2. A entrelinha é a altura do mesmo nó (mesma chave) na referência, 1138, onde o dado
+ * cabe numa linha; sem ele na referência, a altura do nó da folha. Devolve [{ k, par, linhas, extra, y }] — `par` é a
+ * chave do nó da folha, `extra` o quanto o nó cresceu contra ela, `y` o topo dele na folha.
+ */
+export function quebrasPorDado(semPar, a, f, refK) {
+  const out = []
+  const folhaSemPar = semPar.folha.map((s) => f.get(s.par)).filter(Boolean)
+  for (const s of semPar.app) {
+    const n = a.get(s.par)
+    if (!n) continue
+    const g = folhaSemPar.find((x) => Math.abs(n.x - x.x) <= TOL_FOLHA && Math.abs(n.y - x.y) <= TOL_FOLHA && Math.abs(n.w - x.w) <= TOL_FOLHA)
+    if (!g || n.h <= g.h + TOL_FOLHA) continue
+    const r = refK?.get(n.k)
+    const L = r && temArea(r) ? r.h : g.h
+    const k = Math.round(n.h / L)
+    if (k >= 2 && Math.abs(n.h - k * L) <= TOL_FOLHA) out.push({ k: n.k, par: g.k, linhas: k, extra: Math.round((n.h - g.h) * 10) / 10, y: g.y })
+  }
+  return out
+}
+
+/**
+ * A CASCATA de uma quebra por dado: a errata candidata que só DESCEU (|Δx|, |Δw|, |Δh| ≤ 4; Δy > 4), cujo topo na folha
+ * está na altura da quebra ou abaixo dela, e desceu no máximo o que as quebras acima dela cresceram (Δy ≤ Σ extra + 4 —
+ * o que é centrado no cabeçalho desce a metade). Sem quebra acima, ou com Δ além disso, segue errata candidata.
+ */
+export function ehCascata(o, g, quebras) {
+  if (!g) return false
+  const [dx, dy, dw, dh] = o.delta
+  if (Math.abs(dx) > TOL_FOLHA || Math.abs(dw) > TOL_FOLHA || Math.abs(dh) > TOL_FOLHA || dy <= TOL_FOLHA) return false
+  const acima = quebras.filter((q) => g.y >= q.y - TOL_FOLHA)
+  return acima.length > 0 && dy <= acima.reduce((s, q) => s + q.extra, 0) + TOL_FOLHA
+}
+
 /** Classifica um estado inteiro: { larguras: { "1138": medicao, … }, folha?: { C: nos, B: nos } }. */
 export function classificarEstado(estado) {
   const res = {}
@@ -141,20 +181,29 @@ export function classificarEstado(estado) {
       }
     }
     const faixa = L === "1138" ? "C" : L === "711" ? "B" : null
-    const errata = []
+    let errata = []
     const semPar = { folha: [], app: [] }
+    const quebraPorDado = { nos: [], cascata: [] }
     if (faixa && estado.folha?.[faixa]) {
       const f = chavesDeFolha(estado.folha[faixa])
       const a = chavesDeFolha(med.nos)
+      const naFolha = new Map() // k do app → o nó da folha do par (para a cascata)
       for (const [ch, n] of a) {
         const g = f.get(ch)
         if (!g) { semPar.app.push({ k: n.k, par: ch }); continue }
         const d = ["x", "y", "w", "h"].map((c) => Math.round((n[c] - g[c]) * 10) / 10)
-        if (d.some((v) => Math.abs(v) > TOL_FOLHA)) errata.push({ k: n.k, delta: d })
+        if (d.some((v) => Math.abs(v) > TOL_FOLHA)) { errata.push({ k: n.k, delta: d }); naFolha.set(n.k, g) }
       }
       for (const [ch, g] of f) if (!a.has(ch)) semPar.folha.push({ k: g.k, par: ch, rotulo: g.rotulo })
+      const q = quebrasPorDado(semPar, a, f, refK)
+      if (q.length) {
+        quebraPorDado.nos = q
+        const resto = []
+        for (const o of errata) (ehCascata(o, naFolha.get(o.k), q) ? quebraPorDado.cascata : resto).push(o)
+        errata = resto
+      }
     }
-    res[L] = { e, b, dl, errata, semPar, saidas: { nomeAcessivel: nomeAcessivel.length, rolagem: rolagem.length }, reprova: REPROVAM.includes(L), reprovaB: REPROVAM_B.includes(L) }
+    res[L] = { e, b, dl, errata, quebraPorDado, semPar, saidas: { nomeAcessivel: nomeAcessivel.length, rolagem: rolagem.length }, reprova: REPROVAM.includes(L), reprovaB: REPROVAM_B.includes(L) }
   }
   return res
 }
@@ -165,8 +214,9 @@ export function resumo(superficie) {
   for (const [id, estado] of Object.entries(superficie.estados)) {
     const c = classificarEstado(estado)
     for (const [L, r] of Object.entries(c)) {
-      const t = (tot[L] ??= { e: 0, b: 0, dl: 0, errata: 0, semParFolha: 0, semParApp: 0, nomeAcessivel: 0, rolagem: 0, reprova: r.reprova, reprovaB: r.reprovaB, estados: [] })
+      const t = (tot[L] ??= { e: 0, b: 0, dl: 0, errata: 0, quebraPorDado: 0, semParFolha: 0, semParApp: 0, nomeAcessivel: 0, rolagem: 0, reprova: r.reprova, reprovaB: r.reprovaB, estados: [] })
       t.e += r.e.length; t.b += r.b.length; t.dl += r.dl.length; t.errata += r.errata.length
+      t.quebraPorDado += r.quebraPorDado.cascata.length
       t.semParFolha += r.semPar.folha.length; t.semParApp += r.semPar.app.length
       t.nomeAcessivel += r.saidas.nomeAcessivel; t.rolagem += r.saidas.rolagem
       t.estados.push(id)

@@ -24,6 +24,9 @@ const medidas = {
   "aviso-respiro": "calc((var(--toque-min) - var(--faixa-entrelinha-aviso)) / 2)",
   // I1-PR-10 (folha 5, cabeçalho em B): as ações descem com recuo `touch.min + space.lg`, DERIVADO
   "recuo-cabecalho": "calc(var(--toque-min) + var(--espaco-lg))",
+  // I1-PR-11 (folha 6, README-design §2.4 "campo"): duas linhas = 2 × touch.min; a letra = 5 × touch.min — DERIVADOS
+  "campo-duas-linhas": "calc(var(--toque-min) * 2)",
+  "campo-letra": "calc(var(--toque-min) * 5)",
 }
 const identidade = {
   screens: {

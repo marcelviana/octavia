@@ -1,0 +1,194 @@
+$ pnpm exec vitest run tests/gates/i1-editor-put.test.tsx components/editors/__tests__ tests/gates-web/g-faixa-classificar.test.ts tests/gates/i1-visualizador.test.tsx tests/gates/i1-tab-acordes.test.tsx
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-i1-pr11
+
+ ✓  web  tests/gates-web/g-faixa-classificar.test.ts (18 tests) 10ms
+ ✓  web  tests/gates/i1-visualizador.test.tsx (6 tests) 127ms
+ ✓  web  tests/gates/i1-tab-acordes.test.tsx (1 test) 28ms
+ ✓  web  components/editors/__tests__/lib-salvo.test.tsx (3 tests) 489ms
+     ✓ o editor: PUT 200 → a /library de antes e o sinal marcado (lido e apagado uma vez)  471ms
+ ✓  web  tests/gates/i1-editor-put.test.tsx (6 tests | 1 skipped) 732ms
+     ✓ cifra em texto (a forma de hoje da cifra)  370ms
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > rede: "não foi possível carregar o conteúdo — sem conexão" + Tentar de novo
+Error in getContentById: TypeError: Failed to fetch
+    at responder (/Users/marcelviana/projects/octavia-i1-pr11/components/editors/__tests__/editor-estados.test.tsx:43:67)
+    at /Users/marcelviana/projects/octavia-i1-pr11/components/editors/__tests__/editor-estados.test.tsx:50:12
+    at Mock (file:///Users/marcelviana/projects/octavia-i1-pr11/node_modules/.pnpm/@vitest+spy@4.0.16/node_modules/@vitest/spy/dist/index.js:285:34)
+    at getContentById (/Users/marcelviana/projects/octavia-i1-pr11/lib/content-service.ts:480:28)
+    at loadContent (/Users/marcelviana/projects/octavia-i1-pr11/app/content/[id]/edit/page.tsx:44:22)
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > rede: "não foi possível carregar o conteúdo — sem conexão" + Tentar de novo
+Editor: falha ao carregar o conteúdo TypeError: Failed to fetch
+    at responder (/Users/marcelviana/projects/octavia-i1-pr11/components/editors/__tests__/editor-estados.test.tsx:43:67)
+    at /Users/marcelviana/projects/octavia-i1-pr11/components/editors/__tests__/editor-estados.test.tsx:50:12
+    at Mock (file:///Users/marcelviana/projects/octavia-i1-pr11/node_modules/.pnpm/@vitest+spy@4.0.16/node_modules/@vitest/spy/dist/index.js:285:34)
+    at getContentById (/Users/marcelviana/projects/octavia-i1-pr11/lib/content-service.ts:480:28)
+    at loadContent (/Users/marcelviana/projects/octavia-i1-pr11/app/content/[id]/edit/page.tsx:44:22)
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 401: "não foi possível carregar o conteúdo — o servidor não aceitou a sessão, entre de novo", sem ação
+Error in getContentById: Error: x
+    at getContentById (/Users/marcelviana/projects/octavia-i1-pr11/lib/content-service.ts:491:27)
+    at loadContent (/Users/marcelviana/projects/octavia-i1-pr11/app/content/[id]/edit/page.tsx:44:22) {
+  status: 401
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 401: "não foi possível carregar o conteúdo — o servidor não aceitou a sessão, entre de novo", sem ação
+Editor: falha ao carregar o conteúdo Error: x
+    at getContentById (/Users/marcelviana/projects/octavia-i1-pr11/lib/content-service.ts:491:27)
+    at loadContent (/Users/marcelviana/projects/octavia-i1-pr11/app/content/[id]/edit/page.tsx:44:22) {
+  status: 401
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 429: "não foi possível carregar o conteúdo — muitas tentativas, tente de novo em instantes", sem ação
+Error in getContentById: Error: x
+    at getContentById (/Users/marcelviana/projects/octavia-i1-pr11/lib/content-service.ts:491:27)
+    at loadContent (/Users/marcelviana/projects/octavia-i1-pr11/app/content/[id]/edit/page.tsx:44:22) {
+  status: 429
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 429: "não foi possível carregar o conteúdo — muitas tentativas, tente de novo em instantes", sem ação
+Editor: falha ao carregar o conteúdo Error: x
+    at getContentById (/Users/marcelviana/projects/octavia-i1-pr11/lib/content-service.ts:491:27)
+    at loadContent (/Users/marcelviana/projects/octavia-i1-pr11/app/content/[id]/edit/page.tsx:44:22) {
+  status: 429
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 500: "não foi possível carregar o conteúdo — falha no servidor" + Tentar de novo
+Error in getContentById: Error: x
+    at getContentById (/Users/marcelviana/projects/octavia-i1-pr11/lib/content-service.ts:491:27)
+    at loadContent (/Users/marcelviana/projects/octavia-i1-pr11/app/content/[id]/edit/page.tsx:44:22) {
+  status: 500
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 500: "não foi possível carregar o conteúdo — falha no servidor" + Tentar de novo
+Editor: falha ao carregar o conteúdo Error: x
+    at getContentById (/Users/marcelviana/projects/octavia-i1-pr11/lib/content-service.ts:491:27)
+    at loadContent (/Users/marcelviana/projects/octavia-i1-pr11/app/content/[id]/edit/page.tsx:44:22) {
+  status: 500
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 404 e 400: "este conteúdo não existe", sem linha
+Error in getContentById: Error: Content not found
+    at getContentById (/Users/marcelviana/projects/octavia-i1-pr11/lib/content-service.ts:488:29)
+    at loadContent (/Users/marcelviana/projects/octavia-i1-pr11/app/content/[id]/edit/page.tsx:44:22) {
+  status: 404
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 404 e 400: "este conteúdo não existe", sem linha
+Editor: falha ao carregar o conteúdo Error: Content not found
+    at getContentById (/Users/marcelviana/projects/octavia-i1-pr11/lib/content-service.ts:488:29)
+    at loadContent (/Users/marcelviana/projects/octavia-i1-pr11/app/content/[id]/edit/page.tsx:44:22) {
+  status: 404
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 404 e 400: "este conteúdo não existe", sem linha
+Error in getContentById: Error: x
+    at getContentById (/Users/marcelviana/projects/octavia-i1-pr11/lib/content-service.ts:491:27)
+    at loadContent (/Users/marcelviana/projects/octavia-i1-pr11/app/content/[id]/edit/page.tsx:44:22) {
+  status: 400
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 404 e 400: "este conteúdo não existe", sem linha
+Editor: falha ao carregar o conteúdo Error: x
+    at getContentById (/Users/marcelviana/projects/octavia-i1-pr11/lib/content-service.ts:491:27)
+    at loadContent (/Users/marcelviana/projects/octavia-i1-pr11/app/content/[id]/edit/page.tsx:44:22) {
+  status: 400
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > rede: "não foi possível salvar — sem conexão" + "o que você escreveu continua aqui" + Tentar de novo (o mesmo PUT)
+Error in updateContent: TypeError: Failed to fetch
+    at responder (/Users/marcelviana/projects/octavia-i1-pr11/components/editors/__tests__/editor-estados.test.tsx:43:67)
+    at /Users/marcelviana/projects/octavia-i1-pr11/components/editors/__tests__/editor-estados.test.tsx:49:61
+    at Mock (file:///Users/marcelviana/projects/octavia-i1-pr11/node_modules/.pnpm/@vitest+spy@4.0.16/node_modules/@vitest/spy/dist/index.js:285:34)
+    at updateContent (/Users/marcelviana/projects/octavia-i1-pr11/lib/content-service.ts:539:28)
+    at handleSave (/Users/marcelviana/projects/octavia-i1-pr11/components/content-edit-page-client.tsx:35:7)
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > rede: "não foi possível salvar — sem conexão" + "o que você escreveu continua aqui" + Tentar de novo (o mesmo PUT)
+Editor: falha ao salvar TypeError: Failed to fetch
+    at responder (/Users/marcelviana/projects/octavia-i1-pr11/components/editors/__tests__/editor-estados.test.tsx:43:67)
+    at /Users/marcelviana/projects/octavia-i1-pr11/components/editors/__tests__/editor-estados.test.tsx:49:61
+    at Mock (file:///Users/marcelviana/projects/octavia-i1-pr11/node_modules/.pnpm/@vitest+spy@4.0.16/node_modules/@vitest/spy/dist/index.js:285:34)
+    at updateContent (/Users/marcelviana/projects/octavia-i1-pr11/lib/content-service.ts:539:28)
+    at handleSave (/Users/marcelviana/projects/octavia-i1-pr11/components/content-edit-page-client.tsx:35:7)
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > rede: "não foi possível salvar — sem conexão" + "o que você escreveu continua aqui" + Tentar de novo (o mesmo PUT)
+Error in updateContent: TypeError: Failed to fetch
+    at responder (/Users/marcelviana/projects/octavia-i1-pr11/components/editors/__tests__/editor-estados.test.tsx:43:67)
+    at /Users/marcelviana/projects/octavia-i1-pr11/components/editors/__tests__/editor-estados.test.tsx:49:61
+    at Mock (file:///Users/marcelviana/projects/octavia-i1-pr11/node_modules/.pnpm/@vitest+spy@4.0.16/node_modules/@vitest/spy/dist/index.js:285:34)
+    at updateContent (/Users/marcelviana/projects/octavia-i1-pr11/lib/content-service.ts:539:28)
+    at handleSave (/Users/marcelviana/projects/octavia-i1-pr11/components/content-edit-page-client.tsx:35:7)
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > rede: "não foi possível salvar — sem conexão" + "o que você escreveu continua aqui" + Tentar de novo (o mesmo PUT)
+Editor: falha ao salvar TypeError: Failed to fetch
+    at responder (/Users/marcelviana/projects/octavia-i1-pr11/components/editors/__tests__/editor-estados.test.tsx:43:67)
+    at /Users/marcelviana/projects/octavia-i1-pr11/components/editors/__tests__/editor-estados.test.tsx:49:61
+    at Mock (file:///Users/marcelviana/projects/octavia-i1-pr11/node_modules/.pnpm/@vitest+spy@4.0.16/node_modules/@vitest/spy/dist/index.js:285:34)
+    at updateContent (/Users/marcelviana/projects/octavia-i1-pr11/lib/content-service.ts:539:28)
+    at handleSave (/Users/marcelviana/projects/octavia-i1-pr11/components/content-edit-page-client.tsx:35:7)
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > 400: "não foi possível salvar — o servidor recusou os dados" + "o que você escreveu continua aqui"
+Error in updateContent: Error: x
+    at updateContent (/Users/marcelviana/projects/octavia-i1-pr11/lib/content-service.ts:553:27)
+    at handleSave (/Users/marcelviana/projects/octavia-i1-pr11/components/content-edit-page-client.tsx:35:7) {
+  status: 400
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > 400: "não foi possível salvar — o servidor recusou os dados" + "o que você escreveu continua aqui"
+Editor: falha ao salvar Error: x
+    at updateContent (/Users/marcelviana/projects/octavia-i1-pr11/lib/content-service.ts:553:27)
+    at handleSave (/Users/marcelviana/projects/octavia-i1-pr11/components/content-edit-page-client.tsx:35:7) {
+  status: 400
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > 404: "não foi possível salvar — este conteúdo não existe mais" + "o que você escreveu continua aqui"
+Error in updateContent: Error: Content not found
+    at updateContent (/Users/marcelviana/projects/octavia-i1-pr11/lib/content-service.ts:550:29)
+    at handleSave (/Users/marcelviana/projects/octavia-i1-pr11/components/content-edit-page-client.tsx:35:7) {
+  status: 404
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > 404: "não foi possível salvar — este conteúdo não existe mais" + "o que você escreveu continua aqui"
+Editor: falha ao salvar Error: Content not found
+    at updateContent (/Users/marcelviana/projects/octavia-i1-pr11/lib/content-service.ts:550:29)
+    at handleSave (/Users/marcelviana/projects/octavia-i1-pr11/components/content-edit-page-client.tsx:35:7) {
+  status: 404
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > 500: "não foi possível salvar — falha no servidor" + "o que você escreveu continua aqui" + Tentar de novo (o mesmo PUT)
+Error in updateContent: Error: x
+    at updateContent (/Users/marcelviana/projects/octavia-i1-pr11/lib/content-service.ts:553:27)
+    at handleSave (/Users/marcelviana/projects/octavia-i1-pr11/components/content-edit-page-client.tsx:35:7) {
+  status: 500
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > 500: "não foi possível salvar — falha no servidor" + "o que você escreveu continua aqui" + Tentar de novo (o mesmo PUT)
+Editor: falha ao salvar Error: x
+    at updateContent (/Users/marcelviana/projects/octavia-i1-pr11/lib/content-service.ts:553:27)
+    at handleSave (/Users/marcelviana/projects/octavia-i1-pr11/components/content-edit-page-client.tsx:35:7) {
+  status: 500
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > 500: "não foi possível salvar — falha no servidor" + "o que você escreveu continua aqui" + Tentar de novo (o mesmo PUT)
+Error in updateContent: Error: Update failed: 500
+    at updateContent (/Users/marcelviana/projects/octavia-i1-pr11/lib/content-service.ts:553:27)
+    at handleSave (/Users/marcelviana/projects/octavia-i1-pr11/components/content-edit-page-client.tsx:35:7) {
+  status: 500
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > 500: "não foi possível salvar — falha no servidor" + "o que você escreveu continua aqui" + Tentar de novo (o mesmo PUT)
+Editor: falha ao salvar Error: Update failed: 500
+    at updateContent (/Users/marcelviana/projects/octavia-i1-pr11/lib/content-service.ts:553:27)
+    at handleSave (/Users/marcelviana/projects/octavia-i1-pr11/components/content-edit-page-client.tsx:35:7) {
+  status: 500
+}
+
+ ✓  web  components/editors/__tests__/editor-estados.test.tsx (11 tests) 969ms
+     ✓ com o PUT em curso: Salvando…, inativo, e o clique duplo manda UM PUT  458ms
+
+ Test Files  6 passed (6)
+      Tests  44 passed | 1 skipped (45)
+   Start at  15:23:14
+   Duration  4.55s (transform 1.88s, setup 4.77s, import 2.35s, tests 2.35s, environment 13.07s)
+
+# exit: 0

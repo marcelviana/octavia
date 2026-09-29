@@ -72,9 +72,9 @@ export default async function preparar(_config: FullConfig): Promise<() => Promi
         for (const [L, r] of Object.entries(e.naoAlcancado ?? {})) console.log(`G-faixa · ${id} · ${eid} · ${L}: NÃO ALCANÇADO — ${r}`)
         if (e.inalcancavel) console.log(`G-faixa · ${id} · ${eid}: INALCANÇÁVEL (declarado) — ${e.inalcancavel}`)
       }
-      const r = resumo(junto as never) as Record<string, { e: number; b: number; dl: number; errata: number; nomeAcessivel: number; rolagem: number; reprova: boolean }>
+      const r = resumo(junto as never) as Record<string, { e: number; b: number; dl: number; errata: number; quebraPorDado: number; nomeAcessivel: number; rolagem: number; reprova: boolean }>
       for (const [L, t] of Object.entries(r))
-        console.log(`G-faixa · ${id} · ${L}: (e)=${t.e} · (b)=${t.b} · (d′)=${t.dl} · errata candidata=${t.errata} · saídas: nome-acessível=${t.nomeAcessivel} rolagem=${t.rolagem}${L === '411' ? ' (faixa A)' : ''}`)
+        console.log(`G-faixa · ${id} · ${L}: (e)=${t.e} · (b)=${t.b} · (d′)=${t.dl} · errata candidata=${t.errata} · quebra por dado=${t.quebraPorDado} · saídas: nome-acessível=${t.nomeAcessivel} rolagem=${t.rolagem}${L === '411' ? ' (faixa A)' : ''}`)
     }
     const ids = SUPERFICIES.map((s) => s.id).filter((id) => porSup.has(id))
     console.log(`G-faixa · gravado: ${ids.map((id) => `${id}.json`).join(', ') || 'nada'} → ${saida}`)
@@ -93,6 +93,7 @@ type Junto = Record<string, unknown> & {
  * o veredito e o anexo dizerem de onde vem cada medição. O resto (estado sem largura nova) fica como estava.
  */
 function mesclar(velho: Junto | null, novo: Junto): Junto {
+  if (velho && Array.isArray(novo.estadosMedidos)) return mesclarPorEstado(velho, novo)
   const larguras = Object.keys(novo.requests ?? {})
   const rodadas = { ...(velho?.rodadas ?? {}) }
   if (velho && !velho.rodadas) for (const L of Object.keys(velho.requests ?? {})) rodadas[L] = { rodada: velho.rodada, commit: velho.commit }
@@ -111,6 +112,43 @@ function mesclar(velho: Junto | null, novo: Junto): Junto {
     ...novo, estados, rodadas,
     requests: { ...fica(velho.requests), ...(novo.requests ?? {}) },
     controlePositivo: { ...fica(velho.controlePositivo), ...(novo.controlePositivo ?? {}) },
+  }
+}
+
+/**
+ * I1-PR11 (div. 803): a rodada com `G_FAIXA_ESTADOS` substitui SÓ os estados que mediu, nas larguras que mediu. O resto do
+ * JSON (os outros estados, o cabeçalho da rodada inteira, as `rodadas` por largura) fica como estava. A rodada parcial se
+ * registra em `rodadasPorEstado` (estado → largura → rodada e commit); as linhas do log de requests dela se SOMAM às da
+ * largura (com `rodada`), para o veredito ver toda escrita; o controle positivo da largura passa a ser o da rodada nova.
+ */
+function mesclarPorEstado(velho: Junto, novo: Junto): Junto {
+  const larguras = Object.keys(novo.requests ?? {})
+  const estados = { ...velho.estados }
+  const porEstado = { ...((velho.rodadasPorEstado as Record<string, Record<string, unknown>>) ?? {}) }
+  for (const [id, n] of Object.entries(novo.estados)) {
+    const v = velho.estados[id] ?? {}
+    const fica = (o: Record<string, unknown> | undefined) => Object.fromEntries(Object.entries(o ?? {}).filter(([L]) => !larguras.includes(L)))
+    const e = { ...v, ...n, larguras: { ...fica(v.larguras as Record<string, unknown>), ...(n.larguras ?? {}) } }
+    const na = { ...fica(v.naoAlcancado), ...(n.naoAlcancado ?? {}) } as Record<string, string>
+    if (Object.keys(na).length) e.naoAlcancado = na; else delete e.naoAlcancado
+    estados[id] = e
+    porEstado[id] = { ...(porEstado[id] ?? {}), ...Object.fromEntries(larguras.map((L) => [L, { rodada: novo.rodada, commit: novo.commit }])) }
+  }
+  type Log = { linhas?: Record<string, unknown>[]; prodAbortados?: number; outrosHosts?: Record<string, number> }
+  const requests = { ...(velho.requests ?? {}) } as Record<string, Log>
+  for (const L of larguras) {
+    const v = requests[L] ?? {}, n = (novo.requests as Record<string, Log>)[L] ?? {}
+    requests[L] = {
+      ...v,
+      linhas: [...(v.linhas ?? []), ...(n.linhas ?? []).map((l) => ({ ...l, rodada: novo.rodada }))],
+      prodAbortados: (v.prodAbortados ?? 0) + (n.prodAbortados ?? 0),
+      outrosHosts: { ...(v.outrosHosts ?? {}), ...(n.outrosHosts ?? {}) },
+    }
+  }
+  const { estadosMedidos: _medidos, ...cabeca } = velho as Junto & { estadosMedidos?: unknown }
+  return {
+    ...cabeca, estados, requests, rodadasPorEstado: porEstado,
+    controlePositivo: { ...(velho.controlePositivo ?? {}), ...(novo.controlePositivo ?? {}) },
   }
 }
 

@@ -13,8 +13,10 @@
  */
 import type { Page, Route } from '@playwright/test'
 import { PDFDocument, StandardFonts } from 'pdf-lib'
-import { responder, segurar } from './g-faixa-auth'
+import { responder, segurar, type Resposta } from './g-faixa-auth'
 import type { Estado } from './g-faixa-superficies'
+import { EXEMPLOS_EDITOR, type TipoDoExemplo } from './g-faixa-editor-exemplos'
+import { DADOS, conteudo } from './g-faixa-lista'
 
 /** O `file_url` da partitura fabricada: um host do Storage que não existe — o `route()` responde antes de sair. */
 export const PDF_URL = 'https://g-faixa.supabase.co/storage/v1/object/public/content-files/g-faixa-partitura-12p.pdf'
@@ -94,7 +96,67 @@ async function servido(page: Page) {
 /** A página do PDF desenhada (o canvas do react-pdf) — o mesmo seletor antes e depois do commit 2. */
 const paginaDesenhada = (page: Page) => page.locator('.react-pdf__Page canvas').first().waitFor({ state: 'visible', timeout: 60_000 })
 
-const ESTADOS_CONTENT_EDIT: Record<string, Estado> = {
+/**
+ * I1-PR11 — os 15 estados da folha `6-content-editor` (+ o `LIB-salvo` da folha 4), TUDO fabricado: o `GET
+ * /api/content/g-faixa` com os exemplos da folha (`g-faixa-editor-exemplos.ts`), ou segurado, abortado (rede),
+ * 401/429/500/404; o `PUT /api/content` segurado (Salvando…), abortado (a falha de salvar, *sem conexão*) ou 200 (o
+ * `LIB-salvo`). A alteração LOCAL é marcar *Favorita* (nenhum texto muda; o chip aparece). Nenhum `PUT` sai: o
+ * fabricado sem resposta vai ao log como `fabricado sem resposta`; um que escapasse cairia na barreira (reprova).
+ */
+async function editorCom(page: Page, r: Resposta, put?: Resposta) {
+  await page.route(new RegExp(`/api/content/${ID_EDITOR}(\\?|$)`), (rt) => (rt.request().method() === 'GET' ? responder(rt, r) : rt.fallback()))
+  if (put) await page.route(/\/api\/content$/, (rt) => (rt.request().method() === 'PUT' ? responder(rt, put) : rt.fallback()))
+}
+const exemplo = (tipo: TipoDoExemplo) => ({ corpo: EXEMPLOS_EDITOR[tipo] })
+const salvarVisivel = (p: Page) => p.getByRole('button', { name: /^(Salvar|Salvando…)$/ }).waitFor({ state: 'visible', timeout: 60_000 })
+const favorita = (p: Page) => p.getByRole('checkbox', { name: 'Favorita' })
+/** A alteração local: marcar *Favorita* — repetido até o chip aparecer (o HTML do SSR chega antes da hidratação no `next dev`). */
+const alterar = async (p: Page) => {
+  await salvarVisivel(p)
+  for (let i = 0; i < 20; i++) {
+    if ((await favorita(p).getAttribute('aria-checked')) !== 'true') await favorita(p).click()
+    if (await p.getByText('alterações não salvas').waitFor({ state: 'visible', timeout: 1_500 }).then(() => true, () => false)) return
+  }
+  throw new Error('o chip "alterações não salvas" não apareceu depois de marcar Favorita')
+}
+// `exact`: sem ele o nome casa por trecho e *Voltar sem salvar* também responde (div. 801 — a 1ª rodada do aceite)
+const salvar = async (p: Page) => { await alterar(p); await p.getByRole('button', { name: 'Salvar', exact: true }).click() }
+const INALCANCAVEL_SESSAO = (o_que: string) => `${o_que}: com a sessão do perfil o Firebase já responde antes de qualquer route() alcançar — prova na pré-verificação sem sessão (docs/ux/I1-PR11-anexos/pre-verificacao/) e no Vitest (components/editors/__tests__/editor-estados.test.tsx)`
+
+const ESTADOS_EDITOR: Record<string, Estado> = {
+  'EDIT-cifra': { secao: 'EDIT-cifra', antes: (p) => editorCom(p, exemplo('cifra')), preparar: alterar },
+  'EDIT-sem-mudancas': { secao: 'EDIT-sem-mudancas', antes: (p) => editorCom(p, exemplo('cifra')), preparar: salvarVisivel, espera: 'nada mudou desde que você abriu' },
+  'EDIT-salvando': { secao: 'EDIT-salvando', antes: (p) => editorCom(p, exemplo('cifra'), 'segurar'), preparar: salvar, espera: 'Salvando…' },
+  'EDIT-tab': { secao: 'EDIT-tab', antes: (p) => editorCom(p, exemplo('tab')), preparar: alterar },
+  'EDIT-letra': { secao: 'EDIT-letra', antes: (p) => editorCom(p, exemplo('letra')), preparar: alterar },
+  'EDIT-carregando-auth': { inalcancavel: INALCANCAVEL_SESSAO('a espera da sessão (isLoading)') },
+  'EDIT-carregando': { secao: 'EDIT-carregando', antes: (p) => editorCom(p, 'segurar'), espera: 'carregando o conteúdo…' },
+  'EDIT-carregando-editor': {
+    secao: 'EDIT-carregando-editor', espera: 'carregando o editor…',
+    // o pedaço do `dynamic` do editor (next dev: o nome do chunk traz `content-edit-page-client`) — segurado [hipótese]
+    antes: async (p) => { await editorCom(p, exemplo('cifra')); await p.route(/\/_next\/static\/chunks\/.*content-edit-page-client/, (rt) => segurar(p, rt)) },
+  },
+  'EDIT-sem-usuario': { inalcancavel: INALCANCAVEL_SESSAO('sem usuário (a rota sem cookie vai ao /login pelo middleware)') },
+  'EDIT-erro-rede': { secao: 'EDIT-erro-rede', antes: (p) => editorCom(p, 'abortar'), espera: 'não foi possível carregar o conteúdo — sem conexão' },
+  'EDIT-erro-auth': { secao: 'EDIT-erro-auth', antes: (p) => editorCom(p, { status: 401, corpo: { error: 'x' } }), espera: 'o servidor não aceitou a sessão, entre de novo' },
+  'EDIT-erro-limite': { secao: 'EDIT-erro-limite', antes: (p) => editorCom(p, { status: 429, corpo: { error: 'x' } }), espera: 'muitas tentativas, tente de novo em instantes' },
+  'EDIT-erro-servidor': { secao: 'EDIT-erro-servidor', antes: (p) => editorCom(p, { status: 500, corpo: { error: 'x' } }), espera: 'não foi possível carregar o conteúdo — falha no servidor' },
+  'EDIT-404': { secao: 'EDIT-404', antes: (p) => editorCom(p, { status: 404, corpo: { error: 'x' } }), espera: 'este conteúdo não existe' },
+  'EDIT-salvar-erro': { secao: 'EDIT-salvar-erro', antes: (p) => editorCom(p, exemplo('cifra'), 'abortar'), preparar: salvar, espera: 'não foi possível salvar — sem conexão' },
+  'LIB-salvo': {
+    secao: 'LIB-salvo', folha: '4-content-lista', espera: 'alterações salvas',
+    // o PUT fabricado 200 (e a `GET /api/content` da biblioteca com as linhas da folha 4, `g-faixa-lista.ts`)
+    antes: async (p) => { await editorCom(p, exemplo('cifra')); await conteudo(p, [DADOS]) },
+    preparar: async (p) => {
+      await salvar(p)
+      await p.waitForURL(/\/library/, { timeout: 60_000 })
+      await p.getByText('Garota de Ipanema').first().waitFor({ state: 'visible', timeout: 60_000 })
+    },
+  },
+}
+
+/** Os estados do 1b da I1-PR-10 (a `casca-efeito` do editor: antes × depois), com os contents da folha 5. */
+const ESTADOS_CASCA_EFEITO: Record<string, Estado> = {
   'base-cifra': { antes: (p) => conteudoDoEditor(p, 'cifra'), preparar: servido },
   'base-letra': { antes: (p) => conteudoDoEditor(p, 'letra'), preparar: servido },
   'base-tab': { antes: (p) => conteudoDoEditor(p, 'tab'), preparar: servido },
@@ -178,5 +240,7 @@ const ESTADOS_CONTENT: Record<string, Estado> = {
   'VIEW-carregando-arquivo': { inalcancavel: SEM_CODIGO },
   'VIEW-erro-cache': { inalcancavel: SEM_CODIGO },
 }
+
+const ESTADOS_CONTENT_EDIT: Record<string, Estado> = { ...ESTADOS_EDITOR, ...ESTADOS_CASCA_EFEITO }
 
 export { ESTADOS_CONTENT, ESTADOS_CONTENT_EDIT }

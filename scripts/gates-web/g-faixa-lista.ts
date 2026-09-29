@@ -28,11 +28,11 @@ const LINHAS = [
   { id: 'g6', title: 'Construção', artist: 'Chico Buarque', album: null, content_type: 'Lyrics', is_favorite: true, created_at: T('2026-08-02') },
 ].map((l) => ({ ...l, updated_at: l.created_at, user_id: 'g-faixa' }))
 
-const DADOS: Resposta = { corpo: { data: LINHAS, total: 60, page: 1, pageSize: 20, hasMore: true, totalPages: 3 } }
+export const DADOS: Resposta = { corpo: { data: LINHAS, total: 60, page: 1, pageSize: 20, hasMore: true, totalPages: 3 } }
 const VAZIO: Resposta = { corpo: { data: [], total: 0, page: 1, pageSize: 20, hasMore: false, totalPages: 0 } }
 
 /** A `GET /api/content` em sequência; o `DELETE`/`PUT` fabricados (200) para nenhum clique escrever. */
-async function conteudo(page: Page, sequencia: Resposta[]) {
+export async function conteudo(page: Page, sequencia: Resposta[]) {
   let n = 0
   await page.route(/\/api\/content(\?|$)/, (rt) => {
     const m = rt.request().method()
@@ -66,7 +66,8 @@ const ESTADOS_LIB: Record<string, Estado> = {
     secao: 'LIB-mais', espera: 'Abrir', antes: (p) => conteudo(p, [DADOS]),
     preparar: async (p) => { await primeiraCarga(p, 'Garota de Ipanema'); await p.getByRole('button', { name: 'Mais ações para “Garota de Ipanema”' }).click() },
   },
-  'LIB-salvo': { inalcancavel: 'nasce na PR do editor (PR-11) — decisão 8 do aval (div. 703)' },
+  // I1-PR11: o `LIB-salvo` se mede na superfície `content-edit` (o fluxo inteiro, fabricado: salvar → a biblioteca)
+  'LIB-salvo': { inalcancavel: 'medido na superfície content-edit (I1-PR11): o sinal é do editor (lib/sinal-salvo.ts, decisão 1 do aval)' },
   'LIB-carregando-chunk': {
     secao: 'LIB-carregando-chunk', espera: 'carregando a biblioteca…',
     // o pedaço do `dynamic` da biblioteca (next dev: o nome do chunk traz `components_library`) — segurado

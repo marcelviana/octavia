@@ -1,0 +1,27 @@
+{
+  "_": "Âncoras do esperado (I1-PR11). (1) As da casca, as mesmas das folhas 4 e 5 (I1-PR9/PR10): a CAIXA da busca (só o placeholder \"Buscar…\") e a conta (as iniciais do exemplo, \"MV\"). (2) As caixas dos CAMPOS do editor, no molde da 1-auth (I1-PR6, decisão 7; div. 641): a folha desenha o campo como uma caixa (contorno lineInfo, raio 12) com o valor de exemplo dentro, e o app como um input cujo valor é o dado — a caixa recebe o data-testid que o app põe no controle, pelo rótulo escrito no irmão anterior; a chave `t:<testid>` casa dos dois lados. Rótulo repetido (Artista, Tom, BPM em Informações e em Detalhes) dá o mesmo testid duas vezes: o par é pela ordem (#1, #2). O texto do valor dentro da caixa da folha sai \"sem par\" (o do app é o valor do input, no mesmo nó do controle).",
+  "seletor": "div[style*='border:1px solid #6E6A80'][style*='border-radius:12px']",
+  "porRotulo": {
+    "Título": "campo-info-titulo",
+    "Artista": "campo-artista",
+    "Tom": "campo-tom",
+    "Capo": "campo-capo",
+    "BPM": "campo-bpm",
+    "Afinação": "campo-afinacao",
+    "Nome da seção": "campo-secao-nome",
+    "Progressão": "campo-secao-progressao",
+    "Letra da seção": "campo-secao-letra",
+    "Letra": "campo-letra",
+    "Título *": "campo-titulo",
+    "Álbum": "campo-album",
+    "Gênero": "campo-genero",
+    "Compasso": "campo-compasso",
+    "Dificuldade": "campo-dificuldade",
+    "Tags": "campo-tags",
+    "Notas": "campo-notas"
+  },
+  "porSeletor": [
+    { "seletor": "div:has(> svg)", "texto": "Buscar…", "testid": "casca-busca" },
+    { "seletor": "[aria-label^='Conta de']", "testid": "casca-conta" }
+  ]
+}

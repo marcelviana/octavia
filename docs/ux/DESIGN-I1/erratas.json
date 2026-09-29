@@ -92,8 +92,10 @@
   "erratasEstado": [
     {"id": "I1-E15", "div": [733, 734, 735], "folha": "5-content-visualizacao", "o_que_vale": "VIEW-erro-cache e VIEW-carregando-arquivo não existem (a cópia no navegador e o hook que a lia morreram na I1-PR-3, I1-D18); view.erro.cache sai; view.erro.pdf escolhe o motivo pelo name do erro do pdf.js — MissingPDFException e UnexpectedResponseException → o arquivo está corrompido ou inacessível; InvalidPDFException → formato de PDF inválido; UnknownErrorException de rede → motivo.rede; o resto → motivo.generico", "estados": ["VIEW-erro-cache", "VIEW-carregando-arquivo"], "frases": ["view.erro.cache", "view.erro.pdf"]}
   ],
-  "_leia_frase": "I1-PR9: as erratas de FRASE (README-design §5) que nenhum gate acha — nenhuma seção desenha o elemento, então nem o conferir.mjs (lista `erratas`) nem o G-faixa (lista `erratasFaixa`) as veem. Registro só; nenhum gate lê esta lista. Fonte: DESIGN-I1/README.md §2.2.",
+  "_leia_frase": "I1-PR9: as erratas de FRASE (README-design §5) que nenhum gate acha — nenhuma seção desenha o elemento, então nem o conferir.mjs (lista `erratas`) nem o G-faixa (lista `erratasFaixa`) as veem. Registro só; nenhum gate lê esta lista. Fonte: DESIGN-I1/README.md §2.2. I1-PR11: também as erratas de LEITURA que nenhum gate acha (I1-E19: estado sem seção; I1-E20: o texto dentro de uma caixa que pareia pela âncora).",
   "erratasFrase": [
-    {"id": "I1-E13", "div": [697], "o_que_vale": "o menu da conta é só Sair: Perfil saiu com a página (I1-D19); sem cabeçalho nome + e-mail e sem foto — o nome fica no nome acessível Conta de {nome}", "frases": ["casca.conta"]}
+    {"id": "I1-E13", "div": [697], "o_que_vale": "o menu da conta é só Sair: Perfil saiu com a página (I1-D19); sem cabeçalho nome + e-mail e sem foto — o nome fica no nome acessível Conta de {nome}", "frases": ["casca.conta"]},
+    {"id": "I1-E19", "div": [775], "o_que_vale": "a folha 6 não tem estado para partitura; vale o painel da folha 5 (VIEW-partitura e derivados, com as I1-E15…E17) no corpo do editor; o annotation-tools sai", "frases": [], "estados": ["6-content-editor: partitura (sem seção)"]},
+    {"id": "I1-E20", "div": [779], "o_que_vale": "o Tom é o valor gravado, em notação de cifra (C, Am, F#m…), no campo, na opção e na prévia (tom: C) — não Dó", "frases": ["edit.cifra.*", "edit.meta.*"], "estados": ["EDIT-cifra", "EDIT-sem-mudancas", "EDIT-salvando", "EDIT-salvar-erro", "EDIT-tab", "EDIT-letra"]}
   ]
 }

@@ -1,0 +1,14 @@
+$ pnpm exec tsx scripts/gates-web/g-faixa-esperado.ts 6-content-editor
+6-content-editor: 256 caixa(s) de campo ancorada(s) · 16 seções · 15 com C e B · nós C 604 · nós B 604 → tests/gates-web/esperado/6-content-editor.json
+  ✗ Tokens: sem a moldura C B
+# exit: 0
+$ pnpm exec tsx scripts/gates-web/g-faixa-esperado.ts 4-content-lista 5-content-visualizacao  # controle: o script não mudou; re-medidos, byte a byte
+4-content-lista: 60 caixa(s) de campo ancorada(s) · 16 seções · 15 com C e B · nós C 465 · nós B 465 → tests/gates-web/esperado/4-content-lista.json
+  ✗ Tokens: sem a moldura C B
+  − VIEW-erro-cache: tirada por errata de estado (erratasEstado)
+  − VIEW-carregando-arquivo: tirada por errata de estado (erratasEstado)
+5-content-visualizacao: 56 caixa(s) de campo ancorada(s) · 14 seções · 13 com C e B · nós C 297 · nós B 297 → tests/gates-web/esperado/5-content-visualizacao.json
+  ✗ Tokens: sem a moldura C B
+# exit: 0
+cmp 4-content-lista: iguais
+cmp 5-content-visualizacao: iguais

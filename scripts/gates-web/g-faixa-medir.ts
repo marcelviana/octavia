@@ -28,12 +28,17 @@ import path from 'node:path'
 import { CHROMIUM_FIXADO } from '../../playwright.g-faixa.config'
 import { classificarEstado } from './g-faixa-classificar.mjs'
 import { coletar, paraJson } from './g-faixa-coleta'
-import { soltar } from './g-faixa-auth'
+import { semResposta, soltar } from './g-faixa-auth'
 import { selecionadas, type Superficie } from './g-faixa-superficies'
 
 const BASE = new URL(process.env.G_FAIXA_BASE_URL as string)
 const PERFIL = process.env.G_FAIXA_PERFIL
 const TMP = process.env.G_FAIXA_TMP as string
+/**
+ * I1-PR11 (div. 803): `G_FAIXA_ESTADOS=a,b` mede SÓ esses estados; o fechamento (`g-faixa-sessao.ts`, `mesclar`) os
+ * mescla POR ESTADO no JSON existente — os outros estados ficam byte a byte como estavam.
+ */
+const ESTADOS_SO = process.env.G_FAIXA_ESTADOS?.split(',').map((s) => s.trim()).filter(Boolean)
 const PROD = BASE.hostname === 'octavia.rocks' || BASE.hostname.endsWith('.octavia.rocks')
 
 interface LinhaReq { n: number; ms: number; metodo: string; caminho: string; status: string; fim: string }
@@ -76,7 +81,7 @@ function vigiar(ctx: BrowserContext, v: Vigia = novaVigia()) {
   })
   ctx.on('response', (resp) => { const l = porReq.get(resp.request()); if (l) l.status = resp.headers()['x-g-faixa'] === 'fabricado' ? `fabricado ${resp.status()}` : String(resp.status()) })
   ctx.on('requestfinished', (r) => { const l = porReq.get(r); if (l) l.fim = 'fim' })
-  ctx.on('requestfailed', (r) => { const l = porReq.get(r); if (l) { l.fim = `falhou ${r.failure()?.errorText ?? ''}`.trim(); if (l.status === 'pendente') l.status = 'FALHA' } })
+  ctx.on('requestfailed', (r) => { const l = porReq.get(r); if (l) { l.fim = `falhou ${r.failure()?.errorText ?? ''}`.trim(); if (l.status === 'pendente') l.status = semResposta.has(r) ? 'fabricado sem resposta' : 'FALHA' } })
   return v
 }
 
@@ -138,6 +143,7 @@ for (const sup of selecionadas()) {
       const esperado = sup.implementada && sup.folha ? lerEsperado(sup.folha) : null
       const estados: Record<string, { medicao?: unknown; folha?: unknown; pulado?: string; naoAlcancado?: string; inalcancavel?: string }> = {}
       for (const [id, est] of Object.entries(sup.estados)) {
+        if (ESTADOS_SO && !ESTADOS_SO.includes(id)) continue
         if (est.inalcancavel) { estados[id] = { inalcancavel: est.inalcancavel }; continue }
         if (!url) { estados[id] = { pulado: 'a rota não resolveu (ex.: nenhum content na conta)' }; continue }
         // I1-PR10: a URL por estado (o content de cada tipo); sem ela, NÃO ALCANÇADO com a razão
@@ -170,14 +176,16 @@ for (const sup of selecionadas()) {
         const m = await p.evaluate(coletar, null)
         const medicao = { url: sup.rota, viewport: m.viewport, doc: m.doc, nos: paraJson(m.nos, sup.publica) }
         estados[id] = { medicao }
-        const secao = est.secao && esperado?.estados[est.secao]
-        if (secao && 'C' in secao) estados[id].folha = { C: secao.C, B: secao.B, secao: est.secao, sha256: esperado.sha256 }
+        // I1-PR11: a folha pode ser POR ESTADO (o `LIB-salvo` da folha 4, medido pelo fluxo do editor)
+        const esp = est.folha ? lerEsperado(est.folha) : esperado
+        const secao = est.secao && esp?.estados[est.secao]
+        if (esp && secao && 'C' in secao) estados[id].folha = { C: secao.C, B: secao.B, secao: est.secao, sha256: esp.sha256, ...(est.folha ? { folha: est.folha } : {}) }
       }
       expect(estado.parada, 'escrita não declarada').toBe('')
       const peca = {
         superficie: sup.id, rota: sup.rota, folha: sup.folha ?? null, implementada: sup.implementada, publica: sup.publica,
         rodada: process.env.G_FAIXA_RODADA, base: BASE.origin, chromium: navegador.version(), commit: sha,
-        largura, controlePositivo: controle,
+        largura, controlePositivo: controle, ...(ESTADOS_SO ? { estadosMedidos: ESTADOS_SO } : {}),
         requests: { linhas, outrosHosts: Object.fromEntries(outros), prodAbortados: estado.prodAbortados },
         estados,
       }

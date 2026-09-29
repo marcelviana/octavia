@@ -23,6 +23,10 @@
 //   I1-E<n>" quando o estado está numa das `erratasFaixa` de
 //   docs/ux/DESIGN-I1/erratas.json, "sem cobertura" quando não; a contagem das sem
 //   cobertura sai à parte (não reprova: o aceite as nomeia, o Marcel decide).
+//   I1-PR11 (div. 767): a QUEBRA POR DADO (o nó de dado que quebrou linha no lugar do nó
+//   da folha, e a cascata de Δy abaixo dele — `quebrasPorDado`/`ehCascata` do classificador)
+//   sai À PARTE das candidatas: listada por estado × largura, contada, nunca reprova e não
+//   pede errata (a decisão (a) da div. 767, I1-PR10).
 //
 // Uso (da raiz):  node scripts/gates-web/g-faixa-veredito.mjs [pasta]
 // Sai 0 se passa, 1 se reprova, 2 se o JSON não se lê.
@@ -76,7 +80,7 @@ const coberturaDe = (id, secao) => erratasFaixa.find((e) => (e.estados ?? []).so
 let falhas = 0
 const falha = (m) => { console.log(`  ✗ ${m}`); falhas++ }
 const naoMedidos = []
-let erratas = 0, semCobertura = 0, semParFolha = 0, semParApp = 0
+let erratas = 0, semCobertura = 0, semParFolha = 0, semParApp = 0, quebraDado = 0
 const LIMITE = 12 // ocorrências listadas por (tipo, largura); o resto só conta
 for (const f of arquivos) {
   let s
@@ -108,15 +112,18 @@ for (const f of arquivos) {
     for (const L of Object.keys(c).sort((a, b) => b - a)) {
       const r = c[L]
       const cab = `${id} · ${L}${L === "411" ? " (faixa A)" : ""}`
-      console.log(`  ${cab}: (e)=${r.e.length} · (b)=${r.b.length} · (d′)=${r.dl.length} · errata candidata=${r.errata.length} · sem par folha/app=${r.semPar.folha.length}/${r.semPar.app.length} · saídas: nome-acessível=${r.saidas.nomeAcessivel} rolagem=${r.saidas.rolagem}`)
+      console.log(`  ${cab}: (e)=${r.e.length} · (b)=${r.b.length} · (d′)=${r.dl.length} · errata candidata=${r.errata.length} · quebra por dado=${r.quebraPorDado.cascata.length} · sem par folha/app=${r.semPar.folha.length}/${r.semPar.app.length} · saídas: nome-acessível=${r.saidas.nomeAcessivel} rolagem=${r.saidas.rolagem}`)
       // decisão 7: a errata candidata e os nós sem par com a folha, listados (nunca reprovam — decisão do Marcel)
       const cobertura = coberturaDe(id, estado.folha?.secao)
       if (r.reprova) {
         erratas += r.errata.length; semParFolha += r.semPar.folha.length; semParApp += r.semPar.app.length
+        quebraDado += r.quebraPorDado.cascata.length
         if (!cobertura) semCobertura += r.errata.length
       }
       const nomeNo = (k) => { const n = estado.larguras[L]?.nos.find((x) => x.k === k); return n ? nomeDe(n) : k }
       for (const o of r.errata) console.log(`    · errata candidata: ${nomeNo(o.k)} Δ[x,y,w,h]=${JSON.stringify(o.delta)} — ${cobertura ? `coberta por ${cobertura}` : "sem cobertura"}`)
+      for (const q of r.quebraPorDado.nos) console.log(`    · quebra por dado: ${nomeNo(q.k)} em ${q.linhas} linhas no lugar de 1 (+${q.extra} px) — a cascata abaixo dele sai daqui, à parte`)
+      for (const o of r.quebraPorDado.cascata) console.log(`    · quebra por dado (cascata): ${nomeNo(o.k)} Δ[x,y,w,h]=${JSON.stringify(o.delta)}`)
       for (const o of r.semPar.folha) console.log(`    · sem par na folha: ${o.rotulo !== undefined ? JSON.stringify(String(o.rotulo).slice(0, 60)) : o.k}`)
       for (const o of r.semPar.app) console.log(`    · sem par no app: ${nomeNo(o.k)}`)
       const rotulo = (k) => {
@@ -133,8 +140,8 @@ for (const f of arquivos) {
     }
   }
 }
-if (naoMedidos.length || erratas || semParFolha || semParApp) {
-  console.log(`\n## contados à parte (não reprovam): errata candidata ${erratas} · sem par folha ${semParFolha} · sem par app ${semParApp} (C e B) · não medidos ${naoMedidos.length}`)
+if (naoMedidos.length || erratas || quebraDado || semParFolha || semParApp) {
+  console.log(`\n## contados à parte (não reprovam): errata candidata ${erratas} · quebra por dado ${quebraDado} · sem par folha ${semParFolha} · sem par app ${semParApp} (C e B) · não medidos ${naoMedidos.length}`)
   console.log(`## erratas candidatas sem cobertura (erratasFaixa, div. 681): ${semCobertura}`)
   for (const m of naoMedidos) console.log(`  · ${m}`)
 }

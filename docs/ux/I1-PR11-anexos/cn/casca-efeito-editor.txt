@@ -1,0 +1,18 @@
+$ node docs/ux/I1-PR11-anexos/cn/casca-efeito-editor.mjs
+base-cifra · 1138: casca 9/9 iguais · nó velho por componente 0 · coincidência de texto 14: heading/h1 20 car.; label/label 4 car.; label/label 3 car.; button/button 1 car.; button/button 1 car.; button/button 2 car.; button/button 1 car.; button/button 1 car.; button/button 2 car.; button/button 1 car.; button/button 1 car.; button/button 2 car.; button/button 2 car.; texto/section 0 car.
+base-cifra · 711: casca 9/9 iguais · nó velho por componente 0 · coincidência de texto 14: heading/h1 20 car.; label/label 4 car.; label/label 3 car.; button/button 1 car.; button/button 1 car.; button/button 2 car.; button/button 1 car.; button/button 1 car.; button/button 2 car.; button/button 1 car.; button/button 1 car.; button/button 2 car.; button/button 2 car.; texto/section 0 car.
+base-cifra · 411: casca 8/8 iguais · nó velho por componente 0 · coincidência de texto 15: link/a 9 car.; heading/h1 20 car.; label/label 4 car.; label/label 3 car.; button/button 1 car.; button/button 1 car.; button/button 2 car.; button/button 1 car.; button/button 1 car.; button/button 2 car.; button/button 1 car.; button/button 1 car.; button/button 2 car.; button/button 2 car.; texto/section 0 car.
+base-letra · 1138: casca 9/9 iguais · nó velho por componente 0 · coincidência de texto 2: heading/h1 10 car.; texto/section 0 car.
+base-letra · 711: casca 9/9 iguais · nó velho por componente 0 · coincidência de texto 2: heading/h1 10 car.; texto/section 0 car.
+base-letra · 411: casca 8/8 iguais · nó velho por componente 0 · coincidência de texto 3: link/a 9 car.; heading/h1 10 car.; texto/section 0 car.
+base-tab · 1138: casca 9/9 iguais · nó velho por componente 0 · coincidência de texto 10: heading/h1 20 car.; label/label 4 car.; label/label 3 car.; textbox/input 20 car.; textbox/input 20 car.; textbox/input 20 car.; textbox/input 20 car.; textbox/input 19 car.; textbox/input 19 car.; texto/section 0 car.
+base-tab · 711: casca 9/9 iguais · nó velho por componente 0 · coincidência de texto 10: heading/h1 20 car.; label/label 4 car.; label/label 3 car.; textbox/input 20 car.; textbox/input 20 car.; textbox/input 20 car.; textbox/input 20 car.; textbox/input 19 car.; textbox/input 19 car.; texto/section 0 car.
+base-tab · 411: casca 8/8 iguais · nó velho por componente 0 · coincidência de texto 11: link/a 9 car.; heading/h1 20 car.; label/label 4 car.; label/label 3 car.; textbox/input 20 car.; textbox/input 20 car.; textbox/input 20 car.; textbox/input 20 car.; textbox/input 19 car.; textbox/input 19 car.; texto/section 0 car.
+base-partitura · 1138: casca 9/9 iguais · nó velho por componente 0 · coincidência de texto 3: heading/h1 23 car.; presentation/span 55 car.; texto/section 0 car.
+base-partitura · 711: casca 9/9 iguais · nó velho por componente 0 · coincidência de texto 3: heading/h1 23 car.; presentation/span 55 car.; texto/section 0 car.
+base-partitura · 411: casca 8/8 iguais · nó velho por componente 0 · coincidência de texto 4: link/a 9 car.; heading/h1 23 car.; presentation/span 55 car.; texto/section 0 car.
+erro-pdf · 1138: casca 9/9 iguais · nó velho por componente 0 · coincidência de texto 2: heading/h1 23 car.; texto/section 0 car.
+erro-pdf · 711: casca 9/9 iguais · nó velho por componente 0 · coincidência de texto 2: heading/h1 23 car.; texto/section 0 car.
+erro-pdf · 411: casca 8/8 iguais · nó velho por componente 0 · coincidência de texto 3: link/a 9 car.; heading/h1 23 car.; texto/section 0 car.
+NÓ VELHO POR COMPONENTE: 0 — nas 15 (estado × largura)
+# exit: 0

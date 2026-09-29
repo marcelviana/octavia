@@ -174,6 +174,48 @@ PDF de 12 páginas gerado (ou 500, ou segura a resposta). Declarados inalcançá
 **Escrita declarada: nenhuma** (a visualização não escreve; o editor não é clicado). **Cota**: o comando 1 faz ~25
 cargas (7 estados × 3 larguras + a `/library` + o controle); o 2, ~16. Depois diga **"rodei"**.
 
+## I1-PR11 — o aceite do editor (Marcel, um comando)
+
+Na árvore `../octavia-i1-pr11` (branch `i1/pr11-content-edit`, **no commit 2**), com o seu `.env.local` copiado para lá
+(passo seu) e o **`pnpm dev` reiniciado** — o `tailwind.config.ts` mudou (`campo-duas-linhas`, `campo-letra`) — na porta
+3000, até o `✓ Ready`. Perfil de sempre (`~/.octavia-g-faixa-perfil`).
+
+```bash
+G_FAIXA_BASE_URL=http://localhost:3000 G_FAIXA_PERFIL="$HOME/.octavia-g-faixa-perfil" G_FAIXA_SUPERFICIES=content-edit pnpm exec playwright test -c playwright.g-faixa.config.ts scripts/gates-web/g-faixa-medir.ts
+```
+
+Grava `tests/gates-web/medicoes/content-edit.json`: `/content/g-faixa/edit` nas três larguras, os estados da folha
+`6-content-editor`, o `LIB-salvo` da folha 4 (o fluxo do salvar até a `/library`) e os cinco do 1b da PR-10 (`base-*`,
+`erro-pdf` — a `casca-efeito`, antes × depois).
+
+**Tudo fabricado no navegador** (`scripts/gates-web/g-faixa-conteudo.ts`): o `GET /api/content/g-faixa` com os exemplos
+da folha (ou segurado, abortado, 401, 429, 500, 404); o `PUT /api/content` **segurado** (`EDIT-salvando`), **abortado**
+(`EDIT-salvar-erro`, a rede que cai) ou **200** (`LIB-salvo`) — nenhum `PUT` sai: o fabricado sem resposta vai ao log
+como `fabricado sem resposta`, e um que escapasse cairia na barreira (abortado, a rodada reprova). A alteração local de
+cada estado é marcar *Favorita* (nada é gravado — o `PUT` do `LIB-salvo` responde no navegador). O `LIB-salvo` mostra a
+`/library` com a lista da sua conta por um instante (o SSR, leitura) e logo as seis linhas da folha 4 (fabricadas).
+Declarados inalcançáveis com sessão: `EDIT-carregando-auth` e `EDIT-sem-usuario` (prova na pré-verificação e no
+Vitest). `EDIT-carregando-editor` segura o *chunk* do editor no `next dev` (`content-edit-page-client` no nome —
+`[hipótese]`): se não casar, sai NÃO ALCANÇADO com a razão.
+
+**Cota**: ~56 cargas com sessão (18 estados × 3 larguras + o controle) contra as 60 em 15 min do `/api/profile`: rode
+**sozinha**, sem outra rodada nos 15 min antes. Se um estado sair NÃO ALCANÇADO por 429, espere 15 min e repita só a
+largura dele (`--project`). Depois diga **"rodei"**.
+
+### I1-PR11 — a 2ª rodada, só os estados que faltaram (commit 2b, div. 803)
+
+Mesma árvore, mesmo `pnpm dev` (reinicie se estiver de pé desde antes do `git pull` do 2b), mesmo perfil. O
+`tests/gates-web/medicoes/content-edit.json` da 1ª rodada tem de estar na árvore (não o apague): a rodada nova mede SÓ
+os quatro estados e os MESCLA nele — os outros estados ficam byte a byte como estão.
+
+```bash
+G_FAIXA_BASE_URL=http://localhost:3000 G_FAIXA_PERFIL="$HOME/.octavia-g-faixa-perfil" G_FAIXA_SUPERFICIES=content-edit G_FAIXA_ESTADOS=EDIT-salvando,EDIT-salvar-erro,LIB-salvo,EDIT-erro-limite pnpm exec playwright test -c playwright.g-faixa.config.ts scripts/gates-web/g-faixa-medir.ts
+```
+
+~14 cargas (4 estados × 3 larguras + o controle). Nenhum `PUT` sai: o do `EDIT-salvando` fica segurado, o do
+`EDIT-salvar-erro` é abortado no navegador, o do `LIB-salvo` responde 200 no navegador. A rodada fica registrada em
+`rodadasPorEstado` e as linhas do log dela somam-se às da largura. Depois diga **"rodei"**.
+
 ## O resto
 
 | o quê | comando |
@@ -189,3 +231,4 @@ Variáveis: `G_FAIXA_BASE_URL` (obrigatória) · `G_FAIXA_PERFIL` (perfil persis
 sem ela as superfícies com sessão são puladas) · `G_FAIXA_SUPERFICIES` (lista de ids de
 `g-faixa-superficies.ts`) · `G_FAIXA_SAIDA` (padrão `tests/gates-web/medicoes`) ·
 `G_FAIXA_SEM_JANELA=1` (sem sessão no perfil, falha em vez de abrir a janela de login).
+`G_FAIXA_ESTADOS` (I1-PR11, div. 803: mede só os estados listados e os mescla por estado no JSON existente).

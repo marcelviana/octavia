@@ -125,6 +125,42 @@ describe('G-faixa — errata candidata contra a folha (4 px)', () => {
   })
 })
 
+describe('G-faixa — quebra por dado (I1-PR11, div. 767)', () => {
+  // o título de DADO (sem par por texto dos dois lados) no lugar do título da folha; em 711 ele quebra em duas linhas
+  const tituloC = no('heading:dado#1', 96, 90, 875, 30, { h_texto: 'dado' })
+  const folhaB = [no('texto:exemplo#1', 88, 145, 398.3, 33.8, { h_texto: 'exemplo' }), no('button:voltar#1', 24, 149.9, 48, 48, { h_texto: 'voltar' }), no('h2:painel#1', 24, 260.8, 663, 49, { h_texto: 'painel' }), no('p:acima#1', 24, 100, 40, 19, { h_texto: 'acima' })]
+  const appB = (hTitulo: number, extra: No[] = []) => med(711, [
+    no('heading:dado#1', 88, 145, 400.3, hTitulo, { h_texto: 'dado' }),
+    no('button:voltar#1', 24, 149.9 + (hTitulo - 33.8) / 2, 48, 48, { h_texto: 'voltar' }), // centrado: desce a metade
+    no('h2:painel#1', 24, 260.8 + (hTitulo - 33.8), 663, 49, { h_texto: 'painel' }),
+    no('p:acima#1', 24, 100 + 26.2, 40, 19, { h_texto: 'acima' }), // ACIMA da quebra: segue candidata
+    ...extra,
+  ])
+  it('o nó de dado em 2 linhas no lugar do nó da folha: a cascata abaixo dele sai das candidatas; o que está acima fica', () => {
+    const c = classificarEstado({ larguras: { 1138: med(1138, [tituloC]), 711: appB(60) }, folha: { B: folhaB } })['711']
+    expect(c.quebraPorDado.nos).toMatchObject([{ k: 'heading:dado#1', linhas: 2, extra: 26.2 }])
+    expect(c.quebraPorDado.cascata.map((o: { k: string }) => o.k).sort()).toEqual(['button:voltar#1', 'h2:painel#1'])
+    expect(c.errata.map((o: { k: string }) => o.k)).toEqual(['p:acima#1'])
+  })
+  it('sem quebra acima (o título em 1 linha), o mesmo Δy segue errata candidata', () => {
+    const b = appB(30)
+    b.nos.find((n) => n.k === 'h2:painel#1')!.y = 260.8 + 26.2
+    const c = classificarEstado({ larguras: { 1138: med(1138, [tituloC]), 711: b }, folha: { B: folhaB } })['711']
+    expect(c.quebraPorDado).toEqual({ nos: [], cascata: [] })
+    expect(c.errata.map((o: { k: string }) => o.k)).toContain('h2:painel#1')
+  })
+  it('a cascata que desce MAIS que a quebra, ou que muda de tamanho, segue candidata', () => {
+    const b = appB(60)
+    b.nos.find((n) => n.k === 'h2:painel#1')!.y += 20 // desce 46,2 com a quebra de 26,2
+    const c = classificarEstado({ larguras: { 1138: med(1138, [tituloC]), 711: b }, folha: { B: folhaB } })['711']
+    expect(c.errata.map((o: { k: string }) => o.k)).toContain('h2:painel#1')
+  })
+  it('altura que não é múltipla da entrelinha (60 contra 1 linha de 40) não é quebra', () => {
+    const c = classificarEstado({ larguras: { 1138: med(1138, [{ ...tituloC, h: 40 }]), 711: appB(60) }, folha: { B: folhaB } })['711']
+    expect(c.quebraPorDado.nos).toEqual([])
+  })
+})
+
 describe('G-faixa — resumo', () => {
   it('soma por largura sobre os estados', () => {
     const s = { estados: { base: { larguras: { 1138: med(1138, [no('a', 0, 0, 10, 10)]), 711: med(711, []) } } } }
