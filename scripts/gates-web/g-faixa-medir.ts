@@ -34,6 +34,11 @@ import { selecionadas, type Superficie } from './g-faixa-superficies'
 const BASE = new URL(process.env.G_FAIXA_BASE_URL as string)
 const PERFIL = process.env.G_FAIXA_PERFIL
 const TMP = process.env.G_FAIXA_TMP as string
+/**
+ * I1-PR11 (div. 803): `G_FAIXA_ESTADOS=a,b` mede SÓ esses estados; o fechamento (`g-faixa-sessao.ts`, `mesclar`) os
+ * mescla POR ESTADO no JSON existente — os outros estados ficam byte a byte como estavam.
+ */
+const ESTADOS_SO = process.env.G_FAIXA_ESTADOS?.split(',').map((s) => s.trim()).filter(Boolean)
 const PROD = BASE.hostname === 'octavia.rocks' || BASE.hostname.endsWith('.octavia.rocks')
 
 interface LinhaReq { n: number; ms: number; metodo: string; caminho: string; status: string; fim: string }
@@ -138,6 +143,7 @@ for (const sup of selecionadas()) {
       const esperado = sup.implementada && sup.folha ? lerEsperado(sup.folha) : null
       const estados: Record<string, { medicao?: unknown; folha?: unknown; pulado?: string; naoAlcancado?: string; inalcancavel?: string }> = {}
       for (const [id, est] of Object.entries(sup.estados)) {
+        if (ESTADOS_SO && !ESTADOS_SO.includes(id)) continue
         if (est.inalcancavel) { estados[id] = { inalcancavel: est.inalcancavel }; continue }
         if (!url) { estados[id] = { pulado: 'a rota não resolveu (ex.: nenhum content na conta)' }; continue }
         // I1-PR10: a URL por estado (o content de cada tipo); sem ela, NÃO ALCANÇADO com a razão
@@ -179,7 +185,7 @@ for (const sup of selecionadas()) {
       const peca = {
         superficie: sup.id, rota: sup.rota, folha: sup.folha ?? null, implementada: sup.implementada, publica: sup.publica,
         rodada: process.env.G_FAIXA_RODADA, base: BASE.origin, chromium: navegador.version(), commit: sha,
-        largura, controlePositivo: controle,
+        largura, controlePositivo: controle, ...(ESTADOS_SO ? { estadosMedidos: ESTADOS_SO } : {}),
         requests: { linhas, outrosHosts: Object.fromEntries(outros), prodAbortados: estado.prodAbortados },
         estados,
       }

@@ -1,0 +1,13 @@
+$ cp tests/gates-web/medicoes/login.json <cn803>/login.json   # a fixture: o JSON commitado
+$ G_FAIXA_BASE_URL=http://localhost:3110 G_FAIXA_SUPERFICIES=login G_FAIXA_ESTADOS=AUTH-login,AUTH-login-validacao G_FAIXA_SAIDA=<cn803> pnpm exec playwright test -c playwright.g-faixa.config.ts scripts/gates-web/g-faixa-medir.ts   # next dev -p 3110, cópia sem .env
+  3 passed (22.2s)
+$ node docs/ux/I1-PR11-anexos/cn/medicao-por-estado-cn.mjs <fixture> <cn803>/login.json AUTH-login,AUTH-login-validacao
+fora da lista: 13 estados · byte a byte iguais: 13
+AUTH-login: larguras 411,711,1138 · rodadasPorEstado {"411":{"rodada":"2026-09-29T20:49:47.357Z","commit":"desconhecido"},"711":{"rodada":"2026-09-29T20:49:47.357Z","commit":"desconhecido"},"1138":{"rodada":"2026-09-29T20:49:47.357Z","commit":"desconhecido"}}
+AUTH-login-validacao: larguras 411,711,1138 · rodadasPorEstado {"411":{"rodada":"2026-09-29T20:49:47.357Z","commit":"desconhecido"},"711":{"rodada":"2026-09-29T20:49:47.357Z","commit":"desconhecido"},"1138":{"rodada":"2026-09-29T20:49:47.357Z","commit":"desconhecido"}}
+cabeçalho (superficie, rota, rodada, commit, rodadas, folha, chromium): igual
+requests 411: 217 linhas da rodada inteira + 46 da rodada por estado
+requests 711: 215 linhas da rodada inteira + 46 da rodada por estado
+requests 1138: 215 linhas da rodada inteira + 46 da rodada por estado
+CN: PASSA
+# exit: 0

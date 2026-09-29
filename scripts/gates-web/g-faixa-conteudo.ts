@@ -119,7 +119,8 @@ const alterar = async (p: Page) => {
   }
   throw new Error('o chip "alterações não salvas" não apareceu depois de marcar Favorita')
 }
-const salvar = async (p: Page) => { await alterar(p); await p.getByRole('button', { name: 'Salvar' }).click() }
+// `exact`: sem ele o nome casa por trecho e *Voltar sem salvar* também responde (div. 801 — a 1ª rodada do aceite)
+const salvar = async (p: Page) => { await alterar(p); await p.getByRole('button', { name: 'Salvar', exact: true }).click() }
 const INALCANCAVEL_SESSAO = (o_que: string) => `${o_que}: com a sessão do perfil o Firebase já responde antes de qualquer route() alcançar — prova na pré-verificação sem sessão (docs/ux/I1-PR11-anexos/pre-verificacao/) e no Vitest (components/editors/__tests__/editor-estados.test.tsx)`
 
 const ESTADOS_EDITOR: Record<string, Estado> = {

@@ -604,3 +604,52 @@ Próxima divergência: **801**.
 | executor | `pnpm build` | na mesma cópia, sem `.env` |
 | executor | a `main` para os testes novos | worktree temporária de `8fe45e8` (`--detach`), só os arquivos de teste copiados |
 | — | `packages/identidade` | **não mudou** |
+
+---
+
+## 20. Commit 2b — o instrumento: `exact` no *Salvar* e a medição por estado
+
+**Decisão** `[Marcel, 2026-09-29]`: OK para o 2b; divs. 801 e 802 aceitas como propostas. A 1ª rodada do aceite
+(`2026-09-29T19:00:38Z`, sobre `c44c975`) mediu **(e) = 0 e (b) = 0 nas três larguras** em todo estado alcançado, com 0
+candidatas — mas `EDIT-salvando`, `EDIT-salvar-erro` e `LIB-salvo` saíram NÃO ALCANÇADOS nas três larguras (div. 801) e
+`EDIT-erro-limite` em 1138 (div. 802), e o veredito reprovou 1 (*"EDIT-erro-limite: sem a medição de 1138"*).
+
+| arquivo | o quê |
+|---|---|
+| `scripts/gates-web/g-faixa-conteudo.ts` | `getByRole('button', { name: 'Salvar', exact: true })` no `salvar()` — div. 801 |
+| `scripts/gates-web/g-faixa-medir.ts` | `G_FAIXA_ESTADOS=a,b`: mede só os listados; a peça leva `estadosMedidos` — div. 803 |
+| `scripts/gates-web/g-faixa-sessao.ts` | `mesclarPorEstado`: a rodada parcial substitui SÓ os estados medidos nas larguras medidas; o resto (estados, cabeçalho, `rodadas` por largura) fica; a rodada parcial em `rodadasPorEstado`; as linhas do log somadas (com `rodada`); o controle positivo da largura, o da rodada nova |
+| `scripts/gates-web/COMO-RODAR.md` | "a 2ª rodada, só os estados que faltaram"; a variável `G_FAIXA_ESTADOS` |
+
+Nenhuma linha de `app/`, `components/`, `lib/`.
+
+**O seletor, na fumaça sem sessão** (`cn/salvar-exact-801.txt`):
+
+```
+1138: getByRole('button', { name: 'Salvar' }) → 2 ["Voltar sem salvar","Salvar"] · com exact: true → 1
+711: getByRole('button', { name: 'Salvar' }) → 2 ["Voltar sem salvar","Salvar"] · com exact: true → 1
+411: getByRole('button', { name: 'Salvar' }) → 2 ["Voltar sem salvar","Salvar"] · com exact: true → 1
+```
+
+**O CN da medição por estado** (`cn/medicao-por-estado-cn.mjs` · `.txt`): a fixture é uma cópia do `login.json`
+commitado; uma rodada SEM sessão (`next dev -p 3110`, cópia sem `.env`) com `G_FAIXA_ESTADOS=AUTH-login,AUTH-login-validacao`:
+
+```
+fora da lista: 13 estados · byte a byte iguais: 13
+cabeçalho (superficie, rota, rodada, commit, rodadas, folha, chromium): igual
+requests 411: 217 linhas da rodada inteira + 46 da rodada por estado
+CN: PASSA
+```
+
+Os dois estados medidos ganham `rodadasPorEstado` nas três larguras (o `commit` sai `desconhecido`: a cópia não tem
+`.git`); o veredito lê o JSON mesclado (`G-faixa: PASSA`). `tests/gates-web` 22/22 · `tsc` 0 · lint ✔.
+
+### Divergências — 801 a 803
+
+| # | origem | o que se presumiu | o que foi medido | destino |
+|---|---|---|---|---|
+| **801** | T | o clique em *Salvar* por `getByRole(name: 'Salvar')` | o nome casa por TRECHO: *Voltar sem salvar* também — `strict mode violation … resolved to 2 elements`; a pré-verificação não o viu (nunca clica em *Salvar*, de propósito) | `exact: true` (2b); os três estados se medem de novo |
+| **802** | T | `EDIT-erro-limite` alcançável como os outros erros de carga | em 1138 *"o texto esperado não apareceu"*; o log mostra a rota carregada duas vezes seguidas (requests 191 e 200), um `POST /api/auth/session` que falhou entre elas e os `__nextjs_original-stack-frames` do estado anterior (o *chunk* segurado) — `[hipótese]`: uma recarga do `next dev`; em 711 e 411 passou | medido de novo sozinho (div. 803); se falhar de novo em 1138, investigar, não repetir |
+| **803** | T | o medidor mede a superfície inteira | medir de novo 4 estados custaria a superfície toda (~56 cargas, perto da cota do `/api/profile`) e regravaria os que passaram | `G_FAIXA_ESTADOS` + a mescla por estado; CN acima |
+
+Próxima divergência: **804**.
