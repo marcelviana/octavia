@@ -15,6 +15,7 @@
 import type { Page } from '@playwright/test'
 import { ESTADOS_CONFIRM, ESTADOS_FORGOT, ESTADOS_LOGIN, ESTADOS_SIGNUP, ESTADOS_VERIFY, paraEstados } from './g-faixa-auth'
 import { ESTADOS_DASH, ESTADOS_LIB } from './g-faixa-lista'
+import { ESTADOS_CONTENT, ESTADOS_CONTENT_EDIT, ID_EDITOR, descobrirPorTipo } from './g-faixa-conteudo'
 
 export interface Estado {
   /** I1-PR6: antes de carregar a rota — rotas fabricadas, o usuário falso (`g-faixa-auth.ts`) */
@@ -27,6 +28,8 @@ export interface Estado {
   inalcancavel?: string
   /** a seção da folha (`<section data-estado>`), quando a superfície estiver implementada */
   secao?: string
+  /** I1-PR-10: a URL deste estado, quando muda por estado (o content de cada tipo); `null` = NÃO ALCANÇADO */
+  rota?: () => string | null
 }
 
 export interface Superficie {
@@ -42,22 +45,8 @@ export interface Superficie {
   estados: Record<string, Estado>
 }
 
-/**
- * O primeiro `/content/<id>` da conta, sem discovery.json. Os cards da `/library` abrem o content
- * por `onClick` (`router.push`), sem `<a href>`, e têm Apagar/Editar dentro — clicar é arriscado
- * (div. 629). O id vem da resposta do `GET /api/content` que a própria `/library` faz: só o `id`,
- * em memória; o corpo não é gravado (tem título de música).
- */
-async function primeiroContent(page: Page, base: URL): Promise<string | null> {
-  const resposta = page.waitForResponse(
-    (r) => new URL(r.url()).pathname === '/api/content' && r.request().method() === 'GET' && r.ok(),
-    { timeout: 180_000 },
-  )
-  await page.goto(new URL('/library', base).href, { waitUntil: 'domcontentloaded', timeout: 180_000 })
-  const corpo = (await (await resposta).json().catch(() => null)) as { data?: { id?: unknown }[] } | null
-  const id = corpo?.data?.find((c) => typeof c.id === 'string')?.id
-  return typeof id === 'string' ? `/content/${encodeURIComponent(id)}` : null
-}
+// (I1-PR10: o `primeiroContent` da I1-PR5 saiu — a superfície `content` descobre o primeiro de CADA tipo,
+// `descobrirPorTipo` em `g-faixa-conteudo.ts`.)
 
 export const SUPERFICIES: Superficie[] = [
   // I1-PR6: a superfície 1, auth, IMPLEMENTADA — um estado por seção da folha `1-auth`, alcançado pelo
@@ -80,16 +69,23 @@ export const SUPERFICIES: Superficie[] = [
   { id: 'dashboard', rota: '/dashboard', sessao: true, publica: false, folha: '4-content-lista', implementada: true, estados: ESTADOS_DASH },
   { id: 'library', rota: '/library', sessao: true, publica: false, folha: '4-content-lista', implementada: true, estados: ESTADOS_LIB },
   { id: 'setlists', rota: '/setlists', sessao: true, publica: false, folha: '8-setlists', implementada: false, estados: { base: {} } },
+  // I1-PR10: a superfície 5, content visualização, IMPLEMENTADA — os estados da folha `5-content-visualizacao`: o
+  // content REAL de cada tipo (SSR, div. 732; decisão 1 do aval) e o ARQUIVO fabricado (`g-faixa-conteudo.ts`).
+  // Os quatro vazios, o erro de formato e o de render: inalcançáveis declarados; os dois da I1-E15: sem código.
   {
     id: 'content',
     rota: '/content/[id]',
-    resolver: primeiroContent,
+    resolver: descobrirPorTipo,
     sessao: true,
     publica: false,
     folha: '5-content-visualizacao',
-    implementada: false,
-    estados: { base: {} },
+    implementada: true,
+    estados: ESTADOS_CONTENT,
   },
+  // I1-PR10 (commit 1b, decisão 4 do aval): o editor velho, só para a `casca-efeito` do `pdf-viewer` (que a PR-10
+  // restiliza e o editor monta). TUDO fabricado (`g-faixa-conteudo.ts`): o `GET /api/content/g-faixa` com um content
+  // de cada tipo e o arquivo da partitura — nenhuma leitura de content real, nenhuma escrita. Folha 6 = PR-11.
+  { id: 'content-edit', rota: `/content/${ID_EDITOR}/edit`, sessao: true, publica: false, folha: '6-content-editor', implementada: false, estados: ESTADOS_CONTENT_EDIT },
 ]
 
 /** `G_FAIXA_SUPERFICIES=login,dashboard` restringe a rodada. */

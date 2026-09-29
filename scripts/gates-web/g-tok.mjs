@@ -125,7 +125,12 @@ const VOCAB = ["loading", "error", "retry", "search", "no results", "cancel", "s
   "email address", "something went wrong", "unexpected", "required", "invalid", "success", "successfully", "saved",
   "deleted", "created", "updated", "drag", "drop", "browse", "select", "choose", "import", "title", "description",
   "notes", "privacy", "policy", "terms", "get started", "learn more", "back to", "go to", "are you sure", "untitled",
-  "favorite", "favorites", "recent", "all", "filter", "sort", "lyrics", "chords", "sheet", "verify", "resend", "check"]
+  "favorite", "favorites", "recent", "all", "filter", "sort", "lyrics", "chords", "sheet", "verify", "resend", "check",
+  // I1-PR-10 (div. 750): as palavras da visualização velha que o vocabulário não pegava (inventário do commit 1, §4).
+  // "capo" é também pt-BR: a frase nova (`capo: {x}`) mora em `frases-visualizacao.ts`, fora de posição de texto.
+  "chord chart", "chord", "tablature", "tuning", "capo", "none", "album", "key", "genre", "tags", "difficulty", "details",
+  "structure", "progression", "modified", "fit width", "fit page", "standard", "fret", "sheet music", "image", "cached",
+  "reload", "format"]
 // As isenções do a20 (anglicismos do produto, lista fechada).
 const ANGLICISMOS_DO_PRODUTO = ["setlist", "setlists", "auto-scroll", "zoom", "email", "tab", "offline", "pdf", "online"]
 // Decisão 622 [Marcel, 2026-09-27]: SÓ em posição de texto, como o `gate:a20` — texto JSX (e o
@@ -133,6 +138,10 @@ const ANGLICISMOS_DO_PRODUTO = ["setlist", "setlists", "auto-scroll", "zoom", "e
 // nome de variável e chave de objeto não são texto (CN de falso positivo em docs/ux/I1-PR5-anexos/cn/).
 const POSICOES = [
   { nome: "texto JSX", re: />([^<>{}]*[A-Za-z][^<>{}]*)</g },
+  // I1-PR-10 (div. 750): o texto JSX colado a uma expressão (`Page {n} / {N}`, `{x} BPM`) — antes escapava inteiro
+  // (numa linha só, sem parênteses, colchetes nem `?` — entre `}` e `<` também mora código TypeScript)
+  { nome: "texto JSX", re: />\s*([^<>{}\n()[\]?]*[A-Za-z][^<>{}\n()[\]?]*)(?=\{)/g },
+  { nome: "texto JSX", re: /\}([^<>{}\n()[\]?]*[A-Za-z][^<>{}\n()[\]?]*?)\s*(?=<)/g },
   { nome: "literal JSX {'…'}", re: /\{\s*(?:"([^"]*)"|'([^']*)'|`([^`$]*)`)\s*\}/g },
   { nome: "atributo", re: /\b(?:aria-label|placeholder|title|alt)\s*=\s*(?:"([^"]*)"|\{\s*'([^']*)'\s*\}|\{\s*"([^"]*)"\s*\}|\{\s*`([^`$]*)`\s*\})/g },
 ]
@@ -177,6 +186,8 @@ function arquivos() {
       if (!s || !/[A-Za-z]/.test(s)) continue
       // entre `>` e `<` pode haver CÓDIGO (fim de um elemento, instruções, começo do próximo): texto de UI não tem `=` nem `;`
       if (nome === "texto JSX" && /[=;]/.test(s)) continue
+      // I1-PR-10 (div. 750): nem expressão condicional (`) : Array.isArray(…) ? (`, `?.`, `&&`, `||`, `=>`) — era falso positivo
+      if (nome === "texto JSX" && /\?\.|&&|\|\||=>|\)\s*[:?]|[:?]\s*\(/.test(s)) continue
       textos++
       const baixo = s.toLowerCase()
       const hit = vocabOrdenado.find((v) => new RegExp(`(^|[^a-zà-ÿ])${v.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}([^a-zà-ÿ]|$)`, "i").test(baixo))

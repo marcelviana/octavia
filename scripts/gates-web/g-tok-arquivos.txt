@@ -55,3 +55,25 @@ components/painel/lista-do-painel.tsx
 components/library/frases-lista.ts
 components/library/LibraryFiltros.tsx
 components/library/LinhaDaBiblioteca.tsx
+# I1-PR10 — superfície 5, content visualização (folha 5-content-visualizacao): /content/[id].
+# Commit 1 (gate-first): os que sobrevivem — o pdf-viewer entra (é compartilhado com o editor, I1-D27: muda lá também).
+# Morrem no commit 2 (fora da lista): content-viewer/ContentToolbar.tsx, content-viewer/DeleteDialog.tsx, hooks/useContentActions.ts.
+app/content/[id]/page.tsx
+components/content-page-client.tsx
+components/content-viewer.tsx
+components/content-viewer/ContentHeader.tsx
+components/content-viewer/ContentDisplay.tsx
+components/content-viewer/ContentSidebar.tsx
+components/content-viewer/ChordDisplay.tsx
+components/content-viewer/LyricsDisplay.tsx
+components/content-viewer/TabDisplay.tsx
+components/content-viewer/SheetMusicDisplay.tsx
+components/pdf-viewer.tsx
+# Commit 2: os que nasceram.
+components/content/frases-visualizacao.ts
+components/content/corpo-de-texto.ts
+components/content/tipos.ts
+components/content/painel.tsx
+components/content/barra-do-pdf.tsx
+components/content/limite-do-corpo.tsx
+components/content/base-da-pagina.ts

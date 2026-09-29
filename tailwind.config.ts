@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss"
-import { dark, font, limiares, radius, size, space, touch, bar, lineHeight, tracking } from "@octavia/identidade"
+import { dark, light, font, limiares, radius, size, space, touch, bar, lineHeight, tracking } from "@octavia/identidade"
 
 /**
  * I1-PR-6 (decisão 1 do aval): a identidade entra no Tailwind por NOME de
@@ -22,6 +22,8 @@ const medidas = {
   ...Object.fromEntries(WEB.map((k) => [`web-${k}`, `var(--faixa-${k})`])),
   // (touch.min − 20) / 2: o respiro vertical da LinhaDeAviso, DERIVADO (README-design §4 item 9)
   "aviso-respiro": "calc((var(--toque-min) - var(--faixa-entrelinha-aviso)) / 2)",
+  // I1-PR-10 (folha 5, cabeçalho em B): as ações descem com recuo `touch.min + space.lg`, DERIVADO
+  "recuo-cabecalho": "calc(var(--toque-min) + var(--espaco-lg))",
 }
 const identidade = {
   screens: {
@@ -35,11 +37,13 @@ const identidade = {
       // I1-PR-9 (folha 4): accent a 12 % (marcado) e bg a 82 % (fundo do diálogo) — `web.alfa*`, color-mix no gerador
       marcado: "var(--faixa-cor-marcado)",
       dialogo: "var(--faixa-cor-dialogo)",
+      // I1-PR-10 (folha 5): a paleta clara é o "papel" da página do PDF (`light.bg` + contorno `light.line`)
+      ...Object.fromEntries(Object.keys(light).map((k) => [`claro-${kebab(k)}`, `var(--cor-claro-${kebab(k)})`])),
     },
   },
   spacing: medidas,
   maxWidth: { "web-conteiner": "var(--faixa-conteiner)" },
-  fontSize: { ...porNome("tam", size, "tamanho"), "tam-web-metadado": "var(--faixa-metadado)" },
+  fontSize: { ...porNome("tam", size, "tamanho"), "tam-web-metadado": "var(--faixa-metadado)", "tam-zoom-padrao": "var(--zoom-padrao)" },
   fontFamily: Object.fromEntries(Object.keys(font).map((k) => [`fam-${kebab(k)}`, [`var(--fonte-${kebab(k)}-familia)`]])),
   fontWeight: Object.fromEntries(Object.keys(font).map((k) => [`peso-${kebab(k)}`, `var(--fonte-${kebab(k)}-peso)`])),
   // `natural` = a entrelinha da própria fonte (`normal`), a da folha, que não declara entrelinha no corpo — não é

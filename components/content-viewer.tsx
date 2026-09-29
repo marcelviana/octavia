@@ -1,100 +1,36 @@
 "use client"
-import { useState } from "react"
-import { useContentActions } from "@/hooks/useContentActions"
+
+/**
+ * A visualização de um content (I1-PR-10; folha `5-content-visualizacao`): o cabeçalho (voltar · título · tipo ·
+ * *Editar*) e, abaixo, o corpo e a coluna lateral — lado a lado em C (vão `space.xl`, a lateral em
+ * `web.colunaLateral`), empilhados em B e A. Contêiner `web.conteiner`, margem `web.margem`, respiro `space.xxl`.
+ * Saíram o favoritar local e falso, o apagar inalcançável (`hooks/useContentActions.ts`, `DeleteDialog`) e a barra
+ * de palco desligada (`ContentToolbar`) — decisões 20 e 28 da folha, div. 737.
+ */
 import { ContentHeader } from "./content-viewer/ContentHeader"
-import { ContentToolbar } from "./content-viewer/ContentToolbar"
 import { ContentDisplay } from "./content-viewer/ContentDisplay"
 import { ContentSidebar } from "./content-viewer/ContentSidebar"
-import { DeleteDialog } from "./content-viewer/DeleteDialog"
+import { LimiteDoCorpo } from "@/components/content/limite-do-corpo"
+import { rotuloDoTipo } from "@/components/content/frases-visualizacao"
+import type { ConteudoVisto } from "@/components/content/tipos"
 
-interface ContentViewerProps {
-  content: any
+export interface ContentViewerProps {
+  content: ConteudoVisto
   onBack: () => void
-  onEdit?: () => void
-  showToolbar?: boolean
 }
 
-export function ContentViewer({
-  content,
-  onBack,
-  onEdit,
-  showToolbar = true,
-}: ContentViewerProps) {
-  const [zoom, setZoom] = useState(100)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [currentPage, setCurrentPage] = useState(1)
-  const totalPages = content?.content_data?.pages
-    ? content.content_data.pages.length
-    : 1
-
-  // Custom hooks for separated concerns
-  const {
-    deleteDialog,
-    setDeleteDialog,
-    isFavorite,
-    handleDelete,
-    confirmDelete,
-    toggleFavorite
-  } = useContentActions({ content, onBack })
-
-  // Event handlers
-  const handlePlayPause = () => {
-    setIsPlaying(!isPlaying)
-  }
-
-  const handleZoomChange = (newZoom: number) => {
-    setZoom(newZoom)
-  }
-
-  const handlePageChange = (newPage: number) => {
-    setCurrentPage(newPage)
-  }
-
+export function ContentViewer({ content, onBack }: ContentViewerProps) {
   return (
-    <div className="flex flex-col bg-gradient-to-b from-[#fff9f0] to-[#fff5e5] min-h-full">
-      {/* Header */}
-      <ContentHeader
-        content={content}
-        isFavorite={isFavorite}
-        onBack={onBack}
-        onToggleFavorite={toggleFavorite}
-      />
-
-      {/* Toolbar */}
-      {showToolbar && (
-        <ContentToolbar
-          isPlaying={isPlaying}
-          zoom={zoom}
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPlayPause={handlePlayPause}
-          onZoomChange={handleZoomChange}
-          onPageChange={handlePageChange}
-        />
-      )}
-
-      {/* Main Content Area */}
-      <div className="flex-1 p-6">
-        <div className="flex flex-col md:flex-row gap-6 max-w-7xl mx-auto">
-          {/* Main Content Section */}
-          <ContentDisplay
-            content={content}
-            zoom={zoom}
-            currentPage={currentPage}
-          />
-
-          {/* Sidebar with Metadata and Notes */}
-          <ContentSidebar content={content} />
+    <div className="w-full max-w-web-conteiner mx-auto flex flex-col text-cor-text font-fam-ui font-peso-ui leading-natural">
+      <ContentHeader content={content} onBack={onBack} />
+      <div className="flex flex-wrap items-start gap-espaco-xl py-espaco-xxl px-web-margem">
+        <div className="grow shrink basis-full c:basis-0 min-w-0">
+          <LimiteDoCorpo rotulo={rotuloDoTipo(content.content_type)}>
+            <ContentDisplay content={content} />
+          </LimiteDoCorpo>
         </div>
+        <ContentSidebar content={content} />
       </div>
-
-      {/* Delete Confirmation Dialog */}
-      <DeleteDialog
-        open={deleteDialog}
-        onOpenChange={setDeleteDialog}
-        onConfirm={confirmDelete}
-        contentTitle={content.title}
-      />
     </div>
   )
 }

@@ -1,0 +1,57 @@
+$ pnpm build   # commit 2b, numa cópia da árvore, sem .env
+
+> octavia@0.1.0 build /private/tmp/claude-501/-Users-marcelviana-projects-octavia/513cbeab-7cb4-402e-bf33-7ce07dc36cb1/scratchpad/pre2b
+> pnpm exec next build
+
+   ▲ Next.js 15.2.8
+
+   Creating an optimized production build ...
+ ⚠ nodejs runtime support for middleware requires experimental.nodeMiddleware be enabled in your next.config
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/22) ...
+   Generating static pages (5/22) 
+   Generating static pages (10/22) 
+   Generating static pages (16/22) 
+ ✓ Generating static pages (22/22)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ƒ /                                      188 B         111 kB
+├ ƒ /_not-found                            987 B         103 kB
+├ ƒ /add-content                         3.21 kB         273 kB
+├ ƒ /api/auth/session                      181 B         102 kB
+├ ƒ /api/content                           181 B         102 kB
+├ ƒ /api/content/[id]                      181 B         102 kB
+├ ƒ /api/health                            181 B         102 kB
+├ ƒ /api/profile                           181 B         102 kB
+├ ƒ /api/setlists                          181 B         102 kB
+├ ƒ /api/setlists/[id]                     181 B         102 kB
+├ ƒ /api/setlists/[id]/songs               181 B         102 kB
+├ ƒ /api/setlists/[id]/songs/order         181 B         102 kB
+├ ƒ /api/setlists/songs/[songId]           181 B         102 kB
+├ ƒ /api/storage/delete                    181 B         102 kB
+├ ƒ /api/storage/list                      181 B         102 kB
+├ ƒ /api/storage/upload                    181 B         102 kB
+├ ƒ /content/[id]                         109 kB         394 kB
+├ ƒ /content/[id]/edit                   4.64 kB         256 kB
+├ ƒ /dashboard                            2.1 kB         275 kB
+├ ƒ /forgot-password                       996 B         259 kB
+├ ƒ /library                              1.9 kB         275 kB
+├ ƒ /login                               2.23 kB         265 kB
+├ ƒ /privacy-policy                        181 B         102 kB
+├ ƒ /setlists                            3.21 kB         273 kB
+├ ƒ /signup                              1.84 kB         265 kB
+├ ƒ /signup/confirm-email                  823 B         264 kB
+└ ƒ /verify-email                        1.34 kB         261 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/3881-8e23a118aef66f59.js      45.9 kB
+  ├ chunks/512d04e9-aeed3945b96bbf7f.js  53.3 kB
+  └ other shared chunks (total)          3.08 kB
+
+
+ƒ  (Dynamic)  server-rendered on demand
+
+# exit: 0

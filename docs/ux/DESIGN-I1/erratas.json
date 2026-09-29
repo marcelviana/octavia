@@ -13,7 +13,7 @@
       "tipo": "estado",
       "div": [586, 593],
       "o_que_vale": "existe o estado AUTH-verify-reenviar-excecao (C e B): 2 T-I1-R além das seções da folha",
-      "casa": [{ "achado": "^\\(d\\) README\\.md: 286 T-I1-R × 282 esperados$", "n": 1 }]
+      "casa": [{ "achado": "^\\(d\\) README\\.md: T-I1-R para AUTH-verify-reenviar-excecao em [CB], estado sem seção na folha$", "n": 2 }]
     },
     {
       "id": "I1-E2",
@@ -22,8 +22,15 @@
       "o_que_vale": "existe o estado UP-lote-lendo (C e B): o parse do lote tem seção pela errata, e 2 T-I1-R além das seções",
       "casa": [
         { "achado": "^\\(d\\) estado alcançável sem seção: upload/criação · carregando — parse do lote — ", "n": 1 },
-        { "achado": "^\\(d\\) README\\.md: 286 T-I1-R × 282 esperados$", "n": 1 }
+        { "achado": "^\\(d\\) README\\.md: T-I1-R para UP-lote-lendo em [CB], estado sem seção na folha$", "n": 2 }
       ]
+    },
+    {
+      "id": "I1-E15",
+      "tipo": "estado",
+      "div": [733, 734, 760],
+      "o_que_vale": "VIEW-erro-cache e VIEW-carregando-arquivo não existem (I1-PR-10): as seções ficam na folha e os T-I1-R delas saem do README (286 → 282, renumerados); a lista erratasEstado tira as duas do esperado do G-faixa",
+      "casa": [{ "achado": "^\\(d\\) README\\.md: sem T-I1-R para VIEW-(erro-cache|carregando-arquivo) em [CB]$", "n": 4 }]
     },
     {
       "id": "I1-E3",
@@ -68,7 +75,7 @@
       "casa": [{ "achado": "^\\(c\\) forma sem desenho no dados\\.ts \\(10× nas folhas 0,1,4,7\\): <circle cx=\"12\" cy=\"12\" r=\"8\\.5\"></circle>", "n": 1 }]
     }
   ],
-  "_leia_faixa": "I1-PR6 (commit 5; div. 681): as erratas da folha que o G-FAIXA acha (|Δ| > 4 px contra a moldura), não o conferir.mjs — por isso numa lista à parte, que o G-tok (i) não lê (ele casa só `erratas` com os achados do conferir; uma errata daqui lá seria órfã). Cada uma cobre, pelo estado, as erratas candidatas do veredito do aceite de auth (`n` = quantas, em C e B). Fonte: DESIGN-I1/README.md §2.2. I1-PR7: a I1-E11 cobre as 8 do aceite da landing. I1-PR8: a I1-E12 cobre as 45 do aceite da política (22 em C, 23 em B). I1-PR9: a I1-E14 cobre as do LIB-filtros (os 10 nós do menu × C e B — n da pré-verificação sem sessão; o aceite confirma).",
+  "_leia_faixa": "I1-PR6 (commit 5; div. 681): as erratas da folha que o G-FAIXA acha (|Δ| > 4 px contra a moldura), não o conferir.mjs — por isso numa lista à parte, que o G-tok (i) não lê (ele casa só `erratas` com os achados do conferir; uma errata daqui lá seria órfã). Cada uma cobre, pelo estado, as erratas candidatas do veredito do aceite de auth (`n` = quantas, em C e B). Fonte: DESIGN-I1/README.md §2.2. I1-PR7: a I1-E11 cobre as 8 do aceite da landing. I1-PR8: a I1-E12 cobre as 45 do aceite da política (22 em C, 23 em B). I1-PR9: a I1-E14 cobre as do LIB-filtros (os 10 nós do menu × C e B — n da pré-verificação sem sessão; o aceite confirma). I1-PR10: E16 (2: o título da barra da tela cheia encolhe, C e B), E17 (13: a linha sem o botão é mais baixa e o que vem abaixo sobe, 2 em C e 11 em B), E18 (0 com as fixtures da folha; conta só se o content do aceite tiver acordes na letra ou na tab) — n da pré-verificação sem sessão; o aceite confirma.",
   "erratasFaixa": [
     {"id": "I1-E7", "div": [667], "o_que_vale": "o balão de validação é do navegador: não é elemento da página, o código não o reproduz; a seção vale sem ele", "estados": ["AUTH-login-validacao", "AUTH-signup-validacao", "AUTH-forgot-validacao"], "n": 31},
     {"id": "I1-E8", "div": [668], "o_que_vale": "o grupo de botões vazio não existe; a seção vale sem ele", "estados": ["AUTH-verify-carregando"], "n": 2},
@@ -76,7 +83,14 @@
     {"id": "I1-E10", "div": [669], "o_que_vale": "sem usuário não há a frase com o e-mail; a seção vale sem ela", "estados": ["AUTH-confirm-sem-usuario"], "n": 7},
     {"id": "I1-E11", "div": [684], "o_que_vale": "a folha 2-landing renderizou a frase com 1,45; a tabela declara lineHeight.text (1,55), que é o que vale", "estados": ["LANDING"], "n": 8},
     {"id": "I1-E12", "div": [693], "o_que_vale": "títulos com entrelinha natural (o padrão do web desde a I1-PR6); a folha 3-privacy-policy renderizou 1,3 (h1) e 1,35 (h2) sem token; o Δy acumulado dos nós seguintes é consequência desta errata", "estados": ["PRIVACY"], "n": 45},
-    {"id": "I1-E14", "div": [726], "o_que_vale": "o menu Filtros cabe no contêiner (âncora direita, max-w-full; em A os alternáveis quebram linha); a folha 4-content-lista o desenhou passando da moldura, escondido pelo overflow:hidden", "estados": ["LIB-filtros"], "n": 20}
+    {"id": "I1-E14", "div": [726], "o_que_vale": "o menu Filtros cabe no contêiner (âncora direita, max-w-full; em A os alternáveis quebram linha); a folha 4-content-lista o desenhou passando da moldura, escondido pelo overflow:hidden", "estados": ["LIB-filtros"], "n": 20},
+    {"id": "I1-E16", "div": [739, 752], "o_que_vale": "na tela cheia a barra é a da folha (título · página n de N · Sair da tela cheia) MAIS Anterior e Próxima: a paginação fica na tela cheia (I1-D27); o estado de tela cheia vem só do fullscreenchange", "estados": ["VIEW-partitura-cheia"], "n": 2},
+    {"id": "I1-E17", "div": [740], "o_que_vale": "VIEW-erro-formato sem Tentar de novo: o tipo do arquivo vem da extensão do file_url (I1-D36) e repetir não a muda (README-design §3, a linha sem ação)", "estados": ["VIEW-erro-formato"], "n": 13},
+    {"id": "I1-E18", "div": [742], "o_que_vale": "a folha não desenhou content com dois tipos de dado: os acordes da letra e da tab vão num SEGUNDO painel Cifra, abaixo do primeiro, com os T-I1-R do painel", "estados": ["VIEW-letra", "VIEW-tab"], "n": 0}
+  ],
+  "_leia_estado": "I1-PR10: as erratas que TIRAM estados da folha — o gerador do esperado (scripts/gates-web/g-faixa-esperado.ts) não grava as seções listadas, e os T-I1-R delas saem da contagem (DESIGN-I1/README.md §4, renumerados). O conferir.mjs não as lê (a folha não muda). Fonte: DESIGN-I1/README.md §2.2.",
+  "erratasEstado": [
+    {"id": "I1-E15", "div": [733, 734, 735], "folha": "5-content-visualizacao", "o_que_vale": "VIEW-erro-cache e VIEW-carregando-arquivo não existem (a cópia no navegador e o hook que a lia morreram na I1-PR-3, I1-D18); view.erro.cache sai; view.erro.pdf escolhe o motivo pelo name do erro do pdf.js — MissingPDFException e UnexpectedResponseException → o arquivo está corrompido ou inacessível; InvalidPDFException → formato de PDF inválido; UnknownErrorException de rede → motivo.rede; o resto → motivo.generico", "estados": ["VIEW-erro-cache", "VIEW-carregando-arquivo"], "frases": ["view.erro.cache", "view.erro.pdf"]}
   ],
   "_leia_frase": "I1-PR9: as erratas de FRASE (README-design §5) que nenhum gate acha — nenhuma seção desenha o elemento, então nem o conferir.mjs (lista `erratas`) nem o G-faixa (lista `erratasFaixa`) as veem. Registro só; nenhum gate lê esta lista. Fonte: DESIGN-I1/README.md §2.2.",
   "erratasFrase": [

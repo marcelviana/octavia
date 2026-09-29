@@ -1,93 +1,48 @@
 "use client"
-import { Button } from "@/components/ui/button"
-import { ArrowLeft, Star } from "lucide-react"
-import { ContentType, getContentTypeIcon, normalizeContentType } from "@/types/content"
 
-interface ContentHeaderProps {
-  content: {
-    id: string
-    title: string
-    artist: string
-    content_type: string
-    is_favorite?: boolean
-  }
-  isFavorite: boolean
+/**
+ * O cabeçalho da visualização (I1-PR-10; folha 5, README-design §2.4 "cabeçalho" e "Editar"): *voltar* 24 num alvo
+ * `touch.min` (nome acessível *Voltar para a biblioteca*; o `router.back()` de antes — decisão 6) · o título em
+ * `font.displayMedium` · `size.titleSmall` (sem caixa alta: é dado) · o tipo 20 + *{artista} · {tipo}* em
+ * `size.label` `muted` · *Editar* (`touch.list`, contorno `lineInfo`, `renomear` 24 `accentInk`) que leva a
+ * `/content/[id]/edit` (decisão 5). Sem favoritar (decisão 20 da folha) e sem apagar (28). A linha quebra no
+ * `web.colunaAuth` (420, o limiar que a folha usa); em B as ações têm o recuo `touch.min + space.lg`.
+ */
+import Link from "next/link"
+import { Icone } from "@/components/identidade/icone"
+import { CONTROLE_LISTA } from "@/components/identidade/controles"
+import { FRASES_LISTA, tipoDe } from "@/components/library/frases-lista"
+import { FRASES_VIEW } from "@/components/content/frases-visualizacao"
+import type { ConteudoVisto } from "@/components/content/tipos"
+
+export interface ContentHeaderProps {
+  content: Pick<ConteudoVisto, "id" | "title" | "artist" | "content_type">
   onBack: () => void
-  onToggleFavorite: () => void
 }
 
-const getHeaderGradient = (type: string) => {
-  const t = normalizeContentType(type)
-  switch (t) {
-    case ContentType.LYRICS:
-      return "from-green-500 to-green-600"
-    case ContentType.TAB:
-      return "from-blue-500 to-blue-600"
-    case ContentType.CHORDS:
-      return "from-purple-500 to-purple-600"
-    case ContentType.SHEET:
-      return "from-orange-500 to-orange-600"
-    default:
-      return "from-amber-500 to-orange-600"
-  }
-}
-
-const getContentIcon = (type: string) => {
-  const IconComponent = getContentTypeIcon(type)
-  return <IconComponent className="w-4 h-4 text-white" />
-}
-
-export function ContentHeader({
-  content,
-  isFavorite,
-  onBack,
-  onToggleFavorite
-}: ContentHeaderProps) {
+export function ContentHeader({ content, onBack }: ContentHeaderProps) {
+  const tipo = tipoDe(content.content_type)
+  const artista = content.artist || FRASES_LISTA["lib.artista.desconhecido"]
   return (
-    <div className="bg-white/90 backdrop-blur-sm border-b border-amber-200 px-0 py-2 shadow-md">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <Button
-            variant="ghost"
-            onClick={onBack}
-            className="hover:bg-amber-50"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-          </Button>
-          <div
-            className={`w-8 h-8 rounded-lg flex items-center justify-center bg-gradient-to-r ${getHeaderGradient(
-              content.content_type,
-            )}`}
-          >
-            {getContentIcon(content.content_type)}
+    <header className="border-b-hairline border-cor-line py-espaco-xl px-web-margem flex flex-wrap items-center gap-y-espaco-lg gap-x-espaco-xl">
+      <div className="grow shrink basis-web-coluna-auth min-w-0 flex items-center gap-espaco-lg">
+        <button type="button" aria-label={FRASES_VIEW["view.voltar"]} onClick={onBack} className="w-toque-min h-toque-min shrink-0 flex items-center justify-center text-cor-text">
+          <Icone nome="voltar" tamanho={24} />
+        </button>
+        <div className="flex-1 min-w-0 flex flex-col gap-espaco-xs">
+          <h1 className="font-fam-display-medium font-peso-display-medium text-tam-title-small leading-natural text-cor-text break-words">{content.title}</h1>
+          <div className="flex flex-wrap items-center gap-espaco-sm">
+            <Icone nome={tipo.icone} tamanho={20} className="text-cor-line-info" />
+            <p className="text-tam-label text-cor-muted">{`${artista} · ${tipo.rotulo.toLocaleLowerCase("pt-BR")}`}</p>
           </div>
-          <div>
-            <h1 className="font-bold text-lg sm:text-xl text-gray-900">
-              {content.title}
-            </h1>
-            <p className="text-sm text-gray-500">
-              {content.artist} • {content.content_type}
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onToggleFavorite}
-            className={`hover:bg-amber-50 ${
-              isFavorite ? "text-yellow-500" : "text-gray-400"
-            }`}
-          >
-            <Star
-              className={`w-5 h-5 ${
-                isFavorite ? "fill-current" : ""
-              }`}
-            />
-          </Button>
         </div>
       </div>
-    </div>
+      <div className="flex flex-wrap gap-espaco-lg pl-recuo-cabecalho c:pl-0">
+        <Link href={`/content/${encodeURIComponent(content.id)}/edit`} className={`${CONTROLE_LISTA} border-cor-line-info`}>
+          <Icone nome="renomear" tamanho={24} className="text-cor-accent-ink" />
+          {FRASES_VIEW["view.editar"]}
+        </Link>
+      </div>
+    </header>
   )
 }

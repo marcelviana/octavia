@@ -1,0 +1,9 @@
+$ pnpm exec tsx scripts/gates-web/g-faixa-esperado.ts 5-content-visualizacao
+5-content-visualizacao: 56 caixa(s) de campo ancorada(s) · 16 seções · 15 com C e B · nós C 344 · nós B 344 → tests/gates-web/esperado/5-content-visualizacao.json
+  ✗ Tokens: sem a moldura C B
+# exit: 0
+
+# controle: o 4-content-lista re-medido sai byte a byte igual ao commitado
+4-content-lista: 60 caixa(s) de campo ancorada(s) · 16 seções · 15 com C e B · nós C 465 · nós B 465 → tests/gates-web/esperado/4-content-lista.json
+  ✗ Tokens: sem a moldura C B
+cmp: iguais

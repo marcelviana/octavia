@@ -62,7 +62,12 @@ async function main() {
         }
         return n
       }, { seletor: ancoras.seletor, porRotulo: ancoras.porRotulo, porSeletor: ancoras.porSeletor }) : 0
-      const secoes = await page.evaluate(() => [...document.querySelectorAll('section[data-estado]')].map((s) => s.getAttribute('data-estado') as string))
+      // I1-PR10: as seções que uma errata de ESTADO tira da folha (`erratasEstado`, I1-E15) não entram no esperado
+      const tiradas = new Set<string>((JSON.parse(fs.readFileSync("docs/ux/DESIGN-I1/erratas.json", "utf8")).erratasEstado ?? [])
+        .filter((e: { folha?: string }) => e.folha === pasta).flatMap((e: { estados: string[] }) => e.estados))
+      const todas = await page.evaluate(() => [...document.querySelectorAll('section[data-estado]')].map((s) => s.getAttribute('data-estado') as string))
+      const secoes = todas.filter((s) => !tiradas.has(s))
+      for (const s of tiradas) if (todas.includes(s)) console.log(`  − ${s}: tirada por errata de estado (erratasEstado)`)
       const estados: Record<string, { C: ReturnType<typeof paraJson>; B: ReturnType<typeof paraJson> } | { falta: string }> = {}
       for (const secao of secoes) {
         const out: Record<string, ReturnType<typeof paraJson>> = {}

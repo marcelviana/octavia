@@ -1,0 +1,156 @@
+$ pnpm test
+ ✓  core  packages/core/src/ordem.test.ts (16 tests) 6ms
+ ✓  core  packages/core/src/song.test.ts (6 tests) 5ms
+ ✓  core  packages/core/src/validacao.test.ts (17 tests) 9ms
+ ✓  core  packages/core/src/sync.test.ts (14 tests) 8ms
+ ✓  core  packages/core/src/offline.test.ts (25 tests) 20ms
+ ✓  core  packages/core/src/escrita.test.ts (27 tests) 15ms
+ ✓  core  packages/core/src/frases.test.ts (27 tests) 66ms
+ ✓  core  packages/core/src/content-contract.test.ts (15 tests) 4ms
+ ✓  core  packages/core/src/isolation.test.ts (2 tests) 4ms
+ ✓  core  packages/core/src/auth-fetch.test.ts (5 tests) 6ms
+ ✓  core  packages/core/src/errors.test.ts (9 tests) 6ms
+ ✓  core  packages/core/src/frases-picker.test.ts (8 tests) 7ms
+ ✓  core  packages/core/src/search.test.ts (9 tests) 7ms
+ ✓  core  packages/core/src/token.test.ts (7 tests) 3ms
+ ✓  core  packages/core/src/rate-limit.test.ts (7 tests) 4ms
+ ✓  core  packages/core/src/normalize.test.ts (4 tests) 2ms
+ ✓  core  packages/core/src/position.test.ts (4 tests) 6ms
+ ✓  identidade  packages/identidade/test/css.test.ts (4 tests) 10ms
+ ✓  identidade  packages/identidade/test/fontes.test.ts (3 tests) 5ms
+ ✓  identidade  packages/identidade/test/igualdade.test.ts (32 tests) 16ms
+ ✓  native  apps/native/test/files-integridade.test.ts (11 tests) 23ms
+ ✓  native  apps/native/test/palco-divida.test.ts (8 tests) 17ms
+ ✓  native  apps/native/test/prefetch-fila.test.ts (13 tests) 45ms
+ ✓  native  apps/native/test/faixa.test.ts (4 tests) 21ms
+ ✓  native  apps/native/test/files-saneamento.test.ts (5 tests) 11ms
+ ✓  native  apps/native/test/files-mensagem.test.ts (11 tests) 10ms
+ ✓  native  apps/native/test/gates.test.ts (11 tests) 864ms
+ ✓  native  apps/native/test/sync-t1r10.test.ts (6 tests) 2823ms
+ ✓  native-tela  apps/native/test/s1-criar.test.tsx (12 tests) 3937ms
+ ✓  native-tela  apps/native/test/reordenar.test.tsx (15 tests) 4555ms
+ ✓  native-tela  apps/native/test/reordenar-folha-faixa.test.tsx (11 tests) 2362ms
+ ✓  native  apps/native/test/escrita.test.ts (18 tests) 6823ms
+ ✓  native-tela  apps/native/test/apos-escrita.test.tsx (2 tests) 838ms
+ ✓  native-tela  apps/native/test/palco-faixa.test.tsx (8 tests) 447ms
+ ✓  native-tela  apps/native/test/s1-faixa.test.tsx (6 tests) 1462ms
+ ✓  native-tela  apps/native/test/s2-edicao.test.tsx (21 tests) 6892ms
+ ✓  native-tela  apps/native/test/s5-fileira-faixa.test.tsx (6 tests) 297ms
+ ✓  native-tela  apps/native/test/s2-faixa.test.tsx (10 tests) 2905ms
+ ✓  native-tela  apps/native/test/s5-faixa.test.tsx (4 tests) 197ms
+stdout | tests/security/token-blacklist-concurrency.test.ts > Token Blacklisting Concurrency Tests > Database Consistency Under Load > should handle database failures gracefully
+ ✓  web  tests/security/token-blacklist-concurrency.test.ts (11 tests | 10 skipped) 625ms
+ ✓  native-tela  apps/native/test/picker.test.tsx (25 tests) 8980ms
+ ✓  web  hooks/__tests__/use-library-data.test.tsx (13 tests) 407ms
+ ✓  web  hooks/__tests__/use-setlist-data.test.tsx (8 tests) 1096ms
+ ✓  web  tests/gates/g-rotas-protegidas.test.ts (11 tests) 717ms
+ ✓  web  components/auth/__tests__/login-sessao-cn.test.tsx (15 tests) 2107ms
+ ✓  web  components/content/__tests__/visualizacao-estados.test.tsx (16 tests) 363ms
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A03:2021 – Injection Attacks > should prevent LDAP injection
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A03:2021 – Injection Attacks > should prevent LDAP injection
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A03:2021 – Injection Attacks > should prevent LDAP injection
+ ✓  web  components/painel/__tests__/painel-estados.test.tsx (4 tests) 245ms
+ ✓  web  lib/__tests__/content-service.test.ts (10 tests) 782ms
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A07:2021 – Identification and Authentication Failures > should prevent credential stuffing attacks
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A07:2021 – Identification and Authentication Failures > should prevent credential stuffing attacks
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A07:2021 – Identification and Authentication Failures > should prevent credential stuffing attacks
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A07:2021 – Identification and Authentication Failures > should prevent session fixation
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A07:2021 – Identification and Authentication Failures > should implement account lockout after failed attempts
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A08:2021 – Software and Data Integrity Failures > should verify API response integrity
+ ✓  web  tests/security/owasp-top10-penetration.test.ts (26 tests | 9 skipped) 576ms
+ ✓  web  app/api/auth/__tests__/session.test.ts (11 tests) 232ms
+ ✓  web  tests/components/add-content.refactoring.test.tsx (25 tests | 4 skipped) 270ms
+ ✓  web  tests/gates/i1-visualizador.test.tsx (6 tests) 180ms
+ ✓  web  app/api/content/__tests__/route.test.ts (22 tests) 206ms
+ ✓  web  app/api/content/[id]/__tests__/route.test.ts (12 tests | 5 skipped) 159ms
+ ✓  web  app/api/storage/__tests__/delete.test.ts (10 tests) 155ms
+stderr | tests/security/auth-penetration-testing.test.ts > Authentication and Authorization Penetration Tests > Authentication Bypass Attempts > should prevent session fixation attacks
+ ✓  web  app/api/storage/__tests__/upload.test.ts (5 tests) 168ms
+ ✓  web  tests/hooks/useAddContentLogic.test.ts (20 tests) 109ms
+ ✓  web  tests/security/auth-penetration-testing.test.ts (16 tests | 3 skipped) 104ms
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Prototype Pollution Prevention > should prevent prototype pollution in content data
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Prototype Pollution Prevention > should prevent prototype pollution in content data
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Prototype Pollution Prevention > should prevent prototype pollution in content data
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Prototype Pollution Prevention > should prevent prototype pollution in content data
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Large Payload Protection > should reject oversized payloads
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Unicode and Encoding Attacks > should handle Unicode-encoded attacks
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Unicode and Encoding Attacks > should handle Unicode-encoded attacks
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Unicode and Encoding Attacks > should handle Unicode-encoded attacks
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Unicode and Encoding Attacks > should handle Unicode-encoded attacks
+ ✓  web  tests/security/api-validation.security.test.ts (12 tests) 109ms
+ ✓  web  tests/components/monospace-rendering.test.tsx (5 tests) 67ms
+ ✓  web  tests/gates-web/privacy-texto.test.ts (4 tests) 48ms
+ ✓  web  lib/__tests__/auth-mock-example.test.ts (10 tests) 64ms
+ ✓  web  app/api/storage/__tests__/list.test.ts (5 tests) 76ms
+ ✓  web  contexts/__tests__/sidebar-context.test.tsx (2 tests) 73ms
+ ✓  web  app/api/storage/__tests__/upload-paridade.test.ts (12 tests) 66ms
+ ✓  web  lib/__tests__/contract-content.test.ts (39 tests) 23ms
+ ✓  web  tests/gates/i1-tab-acordes.test.tsx (1 test) 55ms
+ ✓  web  hooks/__tests__/useAddContentLogic.test.ts (5 tests) 41ms
+ ✓  web  scripts/ux-audit/fase-d-dirs.test.ts (3 tests) 21ms
+ ✓  web  app/api/setlists/[id]/songs/order/__tests__/route.test.ts (8 tests) 30ms
+ ✓  web  app/api/setlists/[id]/__tests__/route.test.ts (23 tests | 1 skipped) 52ms
+ ✓  web  contexts/__tests__/firebase-auth-context.test.tsx (3 tests) 30ms
+ ✓  web  app/api/profile/__tests__/route.test.ts (17 tests) 38ms
+ ✓  web  hooks/__tests__/useMetadataForm.test.ts (3 tests) 27ms
+ ✓  web  lib/__tests__/contract-errors.test.ts (17 tests) 32ms
+ ✓  web  hooks/__tests__/use-debounce.test.tsx (1 test) 24ms
+ ✓  web  app/api/setlists/[id]/__tests__/delete-owner.test.ts (3 tests) 18ms
+ ✓  web  lib/__tests__/firebase-admin.test.ts (8 tests) 25ms
+ ✓  web  app/api/setlists/__tests__/route.test.ts (15 tests | 4 skipped) 28ms
+ ✓  web  lib/__tests__/setlist-service.test.ts (4 tests) 17ms
+ ✓  web  app/api/setlists/[id]/songs/__tests__/route-rpc.test.ts (6 tests) 34ms
+ ✓  web  app/api/content/[id]/__tests__/route-rpc.test.ts (7 tests) 20ms
+ ✓  web  tests/typescript-strict-mode.test.ts (11 tests) 17ms
+ ✓  web  app/api/setlists/__tests__/create-compensating.test.ts (3 tests) 32ms
+ ✓  web  lib/__tests__/contract-storage.test.ts (10 tests) 17ms
+ ✓  web  tests/security/security-headers-validation.test.ts (31 tests | 20 skipped) 25ms
+ ✓  web  lib/__tests__/firebase-server-utils.test.ts (17 tests) 14ms
+ ✓  web  app/api/setlists/songs/[songId]/__tests__/route-rpc.test.ts (5 tests) 19ms
+ ✓  web  tests/gates-web/g-faixa-classificar.test.ts (14 tests) 17ms
+ ✓  web  lib/__tests__/rpc-errors.test.ts (7 tests) 14ms
+ ✓  web  lib/__tests__/file-signatures.test.ts (12 tests) 8ms
+ ✓  web  app/api/setlists/[id]/songs/__tests__/route.test.ts (3 tests) 19ms
+ ✓  web  lib/__tests__/user-rate-limit.test.ts (9 tests) 14ms
+ ✓  web  app/api/setlists/songs/[songId]/__tests__/route.test.ts (4 tests) 27ms
+ ✓  web  lib/__tests__/contract-setlist.test.ts (18 tests) 29ms
+ ✓  web  lib/__tests__/contract-drift.test.ts (13 tests) 13ms
+ ✓  web  scripts/storage/__tests__/reconcile-core.test.ts (16 tests) 14ms
+ ✓  web  lib/__tests__/setlist-schemas.test.ts (8 tests) 9ms
+ ✓  web  lib/__tests__/contract-d1-gate.test.ts (12 tests) 8ms
+ ✓  web  lib/__tests__/contract-profile.test.ts (10 tests) 12ms
+ ✓  web  app/api/setlists/__tests__/get-shape.test.ts (1 test) 20ms
+ ✓  web  lib/__tests__/secure-auth-utils.test.ts (3 tests) 8ms
+ ✓  web  lib/__tests__/contract-sanitize.test.ts (13 tests) 8ms
+ ✓  web  lib/__tests__/utils.test.ts (2 tests) 6ms
+ ✓  web  tests/typescript-ide-improvements.test.ts (10 tests) 6ms
+ ✓  web  lib/__tests__/g1-no-self-fetch.test.ts (3 tests) 9ms
+ ✓  web  tests/config/next-headers.test.ts (4 tests) 6ms
+ ✓  web  lib/__tests__/security-headers-csp.test.ts (4 tests) 8ms
+ ✓  web  hooks/__tests__/use-toast.test.ts (4 tests) 3ms
+ ↓  web  tests/security/security-headers.test.ts (1 test | 1 skipped)
+ ↓  web  tests/security/auth-security.test.ts (1 test | 1 skipped)
+ ↓  web  tests/security/cors-security.test.ts (1 test | 1 skipped)
+ ✓  web  lib/__tests__/api-schemas-inventory.test.ts (1 test) 2ms
+ ✓  native  apps/native/test/prazo-de-rede.test.ts (4 tests) 62179ms
+ Test Files  111 passed | 3 skipped (114)
+      Tests  1098 passed | 59 skipped (1157)
+# exit: 0

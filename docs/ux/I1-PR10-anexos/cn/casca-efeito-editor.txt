@@ -1,0 +1,47 @@
+$ node docs/ux/I1-PR10-anexos/cn/casca-efeito-editor.mjs
+base-cifra · 1138: FORA do visualizador — iguais 65 · só posição 0 · tamanho 0 · só antes 1 · só depois 1
+    só antes: texto/div 22 car.
+    só depois: texto/div 22 car.
+base-cifra · 711: FORA do visualizador — iguais 65 · só posição 0 · tamanho 0 · só antes 1 · só depois 1
+    só antes: texto/div 22 car.
+    só depois: texto/div 22 car.
+base-cifra · 411: FORA do visualizador — iguais 65 · só posição 0 · tamanho 0 · só antes 1 · só depois 1
+    só antes: texto/div 22 car.
+    só depois: texto/div 22 car.
+base-letra · 1138: FORA do visualizador — iguais 37 · só posição 0 · tamanho 0 · só antes 1 · só depois 1
+    só antes: texto/div 22 car.
+    só depois: texto/div 22 car.
+base-letra · 711: FORA do visualizador — iguais 37 · só posição 0 · tamanho 0 · só antes 1 · só depois 1
+    só antes: texto/div 22 car.
+    só depois: texto/div 22 car.
+base-letra · 411: FORA do visualizador — iguais 37 · só posição 0 · tamanho 0 · só antes 1 · só depois 1
+    só antes: texto/div 22 car.
+    só depois: texto/div 22 car.
+base-tab · 1138: FORA do visualizador — iguais 73 · só posição 0 · tamanho 0 · só antes 1 · só depois 1
+    só antes: texto/div 22 car.
+    só depois: texto/div 22 car.
+base-tab · 711: FORA do visualizador — iguais 73 · só posição 0 · tamanho 0 · só antes 1 · só depois 1
+    só antes: texto/div 22 car.
+    só depois: texto/div 22 car.
+base-tab · 411: FORA do visualizador — iguais 73 · só posição 0 · tamanho 0 · só antes 1 · só depois 1
+    só antes: texto/div 22 car.
+    só depois: texto/div 22 car.
+base-partitura · 1138: FORA do visualizador — iguais 30 · só posição 0 · tamanho 0 · só antes 1 · só depois 1 | DENTRO do visualizador (y ≥ 183) — posição 0 · tamanho 1 · só antes 9 · só depois 10
+    só antes: texto/div 22 car.
+    só depois: texto/div 22 car.
+base-partitura · 711: FORA do visualizador — iguais 30 · só posição 0 · tamanho 0 · só antes 1 · só depois 1 | DENTRO do visualizador (y ≥ 231) — posição 0 · tamanho 1 · só antes 9 · só depois 10
+    só antes: texto/div 22 car.
+    só depois: texto/div 22 car.
+base-partitura · 411: FORA do visualizador — iguais 30 · só posição 0 · tamanho 0 · só antes 1 · só depois 1 | DENTRO do visualizador (y ≥ 335) — posição 0 · tamanho 1 · só antes 9 · só depois 10
+    só antes: texto/div 22 car.
+    só depois: texto/div 22 car.
+erro-pdf · 1138: FORA do visualizador — iguais 30 · só posição 0 · tamanho 0 · só antes 1 · só depois 1 | DENTRO do visualizador (y ≥ 183) — posição 0 · tamanho 0 · só antes 14 · só depois 3
+    só antes: texto/div 22 car.
+    só depois: texto/div 22 car.
+erro-pdf · 711: FORA do visualizador — iguais 30 · só posição 0 · tamanho 0 · só antes 1 · só depois 1 | DENTRO do visualizador (y ≥ 231) — posição 0 · tamanho 0 · só antes 14 · só depois 3
+    só antes: texto/div 22 car.
+    só depois: texto/div 22 car.
+erro-pdf · 411: FORA do visualizador — iguais 30 · só posição 0 · tamanho 0 · só antes 1 · só depois 1 | DENTRO do visualizador (y ≥ 335) — posição 0 · tamanho 0 · só antes 14 · só depois 3
+    só antes: texto/div 22 car.
+    só depois: texto/div 22 car.
+# exit: 0

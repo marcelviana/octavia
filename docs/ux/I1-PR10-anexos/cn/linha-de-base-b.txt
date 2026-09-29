@@ -1,0 +1,35 @@
+$ node docs/ux/I1-PR10-anexos/cn/linha-de-base-b.mjs tests/gates-web/medicoes/cn-main/content.json tests/gates-web/medicoes/casca-efeito/content.json
+tests/gates-web/medicoes/cn-main/content.json · base · 411: (b) 0 · doc 411→411 · nós 21
+tests/gates-web/medicoes/cn-main/content.json · base · 711: (b) 0 · doc 711→711 · nós 21
+tests/gates-web/medicoes/cn-main/content.json · base · 1138: (b) 10 · doc 1138→1138 · nós 23
+    borda do viewport | heading:e8d370949eb4#1 | heading/h3 n=11 [x 345.0 y 179.0 w 984.5 h 28.0] clip=[313,147,1048,461]
+    borda do viewport | texto:4a46a84458a9#1 | texto/div n=255 [x 345.0 y 231.0 w 984.5 h 192.0] clip=[313,147,1048,461]
+    borda do viewport | heading:0b0029061b39#1 | heading/h3 n=12 [x 1403.5 y 163.0 w 138.1 h 28.0] clip=[288,57,850,654] rola
+    borda do viewport | label:f05e840e0069#1 | label/label n=5 [x 1403.5 y 207.0 w 138.1 h 16.0] clip=[288,57,850,654] rola
+    borda do viewport | texto:331e3081d465#1 | texto/p n=19 [x 1403.5 y 223.0 w 138.1 h 20.0] clip=[288,57,850,654] rola
+    borda do viewport | texto:72026a1caa20#1 | texto/span n=17 [x 1403.5 y 268.0 w 68.1 h 32.0] clip=[288,57,850,654] rola
+    borda do viewport | texto:1056838aaef8#1 | texto/span n=18 [x 1471.6 y 268.0 w 70.0 h 32.0] clip=[288,57,850,654] rola
+    borda do viewport | heading:cbfaca9522d6#1 | heading/h3 n=17 [x 1403.5 y 350.0 w 138.1 h 56.0] clip=[288,57,850,654] rola
+    borda do viewport | texto:d2ba55e554a6#1 | texto/p n=30 [x 1404.5 y 487.0 w 136.1 h 40.0] clip=[288,57,850,654] rola
+    borda do viewport | texto:2e758a0f56bc#1 | texto/p n=44 [x 1404.5 y 531.0 w 136.1 h 32.0] clip=[288,57,850,654] rola
+tests/gates-web/medicoes/casca-efeito/content.json · base · 411: (b) 0 · doc 411→411 · nós 24
+tests/gates-web/medicoes/casca-efeito/content.json · base · 711: (b) 0 · doc 711→711 · nós 24
+tests/gates-web/medicoes/casca-efeito/content.json · base · 1138: (b) 9 · doc 1138→1271 · nós 24
+    página com rolagem horizontal | (página) | {"k":"(página)","tipo":"página com rolagem horizontal","de":1138,"para":1271}
+    borda do viewport | heading:0b0029061b39#1 | heading/h3 n=12 [x 1115.5 y 171.0 w 138.1 h 28.0] clip=—
+    borda do viewport | label:f05e840e0069#1 | label/label n=5 [x 1115.5 y 215.0 w 138.1 h 16.0] clip=—
+    borda do viewport | texto:331e3081d465#1 | texto/p n=19 [x 1115.5 y 231.0 w 138.1 h 20.0] clip=—
+    borda do viewport | texto:72026a1caa20#1 | texto/span n=17 [x 1115.5 y 276.0 w 68.1 h 32.0] clip=—
+    borda do viewport | texto:1056838aaef8#1 | texto/span n=18 [x 1183.6 y 276.0 w 70.0 h 32.0] clip=—
+    borda do viewport | heading:cbfaca9522d6#1 | heading/h3 n=17 [x 1115.5 y 358.0 w 138.1 h 56.0] clip=—
+    borda do viewport | texto:d2ba55e554a6#1 | texto/p n=30 [x 1116.5 y 495.0 w 136.1 h 40.0] clip=—
+    borda do viewport | texto:2e758a0f56bc#1 | texto/p n=44 [x 1116.5 y 539.0 w 136.1 h 32.0] clip=—
+# exit: 0
+
+# o texto de cada hash (sha256[0:12], a função de g-faixa-coleta.ts:21), calculado das frases do código de hoje:
+e8d370949eb4 "Chord Chart"
+0b0029061b39 "Song Details"
+f05e840e0069 "Album"
+cbfaca9522d6 "Performance Notes"
+d2ba55e554a6 "No performance notes available"
+2e758a0f56bc "Click Edit to add notes and performance tips"

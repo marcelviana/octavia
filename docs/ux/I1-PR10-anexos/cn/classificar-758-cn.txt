@@ -1,0 +1,26 @@
+# div. 758 — o classificador: o caso novo reprova com o classificador VELHO (git stash só do .mjs) e passa com o novo; o veredito sobre os JSON commitados é idêntico nos dois
+$ git stash push scripts/gates-web/g-faixa-classificar.mjs && pnpm exec vitest run tests/gates-web/g-faixa-classificar.test.ts
+     ✓ nó dentro do viewport e sem recorte: nenhum (b) 1ms
+     ✓ nó que passa da borda direita do viewport: (b) 1ms
+     ✓ nó fora da gaveta que não rola (overflow hidden): (b); fora de contêiner que rola: saída rolagem, não (b) 0ms
+     ✓ decisão 621: fora NA HORIZONTAL de contêiner que rola, sem a marca: (b); com data-rolagem="painel": (d′), não (b) 1ms
+     × div. 758 (I1-PR10): além da borda do viewport DENTRO do painel marcado que rola: (d′); sem a marca, ou num contêiner que só corta, segue (b) 5ms
+     ✓ texto que transborda o próprio nó com overflow escondido (elidir): (b) 0ms
+     ✓ página com rolagem horizontal: (b); nó sr-only fora de tudo: nada 0ms
+     ✓ some em 711: (e) "sem nó"; largura zero: (e); quebrou linha: (d′); nome longo no aria-label: saída nome-acessível 0ms
+     ✓ o nó existe mas perdeu parte do texto (chave mudou): (e) "texto some do nó", não "sem nó"; texto trocado do mesmo tamanho: (d′) 0ms
+     ✓ a faixa A (411): o (e) e o (b) reprovam (errata da I1-D11; div. 677) 0ms
+     ✓ Δ de até 4 px passa; 4,1 px é errata candidata 0ms
+     ✓ I1-PR6 (decisão 7): o par é pelo texto SEM o papel — o `texto` da folha casa com o `link` do app 0ms
+# exit: 1
+
+$ pnpm exec vitest run tests/gates-web/g-faixa-classificar.test.ts   # o novo
+ Test Files  1 passed (1)
+      Tests  14 passed (14)
+# exit: 0
+
+$ node scripts/gates-web/g-faixa-veredito.mjs tests/gates-web/medicoes   # velho × novo
+  · verify-email · AUTH-verify-reenviar-excecao: INALCANÇÁVEL (declarado) — o contexto não lança: o catch da tela não se alcança [hipótese] (I1-E1, div. 640)
+
+G-faixa: PASSA
+cmp velho × novo: idênticos

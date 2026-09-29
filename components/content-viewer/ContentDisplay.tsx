@@ -1,67 +1,32 @@
 "use client"
-import { Card, CardContent } from "@/components/ui/card"
+
+/**
+ * O corpo da visualização (I1-PR-10; folha 5, "corpo | detalhes"): a coluna do corpo — `flex 1 1 0` e
+ * **`min-width: 0`** (sem ele a linha longa em `whitespace-pre` empurrava a coluna lateral para fora da tela: os 9
+ * (b) de 1138 da linha de base, `docs/ux/I1-PR10-anexos/README.md` §6) — com a linha da tela no topo (a falha do
+ * arquivo; a da SESSÃO vence, decisão 14) e o(s) painel(is) do tipo. Em B e A, largura toda.
+ * O `scale(zoom)` inerte de antes saiu (o zoom estava sempre em 100 — div. 745).
+ */
+import { useState } from "react"
 import { ContentType, normalizeContentType } from "@/types/content"
+import { LinhaDaTela, type FalhaDaTela } from "@/components/identidade/linha-da-tela"
+import { FRASES_VIEW } from "@/components/content/frases-visualizacao"
+import type { ConteudoVisto } from "@/components/content/tipos"
 import { SheetMusicDisplay } from "./SheetMusicDisplay"
 import { TabDisplay } from "./TabDisplay"
 import { ChordDisplay } from "./ChordDisplay"
 import { LyricsDisplay } from "./LyricsDisplay"
 
-interface ContentDisplayProps {
-  content: any
-  zoom: number
-  currentPage: number
-}
-
-const getOrdinalSuffix = (num: number) => {
-  const j = num % 10,
-        k = num % 100;
-  if (j == 1 && k != 11) return "st";
-  if (j == 2 && k != 12) return "nd";
-  if (j == 3 && k != 13) return "rd";
-  return "th";
-}
-
-export function ContentDisplay({
-  content,
-  zoom,
-  currentPage,
-}: ContentDisplayProps) {
-  const contentType = normalizeContentType(content.content_type)
-
+export function ContentDisplay({ content }: { content: ConteudoVisto }) {
+  const [falha, setFalha] = useState<FalhaDaTela | null>(null)
+  const tipo = normalizeContentType(content.content_type)
   return (
-    <div className="flex-1">
-      <Card className="shadow-xl border border-amber-200 overflow-hidden">
-        <CardContent className="p-0">
-          <div
-            className="bg-white p-8 min-h-[calc(100vh-250px)] relative"
-            style={{
-              transform: `scale(${zoom / 100})`,
-              transformOrigin: "top center",
-            }}
-          >
-            <div className="space-y-6">
-              {contentType === ContentType.SHEET && (
-                <SheetMusicDisplay content={content} />
-              )}
-
-              {contentType === ContentType.TAB && (
-                <TabDisplay
-                  content={content}
-                  getOrdinalSuffix={getOrdinalSuffix}
-                />
-              )}
-
-              {contentType === ContentType.CHORDS && (
-                <ChordDisplay content={content} />
-              )}
-
-              {contentType === ContentType.LYRICS && (
-                <LyricsDisplay content={content} />
-              )}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+    <div className="flex flex-col gap-espaco-lg">
+      <LinhaDaTela falha={falha} rotuloTentar={FRASES_VIEW["acao.tentar"]} />
+      {tipo === ContentType.SHEET && <SheetMusicDisplay content={content} aoFalhar={setFalha} />}
+      {tipo === ContentType.TAB && <TabDisplay content={content} />}
+      {tipo === ContentType.CHORDS && <ChordDisplay content={content} />}
+      {tipo === ContentType.LYRICS && <LyricsDisplay content={content} />}
     </div>
   )
 }
