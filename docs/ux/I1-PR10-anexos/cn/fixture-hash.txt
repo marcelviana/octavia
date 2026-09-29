@@ -1,0 +1,14 @@
+$ node docs/ux/I1-PR10-anexos/cn/fixture-hash.mjs
+VIEW-partitura · 1138: fixture sim · página 1 de 12 sim · carregando não · erro não
+VIEW-partitura · 711: fixture sim · página 1 de 12 sim · carregando não · erro não
+VIEW-partitura · 411: fixture sim · página 1 de 12 sim · carregando não · erro não
+VIEW-partitura-cheia · 1138: fixture sim · página 1 de 12 não · carregando não · erro não
+VIEW-partitura-cheia · 711: fixture sim · página 1 de 12 não · carregando não · erro não
+VIEW-partitura-cheia · 411: fixture sim · página 1 de 12 não · carregando não · erro não
+VIEW-carregando-pdf · 1138: fixture não · página 1 de 12 não · carregando sim · erro não
+VIEW-carregando-pdf · 711: fixture não · página 1 de 12 não · carregando sim · erro não
+VIEW-carregando-pdf · 411: fixture não · página 1 de 12 não · carregando sim · erro não
+VIEW-erro-pdf · 1138: fixture não · página 1 de 12 não · carregando não · erro sim
+VIEW-erro-pdf · 711: fixture não · página 1 de 12 não · carregando não · erro sim
+VIEW-erro-pdf · 411: fixture não · página 1 de 12 não · carregando não · erro sim
+# exit: 0
