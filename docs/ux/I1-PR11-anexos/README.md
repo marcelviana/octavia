@@ -8,7 +8,8 @@
 > `Done in 17.3s using pnpm v10.28.0`. **Data**: 2026-09-29.
 > **Convenções**: `[medido]` = comando + saída literal (em `cn/`); `[lido]` = arquivo:linha; `[hipótese]` = o resto.
 > Divergências **a partir de 769** (a PR-10 fechou em 768, §23.7 dela).
-> **Estado**: commit 1 (gate-first) com o aval (§10.1).
+> **Estado**: commit 1 (gate-first, `f5260ec`) com o aval (§10.1) e **commit 2** (a implementação, §13–§19) — aguarda o
+> aceite do Marcel ("rodei"). PR [#346](https://github.com/marcelviana/octavia/pull/346).
 
 | arquivo | o que é |
 |---|---|
@@ -414,6 +415,23 @@ pergunto (div. 713).
 12. Frases novas do §3 aprovadas; entram na lista do bloco.
 13. Detalhes da tab e da letra "sem par" (a folha copiou os da cifra), listados.
 
+### 10.2 Os extras do commit 2 — aprovados `[Marcel, 2026-09-29]`
+
+Declarados antes do commit (o rito) e aprovados; vão também no corpo da PR:
+
+- `components/auth/aviso-de-sessao.tsx` — `/content/<id>/edit` passa a desenhar a linha de sessão DENTRO da tela (a
+  `LinhaDaTela` no topo do corpo e nos estados de carga), como a visualização (decisão 14 da PR-10).
+- `components/identidade/linha-da-tela.tsx` — a segunda linha opcional (`detalhe`, `muted`): *o que você escreveu
+  continua aqui* (N2).
+- `tailwind.config.ts` — `campo-duas-linhas` (2 × `touch.min`) e `campo-letra` (5 × `touch.min`), derivados (§2.4).
+- A biblioteca lê o sinal do `LIB-salvo` (`components/library/RefactoredLibrary.tsx`, `frases-lista.ts` + `edit.salvo`).
+- No medidor: `fabricado sem resposta` no log de requests (o `PUT` segurado ou abortado de propósito não é escrita); a
+  folha por estado (o `LIB-salvo` da folha 4 medido no fluxo do editor); `scripts/gates-web/g-faixa-editor-exemplos.ts`
+  (os exemplos da folha, dado puro, usados pelo medidor e pela pré-verificação).
+- Acordes rápidos na ORDEM da folha para os seis que ela tem (C Dm Em F G Am), depois os quatro de hoje (D A E B7) — o
+  conjunto é o de hoje (decisão 8); o botão insere o mesmo acorde (div. 792).
+- *Duplicar compasso* com o ícone `adicionar` (o catálogo não tem "copiar"): decisão, não desenho novo (div. 793).
+
 ## 11. Divergências — 769 a 791
 
 | # | origem | o que o prompt (ou o doc) presumiu | o que foi medido | destino |
@@ -454,3 +472,135 @@ Próxima divergência: **792**.
 | executor | Vitest do `PUT` | jsdom, `fetch` falso (nada sai); `Date` fixado |
 | — | `packages/identidade` | **não mudou** |
 | — | código do app (`app/`, `components/`, `lib/`, `hooks/`) | **0 linha** — o commit 1 é gate, instrumento, esperado, o teste do `PUT` e docs |
+
+---
+
+## 13. Commit 2 — o que mudou `[medido]`
+
+### 13.1 Por grupo (linhas antes → depois)
+
+| grupo | arquivos | o quê |
+|---|---|---|
+| **a rota** | `app/content/[id]/edit/page.tsx` 115 → 73 | todos os estados na casca (decisão 4); UM `dynamic` (eram dois aninhados, div. 787); a falha da carga por espécie (decisão 3); o `return null` virou *carregando…* |
+| **o salvar** | `components/content-edit-page-client.tsx` 47 → 57 | *Salvando…* e o *Salvar* inativo no envio (decisão 5); a falha com o motivo + N2, *Tentar de novo* repete o MESMO corpo (rede e 5xx); o sucesso marca `LIB-salvo` (decisão 1); os dois toasts saíram |
+| **o editor** | `content-editor.tsx` 203 → 108 · `editors/content-type-editor.tsx` 112 → 46 · `chord-editor.tsx` 335 → 86 · `tab-editor.tsx` 294 → 103 · `lyrics-editor.tsx` 53 → 39 · `unified-metadata-editor.tsx` 402 → 101 | a folha: cabeçalho (voltar *Voltar sem salvar* · título · tipo · chip SÓ com alteração · *Salvar*/*Salvando…* · *nada mudou desde que você abriu*), corpo por tipo \| *Detalhes* em `web.colunaLateral` (C) ou abaixo (B, A). O ESTADO e o corpo do `PUT` linha a linha os de antes |
+| **nasceram** | `components/editors/frases-editor.ts` (133) · `falhas-do-editor.ts` (58) · `campos.tsx` (96) · `informacoes.tsx` (40) · `partes-da-cifra.tsx` (89) · `partes-da-tab.tsx` (67) · `cabecalho-do-editor.tsx` (52) · `tela-de-estado.tsx` (47) · `lib/sinal-salvo.ts` (17) | as frases e as espécies; as peças (bloco, campo, seleção nativa com *▾*, caixa de marcar); os blocos da cifra e da tab; o cabeçalho; os estados sem editor |
+| **morreram** | `components/annotation-tools.tsx` (272) · `types/annotations.ts` (52) | inertes (decisão 6, I1-E19); `git grep` → 0 importadores. O `annotations: []` do corpo do `PUT` FICA (é do `content-editor`) |
+| **o serviço** | `lib/content-service.ts` (+10/−7) | `getContentById` e `updateContent`: o `Error` leva o `status` (aditivo; as mensagens são as de antes); sem usuário e sem token = 401 |
+| **extras aprovados** | §10.2 | `aviso-de-sessao.tsx`, `linha-da-tela.tsx`, `tailwind.config.ts`, `RefactoredLibrary.tsx`/`frases-lista.ts` |
+| **instrumento** | `g-faixa-conteudo.ts` (os estados do editor + `LIB-salvo`, tudo fabricado) · `g-faixa-editor-exemplos.ts` (novo) · `g-faixa-superficies.ts` (`content-edit` implementada; `folha` por estado) · `g-faixa-medir.ts` (a folha por estado; `fabricado sem resposta`) · `g-faixa-auth.ts` (`semResposta`) · `g-faixa-lista.ts` (exporta `conteudo`/`DADOS`) · `g-tok-arquivos.txt` (−1 `annotation-tools`, +9 nascidos) · `COMO-RODAR.md` ("I1-PR11") | §15 |
+| **docs do congelamento** | `DESIGN-I1/README.md` (§2.2: I1-E19, I1-E20; §5.1: as frases da PR-11) · `erratas.json` (`erratasFrase`: E19, E20) · `SHA256SUMS` (a linha do `README.md`: `bcde6e59…` → `c09d409a…`; `shasum -a 256 -c` → **14/14 OK**) | — |
+| **testes** | `tests/gates/i1-editor-put.test.tsx` (só os seletores) · `components/editors/__tests__/editor-estados.test.tsx` (novo, 11) · `lib-salvo.test.tsx` (novo, 3) | §14 |
+
+### 13.2 Onde o erro era engolido — e como ficou
+
+| era (§2.2) | agora |
+|---|---|
+| `edit/page.tsx:39-41` — uma frase para rede, 401, 429, 5xx e 404 | `especieDaCarga` pelo `status`: *sem conexão* e *falha no servidor* com *Tentar de novo* (uma carga por clique); *o servidor não aceitou a sessão, entre de novo* e *muitas tentativas, tente de novo em instantes* sem ação; 404, 400 e o corpo nulo → *este conteúdo não existe* (sem linha) |
+| `content-service.ts` — o status se perdia | o `Error` leva `status` (aditivo) |
+| `content-edit-page-client.tsx:29-32` — toast *"Failed to save changes"* | a linha acima do corpo: *não foi possível salvar — {motivo}* + *o que você escreveu continua aqui*; rede e 5xx com *Tentar de novo* (o mesmo corpo); 400 → *o servidor recusou os dados*; 404 → *este conteúdo não existe mais*; 401/429 sem ação |
+| `:21-28` — toast de sucesso; a biblioteca não sabia | `marcarSalvo()` e a `/library` de antes; a biblioteca diz *alterações salvas* (sucesso), uma vez |
+| `content-editor.tsx:74-76` — o chip ao abrir (`null × ""`) | alteração = corpo do `PUT` (sem `updated_at`) ≠ corpo de abertura (decisão 2) |
+| `edit/page.tsx:72-74` — `return null` | *carregando…* na casca |
+
+### 13.3 As heranças D (não tocadas)
+
+- A poluição do `content_data` (§1.2): o corpo do `PUT` é gate byte a byte — **5/5** contra a fixture da `main`.
+- **Div. 771**: o *Compasso* segue editável e fora do corpo (`content-editor.tsx`, `corpoDoPut`, sem `time_signature`;
+  `unified-metadata-editor.tsx`, o `selecao("time_signature", …)`). Com a decisão 2, mudá-lo não ativa o *Salvar*.
+- **Div. 776**: a tab sem `measures` abre o compasso-fixture (`tab-editor.tsx`, `compassoFixture`).
+- **Div. 784**: *"Verse 1"*/*"Content"* como nome padrão de seção (`chord-editor.tsx`) — valor gravado.
+
+## 14. Os testes `[medido]`
+
+| teste | o quê | aqui | na `main` |
+|---|---|---|---|
+| `tests/gates/i1-editor-put.test.tsx` | o corpo do `PUT`, byte a byte, um content de cada tipo (só os seletores mudaram) | **5/5** | 5/5 (é o antes) |
+| `components/editors/__tests__/editor-estados.test.tsx` | chip só com alteração · *Salvando…* + clique duplo = UM `PUT` · a carga por espécie (rede, 401, 429, 500; 404 e 400) · o salvar por espécie (rede, 400, 404, 500; *Tentar de novo* repete o mesmo corpo) | **11/11** | **11 falham** (`cn/editor-estados-main.txt`): o *Save Changes* já ativo ao abrir (`toBeDisabled`); o clique duplo manda dois (`expected 2 to be 1`); *"Content Not Found"* no lugar das frases |
+| `components/editors/__tests__/lib-salvo.test.tsx` | o editor marca o sinal (uma vez); a biblioteca diz *alterações salvas*; a falha vence | **3/3** | a suíte falha no import (`@/lib/sinal-salvo` não existe) |
+| CN da PR-1 · visualizador · tab | — | **15/15 · 6/6 · 1/1** | — |
+
+`pnpm test` → `Test Files 114 passed | 3 skipped (117)` · `Tests 1121 passed | 60 skipped (1181)` · `# exit: 0`
+(`cn/pnpm-test.txt`; a PR-10 terminou em 111 / 1098). **Testes do editor velho**: não havia nenhum (§1.1); nenhum morreu.
+
+**O clique duplo** (div. 794): com dois `click` no mesmo instante a `main` mandava UM `PUT` (o segundo evento não
+chegava ao `fetch` no jsdom); com **100 ms** entre eles (o clique duplo de uma pessoa) mandava **dois** — o teste usa o
+intervalo.
+
+## 15. O instrumento
+
+- `content-edit` implementada: `EDIT-cifra`, `-tab`, `-letra` (a alteração local: marcar *Favorita* — nenhum texto muda),
+  `-sem-mudancas`, `-salvando` (o `PUT /api/content` segurado), `-salvar-erro` (abortado → *sem conexão*), `-carregando`
+  (o `GET` segurado), `-carregando-editor` (o *chunk* segurado, `[hipótese]` sobre o nome), `-erro-rede/-auth/-limite/
+  -servidor`, `-404`; `LIB-salvo` (`PUT` fabricado 200 → a `/library` com as linhas da folha 4, medido contra a folha 4).
+  Inalcançáveis com sessão: `-carregando-auth`, `-sem-usuario`. Mais os cinco do 1b (`base-*`, `erro-pdf`).
+- **`fabricado sem resposta`**: o `PUT` segurado (solto no fim) ou abortado de propósito falha no navegador; antes o log
+  o marcava `FALHA`/`pendente` e o veredito o contaria como escrita. O `semResposta` (`g-faixa-auth.ts`) marca a request.
+- **A hidratação** (div. 795): no `next dev` o HTML do SSR chega antes dos *handlers* — o 1º clique em *Favorita* se
+  perdia (sonda: `aria-checked false`, sem chip). O `alterar` repete o clique até o chip aparecer.
+
+## 16. A pré-verificação sem sessão (`pre-verificacao/`) `[medido]`
+
+`next dev -p 3110` **sem `.env`** numa cópia da árvore (rsync sem `.env*`, `node_modules` por link), com
+`pagina-fumaca.tsx` em `app/fumaca-i1pr11/[estado]/page.tsx` (os componentes reais com os exemplos da folha; apagada no
+fim); `rodar.ts` com a mesma `coletar` e o mesmo `classificarEstado`, contra `esperado/6-content-editor.json`; toda
+escrita a `/api/*` abortada (0). `EDIT-sem-usuario` também pela fumaça: a rota real sem cookie vai ao `/login` pelo
+middleware (`307`, medido). Saída `pre-verificacao/saida.txt`; nós `pre-verificacao/medicoes.json` (só fixture).
+
+```
+TOTAL: 45 (estado × largura) · (e) 0 · (b) 0 · scrollWidth = viewport em 45/45 · errata candidata (C e B) 0 · escritas a /api abortadas 0
+```
+
+**Cinco rodadas; o que acharam e foi consertado antes do commit**: (1) o clique antes da hidratação (div. 795); (2)
+*Detalhes* 50 px estreito — a folha é `content-box` (320 de conteúdo + respiro), `c:box-content` (div. 796); os campos
+altos em 75,6 px — o `min-h-toque-min` do campo vinha depois no CSS e vencia o `min-h-campo-*` (`ENTRADA_ALTA`, div. 797);
+os `data-testid` que não são âncora tiravam o par de nós de texto igual (*Salvar*, o chip, *Favorita*) e marcavam
+invólucros como nós (saíram; `data-tela` para o medidor, div. 798); as cordas da tab cortadas em 411 (`self-start`: a
+largura é a da corda e o painel rola, div. 799); a ordem dos acordes (§10.2); (3) a prévia sem a linha em branco da
+folha; (4) a prévia da tab em minúscula inteira (*eadgbe*, visto na captura em A; só a inicial — div. 800). **Sem par**,
+por estado: os dados de exemplo que a folha escreve dentro das caixas (o valor pareia pela âncora do campo), *Dó*
+(I1-E20), os quatro acordes que diferem, a prévia da cifra (*Dó* × *C*), *Buscar…*/*MV* (a casca, sem usuário) e, do app,
+a `<nav>`, o campo da busca e o *Adicionar tag* (o *+* que a folha não desenha).
+
+**Capturas** (`capturas/`, 15): `EDIT-cifra`, `-tab`, `-letra`, `-salvar-erro`, `-erro-rede` × C-1138 · B-711 · A-411 — da
+fumaça (fixture, sem conta; o "N" no canto é o indicador do `next dev`).
+
+## 17. Os gates — verdes `[medido]`
+
+| gate / suíte | resultado | arquivo |
+|---|---|---|
+| G-tok | **PASSA**: (i) 26/26, 0 órfãs; (ii) `arquivos: 84 · literais de identidade acusados: 0 · toasts: 0 · imports de ui: 0` — **440 → 0** | `cn/g-tok-depois.txt` |
+| G-back | **PASSA** — o `PUT /api/content` e o núcleo não mudaram (`lib/content-service.ts` é cliente, fora do núcleo) | `cn/g-back-depois.txt` |
+| G-palco | **PASSA — 0** | `cn/g-palco.txt` |
+| `pnpm test` | `114 passed \| 3 skipped (117)` · `1121 passed \| 60 skipped (1181)` | `cn/pnpm-test.txt` |
+| os testes da PR · CN da PR-1 | 44/44 (+1 pulado, o `CN_GRAVAR`) · **15/15** | `cn/testes-da-pr.txt`, `cn/cn-pr1.txt` |
+| `tsc --noEmit` · `pnpm lint` | 0 · ✔ | `cn/tsc.txt`, `cn/lint.txt` |
+| `pnpm build` | `✓ Compiled successfully`; `ƒ /content/[id]/edit 6.92 kB`; `# exit: 0` (cópia sem `.env`) | `cn/build.txt` |
+| inércia das públicas | 12 (estado × largura) nos dois lados, **12 idênticos**; `INÉRCIA: PASSA` | `cn/inercia-publicas.txt` |
+| `pdf-viewer` · `music-text` | `git diff --stat origin/main --` os dois → **vazio**: sem `casca-efeito` da visualização | `cn/pdf-viewer-music-text.txt` |
+
+## 18. Divergências — 792 a 800
+
+| # | origem | o que se presumiu | o que foi medido | destino |
+|---|---|---|---|---|
+| **792** | D | decisão 8: *o conjunto de hoje* | a ordem de hoje punha G, Am, Em, Dm em outras casas (4 candidatas) | a ordem da folha para os seis comuns — extra aprovado (§10.2) |
+| **793** | D | *Duplicar compasso* fica | o catálogo não tem "copiar" | ícone `adicionar` — extra aprovado |
+| **794** | T | *"clique duplo deixa de mandar dois `PUT`"* | na `main`, dois cliques no mesmo instante mandavam UM; com 100 ms, dois | o teste usa 100 ms (§14) |
+| **795** | T | — | no `next dev` o clique chega antes da hidratação | `alterar` repete até o chip (medidor e roteiro) |
+| **796** | A | *Detalhes* em `web.colunaLateral` | a folha a mede em `content-box` (320 + respiro) | `c:box-content` |
+| **797** | A | — | `min-h-toque-min` × `min-h-campo-*`: a ordem do CSS decide | `ENTRADA_ALTA` sem o `min-h` do campo de uma linha |
+| **798** | T | — | `data-testid` fora das âncoras tira o par pelo texto e marca invólucros como nós | só as âncoras `campo-*` ficam; `data-tela` para o medidor |
+| **799** | A | — | a corda da tab esticada pelo `flex-col` cortava o texto no próprio campo em 411 | `self-start`: rola no painel |
+| **800** | A | — | a prévia da tab minusculava as notas da afinação | só a inicial |
+
+Próxima divergência: **801**.
+
+## 19. Contabilidade (commit 2)
+
+| quem | item | valor |
+|---|---|---|
+| executor | requests a prod ou preview · logins · `.env*` abertos · escritas · contas | **0 · 0 · 0 · 0 · 0** |
+| executor | `next dev` **sem** `.env`, porta 3110, numa cópia da árvore (sem `.env*`) | 1 subida: 5 rodadas da pré-verificação e a inércia; parada; a fumaça apagada |
+| executor | `pnpm build` | na mesma cópia, sem `.env` |
+| executor | a `main` para os testes novos | worktree temporária de `8fe45e8` (`--detach`), só os arquivos de teste copiados |
+| — | `packages/identidade` | **não mudou** |

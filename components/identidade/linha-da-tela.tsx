@@ -14,6 +14,8 @@ import { LinhaDeAviso, type TipoDeAviso } from "@/components/identidade/linha-de
 export interface FalhaDaTela {
   tipo: TipoDeAviso
   motivo: string
+  /** I1-PR-11: a segunda linha (`muted`) — *o que você escreveu continua aqui* (N2) na falha de salvar */
+  detalhe?: string
   /** sem ele, a linha não tem ação (401/403, 429 — README-design §3) */
   onTentar?: () => void
 }
@@ -33,6 +35,7 @@ export function LinhaDaTela({ falha, rotuloTentar }: { falha: FalhaDaTela | null
     <LinhaDeAviso
       tipo={falha.tipo}
       motivo={falha.motivo}
+      detalhe={falha.detalhe}
       acao={falha.onTentar ? { rotulo: rotuloTentar, onPress: falha.onTentar } : undefined}
     />
   )

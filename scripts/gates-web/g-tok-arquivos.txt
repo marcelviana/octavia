@@ -89,4 +89,13 @@ components/chord-editor.tsx
 components/tab-editor.tsx
 components/lyrics-editor.tsx
 components/unified-metadata-editor.tsx
-components/annotation-tools.tsx
+# Commit 2: o annotation-tools morreu (decisão 6 do aval; sai da lista); os que nasceram.
+components/editors/frases-editor.ts
+components/editors/falhas-do-editor.ts
+components/editors/campos.tsx
+components/editors/informacoes.tsx
+components/editors/partes-da-cifra.tsx
+components/editors/partes-da-tab.tsx
+components/editors/cabecalho-do-editor.tsx
+components/editors/tela-de-estado.tsx
+lib/sinal-salvo.ts

@@ -58,6 +58,8 @@ export const FRASES_LISTA = {
   "lib.vazio.busca": "nada encontrado",
   "lib.vazio.busca.apoio": "mude a busca ou os filtros",
   "lib.erro": "não foi possível carregar a biblioteca — {motivo}",
+  // I1-PR-11 (`LIB-salvo`, README-design §5.5): o sucesso de salvar do editor, dito pela biblioteca (decisão 1)
+  "edit.salvo": "alterações salvas",
   "lib.apagar.titulo": "Apagar conteúdo",
   "lib.apagar.pergunta": "apagar “{título}”? não dá para desfazer",
   "lib.apagar.confirmar": "Apagar",

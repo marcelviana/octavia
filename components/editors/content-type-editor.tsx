@@ -1,20 +1,33 @@
 "use client"
 
+/**
+ * O corpo do editor por tipo (I1-PR-11). Cifra, tab e letra: o editor de cada tipo, com a MESMA entrada e a MESMA
+ * junção de antes (`{ ...content, ...content.content_data }` e o `handleContentChange` que espalha o que volta
+ * dentro do `content_data` — a poluição do Bloco D, §1.2 dos anexos, não tocada). Partitura (decisão 6 do aval,
+ * I1-E19 — a folha não tem estado para ela): o PAINEL da visualização (`SheetMusicDisplay`: o PDF sem altura fixa, a
+ * imagem com `onError`, a notação, o vazio, o formato), e a falha dele sobe para a linha da tela. O
+ * `annotation-tools` inerte de antes (ferramenta fixa em "select", fundo que nunca aparecia) morreu.
+ */
 import { ChordEditor } from "@/components/chord-editor"
 import { LyricsEditor } from "@/components/lyrics-editor"
 import { TabEditor } from "@/components/tab-editor"
-import { AnnotationTools } from "@/components/annotation-tools"
-import PdfViewer from "@/components/pdf-viewer"
-import Image from "next/image"
+import { SheetMusicDisplay } from "@/components/content-viewer/SheetMusicDisplay"
+import type { FalhaDaTela } from "@/components/identidade/linha-da-tela"
 import { ContentType, normalizeContentType } from "@/types/content"
-import { urlHasExtension } from "@/lib/utils"
+
+const POR_TIPO: Partial<Record<ContentType, typeof ChordEditor>> = {
+  [ContentType.CHORDS]: ChordEditor,
+  [ContentType.TAB]: TabEditor,
+  [ContentType.LYRICS]: LyricsEditor,
+}
 
 interface ContentTypeEditorProps {
   content: any
   onChange: (content: any) => void
+  aoFalharArquivo: (falha: FalhaDaTela | null) => void
 }
 
-export function ContentTypeEditor({ content, onChange }: ContentTypeEditorProps) {
+export function ContentTypeEditor({ content, onChange, aoFalharArquivo }: ContentTypeEditorProps) {
   const handleContentChange = (newData: any) => {
     onChange({
       ...content,
@@ -26,87 +39,8 @@ export function ContentTypeEditor({ content, onChange }: ContentTypeEditorProps)
   }
 
   const type = normalizeContentType(content.content_type)
-
-  switch (type) {
-    case ContentType.CHORDS:
-      return (
-        <ChordEditor
-          content={{
-            ...content,
-            ...content.content_data,
-          }}
-          onChange={handleContentChange}
-        />
-      )
-    case ContentType.TAB:
-      return (
-        <TabEditor
-          content={{
-            ...content,
-            ...content.content_data,
-          }}
-          onChange={handleContentChange}
-        />
-      )
-    case ContentType.SHEET:
-      if (content.file_url) {
-        const url = content.file_url
-        if (urlHasExtension(url, ".pdf")) {
-          return (
-            <PdfViewer
-              url={content.file_url}
-              className="w-full h-[calc(100vh-250px)]"
-              fullscreen
-            />
-          )
-        }
-        if (
-          urlHasExtension(url, ".png") ||
-          urlHasExtension(url, ".jpg") ||
-          urlHasExtension(url, ".jpeg")
-        ) {
-          return (
-            <div className="flex justify-center">
-              <Image
-                src={content.file_url}
-                alt="Sheet music"
-                width={800}
-                height={800}
-                className="w-full h-auto"
-                style={{ maxHeight: "calc(100vh - 250px)", objectFit: "contain" }}
-              />
-            </div>
-          )
-        }
-      }
-      return (
-        <AnnotationTools
-          content={{
-            ...content,
-            ...content.content_data,
-          }}
-          annotations={content.content_data?.annotations || []}
-          selectedTool="select"
-          zoom={100}
-          onAnnotationsChange={(annotations) => handleContentChange({ annotations })}
-          onContentChange={handleContentChange}
-        />
-      )
-    case ContentType.LYRICS:
-      return (
-        <LyricsEditor
-          content={{
-            ...content,
-            ...content.content_data,
-          }}
-          onChange={handleContentChange}
-        />
-      )
-    default:
-      return (
-        <div className="p-6 text-center">
-          <p className="text-[#A69B8E]">Editor for {content.content_type} is not yet implemented.</p>
-        </div>
-      )
-  }
+  if (type === ContentType.SHEET) return <SheetMusicDisplay content={content} aoFalhar={aoFalharArquivo} />
+  // `normalizeContentType` cai em Lyrics no resto (types/content.ts): o "not yet implemented" de antes era inalcançável
+  const Editor = POR_TIPO[type] ?? LyricsEditor
+  return <Editor content={{ ...content, ...content.content_data }} onChange={handleContentChange} />
 }

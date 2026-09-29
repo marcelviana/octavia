@@ -52,7 +52,8 @@ const ID = (n: number) => `00000000-0000-4000-8000-00000000000${n}`
 /** O roteiro de cada caso: a edição feita na tela. `rotulo` → o controle; o antes (código da `main`) e o depois. */
 export interface Caso { nome: string; content: Record<string, unknown>; editar: () => Promise<void> }
 
-const campo = (placeholder: string) => screen.findByPlaceholderText(placeholder)
+// I1-PR-11, commit 2: os seletores passam aos `data-testid` do editor novo (os rótulos mudaram); a intenção é a mesma
+const campo = (testid: string) => screen.findByTestId(testid)
 const mudar = async (el: Promise<HTMLElement>, valor: (v: string) => string) => {
   const e = (await el) as HTMLInputElement
   fireEvent.change(e, { target: { value: valor(e.value) } })
@@ -64,15 +65,15 @@ const CASOS: Caso[] = [
     content: { ...base, id: ID(1), title: 'Linha de 120 colunas', content_type: 'Chords',
       content_data: { chords: '[Verso curto — controle]\nC7M      G7\nLa la la, la la lá' } },
     editar: async () => {
-      await mudar(campo('Enter lyrics for this section...'), (v) => `${v}\nLa la lá (CN)`)
-      await mudar(campo('Album or collection'), () => 'Álbum do CN')
+      await mudar(campo('campo-secao-letra'), (v) => `${v}\nLa la lá (CN)`)
+      await mudar(campo('campo-album'), () => 'Álbum do CN')
     },
   },
   {
     nome: 'cifra em seções',
     content: { ...base, id: ID(2), title: 'Linha de 120 colunas', content_type: 'Chords', key: 'C', bpm: 96,
       content_data: { chords: 'C7M G7', sections: [{ id: 1, name: 'Verso curto — controle', chords: 'C7M G7', lyrics: 'La la la, la la lá' }] } },
-    editar: async () => { await mudar(campo('Am F C G'), (v) => `${v} Dm7`) },
+    editar: async () => { await mudar(campo('campo-secao-progressao'), (v) => `${v} Dm7`) },
   },
   {
     nome: 'letra',
@@ -97,14 +98,14 @@ const CASOS: Caso[] = [
     content: { ...base, id: ID(5), title: 'Partitura de 12 páginas', artist: 'Compositor anônimo', content_type: 'Sheet',
       file_url: 'https://cn.supabase.co/storage/v1/object/public/content-files/cn-partitura.pdf', content_data: null },
     editar: async () => {
-      fireEvent.click(await screen.findByText('Organization'))
-      await mudar(campo('Add any notes about this content...'), () => 'nota do CN')
+      // antes: abrir o acordeão *Organization*; o *Detalhes* novo não tem acordeão (decisão 10)
+      await mudar(campo('campo-notas'), () => 'nota do CN')
     },
   },
 ]
 
-/** O botão de salvar — o nome muda no redesenho; o clique é o mesmo. */
-const salvar = async () => fireEvent.click(await screen.findByRole('button', { name: /Save Changes/ }))
+/** O botão de salvar — o nome muda no redesenho (antes *Save Changes*); o clique é o mesmo. */
+const salvar = async () => fireEvent.click(await screen.findByRole('button', { name: 'Salvar' }))
 
 let corpos: string[] = []
 beforeEach(() => {

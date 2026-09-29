@@ -1,0 +1,2 @@
+$ git diff --stat origin/main -- components/pdf-viewer.tsx components/music-text.tsx
+(vazio: nenhum dos dois mudou)

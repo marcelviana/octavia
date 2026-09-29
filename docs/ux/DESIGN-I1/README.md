@@ -203,6 +203,17 @@ estado **sem seção** — é o que a I1-E1 e a I1-E2 passam a cobrir, cada uma 
 *"286 T-I1-R × 282"* que a E15 fecharia por acaso (div. 760). A I1-E16, a I1-E17 e a I1-E18 são do G-faixa
 (`erratasFaixa`, com o `n` da pré-verificação sem sessão da I1-PR-10: 2, 13 e 0 — o aceite confirma).
 
+**Do aval da I1-PR-11** `[Marcel, 2026-09-29; aval do commit 1 da I1-PR-11, itens 6 e 9]` — mesmas colunas:
+
+| id | o que a folha mostra | o que vale | onde se aplica | div. | efeito |
+|---|---|---|---|---|---|
+| **I1-E19** | a folha `6-content-editor` não tem estado para a **partitura** (nenhuma seção de content `Sheet`); o editor de antes tinha três ramos (o PDF de altura fixa, a imagem sem `onError`, o `annotation-tools` inerte) | **a folha não tem estado para partitura; vale o painel da folha 5**: no corpo do editor, o painel *Partitura* da visualização (`VIEW-partitura`, `-carregando-pdf`, `-erro-pdf`, `-vazio-partitura`, `-erro-formato` e a imagem — as mesmas seções e erratas da folha 5, I1-E15…E17), com *Detalhes* ao lado; o `annotation-tools` sai | `6-content-editor` (a partitura aberta no editor) | 775 (I1-PR-11) | leitura |
+| **I1-E20** | o Tom escrito *Dó* (em *Informações* e em *Detalhes* de `EDIT-cifra`, `-sem-mudancas`, `-salvando`, `-salvar-erro`, e em *Detalhes* de `EDIT-tab`, `EDIT-letra`) e *tom: Dó* na prévia | o Tom é o **valor como é gravado**, na notação de cifra (*C*, *Am*, *F#m*…, os 38 de antes) — no campo, na opção e na prévia (*tom: C*); a §5.7 não nomeia as notas | `6-content-editor` | 779 (I1-PR-11) | leitura |
+
+As duas são de **leitura** e nenhum gate as acha: a I1-E19 não tem seção (o G-faixa mede a partitura do editor só como
+`casca-efeito`, sem moldura), e a I1-E20 muda só o texto dentro de uma caixa que pareia pela âncora do campo (o nó do
+*Dó* da folha sai "sem par"). Ficam na lista `erratasFrase` do `erratas.json` (registro, nenhum gate lê).
+
 ## 3 · O bloco `web` de tokens — insumo da PR-4 (`packages/identidade`)
 
 Exatamente como o `README-design.md` §2.1:
@@ -860,6 +871,7 @@ O README-design não muda; as frases que as PRs de tela propõem e o Marcel apro
 |---|---|---|---|
 | I1-PR-9 | *artista desconhecido* · *Favoritar “{título}”* / *Tirar “{título}” das favoritas* (nomes acessíveis) · os 12 meses da data curta (*jan* … *dez*) | commit 1, item 11 (divs. 706–708) | `components/library/frases-lista.ts`; `docs/ux/I1-PR9-anexos/README.md` §12.2 |
 | I1-PR-10 | *Diminuir o zoom* · *Aumentar o zoom* (nomes acessíveis) · *capo: nenhum* · *afinação: padrão (EADGBE)* · *{n}ª casa* · os rótulos de campo *álbum*, *dificuldade*, *gênero*, *tom*, *compasso*, *andamento* (+ *{x} BPM*), *etiquetas*, *criado*, *alterado* · e a composta *não foi possível abrir o arquivo — {motivo}* (a falha da imagem, item 9) | commit 1, itens 9 e 13 (divs. 741, 747, 748) | `components/content/frases-visualizacao.ts`; `docs/ux/I1-PR10-anexos/README.md` |
+| I1-PR-11 | os placeholders *casa* (capo) · *álbum ou coleção* · *escolha o gênero* · *escolha* · *adicionar tag* · *notas sobre este conteúdo* · *ex.: Verso 1, Refrão* · a forma da prévia *tom: {x} · capo: {x} · BPM: {x}* / *afinação: {x} · …* · *este conteúdo não existe mais* (o 404 ao salvar) · *o servidor recusou os dados* (§5.1, no salvar) · os nomes acessíveis *Remover seção* · *Duplicar compasso* · *Remover compasso* · *corda {n} do compasso {m}* · *Adicionar tag* · *Tirar a tag “{x}”* · os 16 gêneros em pt-BR · *Especialista* · *alterações salvas* (`edit.salvo`, §5.5, agora dita pela biblioteca) · e, na forma composta, os motivos com **vírgula** (*o servidor não aceitou a sessão, entre de novo* · *muitas tentativas, tente de novo em instantes* — a folha; a forma com travessão da lista da PR-9 é herança de harmonização) | commit 1, itens 11 e 12 (divs. 782, 783) | `components/editors/frases-editor.ts`; `docs/ux/I1-PR11-anexos/README.md` §3 |
 
 ## 6 · A conferência — §2 (a)–(f) do prompt
 

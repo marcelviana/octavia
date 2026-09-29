@@ -43,7 +43,12 @@ export type Resposta = { status?: number; corpo?: unknown; headers?: Record<stri
  * e são abortadas por `soltar` antes de o contexto fechar — um `route` pendurado trava o `close()`.
  */
 const segurados = new WeakMap<Page, Route[]>()
-export const segurar = (page: Page, route: Route) => { segurados.set(page, [...(segurados.get(page) ?? []), route]) }
+/**
+ * I1-PR11: as requests que o medidor FABRICOU sem resposta — seguradas (soltas, isto é, abortadas, no fim) ou abortadas
+ * de propósito (a rede que cai). O log as marca `fabricado …` (não saíram: não são escrita, `g-faixa-medir.ts`).
+ */
+export const semResposta = new WeakSet<object>()
+export const segurar = (page: Page, route: Route) => { semResposta.add(route.request()); segurados.set(page, [...(segurados.get(page) ?? []), route]) }
 export async function soltar(page: Page) {
   for (const r of segurados.get(page) ?? []) await r.abort().catch(() => {})
   segurados.delete(page)
@@ -53,7 +58,7 @@ export async function soltar(page: Page) {
 export async function responder(route: Route, r: Resposta) {
   if (route.request().method() === 'OPTIONS') return route.fulfill({ status: 204, headers: CORS })
   if (r === 'segurar') return segurar(route.request().frame().page(), route)
-  if (r === 'abortar') return route.abort('internetdisconnected')
+  if (r === 'abortar') { semResposta.add(route.request()); return route.abort('internetdisconnected') }
   return route.fulfill({ status: r.status ?? 200, headers: { ...CORS, 'content-type': 'application/json', ...r.headers }, body: JSON.stringify(r.corpo ?? {}) })
 }
 const erroGoogle = (message: string): Resposta => ({ status: 400, corpo: { error: { code: 400, message, errors: [{ message, domain: 'global', reason: 'invalid' }] } } })

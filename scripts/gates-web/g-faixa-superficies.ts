@@ -30,6 +30,8 @@ export interface Estado {
   secao?: string
   /** I1-PR-10: a URL deste estado, quando muda por estado (o content de cada tipo); `null` = NÃO ALCANÇADO */
   rota?: () => string | null
+  /** I1-PR-11: a folha deste estado, quando não é a da superfície (o `LIB-salvo` da folha 4, medido no fluxo do editor) */
+  folha?: string
 }
 
 export interface Superficie {
@@ -82,10 +84,11 @@ export const SUPERFICIES: Superficie[] = [
     implementada: true,
     estados: ESTADOS_CONTENT,
   },
-  // I1-PR10 (commit 1b, decisão 4 do aval): o editor velho, só para a `casca-efeito` do `pdf-viewer` (que a PR-10
-  // restiliza e o editor monta). TUDO fabricado (`g-faixa-conteudo.ts`): o `GET /api/content/g-faixa` com um content
-  // de cada tipo e o arquivo da partitura — nenhuma leitura de content real, nenhuma escrita. Folha 6 = PR-11.
-  { id: 'content-edit', rota: `/content/${ID_EDITOR}/edit`, sessao: true, publica: false, folha: '6-content-editor', implementada: false, estados: ESTADOS_CONTENT_EDIT },
+  // I1-PR11: a superfície 6, content editor, IMPLEMENTADA — os 15 estados da folha `6-content-editor` e o `LIB-salvo` da
+  // folha 4 (o fluxo do salvar), TUDO fabricado (`g-faixa-conteudo.ts`): o `GET /api/content/g-faixa` com os exemplos da
+  // folha, o `PUT /api/content` segurado/abortado/200 — nenhuma leitura de content real, nenhum `PUT` que saia. Mais os
+  // cinco estados do 1b da PR-10 (`base-*`, `erro-pdf`), a `casca-efeito` do editor (antes × depois).
+  { id: 'content-edit', rota: `/content/${ID_EDITOR}/edit`, sessao: true, publica: false, folha: '6-content-editor', implementada: true, estados: ESTADOS_CONTENT_EDIT },
 ]
 
 /** `G_FAIXA_SUPERFICIES=login,dashboard` restringe a rodada. */

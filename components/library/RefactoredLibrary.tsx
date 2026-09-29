@@ -2,14 +2,14 @@
 
 /**
  * A BIBLIOTECA (I1-PR-9; folha `4-content-lista`: `LIB`, `LIB-filtros`,
- * `LIB-mais`, `LIB-carregando`, `LIB-vazio`, `LIB-vazio-busca`, `LIB-erro`,
+ * `LIB-mais`, `LIB-carregando`, `LIB-vazio`, `LIB-vazio-busca`, `LIB-erro`, `LIB-salvo` (I1-PR-11),
  * `LIB-apagar`, `SESSAO-nao-renovada`). O cabeçalho; a linha da tela abaixo dele
  * (uma por tela: a sessão vence; senão a falha da carga sem lista na tela —
  * `lib.erro` com o motivo pelo `status`, decisão 6 do aval); o carregando, o
  * vazio OU a lista (vazio ≠ erro); a paginação; o diálogo de apagar. Os dados, os
  * filtros, a ordem e as ações são os de antes (`useLibraryData`, `useContentActions`).
  */
-import React, { memo, useMemo } from "react";
+import React, { memo, useEffect, useMemo, useState } from "react";
 import { useFirebaseAuth } from "@/contexts/firebase-auth-context";
 import { useLibraryData } from "@/hooks/use-library-data";
 import { useContentActions } from "@/hooks/use-content-actions";
@@ -18,6 +18,7 @@ import { LinhaDaTela } from "@/components/identidade/linha-da-tela";
 import { FRASES_LISTA, comDado, especieDaFalha, linhaDaFalha } from "@/components/library/frases-lista";
 import type { LibraryProps } from "@/types/library";
 import { calculateTotalPages } from "@/lib/library-utils";
+import { consumirSalvo } from "@/lib/sinal-salvo";
 import LibraryHeader from "./LibraryHeader";
 import LibraryPagination from "./LibraryPagination";
 import LibraryEmptyState from "./LibraryEmptyState";
@@ -52,6 +53,11 @@ const RefactoredLibrary = memo<LibraryProps>(function RefactoredLibrary({
     onToggleFavorite: acoesHook.toggleFavoriteItem,
   }), [acoesHook]);
 
+  // I1-PR-11 (`LIB-salvo`, decisão 1): o editor acabou de salvar → *alterações salvas* (sucesso), lido e apagado uma
+  // vez ao montar; com uma falha de carga na tela, vence a falha (uma linha por tela)
+  const [salvo, setSalvo] = useState(false);
+  useEffect(() => { if (consumirSalvo()) setSalvo(true); }, []);
+
   const vazia = content.length === 0;
   const carregando = loading && vazia;
   const falha = !loading && vazia && erro ? linhaDaFalha(especieDaFalha(erro)) : null;
@@ -69,7 +75,8 @@ const RefactoredLibrary = memo<LibraryProps>(function RefactoredLibrary({
       />
       <LinhaDaTela
         rotuloTentar={FRASES_LISTA["acao.tentar"]}
-        falha={falha ? { tipo: falha.tipo, motivo: comDado("lib.erro", { motivo: falha.motivo }), onTentar: falha.tentar ? () => void reload() : undefined } : null}
+        falha={falha ? { tipo: falha.tipo, motivo: comDado("lib.erro", { motivo: falha.motivo }), onTentar: falha.tentar ? () => void reload() : undefined }
+          : salvo ? { tipo: "sucesso", motivo: FRASES_LISTA["edit.salvo"] } : null}
       />
       {carregando && <LibraryLoadingState />}
       {!loading && vazia && !erro && <LibraryEmptyState searchQuery={searchQuery} filters={selectedFilters} />}

@@ -1,0 +1,1768 @@
+$ # worktree temporária da main 8fe45e8 (git worktree add --detach), só os dois arquivos de teste copiados
+$ pnpm exec vitest run components/editors/__tests__/
+
+ RUN  v4.0.16 $TMP/main-8fe45e8
+
+stdout | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — Salvando… e o Salvar inativo durante o envio (resposta 22, decisão 5) > com o PUT em curso: Salvando…, inativo, e o clique duplo manda UM PUT
+Starting save process for: Batch três
+
+stdout | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — Salvando… e o Salvar inativo durante o envio (resposta 22, decisão 5) > com o PUT em curso: Salvando…, inativo, e o clique duplo manda UM PUT
+Starting save process for: Batch três
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > rede: "não foi possível carregar o conteúdo — sem conexão" + Tentar de novo
+Error in getContentById: TypeError: Failed to fetch
+    at responder ($TMP/main-8fe45e8/components/editors/__tests__/editor-estados.test.tsx:43:67)
+    at $TMP/main-8fe45e8/components/editors/__tests__/editor-estados.test.tsx:50:12
+    at Mock (file://<árvore da PR>/node_modules/.pnpm/@vitest+spy@4.0.16/node_modules/@vitest/spy/dist/index.js:285:34)
+    at getContentById ($TMP/main-8fe45e8/lib/content-service.ts:478:28)
+    at loadContent ($TMP/main-8fe45e8/app/content/[id]/edit/page.tsx:34:22)
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > rede: "não foi possível carregar o conteúdo — sem conexão" + Tentar de novo
+Error loading content: TypeError: Failed to fetch
+    at responder ($TMP/main-8fe45e8/components/editors/__tests__/editor-estados.test.tsx:43:67)
+    at $TMP/main-8fe45e8/components/editors/__tests__/editor-estados.test.tsx:50:12
+    at Mock (file://<árvore da PR>/node_modules/.pnpm/@vitest+spy@4.0.16/node_modules/@vitest/spy/dist/index.js:285:34)
+    at getContentById ($TMP/main-8fe45e8/lib/content-service.ts:478:28)
+    at loadContent ($TMP/main-8fe45e8/app/content/[id]/edit/page.tsx:34:22)
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 401: "não foi possível carregar o conteúdo — o servidor não aceitou a sessão, entre de novo", sem ação
+Error in getContentById: Error: x
+    at getContentById ($TMP/main-8fe45e8/lib/content-service.ts:489:13)
+    at loadContent ($TMP/main-8fe45e8/app/content/[id]/edit/page.tsx:34:22)
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 401: "não foi possível carregar o conteúdo — o servidor não aceitou a sessão, entre de novo", sem ação
+Error loading content: Error: x
+    at getContentById ($TMP/main-8fe45e8/lib/content-service.ts:489:13)
+    at loadContent ($TMP/main-8fe45e8/app/content/[id]/edit/page.tsx:34:22)
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 429: "não foi possível carregar o conteúdo — muitas tentativas, tente de novo em instantes", sem ação
+Error in getContentById: Error: x
+    at getContentById ($TMP/main-8fe45e8/lib/content-service.ts:489:13)
+    at loadContent ($TMP/main-8fe45e8/app/content/[id]/edit/page.tsx:34:22)
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 429: "não foi possível carregar o conteúdo — muitas tentativas, tente de novo em instantes", sem ação
+Error loading content: Error: x
+    at getContentById ($TMP/main-8fe45e8/lib/content-service.ts:489:13)
+    at loadContent ($TMP/main-8fe45e8/app/content/[id]/edit/page.tsx:34:22)
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 500: "não foi possível carregar o conteúdo — falha no servidor" + Tentar de novo
+Error in getContentById: Error: x
+    at getContentById ($TMP/main-8fe45e8/lib/content-service.ts:489:13)
+    at loadContent ($TMP/main-8fe45e8/app/content/[id]/edit/page.tsx:34:22)
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 500: "não foi possível carregar o conteúdo — falha no servidor" + Tentar de novo
+Error loading content: Error: x
+    at getContentById ($TMP/main-8fe45e8/lib/content-service.ts:489:13)
+    at loadContent ($TMP/main-8fe45e8/app/content/[id]/edit/page.tsx:34:22)
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 404 e 400: "este conteúdo não existe", sem linha
+Error in getContentById: Error: Content not found
+    at getContentById ($TMP/main-8fe45e8/lib/content-service.ts:486:15)
+    at loadContent ($TMP/main-8fe45e8/app/content/[id]/edit/page.tsx:34:22)
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 404 e 400: "este conteúdo não existe", sem linha
+Error loading content: Error: Content not found
+    at getContentById ($TMP/main-8fe45e8/lib/content-service.ts:486:15)
+    at loadContent ($TMP/main-8fe45e8/app/content/[id]/edit/page.tsx:34:22)
+
+stdout | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > rede: "não foi possível salvar — sem conexão" + "o que você escreveu continua aqui" + Tentar de novo (o mesmo PUT)
+Starting save process for: Batch três
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > rede: "não foi possível salvar — sem conexão" + "o que você escreveu continua aqui" + Tentar de novo (o mesmo PUT)
+Error in updateContent: TypeError: Failed to fetch
+    at responder ($TMP/main-8fe45e8/components/editors/__tests__/editor-estados.test.tsx:43:67)
+    at $TMP/main-8fe45e8/components/editors/__tests__/editor-estados.test.tsx:49:61
+    at Mock (file://<árvore da PR>/node_modules/.pnpm/@vitest+spy@4.0.16/node_modules/@vitest/spy/dist/index.js:285:34)
+    at updateContent ($TMP/main-8fe45e8/lib/content-service.ts:536:28)
+    at handleSave ($TMP/main-8fe45e8/components/content-edit-page-client.tsx:24:7)
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > rede: "não foi possível salvar — sem conexão" + "o que você escreveu continua aqui" + Tentar de novo (o mesmo PUT)
+Error saving content: TypeError: Failed to fetch
+    at responder ($TMP/main-8fe45e8/components/editors/__tests__/editor-estados.test.tsx:43:67)
+    at $TMP/main-8fe45e8/components/editors/__tests__/editor-estados.test.tsx:49:61
+    at Mock (file://<árvore da PR>/node_modules/.pnpm/@vitest+spy@4.0.16/node_modules/@vitest/spy/dist/index.js:285:34)
+    at updateContent ($TMP/main-8fe45e8/lib/content-service.ts:536:28)
+    at handleSave ($TMP/main-8fe45e8/components/content-edit-page-client.tsx:24:7)
+
+stdout | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > 400: "não foi possível salvar — o servidor recusou os dados" + "o que você escreveu continua aqui"
+Starting save process for: Batch três
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > 400: "não foi possível salvar — o servidor recusou os dados" + "o que você escreveu continua aqui"
+Error in updateContent: Error: x
+    at updateContent ($TMP/main-8fe45e8/lib/content-service.ts:550:13)
+    at handleSave ($TMP/main-8fe45e8/components/content-edit-page-client.tsx:24:7)
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > 400: "não foi possível salvar — o servidor recusou os dados" + "o que você escreveu continua aqui"
+Error saving content: Error: x
+    at updateContent ($TMP/main-8fe45e8/lib/content-service.ts:550:13)
+    at handleSave ($TMP/main-8fe45e8/components/content-edit-page-client.tsx:24:7)
+
+stdout | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > 404: "não foi possível salvar — este conteúdo não existe mais" + "o que você escreveu continua aqui"
+Starting save process for: Batch três
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > 404: "não foi possível salvar — este conteúdo não existe mais" + "o que você escreveu continua aqui"
+Error in updateContent: Error: Content not found
+    at updateContent ($TMP/main-8fe45e8/lib/content-service.ts:547:15)
+    at handleSave ($TMP/main-8fe45e8/components/content-edit-page-client.tsx:24:7)
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > 404: "não foi possível salvar — este conteúdo não existe mais" + "o que você escreveu continua aqui"
+Error saving content: Error: Content not found
+    at updateContent ($TMP/main-8fe45e8/lib/content-service.ts:547:15)
+    at handleSave ($TMP/main-8fe45e8/components/content-edit-page-client.tsx:24:7)
+
+stdout | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > 500: "não foi possível salvar — falha no servidor" + "o que você escreveu continua aqui" + Tentar de novo (o mesmo PUT)
+Starting save process for: Batch três
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > 500: "não foi possível salvar — falha no servidor" + "o que você escreveu continua aqui" + Tentar de novo (o mesmo PUT)
+Error in updateContent: Error: x
+    at updateContent ($TMP/main-8fe45e8/lib/content-service.ts:550:13)
+    at handleSave ($TMP/main-8fe45e8/components/content-edit-page-client.tsx:24:7)
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > 500: "não foi possível salvar — falha no servidor" + "o que você escreveu continua aqui" + Tentar de novo (o mesmo PUT)
+Error saving content: Error: x
+    at updateContent ($TMP/main-8fe45e8/lib/content-service.ts:550:13)
+    at handleSave ($TMP/main-8fe45e8/components/content-edit-page-client.tsx:24:7)
+
+ ❯  web  components/editors/__tests__/editor-estados.test.tsx (11 tests | 11 failed) 10324ms
+     × ao abrir: Salvar inativo, sem o chip, com o motivo; depois de editar: ativo, com o chip 513ms
+     × com o PUT em curso: Salvando…, inativo, e o clique duplo manda UM PUT 483ms
+     × rede: "não foi possível carregar o conteúdo — sem conexão" + Tentar de novo 1007ms
+     × 401: "não foi possível carregar o conteúdo — o servidor não aceitou a sessão, entre de novo", sem ação 1004ms
+     × 429: "não foi possível carregar o conteúdo — muitas tentativas, tente de novo em instantes", sem ação 1005ms
+     × 500: "não foi possível carregar o conteúdo — falha no servidor" + Tentar de novo 1004ms
+     × 404 e 400: "este conteúdo não existe", sem linha 1005ms
+     × rede: "não foi possível salvar — sem conexão" + "o que você escreveu continua aqui" + Tentar de novo (o mesmo PUT) 1088ms
+     × 400: "não foi possível salvar — o servidor recusou os dados" + "o que você escreveu continua aqui" 1074ms
+     × 404: "não foi possível salvar — este conteúdo não existe mais" + "o que você escreveu continua aqui" 1076ms
+     × 500: "não foi possível salvar — falha no servidor" + "o que você escreveu continua aqui" + Tentar de novo (o mesmo PUT) 1062ms
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   web  components/editors/__tests__/lib-salvo.test.tsx [ components/editors/__tests__/lib-salvo.test.tsx ]
+Error: Failed to resolve import "@/lib/sinal-salvo" from "components/editors/__tests__/lib-salvo.test.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: $TMP/main-8fe45e8/components/editors/__tests__/lib-salvo.test.tsx:9:0
+  31 |  const __vi_import_0__ = await import("react/jsx-dev-runtime");
+  32 |  const __vi_import_1__ = await import("@testing-library/react");
+  33 |  const __vi_import_2__ = await import("@/lib/sinal-salvo");
+     |                                       ^
+  34 |  const __vi_import_3__ = await import("@/app/content/[id]/edit/page");
+  35 |  const __vi_import_4__ = await import("@/components/library/RefactoredLibrary");
+ ❯ TransformPluginContext._formatLog ../../../../../../..<árvore da PR>/node_modules/.pnpm/vite@7.1.5_@types+node@22.18.3_jiti@2.7.0_lightningcss@1.33.0_terser@5.51.2_tsx@4.23.11_yaml@2.9.0/node_modules/vite/dist/node/chunks/dep-M_KD0XSK.js:31527:43
+ ❯ TransformPluginContext.error ../../../../../../..<árvore da PR>/node_modules/.pnpm/vite@7.1.5_@types+node@22.18.3_jiti@2.7.0_lightningcss@1.33.0_terser@5.51.2_tsx@4.23.11_yaml@2.9.0/node_modules/vite/dist/node/chunks/dep-M_KD0XSK.js:31524:14
+ ❯ normalizeUrl ../../../../../../..<árvore da PR>/node_modules/.pnpm/vite@7.1.5_@types+node@22.18.3_jiti@2.7.0_lightningcss@1.33.0_terser@5.51.2_tsx@4.23.11_yaml@2.9.0/node_modules/vite/dist/node/chunks/dep-M_KD0XSK.js:29996:18
+ ❯ ../../../../../../..<árvore da PR>/node_modules/.pnpm/vite@7.1.5_@types+node@22.18.3_jiti@2.7.0_lightningcss@1.33.0_terser@5.51.2_tsx@4.23.11_yaml@2.9.0/node_modules/vite/dist/node/chunks/dep-M_KD0XSK.js:30054:32
+ ❯ TransformPluginContext.transform ../../../../../../..<árvore da PR>/node_modules/.pnpm/vite@7.1.5_@types+node@22.18.3_jiti@2.7.0_lightningcss@1.33.0_terser@5.51.2_tsx@4.23.11_yaml@2.9.0/node_modules/vite/dist/node/chunks/dep-M_KD0XSK.js:30022:4
+ ❯ EnvironmentPluginContainer.transform ../../../../../../..<árvore da PR>/node_modules/.pnpm/vite@7.1.5_@types+node@22.18.3_jiti@2.7.0_lightningcss@1.33.0_terser@5.51.2_tsx@4.23.11_yaml@2.9.0/node_modules/vite/dist/node/chunks/dep-M_KD0XSK.js:31325:14
+ ❯ loadAndTransform ../../../../../../..<árvore da PR>/node_modules/.pnpm/vite@7.1.5_@types+node@22.18.3_jiti@2.7.0_lightningcss@1.33.0_terser@5.51.2_tsx@4.23.11_yaml@2.9.0/node_modules/vite/dist/node/chunks/dep-M_KD0XSK.js:26407:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/12]⎯
+
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 11 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   web  components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — alterações não salvas só com alteração (resposta 21, decisão 2) > ao abrir: Salvar inativo, sem o chip, com o motivo; depois de editar: ativo, com o chip
+Error: expect(element).toBeDisabled()
+
+Received element is not disabled:
+  <button
+  class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary hover:bg-primary/90 h-10 px-4 py-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white"
+/>
+ ❯ components/editors/__tests__/editor-estados.test.tsx:64:33
+     62|   it('ao abrir: Salvar inativo, sem o chip, com o motivo; depois de ed…
+     63|     render(<EditContentPage />)
+     64|     expect(await botaoSalvar()).toBeDisabled()
+       |                                 ^
+     65|     expect(screen.queryByText(/alterações não salvas|Unsaved changes/)…
+     66|     expect(screen.getByText('nada mudou desde que você abriu')).toBeIn…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/12]⎯
+
+ FAIL   web  components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — Salvando… e o Salvar inativo durante o envio (resposta 22, decisão 5) > com o PUT em curso: Salvando…, inativo, e o clique duplo manda UM PUT
+AssertionError: expected 2 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 2
+
+ ❯ components/editors/__tests__/editor-estados.test.tsx:85:18
+     83|     await waitFor(() => expect(puts).toBeGreaterThan(0))
+     84|     await new Promise((r) => setTimeout(r, 300))
+     85|     expect(puts).toBe(1)
+       |                  ^
+     86|     expect(await screen.findByRole('button', { name: 'Salvando…' })).t…
+     87|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/12]⎯
+
+ FAIL   web  components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > rede: "não foi possível carregar o conteúdo — sem conexão" + Tentar de novo
+TestingLibraryElementError: Unable to find an element with the text: não foi possível carregar o conteúdo — sem conexão. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="flex items-center justify-center min-h-screen bg-[#fff9f0]"
+    >
+      <div
+        class="text-center"
+      >
+        <h1
+          class="text-2xl font-bold text-[#1A1F36] mb-4"
+        >
+          Content Not Found
+        </h1>
+        <p
+          class="text-[#A69B8E] mb-6"
+        >
+          Failed to load content for editing.
+        </p>
+        <div
+          class="space-x-4"
+        >
+          <button
+            class="bg-[#2E7CE4] hover:bg-[#1E5BB8] text-white px-6 py-2 rounded-lg"
+          >
+            Go Back
+          </button>
+          <button
+            class="bg-[#A69B8E] hover:bg-[#8B7D6F] text-white px-6 py-2 rounded-lg"
+          >
+            Browse Library
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="flex items-center justify-center min-h-screen bg-[#fff9f0]"
+    >
+      <div
+        class="text-center"
+      >
+        <h1
+          class="text-2xl font-bold text-[#1A1F36] mb-4"
+        >
+          Content Not Found
+        </h1>
+        <p
+          class="text-[#A69B8E] mb-6"
+        >
+          Failed to load content for editing.
+        </p>
+        <div
+          class="space-x-4"
+        >
+          <button
+            class="bg-[#2E7CE4] hover:bg-[#1E5BB8] text-white px-6 py-2 rounded-lg"
+          >
+            Go Back
+          </button>
+          <button
+            class="bg-[#A69B8E] hover:bg-[#8B7D6F] text-white px-6 py-2 rounded-lg"
+          >
+            Browse Library
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+ ❯ waitForWrapper ../../../../../../..<árvore da PR>/node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ ../../../../../../..<árvore da PR>/node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ components/editors/__tests__/editor-estados.test.tsx:101:27
+     99|       get = resposta
+    100|       render(<EditContentPage />)
+    101|       expect(await screen.findByText(frase)).toBeInTheDocument()
+       |                           ^
+    102|       expect(!!screen.queryByRole('button', { name: /Tentar de novo/ }…
+    103|       expect(screen.getByRole('link', { name: 'Ir para a biblioteca' }…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/12]⎯
+
+ FAIL   web  components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 401: "não foi possível carregar o conteúdo — o servidor não aceitou a sessão, entre de novo", sem ação
+TestingLibraryElementError: Unable to find an element with the text: não foi possível carregar o conteúdo — o servidor não aceitou a sessão, entre de novo. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="flex items-center justify-center min-h-screen bg-[#fff9f0]"
+    >
+      <div
+        class="text-center"
+      >
+        <h1
+          class="text-2xl font-bold text-[#1A1F36] mb-4"
+        >
+          Content Not Found
+        </h1>
+        <p
+          class="text-[#A69B8E] mb-6"
+        >
+          Failed to load content for editing.
+        </p>
+        <div
+          class="space-x-4"
+        >
+          <button
+            class="bg-[#2E7CE4] hover:bg-[#1E5BB8] text-white px-6 py-2 rounded-lg"
+          >
+            Go Back
+          </button>
+          <button
+            class="bg-[#A69B8E] hover:bg-[#8B7D6F] text-white px-6 py-2 rounded-lg"
+          >
+            Browse Library
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="flex items-center justify-center min-h-screen bg-[#fff9f0]"
+    >
+      <div
+        class="text-center"
+      >
+        <h1
+          class="text-2xl font-bold text-[#1A1F36] mb-4"
+        >
+          Content Not Found
+        </h1>
+        <p
+          class="text-[#A69B8E] mb-6"
+        >
+          Failed to load content for editing.
+        </p>
+        <div
+          class="space-x-4"
+        >
+          <button
+            class="bg-[#2E7CE4] hover:bg-[#1E5BB8] text-white px-6 py-2 rounded-lg"
+          >
+            Go Back
+          </button>
+          <button
+            class="bg-[#A69B8E] hover:bg-[#8B7D6F] text-white px-6 py-2 rounded-lg"
+          >
+            Browse Library
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+ ❯ waitForWrapper ../../../../../../..<árvore da PR>/node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ ../../../../../../..<árvore da PR>/node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ components/editors/__tests__/editor-estados.test.tsx:101:27
+     99|       get = resposta
+    100|       render(<EditContentPage />)
+    101|       expect(await screen.findByText(frase)).toBeInTheDocument()
+       |                           ^
+    102|       expect(!!screen.queryByRole('button', { name: /Tentar de novo/ }…
+    103|       expect(screen.getByRole('link', { name: 'Ir para a biblioteca' }…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/12]⎯
+
+ FAIL   web  components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 429: "não foi possível carregar o conteúdo — muitas tentativas, tente de novo em instantes", sem ação
+TestingLibraryElementError: Unable to find an element with the text: não foi possível carregar o conteúdo — muitas tentativas, tente de novo em instantes. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="flex items-center justify-center min-h-screen bg-[#fff9f0]"
+    >
+      <div
+        class="text-center"
+      >
+        <h1
+          class="text-2xl font-bold text-[#1A1F36] mb-4"
+        >
+          Content Not Found
+        </h1>
+        <p
+          class="text-[#A69B8E] mb-6"
+        >
+          Failed to load content for editing.
+        </p>
+        <div
+          class="space-x-4"
+        >
+          <button
+            class="bg-[#2E7CE4] hover:bg-[#1E5BB8] text-white px-6 py-2 rounded-lg"
+          >
+            Go Back
+          </button>
+          <button
+            class="bg-[#A69B8E] hover:bg-[#8B7D6F] text-white px-6 py-2 rounded-lg"
+          >
+            Browse Library
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="flex items-center justify-center min-h-screen bg-[#fff9f0]"
+    >
+      <div
+        class="text-center"
+      >
+        <h1
+          class="text-2xl font-bold text-[#1A1F36] mb-4"
+        >
+          Content Not Found
+        </h1>
+        <p
+          class="text-[#A69B8E] mb-6"
+        >
+          Failed to load content for editing.
+        </p>
+        <div
+          class="space-x-4"
+        >
+          <button
+            class="bg-[#2E7CE4] hover:bg-[#1E5BB8] text-white px-6 py-2 rounded-lg"
+          >
+            Go Back
+          </button>
+          <button
+            class="bg-[#A69B8E] hover:bg-[#8B7D6F] text-white px-6 py-2 rounded-lg"
+          >
+            Browse Library
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+ ❯ waitForWrapper ../../../../../../..<árvore da PR>/node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ ../../../../../../..<árvore da PR>/node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ components/editors/__tests__/editor-estados.test.tsx:101:27
+     99|       get = resposta
+    100|       render(<EditContentPage />)
+    101|       expect(await screen.findByText(frase)).toBeInTheDocument()
+       |                           ^
+    102|       expect(!!screen.queryByRole('button', { name: /Tentar de novo/ }…
+    103|       expect(screen.getByRole('link', { name: 'Ir para a biblioteca' }…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/12]⎯
+
+ FAIL   web  components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 500: "não foi possível carregar o conteúdo — falha no servidor" + Tentar de novo
+TestingLibraryElementError: Unable to find an element with the text: não foi possível carregar o conteúdo — falha no servidor. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="flex items-center justify-center min-h-screen bg-[#fff9f0]"
+    >
+      <div
+        class="text-center"
+      >
+        <h1
+          class="text-2xl font-bold text-[#1A1F36] mb-4"
+        >
+          Content Not Found
+        </h1>
+        <p
+          class="text-[#A69B8E] mb-6"
+        >
+          Failed to load content for editing.
+        </p>
+        <div
+          class="space-x-4"
+        >
+          <button
+            class="bg-[#2E7CE4] hover:bg-[#1E5BB8] text-white px-6 py-2 rounded-lg"
+          >
+            Go Back
+          </button>
+          <button
+            class="bg-[#A69B8E] hover:bg-[#8B7D6F] text-white px-6 py-2 rounded-lg"
+          >
+            Browse Library
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="flex items-center justify-center min-h-screen bg-[#fff9f0]"
+    >
+      <div
+        class="text-center"
+      >
+        <h1
+          class="text-2xl font-bold text-[#1A1F36] mb-4"
+        >
+          Content Not Found
+        </h1>
+        <p
+          class="text-[#A69B8E] mb-6"
+        >
+          Failed to load content for editing.
+        </p>
+        <div
+          class="space-x-4"
+        >
+          <button
+            class="bg-[#2E7CE4] hover:bg-[#1E5BB8] text-white px-6 py-2 rounded-lg"
+          >
+            Go Back
+          </button>
+          <button
+            class="bg-[#A69B8E] hover:bg-[#8B7D6F] text-white px-6 py-2 rounded-lg"
+          >
+            Browse Library
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+ ❯ waitForWrapper ../../../../../../..<árvore da PR>/node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ ../../../../../../..<árvore da PR>/node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ components/editors/__tests__/editor-estados.test.tsx:101:27
+     99|       get = resposta
+    100|       render(<EditContentPage />)
+    101|       expect(await screen.findByText(frase)).toBeInTheDocument()
+       |                           ^
+    102|       expect(!!screen.queryByRole('button', { name: /Tentar de novo/ }…
+    103|       expect(screen.getByRole('link', { name: 'Ir para a biblioteca' }…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/12]⎯
+
+ FAIL   web  components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 404 e 400: "este conteúdo não existe", sem linha
+TestingLibraryElementError: Unable to find an element with the text: este conteúdo não existe. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="flex items-center justify-center min-h-screen bg-[#fff9f0]"
+    >
+      <div
+        class="text-center"
+      >
+        <h1
+          class="text-2xl font-bold text-[#1A1F36] mb-4"
+        >
+          Content Not Found
+        </h1>
+        <p
+          class="text-[#A69B8E] mb-6"
+        >
+          Failed to load content for editing.
+        </p>
+        <div
+          class="space-x-4"
+        >
+          <button
+            class="bg-[#2E7CE4] hover:bg-[#1E5BB8] text-white px-6 py-2 rounded-lg"
+          >
+            Go Back
+          </button>
+          <button
+            class="bg-[#A69B8E] hover:bg-[#8B7D6F] text-white px-6 py-2 rounded-lg"
+          >
+            Browse Library
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="flex items-center justify-center min-h-screen bg-[#fff9f0]"
+    >
+      <div
+        class="text-center"
+      >
+        <h1
+          class="text-2xl font-bold text-[#1A1F36] mb-4"
+        >
+          Content Not Found
+        </h1>
+        <p
+          class="text-[#A69B8E] mb-6"
+        >
+          Failed to load content for editing.
+        </p>
+        <div
+          class="space-x-4"
+        >
+          <button
+            class="bg-[#2E7CE4] hover:bg-[#1E5BB8] text-white px-6 py-2 rounded-lg"
+          >
+            Go Back
+          </button>
+          <button
+            class="bg-[#A69B8E] hover:bg-[#8B7D6F] text-white px-6 py-2 rounded-lg"
+          >
+            Browse Library
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+ ❯ waitForWrapper ../../../../../../..<árvore da PR>/node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ ../../../../../../..<árvore da PR>/node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ components/editors/__tests__/editor-estados.test.tsx:110:27
+    108|       get = json({ error: 'x' }, status)
+    109|       render(<EditContentPage />)
+    110|       expect(await screen.findByText('este conteúdo não existe')).toBe…
+       |                           ^
+    111|       expect(screen.queryByRole('alert')).toBeNull()
+    112|       cleanup()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/12]⎯
+
+ FAIL   web  components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > rede: "não foi possível salvar — sem conexão" + "o que você escreveu continua aqui" + Tentar de novo (o mesmo PUT)
+TestingLibraryElementError: Unable to find an element with the text: não foi possível salvar — sem conexão. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="min-h-screen bg-cor-bg flex flex-col"
+    >
+      <header
+        class="border-b-hairline border-cor-line text-cor-text font-fam-ui font-peso-ui leading-natural"
+      >
+        <div
+          class="w-full max-w-web-conteiner mx-auto flex flex-wrap items-center gap-x-espaco-xl px-web-margem"
+        >
+          <div
+            aria-label="Octavia"
+            class="order-1 h-barra-top flex items-center font-fam-display font-peso-display text-tam-title tracking-display-wide text-cor-text"
+            role="img"
+          >
+            OCTAVIA
+          </div>
+          <nav
+            aria-label="Navegação"
+            class="order-4 basis-full min-h-toque-list flex flex-wrap items-center gap-espaco-sm c:order-2 c:basis-auto c:h-barra-top"
+          >
+            <a
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-transparent text-cor-muted"
+              href="/dashboard"
+            >
+              Painel
+            </a>
+            <a
+              aria-current="page"
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-cor-accent-ink bg-cor-marcado text-cor-text"
+              href="/library"
+            >
+              Biblioteca
+            </a>
+            <a
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-transparent text-cor-muted"
+              href="/setlists"
+            >
+              Setlists
+            </a>
+            <a
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-transparent text-cor-muted"
+              href="/add-content"
+            >
+              Adicionar
+            </a>
+          </nav>
+          <div
+            class="order-3 flex-1 min-w-0 h-barra-top flex items-center gap-espaco-lg"
+          >
+            <form
+              class="flex-1 min-w-0 h-toque-min border-hairline border-cor-line-info rounded-raio-control flex items-center gap-espaco-md px-espaco-lg"
+              data-testid="casca-busca"
+              role="search"
+            >
+              <svg
+                aria-hidden="true"
+                class="shrink-0 text-cor-line-info"
+                fill="none"
+                focusable="false"
+                height="20"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                viewBox="0 0 24 24"
+                width="20"
+              >
+                <circle
+                  cx="10.5"
+                  cy="10.5"
+                  fill="none"
+                  r="6.5"
+                  stroke-width="1.5"
+                />
+                <path
+                  d="M15.5 15.5L21 21"
+                  fill="none"
+                  stroke-width="1.5"
+                />
+              </svg>
+              <input
+                aria-label="Buscar…"
+                class="flex-1 min-w-0 bg-cor-bg text-cor-text text-tam-body-small placeholder:text-cor-muted outline-none"
+                data-testid="casca-busca-campo"
+                placeholder="Buscar…"
+                type="search"
+                value=""
+              />
+            </form>
+            <div
+              class="relative shrink-0"
+            >
+              <button
+                aria-expanded="false"
+                aria-haspopup="menu"
+                aria-label="Conta de cn@exemplo.com"
+                class="w-toque-min h-toque-min shrink-0 rounded-raio-pill border-hairline border-cor-line-info flex items-center justify-center font-fam-ui-bold font-peso-ui-bold text-tam-label text-cor-text"
+                data-testid="casca-conta"
+                type="button"
+              >
+                C
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+      <main
+        class="flex-1 min-w-0 flex flex-col"
+      >
+        <div
+          class="flex-1 bg-[#fffcf7]"
+        >
+          <div
+            class="flex flex-col bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 min-h-full"
+          >
+            <div
+              class="sticky top-0 z-30 bg-white/90 backdrop-blur-sm border-b border-amber-200 px-4 py-3 shadow-md"
+            >
+              <div
+                class="flex flex-row flex-wrap items-center justify-between gap-4"
+              >
+                <div
+                  class="flex items-center flex-wrap gap-3"
+                >
+                  <button
+                    class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:text-accent-foreground h-10 w-10 hover:bg-amber-100"
+                  >
+                    <svg
+       ...
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="min-h-screen bg-cor-bg flex flex-col"
+    >
+      <header
+        class="border-b-hairline border-cor-line text-cor-text font-fam-ui font-peso-ui leading-natural"
+      >
+        <div
+          class="w-full max-w-web-conteiner mx-auto flex flex-wrap items-center gap-x-espaco-xl px-web-margem"
+        >
+          <div
+            aria-label="Octavia"
+            class="order-1 h-barra-top flex items-center font-fam-display font-peso-display text-tam-title tracking-display-wide text-cor-text"
+            role="img"
+          >
+            OCTAVIA
+          </div>
+          <nav
+            aria-label="Navegação"
+            class="order-4 basis-full min-h-toque-list flex flex-wrap items-center gap-espaco-sm c:order-2 c:basis-auto c:h-barra-top"
+          >
+            <a
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-transparent text-cor-muted"
+              href="/dashboard"
+            >
+              Painel
+            </a>
+            <a
+              aria-current="page"
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-cor-accent-ink bg-cor-marcado text-cor-text"
+              href="/library"
+            >
+              Biblioteca
+            </a>
+            <a
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-transparent text-cor-muted"
+              href="/setlists"
+            >
+              Setlists
+            </a>
+            <a
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-transparent text-cor-muted"
+              href="/add-content"
+            >
+              Adicionar
+            </a>
+          </nav>
+          <div
+            class="order-3 flex-1 min-w-0 h-barra-top flex items-center gap-espaco-lg"
+          >
+            <form
+              class="flex-1 min-w-0 h-toque-min border-hairline border-cor-line-info rounded-raio-control flex items-center gap-espaco-md px-espaco-lg"
+              data-testid="casca-busca"
+              role="search"
+            >
+              <svg
+                aria-hidden="true"
+                class="shrink-0 text-cor-line-info"
+                fill="none"
+                focusable="false"
+                height="20"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                viewBox="0 0 24 24"
+                width="20"
+              >
+                <circle
+                  cx="10.5"
+                  cy="10.5"
+                  fill="none"
+                  r="6.5"
+                  stroke-width="1.5"
+                />
+                <path
+                  d="M15.5 15.5L21 21"
+                  fill="none"
+                  stroke-width="1.5"
+                />
+              </svg>
+              <input
+                aria-label="Buscar…"
+                class="flex-1 min-w-0 bg-cor-bg text-cor-text text-tam-body-small placeholder:text-cor-muted outline-none"
+                data-testid="casca-busca-campo"
+                placeholder="Buscar…"
+                type="search"
+                value=""
+              />
+            </form>
+            <div
+              class="relative shrink-0"
+            >
+              <button
+                aria-expanded="false"
+                aria-haspopup="menu"
+                aria-label="Conta de cn@exemplo.com"
+                class="w-toque-min h-toque-min shrink-0 rounded-raio-pill border-hairline border-cor-line-info flex items-center justify-center font-fam-ui-bold font-peso-ui-bold text-tam-label text-cor-text"
+                data-testid="casca-conta"
+                type="button"
+              >
+                C
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+      <main
+        class="flex-1 min-w-0 flex flex-col"
+      >
+        <div
+          class="flex-1 bg-[#fffcf7]"
+        >
+          <div
+            class="flex flex-col bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 min-h-full"
+          >
+            <div
+              class="sticky top-0 z-30 bg-white/90 backdrop-blur-sm border-b border-amber-200 px-4 py-3 shadow-md"
+            >
+              <div
+                class="flex flex-row flex-wrap items-center justify-between gap-4"
+              >
+                <div
+                  class="flex items-center flex-wrap gap-3"
+                >
+                  <button
+                    class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:text-accent-foreground h-10 w-10 hover:bg-amber-100"
+                  >
+                    <svg
+       ...
+ ❯ waitForWrapper ../../../../../../..<árvore da PR>/node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ ../../../../../../..<árvore da PR>/node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ components/editors/__tests__/editor-estados.test.tsx:130:27
+    128|       await editarLetra()
+    129|       fireEvent.click(await botaoSalvar())
+    130|       expect(await screen.findByText(frase)).toBeInTheDocument()
+       |                           ^
+    131|       expect(screen.getByText('o que você escreveu continua aqui')).to…
+    132|       const t = screen.queryByRole('button', { name: /Tentar de novo/ …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/12]⎯
+
+ FAIL   web  components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > 400: "não foi possível salvar — o servidor recusou os dados" + "o que você escreveu continua aqui"
+TestingLibraryElementError: Unable to find an element with the text: não foi possível salvar — o servidor recusou os dados. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="min-h-screen bg-cor-bg flex flex-col"
+    >
+      <header
+        class="border-b-hairline border-cor-line text-cor-text font-fam-ui font-peso-ui leading-natural"
+      >
+        <div
+          class="w-full max-w-web-conteiner mx-auto flex flex-wrap items-center gap-x-espaco-xl px-web-margem"
+        >
+          <div
+            aria-label="Octavia"
+            class="order-1 h-barra-top flex items-center font-fam-display font-peso-display text-tam-title tracking-display-wide text-cor-text"
+            role="img"
+          >
+            OCTAVIA
+          </div>
+          <nav
+            aria-label="Navegação"
+            class="order-4 basis-full min-h-toque-list flex flex-wrap items-center gap-espaco-sm c:order-2 c:basis-auto c:h-barra-top"
+          >
+            <a
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-transparent text-cor-muted"
+              href="/dashboard"
+            >
+              Painel
+            </a>
+            <a
+              aria-current="page"
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-cor-accent-ink bg-cor-marcado text-cor-text"
+              href="/library"
+            >
+              Biblioteca
+            </a>
+            <a
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-transparent text-cor-muted"
+              href="/setlists"
+            >
+              Setlists
+            </a>
+            <a
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-transparent text-cor-muted"
+              href="/add-content"
+            >
+              Adicionar
+            </a>
+          </nav>
+          <div
+            class="order-3 flex-1 min-w-0 h-barra-top flex items-center gap-espaco-lg"
+          >
+            <form
+              class="flex-1 min-w-0 h-toque-min border-hairline border-cor-line-info rounded-raio-control flex items-center gap-espaco-md px-espaco-lg"
+              data-testid="casca-busca"
+              role="search"
+            >
+              <svg
+                aria-hidden="true"
+                class="shrink-0 text-cor-line-info"
+                fill="none"
+                focusable="false"
+                height="20"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                viewBox="0 0 24 24"
+                width="20"
+              >
+                <circle
+                  cx="10.5"
+                  cy="10.5"
+                  fill="none"
+                  r="6.5"
+                  stroke-width="1.5"
+                />
+                <path
+                  d="M15.5 15.5L21 21"
+                  fill="none"
+                  stroke-width="1.5"
+                />
+              </svg>
+              <input
+                aria-label="Buscar…"
+                class="flex-1 min-w-0 bg-cor-bg text-cor-text text-tam-body-small placeholder:text-cor-muted outline-none"
+                data-testid="casca-busca-campo"
+                placeholder="Buscar…"
+                type="search"
+                value=""
+              />
+            </form>
+            <div
+              class="relative shrink-0"
+            >
+              <button
+                aria-expanded="false"
+                aria-haspopup="menu"
+                aria-label="Conta de cn@exemplo.com"
+                class="w-toque-min h-toque-min shrink-0 rounded-raio-pill border-hairline border-cor-line-info flex items-center justify-center font-fam-ui-bold font-peso-ui-bold text-tam-label text-cor-text"
+                data-testid="casca-conta"
+                type="button"
+              >
+                C
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+      <main
+        class="flex-1 min-w-0 flex flex-col"
+      >
+        <div
+          class="flex-1 bg-[#fffcf7]"
+        >
+          <div
+            class="flex flex-col bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 min-h-full"
+          >
+            <div
+              class="sticky top-0 z-30 bg-white/90 backdrop-blur-sm border-b border-amber-200 px-4 py-3 shadow-md"
+            >
+              <div
+                class="flex flex-row flex-wrap items-center justify-between gap-4"
+              >
+                <div
+                  class="flex items-center flex-wrap gap-3"
+                >
+                  <button
+                    class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:text-accent-foreground h-10 w-10 hover:bg-amber-100"
+                  >
+                    <svg
+       ...
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="min-h-screen bg-cor-bg flex flex-col"
+    >
+      <header
+        class="border-b-hairline border-cor-line text-cor-text font-fam-ui font-peso-ui leading-natural"
+      >
+        <div
+          class="w-full max-w-web-conteiner mx-auto flex flex-wrap items-center gap-x-espaco-xl px-web-margem"
+        >
+          <div
+            aria-label="Octavia"
+            class="order-1 h-barra-top flex items-center font-fam-display font-peso-display text-tam-title tracking-display-wide text-cor-text"
+            role="img"
+          >
+            OCTAVIA
+          </div>
+          <nav
+            aria-label="Navegação"
+            class="order-4 basis-full min-h-toque-list flex flex-wrap items-center gap-espaco-sm c:order-2 c:basis-auto c:h-barra-top"
+          >
+            <a
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-transparent text-cor-muted"
+              href="/dashboard"
+            >
+              Painel
+            </a>
+            <a
+              aria-current="page"
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-cor-accent-ink bg-cor-marcado text-cor-text"
+              href="/library"
+            >
+              Biblioteca
+            </a>
+            <a
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-transparent text-cor-muted"
+              href="/setlists"
+            >
+              Setlists
+            </a>
+            <a
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-transparent text-cor-muted"
+              href="/add-content"
+            >
+              Adicionar
+            </a>
+          </nav>
+          <div
+            class="order-3 flex-1 min-w-0 h-barra-top flex items-center gap-espaco-lg"
+          >
+            <form
+              class="flex-1 min-w-0 h-toque-min border-hairline border-cor-line-info rounded-raio-control flex items-center gap-espaco-md px-espaco-lg"
+              data-testid="casca-busca"
+              role="search"
+            >
+              <svg
+                aria-hidden="true"
+                class="shrink-0 text-cor-line-info"
+                fill="none"
+                focusable="false"
+                height="20"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                viewBox="0 0 24 24"
+                width="20"
+              >
+                <circle
+                  cx="10.5"
+                  cy="10.5"
+                  fill="none"
+                  r="6.5"
+                  stroke-width="1.5"
+                />
+                <path
+                  d="M15.5 15.5L21 21"
+                  fill="none"
+                  stroke-width="1.5"
+                />
+              </svg>
+              <input
+                aria-label="Buscar…"
+                class="flex-1 min-w-0 bg-cor-bg text-cor-text text-tam-body-small placeholder:text-cor-muted outline-none"
+                data-testid="casca-busca-campo"
+                placeholder="Buscar…"
+                type="search"
+                value=""
+              />
+            </form>
+            <div
+              class="relative shrink-0"
+            >
+              <button
+                aria-expanded="false"
+                aria-haspopup="menu"
+                aria-label="Conta de cn@exemplo.com"
+                class="w-toque-min h-toque-min shrink-0 rounded-raio-pill border-hairline border-cor-line-info flex items-center justify-center font-fam-ui-bold font-peso-ui-bold text-tam-label text-cor-text"
+                data-testid="casca-conta"
+                type="button"
+              >
+                C
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+      <main
+        class="flex-1 min-w-0 flex flex-col"
+      >
+        <div
+          class="flex-1 bg-[#fffcf7]"
+        >
+          <div
+            class="flex flex-col bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 min-h-full"
+          >
+            <div
+              class="sticky top-0 z-30 bg-white/90 backdrop-blur-sm border-b border-amber-200 px-4 py-3 shadow-md"
+            >
+              <div
+                class="flex flex-row flex-wrap items-center justify-between gap-4"
+              >
+                <div
+                  class="flex items-center flex-wrap gap-3"
+                >
+                  <button
+                    class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:text-accent-foreground h-10 w-10 hover:bg-amber-100"
+                  >
+                    <svg
+       ...
+ ❯ waitForWrapper ../../../../../../..<árvore da PR>/node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ ../../../../../../..<árvore da PR>/node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ components/editors/__tests__/editor-estados.test.tsx:130:27
+    128|       await editarLetra()
+    129|       fireEvent.click(await botaoSalvar())
+    130|       expect(await screen.findByText(frase)).toBeInTheDocument()
+       |                           ^
+    131|       expect(screen.getByText('o que você escreveu continua aqui')).to…
+    132|       const t = screen.queryByRole('button', { name: /Tentar de novo/ …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/12]⎯
+
+ FAIL   web  components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > 404: "não foi possível salvar — este conteúdo não existe mais" + "o que você escreveu continua aqui"
+TestingLibraryElementError: Unable to find an element with the text: não foi possível salvar — este conteúdo não existe mais. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="min-h-screen bg-cor-bg flex flex-col"
+    >
+      <header
+        class="border-b-hairline border-cor-line text-cor-text font-fam-ui font-peso-ui leading-natural"
+      >
+        <div
+          class="w-full max-w-web-conteiner mx-auto flex flex-wrap items-center gap-x-espaco-xl px-web-margem"
+        >
+          <div
+            aria-label="Octavia"
+            class="order-1 h-barra-top flex items-center font-fam-display font-peso-display text-tam-title tracking-display-wide text-cor-text"
+            role="img"
+          >
+            OCTAVIA
+          </div>
+          <nav
+            aria-label="Navegação"
+            class="order-4 basis-full min-h-toque-list flex flex-wrap items-center gap-espaco-sm c:order-2 c:basis-auto c:h-barra-top"
+          >
+            <a
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-transparent text-cor-muted"
+              href="/dashboard"
+            >
+              Painel
+            </a>
+            <a
+              aria-current="page"
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-cor-accent-ink bg-cor-marcado text-cor-text"
+              href="/library"
+            >
+              Biblioteca
+            </a>
+            <a
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-transparent text-cor-muted"
+              href="/setlists"
+            >
+              Setlists
+            </a>
+            <a
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-transparent text-cor-muted"
+              href="/add-content"
+            >
+              Adicionar
+            </a>
+          </nav>
+          <div
+            class="order-3 flex-1 min-w-0 h-barra-top flex items-center gap-espaco-lg"
+          >
+            <form
+              class="flex-1 min-w-0 h-toque-min border-hairline border-cor-line-info rounded-raio-control flex items-center gap-espaco-md px-espaco-lg"
+              data-testid="casca-busca"
+              role="search"
+            >
+              <svg
+                aria-hidden="true"
+                class="shrink-0 text-cor-line-info"
+                fill="none"
+                focusable="false"
+                height="20"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                viewBox="0 0 24 24"
+                width="20"
+              >
+                <circle
+                  cx="10.5"
+                  cy="10.5"
+                  fill="none"
+                  r="6.5"
+                  stroke-width="1.5"
+                />
+                <path
+                  d="M15.5 15.5L21 21"
+                  fill="none"
+                  stroke-width="1.5"
+                />
+              </svg>
+              <input
+                aria-label="Buscar…"
+                class="flex-1 min-w-0 bg-cor-bg text-cor-text text-tam-body-small placeholder:text-cor-muted outline-none"
+                data-testid="casca-busca-campo"
+                placeholder="Buscar…"
+                type="search"
+                value=""
+              />
+            </form>
+            <div
+              class="relative shrink-0"
+            >
+              <button
+                aria-expanded="false"
+                aria-haspopup="menu"
+                aria-label="Conta de cn@exemplo.com"
+                class="w-toque-min h-toque-min shrink-0 rounded-raio-pill border-hairline border-cor-line-info flex items-center justify-center font-fam-ui-bold font-peso-ui-bold text-tam-label text-cor-text"
+                data-testid="casca-conta"
+                type="button"
+              >
+                C
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+      <main
+        class="flex-1 min-w-0 flex flex-col"
+      >
+        <div
+          class="flex-1 bg-[#fffcf7]"
+        >
+          <div
+            class="flex flex-col bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 min-h-full"
+          >
+            <div
+              class="sticky top-0 z-30 bg-white/90 backdrop-blur-sm border-b border-amber-200 px-4 py-3 shadow-md"
+            >
+              <div
+                class="flex flex-row flex-wrap items-center justify-between gap-4"
+              >
+                <div
+                  class="flex items-center flex-wrap gap-3"
+                >
+                  <button
+                    class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:text-accent-foreground h-10 w-10 hover:bg-amber-100"
+                  >
+                    <svg
+       ...
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="min-h-screen bg-cor-bg flex flex-col"
+    >
+      <header
+        class="border-b-hairline border-cor-line text-cor-text font-fam-ui font-peso-ui leading-natural"
+      >
+        <div
+          class="w-full max-w-web-conteiner mx-auto flex flex-wrap items-center gap-x-espaco-xl px-web-margem"
+        >
+          <div
+            aria-label="Octavia"
+            class="order-1 h-barra-top flex items-center font-fam-display font-peso-display text-tam-title tracking-display-wide text-cor-text"
+            role="img"
+          >
+            OCTAVIA
+          </div>
+          <nav
+            aria-label="Navegação"
+            class="order-4 basis-full min-h-toque-list flex flex-wrap items-center gap-espaco-sm c:order-2 c:basis-auto c:h-barra-top"
+          >
+            <a
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-transparent text-cor-muted"
+              href="/dashboard"
+            >
+              Painel
+            </a>
+            <a
+              aria-current="page"
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-cor-accent-ink bg-cor-marcado text-cor-text"
+              href="/library"
+            >
+              Biblioteca
+            </a>
+            <a
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-transparent text-cor-muted"
+              href="/setlists"
+            >
+              Setlists
+            </a>
+            <a
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-transparent text-cor-muted"
+              href="/add-content"
+            >
+              Adicionar
+            </a>
+          </nav>
+          <div
+            class="order-3 flex-1 min-w-0 h-barra-top flex items-center gap-espaco-lg"
+          >
+            <form
+              class="flex-1 min-w-0 h-toque-min border-hairline border-cor-line-info rounded-raio-control flex items-center gap-espaco-md px-espaco-lg"
+              data-testid="casca-busca"
+              role="search"
+            >
+              <svg
+                aria-hidden="true"
+                class="shrink-0 text-cor-line-info"
+                fill="none"
+                focusable="false"
+                height="20"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                viewBox="0 0 24 24"
+                width="20"
+              >
+                <circle
+                  cx="10.5"
+                  cy="10.5"
+                  fill="none"
+                  r="6.5"
+                  stroke-width="1.5"
+                />
+                <path
+                  d="M15.5 15.5L21 21"
+                  fill="none"
+                  stroke-width="1.5"
+                />
+              </svg>
+              <input
+                aria-label="Buscar…"
+                class="flex-1 min-w-0 bg-cor-bg text-cor-text text-tam-body-small placeholder:text-cor-muted outline-none"
+                data-testid="casca-busca-campo"
+                placeholder="Buscar…"
+                type="search"
+                value=""
+              />
+            </form>
+            <div
+              class="relative shrink-0"
+            >
+              <button
+                aria-expanded="false"
+                aria-haspopup="menu"
+                aria-label="Conta de cn@exemplo.com"
+                class="w-toque-min h-toque-min shrink-0 rounded-raio-pill border-hairline border-cor-line-info flex items-center justify-center font-fam-ui-bold font-peso-ui-bold text-tam-label text-cor-text"
+                data-testid="casca-conta"
+                type="button"
+              >
+                C
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+      <main
+        class="flex-1 min-w-0 flex flex-col"
+      >
+        <div
+          class="flex-1 bg-[#fffcf7]"
+        >
+          <div
+            class="flex flex-col bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 min-h-full"
+          >
+            <div
+              class="sticky top-0 z-30 bg-white/90 backdrop-blur-sm border-b border-amber-200 px-4 py-3 shadow-md"
+            >
+              <div
+                class="flex flex-row flex-wrap items-center justify-between gap-4"
+              >
+                <div
+                  class="flex items-center flex-wrap gap-3"
+                >
+                  <button
+                    class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:text-accent-foreground h-10 w-10 hover:bg-amber-100"
+                  >
+                    <svg
+       ...
+ ❯ waitForWrapper ../../../../../../..<árvore da PR>/node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ ../../../../../../..<árvore da PR>/node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ components/editors/__tests__/editor-estados.test.tsx:130:27
+    128|       await editarLetra()
+    129|       fireEvent.click(await botaoSalvar())
+    130|       expect(await screen.findByText(frase)).toBeInTheDocument()
+       |                           ^
+    131|       expect(screen.getByText('o que você escreveu continua aqui')).to…
+    132|       const t = screen.queryByRole('button', { name: /Tentar de novo/ …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/12]⎯
+
+ FAIL   web  components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > 500: "não foi possível salvar — falha no servidor" + "o que você escreveu continua aqui" + Tentar de novo (o mesmo PUT)
+TestingLibraryElementError: Unable to find an element with the text: não foi possível salvar — falha no servidor. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="min-h-screen bg-cor-bg flex flex-col"
+    >
+      <header
+        class="border-b-hairline border-cor-line text-cor-text font-fam-ui font-peso-ui leading-natural"
+      >
+        <div
+          class="w-full max-w-web-conteiner mx-auto flex flex-wrap items-center gap-x-espaco-xl px-web-margem"
+        >
+          <div
+            aria-label="Octavia"
+            class="order-1 h-barra-top flex items-center font-fam-display font-peso-display text-tam-title tracking-display-wide text-cor-text"
+            role="img"
+          >
+            OCTAVIA
+          </div>
+          <nav
+            aria-label="Navegação"
+            class="order-4 basis-full min-h-toque-list flex flex-wrap items-center gap-espaco-sm c:order-2 c:basis-auto c:h-barra-top"
+          >
+            <a
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-transparent text-cor-muted"
+              href="/dashboard"
+            >
+              Painel
+            </a>
+            <a
+              aria-current="page"
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-cor-accent-ink bg-cor-marcado text-cor-text"
+              href="/library"
+            >
+              Biblioteca
+            </a>
+            <a
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-transparent text-cor-muted"
+              href="/setlists"
+            >
+              Setlists
+            </a>
+            <a
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-transparent text-cor-muted"
+              href="/add-content"
+            >
+              Adicionar
+            </a>
+          </nav>
+          <div
+            class="order-3 flex-1 min-w-0 h-barra-top flex items-center gap-espaco-lg"
+          >
+            <form
+              class="flex-1 min-w-0 h-toque-min border-hairline border-cor-line-info rounded-raio-control flex items-center gap-espaco-md px-espaco-lg"
+              data-testid="casca-busca"
+              role="search"
+            >
+              <svg
+                aria-hidden="true"
+                class="shrink-0 text-cor-line-info"
+                fill="none"
+                focusable="false"
+                height="20"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                viewBox="0 0 24 24"
+                width="20"
+              >
+                <circle
+                  cx="10.5"
+                  cy="10.5"
+                  fill="none"
+                  r="6.5"
+                  stroke-width="1.5"
+                />
+                <path
+                  d="M15.5 15.5L21 21"
+                  fill="none"
+                  stroke-width="1.5"
+                />
+              </svg>
+              <input
+                aria-label="Buscar…"
+                class="flex-1 min-w-0 bg-cor-bg text-cor-text text-tam-body-small placeholder:text-cor-muted outline-none"
+                data-testid="casca-busca-campo"
+                placeholder="Buscar…"
+                type="search"
+                value=""
+              />
+            </form>
+            <div
+              class="relative shrink-0"
+            >
+              <button
+                aria-expanded="false"
+                aria-haspopup="menu"
+                aria-label="Conta de cn@exemplo.com"
+                class="w-toque-min h-toque-min shrink-0 rounded-raio-pill border-hairline border-cor-line-info flex items-center justify-center font-fam-ui-bold font-peso-ui-bold text-tam-label text-cor-text"
+                data-testid="casca-conta"
+                type="button"
+              >
+                C
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+      <main
+        class="flex-1 min-w-0 flex flex-col"
+      >
+        <div
+          class="flex-1 bg-[#fffcf7]"
+        >
+          <div
+            class="flex flex-col bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 min-h-full"
+          >
+            <div
+              class="sticky top-0 z-30 bg-white/90 backdrop-blur-sm border-b border-amber-200 px-4 py-3 shadow-md"
+            >
+              <div
+                class="flex flex-row flex-wrap items-center justify-between gap-4"
+              >
+                <div
+                  class="flex items-center flex-wrap gap-3"
+                >
+                  <button
+                    class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:text-accent-foreground h-10 w-10 hover:bg-amber-100"
+                  >
+                    <svg
+       ...
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="min-h-screen bg-cor-bg flex flex-col"
+    >
+      <header
+        class="border-b-hairline border-cor-line text-cor-text font-fam-ui font-peso-ui leading-natural"
+      >
+        <div
+          class="w-full max-w-web-conteiner mx-auto flex flex-wrap items-center gap-x-espaco-xl px-web-margem"
+        >
+          <div
+            aria-label="Octavia"
+            class="order-1 h-barra-top flex items-center font-fam-display font-peso-display text-tam-title tracking-display-wide text-cor-text"
+            role="img"
+          >
+            OCTAVIA
+          </div>
+          <nav
+            aria-label="Navegação"
+            class="order-4 basis-full min-h-toque-list flex flex-wrap items-center gap-espaco-sm c:order-2 c:basis-auto c:h-barra-top"
+          >
+            <a
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-transparent text-cor-muted"
+              href="/dashboard"
+            >
+              Painel
+            </a>
+            <a
+              aria-current="page"
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-cor-accent-ink bg-cor-marcado text-cor-text"
+              href="/library"
+            >
+              Biblioteca
+            </a>
+            <a
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-transparent text-cor-muted"
+              href="/setlists"
+            >
+              Setlists
+            </a>
+            <a
+              class="h-toque-min px-espaco-lg rounded-raio-control border-hairline flex items-center text-tam-body-small border-transparent text-cor-muted"
+              href="/add-content"
+            >
+              Adicionar
+            </a>
+          </nav>
+          <div
+            class="order-3 flex-1 min-w-0 h-barra-top flex items-center gap-espaco-lg"
+          >
+            <form
+              class="flex-1 min-w-0 h-toque-min border-hairline border-cor-line-info rounded-raio-control flex items-center gap-espaco-md px-espaco-lg"
+              data-testid="casca-busca"
+              role="search"
+            >
+              <svg
+                aria-hidden="true"
+                class="shrink-0 text-cor-line-info"
+                fill="none"
+                focusable="false"
+                height="20"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                viewBox="0 0 24 24"
+                width="20"
+              >
+                <circle
+                  cx="10.5"
+                  cy="10.5"
+                  fill="none"
+                  r="6.5"
+                  stroke-width="1.5"
+                />
+                <path
+                  d="M15.5 15.5L21 21"
+                  fill="none"
+                  stroke-width="1.5"
+                />
+              </svg>
+              <input
+                aria-label="Buscar…"
+                class="flex-1 min-w-0 bg-cor-bg text-cor-text text-tam-body-small placeholder:text-cor-muted outline-none"
+                data-testid="casca-busca-campo"
+                placeholder="Buscar…"
+                type="search"
+                value=""
+              />
+            </form>
+            <div
+              class="relative shrink-0"
+            >
+              <button
+                aria-expanded="false"
+                aria-haspopup="menu"
+                aria-label="Conta de cn@exemplo.com"
+                class="w-toque-min h-toque-min shrink-0 rounded-raio-pill border-hairline border-cor-line-info flex items-center justify-center font-fam-ui-bold font-peso-ui-bold text-tam-label text-cor-text"
+                data-testid="casca-conta"
+                type="button"
+              >
+                C
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+      <main
+        class="flex-1 min-w-0 flex flex-col"
+      >
+        <div
+          class="flex-1 bg-[#fffcf7]"
+        >
+          <div
+            class="flex flex-col bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 min-h-full"
+          >
+            <div
+              class="sticky top-0 z-30 bg-white/90 backdrop-blur-sm border-b border-amber-200 px-4 py-3 shadow-md"
+            >
+              <div
+                class="flex flex-row flex-wrap items-center justify-between gap-4"
+              >
+                <div
+                  class="flex items-center flex-wrap gap-3"
+                >
+                  <button
+                    class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:text-accent-foreground h-10 w-10 hover:bg-amber-100"
+                  >
+                    <svg
+       ...
+ ❯ waitForWrapper ../../../../../../..<árvore da PR>/node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ ../../../../../../..<árvore da PR>/node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ components/editors/__tests__/editor-estados.test.tsx:130:27
+    128|       await editarLetra()
+    129|       fireEvent.click(await botaoSalvar())
+    130|       expect(await screen.findByText(frase)).toBeInTheDocument()
+       |                           ^
+    131|       expect(screen.getByText('o que você escreveu continua aqui')).to…
+    132|       const t = screen.queryByRole('button', { name: /Tentar de novo/ …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/12]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  11 failed (11)
+   Start at  10:48:09
+   Duration  11.09s (transform 344ms, setup 441ms, import 101ms, tests 10.32s, environment 676ms)
+
+# exit: 1

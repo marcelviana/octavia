@@ -28,7 +28,7 @@ import path from 'node:path'
 import { CHROMIUM_FIXADO } from '../../playwright.g-faixa.config'
 import { classificarEstado } from './g-faixa-classificar.mjs'
 import { coletar, paraJson } from './g-faixa-coleta'
-import { soltar } from './g-faixa-auth'
+import { semResposta, soltar } from './g-faixa-auth'
 import { selecionadas, type Superficie } from './g-faixa-superficies'
 
 const BASE = new URL(process.env.G_FAIXA_BASE_URL as string)
@@ -76,7 +76,7 @@ function vigiar(ctx: BrowserContext, v: Vigia = novaVigia()) {
   })
   ctx.on('response', (resp) => { const l = porReq.get(resp.request()); if (l) l.status = resp.headers()['x-g-faixa'] === 'fabricado' ? `fabricado ${resp.status()}` : String(resp.status()) })
   ctx.on('requestfinished', (r) => { const l = porReq.get(r); if (l) l.fim = 'fim' })
-  ctx.on('requestfailed', (r) => { const l = porReq.get(r); if (l) { l.fim = `falhou ${r.failure()?.errorText ?? ''}`.trim(); if (l.status === 'pendente') l.status = 'FALHA' } })
+  ctx.on('requestfailed', (r) => { const l = porReq.get(r); if (l) { l.fim = `falhou ${r.failure()?.errorText ?? ''}`.trim(); if (l.status === 'pendente') l.status = semResposta.has(r) ? 'fabricado sem resposta' : 'FALHA' } })
   return v
 }
 
@@ -170,8 +170,10 @@ for (const sup of selecionadas()) {
         const m = await p.evaluate(coletar, null)
         const medicao = { url: sup.rota, viewport: m.viewport, doc: m.doc, nos: paraJson(m.nos, sup.publica) }
         estados[id] = { medicao }
-        const secao = est.secao && esperado?.estados[est.secao]
-        if (secao && 'C' in secao) estados[id].folha = { C: secao.C, B: secao.B, secao: est.secao, sha256: esperado.sha256 }
+        // I1-PR11: a folha pode ser POR ESTADO (o `LIB-salvo` da folha 4, medido pelo fluxo do editor)
+        const esp = est.folha ? lerEsperado(est.folha) : esperado
+        const secao = est.secao && esp?.estados[est.secao]
+        if (esp && secao && 'C' in secao) estados[id].folha = { C: secao.C, B: secao.B, secao: est.secao, sha256: esp.sha256, ...(est.folha ? { folha: est.folha } : {}) }
       }
       expect(estado.parada, 'escrita não declarada').toBe('')
       const peca = {

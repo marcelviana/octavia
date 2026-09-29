@@ -19,8 +19,11 @@ import { FRASES_SESSAO, fraseDaFalha } from "./frases-sessao"
  */
 export const ROTAS_QUE_DESENHAM_A_LINHA: readonly string[] = ["/login", "/dashboard", "/library"]
 
-/** I1-PR-10 (decisão 14): a visualização `/content/<id>` também desenha a linha (abaixo do cabeçalho); o editor `/content/<id>/edit`, não. */
-export const desenhaNaTela = (caminho: string) => ROTAS_QUE_DESENHAM_A_LINHA.includes(caminho) || /^\/content\/[^/]+$/.test(caminho)
+/**
+ * I1-PR-10 (decisão 14): a visualização `/content/<id>` também desenha a linha (abaixo do cabeçalho). I1-PR-11: o
+ * editor `/content/<id>/edit` também (a linha da tela no topo do corpo e nos estados de carga — `LinhaDaTela`).
+ */
+export const desenhaNaTela = (caminho: string) => ROTAS_QUE_DESENHAM_A_LINHA.includes(caminho) || /^\/content\/[^/]+(\/edit)?$/.test(caminho)
 
 export function AvisoDeSessao({
   sessao,

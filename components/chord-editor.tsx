@@ -1,14 +1,14 @@
 "use client"
 
+/**
+ * O editor de cifra (I1-PR-11; folha 6, `EDIT-cifra`): Informações · Acordes rápidos · Seções · Prévia. O ESTADO e o
+ * que cada mudança devolve são os de antes, linha a linha (o `onChange({ ...content, ...newData })` que leva a linha
+ * inteira ao `content_data` é a poluição do Bloco D — `docs/ux/I1-PR11-anexos/README.md` §1.2 —, não tocada: o corpo
+ * do `PUT` é gate byte a byte, `tests/gates/i1-editor-put.test.tsx`). Só o desenho mudou.
+ */
 import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Plus, Trash2, GripVertical } from "lucide-react"
-import { MusicText } from "@/components/music-text"
+import { Informacoes } from "@/components/editors/informacoes"
+import { AcordesRapidos, PreviaDaCifra, Secoes, type Secao } from "@/components/editors/partes-da-cifra"
 
 interface ChordEditorProps {
   content: any
@@ -19,46 +19,19 @@ export function ChordEditor({ content, onChange }: ChordEditorProps) {
   const [chordData, setChordData] = useState(() => {
     // Priority 1: Use sections if available (structured format)
     if (content.sections && Array.isArray(content.sections) && content.sections.length > 0) {
-      return {
-        title: content.title || "",
-        artist: content.artist || "",
-        key: content.key || "",
-        capo: content.capo || "",
-        bpm: content.bpm || "",
-        sections: content.sections,
-      }
+      return { title: content.title || "", artist: content.artist || "", key: content.key || "", capo: content.capo || "", bpm: content.bpm || "", sections: content.sections }
     }
-    
-    // Priority 2: Convert chords string to sections (legacy format)
+    // Priority 2: Convert chords string to sections (legacy format) — o nome "Content" é VALOR gravado (div. 784)
     if (content.chords && typeof content.chords === 'string' && content.chords.trim()) {
       return {
-        title: content.title || "",
-        artist: content.artist || "",
-        key: content.key || "",
-        capo: content.capo || "",
-        bpm: content.bpm || "",
-        sections: [{
-          id: Date.now(),
-          name: "Content",
-          chords: "",
-          lyrics: content.chords,
-        }],
+        title: content.title || "", artist: content.artist || "", key: content.key || "", capo: content.capo || "", bpm: content.bpm || "",
+        sections: [{ id: Date.now(), name: "Content", chords: "", lyrics: content.chords }],
       }
     }
-    
-    // Priority 3: Empty editor for new content
+    // Priority 3: Empty editor for new content — o nome "Verse 1" é VALOR gravado (div. 784)
     return {
-      title: content.title || "",
-      artist: content.artist || "",
-      key: content.key || "",
-      capo: content.capo || "",
-      bpm: content.bpm || "",
-      sections: [{
-        id: Date.now(),
-        name: "Verse 1",
-        chords: "",
-        lyrics: "",
-      }],
+      title: content.title || "", artist: content.artist || "", key: content.key || "", capo: content.capo || "", bpm: content.bpm || "",
+      sections: [{ id: Date.now(), name: "Verse 1", chords: "", lyrics: "" }],
     }
   })
 
@@ -68,31 +41,18 @@ export function ChordEditor({ content, onChange }: ChordEditorProps) {
   }
 
   const addSection = () => {
-    const newSection = {
-      id: Date.now(),
-      name: "",
-      chords: "",
-      lyrics: "",
-    }
-    updateChordData({
-      ...chordData,
-      sections: [...chordData.sections, newSection],
-    })
+    const newSection = { id: Date.now(), name: "", chords: "", lyrics: "" }
+    updateChordData({ ...chordData, sections: [...chordData.sections, newSection] })
   }
 
   const removeSection = (sectionId: number) => {
-    updateChordData({
-      ...chordData,
-      sections: chordData.sections.filter((section: any) => section.id !== sectionId),
-    })
+    updateChordData({ ...chordData, sections: chordData.sections.filter((section: any) => section.id !== sectionId) })
   }
 
   const updateSection = (sectionId: number, field: string, value: string) => {
     updateChordData({
       ...chordData,
-      sections: chordData.sections.map((section: any) =>
-        section.id === sectionId ? { ...section, [field]: value } : section,
-      ),
+      sections: chordData.sections.map((section: any) => (section.id === sectionId ? { ...section, [field]: value } : section)),
     })
   }
 
@@ -109,227 +69,18 @@ export function ChordEditor({ content, onChange }: ChordEditorProps) {
     }
   }
 
-  const commonChords = ["C", "G", "Am", "F", "D", "Em", "A", "E", "Dm", "B7"]
-
   return (
-    <div className="space-y-6">
-      {/* Song Information */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Song Information</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="title">Title</Label>
-              <Input
-                id="title"
-                value={chordData.title}
-                onChange={(e) => updateChordData({ ...chordData, title: e.target.value })}
-              />
-            </div>
-            <div>
-              <Label htmlFor="artist">Artist</Label>
-              <Input
-                id="artist"
-                value={chordData.artist}
-                onChange={(e) => updateChordData({ ...chordData, artist: e.target.value })}
-              />
-            </div>
-          </div>
-          <div className="grid grid-cols-3 gap-4">
-            <div>
-              <Label htmlFor="key">Key</Label>
-              <Select value={chordData.key} onValueChange={(value) => updateChordData({ ...chordData, key: value })}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select key" />
-                </SelectTrigger>
-                <SelectContent>
-                  {[
-                    "C",
-                    "Cm",
-                    "C#",
-                    "C#m",
-                    "Db",
-                    "Dbm",
-                    "D",
-                    "Dm",
-                    "D#",
-                    "D#m",
-                    "Eb",
-                    "Ebm",
-                    "E",
-                    "Em",
-                    "Fb",
-                    "Fbm",
-                    "F",
-                    "Fm",
-                    "F#",
-                    "F#m",
-                    "Gb",
-                    "Gbm",
-                    "G",
-                    "Gm",
-                    "G#",
-                    "G#m",
-                    "Ab",
-                    "Abm",
-                    "A",
-                    "Am",
-                    "A#",
-                    "A#m",
-                    "Bb",
-                    "Bbm",
-                    "B",
-                    "Bm",
-                    "Cb",
-                    "Cbm",
-                  ].map((key) => (
-                    <SelectItem key={key} value={key}>
-                      {key}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Label htmlFor="capo">Capo</Label>
-              <Input
-                id="capo"
-                value={chordData.capo}
-                onChange={(e) => updateChordData({ ...chordData, capo: e.target.value })}
-                placeholder="Fret"
-              />
-            </div>
-            <div>
-              <Label htmlFor="bpm">BPM</Label>
-              <Input
-                id="bpm"
-                type="number"
-                value={chordData.bpm}
-                onChange={(e) => updateChordData({ ...chordData, bpm: e.target.value })}
-                placeholder="120"
-              />
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Quick Chord Palette */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Quick Chords</CardTitle>
-          <p className="text-sm text-gray-500 mt-1">
-            {focusedSection ? "Click to add chords to the focused section" : "Focus on a chord input to use quick chords"}
-          </p>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-wrap gap-2">
-            {commonChords.map((chord) => (
-              <Button
-                key={chord}
-                variant="outline"
-                size="sm"
-                onClick={() => addChordToSection(chord)}
-                disabled={!focusedSection}
-              >
-                {chord}
-              </Button>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Song Sections */}
-      <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle>Song Sections</CardTitle>
-            <Button onClick={addSection}>
-              <Plus className="w-4 h-4 mr-2" />
-              Add Section
-            </Button>
-          </div>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {chordData.sections.map((section: any, index: number) => (
-            <Card key={section.id} className="p-4">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <GripVertical className="w-4 h-4 text-gray-400 cursor-grab" />
-                    <Input
-                      placeholder="Section name (e.g., Verse 1, Chorus)"
-                      value={section.name}
-                      onChange={(e) => updateSection(section.id, "name", e.target.value)}
-                      className="max-w-xs"
-                    />
-                  </div>
-                  {chordData.sections.length > 1 && (
-                    <Button variant="ghost" size="sm" onClick={() => removeSection(section.id)}>
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
-                  )}
-                </div>
-
-                <div>
-                  <Label>Chord Progression</Label>
-                  <Input
-                    placeholder="Am F C G"
-                    value={section.chords}
-                    onChange={(e) => updateSection(section.id, "chords", e.target.value)}
-                    onFocus={() => setFocusedSection(section.id)}
-                    onBlur={() => setFocusedSection(null)}
-                    className="font-mono"
-                  />
-                </div>
-
-                <div>
-                  <Label>Lyrics</Label>
-                  <Textarea
-                    placeholder="Enter lyrics for this section..."
-                    value={section.lyrics}
-                    onChange={(e) => updateSection(section.id, "lyrics", e.target.value)}
-                    className="min-h-[100px] font-mono"
-                  />
-                </div>
-              </div>
-            </Card>
-          ))}
-        </CardContent>
-      </Card>
-
-      {/* Preview */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Preview</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="bg-white p-6 border rounded-lg">
-            <div className="text-center mb-6">
-              <h2 className="text-2xl font-bold">{chordData.title || "Untitled"}</h2>
-              <p className="text-lg text-gray-600">{chordData.artist || "Unknown Artist"}</p>
-              <div className="flex justify-center space-x-4 mt-2 text-sm text-gray-500">
-                {chordData.key && <span>Key: {chordData.key}</span>}
-                {chordData.capo && <span>Capo: {chordData.capo}</span>}
-                {chordData.bpm && <span>BPM: {chordData.bpm}</span>}
-              </div>
-            </div>
-
-            <div className="space-y-6">
-              {chordData.sections.map((section: any) => (
-                <div key={section.id}>
-                  {section.name && <h3 className="font-bold text-blue-600 mb-2">{section.name}:</h3>}
-                  {section.chords && <p className="font-mono bg-gray-100 p-2 rounded mb-2">Chords: {section.chords}</p>}
-                  {section.lyrics && (
-                    <MusicText text={section.lyrics} monospace={false} />
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+    <div className="flex flex-col gap-espaco-xl min-w-0">
+      <Informacoes dados={chordData} onMudar={(campo, valor) => updateChordData({ ...chordData, [campo]: valor })} />
+      <AcordesRapidos ativo={!!focusedSection} onAcorde={addChordToSection} />
+      <Secoes
+        secoes={chordData.sections as Secao[]}
+        onAdicionar={addSection}
+        onRemover={removeSection}
+        onMudar={updateSection}
+        onFoco={setFocusedSection}
+      />
+      <PreviaDaCifra dados={chordData} />
     </div>
   )
 }
