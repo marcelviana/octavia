@@ -1,0 +1,6 @@
+$ CN_GRAVAR=1 pnpm exec vitest run tests/gates/i1-upload-post.test.tsx   # grava tests/gates/fixtures/upload-post-antes.json (código da main, 434ba79)
+$ pnpm exec vitest run tests/gates/i1-upload-post.test.tsx               # confere (2 execuções, iguais)
+ ✓  web  tests/gates/i1-upload-post.test.tsx (5 tests | 1 skipped) 611ms
+     ✓ criar do zero (letra) + metadados e avançadas  491ms
+ Test Files  1 passed (1)
+      Tests  4 passed | 1 skipped (5)

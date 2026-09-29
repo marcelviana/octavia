@@ -1,0 +1,11 @@
+$ pnpm exec tsx scripts/gates-web/g-faixa-esperado.ts 7-upload
+7-upload: 170 caixa(s) de campo ancorada(s) · 21 seções · 20 com C e B · nós C 507 · nós B 507 → tests/gates-web/esperado/7-upload.json
+  ✗ Tokens: sem a moldura C B
+# exit: 0
+$ pnpm exec tsx scripts/gates-web/g-faixa-esperado.ts 4-content-lista 6-content-editor  # controle
+4-content-lista: 60 caixa(s) de campo ancorada(s) · 16 seções · 15 com C e B · nós C 465 · nós B 465 → tests/gates-web/esperado/4-content-lista.json
+  ✗ Tokens: sem a moldura C B
+6-content-editor: 256 caixa(s) de campo ancorada(s) · 16 seções · 15 com C e B · nós C 604 · nós B 604 → tests/gates-web/esperado/6-content-editor.json
+  ✗ Tokens: sem a moldura C B
+cmp 4-content-lista: iguais
+cmp 6-content-editor: iguais

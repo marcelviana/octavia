@@ -1,0 +1,13 @@
+$ pnpm exec vitest run tests/gates/zz-sonda-upload.test.tsx   # sonda descartável sobre o código da main (434ba79); fonte: sonda-upload-main.test.tsx.txt
+SONDA(1) no passo 2 (formulário): 1 ocorrência(s)
+SONDA(1) no passo 1 depois de Cancel: 1 ocorrência(s) · role=alert: Failed to create content
+SONDA(2) toast.success: [["2 songs imported successfully"]] · na tela: passo 1 = true · "Done!" = false
+SONDA(3) toast.error: ["Unsupported file type: foto.heic. Allowed: .pdf, .docx, .txt"] · fetch chamado: 0
+SONDA(4) toast.error: ["Validation failed"] · "(max 50MB)" na tela: 1
+SONDA(5) toast.error: ["Upload failed with status 413"]
+SONDA(6) toast.error: ["Failed to fetch"]
+ ✓  web  tests/gates/zz-sonda-upload.test.tsx (6 tests) 536ms
+   ✓ (1) a cópia velha: o erro do salvar reaparece no passo 1 depois de Cancel  417ms
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+# exit: 
