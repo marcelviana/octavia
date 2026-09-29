@@ -1,4 +1,4 @@
-$ G_CAPTURAS=docs/ux/I1-PR10-anexos/capturas pnpm exec tsx docs/ux/I1-PR10-anexos/pre-verificacao/rodar.ts http://localhost:3110   # next dev -p 3110 SEM .env, numa cópia da árvore; app/fumaca-i1pr10 copiada de pagina-fumaca.tsx
+$ pnpm exec tsx docs/ux/I1-PR10-anexos/pre-verificacao/rodar.ts http://localhost:3110   # os 13 estados, sobre o commit 2b; next dev -p 3110 SEM .env, numa cópia da árvore; app/fumaca-i1pr10 copiada de pagina-fumaca.tsx
 chromium 140.0.7339.16 · base http://localhost:3110
 VIEW-cifra · 411: (e) 0 · (b) 0 · scrollWidth 411 · errata candidata 0 · sem par folha 0 / app 0
 VIEW-cifra · 711: (e) 0 · (b) 0 · scrollWidth 711 · errata candidata 0 · sem par folha 2 / app 3
@@ -40,16 +40,7 @@ VIEW-tab · 1138: (e) 0 · (b) 0 · scrollWidth 1138 · errata candidata 0 · se
     sem par (app): "Buscar…"
     sem par (app): "TAB e|-------0-----------0-------|-------0--------"
 VIEW-partitura · 411: (e) 0 · (b) 0 · scrollWidth 411 · errata candidata 0 · sem par folha 0 / app 0
-VIEW-partitura · 711: (e) 0 · (b) 0 · scrollWidth 711 · errata candidata 9 · sem par folha 3 / app 5
-    Δ[x,y,w,h] [0,655.8,2,0] "Detalhes"
-    Δ[x,y,w,h] [0,655.8,0,0] "compasso"
-    Δ[x,y,w,h] [2,655.8,0,0] "4/4"
-    Δ[x,y,w,h] [0,655.8,0,0] "criado"
-    Δ[x,y,w,h] [2,655.8,0,0] "10 set 2026"
-    Δ[x,y,w,h] [0,655.8,0,0] "alterado"
-    Δ[x,y,w,h] [2,655.8,0,0] "10 set 2026"
-    Δ[x,y,w,h] [0,655.8,2,0] "Notas de palco"
-    Δ[x,y,w,h] [0,655.8,2,0] "nenhuma nota de palco — use Editar para escrever"
+VIEW-partitura · 711: (e) 0 · (b) 0 · scrollWidth 711 · errata candidata 0 · sem par folha 3 / app 5
     sem par (folha): "Buscar…"
     sem par (folha): "MV"
     sem par (folha): "página do PDF (renderização do arquivo)"

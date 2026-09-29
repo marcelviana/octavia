@@ -76,3 +76,4 @@ components/content/tipos.ts
 components/content/painel.tsx
 components/content/barra-do-pdf.tsx
 components/content/limite-do-corpo.tsx
+components/content/base-da-pagina.ts

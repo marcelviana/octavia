@@ -36,6 +36,7 @@ vi.mock('@/components/content/corpo-de-texto', async (original) => {
 
 import ContentPageClient from '@/components/content-page-client'
 import { especieDoPdf, fraseDoPdf } from '@/components/content/frases-visualizacao'
+import { FRACAO_DA_PAGINA, fracaoDaPagina } from '@/components/content/base-da-pagina'
 import type { ConteudoVisto } from '@/components/content/tipos'
 
 const base = {
@@ -139,5 +140,13 @@ describe('I1-PR-10 — a coluna lateral e o cabeçalho', () => {
     expect(screen.getByRole('link', { name: /Editar/ })).toHaveAttribute('href', '/content/cn/edit')
     expect(screen.queryByRole('button', { name: /favorit/i })).toBeNull()
     expect(screen.queryByText(/Apagar|Delete/)).toBeNull()
+  })
+})
+
+describe('I1-PR-10 — a base da escala do PDF pela folha (div. 761)', () => {
+  it('60 % do painel; na tela cheia, 40 % em C e 85 % em B e A', () => {
+    expect(FRACAO_DA_PAGINA).toEqual({ painel: 0.6, telaCheiaC: 0.4, telaCheiaB: 0.85 })
+    expect([fracaoDaPagina(false, 1138), fracaoDaPagina(false, 411)]).toEqual([0.6, 0.6])
+    expect([fracaoDaPagina(true, 1138), fracaoDaPagina(true, 961), fracaoDaPagina(true, 960), fracaoDaPagina(true, 711), fracaoDaPagina(true, 411)]).toEqual([0.4, 0.4, 0.85, 0.85, 0.85])
   })
 })

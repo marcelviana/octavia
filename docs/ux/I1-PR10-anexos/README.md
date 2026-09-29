@@ -9,7 +9,8 @@
 > **Convenções**: `[medido]` = comando + saída literal (em `cn/`); `[lido]` = arquivo:linha; `[hipótese]` = o resto.
 > Divergências **a partir de 732** (a PR-9 fechou em 731, §18.7 dela).
 > **Estado**: commit 1 (gate-first, `2420b8d`), aval (§11), commit 1b (instrumento do `content-edit`, `e7ab05f`, §12),
-> o "antes" do editor (Marcel, §13) e **commit 2** (a implementação, §14–§20) — aguardando o "rodei". PR
+> o "antes" do editor (Marcel, §13), **commit 2** (a implementação, §14–§21) e **commit 2b** (a base da escala do PDF
+> pela folha, div. 761, §22) — aguardando o "rodei". PR
 > [#345](https://github.com/marcelviana/octavia/pull/345).
 
 | arquivo | o que é |
@@ -578,10 +579,8 @@ PR-1 **15/15**, painel **4/4** (`cn/cn-pr1.txt`, `cn/testes-da-pr.txt`).
   `AUTH-verify-reenviar-excecao`, a I1-E2 os 2 de `UP-lote-lendo`. G-tok (i): **26 achados, 26 cobertos, 0 órfãs**
   (eram 19: −1 da contagem, +4 da E1/E2, +4 da E15).
 - **I1-E16, E17, E18** em `erratasFaixa`, com o `n` da pré-verificação (2, 13, 0) — o aceite confirma.
-- **Proposta, sem decidir — I1-E19** (div. 761): a página do PDF é a do visualizador (`800 × escala`, I1-D9/D27), não
-  *"60 % do painel"*; em B a coluna lateral vem abaixo do painel e desce com a altura da página (Δy +655,8 nos 9 nós de
-  *Detalhes*/*Notas* com o PDF A4 gerado). Sem ela, essas 9 candidatas saem **"sem cobertura"** (contadas à parte; não
-  reprovam). Alternativa: a página a 60 % do painel ao abrir (escala inicial calculada — muda o *100 %* de hoje).
+- **Div. 761** (a página do PDF em `800 × escala`, não *"60 % do painel"*: 9 candidatas em B) — a I1-E19 proposta aqui
+  **não existe**: o Marcel decidiu pela folha (§22, commit 2b).
 - `SHA256SUMS`: `README.md` `bde7edd1…` → `bcde6e59…`; `conferencia/conferir.mjs` `e37312df…` → `7585dba2…`;
   `shasum -a 256 -c` → **14/14 OK**.
 
@@ -600,7 +599,7 @@ TOTAL: 39 (estado × largura) · (e) 0 · (b) 0 · scrollWidth = viewport em 39/
 | estado | C 1138 | B 711 | A 411 |
 |---|---|---|---|
 | `VIEW-cifra` · `-letra` · `-tab` · `-carregando-pdf` · `-erro-pdf` · os 4 vazios · `-erro-render` | 0 · 0 · 0 | 0 · 0 · 0 | 0 · 0 |
-| `VIEW-partitura` | 0 · 0 · 0 | 0 · 0 · **9** (div. 761, I1-E19 proposta) | 0 · 0 |
+| `VIEW-partitura` | 0 · 0 · 0 | 0 · 0 · **9** no commit 2 (div. 761) → **0** no 2b (§22) | 0 · 0 |
 | `VIEW-partitura-cheia` | 0 · 0 · **1** (I1-E16) | 0 · 0 · **1** (I1-E16) | 0 · 0 |
 | `VIEW-erro-formato` | 0 · 0 · **2** (I1-E17) | 0 · 0 · **11** (I1-E17) | 0 · 0 |
 
@@ -643,11 +642,11 @@ e o nó do `pdf-viewer` inteiro (tem `data-testid`, então é nó com o texto to
 | **758** | T | decisão 621: *"fora na horizontal do painel marcado é (d′)"* | a borda do viewport era testada antes e o painel não valia para o nó além da tela; e a camada de texto do PDF tem outro recorte mais perto | `emPainel` na `coletar` + o teste antes do viewport; CN (§16) |
 | **759** | A | *"o `pdf-viewer` mantém o que faz"* | a página mais larga que o painel tinha a borda esquerda **fora do alcance da rolagem** (`justify-center` em contêiner que rola), no visualizador e no editor | `mx-auto` no filho — **mudança declarada** (a rolagem passa a alcançar a página inteira) |
 | **760** | A | I1-E15: *"os T-I1-R são renumerados"* | a contagem do `conferir.mjs` fecharia por acaso e a I1-E1/E2 ficariam órfãs | a regra simétrica no `conferir.mjs`; E1/E2 recasadas (§17) |
-| **761** | D | a folha: página do PDF a 60 % do painel | o código: `800 × escala`; em B a coluna lateral desce 655,8 (9 candidatas) | **I1-E19 proposta** — decisão do Marcel |
+| **761** | D | a folha: página do PDF a 60 % do painel | o código: `800 × escala`; em B a coluna lateral desce 655,8 (9 candidatas) | **→ a folha** `[Marcel, 2026-09-29]`: a base da escala é 60 % do painel (40 % / 85 % na tela cheia); sem I1-E19 — commit 2b (§22) |
 | **762** | T | a tela cheia medida como a moldura da folha | a `coletar` percorre o DOM inteiro: a página por trás da *top layer* sai "sem par" (27 nós por largura) | contados à parte (não reprovam) |
-| **763** | D | *"os dois `data-estado` saem da contagem do §2.4"* | o §2.4 que conta estados por folha é o do `README-design.md` (entregue com as folhas, como os `telas.html`); o `DESIGN-I1/README.md` conta na §4 | a §4 atualizada (13 estados, 145–170); o `README-design.md` **não muda** — a errata prevalece (a regra das erratas, §2.2) |
+| **763** | D | *"os dois `data-estado` saem da contagem do §2.4"* | o §2.4 que conta estados por folha é o do `README-design.md` (entregue com as folhas, como os `telas.html`); o `DESIGN-I1/README.md` conta na §4 | **fica** `[Marcel, 2026-09-29]`: o `README-design.md` é entrega da folha e não se edita (segue dizendo 15); a verdade é o `DESIGN-I1/README.md` §4 (13 estados, 145–170) |
 | **764** | D | — | a barra do PDF aparecia sempre (no carregando e no erro também); a folha só a desenha com o PDF aberto | só com o PDF aberto (desenho; os controles não faziam nada sem páginas) |
-| **765** | D | a folha: *Largura* marcado ao abrir | o código abre em 100 % sem ajuste | o ajuste escolhido fica marcado; nenhum ao abrir (div. 746) |
+| **765** | D | a folha: *Largura* marcado ao abrir | o código abre em 100 % sem ajuste | o ajuste escolhido fica marcado; nenhum ao abrir (div. 746). Desde o 2b o *100 %* é a largura da folha (60 % do painel), que é a que a folha desenha com *Largura* marcado |
 | **766** | D | o título do cabeçalho em `line-height: 1.3` | 1,3 não é token | `leading-natural` (o precedente da I1-E12); dentro da tolerância na pré-verificação (0 candidatas) |
 
 Registrados sem divergência nova: as datas nulas de *Detalhes* deixam de aparecer (antes, *"Created 12/31/1969"* — a
@@ -664,3 +663,51 @@ saíram com ele (I1-D26). Próxima divergência: **767**.
 | executor | a `main` para o teste da tab | worktree temporária de `8b662fc`, removida |
 | executor | navegador | a folha por `file://`; a fumaça em `localhost:3110`; o PDF respondido pelo `route()` (host que não existe) |
 | — | `packages/identidade` | **não mudou** |
+
+## 22. Commit 2b — a base da escala do PDF pela folha (div. 761)
+
+**Decisão** `[Marcel, 2026-09-29]`: *"a página do PDF abre a 60 % do painel (base da escala), não `800 × escala`; os passos
+e os rótulos de zoom continuam os mesmos, só a base muda. Sem I1-E19. É apresentação, não comportamento."* Divs. 759 e
+760 aceitas; div. 763 fica (o `README-design.md` não se edita).
+
+**O `800` era literal em JavaScript** (`<Page width={800}>` e `containerSize.width / 800` no `pdf-viewer.tsx` velho):
+invisível ao G-tok, que lê classes, valores arbitrários e texto — não números em expressão. Agora a base é
+`components/content/base-da-pagina.ts` (novo, na lista do G-tok):
+
+| | antes (até o commit 2) | depois (2b) |
+|---|---|---|
+| a página em 100 % | 800 px | **60 %** da largura útil do painel (a caixa de conteúdo da área da página, `ResizeObserver`); na **tela cheia**, **40 %** da largura em C e **85 %** em B e A (README-design §2.4, "tela cheia") |
+| zoom −/+ | ±0,2 entre 0,5 e 3; o rótulo `escala × 100 %` | **igual** |
+| *Largura* | escala = contêiner ÷ 800 (a página com a largura do contêiner) | escala = contêiner ÷ base — **a mesma página** |
+| *Página* | escala = altura ÷ 1000 (a página com 800 × altura ÷ 1000 de largura) | escala = (800 × altura ÷ 1000) ÷ base — **a mesma página** |
+
+Os ajustes dão exatamente a página de antes; só o tamanho em 100 % (ao abrir, e depois de −/+) muda. CN no Vitest:
+`visualizacao-estados.test.tsx` +1 (as frações por faixa: 0,6 · 0,4 em C · 0,85 em B/A, no limiar 960/961).
+
+**A fixture do PDF passa a Carta** (612 × 792 pt, 1 : 1,294 — a proporção da página que a folha desenha): com a base da
+folha e o PDF em A4 (1 : 1,415) a página em B ficava 42,8 px mais alta que a da folha e as 9 candidatas **não sumiam**
+(Δy 655,8 → 42,8 na 1ª rodada do 2b, com a A4 — saída não guardada; a `saida-2b.txt` é a rodada com a Carta). O formato da fixture é do instrumento
+(`g-faixa-conteudo.ts`); o aceite usa o mesmo gerador.
+
+**Pré-verificação sem sessão, só o PDF** (`pre-verificacao/saida-2b.txt`: `VIEW-partitura`, `-partitura-cheia`,
+`-carregando-pdf`, `-erro-pdf` × três larguras):
+
+```
+TOTAL: 12 (estado × largura) · (e) 0 · (b) 0 · scrollWidth = viewport em 12/12
+```
+
+**`VIEW-partitura` em B: errata candidata 9 → 0.** `VIEW-partitura-cheia`: 1 em C e 1 em B — o título da barra que
+encolhe para caber *Anterior*/*Próxima* (I1-E16, `n: 2`). Os 13 estados de novo sobre o 2b (`pre-verificacao/saida.txt`,
+`medicoes.json`): **39/39 — (e) 0, (b) 0, `scrollWidth` = viewport**; as únicas candidatas são as da I1-E16 (2) e da
+I1-E17 (13). As capturas da partitura foram regravadas.
+
+**O efeito no editor velho** (que monta o mesmo `pdf-viewer`, com a altura fixa dele): a página abre a 60 % da área do
+visualizador em vez de 800 px — no `casca-efeito/depois`, os nós de dentro do `pdf-viewer` (a camada de texto da página) mudam
+de posição e tamanho **também** pela fixture (o "antes" usou a A4); o resto do editor, Δ 0. Esperado e registrado.
+
+**Verdes** (`cn/`): G-tok **PASSA** (67 arquivos, 0 literais; (i) 26/26) · G-back **PASSA** · G-palco **0** · `pnpm test`
+`111 passed | 3 skipped (114)` · `1098 passed | 59 skipped (1157)` · `# exit: 0` · CN da PR-1 **15/15** · os testes da PR
+**46/46** · `tsc` 0 · lint ✔ · `pnpm build` ✓ (`/content/[id]` 109 kB; numa cópia da árvore, sem `.env`).
+
+**Contabilidade do 2b**: requests a prod · logins · `.env*` abertos · escritas · contas — **0 · 0 · 0 · 0 · 0**; `next dev`
+sem `.env` na porta 3110 numa cópia da árvore (3 rodadas do roteiro), parado; a cópia removida. Próxima divergência: **767**.

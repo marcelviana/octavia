@@ -1,7 +1,6 @@
 $ pnpm exec vitest run components/auth/__tests__/login-sessao-cn.test.tsx   # o CN da PR-1
- ✓  web  components/auth/__tests__/login-sessao-cn.test.tsx (15 tests) 2159ms
-     ✓ (b) cada razão tem a sua frase, e a do 429 leva o Retry-After  305ms
-     ✓ (v) renovação que falha fora do /login: linha de aviso no topo, 0 navegações, e nada repete sozinho  335ms
+ ✓  web  components/auth/__tests__/login-sessao-cn.test.tsx (15 tests) 1940ms
+     ✓ (v) renovação que falha fora do /login: linha de aviso no topo, 0 navegações, e nada repete sozinho  318ms
  Test Files  1 passed (1)
       Tests  15 passed (15)
 # exit: 0

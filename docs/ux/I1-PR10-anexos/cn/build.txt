@@ -1,6 +1,6 @@
-$ pnpm build   # numa cópia da árvore (worktree do HEAD + as mudanças do commit 2), sem .env: o pnpm dev do Marcel roda na árvore da PR
+$ pnpm build   # commit 2b, numa cópia da árvore, sem .env
 
-> octavia@0.1.0 build /private/tmp/claude-501/-Users-marcelviana-projects-octavia/513cbeab-7cb4-402e-bf33-7ce07dc36cb1/scratchpad/build-i1pr10
+> octavia@0.1.0 build /private/tmp/claude-501/-Users-marcelviana-projects-octavia/513cbeab-7cb4-402e-bf33-7ce07dc36cb1/scratchpad/pre2b
 > pnpm exec next build
 
    ▲ Next.js 15.2.8

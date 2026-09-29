@@ -6,6 +6,7 @@
  *
  * Uso (da raiz, com `app/fumaca-i1pr10/[estado]/page.tsx` copiado de `pagina-fumaca.tsx` e `next dev -p 3110`):
  *   pnpm exec tsx docs/ux/I1-PR10-anexos/pre-verificacao/rodar.ts http://localhost:3110
+ * Com `G_ESTADOS=VIEW-partitura,VIEW-partitura-cheia`: só esses (o commit 2b, div. 761).
  * Com `G_CAPTURAS=<pasta>`: uma captura (página inteira) dos cinco estados principais em cada largura — só fixture,
  * sem conta (as capturas do aceite, div. 730 da I1-PR-9).
  */
@@ -52,7 +53,8 @@ async function main() {
   const nav = await chromium.launch()
   console.log(`chromium ${nav.version()} · base ${BASE}`)
   const medicoes: Record<string, Record<string, unknown>> = {}
-  for (const w of LARGURAS) for (const estado of Object.keys(FIXTURES)) {
+  const so = process.env.G_ESTADOS?.split(',').filter(Boolean)
+  for (const w of LARGURAS) for (const estado of Object.keys(FIXTURES).filter((e) => !so || so.includes(e))) {
     const ctx = await nav.newContext({ viewport: { width: w, height: 900 } })
     const p = await ctx.newPage()
     await p.addInitScript('window.__name = (f) => f')

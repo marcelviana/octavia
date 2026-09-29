@@ -20,14 +20,18 @@ import type { Estado } from './g-faixa-superficies'
 export const PDF_URL = 'https://g-faixa.supabase.co/storage/v1/object/public/content-files/g-faixa-partitura-12p.pdf'
 
 let pdf12: Buffer | null = null
-/** O PDF de 12 páginas (A4, uma linha de texto por página), gerado uma vez por processo. */
+/**
+ * O PDF de 12 páginas (uma linha de texto por página), gerado uma vez por processo. Formato **Carta** (612 × 792 pt,
+ * 1 : 1,294 — a proporção da página que a folha 5 desenha; div. 761, commit 2b): com A4 (1 : 1,415) a página saía ~44 px
+ * mais alta em B e o que vem abaixo dela descia.
+ */
 export async function pdfDe12Paginas(): Promise<Buffer> {
   if (pdf12) return pdf12
   const doc = await PDFDocument.create()
   const fonte = await doc.embedFont(StandardFonts.Helvetica)
   for (let n = 1; n <= 12; n++) {
-    const pg = doc.addPage([595, 842])
-    pg.drawText(`Partitura de 12 paginas - pagina ${n} (fixture do G-faixa)`, { x: 60, y: 780, size: 14, font: fonte })
+    const pg = doc.addPage([612, 792])
+    pg.drawText(`Partitura de 12 paginas - pagina ${n} (fixture do G-faixa)`, { x: 60, y: 730, size: 14, font: fonte })
   }
   pdf12 = Buffer.from(await doc.save())
   return pdf12
