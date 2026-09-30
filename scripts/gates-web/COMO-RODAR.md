@@ -364,3 +364,7 @@ O limite de `app/layout.tsx` só aparece quando uma exceção escapa de toda tel
 3. **Depois**: `rm -r app/g-faixa-erro-global .next/types/app/g-faixa-erro-global` — sem o segundo, o `tsc` acusa os
    tipos que o `next dev` gerou para a rota que saiu; e nenhum `pnpm build` com a fixture no lugar (a rota entraria na
    tabela).
+
+**A sessão tem porta** (I1-PR14, div. 910): o perfil persistente só tem sessão na origem `localhost:3000` (o IndexedDB
+do Firebase é por origem); **outra porta apaga o cookie** — o cliente não acha usuário e chama `DELETE
+/api/auth/session`. Medição com sessão: sempre na 3000.

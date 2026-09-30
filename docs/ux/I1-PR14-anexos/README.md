@@ -342,7 +342,7 @@ Resumo; o inventário completo (linhas por arquivo, o que sobra) entra no commit
 | `pnpm build` | 27 rotas | **27 rotas, `diff` vazio** (só os tamanhos dos pedaços mudam) | `cn/build-rotas.txt` |
 | `knip` | 26 arquivos · 37 deps · 132 exports · 34 tipos | **25 · 14 · 124 · 33** — as 14 deps são as 11 herdadas da raiz + 3 do nativo; nenhum órfão novo | `cn/knip-depois.md` |
 | prova por imagem | — | **12 capturas × 0 pixel × 0 nó com Δ** (3 públicas sem `.env` + `dashboard` com sessão, × 3 larguras); o ruído antes × antes, também 0 | `cn/prova-por-imagem.txt` |
-| G-faixa `erro-global` | (b) 5 em 711 e 411 com os detalhes abertos (`scrollWidth` 792, 642) | **(e) 0 · (b) 0 · `scrollWidth` = viewport** nos dois estados × três larguras; o veredito das 12 medições PASSA | `cn/g-faixa-depois.txt`, `capturas/depois-*` |
+| G-faixa `erro-global` | (b) 5 em 711 e 411 com os detalhes abertos (`scrollWidth` 792, 642) | **(e) 0 · (b) 0 · `scrollWidth` = viewport** nos dois estados × três larguras; o veredito das 14 medições PASSA | `cn/g-faixa-depois.txt`, `capturas/depois-*` |
 
 **A camada `base` nova não pinta nada visível hoje**: o `body` passou de branco a `#100F16` (medido no CSS servido) e a
 borda-padrão de `#e5e5e5` a `--cor-line` — e as 12 capturas não mudaram um pixel: toda tela cobre o `body` com o
@@ -358,10 +358,144 @@ erro (o *Try again* que re-renderizava — decisão 11); o estado `error` inteir
 
 | div. | origem | premissa | medido | destino |
 |---|---|---|---|---|
-| **910** | A | a sessão do perfil (I1-D37) numa porta livre | o IndexedDB do Firebase é **por origem** (porta): na 3114 o cliente não achou usuário e chamou `DELETE /api/auth/session`, apagando o cookie. O `next dev` da 3000 era o da árvore `../octavia-i1-pr13` (subido pelo executor da PR-13, já mergeada): **parado**; o desta árvore subiu na 3000 e a sessão se refez sozinha (`POST /api/auth/session 200`) | registrado; a 3000 ficou com esta árvore |
+| **910** | A | a sessão do perfil (I1-D37) numa porta livre | o IndexedDB do Firebase é **por origem** (porta): na 3114 o cliente não achou usuário e chamou `DELETE /api/auth/session`, apagando o cookie. O `next dev` da 3000 era o da árvore `../octavia-i1-pr13` (subido pelo executor da PR-13, já mergeada): **parado**; o desta árvore subiu na 3000 e a sessão se refez sozinha (`POST /api/auth/session 200`); depois, parado também (antes do `pnpm build`, que divide a `.next`) — **a 3000 está livre** | registrado como está (aval do commit 2); linha no `COMO-RODAR.md` |
 | **911** | A | apagar a fixture basta | o `next dev` gera `.next/types/app/g-faixa-erro-global/` e o `tsc` o acusa depois que a rota sai | o passo no `COMO-RODAR.md` |
 | **912** | A | `knip` → 0 órfão novo | o tipo `DetalhesDoErro` exportado sem uso | deixou de ser exportado |
 | **913** | A | — | o `<summary>` com `flex` perde o triângulo de abrir no Chromium (só em desenvolvimento) | registrado; herança |
 | **914** | A | *"os 5 `message:` mortos saem"* | o estado `error` do hook tinha mais dois (*User not authenticated*, sem termo do vocabulário) e nenhum leitor: saiu o estado inteiro; o que o hook chama, relê e quando para, igual | extra declarado |
 | **915** | P | corpo da PR: *"`gtok: … +7`"* | são **+8**: `tela-de-erro.tsx`, `frases-erro.ts` e os seis | o corpo diz +8 |
 | **916** | A | — | o `.env.local` copiado de `../octavia-i1-pr13` (`cp -p`, sem abrir) e **afastado** (renomeado, sem abrir) durante as medições sem `.env`; ignorado pelo git | registrado |
+
+---
+
+## 11. O aval do commit 2 `[Marcel, 2026-09-30]`
+
+Aprovado. **Div. 914** (o estado `error` inteiro, sem leitor) aceita como **poda declarada**; **913** herança; **915**
+origem P; **910** registrada como está, com uma linha no `COMO-RODAR.md` (*o perfil só tem sessão na origem
+`localhost:3000`; outra porta apaga o cookie*).
+
+## 12. O inventário da poda — o que saiu, com a prova `[medido]`
+
+A prova de "sem importador" de cada item é o §1.1 (`cn/inventario-importadores.txt`, sobre a `main`); o que saiu,
+linha por linha (`git diff --numstat 747269e 5977f98`):
+
+| grupo | arquivos (linhas removidas) | total |
+|---|---|---|
+| **`components/ui/`** — a pasta inteira (decisão 8) | `accordion` 58 · `alert-dialog` 141 · `alert` 59 · `aspect-ratio` 7 · `avatar` 50 · `badge` 36 · `breadcrumb` 115 · `button` 56 · `calendar` 66 · `card` 79 · `checkbox` 30 · `collapsible` 11 · `dialog` 122 · `dropdown-menu` 200 · `input` 22 · `label` 26 · `pagination` 117 · `popover` 31 · `progress` 28 · `resizable` 45 · `scroll-area` 48 · `select` 160 · `separator` 31 · `sheet` 140 · `skeleton` 15 · `slider` 28 · `switch` 29 · `table` 117 · `tabs` 55 · `textarea` 22 · `toggle` 45 · `tooltip` 30 | **32 arquivos, −2 019** |
+| a casca velha | `contexts/sidebar-context.tsx` 24 · `contexts/__tests__/sidebar-context.test.tsx` 29 · `hooks/use-navigation-actions.ts` 32 | −85 |
+| `types/content.ts` (núcleo; `gback:`) | os 7 símbolos e o `import` de `lucide-react` | 142 → 42 (−101; o resto intacto) |
+| `lib/error-boundary.tsx` | a tela velha, `ui/button`, `lucide-react`, `useErrorHandler` | 111 → 68 (−56 +12) |
+| `hooks/use-content-actions.ts` | o estado `error` sem leitor e as 7 frases dele (div. 914) | −35 +14 |
+| o tema velho | `tailwind.config.ts` (−96 +8) · `app/globals.css` (−97 +6) · `styles/globals.css` (−94, órfão) | −287 +14 |
+| configs órfãs | `components.json` (−21) · `knip.json` (a linha `ignore`, −3) | −24 |
+| testes | os 3 `vi.mock('sonner')` do editor e dos gates (−1 cada); no upload o `vi.mock`, o `vi.hoisted` e as 5 `expect(toast…)` (−7) | −10 |
+| dependências | `package.json` −27 · `pnpm-lock.yaml` −1 038 +66 | — |
+| **nasceram** | `components/identidade/tela-de-erro.tsx` 43 · `frases-erro.ts` 15 · `scripts/gates-web/g-tok-frases-isentas.txt` 9 | +67 |
+
+Fora de `docs/` e das medições: **58 arquivos, +241 −3 696**.
+
+### 12.1 As 27 dependências que saíram (decisão 7)
+
+Os **22 `@radix-ui/*`** (`accordion`, `alert-dialog`, `aspect-ratio`, `avatar`, `checkbox`, `collapsible`,
+`context-menu`, `dialog`, `dropdown-menu`, `label`, `popover`, `progress`, `scroll-area`, `select`, `separator`,
+`slider`, `slot`, `switch`, `tabs`, `toast`, `toggle`, `tooltip`), `class-variance-authority`, `react-day-picker`,
+`react-resizable-panels`, `lucide-react`, `tailwindcss-animate` — cada um só importado por `components/ui/*`, pelo
+`lib/error-boundary.tsx` de antes, por `types/content.ts` (os mapas) ou pelo `plugins` do tema velho (§1.2).
+`pnpm install --offline`: 27 linhas `-`, nenhuma `+`.
+
+### 12.2 As 11 que ficam — herança do encerramento
+
+Sem importador **desde antes desta PR** (o `knip` da `main` já as listava; fora do §27), com `git grep` fora do
+`package.json`/lockfile: nenhuma referência de código nem de config.
+
+| dependência | o que se achou | motivo de ficar |
+|---|---|---|
+| `isomorphic-dompurify` | 0 | fora do escopo desta PR (não era do §27) |
+| `react-hook-form` · `@hookform/resolvers` | 0 (os formulários do web são estado local desde as PRs de tela) | idem |
+| `zustand` · `immer` | 0 (o `immer` citado só no `ARCHITECTURE.md`) | idem |
+| `date-fns` | 0 | idem |
+| `cmdk` | 0 | idem |
+| `next-themes` | 0 | idem |
+| `lru-cache` | 0 (citado só no `AGENT.md`) | idem |
+| `@types/debug` | 0 (nenhum `import 'debug'`) | idem |
+| `autoprefixer` | 0 (o `postcss.config.mjs` só tem `tailwindcss`) | idem |
+
+## 13. A tela de erro — antes e depois `[medido]`
+
+| | antes (`main`) | depois (commit 2) |
+|---|---|---|
+| composição | ícone `AlertTriangle`, *Something went wrong*, o `error.message` cru, *Try again* + *Reload page*, os detalhes em inglês; sem as próprias cores (div. 896) | `CascaAuth` com *Erro*, a `LinhaDeAviso` de falha (*algo deu errado — tente de novo*, *Tentar de novo* = recarregar), os detalhes de dev em pt-BR |
+| teste (`tests/gates/i1-erro-global.test.tsx`) | 4/8 (reprovam os quatro da tela) | **8/8** |
+| G-faixa, detalhes fechados | (e) 0 · (b) 0 · `scrollWidth` = viewport nas três | **idem** |
+| G-faixa, detalhes abertos | **(b) 5** em 711 e 411; `scrollWidth` 792 / 642 | **(e) 0 · (b) 0 · `scrollWidth` = viewport** nas três |
+| capturas | `capturas/antes-erro-global-{1138,411}.png` | `capturas/depois-erro-global-{1138,411}.png`, `depois-erro-global-detalhes-411.png` (a viewport: a pilha quebra linha) |
+
+A medição do depois é `tests/gates-web/medicoes/erro-global.json` — **entra no veredito do CI** (as 14 medições:
+PASSA); a do antes fica em `medicoes/antes-erro-global/` (subpasta, fora do veredito). Sem folha: registrada como
+"sem folha, mecânica" — só (e), (b), (d′) e `scrollWidth`.
+
+## 14. A prova por imagem (decisão 6) `[medido]` (`cn/prova-por-imagem.txt`)
+
+Full page, Chromium do Playwright, `pixelmatch` com `threshold 0`, o indicador do `next dev` removido; mais a geometria
+de todo elemento visível do `<body>`. **Controle**: antes × antes (a `main`, duas vezes) = **0** nas 12. **Antes ×
+depois = 0 pixel e 0 nó com Δ nas 12** (landing, login, privacy-policy sem `.env`; `dashboard` com sessão; × 1138 · 711
+· 411). O CSS servido no depois tinha a base nova (`body` `rgb(16, 15, 22)`, borda-padrão `rgb(42, 40, 54)`) — o 0 mede
+a mudança, não a ausência dela. As capturas do `dashboard` não são anexadas (mostram a biblioteca da conta).
+
+## 15. O gate de cobertura, a 828 e o Tailwind
+
+- **Cobertura** (`scripts/gates-web/g-tok-cobertura.mjs`, job `g-tok`): na `main` FORA 40; no commit 2 **FORA 0**
+  (129 arquivos de tela, 129 na lista). CN: a árvore sintética, FORA 5 exato (`cn/g-tok-cobertura-cn.txt`).
+- **828, regra**: as três posições (§4); a lista de isenção **por frase** `scripts/gates-web/g-tok-frases-isentas.txt` —
+  *Capo*, *capo: {x}* (editor e visualização), *Tags*, *Drop D (DADGBE)*, com a razão (igual nas duas línguas / nome
+  próprio; README-design §5.6/§5.7) — **5 de 5 usadas**; a isenção órfã reprova (CN em `cn/g-tok-commit2.txt`: uma
+  entrada inventada → `ISENÇÃO ÓRFÃ`, exit 1); as fixtures do commit 1, 6/6.
+- **O `content` do Tailwind** ganhou `./lib/**/*.tsx` (div. 896: sobra um `.tsx` em `lib/`, o limite, hoje sem classe).
+  O CSS gerado pelo `tailwindcss` CLI com e sem a linha: **25 030 bytes, `diff` vazio**.
+
+## 16. `knip` antes × depois (`cn/knip-antes.md`, `cn/knip-depois.md`)
+
+| | antes | depois |
+|---|---|---|
+| arquivos não usados | 26 | **25** (−`hooks/use-navigation-actions.ts`) |
+| dependências não usadas | 37 | **14** (−21 `@radix-ui/*`, −`react-day-picker`, −`react-resizable-panels`; ficam as 11 do §12.2 e 3 do nativo) |
+| exports não usados | 132 | **124** (−`useErrorHandler`, −`SidebarProvider`, −os 6 de `types/content.ts`) |
+| tipos exportados não usados | 34 | **33** (−`ContentTypeId`) |
+
+**Nenhum nome novo** no depois (o `diff` dos nomes só tem remoções). O `knip` não via os `ui/*` nem o `sidebar-context`
+(div. 908) — a prova deles é o `grep`, e agora a pasta não existe.
+
+## 17. O que ainda sobra — a 1ª seção do `I1-ENCERRAMENTO.md` `[medido]`
+
+**Nenhum arquivo de tela fora do G-tok**: a cobertura dá FORA 0, e todo arquivo da lista passa em literal, toast,
+import de `ui/*` e inglês (JSX e strings de `.ts`, com 5 frases isentas uma a uma). O resto:
+
+| o que sobra | onde | destino |
+|---|---|---|
+| **as 11 dependências órfãs** | `package.json` (§12.2) | encerramento do I1 — poda à parte, com o lockfile |
+| **o triângulo do `<summary>`** (div. 913) | `components/identidade/tela-de-erro.tsx` — o `flex` do `summary` apaga o marcador no Chromium; só em desenvolvimento | herança (o próximo bloco do web) |
+| **inglês fora de posição de texto** | as mensagens de `Error` e os `logger`/`console` de `lib/setlist-service.ts`, `lib/content-service.ts`, `components/add-content/upload-to-storage.ts`, `hooks/useMetadataForm.ts`, `contexts/firebase-auth-context.tsx` — não chegam à tela (a tela escolhe a frase pela espécie; a 828 não as lê, de propósito) | fica; não é texto de UI |
+| **o valor gravado *Unknown Artist*** | `hooks/useAddContentLogic.ts:133,182,207` e o sentinela *Unknown Artist/Title/Type* das rotas (`app/api/setlists/…`), traduzido na exibição | **Bloco D** (herança da PR-12 e da PR-13) |
+| **os specs do `ux-audit`** | `tests/ux-audit/fase-d/*` — rótulos em inglês | quando o gate voltar a ser usado (herança da PR-12) |
+| **`body { font-family: Arial }`** | `app/globals.css:6` — fora da camada `base`; toda tela declara a própria família, e a prova por imagem não o viu | encerramento: decidir se sai (é o último valor literal do tema velho) |
+| **`generator: "v0.dev"`** | `app/layout.tsx:19` — `<meta name="generator">`, não visível | encerramento |
+| **o `bg-primary`/`bg-blue-500` de um teste** | `lib/__tests__/custom-matchers.ts:189-190` — `classList.contains(…)` de um matcher de teste (usado por `src/test-setup.ts`); não usa o tema | encerramento (limpeza de teste) |
+| **documentação que descreve o web velho** | `CLAUDE.md:111` (*Radix UI components (shadcn/ui)*) e a árvore `components/ui`; `README.md:88,104,255-256` (shadcn, Lucide); `ARCHITECTURE.md:104-227` (`ErrorBoundary` com `DomainErrorBoundary`, `useErrorHandler`) | encerramento do I1 (as notas do `CLAUDE.md` como nas PRs anteriores) |
+| **o `.env.local`** desta árvore | copiado de `../octavia-i1-pr13` sem abrir (div. 916); ignorado pelo git | sai com a árvore |
+
+## 18. Divergências — 917 em diante
+
+Nenhuma nova no commit 3.
+
+## 19. Contabilidade final da I1-PR-14
+
+| | |
+|---|---|
+| commits | `747269e` (gate-first + o aval no §6.1) · `5977f98` (a poda e a tela) · o commit 3 (só docs) |
+| base | `origin/main` `6f8299f` |
+| prod · login · senha · `.env*` aberto | 0 · 0 · 0 · 0 (o `.env.local` copiado com `cp -p` e renomeado, nunca aberto) |
+| escrita pelo navegador | 0 (a barreira das capturas aborta toda escrita a `/api/*` salvo o cookie de sessão) |
+| servidores | `next dev` desta árvore na 3114 (sem `.env`) e na 3000 (com sessão); o `next dev` da árvore da PR-13 na 3000 **parado** (div. 910); ao fim, os dois desta árvore parados — **a 3000 está livre** |
+| cota de `/api/profile` | ~6 cargas do `dashboard` com sessão (antes, antes2, depois × 3) + 1 inspeção |
+| divergências | 893–916 (17 no commit 1, 7 no commit 2); próxima **917** |
+| gates no fim | G-tok PASSA (132; cobertura FORA 0; 828 regra); G-back PASSA com `gback: types/content.ts`; G-palco 0; G-faixa PASSA (14 medições); `pnpm test` 118 · 1179; `tsc` 0; lint limpo; `pnpm build` rotas idênticas |
