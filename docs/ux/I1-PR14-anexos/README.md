@@ -442,6 +442,10 @@ depois = 0 pixel e 0 nó com Δ nas 12** (landing, login, privacy-policy sem `.e
 · 411). O CSS servido no depois tinha a base nova (`body` `rgb(16, 15, 22)`, borda-padrão `rgb(42, 40, 54)`) — o 0 mede
 a mudança, não a ausência dela. As capturas do `dashboard` não são anexadas (mostram a biblioteca da conta).
 
+> **Nota da I1-PR-15** (aval 6 do commit 1): o script desta prova não foi commitado aqui; o método foi refeito a partir
+> deste parágrafo e está em [`../I1-PR15-anexos/cn/capturar.mjs`](../I1-PR15-anexos/cn/capturar.mjs) e
+> [`../I1-PR15-anexos/cn/diff.mjs`](../I1-PR15-anexos/cn/diff.mjs).
+
 ## 15. O gate de cobertura, a 828 e o Tailwind
 
 - **Cobertura** (`scripts/gates-web/g-tok-cobertura.mjs`, job `g-tok`): na `main` FORA 40; no commit 2 **FORA 0**
