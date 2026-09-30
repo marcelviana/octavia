@@ -1,0 +1,2067 @@
+{
+ "superficie": "erro-global",
+ "rota": "/g-faixa-erro-global",
+ "folha": null,
+ "implementada": true,
+ "publica": true,
+ "rodada": "i1-pr14-depois",
+ "base": "http://localhost:3114",
+ "chromium": "140.0.7339.16",
+ "commit": "747269e7d4398656832c113ca8cc746c3b39edea+sujo",
+ "controlePositivo": {
+  "411": {
+   "controle1": "GET 200 falhou net::ERR_ABORTED",
+   "controle2": "GET 200 falhou net::ERR_ABORTED"
+  },
+  "711": {
+   "controle1": "GET 200 falhou net::ERR_ABORTED",
+   "controle2": "GET 200 falhou net::ERR_ABORTED"
+  },
+  "1138": {
+   "controle1": "GET 200 falhou net::ERR_ABORTED",
+   "controle2": "GET 200 falhou net::ERR_ABORTED"
+  }
+ },
+ "requests": {
+  "411": {
+   "linhas": [
+    {
+     "n": 1,
+     "ms": 74,
+     "metodo": "GET",
+     "caminho": "/g-faixa-erro-global",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 2,
+     "ms": 142,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 3,
+     "ms": 144,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 4,
+     "ms": 151,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 5,
+     "ms": 155,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 6,
+     "ms": 156,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/g-faixa-erro-global/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 7,
+     "ms": 157,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 8,
+     "ms": 166,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-1",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 9,
+     "ms": 187,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-2",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 10,
+     "ms": 190,
+     "metodo": "GET",
+     "caminho": "/g-faixa-erro-global",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 11,
+     "ms": 240,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 12,
+     "ms": 242,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 13,
+     "ms": 248,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 14,
+     "ms": 249,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 15,
+     "ms": 250,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/g-faixa-erro-global/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 16,
+     "ms": 251,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 17,
+     "ms": 537,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 18,
+     "ms": 550,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 19,
+     "ms": 552,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 20,
+     "ms": 556,
+     "metodo": "POST",
+     "caminho": "/__nextjs_original-stack-frames",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 21,
+     "ms": 569,
+     "metodo": "POST",
+     "caminho": "/__nextjs_original-stack-frames",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 22,
+     "ms": 578,
+     "metodo": "GET",
+     "caminho": "/__nextjs_font/geist-latin.woff2",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 23,
+     "ms": 1761,
+     "metodo": "GET",
+     "caminho": "/g-faixa-erro-global",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 24,
+     "ms": 1825,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 25,
+     "ms": 1826,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 26,
+     "ms": 1833,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 27,
+     "ms": 1836,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 28,
+     "ms": 1836,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/g-faixa-erro-global/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 29,
+     "ms": 1837,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 30,
+     "ms": 2128,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 31,
+     "ms": 2144,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 32,
+     "ms": 2146,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 33,
+     "ms": 2150,
+     "metodo": "POST",
+     "caminho": "/__nextjs_original-stack-frames",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 34,
+     "ms": 2162,
+     "metodo": "POST",
+     "caminho": "/__nextjs_original-stack-frames",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 35,
+     "ms": 2174,
+     "metodo": "GET",
+     "caminho": "/__nextjs_font/geist-latin.woff2",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 36,
+     "ms": 4190,
+     "metodo": "GET",
+     "caminho": "/fontes/IBMPlexMono_400Regular.ttf",
+     "status": "pendente",
+     "fim": "—"
+    },
+    {
+     "n": 37,
+     "ms": 4254,
+     "metodo": "GET",
+     "caminho": "/g-faixa-erro-global",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 38,
+     "ms": 4318,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 39,
+     "ms": 4319,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 40,
+     "ms": 4325,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 41,
+     "ms": 4328,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 42,
+     "ms": 4329,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/g-faixa-erro-global/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 43,
+     "ms": 4330,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 44,
+     "ms": 4613,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 45,
+     "ms": 4628,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 46,
+     "ms": 4630,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 47,
+     "ms": 4633,
+     "metodo": "POST",
+     "caminho": "/__nextjs_original-stack-frames",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 48,
+     "ms": 4646,
+     "metodo": "POST",
+     "caminho": "/__nextjs_original-stack-frames",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 49,
+     "ms": 4657,
+     "metodo": "GET",
+     "caminho": "/__nextjs_font/geist-latin.woff2",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 50,
+     "ms": 5718,
+     "metodo": "GET",
+     "caminho": "/fontes/IBMPlexMono_400Regular.ttf",
+     "status": "200",
+     "fim": "fim"
+    }
+   ],
+   "outrosHosts": {},
+   "prodAbortados": 0
+  },
+  "711": {
+   "linhas": [
+    {
+     "n": 1,
+     "ms": 64,
+     "metodo": "GET",
+     "caminho": "/g-faixa-erro-global",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 2,
+     "ms": 129,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 3,
+     "ms": 130,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 4,
+     "ms": 138,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 5,
+     "ms": 140,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 6,
+     "ms": 141,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/g-faixa-erro-global/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 7,
+     "ms": 142,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 8,
+     "ms": 151,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-1",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 9,
+     "ms": 171,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-2",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 10,
+     "ms": 173,
+     "metodo": "GET",
+     "caminho": "/g-faixa-erro-global",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 11,
+     "ms": 223,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 12,
+     "ms": 225,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 13,
+     "ms": 229,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 14,
+     "ms": 231,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 15,
+     "ms": 232,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/g-faixa-erro-global/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 16,
+     "ms": 233,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 17,
+     "ms": 522,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 18,
+     "ms": 536,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 19,
+     "ms": 537,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 20,
+     "ms": 541,
+     "metodo": "POST",
+     "caminho": "/__nextjs_original-stack-frames",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 21,
+     "ms": 555,
+     "metodo": "POST",
+     "caminho": "/__nextjs_original-stack-frames",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 22,
+     "ms": 569,
+     "metodo": "GET",
+     "caminho": "/__nextjs_font/geist-latin.woff2",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 23,
+     "ms": 1746,
+     "metodo": "GET",
+     "caminho": "/g-faixa-erro-global",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 24,
+     "ms": 1813,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 25,
+     "ms": 1814,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 26,
+     "ms": 1822,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 27,
+     "ms": 1824,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 28,
+     "ms": 1825,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/g-faixa-erro-global/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 29,
+     "ms": 1825,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 30,
+     "ms": 2172,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 31,
+     "ms": 2188,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 32,
+     "ms": 2189,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 33,
+     "ms": 2192,
+     "metodo": "POST",
+     "caminho": "/__nextjs_original-stack-frames",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 34,
+     "ms": 2205,
+     "metodo": "POST",
+     "caminho": "/__nextjs_original-stack-frames",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 35,
+     "ms": 2219,
+     "metodo": "GET",
+     "caminho": "/__nextjs_font/geist-latin.woff2",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 36,
+     "ms": 4233,
+     "metodo": "GET",
+     "caminho": "/fontes/IBMPlexMono_400Regular.ttf",
+     "status": "pendente",
+     "fim": "—"
+    },
+    {
+     "n": 37,
+     "ms": 4300,
+     "metodo": "GET",
+     "caminho": "/g-faixa-erro-global",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 38,
+     "ms": 4367,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 39,
+     "ms": 4367,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 40,
+     "ms": 4372,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 41,
+     "ms": 4376,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 42,
+     "ms": 4376,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/g-faixa-erro-global/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 43,
+     "ms": 4378,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 44,
+     "ms": 4676,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 45,
+     "ms": 4691,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 46,
+     "ms": 4693,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 47,
+     "ms": 4696,
+     "metodo": "POST",
+     "caminho": "/__nextjs_original-stack-frames",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 48,
+     "ms": 4708,
+     "metodo": "POST",
+     "caminho": "/__nextjs_original-stack-frames",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 49,
+     "ms": 4719,
+     "metodo": "GET",
+     "caminho": "/__nextjs_font/geist-latin.woff2",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 50,
+     "ms": 5778,
+     "metodo": "GET",
+     "caminho": "/fontes/IBMPlexMono_400Regular.ttf",
+     "status": "200",
+     "fim": "fim"
+    }
+   ],
+   "outrosHosts": {},
+   "prodAbortados": 0
+  },
+  "1138": {
+   "linhas": [
+    {
+     "n": 1,
+     "ms": 271,
+     "metodo": "GET",
+     "caminho": "/g-faixa-erro-global",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 2,
+     "ms": 778,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 3,
+     "ms": 780,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 4,
+     "ms": 787,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 5,
+     "ms": 791,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 6,
+     "ms": 792,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/g-faixa-erro-global/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 7,
+     "ms": 793,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 8,
+     "ms": 801,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-1",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 9,
+     "ms": 829,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-2",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 10,
+     "ms": 835,
+     "metodo": "GET",
+     "caminho": "/g-faixa-erro-global",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 11,
+     "ms": 892,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 12,
+     "ms": 894,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 13,
+     "ms": 899,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 14,
+     "ms": 901,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 15,
+     "ms": 902,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/g-faixa-erro-global/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 16,
+     "ms": 903,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 17,
+     "ms": 1200,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 18,
+     "ms": 1219,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 19,
+     "ms": 1220,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 20,
+     "ms": 1225,
+     "metodo": "POST",
+     "caminho": "/__nextjs_original-stack-frames",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 21,
+     "ms": 1242,
+     "metodo": "POST",
+     "caminho": "/__nextjs_original-stack-frames",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 22,
+     "ms": 1255,
+     "metodo": "GET",
+     "caminho": "/__nextjs_font/geist-latin.woff2",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 23,
+     "ms": 2416,
+     "metodo": "GET",
+     "caminho": "/g-faixa-erro-global",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 24,
+     "ms": 2477,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 25,
+     "ms": 2478,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 26,
+     "ms": 2483,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 27,
+     "ms": 2487,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 28,
+     "ms": 2487,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/g-faixa-erro-global/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 29,
+     "ms": 2488,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 30,
+     "ms": 2780,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 31,
+     "ms": 2794,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 32,
+     "ms": 2796,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 33,
+     "ms": 2798,
+     "metodo": "POST",
+     "caminho": "/__nextjs_original-stack-frames",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 34,
+     "ms": 2809,
+     "metodo": "POST",
+     "caminho": "/__nextjs_original-stack-frames",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 35,
+     "ms": 2820,
+     "metodo": "GET",
+     "caminho": "/__nextjs_font/geist-latin.woff2",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 36,
+     "ms": 4848,
+     "metodo": "GET",
+     "caminho": "/fontes/IBMPlexMono_400Regular.ttf",
+     "status": "pendente",
+     "fim": "—"
+    },
+    {
+     "n": 37,
+     "ms": 4910,
+     "metodo": "GET",
+     "caminho": "/g-faixa-erro-global",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 38,
+     "ms": 4975,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 39,
+     "ms": 4976,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 40,
+     "ms": 4981,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 41,
+     "ms": 4984,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 42,
+     "ms": 4985,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/g-faixa-erro-global/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 43,
+     "ms": 4986,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 44,
+     "ms": 5280,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 45,
+     "ms": 5293,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 46,
+     "ms": 5294,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 47,
+     "ms": 5298,
+     "metodo": "POST",
+     "caminho": "/__nextjs_original-stack-frames",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 48,
+     "ms": 5309,
+     "metodo": "POST",
+     "caminho": "/__nextjs_original-stack-frames",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 49,
+     "ms": 5319,
+     "metodo": "GET",
+     "caminho": "/__nextjs_font/geist-latin.woff2",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 50,
+     "ms": 6403,
+     "metodo": "GET",
+     "caminho": "/fontes/IBMPlexMono_400Regular.ttf",
+     "status": "200",
+     "fim": "fim"
+    }
+   ],
+   "outrosHosts": {},
+   "prodAbortados": 0
+  }
+ },
+ "estados": {
+  "ERRO-global": {
+   "larguras": {
+    "411": {
+     "url": "/g-faixa-erro-global",
+     "viewport": {
+      "w": 411,
+      "h": 823
+     },
+     "doc": {
+      "scrollWidth": 411,
+      "clientWidth": 411
+     },
+     "nos": [
+      {
+       "k": "img:e5b3dfe4ee10#1",
+       "role": "img",
+       "tag": "div",
+       "testid": null,
+       "h_texto": null,
+       "h_nome": "e5b3dfe4ee10",
+       "n": 0,
+       "rotulo": "Octavia",
+       "x": 35.5,
+       "y": 48,
+       "w": 340,
+       "h": 219,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:6dba8ec2689f#1",
+       "role": "heading",
+       "tag": "h1",
+       "testid": null,
+       "h_texto": "6dba8ec2689f",
+       "h_nome": null,
+       "n": 4,
+       "rotulo": "Erro",
+       "x": 24,
+       "y": 315,
+       "w": 363,
+       "h": 18,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:906189ff4176#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "906189ff4176",
+       "h_nome": null,
+       "n": 31,
+       "rotulo": "algo deu errado — tente de novo",
+       "x": 81,
+       "y": 380,
+       "w": 205.5,
+       "h": 20,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "button:6bb3150b9757#1",
+       "role": "button",
+       "tag": "button",
+       "testid": null,
+       "h_texto": "6bb3150b9757",
+       "h_nome": null,
+       "n": 14,
+       "rotulo": "Tentar de novo",
+       "x": 49,
+       "y": 412,
+       "w": 149.4,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "button:4fc874d5a4f2#1",
+       "role": "button",
+       "tag": "summary",
+       "testid": null,
+       "h_texto": "4fc874d5a4f2",
+       "h_nome": null,
+       "n": 40,
+       "rotulo": "detalhes do erro (só em desenvolvimento)",
+       "x": 41,
+       "y": 520,
+       "w": 329,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:868507a092da#1",
+       "role": "texto",
+       "tag": "pre",
+       "testid": null,
+       "h_texto": "868507a092da",
+       "h_nome": null,
+       "n": 15654,
+       "rotulo": "Error: G-faixa: erro de fixture (I1-PR14) at ErroGlobalDeFixture (webpack-internal:///(app-pages-browser)/./app/g-faixa-erro-global/page.tsx:20:23) at react-stack-bottom-frame (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:23950:20) at renderWithHooks (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:5079:22) at updateFunctionComponent (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:8328:19) at beginWork (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:9945:18) at runWithFiberInDEV (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:1511:30) at performUnitOfWork (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:15120:22) at workLoopSync (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14944:41) at renderRootSync (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14924:11) at performWorkOnRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14454:44) at performSyncWorkOnRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:16290:7) at flushSyncWorkAcrossRoots_impl (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:16138:21) at flushSpawnedWork (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:15665:9) at commitRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:15391:9) at commitRootWhenReady (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14644:7) at performWorkOnRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14567:15) at performWorkOnRootViaSchedulerTask (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:16275:7) at MessagePort.performWorkUntilDeadline (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/scheduler/cjs/scheduler.development.js:45:48) pilha de componentes: at ErroGlobalDeFixture (webpack-internal:///(app-pages-browser)/./app/g-faixa-erro-global/page.tsx:16:80) at ClientPageRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/client-page.js:14:11) at InnerLayoutRouter (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:242:11) at RedirectErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:75:9) at RedirectBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:83:11) at HTTPAccessFallbackBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js:96:11) at LoadingBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:321:11) at ErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/error-boundary.js:177:11) at InnerScrollAndFocusHandler (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:138:9) at ScrollAndFocusHandler (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:223:11) at RenderFromTemplateContext (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/render-from-template-context.js:16:44) at OuterLayoutRouter (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:358:11) at InnerLayoutRouter (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:242:11) at RedirectErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:75:9) at RedirectBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:83:11) at HTTPAccessFallbackErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js:88:9) at HTTPAccessFallbackBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js:96:11) at LoadingBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:321:11) at ErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/error-boundary.js:177:11) at InnerScrollAndFocusHandler (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:138:9) at ScrollAndFocusHandler (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:223:11) at RenderFromTemplateContext (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/render-from-template-context.js:16:44) at OuterLayoutRouter (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:358:11) at SessionProvider (webpack-internal:///(app-pages-browser)/./components/providers/session-provider.tsx:20:11) at FirebaseAuthProvider (webpack-internal:///(app-pages-browser)/./contexts/firebase-auth-context.tsx:38:11) at ErrorBoundary (webpack-internal:///(app-pages-browser)/./lib/error-boundary.tsx:62:9) at body (<anonymous>) at html (<anonymous>) at RootLayout [Server] (<anonymous>) at RedirectErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:75:9) at RedirectBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:83:11) at HTTPAccessFallbackErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js:88:9) at HTTPAccessFallbackBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js:96:11) at DevRootHTTPAccessFallbackBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/dev-root-http-access-fallback-boundary.js:37:11) at AppDevOverlayErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/react-dev-overlay/app/app-dev-overlay-error-boundary.js:63:9) at AppDevOverlay (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/react-dev-overlay/app/app-dev-overlay.js:68:11) at HotReload (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:391:11) at Router (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/app-router.js:195:11) at ErrorBoundaryHandler (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/error-boundary.js:122:9) at ErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/error-boundary.js:177:11) at AppRouter (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/app-router.js:585:11) at ServerRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/app-index.js:158:46) at Root (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/app-index.js:178:11)",
+       "x": 41,
+       "y": 568,
+       "w": 329,
+       "h": 8479.8,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      }
+     ]
+    },
+    "711": {
+     "url": "/g-faixa-erro-global",
+     "viewport": {
+      "w": 711,
+      "h": 1138
+     },
+     "doc": {
+      "scrollWidth": 711,
+      "clientWidth": 711
+     },
+     "nos": [
+      {
+       "k": "img:e5b3dfe4ee10#1",
+       "role": "img",
+       "tag": "div",
+       "testid": null,
+       "h_texto": null,
+       "h_nome": "e5b3dfe4ee10",
+       "n": 0,
+       "rotulo": "Octavia",
+       "x": 185.5,
+       "y": 48,
+       "w": 340,
+       "h": 219,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:6dba8ec2689f#1",
+       "role": "heading",
+       "tag": "h1",
+       "testid": null,
+       "h_texto": "6dba8ec2689f",
+       "h_nome": null,
+       "n": 4,
+       "rotulo": "Erro",
+       "x": 145.5,
+       "y": 315,
+       "w": 420,
+       "h": 18,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:906189ff4176#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "906189ff4176",
+       "h_nome": null,
+       "n": 31,
+       "rotulo": "algo deu errado — tente de novo",
+       "x": 202.5,
+       "y": 380,
+       "w": 205.5,
+       "h": 20,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "button:6bb3150b9757#1",
+       "role": "button",
+       "tag": "button",
+       "testid": null,
+       "h_texto": "6bb3150b9757",
+       "h_nome": null,
+       "n": 14,
+       "rotulo": "Tentar de novo",
+       "x": 170.5,
+       "y": 412,
+       "w": 149.4,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "button:4fc874d5a4f2#1",
+       "role": "button",
+       "tag": "summary",
+       "testid": null,
+       "h_texto": "4fc874d5a4f2",
+       "h_nome": null,
+       "n": 40,
+       "rotulo": "detalhes do erro (só em desenvolvimento)",
+       "x": 162.5,
+       "y": 520,
+       "w": 386,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:868507a092da#1",
+       "role": "texto",
+       "tag": "pre",
+       "testid": null,
+       "h_texto": "868507a092da",
+       "h_nome": null,
+       "n": 15654,
+       "rotulo": "Error: G-faixa: erro de fixture (I1-PR14) at ErroGlobalDeFixture (webpack-internal:///(app-pages-browser)/./app/g-faixa-erro-global/page.tsx:20:23) at react-stack-bottom-frame (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:23950:20) at renderWithHooks (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:5079:22) at updateFunctionComponent (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:8328:19) at beginWork (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:9945:18) at runWithFiberInDEV (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:1511:30) at performUnitOfWork (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:15120:22) at workLoopSync (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14944:41) at renderRootSync (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14924:11) at performWorkOnRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14454:44) at performSyncWorkOnRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:16290:7) at flushSyncWorkAcrossRoots_impl (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:16138:21) at flushSpawnedWork (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:15665:9) at commitRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:15391:9) at commitRootWhenReady (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14644:7) at performWorkOnRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14567:15) at performWorkOnRootViaSchedulerTask (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:16275:7) at MessagePort.performWorkUntilDeadline (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/scheduler/cjs/scheduler.development.js:45:48) pilha de componentes: at ErroGlobalDeFixture (webpack-internal:///(app-pages-browser)/./app/g-faixa-erro-global/page.tsx:16:80) at ClientPageRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/client-page.js:14:11) at InnerLayoutRouter (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:242:11) at RedirectErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:75:9) at RedirectBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:83:11) at HTTPAccessFallbackBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js:96:11) at LoadingBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:321:11) at ErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/error-boundary.js:177:11) at InnerScrollAndFocusHandler (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:138:9) at ScrollAndFocusHandler (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:223:11) at RenderFromTemplateContext (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/render-from-template-context.js:16:44) at OuterLayoutRouter (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:358:11) at InnerLayoutRouter (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:242:11) at RedirectErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:75:9) at RedirectBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:83:11) at HTTPAccessFallbackErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js:88:9) at HTTPAccessFallbackBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js:96:11) at LoadingBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:321:11) at ErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/error-boundary.js:177:11) at InnerScrollAndFocusHandler (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:138:9) at ScrollAndFocusHandler (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:223:11) at RenderFromTemplateContext (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/render-from-template-context.js:16:44) at OuterLayoutRouter (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:358:11) at SessionProvider (webpack-internal:///(app-pages-browser)/./components/providers/session-provider.tsx:20:11) at FirebaseAuthProvider (webpack-internal:///(app-pages-browser)/./contexts/firebase-auth-context.tsx:38:11) at ErrorBoundary (webpack-internal:///(app-pages-browser)/./lib/error-boundary.tsx:62:9) at body (<anonymous>) at html (<anonymous>) at RootLayout [Server] (<anonymous>) at RedirectErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:75:9) at RedirectBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:83:11) at HTTPAccessFallbackErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js:88:9) at HTTPAccessFallbackBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js:96:11) at DevRootHTTPAccessFallbackBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/dev-root-http-access-fallback-boundary.js:37:11) at AppDevOverlayErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/react-dev-overlay/app/app-dev-overlay-error-boundary.js:63:9) at AppDevOverlay (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/react-dev-overlay/app/app-dev-overlay.js:68:11) at HotReload (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:391:11) at Router (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/app-router.js:195:11) at ErrorBoundaryHandler (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/error-boundary.js:122:9) at ErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/error-boundary.js:177:11) at AppRouter (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/app-router.js:585:11) at ServerRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/app-index.js:158:46) at Root (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/app-index.js:178:11)",
+       "x": 162.5,
+       "y": 568,
+       "w": 386,
+       "h": 6332.8,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      }
+     ]
+    },
+    "1138": {
+     "url": "/g-faixa-erro-global",
+     "viewport": {
+      "w": 1138,
+      "h": 711
+     },
+     "doc": {
+      "scrollWidth": 1138,
+      "clientWidth": 1138
+     },
+     "nos": [
+      {
+       "k": "img:e5b3dfe4ee10#1",
+       "role": "img",
+       "tag": "div",
+       "testid": null,
+       "h_texto": null,
+       "h_nome": "e5b3dfe4ee10",
+       "n": 0,
+       "rotulo": "Octavia",
+       "x": 119,
+       "y": 71.5,
+       "w": 340,
+       "h": 219,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:6dba8ec2689f#1",
+       "role": "heading",
+       "tag": "h1",
+       "testid": null,
+       "h_texto": "6dba8ec2689f",
+       "h_nome": null,
+       "n": 4,
+       "rotulo": "Erro",
+       "x": 599,
+       "y": 48,
+       "w": 420,
+       "h": 18,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:906189ff4176#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "906189ff4176",
+       "h_nome": null,
+       "n": 31,
+       "rotulo": "algo deu errado — tente de novo",
+       "x": 656,
+       "y": 113,
+       "w": 205.5,
+       "h": 20,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "button:6bb3150b9757#1",
+       "role": "button",
+       "tag": "button",
+       "testid": null,
+       "h_texto": "6bb3150b9757",
+       "h_nome": null,
+       "n": 14,
+       "rotulo": "Tentar de novo",
+       "x": 624,
+       "y": 145,
+       "w": 149.4,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "button:4fc874d5a4f2#1",
+       "role": "button",
+       "tag": "summary",
+       "testid": null,
+       "h_texto": "4fc874d5a4f2",
+       "h_nome": null,
+       "n": 40,
+       "rotulo": "detalhes do erro (só em desenvolvimento)",
+       "x": 616,
+       "y": 253,
+       "w": 386,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:868507a092da#1",
+       "role": "texto",
+       "tag": "pre",
+       "testid": null,
+       "h_texto": "868507a092da",
+       "h_nome": null,
+       "n": 15654,
+       "rotulo": "Error: G-faixa: erro de fixture (I1-PR14) at ErroGlobalDeFixture (webpack-internal:///(app-pages-browser)/./app/g-faixa-erro-global/page.tsx:20:23) at react-stack-bottom-frame (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:23950:20) at renderWithHooks (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:5079:22) at updateFunctionComponent (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:8328:19) at beginWork (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:9945:18) at runWithFiberInDEV (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:1511:30) at performUnitOfWork (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:15120:22) at workLoopSync (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14944:41) at renderRootSync (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14924:11) at performWorkOnRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14454:44) at performSyncWorkOnRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:16290:7) at flushSyncWorkAcrossRoots_impl (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:16138:21) at flushSpawnedWork (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:15665:9) at commitRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:15391:9) at commitRootWhenReady (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14644:7) at performWorkOnRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14567:15) at performWorkOnRootViaSchedulerTask (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:16275:7) at MessagePort.performWorkUntilDeadline (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/scheduler/cjs/scheduler.development.js:45:48) pilha de componentes: at ErroGlobalDeFixture (webpack-internal:///(app-pages-browser)/./app/g-faixa-erro-global/page.tsx:16:80) at ClientPageRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/client-page.js:14:11) at InnerLayoutRouter (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:242:11) at RedirectErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:75:9) at RedirectBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:83:11) at HTTPAccessFallbackBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js:96:11) at LoadingBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:321:11) at ErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/error-boundary.js:177:11) at InnerScrollAndFocusHandler (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:138:9) at ScrollAndFocusHandler (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:223:11) at RenderFromTemplateContext (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/render-from-template-context.js:16:44) at OuterLayoutRouter (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:358:11) at InnerLayoutRouter (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:242:11) at RedirectErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:75:9) at RedirectBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:83:11) at HTTPAccessFallbackErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js:88:9) at HTTPAccessFallbackBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js:96:11) at LoadingBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:321:11) at ErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/error-boundary.js:177:11) at InnerScrollAndFocusHandler (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:138:9) at ScrollAndFocusHandler (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:223:11) at RenderFromTemplateContext (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/render-from-template-context.js:16:44) at OuterLayoutRouter (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:358:11) at SessionProvider (webpack-internal:///(app-pages-browser)/./components/providers/session-provider.tsx:20:11) at FirebaseAuthProvider (webpack-internal:///(app-pages-browser)/./contexts/firebase-auth-context.tsx:38:11) at ErrorBoundary (webpack-internal:///(app-pages-browser)/./lib/error-boundary.tsx:62:9) at body (<anonymous>) at html (<anonymous>) at RootLayout [Server] (<anonymous>) at RedirectErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:75:9) at RedirectBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:83:11) at HTTPAccessFallbackErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js:88:9) at HTTPAccessFallbackBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js:96:11) at DevRootHTTPAccessFallbackBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/dev-root-http-access-fallback-boundary.js:37:11) at AppDevOverlayErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/react-dev-overlay/app/app-dev-overlay-error-boundary.js:63:9) at AppDevOverlay (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/react-dev-overlay/app/app-dev-overlay.js:68:11) at HotReload (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:391:11) at Router (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/app-router.js:195:11) at ErrorBoundaryHandler (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/error-boundary.js:122:9) at ErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/error-boundary.js:177:11) at AppRouter (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/app-router.js:585:11) at ServerRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/app-index.js:158:46) at Root (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/app-index.js:178:11)",
+       "x": 616,
+       "y": 301,
+       "w": 386,
+       "h": 6332.8,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      }
+     ]
+    }
+   }
+  },
+  "ERRO-global-detalhes": {
+   "larguras": {
+    "411": {
+     "url": "/g-faixa-erro-global",
+     "viewport": {
+      "w": 411,
+      "h": 823
+     },
+     "doc": {
+      "scrollWidth": 411,
+      "clientWidth": 411
+     },
+     "nos": [
+      {
+       "k": "img:e5b3dfe4ee10#1",
+       "role": "img",
+       "tag": "div",
+       "testid": null,
+       "h_texto": null,
+       "h_nome": "e5b3dfe4ee10",
+       "n": 0,
+       "rotulo": "Octavia",
+       "x": 35.5,
+       "y": 48,
+       "w": 340,
+       "h": 219,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:6dba8ec2689f#1",
+       "role": "heading",
+       "tag": "h1",
+       "testid": null,
+       "h_texto": "6dba8ec2689f",
+       "h_nome": null,
+       "n": 4,
+       "rotulo": "Erro",
+       "x": 24,
+       "y": 315,
+       "w": 363,
+       "h": 18,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:906189ff4176#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "906189ff4176",
+       "h_nome": null,
+       "n": 31,
+       "rotulo": "algo deu errado — tente de novo",
+       "x": 81,
+       "y": 380,
+       "w": 205.5,
+       "h": 20,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "button:6bb3150b9757#1",
+       "role": "button",
+       "tag": "button",
+       "testid": null,
+       "h_texto": "6bb3150b9757",
+       "h_nome": null,
+       "n": 14,
+       "rotulo": "Tentar de novo",
+       "x": 49,
+       "y": 412,
+       "w": 149.4,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "button:4fc874d5a4f2#1",
+       "role": "button",
+       "tag": "summary",
+       "testid": null,
+       "h_texto": "4fc874d5a4f2",
+       "h_nome": null,
+       "n": 40,
+       "rotulo": "detalhes do erro (só em desenvolvimento)",
+       "x": 41,
+       "y": 520,
+       "w": 329,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:868507a092da#1",
+       "role": "texto",
+       "tag": "pre",
+       "testid": null,
+       "h_texto": "868507a092da",
+       "h_nome": null,
+       "n": 15654,
+       "rotulo": "Error: G-faixa: erro de fixture (I1-PR14) at ErroGlobalDeFixture (webpack-internal:///(app-pages-browser)/./app/g-faixa-erro-global/page.tsx:20:23) at react-stack-bottom-frame (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:23950:20) at renderWithHooks (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:5079:22) at updateFunctionComponent (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:8328:19) at beginWork (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:9945:18) at runWithFiberInDEV (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:1511:30) at performUnitOfWork (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:15120:22) at workLoopSync (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14944:41) at renderRootSync (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14924:11) at performWorkOnRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14454:44) at performSyncWorkOnRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:16290:7) at flushSyncWorkAcrossRoots_impl (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:16138:21) at flushSpawnedWork (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:15665:9) at commitRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:15391:9) at commitRootWhenReady (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14644:7) at performWorkOnRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14567:15) at performWorkOnRootViaSchedulerTask (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:16275:7) at MessagePort.performWorkUntilDeadline (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/scheduler/cjs/scheduler.development.js:45:48) pilha de componentes: at ErroGlobalDeFixture (webpack-internal:///(app-pages-browser)/./app/g-faixa-erro-global/page.tsx:16:80) at ClientPageRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/client-page.js:14:11) at InnerLayoutRouter (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:242:11) at RedirectErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:75:9) at RedirectBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:83:11) at HTTPAccessFallbackBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js:96:11) at LoadingBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:321:11) at ErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/error-boundary.js:177:11) at InnerScrollAndFocusHandler (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:138:9) at ScrollAndFocusHandler (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:223:11) at RenderFromTemplateContext (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/render-from-template-context.js:16:44) at OuterLayoutRouter (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:358:11) at InnerLayoutRouter (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:242:11) at RedirectErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:75:9) at RedirectBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:83:11) at HTTPAccessFallbackErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js:88:9) at HTTPAccessFallbackBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js:96:11) at LoadingBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:321:11) at ErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/error-boundary.js:177:11) at InnerScrollAndFocusHandler (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:138:9) at ScrollAndFocusHandler (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:223:11) at RenderFromTemplateContext (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/render-from-template-context.js:16:44) at OuterLayoutRouter (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:358:11) at SessionProvider (webpack-internal:///(app-pages-browser)/./components/providers/session-provider.tsx:20:11) at FirebaseAuthProvider (webpack-internal:///(app-pages-browser)/./contexts/firebase-auth-context.tsx:38:11) at ErrorBoundary (webpack-internal:///(app-pages-browser)/./lib/error-boundary.tsx:62:9) at body (<anonymous>) at html (<anonymous>) at RootLayout [Server] (<anonymous>) at RedirectErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:75:9) at RedirectBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:83:11) at HTTPAccessFallbackErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js:88:9) at HTTPAccessFallbackBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js:96:11) at DevRootHTTPAccessFallbackBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/dev-root-http-access-fallback-boundary.js:37:11) at AppDevOverlayErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/react-dev-overlay/app/app-dev-overlay-error-boundary.js:63:9) at AppDevOverlay (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/react-dev-overlay/app/app-dev-overlay.js:68:11) at HotReload (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:391:11) at Router (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/app-router.js:195:11) at ErrorBoundaryHandler (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/error-boundary.js:122:9) at ErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/error-boundary.js:177:11) at AppRouter (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/app-router.js:585:11) at ServerRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/app-index.js:158:46) at Root (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/app-index.js:178:11)",
+       "x": 41,
+       "y": 568,
+       "w": 329,
+       "h": 10388.3,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      }
+     ]
+    },
+    "711": {
+     "url": "/g-faixa-erro-global",
+     "viewport": {
+      "w": 711,
+      "h": 1138
+     },
+     "doc": {
+      "scrollWidth": 711,
+      "clientWidth": 711
+     },
+     "nos": [
+      {
+       "k": "img:e5b3dfe4ee10#1",
+       "role": "img",
+       "tag": "div",
+       "testid": null,
+       "h_texto": null,
+       "h_nome": "e5b3dfe4ee10",
+       "n": 0,
+       "rotulo": "Octavia",
+       "x": 185.5,
+       "y": 48,
+       "w": 340,
+       "h": 219,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:6dba8ec2689f#1",
+       "role": "heading",
+       "tag": "h1",
+       "testid": null,
+       "h_texto": "6dba8ec2689f",
+       "h_nome": null,
+       "n": 4,
+       "rotulo": "Erro",
+       "x": 145.5,
+       "y": 315,
+       "w": 420,
+       "h": 18,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:906189ff4176#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "906189ff4176",
+       "h_nome": null,
+       "n": 31,
+       "rotulo": "algo deu errado — tente de novo",
+       "x": 202.5,
+       "y": 380,
+       "w": 205.5,
+       "h": 20,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "button:6bb3150b9757#1",
+       "role": "button",
+       "tag": "button",
+       "testid": null,
+       "h_texto": "6bb3150b9757",
+       "h_nome": null,
+       "n": 14,
+       "rotulo": "Tentar de novo",
+       "x": 170.5,
+       "y": 412,
+       "w": 149.4,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "button:4fc874d5a4f2#1",
+       "role": "button",
+       "tag": "summary",
+       "testid": null,
+       "h_texto": "4fc874d5a4f2",
+       "h_nome": null,
+       "n": 40,
+       "rotulo": "detalhes do erro (só em desenvolvimento)",
+       "x": 162.5,
+       "y": 520,
+       "w": 386,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:868507a092da#1",
+       "role": "texto",
+       "tag": "pre",
+       "testid": null,
+       "h_texto": "868507a092da",
+       "h_nome": null,
+       "n": 15654,
+       "rotulo": "Error: G-faixa: erro de fixture (I1-PR14) at ErroGlobalDeFixture (webpack-internal:///(app-pages-browser)/./app/g-faixa-erro-global/page.tsx:20:23) at react-stack-bottom-frame (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:23950:20) at renderWithHooks (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:5079:22) at updateFunctionComponent (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:8328:19) at beginWork (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:9945:18) at runWithFiberInDEV (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:1511:30) at performUnitOfWork (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:15120:22) at workLoopSync (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14944:41) at renderRootSync (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14924:11) at performWorkOnRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14454:44) at performSyncWorkOnRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:16290:7) at flushSyncWorkAcrossRoots_impl (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:16138:21) at flushSpawnedWork (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:15665:9) at commitRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:15391:9) at commitRootWhenReady (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14644:7) at performWorkOnRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14567:15) at performWorkOnRootViaSchedulerTask (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:16275:7) at MessagePort.performWorkUntilDeadline (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/scheduler/cjs/scheduler.development.js:45:48) pilha de componentes: at ErroGlobalDeFixture (webpack-internal:///(app-pages-browser)/./app/g-faixa-erro-global/page.tsx:16:80) at ClientPageRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/client-page.js:14:11) at InnerLayoutRouter (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:242:11) at RedirectErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:75:9) at RedirectBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:83:11) at HTTPAccessFallbackBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js:96:11) at LoadingBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:321:11) at ErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/error-boundary.js:177:11) at InnerScrollAndFocusHandler (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:138:9) at ScrollAndFocusHandler (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:223:11) at RenderFromTemplateContext (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/render-from-template-context.js:16:44) at OuterLayoutRouter (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:358:11) at InnerLayoutRouter (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:242:11) at RedirectErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:75:9) at RedirectBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:83:11) at HTTPAccessFallbackErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js:88:9) at HTTPAccessFallbackBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js:96:11) at LoadingBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:321:11) at ErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/error-boundary.js:177:11) at InnerScrollAndFocusHandler (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:138:9) at ScrollAndFocusHandler (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:223:11) at RenderFromTemplateContext (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/render-from-template-context.js:16:44) at OuterLayoutRouter (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:358:11) at SessionProvider (webpack-internal:///(app-pages-browser)/./components/providers/session-provider.tsx:20:11) at FirebaseAuthProvider (webpack-internal:///(app-pages-browser)/./contexts/firebase-auth-context.tsx:38:11) at ErrorBoundary (webpack-internal:///(app-pages-browser)/./lib/error-boundary.tsx:62:9) at body (<anonymous>) at html (<anonymous>) at RootLayout [Server] (<anonymous>) at RedirectErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:75:9) at RedirectBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:83:11) at HTTPAccessFallbackErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js:88:9) at HTTPAccessFallbackBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js:96:11) at DevRootHTTPAccessFallbackBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/dev-root-http-access-fallback-boundary.js:37:11) at AppDevOverlayErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/react-dev-overlay/app/app-dev-overlay-error-boundary.js:63:9) at AppDevOverlay (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/react-dev-overlay/app/app-dev-overlay.js:68:11) at HotReload (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:391:11) at Router (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/app-router.js:195:11) at ErrorBoundaryHandler (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/error-boundary.js:122:9) at ErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/error-boundary.js:177:11) at AppRouter (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/app-router.js:585:11) at ServerRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/app-index.js:158:46) at Root (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/app-index.js:178:11)",
+       "x": 162.5,
+       "y": 568,
+       "w": 386,
+       "h": 9650.9,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      }
+     ]
+    },
+    "1138": {
+     "url": "/g-faixa-erro-global",
+     "viewport": {
+      "w": 1138,
+      "h": 711
+     },
+     "doc": {
+      "scrollWidth": 1138,
+      "clientWidth": 1138
+     },
+     "nos": [
+      {
+       "k": "img:e5b3dfe4ee10#1",
+       "role": "img",
+       "tag": "div",
+       "testid": null,
+       "h_texto": null,
+       "h_nome": "e5b3dfe4ee10",
+       "n": 0,
+       "rotulo": "Octavia",
+       "x": 119,
+       "y": 4897,
+       "w": 340,
+       "h": 219,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:6dba8ec2689f#1",
+       "role": "heading",
+       "tag": "h1",
+       "testid": null,
+       "h_texto": "6dba8ec2689f",
+       "h_nome": null,
+       "n": 4,
+       "rotulo": "Erro",
+       "x": 599,
+       "y": 48,
+       "w": 420,
+       "h": 18,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:906189ff4176#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "906189ff4176",
+       "h_nome": null,
+       "n": 31,
+       "rotulo": "algo deu errado — tente de novo",
+       "x": 656,
+       "y": 113,
+       "w": 205.5,
+       "h": 20,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "button:6bb3150b9757#1",
+       "role": "button",
+       "tag": "button",
+       "testid": null,
+       "h_texto": "6bb3150b9757",
+       "h_nome": null,
+       "n": 14,
+       "rotulo": "Tentar de novo",
+       "x": 624,
+       "y": 145,
+       "w": 149.4,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "button:4fc874d5a4f2#1",
+       "role": "button",
+       "tag": "summary",
+       "testid": null,
+       "h_texto": "4fc874d5a4f2",
+       "h_nome": null,
+       "n": 40,
+       "rotulo": "detalhes do erro (só em desenvolvimento)",
+       "x": 616,
+       "y": 253,
+       "w": 386,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:868507a092da#1",
+       "role": "texto",
+       "tag": "pre",
+       "testid": null,
+       "h_texto": "868507a092da",
+       "h_nome": null,
+       "n": 15654,
+       "rotulo": "Error: G-faixa: erro de fixture (I1-PR14) at ErroGlobalDeFixture (webpack-internal:///(app-pages-browser)/./app/g-faixa-erro-global/page.tsx:20:23) at react-stack-bottom-frame (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:23950:20) at renderWithHooks (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:5079:22) at updateFunctionComponent (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:8328:19) at beginWork (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:9945:18) at runWithFiberInDEV (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:1511:30) at performUnitOfWork (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:15120:22) at workLoopSync (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14944:41) at renderRootSync (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14924:11) at performWorkOnRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14454:44) at performSyncWorkOnRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:16290:7) at flushSyncWorkAcrossRoots_impl (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:16138:21) at flushSpawnedWork (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:15665:9) at commitRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:15391:9) at commitRootWhenReady (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14644:7) at performWorkOnRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:14567:15) at performWorkOnRootViaSchedulerTask (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:16275:7) at MessagePort.performWorkUntilDeadline (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/compiled/scheduler/cjs/scheduler.development.js:45:48) pilha de componentes: at ErroGlobalDeFixture (webpack-internal:///(app-pages-browser)/./app/g-faixa-erro-global/page.tsx:16:80) at ClientPageRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/client-page.js:14:11) at InnerLayoutRouter (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:242:11) at RedirectErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:75:9) at RedirectBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:83:11) at HTTPAccessFallbackBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js:96:11) at LoadingBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:321:11) at ErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/error-boundary.js:177:11) at InnerScrollAndFocusHandler (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:138:9) at ScrollAndFocusHandler (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:223:11) at RenderFromTemplateContext (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/render-from-template-context.js:16:44) at OuterLayoutRouter (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:358:11) at InnerLayoutRouter (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:242:11) at RedirectErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:75:9) at RedirectBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:83:11) at HTTPAccessFallbackErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js:88:9) at HTTPAccessFallbackBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js:96:11) at LoadingBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:321:11) at ErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/error-boundary.js:177:11) at InnerScrollAndFocusHandler (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:138:9) at ScrollAndFocusHandler (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:223:11) at RenderFromTemplateContext (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/render-from-template-context.js:16:44) at OuterLayoutRouter (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/layout-router.js:358:11) at SessionProvider (webpack-internal:///(app-pages-browser)/./components/providers/session-provider.tsx:20:11) at FirebaseAuthProvider (webpack-internal:///(app-pages-browser)/./contexts/firebase-auth-context.tsx:38:11) at ErrorBoundary (webpack-internal:///(app-pages-browser)/./lib/error-boundary.tsx:62:9) at body (<anonymous>) at html (<anonymous>) at RootLayout [Server] (<anonymous>) at RedirectErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:75:9) at RedirectBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/redirect-boundary.js:83:11) at HTTPAccessFallbackErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js:88:9) at HTTPAccessFallbackBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/http-access-fallback/error-boundary.js:96:11) at DevRootHTTPAccessFallbackBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/dev-root-http-access-fallback-boundary.js:37:11) at AppDevOverlayErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/react-dev-overlay/app/app-dev-overlay-error-boundary.js:63:9) at AppDevOverlay (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/react-dev-overlay/app/app-dev-overlay.js:68:11) at HotReload (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:391:11) at Router (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/app-router.js:195:11) at ErrorBoundaryHandler (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/error-boundary.js:122:9) at ErrorBoundary (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/error-boundary.js:177:11) at AppRouter (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/components/app-router.js:585:11) at ServerRoot (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/app-index.js:158:46) at Root (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/next@15.2.8_@babel+core@7.28.4_@opentelemetry+api@1.9.0_@playwright+test@1.55.0_babel-p_81b098b84368d5711e302a79ff9c02a4/node_modules/next/dist/client/app-index.js:178:11)",
+       "x": 616,
+       "y": 301,
+       "w": 386,
+       "h": 9650.9,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      }
+     ]
+    }
+   }
+  }
+ },
+ "rodadas": {
+  "411": {
+   "rodada": "i1-pr14-depois",
+   "commit": "747269e7d4398656832c113ca8cc746c3b39edea+sujo"
+  },
+  "711": {
+   "rodada": "i1-pr14-depois",
+   "commit": "747269e7d4398656832c113ca8cc746c3b39edea+sujo"
+  },
+  "1138": {
+   "rodada": "i1-pr14-depois",
+   "commit": "747269e7d4398656832c113ca8cc746c3b39edea+sujo"
+  }
+ }
+}

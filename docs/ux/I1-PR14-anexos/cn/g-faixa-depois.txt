@@ -1,0 +1,24 @@
+# G-faixa, o DEPOIS: a tela de erro do commit 2 (next dev sem .env, 3114; a fixture copiada e apagada depois)
+$ node scripts/gates-web/g-faixa-veredito.mjs tests/gates-web/medicoes | sed -n '/## erro-global/,/^$/p'
+## erro-global (/g-faixa-erro-global) — rodada i1-pr14-depois · base http://localhost:3114 · commit 747269e7d4398656832c113ca8cc746c3b39edea+sujo
+  inalcançáveis em A (411) — ERRO-global: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  ERRO-global · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · quebra por dado=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  ERRO-global · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · quebra por dado=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  ERRO-global · 411 (faixa A): (e)=0 · (b)=0 · (d′)=1 · errata candidata=0 · quebra por dado=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  inalcançáveis em A (411) — ERRO-global-detalhes: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
+  ERRO-global-detalhes · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · quebra por dado=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  ERRO-global-detalhes · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · quebra por dado=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+  ERRO-global-detalhes · 411 (faixa A): (e)=0 · (b)=0 · (d′)=1 · errata candidata=0 · quebra por dado=0 · sem par folha/app=0/0 · saídas: nome-acessível=0 rolagem=0
+
+# exit: 0
+$ node scripts/gates-web/g-faixa-veredito.mjs tests/gates-web/medicoes | tail -2
+
+G-faixa: PASSA
+# exit: 0
+# scrollWidth × viewport
+ERRO-global 411 {"scrollWidth":411,"clientWidth":411}
+ERRO-global 711 {"scrollWidth":711,"clientWidth":711}
+ERRO-global 1138 {"scrollWidth":1138,"clientWidth":1138}
+ERRO-global-detalhes 411 {"scrollWidth":411,"clientWidth":411}
+ERRO-global-detalhes 711 {"scrollWidth":711,"clientWidth":711}
+ERRO-global-detalhes 1138 {"scrollWidth":1138,"clientWidth":1138}

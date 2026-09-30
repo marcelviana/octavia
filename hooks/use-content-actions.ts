@@ -3,7 +3,7 @@
 import { useCallback, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { deleteContent, toggleFavorite, clearContentCache } from '@/lib/content-service';
-import { ContentItem, LibraryError } from '@/types/library';
+import { ContentItem } from '@/types/library';
 import { useFirebaseAuth } from '@/contexts/firebase-auth-context';
 
 interface UseContentActionsOptions {
@@ -23,7 +23,6 @@ interface UseContentActionsResult {
     confirm: () => Promise<void>;
   };
   isLoading: boolean;
-  error: LibraryError | null;
 }
 
 export function useContentActions(
@@ -35,18 +34,13 @@ export function useContentActions(
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [contentToDelete, setContentToDelete] = useState<ContentItem | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<LibraryError | null>(null);
 
-  const clearError = useCallback(() => setError(null), []);
-
+  // I1-PR14 (decisão 3 do aval, div. 828): o estado `error` e as suas frases em inglês saíram — nenhuma tela o lia
+  // (`RefactoredLibrary` usa só as ações). O que o hook FAZ não muda: o que chama, o que relê, quando para.
   const deleteItem = useCallback(async (content: ContentItem) => {
-    if (!user) {
-      setError({ message: 'User not authenticated', type: 'AUTH_ERROR' });
-      return;
-    }
+    if (!user) return;
 
     setIsLoading(true);
-    clearError();
 
     try {
       await deleteContent(content.id);
@@ -63,38 +57,25 @@ export function useContentActions(
       }
     } catch (error) {
       console.error('Error deleting content:', error);
-      
-      if (error instanceof Error) {
-        if (error.message.includes('Authentication') || error.message.includes('not configured')) {
-          setError({ message: 'Authentication error. Please try logging out and back in.', type: 'AUTH_ERROR' });
-        } else if (error.message.includes('not found')) {
-          setError({ message: 'Content not found. It may have already been deleted.', type: 'VALIDATION_ERROR' });
-          // Still reload to refresh the UI
-          try {
-            await options.onReload();
-          } catch (reloadError) {
-            console.warn('Failed to reload after delete error:', reloadError);
-          }
-        } else {
-          setError({ message: `Failed to delete content: ${error.message}`, type: 'UNKNOWN_ERROR' });
+
+      if (error instanceof Error && !(error.message.includes('Authentication') || error.message.includes('not configured')) && error.message.includes('not found')) {
+        // Still reload to refresh the UI
+        try {
+          await options.onReload();
+        } catch (reloadError) {
+          console.warn('Failed to reload after delete error:', reloadError);
         }
-      } else {
-        setError({ message: 'Failed to delete content. Please try again.', type: 'UNKNOWN_ERROR' });
       }
     } finally {
       setIsLoading(false);
     }
-  }, [user, options, clearError]);
+  }, [user, options]);
 
   const toggleFavoriteItem = useCallback(async (content: ContentItem) => {
-    if (!user) {
-      setError({ message: 'User not authenticated', type: 'AUTH_ERROR' });
-      return;
-    }
+    if (!user) return;
 
     const newFavoriteStatus = !content.is_favorite;
     setIsLoading(true);
-    clearError();
     
     try {
       await toggleFavorite(content.id, newFavoriteStatus);
@@ -104,11 +85,10 @@ export function useContentActions(
       await options.onReload();
     } catch (error) {
       console.error('Error toggling favorite:', error);
-      setError({ message: 'Failed to update favorite status. Please try again.', type: 'NETWORK_ERROR' });
     } finally {
       setIsLoading(false);
     }
-  }, [user, options, clearError]);
+  }, [user, options]);
 
   const editItem = useCallback((content: ContentItem) => {
     router.push(`/content/${content.id}/edit`);
@@ -148,6 +128,5 @@ export function useContentActions(
       confirm: confirmDelete,
     },
     isLoading,
-    error,
   };
 }

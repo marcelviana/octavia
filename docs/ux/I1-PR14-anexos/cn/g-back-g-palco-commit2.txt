@@ -1,0 +1,46 @@
+# G-back, sem e com a declaração do corpo da PR
+$ cat $GATES_WEB_DECL
+gback: types/content.ts — 7 símbolos sem importador (getContentTypeIcon, getContentTypeColors, CONTENT_TYPE_ICONS, CONTENT_TYPE_COLORS, CONTENT_TYPE_DISPLAY_NAMES, CONTENT_TYPE_IDS, ContentTypeId) e o import de lucide-react; ContentType, CONTENT_TYPE_KEYS e normalizeContentType intactos — decisão 9 do aval
+$ sh scripts/gates-web/g-back.sh origin/main WORKTREE
+G-back — base 6f8299f · head WORKTREE
+núcleo: congelado 39 · derivação BASE 39 · HEAD 39 · união 40
+declarações gback: 0 caminho(s)
+
+## (i) arquivo do núcleo que mudou
+  ✗ types/content.ts (modificado) — SEM DECLARAÇÃO
+## (ii) arquivo novo no alcance (derivação do HEAD fora do congelado)
+  ✓ nenhum
+## (iii) declaração órfã (gback: de arquivo que não mudou)
+  ✓ nenhuma
+
+G-back: REPROVA — 1 ocorrência(s)
+# exit: 1
+$ GATES_WEB_DECL=$S/decl.txt sh scripts/gates-web/g-back.sh origin/main WORKTREE
+G-back — base 6f8299f · head WORKTREE
+núcleo: congelado 39 · derivação BASE 39 · HEAD 39 · união 40
+declarações gback: 1 caminho(s)
+
+## (i) arquivo do núcleo que mudou
+  ✓ types/content.ts (modificado) — declarado
+## (ii) arquivo novo no alcance (derivação do HEAD fora do congelado)
+  ✓ nenhum
+## (iii) declaração órfã (gback: de arquivo que não mudou)
+  ✓ nenhuma
+
+G-back: PASSA
+# exit: 0
+$ sh scripts/gates-web/g-palco.sh
+G-palco — lista: docs/ux/I1-PR3-anexos/lista-do-corte.txt
+MORRE: 69 caminhos · SIMBOLO: 7 · TEXTO: 6
+
+## 1. MORRE — o arquivo existe
+  ✓ nenhum
+## 2. MORRE — o arquivo é importado
+  ✓ nenhum
+## 3. SIMBOLO — símbolo morto dentro de arquivo que fica
+  ✓ nenhum
+## 4. TEXTO — referência a rota/arquivo morto
+  ✓ nenhum
+
+G-palco: PASSA — 0 ocorrências
+# exit: 0

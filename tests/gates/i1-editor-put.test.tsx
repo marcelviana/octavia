@@ -36,7 +36,6 @@ vi.mock('next/image', () => ({
   // eslint-disable-next-line @next/next/no-img-element
   default: ({ src, alt }: { src: string; alt: string }) => <img src={src} alt={alt} />,
 }))
-vi.mock('sonner', () => ({ toast: { success: vi.fn(), error: vi.fn() } }))
 
 import EditContentPage from '@/app/content/[id]/edit/page'
 

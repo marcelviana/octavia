@@ -154,3 +154,13 @@ components/setlists/detalhe.tsx
 # aparecia com a cara velha. Sem folha — composição mecânica: a marca (como no auth) + a `LinhaDeAviso`.
 # Commit 1 (gate-first): ele entra; a cobertura (`g-tok-cobertura.mjs`) lista os que ainda estão fora.
 lib/error-boundary.tsx
+# Commit 2: a tela (decisão 4 do aval) e as frases dela; e os seis arquivos de tela que nenhuma PR tinha listado
+# (decisão 2) — com eles a lista fecha: `g-tok-cobertura.mjs` dá FORA 0.
+components/identidade/tela-de-erro.tsx
+components/identidade/frases-erro.ts
+app/layout.tsx
+components/auth/aviso-de-sessao.tsx
+components/music-text.tsx
+components/providers/session-provider.tsx
+contexts/firebase-auth-context.tsx
+hooks/use-debounce.ts

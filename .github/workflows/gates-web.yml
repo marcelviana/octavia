@@ -9,7 +9,8 @@
 #   g-tok    — a folha congelada intacta (shasum -c do DESIGN-I1), os achados da
 #              conferência cobertos pelo erratas.json, os arquivos redesenhados sem
 #              literal de cor/fonte/espaçamento nem texto em inglês, e o CSS gerado
-#              igual à fonte (packages/identidade/test/css.test.ts).
+#              igual à fonte (packages/identidade/test/css.test.ts). Desde a I1-PR14, a
+#              lista fechada: nenhum arquivo de tela fora dela (g-tok-cobertura.mjs).
 #   g-faixa  — SÓ O VEREDITO sobre os JSON commitados em tests/gates-web/medicoes/;
 #              a medição (Playwright) é local, nunca aqui (I1-D16).
 #
@@ -102,6 +103,8 @@ jobs:
       run: cd docs/ux/DESIGN-I1 && shasum -a 256 -c SHA256SUMS
     - name: G-tok (i) a folha × erratas.json · (ii) os arquivos redesenhados
       run: node scripts/gates-web/g-tok.mjs
+    - name: G-tok — a lista (ii) fechada, nenhum arquivo de tela fora dela (I1-PR14)
+      run: node scripts/gates-web/g-tok-cobertura.mjs
     - name: G-tok — CSS gerado == fonte (packages/identidade)
       run: pnpm exec vitest run --project identidade packages/identidade/test/css.test.ts
 

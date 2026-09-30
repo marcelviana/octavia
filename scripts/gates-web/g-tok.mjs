@@ -23,6 +23,9 @@
 // literal, toast e import de ui, mas NÃO em inglês — o texto da política de
 // privacidade não se traduz nem se reescreve (I1-D17, I1-D19). A lista de
 // exceção só aceita arquivo que está na lista (ii): entrada fora dela reprova.
+// Desde a I1-PR14 (div. 828, decisão 3): também o inglês em STRING fora do JSX (chave de texto, função de mensagem,
+// arquivo de frases), com a isenção por frase de `scripts/gates-web/g-tok-frases-isentas.txt`; e a lista (ii) é
+// FECHADA — `g-tok-cobertura.mjs` reprova arquivo de tela fora dela.
 // O "CSS gerado == fonte" é o `packages/identidade/test/css.test.ts`, que o
 // job do G-tok roda à parte (gates-web.yml).
 //
@@ -35,6 +38,7 @@ import path from "node:path"
 const modo = process.argv[2] ?? ""
 const LISTA = process.env.G_TOK_ARQUIVOS ?? "scripts/gates-web/g-tok-arquivos.txt"
 const SEM_INGLES = process.env.G_TOK_SEM_INGLES ?? "scripts/gates-web/g-tok-sem-ingles.txt"
+const FRASES_ISENTAS = process.env.G_TOK_FRASES_ISENTAS ?? "scripts/gates-web/g-tok-frases-isentas.txt"
 const ERRATAS = "docs/ux/DESIGN-I1/erratas.json"
 const CONFERIR = "docs/ux/DESIGN-I1/conferencia/conferir.mjs"
 const TSX = path.resolve("node_modules/.bin/tsx")
@@ -154,8 +158,9 @@ const POSICOES = [
 //     (o dado gravado, não o rótulo), e todo literal de template.
 // Não é texto: argumento de `new Error(`, `logger`/`console`, comparação — a tela escolhe a frase pela espécie
 // (I1-PR12 §21). Nem a string com forma de CHAVE (`up.meta.album`): o `rotulo:` que aponta para o `FRASES`.
-// Desligada até o aval da I1-PR14 (`G_TOK_828=1` liga; o CN em docs/ux/I1-PR14-anexos/cn/).
-const LIGA_828 = process.env.G_TOK_828 === "1"
+// Regra desde o commit 2 da I1-PR14 (decisão 3 do aval; o CN em docs/ux/I1-PR14-anexos/cn/). A frase que é igual
+// nas duas línguas ou nome próprio fica isenta UMA A UMA em `scripts/gates-web/g-tok-frases-isentas.txt` (arquivo ·
+// frase · razão); a isenção que não casa com nenhuma acusação reprova — órfã, como as erratas.
 const LIT_828 = String.raw`(?:'((?:[^'\\\n]|\\.)*)'|"((?:[^"\\\n]|\\.)*)"|` + "`((?:[^`\\\\]|\\\\.)*)`)"
 const POSICOES_828 = [
   { nome: "chave de texto", re: new RegExp(String.raw`(?<![\w$.])(?:titulo|apoio|texto|rotulo|motivo|message|title|description|label|placeholder)\s*:\s*` + LIT_828, "g") },
@@ -183,7 +188,22 @@ function arquivos() {
   const lerLista = (f) => fs.readFileSync(f, "utf8").split("\n").map((l) => l.trim()).filter((l) => l && !l.startsWith("#"))
   const semIngles = new Set(fs.existsSync(SEM_INGLES) ? lerLista(SEM_INGLES) : [])
   for (const f of semIngles) if (!lista.includes(f)) falha(`${f}: está em ${SEM_INGLES} e não na lista (ii) — exceção sem arquivo cobrado`)
-  let literais = 0, textos = 0, toasts = 0, importsUi = 0, isentos = 0, textos828 = 0
+  // I1-PR14 (decisão 3): a isenção por frase — `arquivo TAB frase TAB razão`
+  const isentas = new Map()
+  for (const l of fs.existsSync(FRASES_ISENTAS) ? fs.readFileSync(FRASES_ISENTAS, "utf8").split("\n") : []) {
+    if (!l.trim() || l.startsWith("#")) continue
+    const [arq, frase, razao] = l.split("\t")
+    if (!arq || !frase || !razao?.trim()) { falha(`${FRASES_ISENTAS}: linha malformada (arquivo · frase · razão): ${JSON.stringify(l)}`); continue }
+    if (!lista.includes(arq)) falha(`${arq}: está em ${FRASES_ISENTAS} e não na lista (ii) — isenção sem arquivo cobrado`)
+    isentas.set(`${arq}\t${frase}`, 0)
+  }
+  // a frase em inglês acusada: isenta (conta o uso) ou falha
+  const ingles = (f, n, nome, s, hit, sufixo = "") => {
+    const k = `${f}\t${s}`
+    if (isentas.has(k)) { isentas.set(k, isentas.get(k) + 1); isentadas++; return }
+    falha(`${f}:${n} [inglês, ${nome}] ${JSON.stringify(s)} ← termo "${hit}"${sufixo}`)
+  }
+  let literais = 0, textos = 0, toasts = 0, importsUi = 0, isentos = 0, textos828 = 0, isentadas = 0
   for (const f of lista) {
     if (!fs.existsSync(f)) { falha(`${f}: está na lista e não existe`); continue }
     const src = semComentarios(fs.readFileSync(f, "utf8"))
@@ -213,9 +233,8 @@ function arquivos() {
       textos++
       const baixo = s.toLowerCase()
       const hit = vocabOrdenado.find((v) => new RegExp(`(^|[^a-zà-ÿ])${v.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}([^a-zà-ÿ]|$)`, "i").test(baixo))
-      if (hit && !ANGLICISMOS_DO_PRODUTO.includes(hit)) falha(`${f}:${linha(src, m.index)} [inglês, ${nome}] ${JSON.stringify(s)} ← termo "${hit}"`)
+      if (hit && !ANGLICISMOS_DO_PRODUTO.includes(hit)) ingles(f, linha(src, m.index), nome, s, hit)
     }
-    if (!LIGA_828) continue
     const fimVisto = new Set() // o mesmo literal casado por duas posições (a chave `rotulo:` num arquivo de frases) conta uma vez
     for (const { nome, re } of ARQUIVO_DE_FRASES.test(f) ? [...POSICOES_828, ...POSICOES_FRASES] : POSICOES_828) for (const m of src.matchAll(re)) {
       const s = (m[1] ?? m[2] ?? m[3] ?? "").replace(/\$\{[^}]*\}/g, " ").trim()
@@ -225,10 +244,11 @@ function arquivos() {
       fimVisto.add(fim)
       textos828++
       const hit = vocabOrdenado.find((v) => new RegExp(`(^|[^a-zà-ÿ])${v.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}([^a-zà-ÿ]|$)`, "i").test(s))
-      if (hit && !ANGLICISMOS_DO_PRODUTO.includes(hit)) falha(`${f}:${linha(src, m.index)} [inglês, ${nome}] ${JSON.stringify(s)} ← termo "${hit}" (div. 828)`)
+      if (hit && !ANGLICISMOS_DO_PRODUTO.includes(hit)) ingles(f, linha(src, m.index), nome, s, hit, " (div. 828)")
     }
   }
-  console.log(`  arquivos: ${lista.length} · literais de identidade acusados: ${literais} · toasts: ${toasts} · imports de ui: ${importsUi} · textos examinados: ${textos} · isentos de inglês (${SEM_INGLES}): ${isentos} · vocabulário: ${VOCAB.length} · isenções: ${ANGLICISMOS_DO_PRODUTO.length}${LIGA_828 ? ` · strings de .ts examinadas (div. 828): ${textos828}` : " · div. 828: desligada"}`)
+  for (const [k, n] of isentas) if (n === 0) falha(`${FRASES_ISENTAS}: ISENÇÃO ÓRFÃ — ${JSON.stringify(k.replace("\t", " · "))} não casa com nenhuma acusação`)
+  console.log(`  arquivos: ${lista.length} · literais de identidade acusados: ${literais} · toasts: ${toasts} · imports de ui: ${importsUi} · textos examinados: ${textos} · isentos de inglês (${SEM_INGLES}): ${isentos} · vocabulário: ${VOCAB.length} · isenções: ${ANGLICISMOS_DO_PRODUTO.length} · strings de .ts examinadas (div. 828): ${textos828} · frases isentas (${FRASES_ISENTAS}): ${isentadas} de ${isentas.size} entradas`)
 }
 
 if (modo !== "--so-arquivos") folha()

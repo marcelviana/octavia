@@ -25,7 +25,6 @@ vi.mock('@/contexts/firebase-auth-context', () => {
 vi.mock('@/lib/firebase', () => ({ auth: { currentUser: { uid: 'cn-user', email: 'cn@exemplo.com' } } }))
 vi.mock('@/lib/auth-manager', () => ({ getValidToken: async () => ({ token: 'cn-token', error: null }) }))
 vi.mock('@/components/pdf-viewer', () => ({ default: () => <div data-testid="pdf-viewer" /> }))
-vi.mock('sonner', () => ({ toast: { success: vi.fn(), error: vi.fn() } }))
 
 import EditContentPage from '@/app/content/[id]/edit/page'
 

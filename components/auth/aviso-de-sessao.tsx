@@ -35,7 +35,7 @@ export function AvisoDeSessao({
   const pathname = usePathname()
   if (sessao.estado !== "falhou" || desenhaNaTela(pathname ?? "")) return null
   return (
-    <div className="sticky top-0 z-50 p-2">
+    <div className="sticky top-0 z-50 p-espaco-sm">
       <LinhaDeAviso
         motivo={fraseDaFalha(sessao.falha, sessao.origem)}
         acao={{ rotulo: FRASES_SESSAO["tentar-de-novo"], onPress: onTentarDeNovo }}

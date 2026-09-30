@@ -323,3 +323,45 @@ Divs. 893, 894 e 896: aceitas como o commit 1 as leu.
 | escrita pelo navegador | 0 (a barreira do medidor; a superfície não chama `/api/*` além do `health` do controle positivo) |
 | servidor | `next dev -p 3114` desta árvore, sem `.env` (a 3000 não foi tocada) |
 | gates no commit 1 | G-tok **REPROVA 34** (o `error-boundary`); cobertura **REPROVA 40** (ainda não é linha do workflow); G-palco PASSA; G-back PASSA (nenhum arquivo do núcleo); `tsc` 0; lint limpo; o teste novo 4/8 (vermelho por construção) |
+
+---
+
+## 10. Commit 2 — a poda e a tela de erro `[medido]`
+
+Resumo; o inventário completo (linhas por arquivo, o que sobra) entra no commit 3.
+
+| | antes | depois | onde |
+|---|---|---|---|
+| G-tok (ii) | REPROVA 34 (124 arquivos) | **PASSA** — 132 arquivos, 0 literal, 0 inglês, 446 strings de `.ts` lidas (828), **5 de 5** frases isentas usadas | `cn/g-tok-commit2.txt` |
+| cobertura | FORA 40 | **FORA 0** (129 de tela, 129 na lista) | idem |
+| 828 | desligada | **regra** (`G_TOK_828` saiu); CN da isenção órfã reprova; CN das fixtures 6/6 | idem |
+| G-back | — | acusa só `types/content.ts`; **PASSA** com o `gback:` (o `layout.tsx` não é núcleo) | `cn/g-back-g-palco-commit2.txt` |
+| G-palco | 0 | **0** | idem |
+| `pnpm test` | — | **118 suítes · 1179 casos** (3 e 58 pulados); a tela de erro **8/8**; o CN da PR-1 **15/15** | `cn/testes-tsc-lint-commit2.txt` |
+| `tsc` · lint | 0 · limpo | **0 · limpo** | idem |
+| `pnpm build` | 27 rotas | **27 rotas, `diff` vazio** (só os tamanhos dos pedaços mudam) | `cn/build-rotas.txt` |
+| `knip` | 26 arquivos · 37 deps · 132 exports · 34 tipos | **25 · 14 · 124 · 33** — as 14 deps são as 11 herdadas da raiz + 3 do nativo; nenhum órfão novo | `cn/knip-depois.md` |
+| prova por imagem | — | **12 capturas × 0 pixel × 0 nó com Δ** (3 públicas sem `.env` + `dashboard` com sessão, × 3 larguras); o ruído antes × antes, também 0 | `cn/prova-por-imagem.txt` |
+| G-faixa `erro-global` | (b) 5 em 711 e 411 com os detalhes abertos (`scrollWidth` 792, 642) | **(e) 0 · (b) 0 · `scrollWidth` = viewport** nos dois estados × três larguras; o veredito das 12 medições PASSA | `cn/g-faixa-depois.txt`, `capturas/depois-*` |
+
+**A camada `base` nova não pinta nada visível hoje**: o `body` passou de branco a `#100F16` (medido no CSS servido) e a
+borda-padrão de `#e5e5e5` a `--cor-line` — e as 12 capturas não mudaram um pixel: toda tela cobre o `body` com o
+próprio fundo e todo contorno desenhado declara a cor. O `content` do Tailwind ganhou `./lib/**/*.tsx` (sobra um `.tsx`
+em `lib/`, o limite): o CSS gerado com e sem a linha é o mesmo (25 030 bytes, `diff` vazio).
+
+**Extras declarados**: `pnpm-lock.yaml` (as 27); `themeColor` `#f59e0b` → `dark.bg` (`#100F16`, o `--cor-bg`) — o único
+literal que troca de valor; `lang="pt-BR"` e o `metadata` (*Octavia* · `landing.frase`); **um botão a menos** na tela de
+erro (o *Try again* que re-renderizava — decisão 11); o estado `error` inteiro do `use-content-actions` (div. 914);
+`scripts/gates-web/g-tok-frases-isentas.txt`; a seção da I1-PR14 no `COMO-RODAR.md`; a linha do `gates-web.yml`.
+
+### 10.1 Divergências — 910 a 916
+
+| div. | origem | premissa | medido | destino |
+|---|---|---|---|---|
+| **910** | A | a sessão do perfil (I1-D37) numa porta livre | o IndexedDB do Firebase é **por origem** (porta): na 3114 o cliente não achou usuário e chamou `DELETE /api/auth/session`, apagando o cookie. O `next dev` da 3000 era o da árvore `../octavia-i1-pr13` (subido pelo executor da PR-13, já mergeada): **parado**; o desta árvore subiu na 3000 e a sessão se refez sozinha (`POST /api/auth/session 200`) | registrado; a 3000 ficou com esta árvore |
+| **911** | A | apagar a fixture basta | o `next dev` gera `.next/types/app/g-faixa-erro-global/` e o `tsc` o acusa depois que a rota sai | o passo no `COMO-RODAR.md` |
+| **912** | A | `knip` → 0 órfão novo | o tipo `DetalhesDoErro` exportado sem uso | deixou de ser exportado |
+| **913** | A | — | o `<summary>` com `flex` perde o triângulo de abrir no Chromium (só em desenvolvimento) | registrado; herança |
+| **914** | A | *"os 5 `message:` mortos saem"* | o estado `error` do hook tinha mais dois (*User not authenticated*, sem termo do vocabulário) e nenhum leitor: saiu o estado inteiro; o que o hook chama, relê e quando para, igual | extra declarado |
+| **915** | P | corpo da PR: *"`gtok: … +7`"* | são **+8**: `tela-de-erro.tsx`, `frases-erro.ts` e os seis | o corpo diz +8 |
+| **916** | A | — | o `.env.local` copiado de `../octavia-i1-pr13` (`cp -p`, sem abrir) e **afastado** (renomeado, sem abrir) durante as medições sem `.env`; ignorado pelo git | registrado |

@@ -3,7 +3,7 @@ $ cat $LISTA
 tests/gates-web/fixtures/g-tok-828.ts
 tests/gates-web/fixtures/frases-g-tok-828.ts
 $ G_TOK_ARQUIVOS=$S/l828.txt G_TOK_SEM_INGLES=/dev/null G_TOK_828=1 node scripts/gates-web/g-tok.mjs --so-arquivos
-## (ii) arquivos redesenhados — /private/tmp/claude-501/-Users-marcelviana-projects-octavia/840b2bca-0863-44c6-9b37-dc07844434f8/scratchpad/l828.txt
+## (ii) arquivos redesenhados — $S/l828.txt
   ✗ tests/gates-web/fixtures/g-tok-828.ts:7 [inglês, chave de texto] "Failed to save the file" ← termo "failed" (div. 828)
   ✗ tests/gates-web/fixtures/g-tok-828.ts:8 [inglês, chave de texto] "Delete song" ← termo "delete" (div. 828)
   ✗ tests/gates-web/fixtures/g-tok-828.ts:10 [inglês, função de mensagem] "Upload failed" ← termo "failed" (div. 828)
@@ -15,7 +15,7 @@ $ G_TOK_ARQUIVOS=$S/l828.txt G_TOK_SEM_INGLES=/dev/null G_TOK_828=1 node scripts
 G-tok: REPROVA — 6 ocorrência(s)
 # exit: 1
 $ G_TOK_ARQUIVOS=$S/l828.txt G_TOK_SEM_INGLES=/dev/null node scripts/gates-web/g-tok.mjs --so-arquivos
-## (ii) arquivos redesenhados — /private/tmp/claude-501/-Users-marcelviana-projects-octavia/840b2bca-0863-44c6-9b37-dc07844434f8/scratchpad/l828.txt
+## (ii) arquivos redesenhados — $S/l828.txt
   arquivos: 2 · literais de identidade acusados: 0 · toasts: 0 · imports de ui: 0 · textos examinados: 0 · isentos de inglês (/dev/null): 0 · vocabulário: 133 · isenções: 9 · div. 828: desligada
 
 G-tok: PASSA

@@ -346,3 +346,21 @@ sem ela as superfícies com sessão são puladas) · `G_FAIXA_SUPERFICIES` (list
 `g-faixa-superficies.ts`) · `G_FAIXA_SAIDA` (padrão `tests/gates-web/medicoes`) ·
 `G_FAIXA_SEM_JANELA=1` (sem sessão no perfil, falha em vez de abrir a janela de login).
 `G_FAIXA_ESTADOS` (I1-PR11, div. 803: mede só os estados listados e os mescla por estado no JSON existente).
+
+## A tela de erro global (I1-PR14) — o executor, sem sessão e sem `.env`
+
+O limite de `app/layout.tsx` só aparece quando uma exceção escapa de toda tela; a medição provoca uma com uma rota de
+**fixture**, que **não é do app**:
+
+1. `mkdir -p app/g-faixa-erro-global && cp tests/gates-web/fixtures/erro-global/page.tsx app/g-faixa-erro-global/page.tsx`
+   (o caminho está no `.gitignore` — não entra em commit).
+2. `next dev` **sem `.env`** (afaste o `.env.local` se houver) numa porta livre, e:
+
+   ```bash
+   G_FAIXA_BASE_URL=http://localhost:3114 G_FAIXA_SUPERFICIES=erro-global pnpm exec playwright test -c playwright.g-faixa.config.ts scripts/gates-web/g-faixa-medir.ts
+   ```
+
+   Dois estados, sem folha: `ERRO-global` (os detalhes de desenvolvimento fechados) e `ERRO-global-detalhes` (abertos).
+3. **Depois**: `rm -r app/g-faixa-erro-global .next/types/app/g-faixa-erro-global` — sem o segundo, o `tsc` acusa os
+   tipos que o `next dev` gerou para a rota que saiu; e nenhum `pnpm build` com a fixture no lugar (a rota entraria na
+   tabela).

@@ -58,23 +58,21 @@ const identidade = {
 }
 
 const config: Config = {
-  darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
+    // I1-PR-14 (div. 896): o `.tsx` de `lib/` renderiza (o limite global) — o que ele pintar tem de estar no CSS
+    "./lib/**/*.tsx",
     "*.{js,ts,jsx,tsx,mdx}",
   ],
   prefix: "",
+  // I1-PR-14 (decisão 6 do aval): o tema velho saiu — as cores do shadcn (`hsl(var(--…))`), `cream`/`beige`/`taupe`,
+  // o `borderRadius` sobre `--radius`, o acordeão, o `container`, o `darkMode`, o `safelist` e o plugin
+  // `tailwindcss-animate`: nenhum arquivo os usava depois da poda (docs/ux/I1-PR14-anexos/cn/tema-velho.txt). A
+  // camada `base` do `app/globals.css` passou aos tokens. Só a identidade mora aqui.
   theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
-    },
     extend: {
       screens: identidade.screens,
       spacing: identidade.spacing,
@@ -85,96 +83,10 @@ const config: Config = {
       lineHeight: identidade.lineHeight,
       letterSpacing: identidade.letterSpacing,
       borderWidth: identidade.borderWidth,
-      colors: {
-        ...identidade.colors,
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
-        // Octavia App Color Palette
-        cream: {
-          light: "#fffcf7", // NEW: Very light cream for main backgrounds
-          DEFAULT: "#fff9f0", // Current cream for boxes/cards
-        },
-        beige: {
-          light: "#F8F4ED", // Light beige for general use
-          DEFAULT: "#F2EDE5", // Beige for boxes/cards
-        },
-        taupe: {
-          DEFAULT: "#A69B8E", // Secondary text and borders
-        },
-      },
-      borderRadius: {
-        ...identidade.borderRadius,
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-      },
-      keyframes: {
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
-        },
-      },
-      animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
-      },
+      colors: identidade.colors,
+      borderRadius: identidade.borderRadius,
     },
   },
-  plugins: [require("tailwindcss-animate")],
-  safelist: [
-    // Ensure all content type colors are included in build
-    'text-purple-600', 'text-purple-500',
-    'border-purple-200', 'bg-purple-50',
-    'hover:bg-purple-50', 'hover:border-purple-200',
-    'ring-purple-500',
-    'text-green-600', 'text-green-500',
-    'border-green-200', 'bg-green-50',
-    'hover:bg-green-50', 'hover:border-green-200',
-    'ring-green-500',
-    'text-blue-600', 'text-blue-500',
-    'border-blue-200', 'bg-blue-50',
-    'hover:bg-blue-50', 'hover:border-blue-200',
-    'ring-blue-500',
-    'text-orange-600', 'text-orange-500',
-    'border-orange-200', 'bg-orange-50',
-    'hover:bg-orange-50', 'hover:border-orange-200',
-    'ring-orange-500',
-  ],
 } satisfies Config
 
 export default config

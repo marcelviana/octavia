@@ -33,7 +33,6 @@ vi.mock('@/contexts/firebase-auth-context', () => {
 })
 vi.mock('@/lib/firebase', () => ({ auth: { currentUser: { uid: 'cn-user', email: 'cn@exemplo.com' } } }))
 vi.mock('@/lib/auth-manager', () => ({ getValidToken: async () => ({ token: 'cn-token', error: null }) }))
-vi.mock('sonner', () => ({ toast: { success: vi.fn(), error: vi.fn() } }))
 
 import AddContentPageClient from '@/components/add-content-page-client'
 
