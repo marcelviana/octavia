@@ -1,0 +1,21 @@
+# pnpm test (tudo) — o resumo
+ Test Files  118 passed | 3 skipped (121)
+      Tests  1179 passed | 58 skipped (1237)
+
+$ pnpm exec vitest run --project web tests/gates/i1-erro-global.test.tsx components/auth/__tests__/login-sessao-cn.test.tsx components/upload/__tests__/upload-estados.test.tsx 2>&1 | sed 's/\x1b\[[0-9;]*m//g' | grep -E '^ (✓|×) |Tests |Test Files'
+ ✓  web  tests/gates/i1-erro-global.test.tsx (8 tests) 112ms
+ ✓  web  components/upload/__tests__/upload-estados.test.tsx (30 tests) 1034ms
+ ✓  web  components/auth/__tests__/login-sessao-cn.test.tsx (15 tests) 1988ms
+ Test Files  3 passed (3)
+      Tests  53 passed (53)
+# exit: 0
+
+$ pnpm exec tsc --noEmit
+# exit: 0
+$ pnpm lint
+
+> octavia@0.1.0 lint .
+> pnpm exec next lint
+
+✔ No ESLint warnings or errors
+# exit: 0

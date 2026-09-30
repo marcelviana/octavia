@@ -84,3 +84,7 @@ docs/ux/fase-d/traces/
 # Mora FORA da árvore ($HOME/.octavia-g-faixa-perfil, scripts/gates-web/COMO-RODAR.md) e a
 # config recusa um caminho dentro dela; a linha guarda o nome documentado, se ele cair aqui.
 .octavia-g-faixa-perfil/
+
+# G-faixa (I1-PR14): a rota de FIXTURE do limite de erro global — copiada de tests/gates-web/fixtures/erro-global/
+# só durante a medição (scripts/gates-web/COMO-RODAR.md); nunca é rota do app
+app/g-faixa-erro-global/

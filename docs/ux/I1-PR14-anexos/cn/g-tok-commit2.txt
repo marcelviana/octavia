@@ -1,0 +1,48 @@
+# I1-PR14 commit 2 — G-tok (lista fechada, 828 ligada, isenção por frase)
+$ node scripts/gates-web/g-tok.mjs
+## (i) a folha — conferir.mjs × erratas.json
+  ✓ I1-E1 (estado) cobre 2
+  ✓ I1-E2 (estado) cobre 1
+  ✓ I1-E2 (estado) cobre 2
+  ✓ I1-E15 (estado) cobre 4
+  ✓ I1-E3 (forma) cobre 1
+  ✓ I1-E4 (inventario-sem-px) cobre 6
+  ✓ I1-E5 (declaracao) cobre 8
+  ✓ I1-E6 (forma) cobre 1
+  ✓ decisao-588 (nome-icone) cobre 1
+  ✓ decisao-589 (forma) cobre 1
+  achados do conferir: 26 · cobertos: 26 · descobertos: 0 · erratas: 9 · órfãs: 0
+## (ii) arquivos redesenhados — scripts/gates-web/g-tok-arquivos.txt
+  arquivos: 132 · literais de identidade acusados: 0 · toasts: 0 · imports de ui: 0 · textos examinados: 33 · isentos de inglês (scripts/gates-web/g-tok-sem-ingles.txt): 1 · vocabulário: 133 · isenções: 9 · strings de .ts examinadas (div. 828): 446 · frases isentas (scripts/gates-web/g-tok-frases-isentas.txt): 5 de 5 entradas
+
+G-tok: PASSA
+# exit: 0
+
+$ node scripts/gates-web/g-tok-cobertura.mjs
+## cobertura da lista (ii) — scripts/gates-web/g-tok-arquivos.txt (raiz .)
+  arquivos de tela: 129 · na lista: 129 · excluídos: 0 · FORA: 0 · da lista que não são de tela (informa): 3
+
+G-tok (cobertura): PASSA
+# exit: 0
+
+# CN da isenção órfã: uma entrada que não casa com acusação nenhuma reprova
+$ G_TOK_FRASES_ISENTAS=$S/isentas-cn.txt node scripts/gates-web/g-tok.mjs --so-arquivos | tail -4
+  ✗ $S/isentas-cn.txt: ISENÇÃO ÓRFÃ — "components/editors/frases-editor.ts · Não existe" não casa com nenhuma acusação
+  arquivos: 132 · literais de identidade acusados: 0 · toasts: 0 · imports de ui: 0 · textos examinados: 33 · isentos de inglês (scripts/gates-web/g-tok-sem-ingles.txt): 1 · vocabulário: 133 · isenções: 9 · strings de .ts examinadas (div. 828): 446 · frases isentas ($S/isentas-cn.txt): 5 de 6 entradas
+
+G-tok: REPROVA — 1 ocorrência(s)
+# exit: 0
+
+# CN da 828 (as fixtures do commit 1), agora sem variável — é regra
+$ G_TOK_ARQUIVOS=$S/l828.txt G_TOK_SEM_INGLES=/dev/null G_TOK_FRASES_ISENTAS=/dev/null node scripts/gates-web/g-tok.mjs --so-arquivos
+## (ii) arquivos redesenhados — $S/l828.txt
+  ✗ tests/gates-web/fixtures/g-tok-828.ts:7 [inglês, chave de texto] "Failed to save the file" ← termo "failed" (div. 828)
+  ✗ tests/gates-web/fixtures/g-tok-828.ts:8 [inglês, chave de texto] "Delete song" ← termo "delete" (div. 828)
+  ✗ tests/gates-web/fixtures/g-tok-828.ts:10 [inglês, função de mensagem] "Upload failed" ← termo "failed" (div. 828)
+  ✗ tests/gates-web/fixtures/g-tok-828.ts:11 [inglês, função de mensagem] "Are you sure?" ← termo "are you sure" (div. 828)
+  ✗ tests/gates-web/fixtures/frases-g-tok-828.ts:5 [inglês, frases: valor de chave] "Next page" ← termo "next" (div. 828)
+  ✗ tests/gates-web/fixtures/frases-g-tok-828.ts:8 [inglês, frases: literal de template] "songs" ← termo "songs" (div. 828)
+  arquivos: 2 · literais de identidade acusados: 0 · toasts: 0 · imports de ui: 0 · textos examinados: 0 · isentos de inglês (/dev/null): 0 · vocabulário: 133 · isenções: 9 · strings de .ts examinadas (div. 828): 10 · frases isentas (/dev/null): 0 de 0 entradas
+
+G-tok: REPROVA — 6 ocorrência(s)
+# exit: 1

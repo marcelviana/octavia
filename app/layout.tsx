@@ -9,11 +9,13 @@ import { FirebaseAuthProvider } from "@/contexts/firebase-auth-context"
 import { SessionProvider } from "@/components/providers/session-provider"
 import { ErrorBoundary } from "@/lib/error-boundary"
 import { getCSPNonce } from "@/lib/csp-nonce"
+import { dark } from "@octavia/identidade"
+import { FRASES_LANDING } from "@/components/landing/frases-landing"
 
-// Update app/layout.tsx metadata
+// I1-PR-14 (decisão 14 do aval): o título da aba e a descrição em pt-BR — o nome do produto e a `landing.frase`
 export const metadata: Metadata = {
-  title: "Octavia - Digital Music Management",
-  description: "Organize, visualize, and share your musical content",
+  title: "Octavia",
+  description: FRASES_LANDING["landing.frase"],
   generator: "v0.dev",
   icons: {
     icon: "/icons/icon-192x192.webp", // Updated path
@@ -23,7 +25,8 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#f59e0b", // Moved from metadata to viewport
+  // I1-PR-14: a cor da barra do navegador é o `--cor-bg` do tema (o `dark.bg` de @octavia/identidade), não mais o âmbar
+  themeColor: dark.bg,
 }
 
 export default async function RootLayout({
@@ -34,7 +37,7 @@ export default async function RootLayout({
   const nonce = await getCSPNonce()
   
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <head>
         {nonce && (
           <script

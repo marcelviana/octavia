@@ -1,0 +1,47 @@
+# G-tok (cobertura) na main 6f8299f + o error-boundary na lista (commit 1). Sem ele na lista: 41.
+$ node scripts/gates-web/g-tok-cobertura.mjs
+## cobertura da lista (ii) — scripts/gates-web/g-tok-arquivos.txt (raiz .)
+  ✗ app/layout.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/auth/aviso-de-sessao.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/music-text.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/providers/session-provider.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/accordion.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/alert-dialog.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/alert.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/aspect-ratio.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/avatar.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/badge.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/breadcrumb.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/button.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/calendar.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/card.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/checkbox.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/collapsible.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/dialog.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/dropdown-menu.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/input.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/label.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/pagination.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/popover.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/progress.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/resizable.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/scroll-area.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/select.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/separator.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/sheet.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/skeleton.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/slider.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/switch.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/table.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/tabs.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/textarea.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/toggle.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/ui/tooltip.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ contexts/firebase-auth-context.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ contexts/sidebar-context.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ hooks/use-debounce.ts: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ hooks/use-navigation-actions.ts: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  arquivos de tela: 161 · na lista: 121 · excluídos: 0 · FORA: 40 · da lista que não são de tela (informa): 3
+
+G-tok (cobertura): REPROVA — 40 arquivo(s) de tela fora da lista
+# exit: 1

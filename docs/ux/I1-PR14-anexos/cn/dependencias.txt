@@ -1,0 +1,58 @@
+# dependências do package.json raiz: quantos arquivos importam cada uma HOJE e DEPOIS da poda (ui/*, sidebar, use-navigation-actions, error-boundary)
+# (scratch deps.mjs: from/import()/require()/vi.mock()/@import/plugins require; fora docs/.audit/.planning/apps/native/packages)
+@octavia/identidade · hoje 14 · depois 14
+@hookform/resolvers · hoje 0 · depois 0
+@radix-ui/react-accordion · hoje 1 · depois 0  ← só: components/ui/accordion.tsx
+@radix-ui/react-alert-dialog · hoje 1 · depois 0  ← só: components/ui/alert-dialog.tsx
+@radix-ui/react-aspect-ratio · hoje 1 · depois 0  ← só: components/ui/aspect-ratio.tsx
+@radix-ui/react-avatar · hoje 1 · depois 0  ← só: components/ui/avatar.tsx
+@radix-ui/react-checkbox · hoje 1 · depois 0  ← só: components/ui/checkbox.tsx
+@radix-ui/react-collapsible · hoje 1 · depois 0  ← só: components/ui/collapsible.tsx
+@radix-ui/react-context-menu · hoje 0 · depois 0
+@radix-ui/react-dialog · hoje 2 · depois 0  ← só: components/ui/dialog.tsx, components/ui/sheet.tsx
+@radix-ui/react-dropdown-menu · hoje 1 · depois 0  ← só: components/ui/dropdown-menu.tsx
+@radix-ui/react-label · hoje 1 · depois 0  ← só: components/ui/label.tsx
+@radix-ui/react-popover · hoje 1 · depois 0  ← só: components/ui/popover.tsx
+@radix-ui/react-progress · hoje 1 · depois 0  ← só: components/ui/progress.tsx
+@radix-ui/react-scroll-area · hoje 1 · depois 0  ← só: components/ui/scroll-area.tsx
+@radix-ui/react-select · hoje 1 · depois 0  ← só: components/ui/select.tsx
+@radix-ui/react-separator · hoje 1 · depois 0  ← só: components/ui/separator.tsx
+@radix-ui/react-slider · hoje 1 · depois 0  ← só: components/ui/slider.tsx
+@radix-ui/react-slot · hoje 2 · depois 0  ← só: components/ui/breadcrumb.tsx, components/ui/button.tsx
+@radix-ui/react-switch · hoje 1 · depois 0  ← só: components/ui/switch.tsx
+@radix-ui/react-tabs · hoje 1 · depois 0  ← só: components/ui/tabs.tsx
+@radix-ui/react-toast · hoje 0 · depois 0
+@radix-ui/react-toggle · hoje 1 · depois 0  ← só: components/ui/toggle.tsx
+@radix-ui/react-tooltip · hoje 1 · depois 0  ← só: components/ui/tooltip.tsx
+@supabase/ssr · hoje 1 · depois 1  [lib/supabase.ts]
+@supabase/supabase-js · hoje 7 · depois 7
+@types/debug · hoje 0 · depois 0
+@vitest/browser · hoje 0 · depois 0
+@vitest/ui · hoje 0 · depois 0
+autoprefixer · hoje 0 · depois 0
+class-variance-authority · hoje 6 · depois 0  ← só: components/ui/alert.tsx, components/ui/badge.tsx, components/ui/button.tsx, components/ui/label.tsx, components/ui/sheet.tsx, components/ui/toggle.tsx
+clsx · hoje 1 · depois 1  [lib/utils.ts]
+cmdk · hoje 0 · depois 0
+date-fns · hoje 0 · depois 0
+firebase · hoje 8 · depois 8
+firebase-admin · hoje 2 · depois 2  [lib/__tests__/firebase-admin.test.ts, lib/firebase-admin.ts]
+happy-dom · hoje 0 · depois 0
+immer · hoje 0 · depois 0
+isomorphic-dompurify · hoje 0 · depois 0
+lru-cache · hoje 0 · depois 0
+lucide-react · hoje 12 · depois 1  [types/content.ts]
+mammoth · hoje 1 · depois 1  [lib/batch-import.ts]
+next · hoje 94 · depois 93
+next-themes · hoje 0 · depois 0
+pdfjs-dist · hoje 1 · depois 1  [lib/pdf-utils.ts]
+react · hoje 95 · depois 63
+react-day-picker · hoje 1 · depois 0  ← só: components/ui/calendar.tsx
+react-dom · hoje 0 · depois 0
+react-hook-form · hoje 0 · depois 0
+react-pdf · hoje 1 · depois 1  [components/pdf-viewer.tsx]
+react-resizable-panels · hoje 1 · depois 0  ← só: components/ui/resizable.tsx
+tailwind-merge · hoje 1 · depois 1  [lib/utils.ts]
+tailwindcss-animate · hoje 1 · depois 1  [tailwind.config.ts]
+vitest · hoje 87 · depois 86
+zod · hoje 9 · depois 9
+zustand · hoje 0 · depois 0

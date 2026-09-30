@@ -1,0 +1,12 @@
+# CN do g-tok-cobertura.mjs: a árvore sintética (tests/gates-web/fixtures/g-tok-cobertura/README.md tem o esperado)
+$ G_TOK_ARQUIVOS=tests/gates-web/fixtures/g-tok-cobertura/lista.txt node scripts/gates-web/g-tok-cobertura.mjs tests/gates-web/fixtures/g-tok-cobertura/arvore
+## cobertura da lista (ii) — tests/gates-web/fixtures/g-tok-cobertura/lista.txt (raiz tests/gates-web/fixtures/g-tok-cobertura/arvore)
+  ✗ app/b/page.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ components/fora.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ contexts/contexto.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ hooks/use-coisa.ts: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  ✗ lib/limite.tsx: arquivo de tela fora da lista (ii) — entra na lista ou em EXCLUIDOS, com a razão
+  arquivos de tela: 7 · na lista: 2 · excluídos: 0 · FORA: 5 · da lista que não são de tela (informa): 1
+
+G-tok (cobertura): REPROVA — 5 arquivo(s) de tela fora da lista
+# exit: 1

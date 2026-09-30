@@ -22,8 +22,6 @@ vi.mock('@/contexts/firebase-auth-context', () => {
 })
 vi.mock('@/lib/firebase', () => ({ auth: { currentUser: { uid: 'cn-user' } } }))
 vi.mock('@/lib/auth-manager', () => ({ getValidToken: async () => ({ token: 'cn-token', error: null }) }))
-const toast = vi.hoisted(() => ({ success: vi.fn(), error: vi.fn() }))
-vi.mock('sonner', () => ({ toast }))
 
 import AddContentPageClient from '@/components/add-content-page-client'
 
@@ -115,7 +113,6 @@ describe('2 · o lote importado diz que importou, na tela (UP-lote-sucesso; era 
     fireEvent.click(await screen.findByRole('button', { name: /^(Import All|Importar todas)$/ }))
     await waitFor(() => expect(pedidos.filter((p) => p.rota === '/api/content')).toHaveLength(2))
     await screen.findByText(/^(How would you like to add content\?|como você quer adicionar\?)$/)
-    expect(toast.success).not.toHaveBeenCalled()
     expect(within(screen.getByRole('status')).getByText('2 músicas importadas')).toBeTruthy()
   })
 })
@@ -131,7 +128,6 @@ describe('3 · o limite pela resposta do servidor (N8, decisão 11 do aval)', ()
   it('400 com details de field "size" → a frase do limite, sem ação, sem toast', async () => {
     await caso(LIMITE_400)
     expect(screen.queryByRole('button', { name: 'Tentar de novo' })).toBeNull()
-    expect(toast.error).not.toHaveBeenCalled()
     expect(screen.queryByText(/50 ?MB/)).toBeNull()
     expect(screen.getByText('formatos: .pdf, .docx, .txt · até 4 MiB')).toBeTruthy()
   })
@@ -201,7 +197,6 @@ describe('o envio, por espécie', () => {
     enviar(PDF())
     await screen.findByText(frase)
     expect(!!screen.queryByRole('button', { name: 'Tentar de novo' })).toBe(tentar)
-    expect(toast.error).not.toHaveBeenCalled()
     return pedidos
   }
   it('rede → sem conexão + Tentar de novo, que repete o MESMO envio e segue ao formulário', async () => {
@@ -237,7 +232,6 @@ describe('o envio, por espécie', () => {
     enviar(arquivo('foto.heic', 'image/heic', 'x'))
     await screen.findByText('tipo de arquivo não aceito: foto.heic — use .pdf, .docx ou .txt')
     expect(pedidos).toHaveLength(0)
-    expect(toast.error).not.toHaveBeenCalled()
   })
 })
 
@@ -313,7 +307,6 @@ describe('o lote', () => {
     await montar()
     fireEvent.click(await ateOLote())
     await screen.findByText('não foi possível importar as músicas — falha no servidor')
-    expect(toast.error).not.toHaveBeenCalled()
     expect(screen.getByRole('button', { name: 'Importar todas' })).toBeTruthy()
     fireEvent.click(screen.getByRole('button', { name: 'Tentar de novo' }))
     await screen.findByText('2 músicas importadas')

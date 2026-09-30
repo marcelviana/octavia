@@ -1,0 +1,34 @@
+# I1-PR14 commit 2 — a prova por imagem (decisão 6): full page, Chromium do Playwright, pixelmatch threshold 0, o indicador do next dev removido.
+# públicas: next dev SEM .env (3114); dashboard: next dev COM o .env.local copiado sem abrir (3000, o perfil persistente — I1-D37).
+# antes = código da main (a árvore no commit 1); antes2 = a mesma, de novo (o ruído); depois = o commit 2. Geometria: todo elemento visível de <body> (tag, hash do texto folha, x, y, w, h).
+
+## antes × antes2 (o ruído do instrumento)
+dashboard-1138	1138×734 → 1138×734	pixels diferentes: 0	nós com Δ de geometria: 0
+dashboard-411	411×1212 → 411×1212	pixels diferentes: 0	nós com Δ de geometria: 0
+dashboard-711	711×1145 → 711×1145	pixels diferentes: 0	nós com Δ de geometria: 0
+landing-1138	1138×711 → 1138×711	pixels diferentes: 0	nós com Δ de geometria: 0
+landing-411	411×823 → 411×823	pixels diferentes: 0	nós com Δ de geometria: 0
+landing-711	711×1138 → 711×1138	pixels diferentes: 0	nós com Δ de geometria: 0
+login-1138	1138×711 → 1138×711	pixels diferentes: 0	nós com Δ de geometria: 0
+login-411	411×851 → 411×851	pixels diferentes: 0	nós com Δ de geometria: 0
+login-711	711×1138 → 711×1138	pixels diferentes: 0	nós com Δ de geometria: 0
+privacy-policy-1138	1138×1373 → 1138×1373	pixels diferentes: 0	nós com Δ de geometria: 0
+privacy-policy-411	411×2056 → 411×2056	pixels diferentes: 0	nós com Δ de geometria: 0
+privacy-policy-711	711×1448 → 711×1448	pixels diferentes: 0	nós com Δ de geometria: 0
+
+## antes × depois
+dashboard-1138	1138×734 → 1138×734	pixels diferentes: 0	nós com Δ de geometria: 0
+dashboard-411	411×1212 → 411×1212	pixels diferentes: 0	nós com Δ de geometria: 0
+dashboard-711	711×1145 → 711×1145	pixels diferentes: 0	nós com Δ de geometria: 0
+landing-1138	1138×711 → 1138×711	pixels diferentes: 0	nós com Δ de geometria: 0
+landing-411	411×823 → 411×823	pixels diferentes: 0	nós com Δ de geometria: 0
+landing-711	711×1138 → 711×1138	pixels diferentes: 0	nós com Δ de geometria: 0
+login-1138	1138×711 → 1138×711	pixels diferentes: 0	nós com Δ de geometria: 0
+login-411	411×851 → 411×851	pixels diferentes: 0	nós com Δ de geometria: 0
+login-711	711×1138 → 711×1138	pixels diferentes: 0	nós com Δ de geometria: 0
+privacy-policy-1138	1138×1373 → 1138×1373	pixels diferentes: 0	nós com Δ de geometria: 0
+privacy-policy-411	411×2056 → 411×2056	pixels diferentes: 0	nós com Δ de geometria: 0
+privacy-policy-711	711×1448 → 711×1448	pixels diferentes: 0	nós com Δ de geometria: 0
+
+## o CSS servido no depois (a base nova em vigor — senão o 0 não prova nada): /privacy-policy
+(servidor parado — valores medidos durante a rodada:) { bodyBg: 'rgb(16, 15, 22)', bodyCor: 'rgb(249, 245, 241)', hr: 'rgb(42, 40, 54)', lang: 'pt-BR', titulo: 'Octavia', tema: '#100F16' } — nas duas bases (3000 e 3114)

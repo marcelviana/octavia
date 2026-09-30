@@ -16,8 +16,5 @@
     "types/**/*.{ts,tsx}",
     "scripts/**/*.{js,ts}",
     "src/**/*.ts"
-  ],
-  "ignore": [
-    "components/ui/**"
   ]
 }

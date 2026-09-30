@@ -1,0 +1,60 @@
+# pnpm build — a tabela de rotas: main (commit 1) × commit 2
+$ diff <(rotas antes) <(rotas depois)
+(vazio — 27 rotas, todas ƒ)
+
+## antes
+┌ ƒ /                                      189 B         111 kB
+├ ƒ /_not-found                            988 B         103 kB
+├ ƒ /add-content                         4.92 kB         278 kB
+├ ƒ /api/auth/session                      183 B         102 kB
+├ ƒ /api/content                           183 B         102 kB
+├ ƒ /api/content/[id]                      183 B         102 kB
+├ ƒ /api/health                            183 B         102 kB
+├ ƒ /api/profile                           183 B         102 kB
+├ ƒ /api/setlists                          183 B         102 kB
+├ ƒ /api/setlists/[id]                     183 B         102 kB
+├ ƒ /api/setlists/[id]/songs               183 B         102 kB
+├ ƒ /api/setlists/[id]/songs/order         183 B         102 kB
+├ ƒ /api/setlists/songs/[songId]           183 B         102 kB
+├ ƒ /api/storage/delete                    183 B         102 kB
+├ ƒ /api/storage/list                      183 B         102 kB
+├ ƒ /api/storage/upload                    183 B         102 kB
+├ ƒ /content/[id]                         109 kB         394 kB
+├ ƒ /content/[id]/edit                   6.97 kB         280 kB
+├ ƒ /dashboard                           1.63 kB         275 kB
+├ ƒ /forgot-password                       995 B         259 kB
+├ ƒ /library                             1.44 kB         275 kB
+├ ƒ /login                               2.23 kB         265 kB
+├ ƒ /privacy-policy                        183 B         102 kB
+├ ƒ /setlists                             2.9 kB         276 kB
+├ ƒ /signup                              1.84 kB         265 kB
+├ ƒ /signup/confirm-email                  818 B         264 kB
+└ ƒ /verify-email                        1.34 kB         261 kB
+## depois
+┌ ƒ /                                      512 B         111 kB
+├ ƒ /_not-found                            988 B         103 kB
+├ ƒ /add-content                         3.92 kB         277 kB
+├ ƒ /api/auth/session                      183 B         102 kB
+├ ƒ /api/content                           183 B         102 kB
+├ ƒ /api/content/[id]                      183 B         102 kB
+├ ƒ /api/health                            183 B         102 kB
+├ ƒ /api/profile                           183 B         102 kB
+├ ƒ /api/setlists                          183 B         102 kB
+├ ƒ /api/setlists/[id]                     183 B         102 kB
+├ ƒ /api/setlists/[id]/songs               183 B         102 kB
+├ ƒ /api/setlists/[id]/songs/order         183 B         102 kB
+├ ƒ /api/setlists/songs/[songId]           183 B         102 kB
+├ ƒ /api/storage/delete                    183 B         102 kB
+├ ƒ /api/storage/list                      183 B         102 kB
+├ ƒ /api/storage/upload                    183 B         102 kB
+├ ƒ /content/[id]                         118 kB         393 kB
+├ ƒ /content/[id]/edit                   6.01 kB         279 kB
+├ ƒ /dashboard                           3.78 kB         274 kB
+├ ƒ /forgot-password                       995 B         259 kB
+├ ƒ /library                               418 B         274 kB
+├ ƒ /login                               2.23 kB         265 kB
+├ ƒ /privacy-policy                        183 B         102 kB
+├ ƒ /setlists                            1.89 kB         275 kB
+├ ƒ /signup                              1.84 kB         265 kB
+├ ƒ /signup/confirm-email                  818 B         264 kB
+└ ƒ /verify-email                        1.07 kB         261 kB

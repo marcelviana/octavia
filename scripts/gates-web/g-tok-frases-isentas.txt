@@ -1,0 +1,9 @@
+# G-tok (ii) — frases isentas da regra de inglês, UMA A UMA (I1-PR14, decisão 3 do aval; div. 828).
+# Formato: <arquivo> TAB <frase exata, como o gate a imprime> TAB <razão>. Lista FECHADA: acrescentar é decisão.
+# Só isenta a frase naquele arquivo; a entrada que não casa com nenhuma acusação REPROVA (órfã — como as erratas),
+# e a entrada de arquivo fora da lista (ii) também.
+components/editors/frases-editor.ts	Capo	"capo" é igual nas duas línguas (o termo do violão em pt-BR; README-design §5.7)
+components/editors/frases-editor.ts	capo: {x}	"capo" é igual nas duas línguas (README-design §5.7)
+components/content/frases-visualizacao.ts	capo: {x}	"capo" é igual nas duas línguas (README-design §5.6)
+components/editors/frases-editor.ts	Tags	"tags" é igual nas duas línguas (o uso em pt-BR; README-design §5.7)
+components/editors/frases-editor.ts	Drop D (DADGBE)	nome próprio de afinação (README-design §5.7)
