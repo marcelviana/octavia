@@ -1,0 +1,21 @@
+# (controle) (b) + COOP unsafe-none (2026-09-30T19:36:06.958Z)
+cabeçalhos do /login:
+  content-security-policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.googleapis.com https://*.gstatic.com localhost:* 127.0.0.1:* https://apis.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://*.supabase.co https://*.firebaseapp.com https://*.googleusercontent.com; media-src 'self' blob: https://*.supabase.co; connect-src 'self' https://*.supabase.co https://*.firebaseio.com https://*.googleapis.com wss://*.supabase.co localhost:* 127.0.0.1:* ws://localhost:* ws://127.0.0.1:*; frame-src https://<authDomain>; object-src 'none'; base-uri 'self'; form-action 'self'; manifest-src 'self'; worker-src 'self' blob:
+  cross-origin-opener-policy: unsafe-none
+violações de CSP: 0
+erros de console (fora as violações): 4
+  login: WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr' failed: Error in connection establishment: net::ERR_BLOCKED_BY_LOCAL_NETWORK_ACCESS_CHECKS
+  popup: Failed to load resource: the server responded with a status of 404 ()
+  login: Cross-Origin-Opener-Policy policy would block the window.closed call.
+  login: Cross-Origin-Opener-Policy policy would block the window.closed call.
+popups:
+  2105  popup aberto: 
+  2338  popup navegou: https://<authDomain>/__/auth/handler
+  4149  popup navegou: https://accounts.google.com/v3/signin/identifier
+chegou a accounts.google.com: true
+opener — popup.closed: false
+popup — window.opener !== null: true
+frase na tela: []
+interceptados no navegador: 1
+parada: (nenhuma)
+veredito: PASSA

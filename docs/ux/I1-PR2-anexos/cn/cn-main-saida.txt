@@ -1,0 +1,6 @@
+google-csp: REPROVA
+  - 1 violação(ões) de CSP — a 1ª: login: CSP-VIOLATION directive=script-src-elem blocked=https://apis.google.com/js/api.js disposition=enforce
+  - o popup não chegou a accounts.google.com
+  - o opener não mantém o popup (closed=null)
+  - frase de falha na tela: ["algo deu errado — tente de novo"]
+# exit: 1

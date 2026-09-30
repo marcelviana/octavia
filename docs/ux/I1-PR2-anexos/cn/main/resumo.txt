@@ -1,0 +1,23 @@
+# CN google-csp — http://localhost:3000 (2026-09-30T19:35:02.735Z)
+cabeçalhos do /login:
+  content-security-policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.googleapis.com https://*.gstatic.com localhost:* 127.0.0.1:*; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://*.supabase.co https://*.firebaseapp.com https://*.googleusercontent.com; media-src 'self' blob: https://*.supabase.co; connect-src 'self' https://*.supabase.co https://*.firebaseio.com https://*.googleapis.com wss://*.supabase.co localhost:* 127.0.0.1:* ws://localhost:* ws://127.0.0.1:*; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; manifest-src 'self'; worker-src 'self' blob:
+  cross-origin-opener-policy: same-origin
+violações de CSP: 1
+  login: CSP-VIOLATION directive=script-src-elem blocked=https://apis.google.com/js/api.js disposition=enforce
+erros de console (fora as violações): 3
+  login: WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr' failed: Error in connection establishment: net::ERR_BLOCKED_BY_LOCAL_NETWORK_ACCESS_CHECKS
+  login: Loading the script 'https://apis.google.com/js/api.js?onload=__iframefcb904517' violates the following Content Security Policy directive: "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.googleapis.com https://*.gstatic.com localhost:* 127.0.0.1:*". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The action has been blocked.
+  login: Google sign in error: Firebase: Error (auth/internal-error).
+popups:
+  (nenhum)
+chegou a accounts.google.com: false
+opener — popup.closed: null
+popup — window.opener !== null: null
+frase na tela: ["algo deu errado — tente de novo"]
+interceptados no navegador: 1
+parada: (nenhuma)
+veredito: REPROVA
+  - 1 violação(ões) de CSP — a 1ª: login: CSP-VIOLATION directive=script-src-elem blocked=https://apis.google.com/js/api.js disposition=enforce
+  - o popup não chegou a accounts.google.com
+  - o opener não mantém o popup (closed=null)
+  - frase de falha na tela: ["algo deu errado — tente de novo"]
