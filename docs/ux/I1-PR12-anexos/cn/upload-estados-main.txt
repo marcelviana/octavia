@@ -1,0 +1,64 @@
+$ pnpm exec vitest run components/upload   # os testes novos do commit 2 sobre o código da main (434ba79, worktree temporária)
+     × salvar falha → Cancelar: nenhum alerta na tela 570ms
+     × a linha de sucesso no passo 1, nenhum toast 77ms
+     × 400 com details de field "size" → a frase do limite, sem ação, sem toast 1025ms
+     × 413 da plataforma (sem JSON) → a mesma frase 1031ms
+     × escolhido Sol, a caixa diz G — e o corpo leva "key":"G" 1042ms
+     × Importar de arquivo não mostra a zona; o Próximo mostra; Voltar devolve o passo 1 com a escolha 25ms
+     × a partitura esconde o como e o lote, como antes (decisão 4) 1015ms
+     × sem usuário (o `return null` de antes) → carregando… 2ms
+     × a sessão ainda abrindo → carregando… 2ms
+     × rede → sem conexão + Tentar de novo, que repete o MESMO envio e segue ao formulário 1033ms
+     × 500 → falha no servidor + Tentar de novo 1029ms
+     × 201 sem url → falha no servidor 1033ms
+     × 401 → a sessão, sem ação 1031ms
+     × 429 → o limite de tentativas, sem ação 1029ms
+     × 400 que não é o tamanho → o servidor recusou os dados, sem ação 1034ms
+     × enviando: a frase, o nome e o tamanho; sem o Escolher arquivo 1029ms
+     × a extensão recusada fica sob a zona; nenhum request, nenhum toast 1027ms
+     × rede → Tentar de novo repete o mesmo corpo e chega ao pronto 1052ms
+     × 500 → falha no servidor, com Tentar de novo 1051ms
+     × 400 → o servidor recusou os dados, sem ação 1051ms
+     × 401 → a sessão, sem ação 1051ms
+     × 429 → o limite, sem ação 1049ms
+     × sem título ou artista: o Salvar inativo diz por quê; salvando: Salvando… 33ms
+     × o criar do zero sem título: a validação sob o campo 1012ms
+     × a prévia: a frase do topo, o número, o título, o artista, o corpo e o incluir; só as incluídas sobem 1031ms
+     × importando: Importando…, inativo 1032ms
+     × a falha: a linha com o motivo; Tentar de novo repete o importar (como o Import All de antes: regrava as que já entraram — herança D) 1030ms
+     × nenhuma música: a linha acima da zona, sem ação 1030ms
+     × o arquivo não se leu: a linha com Tentar de novo, que lê de novo o mesmo arquivo sem reenviar 1029ms
+     × lendo (I1-E2): carregando… no lugar da lista, no passo 2 1029ms
+Error: Failed to resolve import "@/components/upload/frases-upload" from "components/upload/__tests__/limite.test.ts". Does the file exist?
+⎯⎯⎯⎯⎯⎯ Failed Tests 30 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL   web  components/upload/__tests__/upload-estados.test.tsx > 1 · a cópia velha do erro de salvar não volta no passo anterior (decisão 24 do DESIGN-I1) > salvar falha → Cancelar: nenhum alerta na tela
+AssertionError: expected [ 'Failed to create content' ] to deeply equal []
+ FAIL   web  components/upload/__tests__/upload-estados.test.tsx > 2 · o lote importado diz que importou, na tela (UP-lote-sucesso; era toast) > a linha de sucesso no passo 1, nenhum toast
+AssertionError: expected "vi.fn()" to not be called at all, but actually been called 1 times
+ FAIL   web  components/upload/__tests__/upload-estados.test.tsx > 3 · o limite pela resposta do servidor (N8, decisão 11 do aval) > 400 com details de field "size" → a frase do limite, sem ação, sem toast
+TestingLibraryElementError: Unable to find an element with the text: o arquivo passa de 4 MiB — escolha um menor. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+ FAIL   web  components/upload/__tests__/upload-estados.test.tsx > 3 · o limite pela resposta do servidor (N8, decisão 11 do aval) > 413 da plataforma (sem JSON) → a mesma frase
+TestingLibraryElementError: Unable to find an element with the text: o arquivo passa de 4 MiB — escolha um menor. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+ FAIL   web  components/upload/__tests__/upload-estados.test.tsx > 4 · o Tom das Opções avançadas mostra o valor escolhido (decisão 14 do aval) > escolhido Sol, a caixa diz G — e o corpo leva "key":"G"
+ FAIL   web  components/upload/__tests__/upload-estados.test.tsx > 5 · o passo 1 é só o como: a zona vem depois do Próximo (I1-E21 — mudança de fluxo declarada) > Importar de arquivo não mostra a zona; o Próximo mostra; Voltar devolve o passo 1 com a escolha
+AssertionError: expected <input type="file" …(3)></input> to be null
+ FAIL   web  components/upload/__tests__/upload-estados.test.tsx > 5 · o passo 1 é só o como: a zona vem depois do Próximo (I1-E21 — mudança de fluxo declarada) > a partitura esconde o como e o lote, como antes (decisão 4)
+TestingLibraryElementError: Unable to find an element with the text: carregando…. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+TestingLibraryElementError: Unable to find an element with the text: carregando…. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+TestingLibraryElementError: Unable to find an element with the text: o arquivo não foi enviado — sem conexão. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+TestingLibraryElementError: Unable to find an element with the text: o arquivo não foi enviado — falha no servidor. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+TestingLibraryElementError: Unable to find an element with the text: o arquivo não foi enviado — o servidor não aceitou a sessão, entre de novo. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+TestingLibraryElementError: Unable to find an element with the text: o arquivo não foi enviado — muitas tentativas, tente de novo em instantes. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+TestingLibraryElementError: Unable to find an element with the text: o arquivo não foi enviado — o servidor recusou os dados. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+TestingLibraryElementError: Unable to find an element with the text: enviando o arquivo…. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+TestingLibraryElementError: Unable to find an element with the text: tipo de arquivo não aceito: foto.heic — use .pdf, .docx ou .txt. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+TestingLibraryElementError: Unable to find an element with the text: não foi possível salvar — sem conexão. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+TestingLibraryElementError: Unable to find an element with the text: não foi possível salvar — falha no servidor. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+TestingLibraryElementError: Unable to find an element with the text: não foi possível salvar — o servidor recusou os dados. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+TestingLibraryElementError: Unable to find an element with the text: não foi possível salvar — o servidor não aceitou a sessão, entre de novo. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+TestingLibraryElementError: Unable to find an element with the text: não foi possível salvar — muitas tentativas, tente de novo em instantes. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+TestingLibraryElementError: Unable to find an element with the text: nenhuma música encontrada no arquivo. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+TestingLibraryElementError: Unable to find an element with the text: não foi possível ler o arquivo. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+TestingLibraryElementError: Unable to find an element with the text: carregando…. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+ Test Files  2 failed (2)
+      Tests  30 failed (30)

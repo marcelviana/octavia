@@ -6,7 +6,8 @@
  * o corpo de cada `POST /api/content`; percorre um roteiro por fluxo (criar do zero, importar um arquivo, partitura,
  * lote) com a mesma INTENÇÃO antes e depois do redesenho — só os seletores mudam, porque os rótulos mudam — e
  * compara, byte a byte, com `fixtures/upload-post-antes.json`, gravado no commit 1 sobre o código da `main`
- * (`CN_GRAVAR=1`).
+ * (`CN_GRAVAR=1`). Commit 2: só os seletores mudaram, mais o clique no *Próximo* do passo 1 (I1-E21) e, no criar do
+ * zero, o texto que não se digita mais (decisão 5) — esse caso foi regravado sobre a `main` sem o texto (div. 832).
  *
  * O que o roteiro preenche e o corpo NÃO leva (medido aqui, não consertado — herança D): *Ano*, *Capo* e *Afinação*
  * (o hook não os lê), *Compasso* e *favorita* (o formulário manda `time_signature`/`is_favorite`, o hook lê
@@ -52,34 +53,30 @@ const arquivo = (nome: string, tipo: string, texto: string) => {
 const LOTE = ['Anunciação', 'primeira linha da música um', '---', 'Asa branca', 'primeira linha da música dois', '---',
   'Batch três', 'primeira linha da música três'].join('\n')
 
-// ---- os seletores do roteiro (o que muda no commit 2: os rótulos) --------------------------------------------------
-const clicarTexto = async (t: string) => fireEvent.click(await screen.findByText(t))
-const porId = async (id: string) => {
-  await waitFor(() => expect(document.getElementById(id)).not.toBeNull())
-  return document.getElementById(id) as HTMLInputElement
-}
+// ---- os seletores do roteiro (I1-PR-12, commit 2: os do upload novo — os rótulos mudaram; a intenção é a mesma) ------
+const clicar = async (papel: 'radio' | 'button' | 'checkbox', nome: string | RegExp) => fireEvent.click(await screen.findByRole(papel, { name: nome }))
 const escrever = async (el: Promise<HTMLElement> | HTMLElement, v: string) => fireEvent.change(await el, { target: { value: v } })
+const campo = (testid: string) => screen.findByTestId(testid)
 const A = {
-  escolherTipo: (tipo: 'Letra' | 'Cifra' | 'Tab' | 'Partitura') =>
-    clicarTexto({ Letra: 'Lyrics', Cifra: 'Chords', Tab: 'Tab', Partitura: 'Sheet' }[tipo]),
-  escolherImportar: () => clicarTexto('Import from File'),
-  escolherLote: () => clicarTexto('Batch Import'),
+  escolherTipo: (tipo: 'Letra' | 'Cifra' | 'Tab' | 'Partitura') => clicar('radio', tipo),
+  escolherImportar: () => clicar('radio', /^Importar de arquivo/),
+  escolherLote: () => clicar('radio', 'Várias músicas num arquivo'),
+  /** I1-E21 (decisão 2 do aval): o passo 1 tem *Próximo* — o clique a mais, antes da zona ou do criar */
+  proximo: () => clicar('button', 'Próximo'),
   enviar: async (f: File) => {
-    const input = (await screen.findByLabelText('Upload music file')) as HTMLInputElement
-    fireEvent.change(input, { target: { files: [f] } })
+    await screen.findByTestId('zona-arquivo')
+    fireEvent.change(document.querySelector('input[type=file]') as HTMLInputElement, { target: { files: [f] } })
   },
-  criarTitulo: (v: string) => escrever(porId('content-title'), v),
-  criarTexto: async (v: string) => escrever((await screen.findAllByRole('textbox')).find((e) => e.tagName === 'TEXTAREA') as HTMLElement, v),
-  criarProximo: () => clicarTexto('Next'),
-  campo: (qual: 'titulo' | 'artista' | 'album' | 'genero' | 'ano' | 'notas', v: string) =>
-    escrever(porId({ titulo: 'title', artista: 'artist', album: 'album', genero: 'genre', ano: 'year', notas: 'notes' }[qual]), v),
-  abrirAvancadas: () => clicarTexto('Advanced Options'),
+  criarTitulo: (v: string) => escrever(campo('campo-criar-titulo'), v),
+  criarProximo: () => clicar('button', 'Próximo'),
+  campo: (qual: 'titulo' | 'artista' | 'album' | 'genero' | 'ano' | 'notas', v: string) => escrever(campo(`campo-${qual}`), v),
+  abrirAvancadas: () => clicar('button', /^Opções avançadas/),
   avancado: (qual: 'bpm' | 'capo' | 'afinacao' | 'compasso', v: string) =>
-    escrever(porId({ bpm: 'bpm', capo: 'capo', afinacao: 'tuning', compasso: 'timeSignature' }[qual]), v),
-  favorita: async () => fireEvent.click(await porId('favorite')),
-  salvar: () => clicarTexto('Save Content'),
-  loteArtista: async (i: number, v: string) => escrever((await screen.findAllByPlaceholderText('Artist'))[i] as HTMLElement, v),
-  importarTodas: () => clicarTexto('Import All'),
+    escrever(campo({ bpm: 'campo-bpm', capo: 'campo-capo', afinacao: 'campo-tuning', compasso: 'campo-timeSignature' }[qual]), v),
+  favorita: () => clicar('checkbox', 'Favorita'),
+  salvar: () => clicar('button', 'Salvar'),
+  loteArtista: async (i: number, v: string) => escrever((await screen.findAllByTestId('campo-lote-artista'))[i] as HTMLElement, v),
+  importarTodas: () => clicar('button', 'Importar todas'),
 }
 
 interface Caso { nome: string; roteiro: () => Promise<void>; posts: number }
@@ -88,8 +85,10 @@ const CASOS: Caso[] = [
     nome: 'criar do zero (letra) + metadados e avançadas',
     posts: 1,
     roteiro: async () => {
+      await A.proximo()
       await A.criarTitulo('Linha de 120 colunas')
-      await A.criarTexto('La la la, la la lá')
+      // I1-PR-12, decisão 5 do aval: o criar do zero não tem mais o campo de corpo — o roteiro não o digita, e o
+      // "antes" deste caso foi REGRAVADO sobre a `main` sem esse passo (div. 832): `content_data: { lyrics: "" }`
       await A.criarProximo()
       await A.campo('artista', 'Teste de régua')
       await A.campo('album', 'Álbum do CN')
@@ -111,6 +110,7 @@ const CASOS: Caso[] = [
     roteiro: async () => {
       await A.escolherTipo('Cifra')
       await A.escolherImportar()
+      await A.proximo()
       await A.enviar(arquivo('cifra do cn.txt', 'text/plain', '[Verso curto — controle]\nC7M      G7\nLa la la, la la lá'))
       await A.campo('titulo', 'Verso curto')
       await A.campo('artista', 'Teste de régua')
@@ -122,6 +122,7 @@ const CASOS: Caso[] = [
     posts: 1,
     roteiro: async () => {
       await A.escolherTipo('Partitura')
+      await A.proximo()
       await A.enviar(arquivo('partitura-12-paginas.pdf', 'application/pdf', '%PDF-1.7\n% partitura do CN\n'))
       await A.campo('titulo', 'Partitura de 12 páginas')
       await A.campo('artista', 'Compositor anônimo')
@@ -135,6 +136,7 @@ const CASOS: Caso[] = [
     roteiro: async () => {
       await A.escolherImportar()
       await A.escolherLote()
+      await A.proximo()
       await A.enviar(arquivo('repertorio.txt', 'text/plain', LOTE))
       await A.loteArtista(0, 'Alceu Valença')
       await A.loteArtista(1, 'Luiz Gonzaga')

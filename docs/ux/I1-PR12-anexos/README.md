@@ -9,7 +9,8 @@
 > `Done in 17.2s using pnpm v10.28.0`. **Data**: 2026-09-29.
 > **Convenções**: `[medido]` = comando + saída literal (em `cn/`); `[lido]` = arquivo:linha; `[hipótese]` = o resto.
 > Divergências **a partir de 806** (a PR-11 fechou em 805, §21.7 dela).
-> **Estado**: commit 1 (gate-first), com o aval (§10.1); commit 1b (instrumento, §13) — aguarda o "antes".
+> **Estado**: commit 1 (gate-first, `e5fdf5f`) com o aval (§10.1); commit 1b (instrumento, `7b33d06`, §13); o "antes" medido
+> (§14); **commit 2 (a implementação, §15–§21)**. PR [#347](https://github.com/marcelviana/octavia/pull/347).
 
 | arquivo | o que é |
 |---|---|
@@ -71,7 +72,8 @@ da PR-11) são reusados.
 
 Fora do `pnpm test`: `tests/ux-audit/fase-d/i-add.spec.ts` e `add13-14-metadados.spec.ts` (Playwright sob demanda
 contra preview/prod) acham *"Import from File"*, *"Browse files"*, *"Advanced Options"*, *"Save Content"* — quebram com
-o texto novo; o commit 2 troca os seletores (sem rodar: são gates contra preview/prod, passo do Marcel).
+o texto novo. **Não foram tocados** no commit 2 (div. 837): são auditorias da Fase D, sob demanda contra preview/prod;
+os seletores se trocam quando o gate voltar a ser usado — herança nomeada (§21).
 
 ### 1.3 O que o upload envia — o gate byte a byte (**extra declarado**, §10 item 0) `[medido]`
 
@@ -566,3 +568,233 @@ escritas não fabricadas abortadas: 0
 
 A cópia e o servidor foram removidos depois. O que a fumaça não prova: a rota com a casca e a sessão (é a rodada do
 Marcel).
+
+---
+
+## 14. O "antes" `[medido]` — e a I1-D37
+
+`tests/gates-web/medicoes/casca-efeito/antes/add-content.json`: a rodada do **Marcel** (`2026-09-30T11:23:51Z`, sobre
+`7b33d06`), cinco estados × três larguras — `base-criar` 31 nós · `base-arquivo` 34 · `base-detalhes` 32 · `base-lote` 30 ·
+`base-pronto` 15; `scrollWidth` = viewport nos 15; os não-`GET` a `/api/*`: `POST /api/auth/session` (o cookie) e os
+`POST /api/storage/upload` e `POST /api/content` **`fabricado 201`**; `prodAbortados` 0.
+
+**Decisão I1-D37** `[Marcel, 2026-09-30]`: a partir desta PR, **o executor roda o aceite e o "antes"** com o perfil
+persistente `~/.octavia-g-faixa-perfil` (já logado pelo Marcel) contra `localhost:3000`, com o `pnpm dev` da árvore e o
+`.env.local` do Marcel, que ele carrega e não abre. Condições, todas no instrumento: nenhum `POST`/`PUT`/`DELETE` real
+(a barreira aborta e reprova), nenhum request a prod, nenhuma conta, nenhum `.env*` aberto, leitura só do que o medidor
+já lia, a cota respeitada. A I1-D35 fica com errata (`docs/ux/I1-PRECHECK.md` §0.1): *"o executor não digita senha"*
+continua; *"o Marcel roda"* cai.
+
+O "antes" já estava na árvore quando a I1-D37 chegou; rodei-o de novo como pedido, **em pasta à parte**, e comparei
+(`cn/antes-duas-rodadas.txt`) — fica o do Marcel (div. 840):
+
+```
+rodada do Marcel: 2026-09-30T11:23:51.563Z 7b33d06 · rodada do executor (I1-D37): 2026-09-30T11:29:13.386Z 7b33d06
+(estado × largura) 15 · nós byte a byte iguais em 15
+1138 executor — não-GET: [('POST', '/api/content', 'fabricado 201'), ('POST', '/api/storage/upload', 'fabricado 201')] · prodAbortados 0
+```
+
+(O `pnpm dev` que serviu as duas rodadas é o que o Marcel deixou de pé nesta árvore, na 3000 — o executor não subiu
+outro: a porta estava tomada pelo mesmo código e pelo mesmo `.env.local`.)
+
+## 15. Commit 2 — o que mudou `[medido]`
+
+### 15.1 Por grupo (linhas antes → depois)
+
+| grupo | arquivos | o quê |
+|---|---|---|
+| **a rota** | `components/add-content-page-client.tsx` 71 → 64 | os três carregamentos (o `isLoading` fora da casca, o pedaço do `dynamic`, o `return null`) viram **um** *carregando…* na casca (resposta 14); o invólucro `flex-1 bg-[#fffcf7]` saiu. `app/add-content/page.tsx` **intocado** |
+| **os passos** | `RefactoredAddContent.tsx` 177 → 101 · `StepIndicatorComponent.tsx` 60 → 24 · `ContentTypeSelector.tsx` 77 → 37 · `ModeSelector.tsx` 100 → 34 · `ImportModeSelector.tsx` 83 → 35 | o título com os chips (*1 como · 2 detalhes · 3 pronto*); o passo 1 só com os seletores, na ordem de hoje (I1-E22), e o *Próximo* (I1-E21); a partitura esconde o *como* e o lote (decisão 4); o *Back* do passo 1 saiu (decisão 10); o alerta do passo 1 (a cópia velha) morreu |
+| **a zona** | `FileUploadZone.tsx` 117 → 107 · `upload-to-storage.ts` 52 → 57 | `web.zonaArquivo`, *até 4 MiB*, *enviando o arquivo…* + *{nome} · {tamanho}*; a extensão sob a zona; o limite e o envio na linha da tela, pela espécie; *Tentar de novo* repete o mesmo envio. O `FormData` **intocado**; o `Error` leva `status` e `details` (aditivo) |
+| **o criar** | `content-creator.tsx` 187 → 49 | *Título* + *Voltar* · *Próximo* (decisão 5); a validação sob o campo; o ramo morto, o texto e as dez dicas saíram |
+| **os detalhes** | `DetailsStep.tsx` 102 → 77 · `metadata-form/RefactoredMetadataForm.tsx` 134 → 71 · `BasicMetadataFields.tsx` 109 → 45 · `AdvancedMetadataFields.tsx` 141 → 61 | a linha do arquivo, a grade de duas colunas (uma em B e A), *Opções avançadas ▾*, *Cancelar* · *Salvar*/*Salvando…*; o motivo ao lado do *Salvar* inativo; a falha do salvar na linha da tela com a N2 e *Tentar de novo*; o Tom mostra o valor (decisão 14); `UP-lote-lendo` (I1-E2) |
+| **o lote** | `batch-preview.tsx` 148 → 99 | a grade da folha mantendo incluir, título, artista e corpo (I1-E24); *Importando…*; a falha na linha da tela; o sucesso volta ao passo 1 com *{n} músicas importadas* (os três toasts saíram) |
+| **o pronto** | `CompletionStep.tsx` 54 → 30 | `garantida` 28 · *pronto* · *“{título}”, de {artista}, está na biblioteca* · *Ir para a biblioteca* (decisão 9: *Add Another* saiu) |
+| **os hooks** | `hooks/useAddContentLogic.ts` 290 → 265 · `hooks/useMetadataForm.ts` 112 → 110 | `falhaDoLote` (*vazio* \| *ler*) no lugar do `error` cru; **a cópia do erro de salvar morreu**; `isParsing` e `lerDeNovo` devolvidos; os três arranjos de rótulos em inglês saíram. No formulário: `falha` (o erro como veio) no lugar de `error`/`success`. **O que cada um envia é o de antes** — o ramo morto de lote do `handleSaveContent` e o `isProcessing` ficaram (não são tela) |
+| **nasceram** | `components/upload/frases-upload.ts` (131) · `falhas-do-upload.ts` (61) · `pecas.tsx` (86) | as frases (§5.8 + N8, N2, as novas) e o `LIMITE_MIB`; as espécies do envio e da escrita; a escolha, o botão do passo, o campo, a validação, a espera |
+| **morreram** | `lib/content-type-styles.ts` (49) · `tests/components/add-content.refactoring.test.tsx` (25 casos) | o primeiro sem importador (`git grep` → 0); o segundo mockava os seis passos e o hook (a estrutura velha) — as intenções dele estão no `upload-estados.test.tsx`, com os componentes reais |
+| **o serviço** | `lib/content-service.ts` (+3/−2) | `createContent`: o `Error` leva o `status` (aditivo; sem token = 401), como o `updateContent` da PR-11 |
+| **extras** | §15.4 | `components/auth/aviso-de-sessao.tsx` |
+| **instrumento** | `scripts/gates-web/g-faixa-upload.ts` · `g-faixa-superficies.ts` · `g-tok-arquivos.txt` (−1, +3) · `COMO-RODAR.md` ("I1-PR12") | os 21 estados da folha + os cinco `base-*`, tudo fabricado; `add-content` implementada |
+| **docs do congelamento** | `DESIGN-I1/README.md` (§2.2: I1-E21, E22, E24, E25, E26 e a E27 proposta; §5.1: as frases da PR-12) · `erratas.json` (`erratasFaixa`: E2, E22, E24, E27; `erratasFrase`: E21, E25, E26) · `SHA256SUMS` (a linha do `README.md`: `c09d409a…` → `d978bfa3…`; `shasum -a 256 -c` → **14/14 OK**) · `I1-PRECHECK.md` §0.1 (a errata da I1-D35) | — |
+
+### 15.2 A sonda da `main` — e como ficou
+
+| sonda (§2.3, `cn/sonda-upload-main.txt`) | na `main` | agora |
+|---|---|---|
+| (1) o erro do salvar no passo anterior, depois de *Cancel* | `role=alert: Failed to create content` | nenhum alerta: o erro é do formulário e some com ele (`useAddContentLogic.ts`, o `catch` só propaga) |
+| (2) o lote importado | toast *"2 songs imported successfully"* e o passo 1, mudo | o passo 1 com *2 músicas importadas* na linha da tela (sucesso), sem toast — **o passo 1, não o 3** (div. 831) |
+| (3) a extensão | toast, em inglês | *tipo de arquivo não aceito: foto.heic — use .pdf, .docx ou .txt*, sob a zona; nenhum request |
+| (4) o limite, 400 | toast *"Validation failed"* + *"(max 50MB)"* na tela | *o arquivo passa de 4 MiB — escolha um menor*, sem ação; *formatos: … · até 4 MiB* |
+| (5) o limite, 413 | toast *"Upload failed with status 413"* | a mesma frase do limite |
+| (6) a rede | toast *"Failed to fetch"* | *o arquivo não foi enviado — sem conexão* + *Tentar de novo* |
+
+### 15.3 O limite: onde o servidor cobra e o texto que o cita
+
+O servidor cobra em `lib/api-schemas.ts:259` (`storageSchemas.upload.size`, 4 × 1024 × 1024, inclusivo), aplicado por
+`app/api/storage/upload/route.ts:42-52`; **nenhum dos dois mudou**. O texto cita `LIMITE_MIB`
+(`components/upload/frases-upload.ts`) em `up.formatos` e `up.limite`. O `components/upload/__tests__/limite.test.ts`
+acha o teto do servidor **pelo schema** (o maior `size` que o `safeParse` aceita, por busca binária — sem depender do
+zod por dentro) e cobra `teto === LIMITE_MIB × 1024 × 1024` e as duas frases com esse número: se o teto mudar, reprova
+até o texto mudar. O cliente segue **sem** cobrar tamanho (decisão 11): o arquivo grande sobe e é a resposta que diz.
+
+### 15.4 Extras — declarados `[aguardam o aval, com o veredito]`
+
+O prompt do aval pediu para seguir até o veredito sem parar; os extras vão declarados aqui, no corpo da PR e no relato:
+
+- **`components/auth/aviso-de-sessao.tsx`** — `/add-content` entra em `ROTAS_QUE_DESENHAM_A_LINHA`: a falha da sessão é
+  desenhada DENTRO da tela (a `LinhaDaTela`, abaixo do título), como no painel, na biblioteca, na visualização e no
+  editor; sem isso, com a sessão caída haveria duas linhas (a do topo e a da tela).
+- **I1-E27** (proposta, div. 834) — a linha do arquivo copiada em `UP-criar`/`-validacao` (decisão 16: "sem par") empurra
+  o que vem abaixo 44 px na folha: 18 erratas candidatas (C e B) que precisam de cobertura. Proposta: *"a seção vale sem
+  a linha"* (o molde das I1-E7…E10). Está em `erratasFaixa` marcada PROPOSTA; se não for aprovada, sai e o veredito
+  acusa as 18 sem cobertura.
+- **O caso "criar do zero" do gate byte a byte foi regravado sobre a `main`** (div. 832) — a decisão 5 tirou o campo de
+  corpo, então o roteiro não pode mais digitar o texto; regravado numa worktree temporária de `434ba79` com o MESMO
+  roteiro sem esse passo (`content_data: {"lyrics":""}` no lugar de `{"lyrics":"La la la, la la lá"}`); os outros três
+  casos saíram byte a byte iguais aos do commit 1.
+- **Frases fora do §3**: o singular (*1 música encontrada em …*, *1 música importada*); o tamanho em KiB e em B abaixo de
+  0,1 MiB; *passo {n} de 3* (é da folha, no `aria-label`); o *▴* quando as Opções avançadas estão abertas.
+- **O medidor**: `clicarAte` confere o efeito antes de clicar de novo (o alvo pode já ser outro botão de mesmo nome — o
+  *Próximo* do criar); o lote da folha nomeado `repertorio.docx` com o tipo `text/plain` (o texto pareia com a folha).
+
+## 16. Os testes `[medido]`
+
+| teste | o quê | aqui | na `main` |
+|---|---|---|---|
+| `tests/gates/i1-upload-post.test.tsx` | o `FormData` do envio e o corpo de cada `POST /api/content`, quatro fluxos, **byte a byte** contra a fixture da `main` (só os seletores, o clique no *Próximo* do passo 1 e, no criar, o texto que não se digita — div. 832) | **4/4** (1 pulado, o `CN_GRAVAR`) | 4/4 (é o antes) |
+| `components/upload/__tests__/upload-estados.test.tsx` | os cinco pedidos (abaixo) + a espera, o envio por espécie, o salvar por espécie, o lote | **30/30** | **30 falham** (`cn/upload-estados-main.txt`) |
+| `components/upload/__tests__/limite.test.ts` | o texto × o teto do servidor (§15.3) | **3/3** | a suíte falha no import (`frases-upload` não existe) |
+| `hooks/__tests__/useMetadataForm.test.ts` | adaptado: `falha` no lugar de `error`/`success` (3 casos, a mesma intenção ADD-14/ADD-01) | 3/3 | — |
+| `tests/hooks/useAddContentLogic.test.ts` | adaptado: 1 asserção (`falhaDoLote` no lugar de `error`) | 20/20 | — |
+| `hooks/__tests__/useAddContentLogic.test.ts` | ADD-13/ADD-14 — **intocado** | 5/5 | — |
+| `tests/components/add-content.refactoring.test.tsx` | **morto** (25 casos, 4 já pulados): mocks da estrutura velha | — | 21/21 |
+| CN da PR-1 · editor · `PUT` | — | **15/15 · 14/14 · 5/5** | — |
+
+**Os cinco que têm de reprovar na `main`** (os seletores aceitam o rótulo de antes e o de agora — a reprovação é do
+comportamento; `cn/upload-estados-main.txt`):
+
+```
+1 · a cópia velha … > salvar falha → Cancelar: nenhum alerta na tela
+AssertionError: expected [ 'Failed to create content' ] to deeply equal []
+2 · o lote importado diz que importou, na tela … > a linha de sucesso no passo 1, nenhum toast
+AssertionError: expected "vi.fn()" to not be called at all, but actually been called 1 times
+3 · o limite pela resposta do servidor … > 400 com details de field "size" → a frase do limite, sem ação, sem toast
+TestingLibraryElementError: Unable to find an element with the text: o arquivo passa de 4 MiB — escolha um menor.
+3 · … > 413 da plataforma (sem JSON) → a mesma frase
+TestingLibraryElementError: Unable to find an element with the text: o arquivo passa de 4 MiB — escolha um menor.
+4 · o Tom das Opções avançadas mostra o valor escolhido … > escolhido Sol, a caixa diz G — e o corpo leva "key":"G"
+   (na main o Tom é um Select do Radix, sem `campo-tom`: reprova no seletor — a causa, a `key` do React, é `[lido]`, div. 821)
+5 · o passo 1 é só o como … > Importar de arquivo não mostra a zona; o Próximo mostra; Voltar devolve o passo 1 com a escolha
+AssertionError: expected <input type="file" …(3)></input> to be null
+```
+
+`pnpm test` → `Test Files 116 passed | 3 skipped (119)` · `Tests 1137 passed | 57 skipped (1194)` · `# exit: 0`
+(`cn/pnpm-test.txt`; a PR-11 terminou em 114 / 1121: +3 suítes (o gate do `POST`, os estados, o limite), −1 morta; +37 casos
+(4 + 30 + 3), −21 mortos).
+
+## 17. O `POST` byte a byte — e o que não vai no corpo (herança D)
+
+`tests/gates/fixtures/upload-post-antes.json` (a `main`) × o upload novo: **iguais nos quatro fluxos** — o `FormData`
+(`file` com o mesmo nome · tipo · tamanho · sha256; `filename` sanitizado) e cada corpo de `POST /api/content`. O que o
+gate prende e a PR **não conserta** (I1-D9):
+
+| herança D | linha | o que o gate mostra |
+|---|---|---|
+| *Ano*, *Capo*, *Afinação* editáveis e fora do corpo | `hooks/useAddContentLogic.ts` (o `createContent` dos dois ramos não os lê); os campos em `BasicMetadataFields.tsx` (`year`) e `AdvancedMetadataFields.tsx` (`capo`, `tuning`) | o roteiro digita 1998 · 2 · Drop D — o corpo não os tem |
+| *Compasso* e *Favorita* se perdem pelo nome | `hooks/useMetadataForm.ts` manda `time_signature`/`is_favorite`; `hooks/useAddContentLogic.ts` lê `timeSignature`/`isFavorite` | `"time_signature":null,"is_favorite":false` com 3/4 digitado e *Favorita* marcada |
+| **o content criado do zero sai vazio** (decisão 5) | `components/content-creator.tsx` (`handleCreate`: `content: { [chave]: "" }`) → `add-content-page-client.tsx` (`handleContentCreated`: vai a `/content/{id}`, a visualização — não ao editor) | `"content_data":{"lyrics":""}` — na `main` o mesmo corpo com o texto em branco (div. 836) |
+| a importação de um arquivo de texto grava só o `file_url` | `hooks/useAddContentLogic.ts` (o ramo `uploadedFile`) | o corpo da cifra `.txt` sem `content_data` (div. 823) |
+| *"Unknown Artist"* como artista padrão | `hooks/useAddContentLogic.ts` (`handleBatchParsing`, e o `\|\| "Unknown Artist"` dos dois ramos) | `"artist":"Unknown Artist"` na 3ª música do lote (div. 824) |
+| **a duplicação do lote numa falha a meio** (decisão 12) | `components/batch-preview.tsx` (`handleImport`: em série; *Tentar de novo* recomeça da primeira) | `upload-estados.test.tsx`, "a falha…": os títulos pedidos são `Anunciação, Asa branca, Anunciação, Asa branca` — a primeira entra duas vezes |
+| o lote sobe o arquivo ao Storage e nunca o referencia | `FileUploadZone.tsx` (`enviar`) → `useAddContentLogic.ts` (`handleFilesUploaded` → `handleBatchParsing`) | o `POST /api/storage/upload` do fluxo do lote, e nenhum `file_url` nos três corpos (div. 822) |
+| depois de um lote, as músicas lidas ficam no hook | `hooks/useAddContentLogic.ts` (`parsedSongs` só zera ao trocar o tipo) → `DetailsStep.tsx` (`songs.length > 0`) | `[lido]`: importar um arquivo em seguida abre a prévia do lote anterior — igual na `main` (div. 833) |
+| o rascunho do criar fica no hook | `hooks/useAddContentLogic.ts` (`handleSaveContent` testa `draftContent` antes de `uploadedFile`) | `[lido]`: criar, voltar, importar um arquivo e salvar grava o rascunho, não o arquivo — igual na `main` (div. 835) |
+
+## 18. A pré-verificação sem sessão (`pre-verificacao/`) `[medido]`
+
+`next dev -p 3110` **sem `.env`** numa cópia da árvore (rsync sem `.env*`, `node_modules` por link), com
+`pagina-fumaca.tsx` em `app/fumaca-i1pr12/[estado]/page.tsx` — a casca e o `AddContent` reais; em `UP-carregando`, o
+próprio `AddContentPageClient` (sem Firebase não há usuário: a rota cai no *carregando…* de verdade, o "sem usuário" que
+antes era `return null`). **Só na cópia**, dois remendos para o fluxo andar sem sessão: `getValidToken` devolve um token
+de fumaça e os dois hooks não param em `!user`. O `rodar.ts` usa os **mesmos roteiros do aceite** (`ESTADOS_UPLOAD` e
+`ESTADOS_UPLOAD_BASE`, com os `POST` fabricados no `route()`), a mesma `coletar` e o mesmo `classificarEstado`, contra
+`esperado/7-upload.json`; mais um estado sem seção, as **Opções avançadas abertas**. Saída `pre-verificacao/saida.txt`;
+nós `pre-verificacao/medicoes.json` (só fixture).
+
+```
+errata candidata por estado (C + B): {"UP-carregando":0,"UP-como":16,"UP-arquivo":0,"UP-enviando":0,"UP-extensao":0,"UP-limite":0,"UP-envio-rede":0,"UP-envio-servidor":0,"UP-detalhes":0,"UP-detalhes-inativo":0,"UP-salvando":0,"UP-salvar-erro":0,"UP-criar":8,"UP-criar-validacao":10,"UP-lote":24,"UP-lote-lendo":2,"UP-lote-importando":24,"UP-lote-erro":22,"UP-lote-vazio":0,"UP-lote-sucesso":16,"UP-pronto":0,"base-criar":0,"base-arquivo":0,"base-detalhes":0,"base-lote":0,"base-pronto":0,"avancadas-abertas":0}
+respostas fabricadas (não-GET): {"POST /api/storage/upload 400":3,"POST /api/storage/upload 500":3,"POST /api/storage/upload 201":45,"POST /api/content 500":6,"POST /api/content 201":18}
+TOTAL: 81 (estado × largura) · (e) 0 · (b) 0 · scrollWidth = viewport em 81/81 · errata candidata (C e B) 122 · escritas a /api NÃO fabricadas (abortadas) 0
+```
+
+**As 122 candidatas, por errata**: I1-E22 **32** (`UP-como` 16, `UP-lote-sucesso` 16 — os blocos *tipo* e *como* trocados:
+Δy −138 e +114 em C) · I1-E24 **70** (`UP-lote` 24, `-importando` 24, `-erro` 22 — o título no campo, Δ[−13, +26], e a
+cascata das linhas mais altas, +164 por linha) · I1-E27 **18** (`UP-criar` 8, `-validacao` 10 — Δy −44, a linha do
+arquivo copiada) · I1-E2 **2** (`UP-lote-lendo` contra `UP-lote`: o *Voltar*). **0** nos outros 13 estados.
+
+**Duas rodadas; o que a 1ª achou e foi consertado antes do commit** (div. 838): (1) o título do `UP-carregando` como
+bloco de largura inteira (a folha o tem numa linha flexível — Δw 880): entrou na mesma linha dos outros estados; (2) a
+linha do arquivo com o texto num `span` (o nó começava 32 px à direita): o texto passou a ser do próprio parágrafo; (3)
+**(b) em 411** no lote — *"Unknown Artist"* cortado no campo de artista, que dividia a linha com o título: em A os dois
+campos empilham. **Sem par**, por estado: *Buscar…*/*MV* (a casca, sem usuário) e, do app, a `<nav>` e o campo da busca
+(div. 719); o *Próximo* do passo 1 (I1-E21); *o que você preencheu…* × *…escreveu…* (I1-E26); *Salvar* × *Importar todas*
+(I1-E25); a linha do arquivo do criar (decisão 16); no lote, os corpos e os *Incluir “…”* (I1-E24); em `UP-lote-lendo`, a
+lista inteira da folha × *carregando…* (I1-E2).
+
+**Capturas** (`capturas/`, 24): `UP-como`, `-arquivo`, `-limite`, `-detalhes`, `-salvar-erro`, `-lote`, `-lote-sucesso`,
+`-pronto` × C-1138 · B-711 · A-411 — da fumaça (fixture, sem conta; o "N" no canto é o indicador do `next dev`, e o
+*"1 Issue"* dele em `UP-salvar-erro` é o `logger.error` do 500 fabricado).
+
+## 19. Os gates — verdes `[medido]`
+
+| gate / suíte | resultado | arquivo |
+|---|---|---|
+| G-tok | **PASSA**: (i) 26/26, 0 órfãs; (ii) `arquivos: 107 · literais de identidade acusados: 0 · toasts: 0 · imports de ui: 0` — **526 → 0** | `cn/g-tok-depois.txt` |
+| G-back | **PASSA** — `diff vazio no núcleo`; as rotas (`/api/storage/upload`, `/api/content`) e o `lib/api-schemas.ts` não mudaram; `lib/content-service.ts` é cliente, fora do núcleo | `cn/g-back-depois.txt` |
+| G-palco | **PASSA — 0** | `cn/g-palco.txt` |
+| `pnpm test` | `116 passed \| 3 skipped (119)` · `1137 passed \| 57 skipped (1194)` | `cn/pnpm-test.txt` |
+| os testes da PR · CN da PR-1 | 84/84 (+2 pulados, os `CN_GRAVAR`) · **15/15** | `cn/testes-da-pr.txt`, `cn/cn-pr1.txt` |
+| `tsc --noEmit` · `pnpm lint` | 0 · ✔ | `cn/tsc.txt`, `cn/lint.txt` |
+| `pnpm build` | `✓ Compiled successfully`; `ƒ /add-content 4.92 kB`; `# exit: 0` (cópia sem `.env`) | `cn/build.txt` |
+| inércia das públicas | 12 (estado × largura) nos dois lados, **12 idênticos**; `INÉRCIA: PASSA` | `cn/inercia-publicas.txt` |
+| `pdf-viewer` · `music-text` | `git diff --stat origin/main --` os dois → **vazio** | `cn/pdf-viewer-music-text.txt` |
+
+## 20. Divergências — 831 a 840
+
+| # | origem | o que se presumiu | o que foi medido | destino |
+|---|---|---|---|---|
+| **831** | P | o prompt do commit 2: *"o lote chegando ao passo 3 (sonda 2)"* | a folha (T-I1-R239/240, `UP-lote-sucesso`) põe o lote importado no **passo 1**, com a linha de sucesso; o cabeçalho dela lista *"passo 3 do lote"* como fora (inalcançável); a decisão 7 do DESIGN-I1 é *{n} músicas importadas* na linha | implementado pela folha (o passo 1 com a linha); o teste "2 ·" prova e reprova na `main`. **Para o aval**: se o lote tem de ir ao passo 3, é errata nova |
+| **832** | P | *"`i1-upload-post` 4/4 — só seletores mudam"* | a decisão 5 tirou o campo de corpo: o roteiro do criar não pode digitar o texto | o caso regravado sobre a `main` sem esse passo (§15.4); os outros três intactos |
+| **833** | A | — | depois de um lote, `parsedSongs` fica no hook: o arquivo seguinte abre a prévia do lote anterior `[lido]` — igual na `main` | herança D (§17); não tocado |
+| **834** | D | decisão 16: os nós copiados "sem par" | a linha copiada empurra o resto 44 px: 18 candidatas | I1-E27 proposta (§15.4) |
+| **835** | A | — | o rascunho do criar fica no hook e vence o arquivo no salvar `[lido]` — igual na `main` | herança D (§17); não tocado |
+| **836** | A | decisão 5: *"se o conteúdo criado sai vazio sem ir ao editor, herança D com linha"* | sai vazio (`{"lyrics":""}`) e a tela vai à visualização (`/content/{id}`), não ao editor | herança D, com linha (§17) |
+| **837** | T | §1.2: *"o commit 2 troca os seletores"* dos specs `tests/ux-audit/fase-d/` | são auditorias sob demanda contra preview/prod, fora do CI | não tocados; herança (§21) |
+| **838** | T | — | a 1ª rodada da pré-verificação achou três defeitos de tela (§18), um deles (b) em 411 | consertados antes do commit |
+| **839** | A | — | `types/content.ts`: `getContentTypeIcon` e `getContentTypeColors` ficaram sem importador (o `ContentTypeSelector` usa o catálogo) | ficam (arquivo de tipos, fora da lista); limpeza no encerramento |
+| **840** | P | I1-D37: *"o antes desta PR: rode você agora"* | o "antes" do Marcel já estava na árvore (11:23Z) | rodei em pasta à parte: 15/15 iguais nó a nó; fica o do Marcel (§14) |
+
+Próxima divergência: **841**.
+
+## 21. Heranças (commit 2)
+
+| herança | destino |
+|---|---|
+| as nove linhas do §17 (o que não vai no corpo, o vazio do criar, a duplicação do lote, o órfão do Storage, os dois estados que ficam no hook) | **Bloco D** |
+| **div. 828** — o G-tok (ii) não lê strings de `.ts`. Os hooks e módulos do upload com inglês, depois do commit 2: `hooks/useAddContentLogic.ts` (*"Unknown Artist"* — valor gravado, herança D); `components/add-content/upload-to-storage.ts` (*"Authentication required to upload files"*, *"Upload failed with status …"*, *"Failed to get public URL for uploaded file"*), `hooks/useMetadataForm.ts` (*"User not authenticated"*) e `lib/content-service.ts` (*"Failed to create content"*, *"Authentication failed"*) — mensagens de `Error` que **já não chegam à tela** (a tela escolhe a frase pela espécie). Voltadas ao usuário: **nenhuma** além do valor gravado | o encerramento do I1 (decisão 17) |
+| os specs `tests/ux-audit/fase-d/i-add.spec.ts` e `add13-14-metadados.spec.ts` com os rótulos em inglês (div. 837) | quando o gate voltar a ser usado |
+| `types/content.ts`: `getContentTypeIcon`/`getContentTypeColors` sem importador (div. 839); o `safelist` de cores do `tailwind.config.ts` que os servia | o encerramento do I1 |
+| a forma do motivo com travessão (PR-9) × vírgula (PR-11, PR-12) | harmonização no encerramento (herdada da PR-11) |
+| o invólucro `flex-1 bg-[#fffcf7]` do corpo velho: resta só o das setlists | PR-13 |
+
+## 22. Contabilidade (commit 2)
+
+| quem | item | valor |
+|---|---|---|
+| executor | requests a prod ou preview · logins · `.env*` abertos · escritas · contas | **0 · 0 · 0 · 0 · 0** |
+| executor (I1-D37) | rodada com sessão | 1: o "antes" em pasta à parte (16 cargas, `11:29Z`), sobre o `pnpm dev` de pé na árvore — `POST` só `fabricado 201`; `prodAbortados` 0 |
+| executor | `next dev` **sem** `.env`, porta 3110, numa cópia da árvore (sem `.env*`) | 1 subida: as duas rodadas da pré-verificação (com os dois remendos, só na cópia) e a inércia (sem eles); parada; a cópia removida |
+| executor | `pnpm build` | na mesma cópia, sem `.env` |
+| executor | a `main` para o gate regravado e para os testes novos | worktree temporária de `434ba79` (`--detach`), removida |
+| — | `packages/identidade` · `tailwind.config.ts` | **não mudaram** |

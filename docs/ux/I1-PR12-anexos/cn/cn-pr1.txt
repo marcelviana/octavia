@@ -1,0 +1,4 @@
+$ pnpm exec vitest run components/auth/__tests__/login-sessao-cn.test.tsx   # o CN da PR-1
+ ✓  web  components/auth/__tests__/login-sessao-cn.test.tsx (15 tests) 1890ms
+ Test Files  1 passed (1)
+      Tests  15 passed (15)

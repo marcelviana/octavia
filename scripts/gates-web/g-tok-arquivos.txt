@@ -123,4 +123,7 @@ components/metadata-form/BasicMetadataFields.tsx
 components/metadata-form/AdvancedMetadataFields.tsx
 hooks/useAddContentLogic.ts
 hooks/useMetadataForm.ts
-lib/content-type-styles.ts
+# Commit 2: o content-type-styles morreu (sem importador; sai da lista); os que nasceram.
+components/upload/frases-upload.ts
+components/upload/falhas-do-upload.ts
+components/upload/pecas.tsx

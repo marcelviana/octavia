@@ -40,7 +40,7 @@ describe('useAddContentLogic Hook', () => {
       expect(result.current.parsedSongs).toEqual([])
       expect(result.current.importMode).toBe('single')
       expect(result.current.contentType).toBe('Lyrics')
-      expect(result.current.error).toBeNull()
+      expect(result.current.falhaDoLote).toBeNull()
     })
 
     it('should provide all necessary setter functions', () => {

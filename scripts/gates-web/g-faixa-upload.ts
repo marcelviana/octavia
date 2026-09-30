@@ -8,13 +8,15 @@
  * (abortado, a rodada reprova). A navegação ao content criado (`router.push('/content/g-faixa-novo')`) é SEGURADA: a
  * tela fica no pronto, que hoje pisca antes do redirecionamento.
  *
- * Commit 1b: os estados `base-*` do web VELHO (o código do app é o da `main`) — o "antes" da `casca-efeito`
- * (decisão 1 do aval). Os seletores são os do web velho; o commit 2 os troca (o "depois" mede os mesmos estados).
+ * Commit 1b: os estados `base-*` do web VELHO (o código do app era o da `main`) — o "antes" da `casca-efeito`
+ * (decisão 1 do aval), medido sobre `7b33d06`. Commit 2: os 21 estados da folha `7-upload` (20 seções + `UP-lote-lendo`,
+ * I1-E2, contra a seção `UP-lote`) e os mesmos cinco `base-*`, agora com os seletores do upload novo (o "depois").
  *
  * Os textos são obra do projeto (os exemplos da folha 7) — a regra "anexo não carrega texto de música" não os alcança;
  * e a medição com sessão grava só hash.
  */
 import type { Locator, Page } from '@playwright/test'
+import { PDFDocument, StandardFonts } from 'pdf-lib'
 import { responder, segurar, type Resposta } from './g-faixa-auth'
 import type { Estado } from './g-faixa-superficies'
 
@@ -68,6 +70,8 @@ export async function segurarNavegacao(page: Page) {
 export async function clicarAte(alvo: Locator, efeito: Locator) {
   await alvo.first().waitFor({ state: 'visible', timeout: 60_000 })
   for (let i = 0; i < 20; i++) {
+    // o efeito já veio (o clique anterior valeu): não clica de novo — o alvo pode já ser outro botão de mesmo nome
+    if (await efeito.first().isVisible().catch(() => false)) return
     await alvo.first().click()
     if (await efeito.first().waitFor({ state: 'visible', timeout: 1_500 }).then(() => true, () => false)) return
   }
@@ -76,49 +80,132 @@ export async function clicarAte(alvo: Locator, efeito: Locator) {
 
 const arquivoInput = (p: Page) => p.locator('input[type=file]')
 
-// ---- o web velho (commit 1b, o "antes"): os seletores da `main` ------------------------------------------------------
-const V = {
-  proximoCriar: (p: Page) => p.getByRole('button', { name: 'Next', exact: true }),
-  importar: (p: Page) => p.getByText('Import from File', { exact: true }),
-  escolher: (p: Page) => p.getByRole('button', { name: 'Browse files' }),
-  lote: (p: Page) => p.getByText('Batch Import', { exact: true }),
-  salvar: (p: Page) => p.getByRole('button', { name: 'Save Content' }),
-  importarTodas: (p: Page) => p.getByRole('button', { name: 'Import All' }),
-}
-const velhoZona = async (p: Page) => { await clicarAte(V.importar(p), V.escolher(p)) }
-const velhoDetalhes = async (p: Page) => {
-  await velhoZona(p)
-  await arquivoInput(p).setInputFiles(ARQUIVO_PDF)
-  await V.salvar(p).waitFor({ state: 'visible', timeout: 60_000 })
-  await p.locator('#title').fill(EXEMPLO.titulo)
-  await p.locator('#artist').fill(EXEMPLO.artista)
+/** O lote como a folha o nomeia (`repertorio.docx`): o MESMO texto, com o tipo `text/plain` — é por ele que o app escolhe o leitor. */
+export const ARQUIVO_LOTE_DA_FOLHA = { ...ARQUIVO_LOTE, name: 'repertorio.docx' }
+/** Um lote sem música nenhuma (só linhas em branco): `parseTextContent` devolve 0. */
+export const ARQUIVO_LOTE_VAZIO = { name: 'repertorio.docx', mimeType: 'text/plain', buffer: Buffer.from('\n\n\n') }
+/** O tipo não aceito da folha (`UP-extensao`): o cliente o recusa pela extensão — nenhum request. */
+export const ARQUIVO_RECUSADO = { name: 'foto.heic', mimeType: 'image/heic', buffer: Buffer.from('fixture do G-faixa') }
+/** 5 MiB gerados em memória (`UP-limite`): o `POST` fabricado responde o 400 do contrato — o arquivo NÃO sai. */
+export const ARQUIVO_GRANDE = { name: 'partitura-12-paginas.pdf', mimeType: 'application/pdf', buffer: Buffer.concat([CABECALHO_PDF, Buffer.alloc(5 * 1024 * 1024 - CABECALHO_PDF.length, 0x20)]) }
+const LIMITE_400: Resposta = { status: 400, corpo: { error: 'Validation failed', code: 'VALIDATION_ERROR', details: [{ field: 'size', message: 'File exceeds the 4MB limit', code: 'too_big' }] } }
+const ERRO_500: Resposta = { status: 500, corpo: { error: 'x', code: 'INTERNAL_ERROR' } }
+
+let pdfDoLote: Buffer | null = null
+/** Um lote em PDF (para `UP-lote-lendo`: o worker do pdf.js fica segurado e a leitura não termina). */
+async function loteEmPdf() {
+  if (!pdfDoLote) {
+    const doc = await PDFDocument.create()
+    const fonte = await doc.embedFont(StandardFonts.HelveticaBold)
+    doc.addPage([612, 792]).drawText('Anunciacao (fixture do G-faixa)', { x: 60, y: 730, size: 14, font: fonte })
+    pdfDoLote = Buffer.from(await doc.save())
+  }
+  return { name: 'repertorio.pdf', mimeType: 'application/pdf', buffer: pdfDoLote }
 }
 
-/** Os estados do web velho — a `casca-efeito` do upload (antes × depois), sem seção da folha. */
-export const ESTADOS_UPLOAD_ANTES: Record<string, Estado> = {
-  // abre: Letra + Criar (o passo 1 com os seletores e, abaixo, o criar)
-  'base-criar': { preparar: async (p) => { await V.proximoCriar(p).waitFor({ state: 'visible', timeout: 60_000 }) } },
-  // *Import from File*: o passo 1 com a zona abaixo
-  'base-arquivo': { preparar: velhoZona },
-  // o upload fabricado 201 → o passo 2 (o formulário), título e artista da folha
-  'base-detalhes': { antes: (p) => envio(p, ENVIO_OK), preparar: velhoDetalhes },
-  // *Batch Import* + o lote da folha → a prévia do lote
-  'base-lote': {
-    antes: (p) => envio(p, ENVIO_OK),
-    preparar: async (p) => {
-      await velhoZona(p)
-      await clicarAte(V.lote(p), p.getByText('Import multiple songs from one file.'))
-      await arquivoInput(p).setInputFiles(ARQUIVO_LOTE)
-      await V.importarTodas(p).waitFor({ state: 'visible', timeout: 60_000 })
-    },
+// ---- o upload novo (commit 2): os seletores da folha ----------------------------------------------------------------
+const N = {
+  escolha: (p: Page, nome: string | RegExp) => p.getByRole('radio', { name: nome }),
+  botao: (p: Page, nome: string) => p.getByRole('button', { name: nome, exact: true }),
+  zona: (p: Page) => p.getByTestId('zona-arquivo'),
+}
+/** Marca a escolha — repetido até `aria-checked` (o clique antes da hidratação se perde, div. 795). */
+async function marcar(p: Page, nome: string | RegExp) {
+  const e = N.escolha(p, nome).first()
+  await e.waitFor({ state: 'visible', timeout: 60_000 })
+  for (let i = 0; i < 20; i++) {
+    if ((await e.getAttribute('aria-checked')) === 'true') return
+    await e.click()
+    await p.waitForTimeout(300)
+  }
+  throw new Error(`a escolha ${String(nome)} não ficou marcada`)
+}
+const IMPORTAR = /^Importar de arquivo/
+/** Do passo 1 à zona: *Importar de arquivo* (e *Várias músicas*), *Próximo*. O tipo é o de abertura, **Letra** (decisão 4). */
+async function ateAZona(p: Page, lote = false) {
+  await marcar(p, IMPORTAR)
+  if (lote) await marcar(p, 'Várias músicas num arquivo')
+  await clicarAte(N.botao(p, 'Próximo'), N.zona(p))
+}
+const enviar = (arq: { name: string; mimeType: string; buffer: Buffer }, lote = false) => async (p: Page) => {
+  await ateAZona(p, lote)
+  await arquivoInput(p).setInputFiles(arq)
+}
+/** Até o formulário, com os exemplos da folha: o título e (salvo no `-inativo`) o artista. Nada sai: é digitação. */
+const ateOFormulario = (comArtista = true) => async (p: Page) => {
+  await enviar(ARQUIVO_PDF)(p)
+  await p.getByTestId('campo-titulo').waitFor({ state: 'visible', timeout: 60_000 })
+  await p.getByTestId('campo-titulo').fill(EXEMPLO.titulo)
+  if (comArtista) await p.getByTestId('campo-artista').fill(EXEMPLO.artista)
+}
+const salvar = async (p: Page) => { await ateOFormulario()(p); await N.botao(p, 'Salvar').click() }
+/** Até a prévia do lote, com os artistas da folha nas duas primeiras (as outras ficam com o que o app põe). */
+const ateOLote = (arq = ARQUIVO_LOTE_DA_FOLHA) => async (p: Page) => {
+  await enviar(arq, true)(p)
+  await N.botao(p, 'Importar todas').waitFor({ state: 'visible', timeout: 60_000 })
+  const artistas = p.getByTestId('campo-lote-artista')
+  await artistas.nth(0).fill('Alceu Valença')
+  await artistas.nth(1).fill('Luiz Gonzaga')
+}
+const importar = async (p: Page) => { await ateOLote()(p); await N.botao(p, 'Importar todas').click() }
+const aoCriar = async (p: Page) => {
+  await N.escolha(p, 'Letra').first().waitFor({ state: 'visible', timeout: 60_000 })
+  await clicarAte(N.botao(p, 'Próximo'), p.getByTestId('campo-criar-titulo'))
+}
+const CRIADO: Resposta = { status: 201, corpo: { id: ID_NOVO, title: EXEMPLO.titulo, artist: EXEMPLO.artista } }
+
+/**
+ * Os 21 estados da folha `7-upload`, TUDO fabricado. `UP-como` com **Letra** (decisão 4 do aval: a partitura esconde o
+ * *como*). `UP-lote-lendo` (I1-E2) mede contra a seção `UP-lote` (decisão 13). Inalcançáveis com a sessão do perfil,
+ * declarados no README da PR (§7): o *carregando…* pelo `isLoading` do Firebase e pelo "sem usuário" — a tela é a
+ * MESMA do `UP-carregando`, aqui alcançada pelo pedaço do `dynamic` segurado.
+ */
+export const ESTADOS_UPLOAD: Record<string, Estado> = {
+  'UP-carregando': {
+    secao: 'UP-carregando', espera: 'carregando…',
+    // o pedaço do `dynamic` (next dev: `…components_add-content_tsx…`) — segurado [hipótese sobre o nome]
+    antes: async (p) => { await p.route(/\/_next\/static\/chunks\/[^/]*components_add-content/, (rt) => segurar(p, rt)) },
   },
-  // o salvar fabricado 201 + a navegação segurada → o pronto (que hoje pisca)
-  'base-pronto': {
-    antes: async (p) => { await envio(p, ENVIO_OK); await criacao(p, 'ecoar'); await segurarNavegacao(p) },
-    preparar: async (p) => {
-      await velhoDetalhes(p)
-      await V.salvar(p).click()
-      await p.getByText(/Done!/).first().waitFor({ state: 'visible', timeout: 60_000 })
-    },
+  'UP-como': { secao: 'UP-como', preparar: (p) => marcar(p, IMPORTAR), espera: 'como você quer adicionar?' },
+  'UP-arquivo': { secao: 'UP-arquivo', preparar: (p) => ateAZona(p), espera: 'arraste o arquivo para cá' },
+  'UP-enviando': { secao: 'UP-enviando', antes: (p) => envio(p, 'segurar'), preparar: enviar(ARQUIVO_PDF), espera: 'enviando o arquivo…' },
+  'UP-extensao': { secao: 'UP-extensao', preparar: enviar(ARQUIVO_RECUSADO), espera: 'tipo de arquivo não aceito: foto.heic' },
+  'UP-limite': { secao: 'UP-limite', antes: (p) => envio(p, LIMITE_400), preparar: enviar(ARQUIVO_GRANDE), espera: 'o arquivo passa de 4 MiB — escolha um menor' },
+  'UP-envio-rede': { secao: 'UP-envio-rede', antes: (p) => envio(p, 'abortar'), preparar: enviar(ARQUIVO_PDF), espera: 'o arquivo não foi enviado — sem conexão' },
+  'UP-envio-servidor': { secao: 'UP-envio-servidor', antes: (p) => envio(p, ERRO_500), preparar: enviar(ARQUIVO_PDF), espera: 'o arquivo não foi enviado — falha no servidor' },
+  'UP-detalhes': { secao: 'UP-detalhes', antes: (p) => envio(p, ENVIO_OK), preparar: ateOFormulario(), espera: 'Opções avançadas' },
+  'UP-detalhes-inativo': { secao: 'UP-detalhes-inativo', antes: (p) => envio(p, ENVIO_OK), preparar: ateOFormulario(false), espera: 'título e artista são obrigatórios' },
+  'UP-salvando': { secao: 'UP-salvando', antes: async (p) => { await envio(p, ENVIO_OK); await criacao(p, 'segurar') }, preparar: salvar, espera: 'Salvando…' },
+  'UP-salvar-erro': { secao: 'UP-salvar-erro', antes: async (p) => { await envio(p, ENVIO_OK); await criacao(p, ERRO_500) }, preparar: salvar, espera: 'não foi possível salvar — falha no servidor' },
+  'UP-criar': { secao: 'UP-criar', preparar: aoCriar },
+  'UP-criar-validacao': { secao: 'UP-criar-validacao', preparar: async (p) => { await aoCriar(p); await N.botao(p, 'Próximo').click() }, espera: 'o título é obrigatório' },
+  'UP-lote': { secao: 'UP-lote', antes: (p) => envio(p, ENVIO_OK), preparar: ateOLote(), espera: '4 músicas encontradas em repertorio.docx' },
+  'UP-lote-lendo': {
+    secao: 'UP-lote', espera: 'carregando…',
+    // o worker do pdf.js (`lib/pdf-utils.ts`: `/pdf.worker.min.mjs`) segurado: a leitura do lote em PDF não termina
+    antes: async (p) => { await envio(p, ENVIO_OK); await p.route(/\/pdf\.worker\.min\.mjs/, (rt) => segurar(p, rt)) },
+    preparar: async (p) => { await enviar(await loteEmPdf(), true)(p) },
   },
+  'UP-lote-importando': { secao: 'UP-lote-importando', antes: async (p) => { await envio(p, ENVIO_OK); await criacao(p, 'segurar') }, preparar: importar, espera: 'Importando…' },
+  'UP-lote-erro': { secao: 'UP-lote-erro', antes: async (p) => { await envio(p, ENVIO_OK); await criacao(p, ERRO_500) }, preparar: importar, espera: 'não foi possível importar as músicas — falha no servidor' },
+  'UP-lote-vazio': { secao: 'UP-lote-vazio', antes: (p) => envio(p, ENVIO_OK), preparar: enviar(ARQUIVO_LOTE_VAZIO, true), espera: 'nenhuma música encontrada no arquivo' },
+  'UP-lote-sucesso': { secao: 'UP-lote-sucesso', antes: async (p) => { await envio(p, ENVIO_OK); await criacao(p, 'ecoar') }, preparar: importar, espera: '4 músicas importadas' },
+  'UP-pronto': {
+    secao: 'UP-pronto', espera: 'está na biblioteca',
+    antes: async (p) => { await envio(p, ENVIO_OK); await criacao(p, CRIADO); await segurarNavegacao(p) },
+    preparar: salvar,
+  },
+}
+
+/**
+ * Os cinco estados do 1b, para a `casca-efeito` (antes × depois), sem seção da folha: o MESMO ponto do fluxo que o
+ * "antes" mediu no web velho (`7b33d06`), agora no upload novo. `base-criar` é a tela como abre (antes, o passo 1 com o
+ * criar abaixo; agora, o passo 1 sozinho).
+ */
+export const ESTADOS_UPLOAD_BASE: Record<string, Estado> = {
+  'base-criar': { preparar: async (p) => { await N.botao(p, 'Próximo').waitFor({ state: 'visible', timeout: 60_000 }) } },
+  'base-arquivo': { preparar: (p) => ateAZona(p) },
+  'base-detalhes': { antes: (p) => envio(p, ENVIO_OK), preparar: ateOFormulario() },
+  'base-lote': { antes: (p) => envio(p, ENVIO_OK), preparar: ateOLote(ARQUIVO_LOTE) },
+  'base-pronto': { antes: async (p) => { await envio(p, ENVIO_OK); await criacao(p, 'ecoar'); await segurarNavegacao(p) }, preparar: salvar },
 }

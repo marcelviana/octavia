@@ -506,7 +506,8 @@ export async function createContent(content: ContentInsert) {
     const { getValidToken } = await import("@/lib/auth-manager");
     const { token, error: tokenError } = await getValidToken();
     if (!token) {
-      throw new Error(tokenError || "Authentication failed");
+      // I1-PR-12 (decisão 11 do aval): o erro leva o `status` (aditivo), como no `updateContent`
+      throw Object.assign(new Error(tokenError || "Authentication failed"), { status: 401 });
     }
     const response = await fetch("/api/content", {
       method: "POST",
@@ -518,7 +519,7 @@ export async function createContent(content: ContentInsert) {
     });
     if (!response.ok) {
       const err = await response.json().catch(() => ({}));
-      throw new Error(err.error || "Failed to create content");
+      throw Object.assign(new Error(err.error || "Failed to create content"), { status: response.status });
     }
     return await response.json();
   } catch (error) {

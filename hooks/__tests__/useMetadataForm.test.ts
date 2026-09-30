@@ -24,7 +24,7 @@ describe('useMetadataForm — timing de sucesso/erro (ADD-14/ADD-01)', () => {
 
   beforeEach(() => vi.clearAllMocks())
 
-  it('só mostra sucesso DEPOIS do save concluir', async () => {
+  it('o envio fica travado ATÉ o save concluir (I1-PR-12: a frase de sucesso saiu — a notícia é o pronto)', async () => {
     let resolveSave: (() => void) | undefined
     const onComplete = vi.fn(
       () => new Promise<void>((resolve) => { resolveSave = resolve })
@@ -37,8 +37,8 @@ describe('useMetadataForm — timing de sucesso/erro (ADD-14/ADD-01)', () => {
       submitPromise = result.current.handleSubmit()
     })
 
-    // Save em voo: sem mensagem de sucesso e com o botão travado
-    expect(result.current.success).toBeNull()
+    // Save em voo: o botão travado, nenhuma falha
+    expect(result.current.falha).toBeNull()
     expect(result.current.isSubmitting).toBe(true)
 
     await act(async () => {
@@ -46,11 +46,11 @@ describe('useMetadataForm — timing de sucesso/erro (ADD-14/ADD-01)', () => {
       await submitPromise!
     })
 
-    expect(result.current.success).toBe('Content saved successfully!')
+    expect(result.current.falha).toBeNull()
     expect(result.current.isSubmitting).toBe(false)
   })
 
-  it('falha no save → mensagem de ERRO visível, nenhum sucesso, isSubmitting liberado', async () => {
+  it('falha no save → a FALHA fica no formulário (o erro como veio; a frase é da tela), isSubmitting liberado', async () => {
     const onComplete = vi.fn().mockRejectedValue(new Error('Failed to create content'))
     const { result } = renderHook(() => useMetadataForm({ onComplete }))
     await fill(result)
@@ -60,9 +60,8 @@ describe('useMetadataForm — timing de sucesso/erro (ADD-14/ADD-01)', () => {
     })
 
     await waitFor(() => {
-      expect(result.current.error).toBe('Failed to create content')
+      expect((result.current.falha as Error).message).toBe('Failed to create content')
     })
-    expect(result.current.success).toBeNull()
     expect(result.current.isSubmitting).toBe(false)
   })
 
@@ -75,6 +74,7 @@ describe('useMetadataForm — timing de sucesso/erro (ADD-14/ADD-01)', () => {
     })
 
     expect(onComplete).not.toHaveBeenCalled()
-    expect(result.current.error).toBe('Title and Artist are required')
+    // I1-PR-12: o motivo (*título e artista são obrigatórios*) fica ao lado do Salvar inativo — não é erro do hook
+    expect(result.current.falha).toBeNull()
   })
 })

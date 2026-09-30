@@ -1,61 +1,24 @@
-"use client";
+"use client"
 
-import { Check, Upload, FileText } from "lucide-react";
+/**
+ * Os passos (I1-PR-12; folha `7-upload`, README-design §2.4 "passos"): três chips — `radius.chip`, 13 (o metadado), o
+ * número em `font.mono`; o atual com contorno `accentInk` e `accent` a 12 %. O nome acessível do grupo é
+ * *passo {n} de 3*. Eram três círculos com ícone e *Upload · Add Details · Complete*.
+ */
+import { FRASES_UP, fraseUp, type ChaveUp } from "@/components/upload/frases-upload"
 
-interface StepIndicatorProps {
-  currentStep: number;
-}
+const PASSOS: readonly ChaveUp[] = ["up.passo.como", "up.passo.detalhes", "up.passo.pronto"]
 
-export function StepIndicator({ currentStep }: StepIndicatorProps) {
-  const steps = [
-    { number: 1, title: "Upload", active: currentStep >= 1, icon: Upload },
-    {
-      number: 2,
-      title: "Add Details",
-      active: currentStep >= 2,
-      icon: FileText,
-    },
-    { number: 3, title: "Complete", active: currentStep >= 3, icon: Check },
-  ];
-
+export function StepIndicator({ currentStep }: { currentStep: number }) {
   return (
-    <div className="flex items-center justify-center space-x-3 mb-4">
-      {steps.map((step, index) => {
-        const Icon = step.icon;
-        return (
-          <div key={step.number} className="flex items-center">
-            <div className="flex flex-col items-center">
-              <div
-                className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium transition-all duration-300 ${
-                  step.active
-                    ? "bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-sm"
-                    : "bg-white border-2 border-amber-200 text-amber-600"
-                }`}
-              >
-                {currentStep > step.number ? (
-                  <Check className="w-4 h-4" />
-                ) : (
-                  <Icon className="w-4 h-4" />
-                )}
-              </div>
-              <span
-                className={`mt-1 text-xs font-medium transition-colors ${
-                  step.active ? "text-amber-800" : "text-amber-600"
-                }`}
-              >
-                {step.title}
-              </span>
-            </div>
-            {index < steps.length - 1 && (
-              <div
-                className={`w-12 h-0.5 mx-3 rounded-full transition-colors ${
-                  currentStep > step.number ? "bg-amber-500" : "bg-amber-200"
-                }`}
-              />
-            )}
-          </div>
-        );
-      })}
+    <div aria-label={fraseUp("up.passo.nome", { n: currentStep })} className="flex flex-wrap gap-espaco-sm">
+      {PASSOS.map((chave, i) => (
+        <div key={chave} aria-current={currentStep === i + 1 ? "step" : undefined}
+          className={`h-espaco-xxl rounded-raio-chip border-hairline flex items-center gap-espaco-sm px-espaco-md text-tam-web-metadado ${currentStep === i + 1 ? "border-cor-accent-ink bg-cor-marcado text-cor-text" : "border-cor-line text-cor-muted"}`}>
+          <div className="font-fam-mono font-peso-mono">{i + 1}</div>
+          {FRASES_UP[chave]}
+        </div>
+      ))}
     </div>
-  );
+  )
 }

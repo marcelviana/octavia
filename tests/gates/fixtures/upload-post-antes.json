@@ -1,6 +1,6 @@
 {
  "criar do zero (letra) + metadados e avançadas": [
-  "POST /api/content {\"title\":\"Linha de 120 colunas\",\"artist\":\"Teste de régua\",\"content_type\":\"Lyrics\",\"content_data\":{\"lyrics\":\"La la la, la la lá\"},\"album\":\"Álbum do CN\",\"genre\":\"Samba\",\"notes\":\"nota do CN\",\"key\":null,\"bpm\":96,\"difficulty\":null,\"time_signature\":null,\"is_favorite\":false,\"tags\":null,\"user_id\":\"cn-user\"}"
+  "POST /api/content {\"title\":\"Linha de 120 colunas\",\"artist\":\"Teste de régua\",\"content_type\":\"Lyrics\",\"content_data\":{\"lyrics\":\"\"},\"album\":\"Álbum do CN\",\"genre\":\"Samba\",\"notes\":\"nota do CN\",\"key\":null,\"bpm\":96,\"difficulty\":null,\"time_signature\":null,\"is_favorite\":false,\"tags\":null,\"user_id\":\"cn-user\"}"
  ],
  "importar um arquivo (cifra, .txt)": [
   "POST /api/storage/upload [[\"file\",{\"name\":\"cifra do cn.txt\",\"type\":\"text/plain\",\"size\":58,\"sha256\":\"b327026364ad9999da0122c4ad0a15a4342f84732892d7bfb3469bf036be7d6b\"}],[\"filename\",\"cifra_do_cn.txt\"]]",

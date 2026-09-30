@@ -1,0 +1,12 @@
+$ pnpm exec vitest run tests/gates/i1-upload-post.test.tsx components/upload hooks/__tests__/useAddContentLogic.test.ts hooks/__tests__/useMetadataForm.test.ts tests/hooks/useAddContentLogic.test.ts tests/gates/i1-editor-put.test.tsx components/editors/__tests__
+ ✓  web  hooks/__tests__/useAddContentLogic.test.ts (5 tests) 38ms
+ ✓  web  tests/hooks/useAddContentLogic.test.ts (20 tests) 79ms
+ ✓  web  tests/gates/i1-upload-post.test.tsx (5 tests | 1 skipped) 761ms
+ ✓  web  components/editors/__tests__/lib-salvo.test.tsx (3 tests) 716ms
+ ✓  web  hooks/__tests__/useMetadataForm.test.ts (3 tests) 26ms
+ ✓  web  tests/gates/i1-editor-put.test.tsx (6 tests | 1 skipped) 1126ms
+ ✓  web  components/upload/__tests__/limite.test.ts (3 tests) 7ms
+ ✓  web  components/editors/__tests__/editor-estados.test.tsx (11 tests) 1376ms
+ ✓  web  components/upload/__tests__/upload-estados.test.tsx (30 tests) 1554ms
+ Test Files  9 passed (9)
+      Tests  84 passed | 2 skipped (86)

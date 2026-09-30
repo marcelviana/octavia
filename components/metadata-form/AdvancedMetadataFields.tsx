@@ -1,142 +1,61 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
+/**
+ * As Opções avançadas (I1-PR-12; a folha `7-upload` só as desenha fechadas — nota de `UP-detalhes`): Tom · BPM ·
+ * Dificuldade · Capo · Afinação · Compasso · Favorita, com os rótulos da §5.7 (aprovados na I1-PR-11) e os VALORES de
+ * antes (os 12 tons, as três dificuldades). O Tom mostra o valor escolhido (decisão 14 do aval): antes a tela passava
+ * `key={formData.key}`, que é a `key` do React — a prop chegava indefinida e a seleção remontava a cada escolha.
+ * Herança D, não tocada: *Capo* e *Afinação* não vão no `POST`; *Compasso* e *Favorita* se perdem pelo nome.
+ */
+import { DIFICULDADES } from "@/components/library/frases-lista";
+import { CaixaDeMarcar, Selecao } from "@/components/editors/campos";
+import { Campo, campoDeUmaLinha } from "@/components/upload/pecas";
+import { FRASES_UP, TONS_UP, type ChaveUp } from "@/components/upload/frases-upload";
 
 interface AdvancedMetadataFieldsProps {
-  key: string;
+  tom: string;
   bpm: string;
   difficulty: string;
   capo: string;
   tuning: string;
   timeSignature: string;
   isFavorite: boolean;
-  tags: string[];
   onChange: (field: string, value: string | boolean | string[]) => void;
 }
 
-export function AdvancedMetadataFields({
-  key,
-  bpm,
-  difficulty,
-  capo,
-  tuning,
-  timeSignature,
-  isFavorite,
-  tags,
-  onChange
-}: AdvancedMetadataFieldsProps) {
-  const difficulties = ["Beginner", "Intermediate", "Advanced"];
-  const keys = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+type Nome = "bpm" | "capo" | "tuning" | "timeSignature";
+const ENTRADAS: Record<Nome, { rotulo: ChaveUp; exemplo?: ChaveUp; numero?: boolean }> = {
+  bpm: { rotulo: "up.av.bpm", numero: true },
+  capo: { rotulo: "up.av.capo", exemplo: "up.av.capo.exemplo", numero: true },
+  tuning: { rotulo: "up.av.afinacao" },
+  timeSignature: { rotulo: "up.av.compasso" },
+};
 
+export function AdvancedMetadataFields({ tom, difficulty, isFavorite, onChange, ...valores }: AdvancedMetadataFieldsProps) {
+  const entrada = (nome: Nome) => {
+    const e = ENTRADAS[nome];
+    return (
+      <Campo rotulo={FRASES_UP[e.rotulo]} id={`up-${nome}`}>
+        <input id={`up-${nome}`} data-testid={`campo-${nome}`} type={e.numero ? "number" : "text"} value={valores[nome]}
+          placeholder={e.exemplo ? FRASES_UP[e.exemplo] : undefined} className={campoDeUmaLinha()} onChange={(ev) => onChange(nome, ev.target.value)} />
+      </Campo>
+    );
+  };
   return (
-    <>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="space-y-2">
-          <Label htmlFor="key" className="text-sm font-medium">
-            Key
-          </Label>
-          <Select value={key} onValueChange={(value) => onChange("key", value)}>
-            <SelectTrigger className="border-amber-200 focus:border-amber-400">
-              <SelectValue placeholder="Select key" />
-            </SelectTrigger>
-            <SelectContent>
-              {keys.map((k) => (
-                <SelectItem key={k} value={k}>
-                  {k}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="bpm" className="text-sm font-medium">
-            BPM
-          </Label>
-          <Input
-            id="bpm"
-            type="number"
-            value={bpm}
-            onChange={(e) => onChange("bpm", e.target.value)}
-            placeholder="120"
-            className="border-amber-200 focus:border-amber-400"
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="difficulty" className="text-sm font-medium">
-            Difficulty
-          </Label>
-          <Select value={difficulty} onValueChange={(value) => onChange("difficulty", value)}>
-            <SelectTrigger className="border-amber-200 focus:border-amber-400">
-              <SelectValue placeholder="Select difficulty" />
-            </SelectTrigger>
-            <SelectContent>
-              {difficulties.map((d) => (
-                <SelectItem key={d} value={d}>
-                  {d}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+    <div className="grid grid-cols-1 b:grid-cols-2 c:grid-cols-3 gap-espaco-lg">
+      <Campo rotulo={FRASES_UP["up.av.tom"]} id="up-key">
+        <Selecao id="up-key" testid="campo-tom" valor={tom} opcoes={TONS_UP} escolha={FRASES_UP["up.av.escolha"]} meta onMudar={(v) => onChange("key", v)} />
+      </Campo>
+      {entrada("bpm")}
+      <Campo rotulo={FRASES_UP["up.av.dificuldade"]} id="up-difficulty">
+        <Selecao id="up-difficulty" testid="campo-dificuldade" valor={difficulty} opcoes={DIFICULDADES} escolha={FRASES_UP["up.av.escolha"]} meta onMudar={(v) => onChange("difficulty", v)} />
+      </Campo>
+      {entrada("capo")}
+      {entrada("tuning")}
+      {entrada("timeSignature")}
+      <div className="col-span-full">
+        <CaixaDeMarcar rotulo={FRASES_UP["up.av.favorita"]} marcado={isFavorite} onMudar={(v) => onChange("isFavorite", v)} />
       </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <Label htmlFor="capo" className="text-sm font-medium">
-            Capo
-          </Label>
-          <Input
-            id="capo"
-            type="number"
-            value={capo}
-            onChange={(e) => onChange("capo", e.target.value)}
-            placeholder="Fret number"
-            className="border-amber-200 focus:border-amber-400"
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="tuning" className="text-sm font-medium">
-            Tuning
-          </Label>
-          <Input
-            id="tuning"
-            value={tuning}
-            onChange={(e) => onChange("tuning", e.target.value)}
-            placeholder="Standard (EADGBE)"
-            className="border-amber-200 focus:border-amber-400"
-          />
-        </div>
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="timeSignature" className="text-sm font-medium">
-          Time Signature
-        </Label>
-        <Input
-          id="timeSignature"
-          value={timeSignature}
-          onChange={(e) => onChange("timeSignature", e.target.value)}
-          placeholder="4/4"
-          className="border-amber-200 focus:border-amber-400"
-        />
-      </div>
-
-      <div className="flex items-center space-x-2">
-        <Checkbox
-          id="favorite"
-          checked={isFavorite}
-          onCheckedChange={(checked) => onChange("isFavorite", !!checked)}
-        />
-        <Label htmlFor="favorite" className="text-sm font-medium">
-          Mark as favorite
-        </Label>
-      </div>
-    </>
+    </div>
   );
 }

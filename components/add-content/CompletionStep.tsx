@@ -1,55 +1,30 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Check, Sparkles } from "lucide-react";
+/**
+ * O pronto (I1-PR-12; folha `7-upload`, `UP-pronto`): `garantida` de 28 em tinta neutra, *pronto* (`font.display` ·
+ * `size.title`), *“{título}”, de {artista}, está na biblioteca* e *Ir para a biblioteca*. Pisca antes do
+ * redirecionamento ao content criado, como antes. O 🎉, as duas frases de apoio e o *Add Another* / *Import More*
+ * saíram (decisão 9 do aval: o *Adicionar* da casca já reinicia o formulário).
+ */
+import { Icone } from "@/components/identidade/icone";
+import { CONTROLE_LISTA } from "@/components/identidade/controles";
+import { FRASES_UP, fraseUp } from "@/components/upload/frases-upload";
 
 interface CompletionStepProps {
-  title: string;
-  subtitle: string;
-  secondaryLabel: string;
-  onNavigate: (destination: string) => void;
+  titulo: string;
+  artista: string;
+  onIrParaABiblioteca: () => void;
 }
 
-export function CompletionStep({
-  title,
-  subtitle,
-  secondaryLabel,
-  onNavigate
-}: CompletionStepProps) {
+export function CompletionStep({ titulo, artista, onIrParaABiblioteca }: CompletionStepProps) {
   return (
-    <div className="p-4">
-      <div className="max-w-2xl mx-auto">
-        <div className="text-center space-y-6">
-          <div className="relative">
-            <div className="w-20 h-20 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center mx-auto shadow-lg">
-              <Check className="w-10 h-10 text-white" />
-            </div>
-            <div className="absolute -top-1 -right-1 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center">
-              <Sparkles className="w-3 h-3 text-yellow-800" />
-            </div>
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold mb-2">🎉 Done! Your music is now part of your library.</h1>
-            <p className="text-sm text-gray-600 max-w-md mx-auto mb-1">{title}</p>
-            <p className="text-sm text-gray-600 max-w-md mx-auto">{subtitle}</p>
-          </div>
-          <div className="flex justify-center space-x-3">
-            <Button
-              variant="outline"
-              onClick={() => onNavigate("add-content")}
-              className="border-amber-300 text-amber-700 hover:bg-amber-50 px-4 py-2 text-sm"
-            >
-              {secondaryLabel}
-            </Button>
-            <Button
-              onClick={() => onNavigate("library")}
-              className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white px-4 py-2 text-sm shadow"
-            >
-              Go to Library
-            </Button>
-          </div>
-        </div>
-      </div>
+    <div className="py-espaco-xxxl flex flex-col items-center justify-center gap-espaco-lg text-center">
+      <Icone nome="garantida" tamanho={28} className="text-cor-text" />
+      <p className="font-fam-display font-peso-display text-tam-title tracking-display uppercase leading-natural">{FRASES_UP["up.pronto"]}</p>
+      <p className="text-tam-body text-cor-muted break-words max-w-full">{fraseUp("up.pronto.apoio", { titulo, artista })}</p>
+      <button type="button" onClick={onIrParaABiblioteca} className={`${CONTROLE_LISTA} border-cor-line-info`}>
+        {FRASES_UP["up.ir-biblioteca"]}
+      </button>
     </div>
   );
 }

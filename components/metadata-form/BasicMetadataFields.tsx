@@ -1,8 +1,12 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+/**
+ * Os campos do formulário de detalhes (I1-PR-12; folha `7-upload`, `UP-detalhes`): Título \* · Artista \* · Álbum ·
+ * Gênero · Ano em duas colunas (uma em B e A) e as *Notas* (duas linhas) na largura toda. Os valores que sobem são os
+ * de antes.
+ */
+import { Campo, CAMPO_DE_DUAS_LINHAS, campoDeUmaLinha } from "@/components/upload/pecas";
+import { FRASES_UP, type ChaveUp } from "@/components/upload/frases-upload";
 
 interface BasicMetadataFieldsProps {
   title: string;
@@ -14,97 +18,28 @@ interface BasicMetadataFieldsProps {
   onChange: (field: string, value: string) => void;
 }
 
-export function BasicMetadataFields({
-  title,
-  artist,
-  album,
-  genre,
-  year,
-  notes,
-  onChange
-}: BasicMetadataFieldsProps) {
+type Nome = "title" | "artist" | "album" | "genre" | "year";
+const CAMPOS: readonly { nome: Nome; testid: string; rotulo: ChaveUp; exemplo: ChaveUp; numero?: boolean }[] = [
+  { nome: "title", testid: "campo-titulo", rotulo: "up.meta.titulo", exemplo: "up.meta.titulo.exemplo" },
+  { nome: "artist", testid: "campo-artista", rotulo: "up.meta.artista", exemplo: "up.meta.artista.exemplo" },
+  { nome: "album", testid: "campo-album", rotulo: "up.meta.album", exemplo: "up.meta.album.exemplo" },
+  { nome: "genre", testid: "campo-genero", rotulo: "up.meta.genero", exemplo: "up.meta.genero.exemplo" },
+  { nome: "year", testid: "campo-ano", rotulo: "up.meta.ano", exemplo: "up.meta.ano.exemplo", numero: true },
+];
+
+export function BasicMetadataFields({ notes, onChange, ...valores }: BasicMetadataFieldsProps) {
   return (
-    <>
-      <div className="space-y-2">
-        <Label htmlFor="title" className="text-sm font-medium">
-          Title *
-        </Label>
-        <Input
-          id="title"
-          value={title}
-          onChange={(e) => onChange("title", e.target.value)}
-          placeholder="Enter song title"
-          className="border-amber-200 focus:border-amber-400"
-        />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="artist" className="text-sm font-medium">
-          Artist *
-        </Label>
-        <Input
-          id="artist"
-          value={artist}
-          onChange={(e) => onChange("artist", e.target.value)}
-          placeholder="Enter artist name"
-          className="border-amber-200 focus:border-amber-400"
-        />
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <Label htmlFor="album" className="text-sm font-medium">
-            Album
-          </Label>
-          <Input
-            id="album"
-            value={album}
-            onChange={(e) => onChange("album", e.target.value)}
-            placeholder="Enter album name"
-            className="border-amber-200 focus:border-amber-400"
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="genre" className="text-sm font-medium">
-            Genre
-          </Label>
-          <Input
-            id="genre"
-            value={genre}
-            onChange={(e) => onChange("genre", e.target.value)}
-            placeholder="Enter genre"
-            className="border-amber-200 focus:border-amber-400"
-          />
-        </div>
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="year" className="text-sm font-medium">
-          Year
-        </Label>
-        <Input
-          id="year"
-          type="number"
-          value={year}
-          onChange={(e) => onChange("year", e.target.value)}
-          placeholder="Enter year"
-          className="border-amber-200 focus:border-amber-400"
-        />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="notes" className="text-sm font-medium">
-          Notes
-        </Label>
-        <Textarea
-          id="notes"
-          value={notes}
-          onChange={(e) => onChange("notes", e.target.value)}
-          placeholder="Add any additional notes or comments"
-          className="border-amber-200 focus:border-amber-400 min-h-[80px]"
-        />
-      </div>
-    </>
+    <div className="grid grid-cols-1 c:grid-cols-2 gap-espaco-lg">
+      {CAMPOS.map((c) => (
+        <Campo key={c.nome} rotulo={FRASES_UP[c.rotulo]} id={`up-${c.nome}`}>
+          <input id={`up-${c.nome}`} data-testid={c.testid} type={c.numero ? "number" : "text"} value={valores[c.nome]}
+            placeholder={FRASES_UP[c.exemplo]} className={campoDeUmaLinha()} onChange={(e) => onChange(c.nome, e.target.value)} />
+        </Campo>
+      ))}
+      <Campo rotulo={FRASES_UP["up.meta.notas"]} id="up-notes" largo>
+        <textarea id="up-notes" data-testid="campo-notas" value={notes} placeholder={FRASES_UP["up.meta.notas.exemplo"]}
+          className={CAMPO_DE_DUAS_LINHAS} onChange={(e) => onChange("notes", e.target.value)} />
+      </Campo>
+    </div>
   );
 }

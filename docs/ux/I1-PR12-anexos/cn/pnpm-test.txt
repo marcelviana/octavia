@@ -1,0 +1,5 @@
+$ pnpm test
+ Test Files  116 passed | 3 skipped (119)
+      Tests  1137 passed | 57 skipped (1194)
+   Duration  62.96s (transform 5.96s, setup 23.35s, import 13.21s, tests 116.41s, environment 57.84s)
+# exit: 0
