@@ -5,8 +5,8 @@
  * `FormData`) e `POST /api/content` (uma por música no lote). Aqui as duas são FABRICADAS no navegador — respondidas,
  * seguradas ou abortadas no `route()` — e os arquivos são GERADOS em memória (`setInputFiles` com `buffer`), nunca lidos
  * do disco: o corpo do `POST` para no `route()` e não sai. Um `POST` que escapasse cairia na barreira do medidor
- * (abortado, a rodada reprova). A navegação ao content criado (`router.push('/content/g-faixa-novo')`) é SEGURADA: a
- * tela fica no pronto, que hoje pisca antes do redirecionamento.
+ * (abortado, a rodada reprova). O pronto pisca antes de a tela ir ao content criado: no 1b (o web velho) essa navegação
+ * foi SEGURADA; no upload novo o content fabricado vem sem `id` e a tela fica no pronto (div. 841).
  *
  * Commit 1b: os estados `base-*` do web VELHO (o código do app era o da `main`) — o "antes" da `casca-efeito`
  * (decisão 1 do aval), medido sobre `7b33d06`. Commit 2: os 21 estados da folha `7-upload` (20 seções + `UP-lote-lendo`,
@@ -56,11 +56,6 @@ export async function criacao(page: Page, r: Resposta | 'ecoar') {
     const corpo = JSON.parse(rt.request().postData() ?? '{}') as Record<string, unknown>
     return responder(rt, { status: 201, corpo: { ...corpo, id: ID_NOVO } })
   })
-}
-
-/** A navegação ao content criado, segurada: a tela fica no pronto. */
-export async function segurarNavegacao(page: Page) {
-  await page.route(new RegExp(`/content/${ID_NOVO}`), (rt) => segurar(page, rt))
 }
 
 /**
@@ -152,7 +147,13 @@ const aoCriar = async (p: Page) => {
   await N.escolha(p, 'Letra').first().waitFor({ state: 'visible', timeout: 60_000 })
   await clicarAte(N.botao(p, 'Próximo'), p.getByTestId('campo-criar-titulo'))
 }
-const CRIADO: Resposta = { status: 201, corpo: { id: ID_NOVO, title: EXEMPLO.titulo, artist: EXEMPLO.artista } }
+/**
+ * O content criado, SEM `id` (div. 841): com `id` a tela navega a `/content/{id}` e o pronto só pisca; segurar essa
+ * navegação (o que o 1b fazia no web velho) deixa um `fetch` pendurado que, solto no estado seguinte, faz o Next cair
+ * na navegação dura e abortar o `goto` — a 1ª rodada do aceite perdeu o `base-criar` assim. Sem `id`, a tela fica no
+ * pronto (`add-content-page-client.tsx`: sem id não navega) e nada fica pendurado; a tela é a mesma.
+ */
+const CRIADO: Resposta = { status: 201, corpo: { title: EXEMPLO.titulo, artist: EXEMPLO.artista } }
 
 /**
  * Os 21 estados da folha `7-upload`, TUDO fabricado. `UP-como` com **Letra** (decisão 4 do aval: a partitura esconde o
@@ -192,7 +193,7 @@ export const ESTADOS_UPLOAD: Record<string, Estado> = {
   'UP-lote-sucesso': { secao: 'UP-lote-sucesso', antes: async (p) => { await envio(p, ENVIO_OK); await criacao(p, 'ecoar') }, preparar: importar, espera: '4 músicas importadas' },
   'UP-pronto': {
     secao: 'UP-pronto', espera: 'está na biblioteca',
-    antes: async (p) => { await envio(p, ENVIO_OK); await criacao(p, CRIADO); await segurarNavegacao(p) },
+    antes: async (p) => { await envio(p, ENVIO_OK); await criacao(p, CRIADO) },
     preparar: salvar,
   },
 }
@@ -207,5 +208,5 @@ export const ESTADOS_UPLOAD_BASE: Record<string, Estado> = {
   'base-arquivo': { preparar: (p) => ateAZona(p) },
   'base-detalhes': { antes: (p) => envio(p, ENVIO_OK), preparar: ateOFormulario() },
   'base-lote': { antes: (p) => envio(p, ENVIO_OK), preparar: ateOLote(ARQUIVO_LOTE) },
-  'base-pronto': { antes: async (p) => { await envio(p, ENVIO_OK); await criacao(p, 'ecoar'); await segurarNavegacao(p) }, preparar: salvar },
+  'base-pronto': { antes: async (p) => { await envio(p, ENVIO_OK); await criacao(p, CRIADO) }, preparar: salvar },
 }

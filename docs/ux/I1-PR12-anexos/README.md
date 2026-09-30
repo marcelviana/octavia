@@ -9,8 +9,11 @@
 > `Done in 17.2s using pnpm v10.28.0`. **Data**: 2026-09-29.
 > **Convenções**: `[medido]` = comando + saída literal (em `cn/`); `[lido]` = arquivo:linha; `[hipótese]` = o resto.
 > Divergências **a partir de 806** (a PR-11 fechou em 805, §21.7 dela).
-> **Estado**: commit 1 (gate-first, `e5fdf5f`) com o aval (§10.1); commit 1b (instrumento, `7b33d06`, §13); o "antes" medido
-> (§14); **commit 2 (a implementação, §15–§21)**. PR [#347](https://github.com/marcelviana/octavia/pull/347).
+> **Estado**: commit 1 (gate-first, `e5fdf5f`) com o aval (§10.1); commit 1b (instrumento, `7b33d06`, §13); o "antes" (§14);
+> commit 2 (a implementação, `9bac7bb`, §15–§22) e **commit 3 (aceite e docs, §23)**. **Veredito do aceite: PASSA — (e) = 0
+> e (b) = 0 nas três larguras, nos 21 estados da folha 7 e nos 5 do "antes"; 122 erratas candidatas, todas cobertas
+> (I1-E22 32 · I1-E24 70 · I1-E27 18 · I1-E2 2); nó velho por componente 0.** Aguarda o aval do veredito (§23.8).
+> PR [#347](https://github.com/marcelviana/octavia/pull/347).
 
 | arquivo | o que é |
 |---|---|
@@ -798,3 +801,221 @@ Próxima divergência: **841**.
 | executor | `pnpm build` | na mesma cópia, sem `.env` |
 | executor | a `main` para o gate regravado e para os testes novos | worktree temporária de `434ba79` (`--detach`), removida |
 | — | `packages/identidade` · `tailwind.config.ts` | **não mudaram** |
+
+---
+
+## 23. Commit 3 — o aceite e o fecho
+
+### 23.1 As decisões, numa tabela
+
+| aval | quando | o quê |
+|---|---|---|
+| commit 1 | 2026-09-29 | as **18** do §10.1 (o extra do gate; o 1b; o *Próximo* no passo 1 + **I1-E21**; a ordem de hoje + **I1-E22**; a partitura como hoje; o criar = Título + Próximo; o lote com os controles + **I1-E24**; *Importar todas* + **I1-E25**; a N2 + **I1-E26**; o pronto pela folha; o *Back* sai; o limite pela resposta; o *Tentar de novo* do lote como hoje; `UP-lote-lendo` contra `UP-lote`; o Tom mostra o valor; as frases novas; as cópias "sem par"; a div. 828 ao encerramento; a cota) |
+| "rodei-antes" | 2026-09-30 | o "antes" do Marcel na árvore; seguir para o commit 2 |
+| **I1-D37** | 2026-09-30 | o executor roda o aceite e o "antes" com o perfil persistente (§14); o aval fica no veredito |
+| **pendente** | — | o veredito e os itens do §23.8 |
+
+### 23.2 O aceite `[executor, I1-D37, 2026-09-30]`
+
+`tests/gates-web/medicoes/add-content.json` — três rodadas com a sessão do perfil (`G_FAIXA_SEM_JANELA=1`), sobre o
+`pnpm dev` de pé nesta árvore (o do Marcel, na 3000; o `tailwind.config.ts` não mudou, não precisou reiniciar):
+
+| rodada | quando (UTC) | o quê | commit |
+|---|---|---|---|
+| 1 | 12:09–12:13 | **C e B**, os 26 estados — `base-criar` NÃO ALCANÇADO nas duas (div. 841) | `9bac7bb` |
+| 2 | 12:29–12:31 | **A**, os 26 estados (15 min depois, a cota) | `9bac7bb+sujo` (div. 842) |
+| 3 | 12:32 | por estado (`G_FAIXA_ESTADOS=base-criar,UP-pronto,base-pronto`), C e B — em `rodadasPorEstado` | `9bac7bb+sujo` |
+
+(Entre a 1 e a 2 houve uma rodada por estado às 12:29 com os mesmos três estados; a rodada 2, por largura, **apagou o
+registro dela** — div. 843 — e ela foi repetida como rodada 3, depois do conserto do mesclador.)
+
+Veredito verbatim em `cn/g-faixa-aceite.txt`:
+
+```
+$ node scripts/gates-web/g-faixa-veredito.mjs tests/gates-web/medicoes
+## contados à parte (não reprovam): errata candidata 241 · quebra por dado 42 · sem par folha 568 · sem par app 568 (C e B) · não medidos 26
+## erratas candidatas sem cobertura (erratasFaixa, div. 681): 0
+G-faixa: PASSA
+# exit: 0
+```
+
+(241 = as 119 de antes desta PR + as **122** do upload; "não medidos" 28 → 26 contando os inalcançáveis declarados das
+outras superfícies — nenhum é do `add-content`.)
+
+Por estado (`cn/aceite-por-estado.txt`; célula = (e) · (b) · errata candidata; em A, (e) · (b) · (d′), que é triagem):
+
+| estado | 1138 (C) | 711 (B) | 411 (A) | sem par folha/app (C e B, cada) | cobertura |
+|---|---|---|---|---|---|
+| `UP-carregando` | 0 · 0 · 0 | 0 · 0 · 0 | 0 · 0 · (d′) 1 | 1/2 | — |
+| `UP-como` | 0 · 0 · 8 | 0 · 0 · 8 | 0 · 0 · (d′) 1 | 1/3 | I1-E22 (+ o *Próximo* "sem par", I1-E21) |
+| `UP-arquivo` · `-enviando` · `-extensao` · `-limite` · `-envio-rede` · `-envio-servidor` | 0 · 0 · 0 | 0 · 0 · 0 | 0 · 0 · (d′) 1–3 | 1/2 | — |
+| `UP-detalhes` · `-detalhes-inativo` · `-salvando` | 0 · 0 · 0 | 0 · 0 · 0 | 0 · 0 · (d′) 1 | 1/2 | — |
+| `UP-salvar-erro` | 0 · 0 · 0 | 0 · 0 · 0 | 0 · 0 · (d′) 1 | 2/3 | — (a N2 "sem par", I1-E26) |
+| `UP-criar` | 0 · 0 · 4 | 0 · 0 · 4 | 0 · 0 · (d′) 1 | 2/2 | **I1-E27 (proposta)** |
+| `UP-criar-validacao` | 0 · 0 · 5 | 0 · 0 · 5 | 0 · 0 · (d′) 1 | 2/2 | **I1-E27 (proposta)** |
+| `UP-lote` · `-lote-importando` | 0 · 0 · 12 | 0 · 0 · 12 | 0 · 0 · (d′) 1 | 1/10 | I1-E24 |
+| `UP-lote-erro` | 0 · 0 · 11 | 0 · 0 · 11 | 0 · 0 · (d′) 2 | 2/11 | I1-E24 (+ *Importar todas* "sem par", I1-E25) |
+| `UP-lote-lendo` (contra `UP-lote`) | 0 · 0 · 1 | 0 · 0 · 1 | 0 · 0 · (d′) 1 | 15/3 | I1-E2 |
+| `UP-lote-vazio` | 0 · 0 · 0 | 0 · 0 · 0 | 0 · 0 · (d′) 2 | 1/2 | — |
+| `UP-lote-sucesso` | 0 · 0 · 8 | 0 · 0 · 8 | 0 · 0 · (d′) 1 | 1/3 | I1-E22 |
+| `UP-pronto` | 0 · 0 · 0 | 0 · 0 · 0 | 0 · 0 · (d′) 2 | 1/2 | — |
+| `base-criar` · `-arquivo` · `-detalhes` · `-lote` · `-pronto` (sem folha: a casca-efeito) | 0 · 0 | 0 · 0 | 0 · 0 · (d′) 1–2 | — | — |
+
+**(e) = 0 e (b) = 0 nas três larguras, em todo estado medido; `scrollWidth` = viewport nos 78.** As candidatas do aceite
+são **as mesmas 122 da pré-verificação** (61 em C, 61 em B): o `n` de cada errata em `erratasFaixa` confirma. **Quebra
+por dado: 0.** O (d′) de 411 (39 no total) é o que empilha em A — a casca e, no corpo, a grade de duas colunas que vira
+uma.
+
+**Sem par** (contados à parte; nunca reprovam), por espécie:
+- **da folha**: *Buscar…* (a casca, div. 719) em todos; *o que você preencheu continua aqui* (I1-E26); *Salvar* do
+  `UP-lote-erro` (I1-E25); a linha do arquivo copiada em `UP-criar`/`-validacao` (decisão 16); em `UP-lote-lendo`, a
+  lista inteira da `UP-lote` (o cabeçalho, os quatro números, títulos e artistas, *Importar todas*) — I1-E2;
+- **do app**: a `<nav>` e o campo da busca (div. 719); o *Próximo* do passo 1 (I1-E21); *o que você escreveu continua
+  aqui* (N2); *Importar todas* no `UP-lote-erro`; no lote, os quatro corpos e os quatro *Incluir “…”* (I1-E24);
+  *carregando…* no `UP-lote-lendo`.
+
+**A fixture, confirmada pelo hash** (`cn/fixture-hash.txt`): os 32 textos que provam cada estado estão nas três
+larguras — *enviando o arquivo…* com *partitura-12-paginas.pdf · 1,8 MiB*, *tipo de arquivo não aceito: foto.heic — use
+.pdf, .docx ou .txt*, *o arquivo passa de 4 MiB — escolha um menor*, as duas falhas do envio, *Salvando…*, a falha do
+salvar com a N2, *4 músicas encontradas em repertorio.docx* com *Anunciação* · *Alceu Valença* · *Unknown Artist*,
+*Importando…*, *4 músicas importadas*, *“Partitura de 12 páginas”, de Compositor anônimo, está na biblioteca*.
+**Nenhum content real foi lido** (a rota não lê content).
+
+**Os requests** (três larguras; `cn/aceite-por-estado.txt`): `prodAbortados` **0**; os não-`GET` a `/api/*` são o
+`POST /api/auth/session` (o cookie) e **só fabricados**: `POST /api/storage/upload` `fabricado 201` · `400` (o limite) ·
+`500` · `sem resposta` (segurado no `UP-enviando`, abortado no `UP-envio-rede`); `POST /api/content` `fabricado 201` ·
+`500` · `sem resposta` (segurado no `UP-salvando` e no `UP-lote-importando`). **Nenhum `POST` saiu**; o arquivo de
+5 MiB foi gerado e parou no `route()`. Nenhum request a `/content/g-faixa-novo`. `GET /api/profile`: 34 + 34 + 27, em
+janelas de no máximo 52 em 15 min (a rodada 1; o teto é 60). Contas 0, escritas 0.
+
+`UP-carregando` **alcançado com sessão** pelo pedaço do `dynamic` segurado (`components_add-content` no nome do chunk —
+a hipótese casou). **Inalcançáveis com sessão**, com a prova: o *carregando…* pelo `isLoading` do Firebase e pelo "sem
+usuário" — a mesma tela; pré-verificação sem sessão (§18: `UP-carregando` é a rota sem usuário, 3/3 larguras, (e) 0
+(b) 0) e Vitest (`upload-estados.test.tsx`, "a espera": os dois ramos). As variantes de motivo (401, 429, o 400 que não
+é o tamanho, o 413, o "sem URL", a rede no salvar) e `up.lote.ler`: Vitest, uma por status. As Opções avançadas abertas:
+pré-verificação (3/3, (e) 0 (b) 0, `scrollWidth` = viewport).
+
+### 23.3 `casca-efeito` do upload — antes × depois `[medido]`
+
+`cn/casca-efeito-upload.mjs` (anexo, não gate), o "antes" (`casca-efeito/antes/add-content.json`, o upload velho,
+`7b33d06`) × o "depois" (os mesmos cinco estados no `add-content.json`) — `cn/casca-efeito-upload.txt`:
+
+```
+base-criar · 1138: casca 9/9 iguais · nó velho por componente 0 · valor gravado 0 · coincidência de texto 1: texto/section 0 car. · nós 31 → 27
+base-arquivo · 1138: casca 9/9 iguais · nó velho por componente 0 · valor gravado 0 · coincidência de texto 1: texto/section 0 car. · nós 34 → 23
+base-detalhes · 1138: casca 9/9 iguais · nó velho por componente 0 · valor gravado 0 · coincidência de texto 1: texto/section 0 car. · nós 32 → 34
+base-lote · 1138: casca 9/9 iguais · nó velho por componente 0 · valor gravado 2 · coincidência de texto 9: textbox/input 10 car.; textbox/textarea 27 car.; … 
+base-pronto · 1138: casca 9/9 iguais · nó velho por componente 0 · valor gravado 0 · coincidência de texto 1: texto/section 0 car. · nós 15 → 21
+NÓ VELHO POR COMPONENTE: 0 — nas 15 (estado × largura) · valor gravado "Unknown Artist" no campo do lote: 6
+```
+
+**A casca não se moveu**: 9/9 em C e B, 8/8 em A, nos cinco estados. **Nó velho por componente = 0**: nenhuma das 69
+frases de UI do upload velho (`FRASES_VELHAS`, as do código da `main`) aparece no depois. **Coincidência de texto = 1 a
+10**: o `section` sem texto; em A, o *Adicionar* da casca, que ali empilha abaixo de y = 120; e, só no `base-lote`, os
+**dados** do lote (os quatro títulos e os quatro corpos da fixture, e os artistas) — o mesmo texto em campos dos dois
+lados. **Valor gravado 6**: *"Unknown Artist"* nos dois campos de artista sem artista do lote (2 × 3 larguras) — é
+texto de UI do web velho **e** o valor que o hook grava (herança D, div. 824): contado à parte, não como nó velho.
+*Tab* fica fora da lista de frases velhas (é o nome do tipo nas duas línguas).
+
+### 23.4 `cn-main`
+
+`cn/cn-main-veredito.txt`: **`G-faixa: REPROVA — 83 ocorrência(s)`**, a mesma — é o web velho (registro).
+
+### 23.5 Estado × alcance × medido
+
+| estado | como (fabricado) | rodada | medido |
+|---|---|---|---|
+| `UP-carregando` | o pedaço do `dynamic` segurado | 1, 2 | 3/3 |
+| `UP-como` | *Importar de arquivo* marcado, com Letra | 1, 2 | 3/3 |
+| `UP-arquivo` | + *Próximo* | 1, 2 | 3/3 |
+| `UP-enviando` | + o PDF de 1,8 MiB, o `POST` de upload segurado | 1, 2 | 3/3 |
+| `UP-extensao` | + `foto.heic` (validação do cliente, nenhum request) | 1, 2 | 3/3 |
+| `UP-limite` | + o arquivo de 5 MiB gerado, o `POST` fab. 400 (`field: "size"`) | 1, 2 | 3/3 |
+| `UP-envio-rede` · `-envio-servidor` | o `POST` abortado · fab. 500 | 1, 2 | 3/3 |
+| `UP-detalhes` · `-detalhes-inativo` | o `POST` fab. 201 → o formulário; o título e o artista digitados · só o título | 1, 2 | 3/3 |
+| `UP-salvando` · `UP-salvar-erro` | + *Salvar*, o `POST /api/content` segurado · fab. 500 | 1, 2 | 3/3 |
+| `UP-criar` · `-criar-validacao` | *Próximo* (o criar) · + *Próximo* com o título vazio | 1, 2 | 3/3 |
+| `UP-lote` | *Várias músicas* + o lote da folha (`repertorio.docx`, `text/plain`) | 1, 2 | 3/3 |
+| `UP-lote-lendo` | um lote em PDF com o worker do pdf.js segurado | 1, 2 | 3/3 |
+| `UP-lote-importando` · `-erro` · `-sucesso` | + *Importar todas*, os `POST /api/content` segurados · fab. 500 · fab. 201 × 4 | 1, 2 | 3/3 |
+| `UP-lote-vazio` | um lote só com linhas em branco | 1, 2 | 3/3 |
+| `UP-pronto` | + *Salvar*, o `POST /api/content` fab. 201 **sem `id`** (div. 841) | 3 (C, B), 2 (A) | 3/3 |
+| `base-criar` · `base-pronto` | os do 1b, no upload novo | 3 (C, B), 2 (A) | 3/3 |
+| `base-arquivo` · `-detalhes` · `-lote` | idem | 1, 2 | 3/3 |
+
+### 23.6 As heranças
+
+As do §21 (o Bloco D, com as nove linhas do §17 — os cinco campos que não vão no corpo, o vazio do criar, a duplicação
+do lote, o órfão do Storage, os dois estados que ficam no hook; a div. 828 para o encerramento; os specs do `ux-audit`;
+os dois auxiliares sem importador em `types/content.ts`; a vírgula × travessão; o invólucro das setlists), mais:
+
+| herança | destino |
+|---|---|
+| segurar uma navegação do `router.push` e soltá-la no estado seguinte derruba o `goto` (div. 841) | **molde**: o estado que "pisca antes de navegar" se alcança pela resposta fabricada que não navega (aqui, o content sem `id`) |
+| a rodada por largura apagava o `rodadasPorEstado` (div. 843) — consertado no `g-faixa-sessao.ts` | **molde**: por estado e por largura mesclam nos dois sentidos |
+| a cota com 26 estados: duas rodadas por largura (C+B; A 15 min depois), por estado só para repetir | **molde** (`COMO-RODAR.md`, "I1-PR12") |
+| I1-D37: o executor roda o aceite | as próximas PRs |
+
+### 23.7 Divergências — 806 a 843, com destino
+
+| # | destino |
+|---|---|
+| 806 | registrado: 20 seções + `Tokens`; `UP-lote-lendo` contra `UP-lote` (decisão 13) |
+| 807 | registrado: o teto vive em `lib/api-schemas.ts:259`; o teste lê o schema (§15.3) |
+| 808 | → decisão 2 + **I1-E21** (o *Próximo*; mudança de fluxo declarada, com teste) |
+| 809 | → decisão 3 + **I1-E22** |
+| 810 | → decisão 4 (a partitura como hoje; `UP-como` com Letra) |
+| 811 | → decisão 5 (Título + Próximo, sem corpo); a consequência é a 836 |
+| 812 | → decisão 16 ("sem par"); a consequência geométrica é a 834 |
+| 813 | → decisão 6 + **I1-E24** |
+| 814 | → decisão 7 + **I1-E25** |
+| 815 | → decisão 8 + **I1-E26** |
+| 816 · 817 | → decisões 9 e 10 (remoções declaradas) |
+| 818 | consertado: a cópia velha morreu; teste que reprova na `main` |
+| 819 | consertado: o lote diz *{n} músicas importadas* no passo 1; ver a 831 |
+| 820 · 822 · 823 · 824 | herança D (§17); o gate byte a byte os prende |
+| 821 | → decisão 14: o Tom mostra o valor (defeito de tela declarado) |
+| 825 · 826 | → decisão 11 (pela resposta do servidor; `status` e `details` aditivos) |
+| 827 | → decisão 12; herança D (a duplicação, com linha no §17) |
+| 828 | → decisão 17: herança de instrumento; a lista no §21 |
+| 829 | → decisão 13 + I1-E2 em `erratasFaixa` |
+| 830 | → decisão 15 (as frases no §5.1 do DESIGN-I1) |
+| **831** | **para o aval** (§23.8): o lote no passo 1 (a folha) × *"o lote chegando ao passo 3"* (o prompt) |
+| 832 | declarado (§15.4): o caso do criar regravado sobre a `main` |
+| 833 · 835 · 836 | herança D (§17) |
+| **834** | **para o aval** (§23.8): I1-E27 proposta |
+| 837 · 839 | herança (§21) |
+| 838 | aplicado na pré-verificação (§18) |
+| 840 | registrado: o "antes" rodado duas vezes, igual; fica o do Marcel |
+| **841** | **T** — a 1ª rodada perdeu `base-criar` (C e B): vinha depois do `UP-pronto`, que segurava o `router.push('/content/g-faixa-novo')`; solto o `fetch`, o Next cai na navegação dura e o `goto` seguinte aborta (`net::ERR_ABORTED`). Conserto no instrumento: o content fabricado vem **sem `id`** — a tela fica no pronto (`add-content-page-client.tsx`: sem id não navega) e nada fica pendurado. Os três estados medidos de novo (rodada 3). Nenhum request a `/content/g-faixa-novo` chegou ao servidor (0 no log) |
+| **842** | **T** — as rodadas 2 e 3 saíram `9bac7bb…+sujo`: o `g-faixa-upload.ts` (o conserto da 841) e o `add-content.json` da rodada 1 estavam na árvore sem commit; **nenhum arquivo de `app/`, `components/`, `lib/`, `hooks/` difere** de `9bac7bb` — o caso das divs. 731 e 804. Registrado |
+| **843** | **T** — `g-faixa-sessao.ts`, `mesclar` (por largura): o `...novo` descartava o `rodadasPorEstado` do JSON — a rodada de A apagou o registro da rodada por estado de C e B (as medições ficaram; a origem sumiu). Consertado (o registro das outras larguras fica) e a rodada por estado repetida (rodada 3). Latente desde a I1-PR-11, onde a rodada por estado foi a última |
+
+Próxima divergência: **844**.
+
+### 23.8 O que o aval do veredito decide
+
+1. **O veredito**: G-faixa PASSA — (e) 0, (b) 0 nas três larguras; 122 candidatas, 0 sem cobertura; nó velho 0.
+2. **Div. 831** — o lote importado fica no **passo 1** com a linha de sucesso (a folha, T-I1-R239/240) — ou vai ao passo
+   3, como o prompt do commit 2 escreveu? Implementado pela folha.
+3. **I1-E27** (div. 834) — aprova a errata *"`UP-criar` e `-validacao` valem sem a linha do arquivo"*? Sem ela, 18
+   candidatas ficam sem cobertura e o G-faixa reprova.
+4. **Os extras do commit 2** (§15.4): a linha de sessão dentro da tela (`aviso-de-sessao.tsx`); o caso do criar
+   regravado sobre a `main` (div. 832); as frases do singular e o tamanho em KiB/B.
+5. **O instrumento do commit 3**: o pronto sem `id` (div. 841) e o conserto do mesclador (div. 843).
+
+### 23.9 Contabilidade final da I1-PR-12
+
+| quem | item | valor |
+|---|---|---|
+| executor | requests a `https://octavia.rocks` ou preview · logins · senhas digitadas · `.env*` abertos · escritas · contas | **0 · 0 · 0 · 0 · 0 · 0** |
+| executor (I1-D37) | rodadas com sessão (perfil `~/.octavia-g-faixa-perfil`, `localhost:3000`) | 5: o "antes" em pasta à parte (16 cargas, 11:29Z); o aceite — C+B (12:09Z), por estado (12:29Z, registro perdido, div. 843), A (12:29Z), por estado de novo (12:32Z) |
+| executor | `pnpm dev` com `.env.local` | **nenhum subido**: a 3000 já estava de pé nesta árvore (o do Marcel), com o mesmo código e o mesmo `.env.local`; não foi reiniciado nem parado |
+| executor | `next dev` **sem** `.env`, porta 3110, **numa cópia da árvore** | 1b: 1 subida (a fumaça dos `base-*`); commit 2: 1 (as duas rodadas da pré-verificação, a inércia); paradas; cópias removidas |
+| executor | `pnpm build` | numa cópia da árvore, sem `.env` |
+| executor | a `main` | worktree temporária de `434ba79` (`--detach`): o caso regravado do gate e os testes novos; removida |
+| executor | páginas de fumaça e remendos de sessão | só nas cópias; nunca na árvore da PR nem no commit (a fonte é `pre-verificacao/pagina-fumaca.tsx`) |
+| Marcel | rodadas com sessão | 1: o "antes" (11:23Z, sobre `7b33d06`) — contas 0, escritas 0 |
+| todos | `POST` que saiu | **0** (`fabricado 201/400/500` e `fabricado sem resposta`) |
+| — | leitura de content real | **nenhuma** (a rota não lê content; lidos só `/api/profile` e o `securetoken`) |
+| — | `packages/identidade` · `tailwind.config.ts` · as rotas · `lib/api-schemas.ts` | **não mudaram** |

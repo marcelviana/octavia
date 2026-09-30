@@ -271,11 +271,15 @@ Grava `tests/gates-web/medicoes/add-content.json`. `G_FAIXA_SEM_JANELA=1`: se a 
 fabricado; o 400 do contrato com `field: "size"`; 500; segurado; abortado) e o `POST /api/content` (201; 500; segurado).
 Os arquivos são **gerados em memória** — o PDF de 1,8 MiB, o lote `.txt` com as quatro músicas da folha (nomeado
 `repertorio.docx`, como a folha, com o tipo `text/plain`), um lote em PDF (`pdf-lib`), o `foto.heic` e o de **5 MiB** do
-`UP-limite` — e **nenhum sai**: o corpo do `POST` para no `route()`. A navegação ao content criado (`/content/g-faixa-novo`)
-fica segurada (`UP-pronto`); o worker do pdf.js fica segurado (`UP-lote-lendo`); o pedaço do `dynamic` fica segurado
+`UP-limite` — e **nenhum sai**: o corpo do `POST` para no `route()`. O content criado vem **sem `id`** (`UP-pronto`: a tela fica
+no pronto em vez de navegar — div. 841); o worker do pdf.js fica segurado (`UP-lote-lendo`); o pedaço do `dynamic` fica segurado
 (`UP-carregando` — `components_add-content` no nome do chunk, `[hipótese]`: se não casar, sai NÃO ALCANÇADO com a razão).
 Um `POST` que escapasse cairia na barreira (abortado, a rodada reprova). Lidos de verdade só a sessão (`/api/profile`, o
 `securetoken`). **Escrita declarada: nenhuma.**
+
+Se um estado sair NÃO ALCANÇADO, repita só ele: o mesmo comando com `G_FAIXA_ESTADOS=<estado>[,<estado>]` e o
+`--project` da largura — mescla por estado e registra em `rodadasPorEstado` (que a rodada por largura preserva desde a
+div. 843).
 
 ## O resto
 

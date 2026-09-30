@@ -108,8 +108,12 @@ function mesclar(velho: Junto | null, novo: Junto): Junto {
     if (Object.keys(na).length) e.naoAlcancado = na; else delete e.naoAlcancado
     estados[id] = e
   }
+  // I1-PR12 (div. 843): a rodada por LARGURA não apaga o registro das rodadas por ESTADO das outras larguras — antes o
+  // `...novo` o descartava (a rodada de A apagou o `rodadasPorEstado` de C e B; as medições ficaram, a origem sumiu)
+  const porEstado = Object.fromEntries(Object.entries((velho.rodadasPorEstado as Record<string, Record<string, unknown>>) ?? {})
+    .map(([id, ls]) => [id, fica(ls)] as const).filter(([, ls]) => Object.keys(ls).length))
   return {
-    ...novo, estados, rodadas,
+    ...novo, estados, rodadas, ...(Object.keys(porEstado).length ? { rodadasPorEstado: porEstado } : {}),
     requests: { ...fica(velho.requests), ...(novo.requests ?? {}) },
     controlePositivo: { ...fica(velho.controlePositivo), ...(novo.controlePositivo ?? {}) },
   }

@@ -1,0 +1,30 @@
+commit 9bac7bb7d8994ea98d700236ac69a76ec612f1a9+sujo · rodadas {"411":{"rodada":"2026-09-30T12:29:52.005Z","commit":"9bac7bb7d8994ea98d700236ac69a76ec612f1a9+sujo"},"711":{"rodada":"2026-09-30T12:09:20.991Z","commit":"9bac7bb7d8994ea98d700236ac69a76ec612f1a9"},"1138":{"rodada":"2026-09-30T12:09:20.991Z","commit":"9bac7bb7d8994ea98d700236ac69a76ec612f1a9"}} · rodadasPorEstado {"UP-pronto":{"711":{"rodada":"2026-09-30T12:32:48.821Z","commit":"9bac7bb7d8994ea98d700236ac69a76ec612f1a9+sujo"},"1138":{"rodada":"2026-09-30T12:32:48.821Z","commit":"9bac7bb7d8994ea98d700236ac69a76ec612f1a9+sujo"}},"base-criar":{"711":{"rodada":"2026-09-30T12:32:48.821Z","commit":"9bac7bb7d8994ea98d700236ac69a76ec612f1a9+sujo"},"1138":{"rodada":"2026-09-30T12:32:48.821Z","commit":"9bac7bb7d8994ea98d700236ac69a76ec612f1a9+sujo"}},"base-pronto":{"711":{"rodada":"2026-09-30T12:32:48.821Z","commit":"9bac7bb7d8994ea98d700236ac69a76ec612f1a9+sujo"},"1138":{"rodada":"2026-09-30T12:32:48.821Z","com
+UP-carregando          0·0·0  0·0·0  0·0·d′1  sem par 1/2  sw 1138/711/411
+UP-como                0·0·8  0·0·8  0·0·d′1  sem par 1/3  sw 1138/711/411
+UP-arquivo             0·0·0  0·0·0  0·0·d′2  sem par 1/2  sw 1138/711/411
+UP-enviando            0·0·0  0·0·0  0·0·d′1  sem par 1/2  sw 1138/711/411
+UP-extensao            0·0·0  0·0·0  0·0·d′3  sem par 1/2  sw 1138/711/411
+UP-limite              0·0·0  0·0·0  0·0·d′3  sem par 1/2  sw 1138/711/411
+UP-envio-rede          0·0·0  0·0·0  0·0·d′2  sem par 1/2  sw 1138/711/411
+UP-envio-servidor      0·0·0  0·0·0  0·0·d′3  sem par 1/2  sw 1138/711/411
+UP-detalhes            0·0·0  0·0·0  0·0·d′1  sem par 1/2  sw 1138/711/411
+UP-detalhes-inativo    0·0·0  0·0·0  0·0·d′1  sem par 1/2  sw 1138/711/411
+UP-salvando            0·0·0  0·0·0  0·0·d′1  sem par 1/2  sw 1138/711/411
+UP-salvar-erro         0·0·0  0·0·0  0·0·d′1  sem par 2/3  sw 1138/711/411
+UP-criar               0·0·4  0·0·4  0·0·d′1  sem par 2/2  sw 1138/711/411
+UP-criar-validacao     0·0·5  0·0·5  0·0·d′1  sem par 2/2  sw 1138/711/411
+UP-lote                0·0·12  0·0·12  0·0·d′1  sem par 1/10  sw 1138/711/411
+UP-lote-lendo          0·0·1  0·0·1  0·0·d′1  sem par 15/3  sw 1138/711/411
+UP-lote-importando     0·0·12  0·0·12  0·0·d′1  sem par 1/10  sw 1138/711/411
+UP-lote-erro           0·0·11  0·0·11  0·0·d′2  sem par 2/11  sw 1138/711/411
+UP-lote-vazio          0·0·0  0·0·0  0·0·d′2  sem par 1/2  sw 1138/711/411
+UP-lote-sucesso        0·0·8  0·0·8  0·0·d′1  sem par 1/3  sw 1138/711/411
+UP-pronto              0·0·0  0·0·0  0·0·d′2  sem par 1/2  sw 1138/711/411
+base-criar             0·0·0  0·0·0  0·0·d′1  sem par 0/0  sw 1138/711/411
+base-arquivo           0·0·0  0·0·0  0·0·d′2  sem par 0/0  sw 1138/711/411
+base-detalhes          0·0·0  0·0·0  0·0·d′1  sem par 0/0  sw 1138/711/411
+base-lote              0·0·0  0·0·0  0·0·d′1  sem par 0/0  sw 1138/711/411
+base-pronto            0·0·0  0·0·0  0·0·d′2  sem par 0/0  sw 1138/711/411
+1138 linhas 558 prodAbortados 0 {"POST /api/auth/session 200":34,"POST /api/storage/upload fabricado sem resposta":2,"POST /api/storage/upload fabricado 400":1,"POST /api/storage/upload fabricado 500":1,"POST /api/storage/upload fabricado 201":18,"POST /api/content fabricado sem resposta":2,"POST /api/content fabricado 500":2,"POST /api/content fabricado 201":10} GET /api/profile 34 · g-faixa-novo 0
+711 linhas 559 prodAbortados 0 {"POST /api/auth/session 200":34,"POST /api/storage/upload fabricado sem resposta":2,"POST /api/storage/upload fabricado 400":1,"POST /api/storage/upload fabricado 500":1,"POST /api/storage/upload fabricado 201":18,"POST /api/content fabricado sem resposta":2,"POST /api/content fabricado 500":2,"POST /api/content fabricado 201":10} GET /api/profile 34 · g-faixa-novo 0
+411 linhas 429 prodAbortados 0 {"POST /api/auth/session 200":27,"POST /api/storage/upload fabricado sem resposta":2,"POST /api/storage/upload fabricado 400":1,"POST /api/storage/upload fabricado 500":1,"POST /api/storage/upload fabricado 201":14,"POST /api/content fabricado sem resposta":2,"POST /api/content fabricado 500":2,"POST /api/content fabricado 201":6} GET /api/profile 27 · g-faixa-novo 0
