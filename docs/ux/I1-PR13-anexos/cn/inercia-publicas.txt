@@ -1,0 +1,38 @@
+$ next dev -p 3110 (cópia sem .env, sem a fumaça e sem os remendos) · G_FAIXA_SUPERFICIES=landing,login,privacy-policy → <scratchpad>/inercia
+  9 passed (3.8m)
+$ node docs/ux/I1-PR9-anexos/cn/inercia-comparar.mjs <inercia> landing login privacy-policy
+  ✗ landing · LANDING · 1138: nós diferem
+  ✗ landing · LANDING · 711: nós diferem
+  ✗ landing · LANDING · 411: nós diferem
+landing: 3 (estado × largura) medidos nos dois lados · 0 idênticos (nós + doc) · 0 só no commitado (pedem o .env — o usuário falso do auth)
+  ✗ login · AUTH-login · 1138: nós diferem
+  ✗ login · AUTH-login · 711: nós diferem
+  ✗ login · AUTH-login · 411: nós diferem
+  ✗ login · AUTH-login-validacao · 1138: nós diferem
+  ✗ login · AUTH-login-validacao · 711: nós diferem
+  ✗ login · AUTH-login-validacao · 411: nós diferem
+login: 6 (estado × largura) medidos nos dois lados · 0 idênticos (nós + doc) · 33 só no commitado (pedem o .env — o usuário falso do auth)
+  ✗ privacy-policy · PRIVACY · 1138: nós diferem
+  ✗ privacy-policy · PRIVACY · 711: nós diferem
+  ✗ privacy-policy · PRIVACY · 411: nós diferem
+privacy-policy: 3 (estado × largura) medidos nos dois lados · 0 idênticos (nós + doc) · 0 só no commitado (pedem o .env — o usuário falso do auth)
+INÉRCIA: REPROVA — 12
+# exit: 0
+
+$ node docs/ux/I1-PR13-anexos/cn/inercia-diferenca.mjs <inercia> landing login privacy-policy   # nó a nó
+landing · LANDING · 1138: só antes "Notifications alt+T" <section> 1138×0 · só depois 0 · nós que mudaram 0 · doc igual
+landing · LANDING · 711: só antes "Notifications alt+T" <section> 711×0 · só depois 0 · nós que mudaram 0 · doc igual
+landing · LANDING · 411: só antes "Notifications alt+T" <section> 411×0 · só depois 0 · nós que mudaram 0 · doc igual
+login · AUTH-login · 1138: só antes "Notifications alt+T" <section> 1138×0 · só depois 0 · nós que mudaram 0 · doc igual
+login · AUTH-login · 711: só antes "Notifications alt+T" <section> 711×0 · só depois 0 · nós que mudaram 0 · doc igual
+login · AUTH-login · 411: só antes "Notifications alt+T" <section> 411×0 · só depois 0 · nós que mudaram 0 · doc igual
+login · AUTH-login-validacao · 1138: só antes "Notifications alt+T" <section> 1138×0 · só depois 0 · nós que mudaram 0 · doc igual
+login · AUTH-login-validacao · 711: só antes "Notifications alt+T" <section> 711×0 · só depois 0 · nós que mudaram 0 · doc igual
+login · AUTH-login-validacao · 411: só antes "Notifications alt+T" <section> 411×0 · só depois 0 · nós que mudaram 0 · doc igual
+privacy-policy · PRIVACY · 1138: só antes "Notifications alt+T" <section> 1138×0 · só depois 0 · nós que mudaram 0 · doc igual
+privacy-policy · PRIVACY · 711: só antes "Notifications alt+T" <section> 711×0 · só depois 0 · nós que mudaram 0 · doc igual
+privacy-policy · PRIVACY · 411: só antes "Notifications alt+T" <section> 411×0 · só depois 0 · nós que mudaram 0 · doc igual
+
+12 (estado × largura): nós que mudaram 0 · só depois 0 · só antes: 12 × a seção do Toaster do sonner · 0 outros
+INÉRCIA (nó a nó): PASSA — só a seção do Toaster saiu
+# exit: 0

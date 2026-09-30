@@ -1,0 +1,76 @@
+$ pnpm exec vitest run components/setlists/__tests__/setlists-estados.test.tsx   # numa worktree temporária de origin/main (aa772df, --detach), com o teste e o servidor falso copiados
+     × criar falha (rede): o diálogo fica com o digitado, a linha diz o motivo, Tentar de novo reenvia o MESMO corpo 1779ms
+     × criar falha (400): "o servidor recusou os dados" — Tentar de novo: false 1189ms
+     × criar falha (401): "o servidor não aceitou a sessão, entre de novo" — Tentar de novo: false 1192ms
+     × criar falha (429): "muitas tentativas, tente de novo em instantes" — Tentar de novo: false 1186ms
+     × criar falha (500): "falha no servidor" — Tentar de novo: true 1183ms
+     × salvar falha (500): o diálogo de editar fica e diz "não foi possível salvar a setlist" 1183ms
+     × apagar falha (500): a linha DENTRO do diálogo, sem Tentar de novo; o Apagar repete 1170ms
+     × adicionar falha (500 na 1ª): o picker fica com a seleção e a linha; nada entra 1207ms
+     × adicionar falha A MEIO (201, 500): a que entrou aparece na lista e sai da seleção; Tentar de novo manda só as que faltam 1223ms
+     × remover falha (rede): a linha abaixo do cabeçalho da setlist, com o título; Tentar de novo repete o mesmo DELETE 1166ms
+     × editar uma setlist que sumiu (404): o diálogo fecha, a lista é relida, "esta setlist já foi apagada" 1179ms
+     × remover uma linha que sumiu (404), a setlist ainda existe: relê e mostra a lista relida, sem frase 1161ms
+     × N7: sem nome, o Criar fica inativo e DIZ por quê; com nome, a frase some 154ms
+     × N10: todas as músicas da biblioteca já estão na setlist — o picker diz isso, e não "adicione à biblioteca" 1149ms
+     × SET-carregando: a sessão carregando e o sem usuário são a mesma tela — o título, Nova setlist inerte e a frase 30005ms
+     × SET-carregando-dados: três blocos sem texto, com o título e Nova setlist ativo (decisão 15) 30014ms
+     × SET-vazio: nenhuma setlist ainda, e Criar a primeira setlist abre o formulário 30012ms
+     × SET-erro ("rede"): o motivo pela espécie; Tentar de novo (sem conexão) repete a CARGA, não a página (decisão 16) 30010ms
+     × SET-erro ({"status":401,"corpo":{"error":"x","code":"X"}}): o motivo pela espécie; Tentar de novo (o servidor não aceitou a sessão, entre de novo) repete a CARGA, não a página (decisão 16) 30012ms
+     × SET-erro ({"status":429,"corpo":{"error":"x","code":"X"}}): o motivo pela espécie; Tentar de novo (muitas tentativas, tente de novo em instantes) repete a CARGA, não a página (decisão 16) 30012ms
+     × SET-erro ({"status":500,"corpo":{"error":"x","code":"X"}}): o motivo pela espécie; Tentar de novo (falha no servidor) repete a CARGA, não a página (decisão 16) 30008ms
+     × SET e SET-nenhuma: a contagem, os nomes acessíveis, a duração estimada, o tipo em pt-BR, sem alça 121ms
+     × SET-sem-musicas: "0 músicas" sem duração; o Adicionar é o do cabeçalho (um só) 1124ms
+     × decisões 6, 7 e 8: o sentinela da rota, a data e o local, a nota da música 1137ms
+     × o editar é o mesmo diálogo: Editar setlist, os valores de antes, Salvar / Salvando… 137ms
+     × o picker: Selecionar todas, a busca pelo rótulo pt-BR e pelo valor de antes, nada encontrado (decisão 11) 152ms
+     × o picker sem músicas: a biblioteca vazia; o teto (decisão 4); a leitura que falhou (decisão 5) 142ms
+     × adicionando: o botão diz Adicionando… e fica inativo; Esc não fecha 1229ms
+ Test Files  1 failed (1)
+      Tests  28 failed (28)
+# exit: 1
+
+# o bloco 1 ("reprovam na main"): onde cada um para (a 1ª linha do erro e a linha do teste)
+1 · o que era mudo agora diz (reprovam na main) > criar falha (rede): o diálogo fica com o digitado, a linha diz o motivo, Tent
+TestingLibraryElementError: Unable to find role="dialog"
+ ❯ components/setlists/__tests__/setlists-estados.test.tsx:69:21
+1 · o que era mudo agora diz (reprovam na main) > criar falha (400): "o servidor recusou os dados" — Tentar de novo: false
+TestingLibraryElementError: Unable to find an element with the text: não foi possível criar a setlist — o servidor recusou os dados
+ ❯ components/setlists/__tests__/setlists-estados.test.tsx:90:28
+1 · o que era mudo agora diz (reprovam na main) > criar falha (401): "o servidor não aceitou a sessão, entre de novo" — Tent
+TestingLibraryElementError: Unable to find an element with the text: não foi possível criar a setlist — o servidor não aceitou a sessão, entre de novo
+ ❯ components/setlists/__tests__/setlists-estados.test.tsx:90:28
+1 · o que era mudo agora diz (reprovam na main) > criar falha (429): "muitas tentativas, tente de novo em instantes" — Tentar 
+TestingLibraryElementError: Unable to find an element with the text: não foi possível criar a setlist — muitas tentativas, tente de novo em instantes
+ ❯ components/setlists/__tests__/setlists-estados.test.tsx:90:28
+1 · o que era mudo agora diz (reprovam na main) > criar falha (500): "falha no servidor" — Tentar de novo: true
+TestingLibraryElementError: Unable to find an element with the text: não foi possível criar a setlist — falha no servidor
+ ❯ components/setlists/__tests__/setlists-estados.test.tsx:90:28
+1 · o que era mudo agora diz (reprovam na main) > salvar falha (500): o diálogo de editar fica e diz "não foi possível salvar
+TestingLibraryElementError: Unable to find an element with the text: não foi possível salvar a setlist — falha no servidor
+ ❯ components/setlists/__tests__/setlists-estados.test.tsx:99:42
+1 · o que era mudo agora diz (reprovam na main) > apagar falha (500): a linha DENTRO do diálogo, sem Tentar de novo; o Apagar r
+TestingLibraryElementError: Unable to find an element with the text: não foi possível apagar a setlist — falha no servidor
+ ❯ components/setlists/__tests__/setlists-estados.test.tsx:107:28
+1 · o que era mudo agora diz (reprovam na main) > adicionar falha (500 na 1ª): o picker fica com a seleção e a linha; nada en
+TestingLibraryElementError: Unable to find role="dialog"
+ ❯ components/setlists/__tests__/setlists-estados.test.tsx:123:21
+1 · o que era mudo agora diz (reprovam na main) > adicionar falha A MEIO (201, 500): a que entrou aparece na lista e sai da sele
+TestingLibraryElementError: Unable to find role="dialog"
+ ❯ components/setlists/__tests__/setlists-estados.test.tsx:135:21
+1 · o que era mudo agora diz (reprovam na main) > remover falha (rede): a linha abaixo do cabeçalho da setlist, com o título; 
+TestingLibraryElementError: Unable to find an element with the text: não foi possível remover “Construção” — sem conexão
+ ❯ components/setlists/__tests__/setlists-estados.test.tsx:150:25
+1 · o que era mudo agora diz (reprovam na main) > editar uma setlist que sumiu (404): o diálogo fecha, a lista é relida, "esta
+TestingLibraryElementError: Unable to find an element with the text: esta setlist já foi apagada
+ ❯ components/setlists/__tests__/setlists-estados.test.tsx:165:25
+1 · o que era mudo agora diz (reprovam na main) > remover uma linha que sumiu (404), a setlist ainda existe: relê e mostra a li
+AssertionError: expected 1 to be 2 // Object.is equality
+ ❯ components/setlists/__tests__/setlists-estados.test.tsx:176:51
+1 · o que era mudo agora diz (reprovam na main) > N7: sem nome, o Criar fica inativo e DIZ por quê; com nome, a frase some
+TestingLibraryElementError: Unable to find an element with the text: a setlist precisa de um nome
+ ❯ components/setlists/__tests__/setlists-estados.test.tsx:187:22
+1 · o que era mudo agora diz (reprovam na main) > N10: todas as músicas da biblioteca já estão na setlist — o picker diz is
+TestingLibraryElementError: Unable to find an element with the text: todas as músicas da biblioteca já estão nesta setlist
+ ❯ components/setlists/__tests__/setlists-estados.test.tsx:199:28

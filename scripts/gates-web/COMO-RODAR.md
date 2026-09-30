@@ -281,6 +281,55 @@ Se um estado sair NÃO ALCANÇADO, repita só ele: o mesmo comando com `G_FAIXA_
 `--project` da largura — mescla por estado e registra em `rodadasPorEstado` (que a rodada por largura preserva desde a
 div. 843).
 
+## I1-PR13 antes — as setlists velhas, casca-efeito (o executor roda — I1-D37; um comando)
+
+Na árvore `../octavia-i1-pr13`, **no commit 1** (branch `i1/pr13-setlists`; o código do app é o da `main` — o commit 1 só
+acrescenta gate, esperado, testes e instrumento). Perfil de sempre (`~/.octavia-g-faixa-perfil`), contra o `pnpm dev` da
+porta 3000 com o `.env.local` do Marcel. (Na rodada de 2026-09-30 o servidor de pé era o de `../octavia-i1-pr12`, em
+`bd77cd7` — a mesma árvore da `main` `aa772df`; a árvore da PR-13 ainda não tinha `.env.local`, div. 849.)
+
+```bash
+G_FAIXA_BASE_URL=http://localhost:3000 G_FAIXA_PERFIL="$HOME/.octavia-g-faixa-perfil" G_FAIXA_SEM_JANELA=1 G_FAIXA_SUPERFICIES=setlists G_FAIXA_SAIDA=tests/gates-web/medicoes/casca-efeito/antes pnpm exec playwright test -c playwright.g-faixa.config.ts scripts/gates-web/g-faixa-medir.ts
+```
+
+Mede `/setlists` nas três larguras, cinco estados do web velho: `base-lista`, `base-detalhe` (*Show padrão* aberta),
+`base-formulario` (*Create Setlist*), `base-dialogo` (*Delete Setlist*) e `base-picker` (*Add Songs*). Grava
+`tests/gates-web/medicoes/casca-efeito/antes/setlists.json`.
+
+**Tudo fabricado no navegador** (`scripts/gates-web/g-faixa-setlists.ts`): a `GET /api/setlists` (as três setlists da
+folha 8) e a `GET /api/content` (as músicas da folha) — **nenhuma setlist nem content da conta é lido** — e toda escrita a
+`/api/setlists*` (nenhum botão de escrita é clicado; uma que escapasse cairia na barreira: abortada, a rodada reprova).
+Lidos de verdade só a sessão (`/api/profile`, o `securetoken`). **Cota**: ~18 cargas (5 estados × 3 larguras + o controle).
+
+## I1-PR13 — o aceite das setlists (o executor roda — I1-D37; três rodadas)
+
+**Quem roda**: o executor, com o perfil persistente `~/.octavia-g-faixa-perfil` contra `localhost:3000`, com o `pnpm dev` da
+árvore `../octavia-i1-pr13` (branch `i1/pr13-setlists`, **no commit 2**) e o `.env.local` do Marcel — copiado de
+`../octavia-i1-pr12` **sem abrir** (decisão 1 do aval), que o `next dev` carrega. O `tailwind.config.ts` não mudou.
+
+**Por que três rodadas (a cota)**: são 30 estados — os 20 da folha `8-setlists`, o editar (3, contra `SET-criar*`), a N10
+(contra `SET-adicionar-vazio`), `SESSAO-nao-renovada` e os cinco `base-*` da casca-efeito — × 3 larguras + o controle ≈ **93
+cargas com sessão**, e cada carga pode ler `/api/profile` — 60 em 15 min por usuário (`lib/user-rate-limit.ts:54`). C e B
+juntas (62) já passam: então **C** (31), **B** (31) e, **15 minutos depois**, **A** (31). A gravação mescla por largura.
+
+```bash
+G_FAIXA_BASE_URL=http://localhost:3000 G_FAIXA_PERFIL="$HOME/.octavia-g-faixa-perfil" G_FAIXA_SEM_JANELA=1 G_FAIXA_SUPERFICIES=setlists pnpm exec playwright test -c playwright.g-faixa.config.ts scripts/gates-web/g-faixa-medir.ts --project C-1138
+```
+
+(o mesmo com `--project B-711` e, 15 min depois da primeira, `--project A-411`.) Grava
+`tests/gates-web/medicoes/setlists.json`.
+
+**Tudo fabricado no navegador** (`scripts/gates-web/g-faixa-setlists.ts`): a `GET /api/setlists` (as três setlists da folha;
+vazia; segurada; abortada; a lista relida sem *Show padrão*) e a `GET /api/content` (as músicas da folha; vazia; só as do
+show) — **nenhuma setlist nem content da conta é lido** — e toda escrita a `/api/setlists*`: 200, **404** (`SET-ja-apagada`),
+500, segurada (`-criar-salvando`, `-adicionar-enviando`, `-editar-salvando`) ou abortada (`-criar-erro`, `-remover-erro`,
+`-editar-erro`). **Nenhuma escrita sai**; uma que escapasse cairia na barreira (abortada, a rodada reprova). O pedaço do
+`dynamic` fica segurado em `SET-carregando` (`components_setlist-manager` no nome do chunk, `[hipótese]`: se não casar, sai
+NÃO ALCANÇADO com a razão). Lidos de verdade só a sessão (`/api/profile`, o `securetoken`).
+
+Se um estado sair NÃO ALCANÇADO, repita só ele: o mesmo comando com `G_FAIXA_ESTADOS=<estado>[,<estado>]` e o
+`--project` da largura.
+
 ## O resto
 
 | o quê | comando |

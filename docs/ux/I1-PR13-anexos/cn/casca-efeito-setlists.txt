@@ -1,0 +1,24 @@
+$ node docs/ux/I1-PR13-anexos/cn/casca-efeito-setlists.mjs
+base-lista · 1138: casca 9/9 iguais · nó velho por componente 0 · coincidência de texto 0:  · (b) 0 → 0 · scrollWidth 1138 → 1138 · nós 30 → 22
+base-lista · 711: casca 9/9 iguais · nó velho por componente 0 · coincidência de texto 0:  · (b) 0 → 0 · scrollWidth 711 → 711 · nós 30 → 22
+base-lista · 411: casca 8/8 iguais · nó velho por componente 0 · coincidência de texto 1: link/a 9 car. · (b) 0 → 0 · scrollWidth 411 → 411 · nós 30 → 22
+base-detalhe · 1138: casca 9/9 iguais · nó velho por componente 0 · coincidência de texto 16: texto/p 49 car.; texto/div 1 car.; texto/p 9 car.; texto/div 1 car.; texto/p 13 car.; texto/div 1 car.; texto/p 11 car.; texto/div 3 car.; texto/div 1 car.; texto/p 13 car.; texto/div 1 car.; texto/p 18 car.; texto/div 1 car.; texto/div 1 car.; texto/div 3 car.; texto/div 1 car. · (b) 0 → 0 · scrollWidth 1138 → 1138 · nós 68 → 66
+base-detalhe · 711: casca 9/9 iguais · nó velho por componente 0 · coincidência de texto 16: texto/p 49 car.; texto/div 1 car.; texto/p 9 car.; texto/div 1 car.; texto/p 13 car.; texto/div 1 car.; texto/p 11 car.; texto/div 3 car.; texto/div 1 car.; texto/p 13 car.; texto/div 1 car.; texto/p 18 car.; texto/div 1 car.; texto/div 1 car.; texto/div 3 car.; texto/div 1 car. · (b) 0 → 0 · scrollWidth 711 → 711 · nós 68 → 66
+base-detalhe · 411: casca 8/8 iguais · nó velho por componente 0 · coincidência de texto 17: link/a 9 car.; texto/p 49 car.; texto/div 1 car.; texto/p 9 car.; texto/div 1 car.; texto/p 13 car.; texto/div 1 car.; texto/p 11 car.; texto/div 3 car.; texto/div 1 car.; texto/p 13 car.; texto/div 1 car.; texto/p 18 car.; texto/div 1 car.; texto/div 1 car.; texto/div 3 car.; texto/div 1 car. · (b) 6 → 0 · scrollWidth 411 → 411 · nós 68 → 66
+base-formulario · 1138: casca 9/9 iguais · nó velho por componente 0 · coincidência de texto 1: textbox/input 0 car. · (b) 0 → 0 · scrollWidth 1138 → 1138 · nós 46 → 38
+base-formulario · 711: casca 9/9 iguais · nó velho por componente 0 · coincidência de texto 1: textbox/input 0 car. · (b) 0 → 0 · scrollWidth 711 → 711 · nós 46 → 38
+base-formulario · 411: casca 8/10 iguais · nó velho por componente 0 · coincidência de texto 2: link/a 9 car.; textbox/input 0 car. · (b) 0 → 0 · scrollWidth 411 → 411 · nós 46 → 38
+base-dialogo · 1138: casca 9/9 iguais · nó velho por componente 0 · coincidência de texto 0:  · (b) 0 → 0 · scrollWidth 1138 → 1138 · nós 35 → 26
+base-dialogo · 711: casca 9/9 iguais · nó velho por componente 0 · coincidência de texto 0:  · (b) 0 → 0 · scrollWidth 711 → 711 · nós 35 → 26
+base-dialogo · 411: casca 8/8 iguais · nó velho por componente 0 · coincidência de texto 1: link/a 9 car. · (b) 0 → 0 · scrollWidth 411 → 411 · nós 35 → 26
+base-picker · 1138: casca 9/9 iguais · nó velho por componente 0 · coincidência de texto 18: texto/p 49 car.; texto/div 1 car.; texto/p 9 car.; texto/div 1 car.; texto/p 13 car.; texto/div 1 car.; texto/p 11 car.; texto/div 3 car.; texto/div 1 car.; texto/p 13 car.; texto/div 1 car.; texto/p 18 car.; texto/div 1 car.; texto/p 14 car.; texto/div 1 car.; texto/div 3 car.; texto/div 1 car.; texto/p 12 car. · (b) 0 → 0 · scrollWidth 1138 → 1138 · nós 90 → 84
+base-picker · 711: casca 9/9 iguais · nó velho por componente 0 · coincidência de texto 18: texto/p 49 car.; texto/div 1 car.; texto/p 9 car.; texto/div 1 car.; texto/p 13 car.; texto/div 1 car.; texto/p 11 car.; texto/div 3 car.; texto/div 1 car.; texto/p 13 car.; texto/div 1 car.; texto/p 18 car.; texto/div 1 car.; texto/p 14 car.; texto/div 1 car.; texto/div 3 car.; texto/div 1 car.; texto/p 12 car. · (b) 0 → 0 · scrollWidth 711 → 711 · nós 90 → 84
+base-picker · 411: casca 8/8 iguais · nó velho por componente 0 · coincidência de texto 19: link/a 9 car.; texto/p 49 car.; texto/div 1 car.; texto/p 9 car.; texto/div 1 car.; texto/p 13 car.; texto/div 1 car.; texto/p 11 car.; texto/div 3 car.; texto/div 1 car.; texto/p 13 car.; texto/div 1 car.; texto/p 18 car.; texto/div 1 car.; texto/p 14 car.; texto/div 1 car.; texto/div 3 car.; texto/div 1 car.; texto/p 12 car. · (b) 6 → 0 · scrollWidth 411 → 411 · nós 90 → 84
+
+em 1138 (base-detalhe): o conteúdo vai de x=32 a x=1106 (1074 úteis, vão 24) — 2 : 3 = 420 · 630
+  "Garota de Ipanema": antes x 691 w 269 · depois x 540.2 w 444.2
+  "Construção": antes x 691 w 276.1 · depois x 540.2 w 441.7
+  depois: a coluna da lista x 32 w 419.2 · o painel x 475.2 até 1106 (w 630.8) — razão 0.665 (2 : 3 = 0.667)
+
+NÓ VELHO POR COMPONENTE: 0 — nas 15 (estado × largura) · (b) do antes 12 → do depois 0
+# exit: 0

@@ -1,0 +1,24 @@
+$ sh scripts/gates-web/g-back.sh origin/main WORKTREE
+## (i) arquivo do núcleo que mudou
+  ✓ nenhum — diff vazio no núcleo
+## (ii) arquivo novo no alcance (derivação do HEAD fora do congelado)
+  ✓ nenhum
+## (iii) declaração órfã (gback: de arquivo que não mudou)
+  ✓ nenhuma
+
+G-back: PASSA
+# exit: 0
+
+$ bash scripts/gates-web/g-palco.sh
+
+G-palco: PASSA — 0 ocorrências
+
+$ pnpm exec tsc --noEmit
+# exit: 0
+
+$ pnpm lint
+
+✔ No ESLint warnings or errors
+
+$ git diff --stat origin/main -- components/pdf-viewer.tsx components/music-text.tsx packages/identidade tailwind.config.ts app/api lib/api-schemas.ts
+(vazio)

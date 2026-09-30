@@ -1,0 +1,16 @@
+{
+  "_": "Âncoras do esperado (I1-PR13). (1) As da casca, as mesmas das folhas 4 a 7 (I1-PR9…PR12): a CAIXA da busca (só o placeholder \"Buscar…\") e a conta (as iniciais do exemplo, \"MV\"). (2) As caixas dos CINCO campos do diálogo Nova/Editar setlist, no molde da 1-auth, da 6 e da 7 (I1-PR6, decisão 7): a folha desenha o campo como uma caixa (contorno lineInfo, raio 12) com o valor de exemplo ou o placeholder dentro, e o app como um controle cujo valor é o dado — a caixa recebe o data-testid que o app põe no controle, pelo rótulo escrito no irmão anterior; a chave `t:<testid>` casa dos dois lados. O texto dentro da caixa da folha sai \"sem par\". (3) A busca do picker (filha direta do diálogo, 48 de altura): o texto dela é o placeholder ou o termo digitado (\"xablau\" em SET-adicionar-busca) — recebe o testid pelo seletor.",
+  "seletor": "div[style*='border-radius:12px'][style*='border:1px solid #6E6A80']",
+  "porRotulo": {
+    "Nome": "campo-nome",
+    "Descrição": "campo-descricao",
+    "Data do show": "campo-data",
+    "Local": "campo-local",
+    "Notas": "campo-notas"
+  },
+  "porSeletor": [
+    { "seletor": "div:has(> svg)", "texto": "Buscar…", "testid": "casca-busca" },
+    { "seletor": "[aria-label^='Conta de']", "testid": "casca-conta" },
+    { "seletor": "[role='dialog'] > div[style^='height:48px']", "testid": "picker-busca" }
+  ]
+}

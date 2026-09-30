@@ -1,0 +1,20 @@
+$ pnpm test   # commit 2 (ab0de37)
+ Test Files  118 passed | 3 skipped (121)
+      Tests  1172 passed | 58 skipped (1230)
+# exit: 0
+
+$ pnpm exec vitest run components/setlists tests/gates/i1-setlists-escritas.test.tsx tests/gates/i1-editor-put.test.tsx tests/gates/i1-upload-post.test.tsx components/editors components/upload hooks/__tests__/use-setlist-data.test.tsx lib/__tests__/setlist-service.test.ts components/auth/__tests__/login-sessao-cn.test.tsx
+ ✓ |web| components/setlists/__tests__/setlists-defeitos.test.tsx (3 tests) 618ms
+ ✓ |web| components/editors/__tests__/editor-estados.test.tsx (11 tests) 1050ms
+ ✓ |web| hooks/__tests__/use-setlist-data.test.tsx (9 tests) 1298ms
+ ✓ |web| components/upload/__tests__/upload-estados.test.tsx (30 tests) 1119ms
+ ✓ |web| tests/gates/i1-setlists-escritas.test.tsx (7 tests | 1 skipped) 1119ms
+ ✓ |web| lib/__tests__/setlist-service.test.ts (4 tests) 16ms
+ ✓ |web| components/auth/__tests__/login-sessao-cn.test.tsx (15 tests) 1983ms
+ ✓ |web| components/upload/__tests__/limite.test.ts (3 tests) 6ms
+ ✓ |web| tests/gates/i1-editor-put.test.tsx (6 tests | 1 skipped) 589ms
+ ✓ |web| tests/gates/i1-upload-post.test.tsx (5 tests | 1 skipped) 298ms
+ ✓ |web| components/editors/__tests__/lib-salvo.test.tsx (3 tests) 426ms
+ ✓ |web| components/setlists/__tests__/setlists-estados.test.tsx (29 tests) 4578ms
+ Test Files  12 passed (12)
+      Tests  122 passed | 3 skipped (125)

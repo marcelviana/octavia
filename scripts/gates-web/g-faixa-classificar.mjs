@@ -22,7 +22,12 @@
 //   saídas, contadas À PARTE e nunca somadas ao (e)/(b) (a N3-D29):
 //        nome-acessível — o texto de 1138 sumiu na largura W mas existe lá um
 //        nó cujo nome acessível (aria-label) é esse texto (rótulo curto com
-//        nome longo, I1-D7 item 4);
+//        nome longo, I1-D7 item 4); ou — I1-PR13 (commit 2b, aval do veredito) —
+//        o nó de 1138 tem o "nome longo" (`nl`: o aria-label CONTÉM o texto
+//        visível) e na largura W há um nó com o MESMO nome acessível, também
+//        "nome longo", e o texto MAIS CURTO: é o mesmo controle
+//        com o rótulo encurtado (*Adicionar* / `aria-label="Adicionar músicas a
+//        X"`, nas três faixas);
 //        rolagem — o nó está fora, NA VERTICAL, da área visível de um contêiner
 //        que ROLA (overflow auto/scroll): não é corte, é rolagem.
 //   Decisão 621 [Marcel, 2026-09-27]: fora NA HORIZONTAL de um contêiner que rola
@@ -42,7 +47,7 @@
 //   esconde" vale em A. A lista das (e) de 411 continua saindo (é a herança), com contagem 0 como critério.
 //
 // Nó cru (o que o medidor grava): { k, role, tag, testid, h_texto, h_nome, n,
-//   x, y, w, h, sr, clip: {x,y,w,h,rolagem,painel} | null, emPainel?: {x,y,w,h} (I1-PR10), corta: {x,y} }
+//   x, y, w, h, sr, clip: {x,y,w,h,rolagem,painel} | null, emPainel?: {x,y,w,h} (I1-PR10), nl?: true (I1-PR13), corta: {x,y} }
 //   k = chave de identidade estável entre larguras (testid, ou papel + hash do
 //   texto, com o nº da ocorrência); h_texto/h_nome = sha256 (12 hex) do texto
 //   visível e do aria-label — o texto em claro não vai para o JSON de superfície
@@ -157,6 +162,21 @@ export function classificarEstado(estado) {
     if (refK && L !== REFERENCIA) {
       const aqui = porK(med.nos)
       const nomes = new Set(med.nos.filter(temArea).map((n) => n.h_nome).filter(Boolean))
+      // I1-PR13 (2b; I1-D7 item 4): rótulo curto COM nome acessível longo. O nó de 1138 tem o "nome longo" (`nl`: o
+      // `aria-label` contém o texto visível — a coleta o grava) e, na largura W, há um nó com área, fora do leitor de
+      // tela, com o MESMO nome acessível, também "nome longo" e com o texto MAIS CURTO: o rótulo encolheu, o nome diz o
+      // que ele dizia. (A chave desse nó pode coincidir com a de OUTRO nó de 1138 — o *Adicionar* do cabeçalho em B e o
+      // *Adicionar* sem número do picker em C —, por isso não se exige "sem par pela chave": div. 889.) Um nó de W
+      // serve a um só de 1138. NÃO vale para o nó cujo
+      // nome não contém o texto — o cartão que perde um bloco de conteúdo em 711 (`cn-main/library.json`: 20 cartões,
+      // o mesmo `aria-label`, 12 caracteres a menos) segue (e) "texto some do nó".
+      const usados = new Set()
+      const mesmoNome = (r) => {
+        if (!r.nl || !r.h_nome) return false
+        const n = med.nos.find((x) => !usados.has(x.k) && temArea(x) && !x.sr && x.nl && x.h_nome === r.h_nome && x.n < r.n)
+        if (n) usados.add(n.k)
+        return !!n
+      }
       // Par ESTRUTURAL (div. 630): a chave muda quando o texto do nó muda, e um controle que só
       // perdeu parte do texto (o `hidden md:flex` dentro do card) viraria "sem nó". Sem par pela
       // chave, o nó de mesmo papel+tag na mesma ordem, que também ficou sem par, é o mesmo nó.
@@ -171,8 +191,9 @@ export function classificarEstado(estado) {
         if (!temArea(r) || r.sr) continue
         const n = aqui.get(k)
         if (!n) {
-          const p = r.h_texto && nomes.has(r.h_texto) ? null : parEstrutural(r)
-          if (r.h_texto && nomes.has(r.h_texto)) nomeAcessivel.push({ k })
+          const saida = (r.h_texto && nomes.has(r.h_texto)) || mesmoNome(r)
+          const p = saida ? null : parEstrutural(r)
+          if (saida) nomeAcessivel.push({ k })
           else if (p && temArea(p) && p.n < r.n) e.push({ k, tipo: "texto some do nó", n: [r.n, p.n] })
           else if (p && temArea(p)) dl.push({ k, de: [r.w, r.h], para: [p.w, p.h], texto: "trocado" })
           else e.push({ k, tipo: "sem nó", ref: [r.x, r.y, r.w, r.h] })

@@ -4,61 +4,64 @@ import type React from "react"
 import { useState, useEffect, useRef, useCallback } from "react"
 import { getUserSetlists } from "@/lib/setlist-service"
 import { getUserContentPage } from "@/lib/content-service"
-import type { Database } from "@/types/database.types"
+import type { Content, SetlistComMusicas } from "@/components/setlists/tipos"
 
-export type Setlist = Database["public"]["Tables"]["setlists"]["Row"]
-export type Content = Database["public"]["Tables"]["content"]["Row"]
-export type SetlistWithSongs = Setlist & {
-  setlist_songs: Array<{
-    id: string
-    position: number
-    notes: string | null
-    content: Content
-  }>
-}
+export type { Content } from "@/components/setlists/tipos"
+export type SetlistWithSongs = SetlistComMusicas
+
+type Definir<T> = React.Dispatch<React.SetStateAction<T>>
 
 interface UseSetlistDataResult {
   setlists: SetlistWithSongs[]
-  setSetlists: React.Dispatch<React.SetStateAction<SetlistWithSongs[]>>
   content: Content[]
-  setContent: React.Dispatch<React.SetStateAction<Content[]>>
+  setSetlists: Definir<SetlistWithSongs[]>
+  setContent: Definir<Content[]>
   loading: boolean
-  error: string | null
-  reload: () => Promise<void>
+  /** I1-PR-13: a falha da carga das setlists COMO VEIO (com o `status`; `{ rede: true }` sem rede) — a tela escolhe o motivo */
+  erro: unknown | null
+  /** I1-PR-13 (decisão 5): a falha da leitura da biblioteca, que antes era só `console.error` (o picker dizia "sem músicas") */
+  erroDaBiblioteca: unknown | null
+  /** I1-PR-13 (decisão 4): a resposta da biblioteca trouxe TUDO (`total` ≤ o que veio) — a rota corta a página em 100 */
+  bibliotecaInteira: boolean
+  /** relê; devolve a lista relida (ou `null` se a leitura falhou) — o 404 de uma escrita confere por ela se a setlist sumiu */
+  reload: () => Promise<SetlistWithSongs[] | null>
 }
 
 export function useSetlistData(user: any | null, ready: boolean): UseSetlistDataResult {
   const [setlists, setSetlists] = useState<SetlistWithSongs[]>([])
   const [availableContent, setAvailableContent] = useState<Content[]>([])
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [erro, setErro] = useState<unknown | null>(null)
+  const [erroDaBiblioteca, setErroDaBiblioteca] = useState<unknown | null>(null)
+  const [bibliotecaInteira, setBibliotecaInteira] = useState(false)
   const inProgressRef = useRef(false)
   const lastFocusTimeRef = useRef(Date.now())
 
-  const load = useCallback(async (forceRefresh = false) => {
+  const load = useCallback(async (forceRefresh = false): Promise<SetlistWithSongs[] | null> => {
     if (!user || inProgressRef.current) {
-      return
+      return null
     }
     inProgressRef.current = true
+    let relida: SetlistWithSongs[] | null = null
 
     try {
       setLoading(true)
-      setError(null)
+      setErro(null)
 
       // 1. Sem rede declarada: estado de erro, nunca o empty state de
       // primeiro uso. (O cache offline que hidratava a lista antes da rede
       // morreu com o PWA na I1-PR3 — o web é só online.)
       if (typeof navigator !== "undefined" && !navigator.onLine) {
-        setError("Couldn't load setlists. Check your connection and try again.")
-        return
+        setErro({ rede: true })
+        return null
       }
 
       // Ensure we have a valid user with proper authentication
       const userForQuery = user && user.uid ? { id: user.uid, email: user.email } : null
       if (!userForQuery) {
         console.warn("useSetlistData: No valid user found for query")
-        setError("Authentication required")
-        return
+        setErro({ status: 401 })
+        return null
       }
 
       // 2. Rede
@@ -75,28 +78,33 @@ export function useSetlistData(user: any | null, ready: boolean): UseSetlistData
       ])
 
       if (setsResult.status === "fulfilled") {
-        const setsData = setsResult.value as SetlistWithSongs[]
-        setSetlists(setsData)
+        relida = setsResult.value as SetlistWithSongs[]
+        setSetlists(relida)
       } else {
         console.error("useSetlistData: Sets loading failed:", setsResult.reason)
         // Falha de rede nunca vira lista vazia: estado de erro — nunca o
         // empty state de primeiro uso
-        setError("Couldn't load setlists. Check your connection and try again.")
+        setErro(setsResult.reason ?? {})
       }
 
       if (contentResult.status === "fulfilled") {
-        const contentData = contentResult.value.data || []
+        const contentData: Content[] = contentResult.value.data || []
         setAvailableContent(contentData)
+        setErroDaBiblioteca(null)
+        const total = contentResult.value.total
+        setBibliotecaInteira(typeof total === "number" ? total <= contentData.length : false)
       } else {
         console.error("useSetlistData: Content loading failed:", contentResult.reason)
+        setErroDaBiblioteca(contentResult.reason ?? {})
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("useSetlistData: Error:", err)
-      setError(err?.message ?? "Failed to load data")
+      setErro(err ?? {})
     } finally {
       inProgressRef.current = false
       setLoading(false)
     }
+    return relida
   }, [user, ready])
 
   useEffect(() => {
@@ -105,13 +113,13 @@ export function useSetlistData(user: any | null, ready: boolean): UseSetlistData
       const timeoutId = setTimeout(() => {
         load(true) // Force refresh to get latest data
       }, 100)
-      
+
       return () => clearTimeout(timeoutId)
     } else if (ready && !user) {
       setLoading(false)
       setSetlists([])
       setAvailableContent([])
-      setError(null)
+      setErro(null)
     }
     // Explicit return for all code paths
     return undefined
@@ -151,7 +159,9 @@ export function useSetlistData(user: any | null, ready: boolean): UseSetlistData
     content: availableContent,
     setContent: setAvailableContent,
     loading,
-    error,
+    erro,
+    erroDaBiblioteca,
+    bibliotecaInteira,
     reload: () => load(true), // Force refresh to bypass cache
   }
 }

@@ -127,3 +127,26 @@ hooks/useMetadataForm.ts
 components/upload/frases-upload.ts
 components/upload/falhas-do-upload.ts
 components/upload/pecas.tsx
+# I1-PR13 — superfície 8, setlists (folha 8-setlists): /setlists.
+# Commit 1 (gate-first): a rota, o page-client (na PR-9 só o invólucro mudou; nunca esteve na lista), o gerente, as cinco
+# peças de `components/setlist/`, o hook, o serviço (cliente, fora do núcleo do G-back) e o que só as setlists usam (o
+# tipo `types/performance.ts` e o `hooks/use-toast.ts` — I1-D26). O destino de cada um é o §1 do README da PR; os que
+# morrerem no commit 2 saem da lista junto.
+app/setlists/page.tsx
+components/setlists-page-client.tsx
+components/setlist-manager.tsx
+hooks/use-setlist-data.ts
+lib/setlist-service.ts
+# Commit 2: as cinco peças de `components/setlist/`, o `index.ts`, o `types/performance.ts` e o `hooks/use-toast.ts`
+# morreram (saem da lista); os que nasceram em `components/setlists/`.
+components/setlists/frases-setlists.ts
+components/setlists/falhas-das-setlists.ts
+components/setlists/tipos.ts
+components/setlists/use-setlists.ts
+components/setlists/moldura.tsx
+components/setlists/dialogo.tsx
+components/setlists/formulario.tsx
+components/setlists/apagar.tsx
+components/setlists/picker.tsx
+components/setlists/cartao.tsx
+components/setlists/detalhe.tsx

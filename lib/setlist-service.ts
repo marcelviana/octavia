@@ -16,6 +16,10 @@ function getAuthenticatedUser() {
   }
 }
 
+// I1-PR-13 (o molde da I1-PR-9/PR-11/PR-12): o `Error` leva o `status` da resposta (aditivo) — a tela escolhe o motivo
+// pela espécie; a mensagem não chega mais a ela. O `TypeError` do `fetch` (rede) passa como veio.
+const comStatus = (mensagem: string, status: number) => Object.assign(new Error(mensagem), { status })
+
 type Setlist = Database["public"]["Tables"]["setlists"]["Row"]
 type SetlistInsert = Database["public"]["Tables"]["setlists"]["Insert"]
 type SetlistUpdate = Database["public"]["Tables"]["setlists"]["Update"]
@@ -61,7 +65,7 @@ export async function getUserSetlists(providedUser?: any) {
       logger.error("Error fetching setlists:", errorData)
       // Lança em vez de devolver []: o caller precisa distinguir "sem
       // setlists" de "falha de rede" para cair no cache offline (SET-14)
-      throw new Error("Failed to load setlists")
+      throw comStatus("Failed to load setlists", response.status)
     }
 
     const setlists = await response.json()
@@ -152,8 +156,8 @@ export async function createSetlist(setlist: {
     })
 
     if (!response.ok) {
-      const errorData = await response.json()
-      throw new Error(errorData.error || 'Failed to create setlist')
+      const errorData = await response.json().catch(() => ({}))
+      throw comStatus(errorData.error || 'Failed to create setlist', response.status)
     }
 
     const data = await response.json()
@@ -194,7 +198,7 @@ export async function updateSetlist(id: string, updates: { name?: string; descri
     })
 
     if (!response.ok) {
-      throw new Error(`Failed to update setlist: ${response.status}`)
+      throw comStatus(`Failed to update setlist: ${response.status}`, response.status)
     }
 
     return await response.json()
@@ -230,7 +234,7 @@ export async function deleteSetlist(id: string) {
     })
 
     if (!response.ok) {
-      throw new Error(`Failed to delete setlist: ${response.status}`)
+      throw comStatus(`Failed to delete setlist: ${response.status}`, response.status)
     }
 
     return true
@@ -276,8 +280,8 @@ export async function addSongToSetlist(setlistId: string, contentId: string, pos
     })
 
     if (!response.ok) {
-      const errorData = await response.json()
-      throw new Error(errorData.error || 'Failed to add song to setlist')
+      const errorData = await response.json().catch(() => ({}))
+      throw comStatus(errorData.error || 'Failed to add song to setlist', response.status)
     }
 
     const song = await response.json()
@@ -318,8 +322,8 @@ export async function removeSongFromSetlist(songId: string) {
     })
 
     if (!response.ok) {
-      const errorData = await response.json()
-      throw new Error(errorData.error || 'Failed to remove song from setlist')
+      const errorData = await response.json().catch(() => ({}))
+      throw comStatus(errorData.error || 'Failed to remove song from setlist', response.status)
     }
 
     return true

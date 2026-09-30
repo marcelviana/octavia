@@ -1,0 +1,7 @@
+$ node docs/ux/I1-PR13-anexos/cn/nome-longo-cn.mjs
+(1) classificador de 5a8dc93 × o de agora, sobre os JSON commitados em 5a8dc93: 34 JSON · 549 (estado × largura) · divergem: 0
+(2) "Adicionar músicas" (C) → "Adicionar" (B), o MESMO aria-label "Adicionar músicas a X": antes (e) 1 · nome-acessível 0 → agora (e) 0 · nome-acessível 1
+(2) "Adicionar músicas" (C) → "Adicionar" (B), SEM aria-label: antes (e) 1 · nome-acessível 0 → agora (e) 1 · nome-acessível 0 [texto some do nó]
+(2) o cartão que perde conteúdo: o MESMO aria-label, que NÃO contém o texto (48 → 36 car.): antes (e) 1 · nome-acessível 0 → agora (e) 1 · nome-acessível 0 [texto some do nó]
+CN: PASSA
+# exit: 0

@@ -1,0 +1,89 @@
+$ pnpm exec vitest run components/setlists/__tests__/setlists-defeitos.test.tsx   # código do app = main (aa772df)
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-i1-pr13
+
+stderr | components/setlists/__tests__/setlists-defeitos.test.tsx > I1-PR13 — os três defeitos de tela das setlists (N2 §10.3.5/.6) > (c) apagar a setlist já apagada (404): o diálogo fecha, a lista é relida e a tela diz por quê
+Error in deleteSetlist: Error: Failed to delete setlist: 404
+    at deleteSetlist (/Users/marcelviana/projects/octavia-i1-pr13/lib/setlist-service.ts:233:13)
+    at /Users/marcelviana/projects/octavia-i1-pr13/components/setlist-manager.tsx:133:7
+
+stderr | components/setlists/__tests__/setlists-defeitos.test.tsx > I1-PR13 — os três defeitos de tela das setlists (N2 §10.3.5/.6) > (c) apagar a setlist já apagada (404): o diálogo fecha, a lista é relida e a tela diz por quê
+Failed to delete setlist: Error: Failed to delete setlist: 404
+    at deleteSetlist (/Users/marcelviana/projects/octavia-i1-pr13/lib/setlist-service.ts:233:13)
+    at /Users/marcelviana/projects/octavia-i1-pr13/components/setlist-manager.tsx:133:7
+
+ ❯ |web| components/setlists/__tests__/setlists-defeitos.test.tsx (3 tests | 3 failed) 2085ms
+     × (a) remover o bis: o DELETE leva o id da LINHA clicada e só ela sai da tela 643ms
+     × (b) a música adicionada fica com o id que a rota devolveu: removê-la chama esse id 236ms
+     × (c) apagar a setlist já apagada (404): o diálogo fecha, a lista é relida e a tela diz por quê 1204ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |web| components/setlists/__tests__/setlists-defeitos.test.tsx > I1-PR13 — os três defeitos de tela das setlists (N2 §10.3.5/.6) > (a) remover o bis: o DELETE leva o id da LINHA clicada e só ela sai da tela
+AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  [
+-   "DELETE /api/setlists/songs/linha-3",
++   "DELETE /api/setlists/songs/linha-1",
+  ]
+
+ ❯ components/setlists/__tests__/setlists-defeitos.test.tsx:62:31
+     60| 
+     61|     await waitFor(() => expect(deletes(escritas)).toHaveLength(1))
+     62|     expect(deletes(escritas)).toEqual(['DELETE /api/setlists/songs/lin…
+       |                               ^
+     63|     await waitFor(() => expect(screen.getAllByText('Garota de Ipanema'…
+     64|     expect(screen.getAllByText('Construção')).toHaveLength(1)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  |web| components/setlists/__tests__/setlists-defeitos.test.tsx > I1-PR13 — os três defeitos de tela das setlists (N2 §10.3.5/.6) > (b) a música adicionada fica com o id que a rota devolveu: removê-la chama esse id
+AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
+
+- Expected
++ Received
+
+  [
+-   "DELETE /api/setlists/songs/linha-do-servidor-1",
++   "DELETE /api/setlists/songs/set-solo-c-asa",
+  ]
+
+ ❯ components/setlists/__tests__/setlists-defeitos.test.tsx:82:31
+     80| 
+     81|     await waitFor(() => expect(deletes(escritas)).toHaveLength(1))
+     82|     expect(deletes(escritas)).toEqual(['DELETE /api/setlists/songs/lin…
+       |                               ^
+     83|   }, 60_000)
+     84| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  |web| components/setlists/__tests__/setlists-defeitos.test.tsx > I1-PR13 — os três defeitos de tela das setlists (N2 §10.3.5/.6) > (c) apagar a setlist já apagada (404): o diálogo fecha, a lista é relida e a tela diz por quê
+AssertionError: expected <div role="dialog" …(7)>…(3)</div> to be null
+
+
+[… o DOM do diálogo "Delete Setlist", aberto e sem mensagem — 218 linhas omitidas …]
+
+ ❯ components/setlists/__tests__/setlists-defeitos.test.tsx:97:62
+     95|     await waitFor(() => expect(deletes(escritas)).toEqual(['DELETE /ap…
+     96| 
+     97|     await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull(…
+       |                                                              ^
+     98|     expect(await screen.findByText('esta setlist já foi apagada')).toB…
+     99|     await waitFor(() => expect(screen.queryByText('Show padrão')).toBe…
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed (3)
+   Start at  10:27:20
+   Duration  3.20s (transform 364ms, setup 321ms, import 178ms, tests 2.08s, environment 497ms)
+
+# exit: 1

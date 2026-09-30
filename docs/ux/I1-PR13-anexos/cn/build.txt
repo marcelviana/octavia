@@ -1,0 +1,6 @@
+$ pnpm build   # numa cópia da árvore, sem .env
+ ✓ Compiled successfully
+├ ƒ /dashboard                           1.62 kB         276 kB
+├ ƒ /library                             1.43 kB         275 kB
+├ ƒ /setlists                            2.89 kB         277 kB
+# exit: 0

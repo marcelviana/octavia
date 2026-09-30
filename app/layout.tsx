@@ -7,7 +7,6 @@ import "./styles/fontes.css"
 import "@/lib/logger"
 import { FirebaseAuthProvider } from "@/contexts/firebase-auth-context"
 import { SessionProvider } from "@/components/providers/session-provider"
-import { Toaster } from "@/components/ui/sonner"
 import { ErrorBoundary } from "@/lib/error-boundary"
 import { getCSPNonce } from "@/lib/csp-nonce"
 
@@ -124,7 +123,6 @@ export default async function RootLayout({
         <ErrorBoundary>
           <FirebaseAuthProvider>
             <SessionProvider>{children}</SessionProvider>
-            <Toaster richColors position="top-right" />
           </FirebaseAuthProvider>
         </ErrorBoundary>
       </body>

@@ -1,0 +1,7 @@
+$ node scripts/gates-web/g-tok.mjs
+  achados do conferir: 26 · cobertos: 26 · descobertos: 0 · erratas: 9 · órfãs: 0
+## (ii) arquivos redesenhados — scripts/gates-web/g-tok-arquivos.txt
+  arquivos: 123 · literais de identidade acusados: 0 · toasts: 0 · imports de ui: 0 · textos examinados: 22 · isentos de inglês (scripts/gates-web/g-tok-sem-ingles.txt): 1 · vocabulário: 133 · isenções: 9
+
+G-tok: PASSA
+# exit: 0

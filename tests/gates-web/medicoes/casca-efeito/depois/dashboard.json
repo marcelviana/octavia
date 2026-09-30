@@ -1,0 +1,4467 @@
+{
+ "superficie": "dashboard",
+ "rota": "/dashboard",
+ "folha": "4-content-lista",
+ "implementada": true,
+ "publica": false,
+ "rodada": "2026-09-30T15:16:21.541Z",
+ "base": "http://localhost:3000",
+ "chromium": "140.0.7339.16",
+ "commit": "ab0de377757d3f941fa3b211c8abad986aecf4b0+sujo",
+ "controlePositivo": {
+  "411": {
+   "controle1": "GET 200 falhou net::ERR_ABORTED",
+   "controle2": "GET 200 falhou net::ERR_ABORTED"
+  },
+  "711": {
+   "controle1": "GET 200 falhou net::ERR_ABORTED",
+   "controle2": "GET 200 falhou net::ERR_ABORTED"
+  },
+  "1138": {
+   "controle1": "GET 200 falhou net::ERR_ABORTED",
+   "controle2": "GET 200 falhou net::ERR_ABORTED"
+  }
+ },
+ "estadosMedidos": [
+  "DASH"
+ ],
+ "requests": {
+  "411": {
+   "linhas": [
+    {
+     "n": 1,
+     "ms": 135,
+     "metodo": "GET",
+     "caminho": "/dashboard",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 2,
+     "ms": 832,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 3,
+     "ms": 833,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 4,
+     "ms": 840,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 5,
+     "ms": 843,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 6,
+     "ms": 844,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 7,
+     "ms": 845,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/dashboard/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 8,
+     "ms": 854,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 9,
+     "ms": 857,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 10,
+     "ms": 864,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-1",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 11,
+     "ms": 892,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-2",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 12,
+     "ms": 893,
+     "metodo": "GET",
+     "caminho": "/dashboard",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 13,
+     "ms": 1533,
+     "metodo": "POST",
+     "caminho": "/api/auth/session",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 14,
+     "ms": 1554,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 15,
+     "ms": 1557,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 16,
+     "ms": 1634,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 17,
+     "ms": 1635,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 18,
+     "ms": 1637,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 19,
+     "ms": 1638,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/dashboard/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 20,
+     "ms": 1643,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 21,
+     "ms": 1645,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 22,
+     "ms": 2145,
+     "metodo": "POST",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 23,
+     "ms": 2162,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 24,
+     "ms": 2405,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 25,
+     "ms": 2412,
+     "metodo": "GET",
+     "caminho": "/dashboard",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 26,
+     "ms": 3155,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 27,
+     "ms": 3158,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 28,
+     "ms": 3162,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 29,
+     "ms": 3166,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 30,
+     "ms": 3167,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 31,
+     "ms": 3168,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/dashboard/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 32,
+     "ms": 3171,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 33,
+     "ms": 3172,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 34,
+     "ms": 3762,
+     "metodo": "POST",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "—"
+    },
+    {
+     "n": 35,
+     "ms": 3778,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 36,
+     "ms": 3986,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    }
+   ],
+   "outrosHosts": {
+    "identitytoolkit.googleapis.com": 3
+   },
+   "prodAbortados": 0
+  },
+  "711": {
+   "linhas": [
+    {
+     "n": 1,
+     "ms": 142,
+     "metodo": "GET",
+     "caminho": "/dashboard",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 2,
+     "ms": 851,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 3,
+     "ms": 852,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 4,
+     "ms": 858,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 5,
+     "ms": 860,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 6,
+     "ms": 861,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 7,
+     "ms": 863,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/dashboard/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 8,
+     "ms": 872,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 9,
+     "ms": 873,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 10,
+     "ms": 882,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-1",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 11,
+     "ms": 903,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-2",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 12,
+     "ms": 912,
+     "metodo": "GET",
+     "caminho": "/dashboard",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 13,
+     "ms": 1512,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 14,
+     "ms": 1515,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 15,
+     "ms": 1520,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 16,
+     "ms": 1524,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 17,
+     "ms": 1525,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 18,
+     "ms": 1526,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/dashboard/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 19,
+     "ms": 1530,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 20,
+     "ms": 1532,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 21,
+     "ms": 2038,
+     "metodo": "POST",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 22,
+     "ms": 2055,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 23,
+     "ms": 2264,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 24,
+     "ms": 2431,
+     "metodo": "GET",
+     "caminho": "/dashboard",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 25,
+     "ms": 3254,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 26,
+     "ms": 3257,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 27,
+     "ms": 3262,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 28,
+     "ms": 3265,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 29,
+     "ms": 3267,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 30,
+     "ms": 3269,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/dashboard/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 31,
+     "ms": 3272,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 32,
+     "ms": 3273,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 33,
+     "ms": 3792,
+     "metodo": "POST",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "—"
+    },
+    {
+     "n": 34,
+     "ms": 3811,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 35,
+     "ms": 4060,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    }
+   ],
+   "outrosHosts": {
+    "identitytoolkit.googleapis.com": 3
+   },
+   "prodAbortados": 0
+  },
+  "1138": {
+   "linhas": [
+    {
+     "n": 1,
+     "ms": 134,
+     "metodo": "GET",
+     "caminho": "/dashboard",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 2,
+     "ms": 759,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 3,
+     "ms": 760,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 4,
+     "ms": 768,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 5,
+     "ms": 771,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 6,
+     "ms": 772,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 7,
+     "ms": 773,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/dashboard/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 8,
+     "ms": 783,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 9,
+     "ms": 785,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 10,
+     "ms": 793,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-1",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 11,
+     "ms": 822,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-2",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 12,
+     "ms": 824,
+     "metodo": "GET",
+     "caminho": "/dashboard",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 13,
+     "ms": 1448,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 14,
+     "ms": 1450,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 15,
+     "ms": 1456,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 16,
+     "ms": 1459,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 17,
+     "ms": 1460,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 18,
+     "ms": 1462,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/dashboard/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 19,
+     "ms": 1464,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 20,
+     "ms": 1466,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 21,
+     "ms": 1958,
+     "metodo": "POST",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED"
+    },
+    {
+     "n": 22,
+     "ms": 1974,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 23,
+     "ms": 2183,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 24,
+     "ms": 2349,
+     "metodo": "GET",
+     "caminho": "/dashboard",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 25,
+     "ms": 2976,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 26,
+     "ms": 2981,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 27,
+     "ms": 2985,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 28,
+     "ms": 2988,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 29,
+     "ms": 2990,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 30,
+     "ms": 2991,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/dashboard/page.js",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 31,
+     "ms": 2994,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 32,
+     "ms": 2995,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 33,
+     "ms": 3513,
+     "metodo": "POST",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "—"
+    },
+    {
+     "n": 34,
+     "ms": 3535,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "200",
+     "fim": "fim"
+    },
+    {
+     "n": 35,
+     "ms": 3770,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim"
+    }
+   ],
+   "outrosHosts": {
+    "identitytoolkit.googleapis.com": 3
+   },
+   "prodAbortados": 0
+  }
+ },
+ "estados": {
+  "DASH": {
+   "larguras": {
+    "411": {
+     "url": "/dashboard",
+     "viewport": {
+      "w": 411,
+      "h": 823
+     },
+     "doc": {
+      "scrollWidth": 411,
+      "clientWidth": 411
+     },
+     "nos": [
+      {
+       "k": "img:6fa3606cd084#1",
+       "role": "img",
+       "tag": "div",
+       "testid": null,
+       "h_texto": "6fa3606cd084",
+       "h_nome": "e5b3dfe4ee10",
+       "n": 7,
+       "x": 24,
+       "y": 0,
+       "w": 126.9,
+       "h": 64,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:e8bb7013c1eb#1",
+       "role": "texto",
+       "tag": "nav",
+       "testid": null,
+       "h_texto": "e8bb7013c1eb",
+       "h_nome": "a6edef72ddcd",
+       "n": 36,
+       "x": 24,
+       "y": 64,
+       "w": 363,
+       "h": 104,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:0ebf35ccfd30#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "0ebf35ccfd30",
+       "h_nome": null,
+       "n": 6,
+       "x": 24,
+       "y": 64,
+       "w": 75.7,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:c9169c12cba9#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "c9169c12cba9",
+       "h_nome": null,
+       "n": 10,
+       "x": 107.7,
+       "y": 64,
+       "w": 102.5,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:30e7717f44c4#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "30e7717f44c4",
+       "h_nome": null,
+       "n": 8,
+       "x": 218.2,
+       "y": 64,
+       "w": 86.8,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:967bcf34a913#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "967bcf34a913",
+       "h_nome": null,
+       "n": 9,
+       "x": 24,
+       "y": 120,
+       "w": 99,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "t:casca-busca#1",
+       "role": "search",
+       "tag": "form",
+       "testid": "casca-busca",
+       "h_texto": null,
+       "h_nome": null,
+       "n": 0,
+       "x": 174.9,
+       "y": 8,
+       "w": 148.1,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "t:casca-busca-campo#1",
+       "role": "textbox",
+       "tag": "input",
+       "testid": "casca-busca-campo",
+       "h_texto": "9120df43bebb",
+       "h_nome": "9120df43bebb",
+       "n": 7,
+       "x": 223.9,
+       "y": 21.5,
+       "w": 82.1,
+       "h": 21,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "t:casca-conta#1",
+       "role": "button",
+       "tag": "button",
+       "testid": "casca-conta",
+       "h_texto": "aba32a1dc3e1",
+       "h_nome": "c0bf8bd21261",
+       "n": 2,
+       "x": 339,
+       "y": 8,
+       "w": 48,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:0ebf35ccfd30#1",
+       "role": "heading",
+       "tag": "h1",
+       "testid": null,
+       "h_texto": "0ebf35ccfd30",
+       "h_nome": null,
+       "n": 6,
+       "x": 24,
+       "y": 214,
+       "w": 124.6,
+       "h": 30,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:967bcf34a913#2",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "967bcf34a913",
+       "h_nome": null,
+       "n": 9,
+       "x": 252,
+       "y": 201,
+       "w": 135,
+       "h": 56,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "tab:36664e8242af#1",
+       "role": "tab",
+       "tag": "button",
+       "testid": null,
+       "h_texto": "36664e8242af",
+       "h_nome": null,
+       "n": 11,
+       "x": 24,
+       "y": 281,
+       "w": 108.9,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "tab:3068eba03d59#1",
+       "role": "tab",
+       "tag": "button",
+       "testid": null,
+       "h_texto": "3068eba03d59",
+       "h_nome": null,
+       "n": 8,
+       "x": 140.9,
+       "y": 281,
+       "w": 100.1,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "tab:1f5b98b37ef8#1",
+       "role": "tab",
+       "tag": "button",
+       "testid": null,
+       "h_texto": "1f5b98b37ef8",
+       "h_nome": null,
+       "n": 9,
+       "x": 249,
+       "y": 281,
+       "w": 96.6,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:49d180ecf561#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "49d180ecf561",
+       "h_nome": null,
+       "n": 2,
+       "x": 49,
+       "y": 370,
+       "w": 123.5,
+       "h": 33,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:cbda95979b76#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "cbda95979b76",
+       "h_nome": null,
+       "n": 23,
+       "x": 49,
+       "y": 407,
+       "w": 123.5,
+       "h": 38,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:4e07408562be#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "4e07408562be",
+       "h_nome": null,
+       "n": 1,
+       "x": 238.5,
+       "y": 370,
+       "w": 123.5,
+       "h": 33,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:dd79d17ec405#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "dd79d17ec405",
+       "h_nome": null,
+       "n": 8,
+       "x": 238.5,
+       "y": 407,
+       "w": 123.5,
+       "h": 19,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:4e07408562be#2",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "4e07408562be",
+       "h_nome": null,
+       "n": 1,
+       "x": 49,
+       "y": 495,
+       "w": 123.5,
+       "h": 33,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:980b73779a69#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "980b73779a69",
+       "h_nome": null,
+       "n": 9,
+       "x": 49,
+       "y": 532,
+       "w": 123.5,
+       "h": 19,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:4a44dc153642#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "4a44dc153642",
+       "h_nome": null,
+       "n": 2,
+       "x": 238.5,
+       "y": 495,
+       "w": 123.5,
+       "h": 33,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:98091398ff68#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "98091398ff68",
+       "h_nome": null,
+       "n": 15,
+       "x": 238.5,
+       "y": 532,
+       "w": 123.5,
+       "h": 19,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:3068eba03d59#1",
+       "role": "heading",
+       "tag": "h2",
+       "testid": null,
+       "h_texto": "3068eba03d59",
+       "h_nome": null,
+       "n": 8,
+       "x": 25,
+       "y": 609,
+       "w": 361,
+       "h": 28,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:f702f8744934#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "f702f8744934",
+       "h_nome": null,
+       "n": 37,
+       "x": 25,
+       "y": 637,
+       "w": 361,
+       "h": 57,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:b1140b078c67#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "b1140b078c67",
+       "h_nome": null,
+       "n": 27,
+       "x": 25,
+       "y": 694,
+       "w": 361,
+       "h": 57,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:8e8f8504e97c#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "8e8f8504e97c",
+       "h_nome": null,
+       "n": 27,
+       "x": 25,
+       "y": 751,
+       "w": 361,
+       "h": 57,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:35336d315031#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "35336d315031",
+       "h_nome": null,
+       "n": 25,
+       "x": 25,
+       "y": 808,
+       "w": 361,
+       "h": 57,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:8f53b343d885#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "8f53b343d885",
+       "h_nome": null,
+       "n": 33,
+       "x": 25,
+       "y": 865,
+       "w": 361,
+       "h": 57,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:1f5b98b37ef8#1",
+       "role": "heading",
+       "tag": "h2",
+       "testid": null,
+       "h_texto": "1f5b98b37ef8",
+       "h_nome": null,
+       "n": 9,
+       "x": 25,
+       "y": 972,
+       "w": 361,
+       "h": 28,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:101813684217#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "101813684217",
+       "h_nome": null,
+       "n": 27,
+       "x": 25,
+       "y": 1000,
+       "w": 361,
+       "h": 57,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:3177ada3db55#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "3177ada3db55",
+       "h_nome": null,
+       "n": 34,
+       "x": 25,
+       "y": 1057,
+       "w": 361,
+       "h": 57,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:4e8a7db661de#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "4e8a7db661de",
+       "h_nome": null,
+       "n": 27,
+       "x": 25,
+       "y": 1114,
+       "w": 361,
+       "h": 57,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      }
+     ]
+    },
+    "711": {
+     "url": "/dashboard",
+     "viewport": {
+      "w": 711,
+      "h": 1138
+     },
+     "doc": {
+      "scrollWidth": 711,
+      "clientWidth": 711
+     },
+     "nos": [
+      {
+       "k": "img:6fa3606cd084#1",
+       "role": "img",
+       "tag": "div",
+       "testid": null,
+       "h_texto": "6fa3606cd084",
+       "h_nome": "e5b3dfe4ee10",
+       "n": 7,
+       "x": 24,
+       "y": 0,
+       "w": 126.9,
+       "h": 64,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:e8bb7013c1eb#1",
+       "role": "texto",
+       "tag": "nav",
+       "testid": null,
+       "h_texto": "e8bb7013c1eb",
+       "h_nome": "a6edef72ddcd",
+       "n": 36,
+       "x": 24,
+       "y": 64,
+       "w": 663,
+       "h": 56,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:0ebf35ccfd30#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "0ebf35ccfd30",
+       "h_nome": null,
+       "n": 6,
+       "x": 24,
+       "y": 68,
+       "w": 75.7,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:c9169c12cba9#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "c9169c12cba9",
+       "h_nome": null,
+       "n": 10,
+       "x": 107.7,
+       "y": 68,
+       "w": 102.5,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:30e7717f44c4#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "30e7717f44c4",
+       "h_nome": null,
+       "n": 8,
+       "x": 218.2,
+       "y": 68,
+       "w": 86.8,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:967bcf34a913#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "967bcf34a913",
+       "h_nome": null,
+       "n": 9,
+       "x": 313,
+       "y": 68,
+       "w": 99,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "t:casca-busca#1",
+       "role": "search",
+       "tag": "form",
+       "testid": "casca-busca",
+       "h_texto": null,
+       "h_nome": null,
+       "n": 0,
+       "x": 174.9,
+       "y": 8,
+       "w": 448.1,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "t:casca-busca-campo#1",
+       "role": "textbox",
+       "tag": "input",
+       "testid": "casca-busca-campo",
+       "h_texto": "9120df43bebb",
+       "h_nome": "9120df43bebb",
+       "n": 7,
+       "x": 223.9,
+       "y": 21.5,
+       "w": 382.1,
+       "h": 21,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "t:casca-conta#1",
+       "role": "button",
+       "tag": "button",
+       "testid": "casca-conta",
+       "h_texto": "aba32a1dc3e1",
+       "h_nome": "c0bf8bd21261",
+       "n": 2,
+       "x": 639,
+       "y": 8,
+       "w": 48,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:0ebf35ccfd30#1",
+       "role": "heading",
+       "tag": "h1",
+       "testid": null,
+       "h_texto": "0ebf35ccfd30",
+       "h_nome": null,
+       "n": 6,
+       "x": 24,
+       "y": 166,
+       "w": 124.6,
+       "h": 30,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:967bcf34a913#2",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "967bcf34a913",
+       "h_nome": null,
+       "n": 9,
+       "x": 552,
+       "y": 153,
+       "w": 135,
+       "h": 56,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "tab:36664e8242af#1",
+       "role": "tab",
+       "tag": "button",
+       "testid": null,
+       "h_texto": "36664e8242af",
+       "h_nome": null,
+       "n": 11,
+       "x": 24,
+       "y": 233,
+       "w": 108.9,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "tab:3068eba03d59#1",
+       "role": "tab",
+       "tag": "button",
+       "testid": null,
+       "h_texto": "3068eba03d59",
+       "h_nome": null,
+       "n": 8,
+       "x": 140.9,
+       "y": 233,
+       "w": 100.1,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "tab:1f5b98b37ef8#1",
+       "role": "tab",
+       "tag": "button",
+       "testid": null,
+       "h_texto": "1f5b98b37ef8",
+       "h_nome": null,
+       "n": 9,
+       "x": 249,
+       "y": 233,
+       "w": 96.6,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:49d180ecf561#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "49d180ecf561",
+       "h_nome": null,
+       "n": 2,
+       "x": 49,
+       "y": 322,
+       "w": 273.5,
+       "h": 33,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:cbda95979b76#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "cbda95979b76",
+       "h_nome": null,
+       "n": 23,
+       "x": 49,
+       "y": 359,
+       "w": 273.5,
+       "h": 19,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:4e07408562be#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "4e07408562be",
+       "h_nome": null,
+       "n": 1,
+       "x": 388.5,
+       "y": 322,
+       "w": 273.5,
+       "h": 33,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:dd79d17ec405#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "dd79d17ec405",
+       "h_nome": null,
+       "n": 8,
+       "x": 388.5,
+       "y": 359,
+       "w": 273.5,
+       "h": 19,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:4e07408562be#2",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "4e07408562be",
+       "h_nome": null,
+       "n": 1,
+       "x": 49,
+       "y": 428,
+       "w": 273.5,
+       "h": 33,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:980b73779a69#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "980b73779a69",
+       "h_nome": null,
+       "n": 9,
+       "x": 49,
+       "y": 465,
+       "w": 273.5,
+       "h": 19,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:4a44dc153642#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "4a44dc153642",
+       "h_nome": null,
+       "n": 2,
+       "x": 388.5,
+       "y": 428,
+       "w": 273.5,
+       "h": 33,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:98091398ff68#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "98091398ff68",
+       "h_nome": null,
+       "n": 15,
+       "x": 388.5,
+       "y": 465,
+       "w": 273.5,
+       "h": 19,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:3068eba03d59#1",
+       "role": "heading",
+       "tag": "h2",
+       "testid": null,
+       "h_texto": "3068eba03d59",
+       "h_nome": null,
+       "n": 8,
+       "x": 25,
+       "y": 542,
+       "w": 661,
+       "h": 28,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:f702f8744934#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "f702f8744934",
+       "h_nome": null,
+       "n": 37,
+       "x": 25,
+       "y": 570,
+       "w": 661,
+       "h": 57,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:b1140b078c67#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "b1140b078c67",
+       "h_nome": null,
+       "n": 27,
+       "x": 25,
+       "y": 627,
+       "w": 661,
+       "h": 57,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:8e8f8504e97c#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "8e8f8504e97c",
+       "h_nome": null,
+       "n": 27,
+       "x": 25,
+       "y": 684,
+       "w": 661,
+       "h": 57,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:35336d315031#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "35336d315031",
+       "h_nome": null,
+       "n": 25,
+       "x": 25,
+       "y": 741,
+       "w": 661,
+       "h": 57,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:8f53b343d885#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "8f53b343d885",
+       "h_nome": null,
+       "n": 33,
+       "x": 25,
+       "y": 798,
+       "w": 661,
+       "h": 57,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:1f5b98b37ef8#1",
+       "role": "heading",
+       "tag": "h2",
+       "testid": null,
+       "h_texto": "1f5b98b37ef8",
+       "h_nome": null,
+       "n": 9,
+       "x": 25,
+       "y": 905,
+       "w": 661,
+       "h": 28,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:101813684217#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "101813684217",
+       "h_nome": null,
+       "n": 27,
+       "x": 25,
+       "y": 933,
+       "w": 661,
+       "h": 57,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:3177ada3db55#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "3177ada3db55",
+       "h_nome": null,
+       "n": 34,
+       "x": 25,
+       "y": 990,
+       "w": 661,
+       "h": 57,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:4e8a7db661de#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "4e8a7db661de",
+       "h_nome": null,
+       "n": 27,
+       "x": 25,
+       "y": 1047,
+       "w": 661,
+       "h": 57,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      }
+     ]
+    },
+    "1138": {
+     "url": "/dashboard",
+     "viewport": {
+      "w": 1138,
+      "h": 711
+     },
+     "doc": {
+      "scrollWidth": 1138,
+      "clientWidth": 1138
+     },
+     "nos": [
+      {
+       "k": "img:6fa3606cd084#1",
+       "role": "img",
+       "tag": "div",
+       "testid": null,
+       "h_texto": "6fa3606cd084",
+       "h_nome": "e5b3dfe4ee10",
+       "n": 7,
+       "x": 32,
+       "y": 0,
+       "w": 126.9,
+       "h": 64,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:e8bb7013c1eb#1",
+       "role": "texto",
+       "tag": "nav",
+       "testid": null,
+       "h_texto": "e8bb7013c1eb",
+       "h_nome": "a6edef72ddcd",
+       "n": 36,
+       "x": 182.9,
+       "y": 0,
+       "w": 388,
+       "h": 64,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:0ebf35ccfd30#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "0ebf35ccfd30",
+       "h_nome": null,
+       "n": 6,
+       "x": 182.9,
+       "y": 8,
+       "w": 75.7,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:c9169c12cba9#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "c9169c12cba9",
+       "h_nome": null,
+       "n": 10,
+       "x": 266.5,
+       "y": 8,
+       "w": 102.5,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:30e7717f44c4#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "30e7717f44c4",
+       "h_nome": null,
+       "n": 8,
+       "x": 377.1,
+       "y": 8,
+       "w": 86.8,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:967bcf34a913#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "967bcf34a913",
+       "h_nome": null,
+       "n": 9,
+       "x": 471.9,
+       "y": 8,
+       "w": 99,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "t:casca-busca#1",
+       "role": "search",
+       "tag": "form",
+       "testid": "casca-busca",
+       "h_texto": null,
+       "h_nome": null,
+       "n": 0,
+       "x": 594.9,
+       "y": 8,
+       "w": 447.1,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "t:casca-busca-campo#1",
+       "role": "textbox",
+       "tag": "input",
+       "testid": "casca-busca-campo",
+       "h_texto": "9120df43bebb",
+       "h_nome": "9120df43bebb",
+       "n": 7,
+       "x": 643.9,
+       "y": 21.5,
+       "w": 381.1,
+       "h": 21,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "t:casca-conta#1",
+       "role": "button",
+       "tag": "button",
+       "testid": "casca-conta",
+       "h_texto": "aba32a1dc3e1",
+       "h_nome": "c0bf8bd21261",
+       "n": 2,
+       "x": 1058,
+       "y": 8,
+       "w": 48,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:0ebf35ccfd30#1",
+       "role": "heading",
+       "tag": "h1",
+       "testid": null,
+       "h_texto": "0ebf35ccfd30",
+       "h_nome": null,
+       "n": 6,
+       "x": 32,
+       "y": 110,
+       "w": 124.6,
+       "h": 30,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:967bcf34a913#2",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "967bcf34a913",
+       "h_nome": null,
+       "n": 9,
+       "x": 971,
+       "y": 97,
+       "w": 135,
+       "h": 56,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "tab:36664e8242af#1",
+       "role": "tab",
+       "tag": "button",
+       "testid": null,
+       "h_texto": "36664e8242af",
+       "h_nome": null,
+       "n": 11,
+       "x": 32,
+       "y": 177,
+       "w": 108.9,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "tab:3068eba03d59#1",
+       "role": "tab",
+       "tag": "button",
+       "testid": null,
+       "h_texto": "3068eba03d59",
+       "h_nome": null,
+       "n": 8,
+       "x": 148.9,
+       "y": 177,
+       "w": 100.1,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "tab:1f5b98b37ef8#1",
+       "role": "tab",
+       "tag": "button",
+       "testid": null,
+       "h_texto": "1f5b98b37ef8",
+       "h_nome": null,
+       "n": 9,
+       "x": 257,
+       "y": 177,
+       "w": 96.6,
+       "h": 48,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:49d180ecf561#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "49d180ecf561",
+       "h_nome": null,
+       "n": 2,
+       "x": 57,
+       "y": 266,
+       "w": 206.5,
+       "h": 33,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:cbda95979b76#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "cbda95979b76",
+       "h_nome": null,
+       "n": 23,
+       "x": 57,
+       "y": 303,
+       "w": 206.5,
+       "h": 19,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:4e07408562be#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "4e07408562be",
+       "h_nome": null,
+       "n": 1,
+       "x": 329.5,
+       "y": 266,
+       "w": 206.5,
+       "h": 33,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:dd79d17ec405#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "dd79d17ec405",
+       "h_nome": null,
+       "n": 8,
+       "x": 329.5,
+       "y": 303,
+       "w": 206.5,
+       "h": 19,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:4e07408562be#2",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "4e07408562be",
+       "h_nome": null,
+       "n": 1,
+       "x": 602,
+       "y": 266,
+       "w": 206.5,
+       "h": 33,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:980b73779a69#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "980b73779a69",
+       "h_nome": null,
+       "n": 9,
+       "x": 602,
+       "y": 303,
+       "w": 206.5,
+       "h": 19,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:4a44dc153642#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "4a44dc153642",
+       "h_nome": null,
+       "n": 2,
+       "x": 874.5,
+       "y": 266,
+       "w": 206.5,
+       "h": 33,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "texto:98091398ff68#1",
+       "role": "texto",
+       "tag": "span",
+       "testid": null,
+       "h_texto": "98091398ff68",
+       "h_nome": null,
+       "n": 15,
+       "x": 874.5,
+       "y": 303,
+       "w": 206.5,
+       "h": 19,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:3068eba03d59#1",
+       "role": "heading",
+       "tag": "h2",
+       "testid": null,
+       "h_texto": "3068eba03d59",
+       "h_nome": null,
+       "n": 8,
+       "x": 33,
+       "y": 380,
+       "w": 523,
+       "h": 28,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:f702f8744934#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "f702f8744934",
+       "h_nome": null,
+       "n": 37,
+       "x": 33,
+       "y": 408,
+       "w": 523,
+       "h": 57,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:b1140b078c67#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "b1140b078c67",
+       "h_nome": null,
+       "n": 27,
+       "x": 33,
+       "y": 465,
+       "w": 523,
+       "h": 57,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:8e8f8504e97c#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "8e8f8504e97c",
+       "h_nome": null,
+       "n": 27,
+       "x": 33,
+       "y": 522,
+       "w": 523,
+       "h": 57,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:35336d315031#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "35336d315031",
+       "h_nome": null,
+       "n": 25,
+       "x": 33,
+       "y": 579,
+       "w": 523,
+       "h": 57,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:8f53b343d885#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "8f53b343d885",
+       "h_nome": null,
+       "n": 33,
+       "x": 33,
+       "y": 636,
+       "w": 523,
+       "h": 57,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "heading:1f5b98b37ef8#1",
+       "role": "heading",
+       "tag": "h2",
+       "testid": null,
+       "h_texto": "1f5b98b37ef8",
+       "h_nome": null,
+       "n": 9,
+       "x": 582,
+       "y": 380,
+       "w": 523,
+       "h": 28,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:101813684217#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "101813684217",
+       "h_nome": null,
+       "n": 27,
+       "x": 582,
+       "y": 408,
+       "w": 523,
+       "h": 57,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:3177ada3db55#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "3177ada3db55",
+       "h_nome": null,
+       "n": 34,
+       "x": 582,
+       "y": 465,
+       "w": 523,
+       "h": 57,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      },
+      {
+       "k": "link:4e8a7db661de#1",
+       "role": "link",
+       "tag": "a",
+       "testid": null,
+       "h_texto": "4e8a7db661de",
+       "h_nome": null,
+       "n": 27,
+       "x": 582,
+       "y": 522,
+       "w": 523,
+       "h": 57,
+       "sr": false,
+       "clip": null,
+       "corta": {
+        "x": false,
+        "y": false
+       }
+      }
+     ]
+    }
+   },
+   "folha": {
+    "C": [
+     {
+      "k": "texto:6fa3606cd084#1",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "6fa3606cd084",
+      "h_nome": "e5b3dfe4ee10",
+      "n": 7,
+      "rotulo": "OCTAVIA",
+      "x": 32,
+      "y": 0,
+      "w": 126.9,
+      "h": 64,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "link:0ebf35ccfd30#1",
+      "role": "link",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "0ebf35ccfd30",
+      "h_nome": null,
+      "n": 6,
+      "rotulo": "Painel",
+      "x": 182.9,
+      "y": 8,
+      "w": 75.7,
+      "h": 48,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "link:c9169c12cba9#1",
+      "role": "link",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "c9169c12cba9",
+      "h_nome": null,
+      "n": 10,
+      "rotulo": "Biblioteca",
+      "x": 266.6,
+      "y": 8,
+      "w": 102.5,
+      "h": 48,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "link:30e7717f44c4#1",
+      "role": "link",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "30e7717f44c4",
+      "h_nome": null,
+      "n": 8,
+      "rotulo": "Setlists",
+      "x": 377.1,
+      "y": 8,
+      "w": 86.8,
+      "h": 48,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "link:967bcf34a913#1",
+      "role": "link",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "967bcf34a913",
+      "h_nome": null,
+      "n": 9,
+      "rotulo": "Adicionar",
+      "x": 471.9,
+      "y": 8,
+      "w": 99,
+      "h": 48,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "t:casca-busca#1",
+      "role": "texto",
+      "tag": "div",
+      "testid": "casca-busca",
+      "h_texto": "9120df43bebb",
+      "h_nome": null,
+      "n": 7,
+      "rotulo": "Buscar…",
+      "x": 594.9,
+      "y": 8,
+      "w": 443.1,
+      "h": 48,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:9120df43bebb#1",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "9120df43bebb",
+      "h_nome": null,
+      "n": 7,
+      "rotulo": "Buscar…",
+      "x": 643.9,
+      "y": 21.5,
+      "w": 57.5,
+      "h": 21,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "t:casca-conta#1",
+      "role": "button",
+      "tag": "div",
+      "testid": "casca-conta",
+      "h_texto": "aba32a1dc3e1",
+      "h_nome": "c0bf8bd21261",
+      "n": 2,
+      "rotulo": "MV",
+      "x": 1054,
+      "y": 7,
+      "w": 50,
+      "h": 50,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:0ebf35ccfd30#1",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "0ebf35ccfd30",
+      "h_nome": null,
+      "n": 6,
+      "rotulo": "Painel",
+      "x": 32,
+      "y": 110,
+      "w": 124.6,
+      "h": 30,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "button:967bcf34a913#1",
+      "role": "button",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "967bcf34a913",
+      "h_nome": null,
+      "n": 9,
+      "rotulo": "Adicionar",
+      "x": 969,
+      "y": 97,
+      "w": 135,
+      "h": 56,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:36664e8242af#1",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "36664e8242af",
+      "h_nome": null,
+      "n": 11,
+      "rotulo": "Visão geral",
+      "x": 32,
+      "y": 177,
+      "w": 108.9,
+      "h": 48,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:3068eba03d59#1",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "3068eba03d59",
+      "h_nome": null,
+      "n": 8,
+      "rotulo": "Recentes",
+      "x": 148.9,
+      "y": 177,
+      "w": 100.1,
+      "h": 48,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:1f5b98b37ef8#1",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "1f5b98b37ef8",
+      "h_nome": null,
+      "n": 9,
+      "rotulo": "Favoritas",
+      "x": 257.1,
+      "y": 177,
+      "w": 96.6,
+      "h": 48,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:49d180ecf561#1",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "49d180ecf561",
+      "h_nome": null,
+      "n": 2,
+      "rotulo": "67",
+      "x": 57,
+      "y": 266,
+      "w": 206,
+      "h": 33,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:cbda95979b76#1",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "cbda95979b76",
+      "h_nome": null,
+      "n": 23,
+      "rotulo": "conteúdos na biblioteca",
+      "x": 57,
+      "y": 303,
+      "w": 206,
+      "h": 19,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:4e07408562be#1",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "4e07408562be",
+      "h_nome": null,
+      "n": 1,
+      "rotulo": "3",
+      "x": 329,
+      "y": 266,
+      "w": 206,
+      "h": 33,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:dd79d17ec405#1",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "dd79d17ec405",
+      "h_nome": null,
+      "n": 8,
+      "rotulo": "setlists",
+      "x": 329,
+      "y": 303,
+      "w": 206,
+      "h": 19,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:4e07408562be#2",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "4e07408562be",
+      "h_nome": null,
+      "n": 1,
+      "rotulo": "3",
+      "x": 601,
+      "y": 266,
+      "w": 206,
+      "h": 33,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:980b73779a69#1",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "980b73779a69",
+      "h_nome": null,
+      "n": 9,
+      "rotulo": "favoritas",
+      "x": 601,
+      "y": 303,
+      "w": 206,
+      "h": 19,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:4a44dc153642#1",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "4a44dc153642",
+      "h_nome": null,
+      "n": 2,
+      "rotulo": "10",
+      "x": 873,
+      "y": 266,
+      "w": 206,
+      "h": 33,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:98091398ff68#1",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "98091398ff68",
+      "h_nome": null,
+      "n": 15,
+      "rotulo": "vistas há pouco",
+      "x": 873,
+      "y": 303,
+      "w": 206,
+      "h": 19,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:3068eba03d59#2",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "3068eba03d59",
+      "h_nome": null,
+      "n": 8,
+      "rotulo": "Recentes",
+      "x": 33,
+      "y": 380,
+      "w": 522,
+      "h": 28,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "link:9a0610cc8967#1",
+      "role": "link",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "9a0610cc8967",
+      "h_nome": null,
+      "n": 26,
+      "rotulo": "Linha de 120 colunas Cifra",
+      "x": 33,
+      "y": 408,
+      "w": 522,
+      "h": 57,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "link:beddc2e6648d#1",
+      "role": "link",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "beddc2e6648d",
+      "h_nome": null,
+      "n": 16,
+      "rotulo": "Batch três Letra",
+      "x": 33,
+      "y": 465,
+      "w": 522,
+      "h": 57,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "link:2a78ed6823ac#1",
+      "role": "link",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "2a78ed6823ac",
+      "h_nome": null,
+      "n": 24,
+      "rotulo": "Trenzinho do caipira Tab",
+      "x": 33,
+      "y": 522,
+      "w": 522,
+      "h": 57,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "link:487cf9611c02#1",
+      "role": "link",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "487cf9611c02",
+      "h_nome": null,
+      "n": 33,
+      "rotulo": "Partitura de 12 páginas Partitura",
+      "x": 33,
+      "y": 579,
+      "w": 522,
+      "h": 57,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "link:44f1e48aa7fd#1",
+      "role": "link",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "44f1e48aa7fd",
+      "h_nome": null,
+      "n": 16,
+      "rotulo": "Construção Letra",
+      "x": 33,
+      "y": 636,
+      "w": 522,
+      "h": 57,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:1f5b98b37ef8#2",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "1f5b98b37ef8",
+      "h_nome": null,
+      "n": 9,
+      "rotulo": "Favoritas",
+      "x": 581,
+      "y": 380,
+      "w": 522,
+      "h": 28,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "link:670755b5cb5b#1",
+      "role": "link",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "670755b5cb5b",
+      "h_nome": null,
+      "n": 16,
+      "rotulo": "Anunciação Letra",
+      "x": 581,
+      "y": 408,
+      "w": 522,
+      "h": 57,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "link:eaec6590781b#1",
+      "role": "link",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "eaec6590781b",
+      "h_nome": null,
+      "n": 23,
+      "rotulo": "Garota de Ipanema Cifra",
+      "x": 581,
+      "y": 465,
+      "w": 522,
+      "h": 57,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "link:44f1e48aa7fd#2",
+      "role": "link",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "44f1e48aa7fd",
+      "h_nome": null,
+      "n": 16,
+      "rotulo": "Construção Letra",
+      "x": 581,
+      "y": 522,
+      "w": 522,
+      "h": 57,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 1136,
+       "h": 734,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     }
+    ],
+    "B": [
+     {
+      "k": "texto:6fa3606cd084#1",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "6fa3606cd084",
+      "h_nome": "e5b3dfe4ee10",
+      "n": 7,
+      "rotulo": "OCTAVIA",
+      "x": 24,
+      "y": 0,
+      "w": 126.9,
+      "h": 64,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "link:0ebf35ccfd30#1",
+      "role": "link",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "0ebf35ccfd30",
+      "h_nome": null,
+      "n": 6,
+      "rotulo": "Painel",
+      "x": 24,
+      "y": 68,
+      "w": 75.7,
+      "h": 48,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "link:c9169c12cba9#1",
+      "role": "link",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "c9169c12cba9",
+      "h_nome": null,
+      "n": 10,
+      "rotulo": "Biblioteca",
+      "x": 107.7,
+      "y": 68,
+      "w": 102.5,
+      "h": 48,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "link:30e7717f44c4#1",
+      "role": "link",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "30e7717f44c4",
+      "h_nome": null,
+      "n": 8,
+      "rotulo": "Setlists",
+      "x": 218.2,
+      "y": 68,
+      "w": 86.8,
+      "h": 48,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "link:967bcf34a913#1",
+      "role": "link",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "967bcf34a913",
+      "h_nome": null,
+      "n": 9,
+      "rotulo": "Adicionar",
+      "x": 313,
+      "y": 68,
+      "w": 99,
+      "h": 48,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "t:casca-busca#1",
+      "role": "texto",
+      "tag": "div",
+      "testid": "casca-busca",
+      "h_texto": "9120df43bebb",
+      "h_nome": null,
+      "n": 7,
+      "rotulo": "Buscar…",
+      "x": 174.9,
+      "y": 8,
+      "w": 444.1,
+      "h": 48,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:9120df43bebb#1",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "9120df43bebb",
+      "h_nome": null,
+      "n": 7,
+      "rotulo": "Buscar…",
+      "x": 223.9,
+      "y": 21.5,
+      "w": 57.5,
+      "h": 21,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "t:casca-conta#1",
+      "role": "button",
+      "tag": "div",
+      "testid": "casca-conta",
+      "h_texto": "aba32a1dc3e1",
+      "h_nome": "c0bf8bd21261",
+      "n": 2,
+      "rotulo": "MV",
+      "x": 635,
+      "y": 7,
+      "w": 50,
+      "h": 50,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:0ebf35ccfd30#1",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "0ebf35ccfd30",
+      "h_nome": null,
+      "n": 6,
+      "rotulo": "Painel",
+      "x": 24,
+      "y": 166,
+      "w": 124.6,
+      "h": 30,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "button:967bcf34a913#1",
+      "role": "button",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "967bcf34a913",
+      "h_nome": null,
+      "n": 9,
+      "rotulo": "Adicionar",
+      "x": 550,
+      "y": 153,
+      "w": 135,
+      "h": 56,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:36664e8242af#1",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "36664e8242af",
+      "h_nome": null,
+      "n": 11,
+      "rotulo": "Visão geral",
+      "x": 24,
+      "y": 233,
+      "w": 108.9,
+      "h": 48,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:3068eba03d59#1",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "3068eba03d59",
+      "h_nome": null,
+      "n": 8,
+      "rotulo": "Recentes",
+      "x": 140.9,
+      "y": 233,
+      "w": 100.1,
+      "h": 48,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:1f5b98b37ef8#1",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "1f5b98b37ef8",
+      "h_nome": null,
+      "n": 9,
+      "rotulo": "Favoritas",
+      "x": 249.1,
+      "y": 233,
+      "w": 96.6,
+      "h": 48,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:49d180ecf561#1",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "49d180ecf561",
+      "h_nome": null,
+      "n": 2,
+      "rotulo": "67",
+      "x": 49,
+      "y": 322,
+      "w": 272.5,
+      "h": 33,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:cbda95979b76#1",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "cbda95979b76",
+      "h_nome": null,
+      "n": 23,
+      "rotulo": "conteúdos na biblioteca",
+      "x": 49,
+      "y": 359,
+      "w": 272.5,
+      "h": 19,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:4e07408562be#1",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "4e07408562be",
+      "h_nome": null,
+      "n": 1,
+      "rotulo": "3",
+      "x": 387.5,
+      "y": 322,
+      "w": 272.5,
+      "h": 33,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:dd79d17ec405#1",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "dd79d17ec405",
+      "h_nome": null,
+      "n": 8,
+      "rotulo": "setlists",
+      "x": 387.5,
+      "y": 359,
+      "w": 272.5,
+      "h": 19,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:4e07408562be#2",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "4e07408562be",
+      "h_nome": null,
+      "n": 1,
+      "rotulo": "3",
+      "x": 49,
+      "y": 428,
+      "w": 272.5,
+      "h": 33,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:980b73779a69#1",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "980b73779a69",
+      "h_nome": null,
+      "n": 9,
+      "rotulo": "favoritas",
+      "x": 49,
+      "y": 465,
+      "w": 272.5,
+      "h": 19,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:4a44dc153642#1",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "4a44dc153642",
+      "h_nome": null,
+      "n": 2,
+      "rotulo": "10",
+      "x": 387.5,
+      "y": 428,
+      "w": 272.5,
+      "h": 33,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:98091398ff68#1",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "98091398ff68",
+      "h_nome": null,
+      "n": 15,
+      "rotulo": "vistas há pouco",
+      "x": 387.5,
+      "y": 465,
+      "w": 272.5,
+      "h": 19,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:3068eba03d59#2",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "3068eba03d59",
+      "h_nome": null,
+      "n": 8,
+      "rotulo": "Recentes",
+      "x": 25,
+      "y": 542,
+      "w": 659,
+      "h": 28,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "link:9a0610cc8967#1",
+      "role": "link",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "9a0610cc8967",
+      "h_nome": null,
+      "n": 26,
+      "rotulo": "Linha de 120 colunas Cifra",
+      "x": 25,
+      "y": 570,
+      "w": 659,
+      "h": 57,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "link:beddc2e6648d#1",
+      "role": "link",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "beddc2e6648d",
+      "h_nome": null,
+      "n": 16,
+      "rotulo": "Batch três Letra",
+      "x": 25,
+      "y": 627,
+      "w": 659,
+      "h": 57,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "link:2a78ed6823ac#1",
+      "role": "link",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "2a78ed6823ac",
+      "h_nome": null,
+      "n": 24,
+      "rotulo": "Trenzinho do caipira Tab",
+      "x": 25,
+      "y": 684,
+      "w": 659,
+      "h": 57,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "link:487cf9611c02#1",
+      "role": "link",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "487cf9611c02",
+      "h_nome": null,
+      "n": 33,
+      "rotulo": "Partitura de 12 páginas Partitura",
+      "x": 25,
+      "y": 741,
+      "w": 659,
+      "h": 57,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "link:44f1e48aa7fd#1",
+      "role": "link",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "44f1e48aa7fd",
+      "h_nome": null,
+      "n": 16,
+      "rotulo": "Construção Letra",
+      "x": 25,
+      "y": 798,
+      "w": 659,
+      "h": 57,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "texto:1f5b98b37ef8#2",
+      "role": "texto",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "1f5b98b37ef8",
+      "h_nome": null,
+      "n": 9,
+      "rotulo": "Favoritas",
+      "x": 25,
+      "y": 905,
+      "w": 659,
+      "h": 28,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "link:670755b5cb5b#1",
+      "role": "link",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "670755b5cb5b",
+      "h_nome": null,
+      "n": 16,
+      "rotulo": "Anunciação Letra",
+      "x": 25,
+      "y": 933,
+      "w": 659,
+      "h": 57,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "link:eaec6590781b#1",
+      "role": "link",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "eaec6590781b",
+      "h_nome": null,
+      "n": 23,
+      "rotulo": "Garota de Ipanema Cifra",
+      "x": 25,
+      "y": 990,
+      "w": 659,
+      "h": 57,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     },
+     {
+      "k": "link:44f1e48aa7fd#2",
+      "role": "link",
+      "tag": "div",
+      "testid": null,
+      "h_texto": "44f1e48aa7fd",
+      "h_nome": null,
+      "n": 16,
+      "rotulo": "Construção Letra",
+      "x": 25,
+      "y": 1047,
+      "w": 659,
+      "h": 57,
+      "sr": false,
+      "clip": {
+       "x": 0,
+       "y": 0,
+       "w": 709,
+       "h": 1145,
+       "rolagem": false,
+       "painel": false
+      },
+      "corta": {
+       "x": false,
+       "y": false
+      }
+     }
+    ],
+    "secao": "DASH",
+    "sha256": "c9eb257eb149af10b50c9cdc39bb6d6011c2e48a6e8739d90b55ddd15057a799"
+   }
+  }
+ },
+ "rodadas": {
+  "411": {
+   "rodada": "2026-09-30T15:16:21.541Z",
+   "commit": "ab0de377757d3f941fa3b211c8abad986aecf4b0+sujo"
+  },
+  "711": {
+   "rodada": "2026-09-30T15:16:21.541Z",
+   "commit": "ab0de377757d3f941fa3b211c8abad986aecf4b0+sujo"
+  },
+  "1138": {
+   "rodada": "2026-09-30T15:16:21.541Z",
+   "commit": "ab0de377757d3f941fa3b211c8abad986aecf4b0+sujo"
+  }
+ }
+}

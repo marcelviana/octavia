@@ -1,0 +1,28 @@
+$ node scripts/gates-web/g-tok.mjs --so-folha
+  achados do conferir: 26 · cobertos: 26 · descobertos: 0 · erratas: 9 · órfãs: 0
+
+G-tok: PASSA
+
+$ sh scripts/gates-web/g-back.sh origin/main WORKTREE
+## (ii) arquivo novo no alcance (derivação do HEAD fora do congelado)
+  ✓ nenhum
+## (iii) declaração órfã (gback: de arquivo que não mudou)
+  ✓ nenhuma
+
+G-back: PASSA
+
+$ bash scripts/gates-web/g-palco.sh
+
+G-palco: PASSA — 0 ocorrências
+
+$ pnpm exec tsc --noEmit   → exit 0
+$ pnpm lint   → ✔ No ESLint warnings or errors
+
+$ node scripts/gates-web/g-faixa-veredito.mjs tests/gates-web/medicoes
+  · signup · AUTH-signup-excecao: INALCANÇÁVEL (declarado) — o contexto não lança (todo catch devolve { error }): o catch da tela não se alcança [hipótese] (div. 640)
+  · verify-email · AUTH-verify-reenviar-excecao: INALCANÇÁVEL (declarado) — o contexto não lança: o catch da tela não se alcança [hipótese] (I1-E1, div. 640)
+
+G-faixa: PASSA
+
+$ node scripts/gates-web/g-faixa-veredito.mjs tests/gates-web/medicoes/cn-main
+G-faixa: REPROVA — 83 ocorrência(s)
