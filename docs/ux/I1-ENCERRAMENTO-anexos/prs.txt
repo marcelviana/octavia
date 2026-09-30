@@ -1,5 +1,7 @@
-# I1-ENCERRAMENTO — as PRs do bloco (rastro; gerado nesta sessão sobre origin/main = 1cb897f)
-$ git log --merges --format="%h %cI %s" c57d81f..1cb897f
+# I1-ENCERRAMENTO — as PRs do bloco (rastro; regenerado no commit 2 sobre origin/main = c1640e5; a #350 é este encerramento)
+$ git log --merges --format="%h %cI %s" c57d81f..c1640e5
+c1640e5 2026-09-30T20:18:27-03:00 Merge pull request #352 from marcelviana/i1/pr15-poda-final
+baeebf7 2026-09-30T19:28:49-03:00 Merge pull request #351 from marcelviana/i1/pr2-google
 1cb897f 2026-09-30T15:55:10-03:00 Merge pull request #349 from marcelviana/i1/pr14-poda
 6f8299f 2026-09-30T14:42:38-03:00 Merge pull request #348 from marcelviana/i1/pr13-setlists
 aa772df 2026-09-30T10:19:02-03:00 Merge pull request #347 from marcelviana/i1/pr12-upload
@@ -17,7 +19,7 @@ ab66e1a 2026-09-26T16:15:56-03:00 I1-PR-3 — merge da main (#336)
 b68305b 2026-09-26T15:06:02-03:00 Merge pull request #336 from marcelviana/i1/pr1-sessao
 089f72c 2026-09-26T12:52:44-03:00 Merge pull request #335 from marcelviana/i1/precheck
 
-$ for n in 335..349: gh pr view $n --json number,title,mergeCommit,mergedAt,commits,additions,deletions,changedFiles
+$ para n em 335…349, 351, 352: gh pr view $n --json number,title,mergeCommit,mergedAt,commits,additions,deletions,changedFiles
 #335 | I1 — pre-check (Fase A, só leitura) | merge 089f72c | 2026-09-26T15:52:45Z | 4 commits | +6693 −0 · 81 arquivos
 #336 | I1-PR1 — o loop mudo do POST /api/auth/session (gate-first) | merge b68305b | 2026-09-26T18:06:02Z | 4 commits | +1953 −144 · 46 arquivos
 #337 | I1-PR3 — o corte: palco, PWA/offline e as quatro páginas | merge efde410 | 2026-09-26T21:32:33Z | 7 commits | +3007 −13045 · 153 arquivos
@@ -33,8 +35,10 @@ $ for n in 335..349: gh pr view $n --json number,title,mergeCommit,mergedAt,comm
 #347 | I1-PR-12 — superfície 7: upload (/add-content) | merge aa772df | 2026-09-30T13:19:02Z | 6 commits | +129698 −1981 · 97 arquivos
 #348 | I1-PR-13 — superfície 8: setlists (/setlists) | merge 6f8299f | 2026-09-30T17:42:39Z | 8 commits | +269693 −1968 · 118 arquivos
 #349 | I1-PR-14 — poda: o web velho que sobra, e o error-boundary como tela | merge 1cb897f | 2026-09-30T18:55:11Z | 3 commits | +6122 −3692 · 102 arquivos
+#351 | I1-PR-2 — login com Google no web: script-src, frame-src, COOP (I1-D6) | merge baeebf7 | 2026-09-30T22:28:50Z | 5 commits | +6045 −1539 · 31 arquivos
+#352 | I1-PR-15 — poda final: dependências órfãs, literais do tema velho, rastro comprimido | merge c1640e5 | 2026-09-30T23:18:28Z | 3 commits | +1114 −160222 · 74 arquivos
 
-$ for cada merge M: git log --format="   %h %s" M^1..M^2
+$ para cada merge M: git log --format="   %h %s" M^1..M^2
 #335 (089f72c)
    58dec0e I1 — pre-check, commit 3b: Fase B fechada
    ff39c3c I1 — pre-check, commit 3a: I1-D34…D36, erratas D25/D30, probe 2, scripts dos probes 1 e 4
@@ -116,6 +120,16 @@ $ for cada merge M: git log --format="   %h %s" M^1..M^2
    b99ca7d I1-PR-14 — docs
    5977f98 I1-PR-14 — poda do web velho; a tela de erro global pela identidade
    747269e I1-PR-14 — gate-first: o error-boundary no G-tok, a cobertura da lista, a 828, a prova da tela de erro
+#351 (baeebf7)
+   a8fdf98 I1-PR-2 — docs: div. 943, o botão do Google no tema Dark (decisão da marca)
+   cb65917 I1-PR-2 — docs: anexo, aceite real do Marcel, H-I1-3 e div. 564 fechadas
+   cdaee40 I1-PR-2 — a marca do Google: o asset novo do Marcel, fundo transparente
+   c134f7d I1-PR-2 — login com Google: script-src, frame-src, COOP (I1-D6)
+   1fbdc12 I1-PR-2 — gate: CN do Entrar com Google reprovando na main + medição diretiva a diretiva
+#352 (c1640e5)
+   9a17b24 I1-PR-15 — docs: o anexo, os scripts da prova por imagem, a nota na PR-14
+   fd6ca71 I1-PR-15 — a poda: 11 dependências, o Arial, o generator, o matcher, o rastro em .gz
+   42891d9 I1-PR-15 — gate-first: o leitor dos dois formatos e as medições (sem apagar)
 
 # linhas por PR — git diff --shortstat M^1 M  |  o mesmo sem docs/, tests/gates-web/medicoes/, tests/gates-web/esperado/, pnpm-lock.yaml
 #335 089f72c | tudo: 81 files changed, 6693 insertions(+) | código:
@@ -133,7 +147,10 @@ $ for cada merge M: git log --format="   %h %s" M^1..M^2
 #347 aa772df | tudo: 97 files changed, 129698 insertions(+), 1981 deletions(-) | código: 35 files changed, 1817 insertions(+), 1978 deletions(-)
 #348 6f8299f | tudo: 118 files changed, 269693 insertions(+), 1968 deletions(-) | código: 44 files changed, 2141 insertions(+), 1952 deletions(-)
 #349 1cb897f | tudo: 102 files changed, 6122 insertions(+), 3692 deletions(-) | código: 76 files changed, 462 insertions(+), 2654 deletions(-)
-TOTAL tudo +970800 -28409 | código +19308 -27169
-$ git diff --shortstat c57d81f 1cb897f
- 988 files changed, 970312 insertions(+), 27921 deletions(-)
- 392 files changed, 19000 insertions(+), 26861 deletions(-)
+#351 baeebf7 | tudo: 31 files changed, 6045 insertions(+), 1539 deletions(-) | código: 5 files changed, 341 insertions(+), 20 deletions(-)
+#352 c1640e5 | tudo: 74 files changed, 1114 insertions(+), 160222 deletions(-) | código: 6 files changed, 36 insertions(+), 41 deletions(-)
+TOTAL tudo +977959 -190170 | código +19685 -27230
+$ git diff --shortstat c57d81f c1640e5
+ 1029 files changed, 816532 insertions(+), 28743 deletions(-)
+$ git diff --shortstat c57d81f c1640e5 -- . ":!docs" ":!tests/gates-web/medicoes" ":!tests/gates-web/esperado" ":!pnpm-lock.yaml"
+ 396 files changed, 19365 insertions(+), 26910 deletions(-)

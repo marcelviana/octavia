@@ -874,8 +874,8 @@ cada ✅ e fechar cada ❌/⚠️**. Os números que definem o piso:
 > **Nota do encerramento do I1 (2026-09-30):** o item de abertura abaixo (o loop mudo)
 > **foi consertado na I1-PR-1** (#336); o que o web deixou para o D, com a fonte de cada
 > item, está em `docs/ux/I1-ENCERRAMENTO.md` §10.1. O **login com Google** (I1-D6,
-> *"consertar, não revogar"*) **não foi consertado** no I1 — a PR-2 do fatiamento não foi
-> aberta (`I1-ENCERRAMENTO.md` §3 e §14).
+> *"consertar, não revogar"*) **foi consertado na I1-PR-2** (#351): `script-src`, `frame-src` e
+> COOP, com aceite real do Marcel (`docs/ux/I1-PR2-anexos/README.md`).
 
 > **Item de abertura do Bloco D — prioridade máxima (registrado no B3,
 > 2026-08-28)**: o **loop mudo do `POST /api/auth/session`** — falha no
@@ -1499,7 +1499,7 @@ automaticamente.
 > **Nota do encerramento do I1 (2026-09-30)** — sem reescrever os itens acima, que param antes
 > do N2. Encerrados desde então, cada um com a sua fonte: **N2** (`docs/native/N2-ENCERRAMENTO.md`),
 > **W4** (`docs/native/W4-ENCERRAMENTO.md`), **N3** (`docs/native/N3-ENCERRAMENTO.md`) e **I1 — o
-> web com a identidade do nativo, só online, sem palco** (#335–#349, `docs/ux/I1-ENCERRAMENTO.md`).
+> web com a identidade do nativo, só online, sem palco** (#335–#352, `docs/ux/I1-ENCERRAMENTO.md`).
 > **A ordem depois do I1** é a da I1-D15 (`docs/ux/I1-PRECHECK.md` §0.1): **N4** (content nos
 > apps) → **N5** (celular) → **iOS**; o **W5** (instrumento) corre à parte. As heranças do I1 para
 > cada um estão no `I1-ENCERRAMENTO.md` §10.

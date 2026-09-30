@@ -1,28 +1,27 @@
 # I1 — ENCERRAMENTO
 
-> **RASCUNHO (commit 1)** — as seções **§9** (catálogo) e **§14** (perguntas) estão **para aval**;
-> nada nelas é definitivo antes da resposta do Marcel.
-
 **A fonte do bloco — e um índice, não uma segunda cópia.** Tudo o que este arquivo afirma
 aponta para o documento, a PR ou o anexo onde está; onde a prosa daqui e a fonte divergirem,
 vale a fonte. Nenhum texto de decisão ou de errata é reescrito aqui.
 
 - **Bloco**: I1 — **identidade** (I1-D1): o web ganha a identidade visual do app nativo, em
   pt-BR, mantém cadastro, edição e auth, e perde o palco (I1-D2, I1-D5).
-- **Janela**: 2026-09-26 (pre-check, #335, merge `089f72c` às 15:52:45Z) → 2026-09-30 (I1-PR-14,
-  #349, merge `1cb897f` às 18:55:11Z).
-- **Esta PR**: só docs, sobre `origin/main` = **`1cb897f`** (o sha do encerramento), árvore
-  `../octavia-i1-encerramento`, branch `i1/encerramento`. Nenhuma request a prod, nenhum login,
+- **Janela**: 2026-09-26 (pre-check, #335, merge `089f72c` às 15:52:45Z) → 2026-09-30 (I1-PR-15,
+  #352, merge `c1640e5` às 23:18:28Z).
+- **Esta PR** (#350): só docs, árvore `../octavia-i1-encerramento`, branch `i1/encerramento`. O
+  commit 1 (`770ed77`) foi escrito sobre `1cb897f` (a #349); o aval mandou abrir a PR-2 e a PR-15
+  antes do fecho, e o commit 2 foi escrito depois de trazer a `main` com as duas (merge `1f15083`).
+  **O sha do encerramento é `c1640e5`** (o merge da #352). Nenhuma request a prod, nenhum login,
   nenhum `.env*` (a árvore só tem o `.env.example` versionado); `pnpm install --frozen-lockfile
   --offline`.
 - **Convenção**: `[medido]` = comando + saída literal nesta sessão, no anexo
   [`I1-ENCERRAMENTO-anexos/contabilidade.txt`](I1-ENCERRAMENTO-anexos/contabilidade.txt);
   `[lido]` = tirado do documento citado, sem medir de novo.
-- **Divergências desta PR**: a partir de **917** (§15).
+- **Divergências desta PR**: **917–932** (commit 1) e **951–954** (commit 2) — as 933–950 são da PR-2 e da PR-15 (§15).
 - **Como este documento foi lido**: os 15 `README.md` de anexo do bloco (e o do pre-check) foram
   lidos inteiros por cinco agentes de leitura, em paralelo, com extração por roteiro fixo (decisões,
   erratas, divergências, heranças, instrumentos, contabilidade); o `I1-PRECHECK.md`, o
-  `DESIGN-I1/README.md` §2/§4/§7 e o `N3-ENCERRAMENTO.md` pelo executor. Toda citação de seção
+  `DESIGN-I1/README.md` §2/§4/§7 e o `N3-ENCERRAMENTO.md` pelo executor; no commit 2, os `README.md` da PR-2 e da PR-15, inteiros, pelo executor. Toda citação de seção
   foi conferida com `grep` do cabeçalho.
 
 > **"QUANDO NÃO CABE, A COMPOSIÇÃO EMPILHA; O CONTEÚDO NÃO SAI."** — a regra do N3 que o web
@@ -38,7 +37,8 @@ vale a fonte. Nenhum texto de decisão ou de errata é reescrito aqui.
 morreu); as oito superfícies (auth, landing, política, lista, visualização, editor, upload,
 setlists) desenhadas pela folha `DESIGN-I1`, estado a estado; **toda falha é uma frase com o
 motivo na tela** (nenhum toast, nenhum erro engolido — H-I1-5); o login não entra mais em
-**loop mudo** (H-I1-2, H-I1-7); a tela de erro global é da identidade. **Sem palco** (tocar é do
+**loop mudo** (H-I1-2, H-I1-7); o **login com Google** funciona (H-I1-3, PR-2); a tela de erro global é da
+identidade. **Sem palco** (tocar é do
 nativo), **sem PWA e sem offline** (o web é só online), e **nada de backend mudou** (I1-D9; o
 G-back é a prova).
 
@@ -49,28 +49,32 @@ velho saíram. **Quatro gates do web** (`gates-web.yml`: G-back, G-palco, G-tok,
 **cobertura da lista do G-tok** e a **regra 828** (inglês em string de `.ts`), com linha de base
 do web velho e medição commitada por superfície × estado × largura.
 
-**O que NÃO se entregou**: o **login com Google** (I1-D6, *"consertar, não revogar"*) — a PR-2
-do fatiamento **não foi aberta**, e as três causas da H-I1-3 seguem no código (§3, §6, div. 920).
+**O login com Google** (I1-D6, *"consertar, não revogar"*) quase ficou de fora: a PR-2 do
+fatiamento não tinha sido aberta até o commit 1 deste encerramento (div. 920, origem P — o revisor
+pulou da PR-1 para a PR-3). O aval a mandou abrir **antes do fecho**: #351, as três diretivas
+medidas uma a uma, aceite real do Marcel. E a **PR-15** (#352) fez a poda que o §17 da PR-14 ainda
+listava e comprimiu o rastro das medições (decisões 2 e 3 do aval).
 
 **Os números** `[medido]` (comandos e saídas no anexo `contabilidade.txt`):
 
-| o quê | antes (pre-check, `c57d81f`) | depois (`1cb897f`) | fonte |
+| o quê | antes (pre-check, `c57d81f`) | depois (`c1640e5`) | fonte |
 |---|---|---|---|
-| rotas | 18 `page.tsx` + 14 `route.ts` `[lido: pre-check §1]` | `pnpm build`: **27** — 13 páginas + `/_not-found` + 13 API. **Mortas**: `/performance` (e o seu `loading`), `/profile`, `/settings`, `/setup`, `/offline`, `/api/proxy` | §3 do anexo |
+| rotas | 18 `page.tsx` + 14 `route.ts` `[lido: pre-check §1]` | `pnpm build` em `c1640e5`: **27** — 13 páginas + `/_not-found` + 13 API. **Mortas**: `/performance` (e o seu `loading`), `/profile`, `/settings`, `/setup`, `/offline`, `/api/proxy` | §3 do anexo |
 | arquivos na lista do G-tok | 0 (a lista nasce vazia na PR-5) | **132** — dos quais **129** são "arquivo de tela" pela cobertura (FORA 0) e 3 não são (div. 922) | `g-tok.mjs`, `g-tok-cobertura.mjs` |
 | literais de identidade · toasts · imports de `ui/*` nos 132 | — | **0 · 0 · 0**; strings de `.ts` examinadas (828): 446; frases isentas 5 de 5 | `g-tok.mjs` |
 | frases pt-BR | 12 em português em todo o web, todas da política `[lido: div. 496]` | **421** folhas de texto nos dez `components/*/frases-*.ts` (contando o reúso: o `FRASES_AUTH` aponta para frases do `FRASES_SESSAO`) | §5 do anexo |
-| linhas | — | soma dos merges: **+970 800 −28 409**; sem `docs/`, sem as medições/esperados e sem o lockfile: **+19 308 −27 169** (por PR na §2) | §9 do anexo |
-| dependências do `package.json` | — | **29 removidas** (`localforage` na PR-3; `sonner` na PR-13; 22 `@radix-ui/*`, `class-variance-authority`, `lucide-react`, `react-day-picker`, `react-resizable-panels`, `tailwindcss-animate` na PR-14); **1 adicionada** (`@octavia/identidade`, workspace); o `build:sw` saiu | §4 do anexo |
-| testes (`pnpm test`) | **1175** casos (1090 passed · 85 skipped), 119 arquivos | **1237** (1179 passed · 58 skipped), 121 arquivos | §1–§2 do anexo; o "1101" do prompt não existe (div. 921) |
-| APKs construídos | — | **7** (`android-debug-apk` `success`): PR-4 ×1 + push; PR-6 ×1 + push; PR-9 ×2 + push. **7 pulados** (pushes de docs depois do verde — a regra 18) | §8 do anexo |
+| linhas | — | soma dos merges: **+977 959 −190 170**; sem `docs/`, sem as medições/esperados e sem o lockfile: **+19 685 −27 230** (por PR na §2). O líquido `c57d81f..c1640e5`: +816 532 −28 743 (tudo) · +19 365 −26 910 (sem docs, medições e lockfile) | §9 do anexo |
+| dependências do `package.json` | — | **40 removidas** (`localforage` na PR-3; `sonner` na PR-13; 22 `@radix-ui/*`, `class-variance-authority`, `lucide-react`, `react-day-picker`, `react-resizable-panels`, `tailwindcss-animate` na PR-14; `isomorphic-dompurify`, `react-hook-form`, `@hookform/resolvers`, `zustand`, `immer`, `date-fns`, `cmdk`, `next-themes`, `lru-cache`, `@types/debug`, `autoprefixer` na PR-15); **1 adicionada** (`@octavia/identidade`, workspace); o `build:sw` saiu | §4 do anexo |
+| testes (`pnpm test`) | **1175** casos (1090 passed · 85 skipped), 119 arquivos | **1239** (1181 passed · 58 skipped), 121 arquivos — em `c1640e5` | §1–§2 do anexo; o "1101" do prompt não existe (div. 921) |
+| APKs construídos | — | **7** (`android-debug-apk` `success`): PR-4 ×1 + push; PR-6 ×1 + push; PR-9 ×2 + push. **7 pulados** (pushes de docs depois do verde — a regra 18). A PR-2 e a PR-15 não dispararam o `native.yml` | §8 do anexo |
 | G-faixa sobre as medições vivas | — | **PASSA**, 14 medições, (e)=0 e (b)=0 nas três larguras; contados à parte: errata candidata 773 (todas cobertas) · quebra por dado 42 · não medidos 26 | `g-faixa-veredito.mjs` |
 | linha de base do web velho (`cn-main`) | REPROVA 46 (PR-5) | REPROVA **83** — o mesmo web velho, com 411 contado (errata da I1-D11); é **registro**, não tela viva (div. 924) | idem, sobre `medicoes/cn-main` |
 | G-palco · `SHA256SUMS` do `DESIGN-I1` | — | **0 ocorrências** · **14/14 OK** | `g-palco.sh`; `shasum -c` |
+| o rastro das medições | — | **22** JSON do rastro em `.json.gz` (3 203 276 → 153 610 bytes), lidos pelo `ler-medicao.mjs`; `du -sh tests/gates-web/medicoes` **13M → 10M**; `esperado/` 3,0M | PR-15 §5; §7 do anexo |
 
 ---
 
-## 2. Índice das PRs — #335 … #349
+## 2. Índice das PRs — #335 … #352
 
 `[medido: gh pr view <n> --json commits,mergeCommit,mergedAt; git diff --shortstat M^1 M]`, em
 ordem de número (que é a de merge). **Linhas** = sem `docs/`, medições, esperados e lockfile
@@ -81,7 +85,6 @@ em destaque.
 |---|---|---|---|---|---|---|---|---|
 | **#335** | pre-check | `089f72c` | 4 (`e799235`, `4a88cf4`, `ff39c3c`, `58dec0e`) | Fase A (A1–A14), Fase B em prod pela regra 12 (probes 1, 2, 4); **I1-D1…D36** | probe 1: **52 `POST` · 51 `GET /api/profile` · 104 navegações** em 60 s, a tela muda | 0 | [`I1-PRECHECK.md`](I1-PRECHECK.md), [`I1-PRECHECK-anexos/`](I1-PRECHECK-anexos/README.md) | 480–521 |
 | **#336** | PR-1 — o loop mudo | `b68305b` | 4 (`1f1525c` gate · `26d2c68` conserto · `f8b2485` aparato · `0894d51` docs) | `setSessionCookie` devolve a espécie da falha; navega só com 2xx; uma falha é uma tela (`LinhaDeAviso`), não uma volta | CN de tela **10 falham → 15/15**; no navegador **52 · 51 · 104 → 1 · 0 · 0** | +735 −144 | [`I1-PR1-anexos/`](I1-PR1-anexos/README.md) | 522–531 |
-| — | PR-2 — Google | — | — | **não aberta** (div. 919/920) | — | — | — | — |
 | **#337** | PR-3 — o corte | `efde410` | 7 (`6196d02` … `b698c53`) | palco, PWA/offline, `/api/proxy` e `/profile` `/settings` `/setup` `/offline` fora; `public/sw.js` de auto-destruição; redirects 308 | **G-palco 141 → 0**; 69 arquivos apagados | +481 −13 028 | [`I1-PR3-anexos/`](I1-PR3-anexos/README.md) | 550–580 |
 | **#338** | congelamento da folha | `d18b7c4` | 2 (`b2b7ad0`, `a81eb45`) | `DESIGN-I1` (9 folhas, `SHA256SUMS`), requisitos `T-I1-R`, erratas **I1-E1…E5** | **286 `T-I1-R`** (hoje 282, I1-E15) | 0 | [`DESIGN-I1/README.md`](DESIGN-I1/README.md) | 581–596 |
 | **#339** | PR-4 — `packages/identidade` | `73612be` | 4 (`4568877` … `86f1eb3`) | tokens, faixas e ícones no pacote; o nativo importa; `identidade.css` gerado; **I1-E6** | identidade **37/37**, nativo **211/211** antes e depois, mapa de ícones byte a byte | +2 163 −582 | [`../native/I1-PR4-anexos/`](../native/I1-PR4-anexos/README.md) | 597–611 |
@@ -95,66 +98,60 @@ em destaque.
 | **#347** | PR-12 — upload | `aa772df` | 6 (`e5fdf5f` … `bd77cd7`) | o upload pela folha 7; *até 4 MiB* (I1-D29); o `POST` byte a byte; **I1-D37**; **I1-E21, E22, E24…E27** | **G-tok 526 → 0**; 122 candidatas, todas cobertas | +1 817 −1 978 | [`I1-PR12-anexos/`](I1-PR12-anexos/README.md) | 806–845 |
 | **#348** | PR-13 — setlists | `6f8299f` | 8 (`ae78774` … `ce5a30e`) | `/setlists` pela folha 8; os três defeitos do N2 §10.3.5/.6; os dois toasts morrem; o `nl`; **I1-E28…E30** (E31 recusada) | **G-tok 563 → 0**; defeitos **3/3**; 532 candidatas cobertas | +2 141 −1 952 | [`I1-PR13-anexos/`](I1-PR13-anexos/README.md) | 846–892 |
 | **#349** | PR-14 — a poda | `1cb897f` | 3 (`747269e`, `5977f98`, `b99ca7d`) | `components/ui/` e o tema velho fora, 27 dependências; a tela de erro da identidade; cobertura do G-tok; a 828 vira regra | **cobertura FORA 40 → 0**; `knip` 26·37·132·34 → 25·14·124·33 | +462 −2 654 | [`I1-PR14-anexos/`](I1-PR14-anexos/README.md) | 893–916 |
+| **#351** | PR-2 — login com Google | `baeebf7` | 5 (`1fbdc12` gate · `c134f7d` conserto · `cdaee40` a marca · `cb65917`, `a8fdf98` docs) | `script-src` + `https://apis.google.com` (prod e dev); `frame-src` = `https://${NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN}` (`'none'` sem a variável); COOP `same-origin-allow-popups` nos **dois** campos de prod (div. 935); H-I1-3 e div. 564 fechadas; aceite real do Marcel; a marca do Google no **tema Dark** pré-aprovado (div. 943, decisão da folha) | CN `google-csp` **REPROVA → PASSA**: 1 violação de CSP → **0**, o popup chega ao Google, `popup.closed` `true` → `false` | +341 −20 | [`I1-PR2-anexos/`](I1-PR2-anexos/README.md) | 933–943 |
+| **#352** | PR-15 — poda final | `c1640e5` | 3 (`42891d9` gate-first · `fd6ca71` a poda · `9a17b24` docs) | as **11** dependências órfãs; o `Arial` → `var(--fonte-ui-familia), sans-serif`; o `generator`; o matcher `toBeVisuallySelected`; **22 rastros em `.gz`** com o leitor `scripts/gates-web/ler-medicao.mjs` | prova por imagem **12 × 0 pixel · 0 nó com Δ**; `knip` deps 14 → 3; `medicoes/` 13M → 10M | +36 −41 | [`I1-PR15-anexos/`](I1-PR15-anexos/README.md) | 944–950 |
 
-**Código**: 13 PRs (#336, #337, #339–#349); só docs: 2 (#335, #338) — não 14 de código (div. 919).
+**Código**: **15 PRs** (#336, #337, #339–#349, #351, #352); só docs: 2 (#335, #338); e este
+encerramento (#350). A PR-2 foi aberta **depois** da PR-14, por decisão do aval (div. 919/920) — por
+isso o número #351 vem depois do da PR-14.
 
 ---
 
 ## 3. O que ainda sobra
 
-### 3.1 O §17 da I1-PR-14, transcrito
+**No fecho** (`c1640e5`), pelo §8 da I1-PR-15 — que já é o §17 da I1-PR-14 menos o que a PR-15
+podou — e pela leitura dos anexos. Todo item tem bloco (regra 23); o número entre parênteses é a
+linha do §10.
 
-`[lido: docs/ux/I1-PR14-anexos/README.md §17, verbatim]`
+### 3.1 O §8 da I1-PR-15, transcrito
 
-> **Nenhum arquivo de tela fora do G-tok**: a cobertura dá FORA 0, e todo arquivo da lista passa em literal, toast,
-> import de `ui/*` e inglês (JSX e strings de `.ts`, com 5 frases isentas uma a uma). O resto:
+`[lido: docs/ux/I1-PR15-anexos/README.md §8, verbatim]`
+
+> Do §17 da I1-PR-14 e do §3 do encerramento, depois desta PR:
 >
-> | o que sobra | onde | destino |
-> |---|---|---|
-> | **as 11 dependências órfãs** | `package.json` (§12.2) | encerramento do I1 — poda à parte, com o lockfile |
-> | **o triângulo do `<summary>`** (div. 913) | `components/identidade/tela-de-erro.tsx` — o `flex` do `summary` apaga o marcador no Chromium; só em desenvolvimento | herança (o próximo bloco do web) |
-> | **inglês fora de posição de texto** | as mensagens de `Error` e os `logger`/`console` de `lib/setlist-service.ts`, `lib/content-service.ts`, `components/add-content/upload-to-storage.ts`, `hooks/useMetadataForm.ts`, `contexts/firebase-auth-context.tsx` — não chegam à tela (a tela escolhe a frase pela espécie; a 828 não as lê, de propósito) | fica; não é texto de UI |
-> | **o valor gravado *Unknown Artist*** | `hooks/useAddContentLogic.ts:133,182,207` e o sentinela *Unknown Artist/Title/Type* das rotas (`app/api/setlists/…`), traduzido na exibição | **Bloco D** (herança da PR-12 e da PR-13) |
-> | **os specs do `ux-audit`** | `tests/ux-audit/fase-d/*` — rótulos em inglês | quando o gate voltar a ser usado (herança da PR-12) |
-> | **`body { font-family: Arial }`** | `app/globals.css:6` — fora da camada `base`; toda tela declara a própria família, e a prova por imagem não o viu | encerramento: decidir se sai (é o último valor literal do tema velho) |
-> | **`generator: "v0.dev"`** | `app/layout.tsx:19` — `<meta name="generator">`, não visível | encerramento |
-> | **o `bg-primary`/`bg-blue-500` de um teste** | `lib/__tests__/custom-matchers.ts:189-190` — `classList.contains(…)` de um matcher de teste (usado por `src/test-setup.ts`); não usa o tema | encerramento (limpeza de teste) |
-> | **documentação que descreve o web velho** | `CLAUDE.md:111` (*Radix UI components (shadcn/ui)*) e a árvore `components/ui`; `README.md:88,104,255-256` (shadcn, Lucide); `ARCHITECTURE.md:104-227` (`ErrorBoundary` com `DomainErrorBoundary`, `useErrorHandler`) | encerramento do I1 (as notas do `CLAUDE.md` como nas PRs anteriores) |
-> | **o `.env.local`** desta árvore | copiado de `../octavia-i1-pr13` sem abrir (div. 916); ignorado pelo git | sai com a árvore |
+> | o que sobra | destino |
+> |---|---|
+> | `public/sw.js` (o worker de auto-destruição) e o `worker-src`/`manifest-src` da CSP | bloco seguinte ao I1 (aval 4 do encerramento) |
+> | os specs do `ux-audit` (`tests/ux-audit/fase-d/*`, rótulos em inglês) | bloco seguinte ao I1 (§10.5.6) |
+> | o triângulo do `<summary>` da tela de erro (div. 913) | bloco seguinte ao I1 (§10.5.7) |
+> | `public/icons/*`: 10 de 11 sem leitor (div. 553) | bloco seguinte ao I1 (§10.5.8) |
+> | a memoização das setlists (div. 568) | Bloco D (aval 10 do encerramento) |
+> | o `text-amber-500` do `toBeInFavoriteState` (div. 948) | bloco seguinte ao I1, com o resto do `custom-matchers.ts` |
+> | as devDependencies que o `knip` acusa (7) e as 3 `@expo-google-fonts/*` do nativo | fora do escopo desta PR (o nativo; ferramentas de CLI) — sem destino novo |
+>
+> As 11 dependências, o `Arial`, o `generator`, o matcher do §17 e o rastro em texto: **fechados aqui**.
 
-**O destino de cada linha, depois desta PR** (esta PR é só docs — o que é código vira herança,
-regra 23):
+### 3.2 A lista inteira, com destino
 
-| linha do §17 | destino |
-|---|---|
-| as 11 dependências órfãs | **bloco seguinte ao I1** (§10.5.2), ou PR de poda à parte — **pergunta 3** |
-| o triângulo do `<summary>` | **bloco seguinte ao I1** (§10.5.7) — "o próximo bloco do web" não é bloco (regra 23) |
-| inglês fora de posição de texto | fica (não é texto de UI) — sem herança |
-| *Unknown Artist* | **Bloco D** (§10.1.5) |
-| os specs do `ux-audit` | **bloco seguinte ao I1** (§10.5.6) — "quando o gate voltar" não é bloco (regra 23) |
-| `font-family: Arial` · `generator: v0.dev` · o matcher | **bloco seguinte ao I1** (§10.5.3–5) — **pergunta 3** |
-| a documentação | **feito nesta PR** (§11) |
-| o `.env.local` da árvore da PR-14 | sai com a árvore (não é do repositório) |
+| o que sobra | onde | destino |
+|---|---|---|
+| **`public/sw.js`** de auto-destruição e o **`worker-src`/`manifest-src`** da CSP | `public/sw.js`; `lib/security-headers.ts` | **bloco seguinte ao I1** (§10.5.1; aval 4) |
+| os **specs do `ux-audit`** (rótulos em inglês) | `tests/ux-audit/fase-d/*` | **bloco seguinte ao I1** (§10.5.6) |
+| o **triângulo do `<summary>`** (div. 913) | `components/identidade/tela-de-erro.tsx` | **bloco seguinte ao I1** (§10.5.7) |
+| **`public/icons/*`**: 10 de 11 sem leitor (div. 553) | `public/icons/` | **bloco seguinte ao I1** (§10.5.8) |
+| o **`text-amber-500`** do `toBeInFavoriteState` (div. 948) | `lib/__tests__/custom-matchers.ts:29` | **bloco seguinte ao I1** (§10.5.10) |
+| as 7 devDependencies que o `knip` acusa e as 3 `@expo-google-fonts/*` do nativo | `package.json` | fora do escopo do I1 — **sem destino novo** (PR-15 §8) |
+| a **memoização das setlists** (div. 568) | `components/setlists/use-setlists.ts` | **Bloco D** (§10.1.16; aval 10) |
+| os **três `undefined`** do `TokensDaFaixa` | `packages/identidade/src/tokens.ts` | **N4** (§10.2.4; aval 10) |
+| a **harmonização do motivo** (travessão × vírgula) e a **`LinhaDeAviso` no core** | `components/*/frases-*.ts`; `components/identidade/linha-de-aviso.tsx` | **N4** (§10.2.2, §10.2.3; aval 11) |
+| as heranças de dado e de rota (o `content_data`, o lote, os sentinelas *Unknown*, o reordenar, o teto de 100, o `PATCH /api/profile`, o nonce, o `/verify-email`, a URL da setlist, a div. 864…) | §10.1 | **Bloco D** (§10.1.1–14) |
+| a div. 845 (testes do editor instáveis), a 672 (o cabeçalho do `g-faixa-auth.ts`), a 607, a 606, o G1b de `apps/native/test`, o perfil × `storageState` | §10.4 | **W5** |
+| o **inglês fora de posição de texto** (mensagens de `Error`, `logger`/`console`) | `lib/setlist-service.ts`, `lib/content-service.ts`, … | **fica** — não é texto de UI (PR-14 §17) |
 
-### 3.2 O que a leitura dos anexos acrescenta
-
-| # | o que sobra | onde está registrado | destino |
-|---|---|---|---|
-| 1 | **o login com Google não foi consertado**: a PR-2 do fatiamento (I1-D15) não foi aberta; a PR-6 só deu **nome** à falha (A2: código + mensagem; `login.google-bloqueado`). As três causas da H-I1-3 seguem: `frame-src 'none'` (`lib/security-headers.ts:81`), `script-src` sem `https://apis.google.com` (`:39-47`), `Cross-Origin-Opener-Policy: same-origin` (`:124`) `[medido: grep]` | pre-check H-I1-3, div. 515; I1-PR6 §9 (A2); div. 920 | **pergunta 1** (proposta: Bloco D, §10.1.15) |
-| 2 | a div. 564 da PR-3 diz *"a PR-2 reabre"* o `frame-src` — órfã, pela linha 1 | `I1-PR3-anexos/README.md` §15 | vai com a linha 1 |
-| 3 | o **asset do Google** (quadrado tracejado 20×20 no lugar da marca) | div. 636, "Marcel fornece o asset" | vai com a linha 1; **pergunta 8** |
-| 4 | a div. 864: `lib/content-service-server.ts:12` (núcleo do G-back) importa `getSetlistById` do serviço cliente e não o usa | `I1-PR13-anexos/README.md` §11, §28 | **Bloco D** (§10.1.14) |
-| 5 | a div. 845: os testes do editor (`i1-editor-put`, `editor-estados`) instáveis sob cobertura (o pedaço do `dynamic` em 1 s) | `I1-PR12-anexos/README.md` §24 | **W5** (§10.4.5) |
-| 6 | a harmonização do motivo: travessão (PR-9) × vírgula (PR-11…13) | `I1-PR11-anexos` §21.6; `I1-PR13-anexos` §28 | **N4**, com a unificação das frases (§10.2.2) |
-| 7 | a div. 672: o cabeçalho de `scripts/gates-web/g-faixa-auth.ts:5-6` segue dizendo que *"nada sai"* para o Google; a PR-9 (`ed85f23`) e a PR-11 (`c44c975`) tocaram o arquivo e não o corrigiram (regra 23) | `I1-PR6-anexos/README.md` §14.6; div. 928 | **W5** (§10.4.6) |
-| 8 | a div. 607: a prova de que o `native.yml` dispara por uma PR que toque **só** `packages/identidade` | `I1-PR4-anexos/README.md` §8 | **W5** (§10.4.4) |
-| 9 | a div. 611: o tamanho **20** onde a folha desenha o visto em 16 (I1-E6) — "a confirmar pelo Marcel" | `I1-PR4-anexos/README.md` §8 | **pergunta 7** |
-| 10 | a div. 892: o aval do veredito da PR-13 **chegou cortado** — "a conferir com o Marcel" | `I1-PR13-anexos/README.md` §29 | **pergunta 6** |
-| 11 | a div. 568: a memoização dos três `useCallback` do `setlist-manager.tsx` — *"a PR de setlists herda"*; a PR-13 reescreveu a tela (322 → 78; a lógica foi para `components/setlists/use-setlists.ts`, 11 `useCallback`) e **não registrou** o pagamento | `I1-PR3-anexos/README.md` §5, §15; div. 932 | **bloco seguinte ao I1** (§10.5.9): conferir |
-| 12 | os três `undefined` do `TokensDaFaixa` (`faixas.A.folha.alturaMin`, `faixas.B.folha.alturaMin`, `faixas.C.reordenar.artistaMin`) — destino *"quem der forma final ao `TokensDaFaixa` do web"*; nenhuma PR de tela o registrou | `I1-PR4-anexos/README.md` §2; div. 932 | **N5** (§10.3.3) |
-| 13 | o perfil persistente × `storageState({ indexedDB: true })` e a sessão de mais de 1 h — "não medido" | `I1-PR5-anexos/README.md` §5 | **W5** (§10.4.7) |
-| 14 | `public/icons/*`: dos 11, só `icon-192x192.webp` tem leitor (`app/layout.tsx:21-23`) — *"a identidade decide os ícones"*, sem bloco | `I1-PR3-anexos/README.md` §5 (div. 553) | **bloco seguinte ao I1** (§10.5.8) |
-| 15 | os JSON de medição: **13 MB** em `tests/gates-web/medicoes` + **3,0 MB** em `esperado`, 51 arquivos, **868 331** linhas — **89 %** das inserções do bloco | §13 | **pergunta 2** (decisão pendente, §10.6) |
+**Fechados depois do commit 1**: o **login com Google** e o asset da marca (PR-2; H-I1-3 e divs.
+564, 636, 920); as **11 dependências**, o **`Arial`**, o **`generator`**, o **matcher**
+`toBeVisuallySelected` e o **rastro em texto** (PR-15); a div. 892 (nada faltou) e a 611 (o 20
+da I1-E6 confirmado) pelo aval; a **documentação da raiz** (§11).
 
 ---
 
@@ -170,7 +167,7 @@ O texto de cada decisão vive **só** no `I1-PRECHECK.md` §0.1 (e a errata da I
 | I1-D3 | `packages/identidade` em TS puro; CSS gerado com gate; 1 dp = 1 px | — | PR-4 |
 | I1-D4 | o nativo importa o pacote numa PR só, com G-inv | a PR-4 provou **por igualdade** (decisão 3 do aval: *"PR que só move tokens se prova por igualdade"*, div. 598) | PR-4 |
 | I1-D5 | o palco é apagado; URL antiga redireciona ou 404 | **I1-D22** (os destinos) | PR-3 |
-| I1-D6 | PR-1 = o loop mudo; PR-2 = Google, consertar | — | PR-1 ✓; **Google: não aplicada** (div. 920) |
+| I1-D6 | PR-1 = o loop mudo; PR-2 = Google, consertar | — | PR-1; **PR-2 (#351)**, aberta depois da PR-14 por decisão do aval (div. 920) |
 | I1-D7 | as seis decisões de composição do N3 | — | PR-6…PR-13 (o item 4 é a base da recusa da E31, PR-13) |
 | I1-D8 | o corte vem antes do desenho | — | PR-3 (#337) antes de #338 |
 | I1-D9 | nenhuma mudança de comportamento fora da auth; itens 5 e 6 do N2 §10.3 condicionados | — | o bloco (G-back); os itens 5 e 6 na PR-13 |
@@ -179,7 +176,7 @@ O texto de cada decisão vive **só** no `I1-PRECHECK.md` §0.1 (e a errata da I
 | I1-D12 | brief e folha próprios, depois do corte | **errata** no `DESIGN-I1/README.md` §2.1 | #338 |
 | I1-D13 | quatro gates numa PR de gate, com CN | — | PR-5 |
 | I1-D14 | aceite e escrita só no preview/audit | **errata** (commit 3b): o aceite é o G-faixa no Playwright, **nenhum aparelho** | PR-5…PR-14 |
-| I1-D15 | fatiamento; ordem depois do I1 = N4, N5, iOS; W5 à parte | — | o bloco (sem a PR-2) |
+| I1-D15 | fatiamento; ordem depois do I1 = N4, N5, iOS; W5 à parte | — | o bloco (a PR-2 fora de ordem; + a PR-15, que o fatiamento não previa) |
 | I1-D16 | G-faixa com config própria; medição commitada; veredito no CI | — | PR-5 |
 | I1-D17 | pt-BR superfície por superfície; exceção: a política | — | PR-1…PR-14 |
 | I1-D18 | o PWA morre por inteiro, com o cache, a fila e o `/api/proxy` | — | PR-3 |
@@ -188,7 +185,7 @@ O texto de cada decisão vive **só** no `I1-PRECHECK.md` §0.1 (e a errata da I
 | I1-D21 | o escopo do G-back (núcleo, 11 compartilhados) | — | PR-5 (div. 612) |
 | I1-D22 | errata da I1-D5: `?contentId=` → `/content/[id]` etc. | (é a errata) | PR-3 |
 | I1-D23 | símbolos do palco no backend saem, declarados | — | PR-3 |
-| I1-D24 | `frame-src`: a PR-2 acrescenta, a PR-3 tira o `'blob:'` | — | PR-3 (`'none'`); a parte da PR-2 não se aplicou (div. 564) |
+| I1-D24 | `frame-src`: a PR-2 acrescenta, a PR-3 tira o `'blob:'` | — | PR-3 (`'none'`); PR-2 (a origem do `authDomain` pela variável; div. 564 fechada) |
 | I1-D25 | os testes do palco morrem ou adaptam | **errata** (div. 504): declarações no ```gates-web``` | PR-3 |
 | I1-D26 | nenhum toast; a folha desenha a falha; `use-toast` sai | — | PR-9…PR-13 |
 | I1-D27 | a tela cheia do `pdf-viewer` fica | — | PR-10 (I1-E16) |
@@ -201,15 +198,18 @@ O texto de cada decisão vive **só** no `I1-PRECHECK.md` §0.1 (e a errata da I
 | I1-D34 | a Fase B contra prod, pela regra 12 | — | pre-check |
 | I1-D35 | quem roda os probes | **errata** = **I1-D37** | pre-check; PR-12 |
 | I1-D36 | todo tipo de content abre no visualizador, com CN | — | PR-3 (`i1-visualizador.test.tsx`) |
-| I1-D37 | o executor roda o aceite e o "antes" do G-faixa (perfil persistente, `localhost:3000`, barreira de escrita) | (é a errata da I1-D35) | PR-12, PR-13, PR-14 |
+| I1-D37 | o executor roda o aceite e o "antes" do G-faixa (perfil persistente, `localhost:3000`, barreira de escrita) | **é a errata da I1-D35** (*"o executor não digita senha"* continua; *"o Marcel roda"* cai) | PR-12, PR-13, PR-14, PR-2 (G-faixa por estado), PR-15 (a prova por imagem do `dashboard`) |
 
 As erratas que o prompt listou — D5, D11, D12, D14, D25, D30, D35 — estão todas acima; a da D5
 **é** a I1-D22, e a da D12 mora no `DESIGN-I1/README.md` §2.1, não no pre-check.
 
 **As decisões da folha**, só por referência (`DESIGN-I1/README.md`): §1.1 (respostas **1–32**),
 §1.2 (**9** tokens), §1.3 (**3**), §1.4 (**5** itens, divs. 583–591), e as por PR dentro do §4 —
-os **8** nomes das medidas fixas (PR-6) e **3** da folha 4 (PR-9, div. 713). Os avais de cada PR
-estão no README do seu anexo.
+os **8** nomes das medidas fixas (PR-6) e **3** da folha 4 (PR-9, div. 713) — e a **decisão da
+marca do Google** `[Marcel, 2026-09-30]` (div. 943, PR-2, registrada no §1.4 com o `SHA256SUMS`):
+o botão segue o **tema Dark pré-aprovado do Google**, o "G" colorido direto sobre fundo escuro, com
+o fundo e o contorno do botão secundário da folha (`bg`, `lineInfo`) no lugar de `#131314` e
+`#8E918F`. Os avais de cada PR estão no README do seu anexo.
 
 ---
 
@@ -227,7 +227,7 @@ Todas no `DESIGN-I1/README.md` §2.2, na seção da PR que a abriu; as listas do
 | E3 | #338 | o `garantida` da linha de sucesso é o do catálogo (r 9) | casa 1 | 589 | leitura | `erratas` |
 | E4 | #338 | landing: `2 → undefined`, `3 → undefined` riscados | casa 6 | 584 | leitura | `erratas` |
 | E5 | #338 | entrelinha 20 = literal do N3 | casa 8 | 585 | leitura | `erratas` |
-| E6 | PR-4 | o **visto** → `garantida`; 20 onde a folha tem 16 (div. 611) | casa 1 | 588, 601 | leitura | `erratas` |
+| E6 | PR-4 | o **visto** → `garantida`; **20** onde a folha tem 16 — confirmado no aval do encerramento (div. 611 fechada) | casa 1 | 588, 601, 611 | leitura | `erratas` |
 | E7 | PR-6 | `-validacao` sem o balão do navegador | 31 | 667 | leitura | `erratasFaixa` |
 | E8 | PR-6 | `verify-carregando` sem o grupo vazio | 2 | 668 | leitura | `erratasFaixa` |
 | E9 | PR-6 | `login-redirecionando` sem o grupo vazio | 6 | 675 | leitura | `erratasFaixa` |
@@ -276,7 +276,7 @@ Fonte: `I1-PRECHECK.md` §0.2; o estado final, pela PR que fechou.
 |---|---|---|---|
 | H-I1-1 | Playwright só Chromium desktop, poda em PR própria | **FECHADA** — a premissa já era a `main` (div. 486 → I1-D16) | pre-check §8 |
 | H-I1-2 | o loop mudo se repete enquanto o `POST` falhar | **CONFIRMADA** (probe 1, ramo b) e **CONSERTADA** na PR-1: 52 · 51 · 104 → 1 · 0 · 0 | `faseB/probe1-out/`; `I1-PR1-anexos` |
-| H-I1-3 | o Google falha no navegador pela CSP/COOP | **PARCIAL — e ABERTA**: confirmada no `script-src` (probe 2); `frame-src` e COOP nunca alcançados; **o conserto não foi feito** (a PR-2 não houve) e as três causas seguem no código `[medido: lib/security-headers.ts:39-47, :81, :124]` | `faseB/probe2-out/`; §3.2.1; div. 920; **pergunta 1** |
+| H-I1-3 | o Google falha no navegador pela CSP/COOP | **FECHADA** pela PR-2 (#351): as três causas eram as três, nessa ordem, medidas uma diretiva por vez — `main`: 1 violação `script-src-elem` (`apis.google.com/js/api.js`), nenhum popup · (a) + `script-src https://apis.google.com`: 1 violação `frame-src` (o `authDomain`), popup no Google mas `popup.closed` `true` · (b) + `frame-src https://<authDomain>`: **0 violações**, ainda `closed` `true` · (c) + COOP `same-origin-allow-popups`: **0 violações, `closed` `false`, `window.opener` `true`**. Aceite real do Marcel: *entrou* | `faseB/probe2-out/`; `I1-PR2-anexos/README.md` §2, §7, §8 |
 | H-I1-4 | a largura CSS do Chrome no Tab S6 | **SEM OBJETO** (errata da I1-D14) | — |
 | H-I1-5 | nenhum toast das setlists aparece | **CONFIRMADA** (probe 4) e **FECHADA** na PR-13: os dois sistemas de toast morreram, a falha é estado na tela | `faseB/probe4-out/`; `I1-PR13-anexos` §26.4 |
 | H-I1-6 | Chrome desktop e do Tab dão a mesma quebra | **SEM OBJETO** (errata da I1-D14) | — |
@@ -284,22 +284,23 @@ Fonte: `I1-PRECHECK.md` §0.2; o estado final, pela PR que fechou.
 
 ---
 
-## 7. Divergências 480–916
+## 7. Divergências 480–954
 
 ### 7.1 A contagem
 
-`[medido]` — `git grep -nE '^\| \*\*[0-9]{3}\*\*' -- docs`, filtrado para 480–916, a origem lida
-na célula depois do número; o bruto (432 linhas de tabela, a marca `*` na que conta) está no
-anexo [`divergencias.txt`](I1-ENCERRAMENTO-anexos/divergencias.txt):
+`[medido]` — `git grep -nE '^\| \*\*[0-9]{3}\*\*' -- docs`, filtrado para 480–954 (o bloco,
+480–950, mais as deste documento, 951–954), a origem lida na célula depois do número; o bruto (472
+linhas de tabela, a marca `*` na que conta) está no anexo
+[`divergencias.txt`](I1-ENCERRAMENTO-anexos/divergencias.txt):
 
 ```
-números atribuídos: 419 de 437   (418 em tabela + a 756, que só existe em prosa)
+números atribuídos: 457 de 475   (456 em tabela + a 756, que só existe em prosa)
 sem registro: 18 → 532–549       (a faixa 522–549 era da PR-1, que usou 522–531; a PR-3 começou em 550)
-sem letra de origem: 4 → 726, 727, 728 (PR-9), 767 (PR-10)   (div. 918)
-A 133 · P 123 · D 82 · T 77 · X 0 · sem origem 4 · total 419
+sem letra na tabela: 726, 727, 728 (PR-9), 767 (PR-10) → pelo aval: 726 D · 727 A · 728 P · 767 A
+P 143 · A 139 · D 92 · T 80 · X 3 · total 457
 ```
 
-| PR | faixa | P | D | A | T | sem | total |
+| PR | faixa | P | D | A | T | X | total |
 |---|---|---|---|---|---|---|---|
 | pre-check | 480–521 | 24 | 4 | 5 | 9 | | 42 |
 | PR-1 | 522–531 | 4 | | 2 | 4 | | 10 |
@@ -310,18 +311,24 @@ A 133 · P 123 · D 82 · T 77 · X 0 · sem origem 4 · total 419
 | PR-6 | 636–682 | 17 | 7 | 10 | 13 | | 47 |
 | PR-7 | 683–691 | 4 | 1 | 2 | 2 | | 9 |
 | PR-8 | 692–695 | 1 | 3 | | | | 4 |
-| PR-9 | 696–731 | 5 | 8 | 14 | 6 | 3 | 36 |
-| PR-10 | 732–768 | 4 | 13 | 15 | 4 | 1 | 37 |
+| PR-9 | 696–731 | 6 | 9 | 15 | 6 | | 36 |
+| PR-10 | 732–768 | 4 | 13 | 16 | 4 | | 37 |
 | PR-11 | 769–805 | 1 | 13 | 13 | 10 | | 37 |
 | PR-12 | 806–845 | 5 | 12 | 15 | 8 | | 40 |
 | PR-13 | 846–892 | 12 | 8 | 16 | 11 | | 47 |
 | PR-14 | 893–916 | 7 | | 17 | | | 24 |
-| **I1** | | **123** | **82** | **133** | **77** | **4** | **419** |
+| encerramento, commit 1 | 917–932 | 10 | 6 | | | | 16 |
+| PR-2 | 933–943 | 4 | | 4 | | 3 | 11 |
+| PR-15 | 944–950 | 4 | | | 3 | | 7 |
+| encerramento, commit 2 | 951–954 | 1 | 3 | | | | 4 |
+| **I1** | | **143** | **92** | **139** | **80** | **3** | **457** |
 
-**A cresceu** contra o N3 (9 de 85 lá; 133 de 419 aqui): o I1 foi o primeiro bloco a reescrever
+**A cresceu** contra o N3 (9 de 85 lá; 139 de 457 aqui): o I1 foi o primeiro bloco a reescrever
 telas **com dado real atrás**, e a leitura do código de cada superfície achou o que a tela
 escondia — erro engolido, `status` perdido, campo que nunca vai no corpo, texto que mente
 (*"max 50MB"*). **T** é do instrumento que nasceu no bloco (G-faixa, sobretudo) e das rodadas.
+**X** aparece só na PR-2, a primeira a falar com o Google de verdade (o COOP report-only do
+`accounts.google.com`, o `init.json` 404 do Firebase, o `createAuthUri`).
 
 ### 7.2 As que ensinaram (viraram decisão, errata, regra ou caso)
 
@@ -331,13 +338,13 @@ escondia — erro engolido, `status` perdido, campo que nunca vai no corpo, text
 | 492 | I1-D32 (errata "morre com a web") | `PLANO-TRANSICAO.md`; `N1-ENCERRAMENTO.md` |
 | 503, 504 | erratas da I1-D30 e da I1-D25; G1b de `apps/native/test` → W5 | pre-check §0.1 |
 | 506 | I1-D36 (todo tipo abre no visualizador) | pre-check §0.1 |
-| 518, 522 | o listener por `request`/`response` (caso 33 proposto) | `I1-PR1-anexos/cn/comum.ts` |
-| 531 | nada se grava na pasta vigiada pelo `next dev` (caso 29 proposto) | `I1-PR1-anexos` |
-| 560 | o `public/sw.js` de auto-destruição (caso 31 proposto) | `I1-PR3-anexos` §13 |
+| 518, 522 | o listener por `request`/`response` (caso 33) | `I1-PR1-anexos/cn/comum.ts` |
+| 531 | nada se grava na pasta vigiada pelo `next dev` (caso 29) | `I1-PR1-anexos` |
+| 560 | o `public/sw.js` de auto-destruição (caso 31) | `I1-PR3-anexos` §13 |
 | 584–589 | I1-E1…E5 | `DESIGN-I1` §2.2 |
-| 588, 601 | I1-E6 | `DESIGN-I1` §2.2 |
+| 588, 601, 611 | I1-E6 (o 20 confirmado no aval) | `DESIGN-I1` §2.2 |
 | 598 | "PR que só move tokens se prova por igualdade" | `I1-PR4-anexos` §1 |
-| 599, 600 | **N2-E25** (este commit) | `DESIGN-N2/README.md` §9 |
+| 599, 600 | **N2-E25** | `DESIGN-N2/README.md` §9 |
 | 614, 681 | o `erratas.json` e a lista `erratasFaixa` | `DESIGN-I1/erratas.json` |
 | 619, 676, 677 | errata da I1-D11: (e) e (b) reprovam em 411 | pre-check §0.1 |
 | 631 | o gate se prova no Linux do CI | `I1-PR5-anexos` |
@@ -346,20 +353,25 @@ escondia — erro engolido, `status` perdido, campo que nunca vai no corpo, text
 | 678 | "sem `.env`" se confere pelo que o servidor carrega | `I1-PR6-anexos` §15.3 |
 | 680, 843 | a mescla por largura, e nos dois sentidos | `g-faixa-sessao.ts` |
 | 684, 693 | I1-E11, I1-E12 | `DESIGN-I1` §2.2 |
-| 726 | I1-E14; `scrollWidth` por estado na pré-verificação (caso 30 proposto) | `I1-PR9-anexos` §17 |
-| 727 | a raiz da casca não estiliza texto (regra 27 proposta) | idem |
+| 726 | I1-E14; `scrollWidth` por estado na pré-verificação (caso 30) | `I1-PR9-anexos` §17 |
+| 727 | a raiz da casca não estiliza texto (regra 27) | idem |
 | 733–735, 760 | I1-E15; a regra simétrica do `conferir.mjs` | `DESIGN-I1` §2.2, §6 |
-| 761 | a folha vence (sem errata); o `800` literal invisível ao G-tok (caso 35 proposto) | `I1-PR10-anexos` §22 |
-| 767 | "quebra por dado" (regra 25 proposta) | `I1-PR10-anexos` §23.3; `g-faixa-classificar.mjs` |
+| 761 | a folha vence (sem errata); o `800` literal invisível ao G-tok (caso 35) | `I1-PR10-anexos` §22 |
+| 767 | "quebra por dado" (regra 25) | `I1-PR10-anexos` §23.3; `g-faixa-classificar.mjs` |
 | 775, 779 | I1-E19, I1-E20 | `DESIGN-I1` §2.2 |
-| 803 | medição por estado (regra 24 proposta) | `I1-PR11-anexos` §20 |
+| 803 | medição por estado (regra 24) | `I1-PR11-anexos` §20 |
 | 808–815, 834 | I1-E21, E22, E24…E27 | `DESIGN-I1` §2.2 |
-| 828 | a regra 828 (inglês em string de `.ts`) no G-tok (caso 34 proposto) | `I1-PR14-anexos` §15 |
+| 828 | a regra 828 (inglês em string de `.ts`) no G-tok (caso 34) | `I1-PR14-anexos` §15 |
 | 854, 858, 876 | I1-E28…E30 | `DESIGN-I1` §2.2 |
-| 875, 888 | E31 recusada; o `nl` (regras 26 e 32 propostas) | `I1-PR13-anexos` §24, §25 |
-| 901, 908 | o `vi.mock` que nunca resolve; o `knip` que ignora (casos 36, 37 propostos) | `I1-PR14-anexos` §7 |
-| 910 | o perfil só na origem 3000 (caso 32 proposto) | `COMO-RODAR.md` |
-| 914 | texto sem leitor é poda (regra 31 proposta) | `I1-PR14-anexos` §11 |
+| 875, 888 | E31 recusada; o `nl` (regras 26 e 32) | `I1-PR13-anexos` §24, §25 |
+| 901, 908 | o `vi.mock` que nunca resolve; o `knip` que ignora (casos 36, 37) | `I1-PR14-anexos` §7 |
+| 910 | o perfil só na origem 3000 (caso 32) | `COMO-RODAR.md` |
+| 914 | texto sem leitor é poda (regra 31) | `I1-PR14-anexos` §11 |
+| **920** | **a PR-2 aberta antes do fecho** (decisão 1 do aval) | #351 |
+| 935, 940, 941 | o COOP nos dois campos de prod; o `script-src` também no dev; o `frame-src` pela variável | `lib/security-headers.ts`; `I1-PR2-anexos` §9 |
+| 943 | a **decisão da marca**: o botão do Google no tema Dark pré-aprovado | `DESIGN-I1/README.md` §1.4 |
+| 944–946 | o rastro em `.gz` é tudo o que o veredito não lê, por um leitor só (`ler-medicao.mjs`), com a mesma medição nos dois formatos = erro | `I1-PR15-anexos` §5 |
+| 951 | a errata do *"fica até o encerramento"* do `sw.js` | `I1-PR3-anexos/README.md` §8 |
 
 ### 7.3 As abertas, com destino
 
@@ -367,13 +379,10 @@ escondia — erro engolido, `status` perdido, campo que nunca vai no corpo, text
 |---|---|---|
 | 527, 528 | `DELETE /api/auth/session` em toda carga sem usuário, 2× por logout | **fica** (aval da PR-1) — não é herança |
 | 553 | `public/icons/*` sem leitor | bloco seguinte ao I1 (§10.5.8) |
-| 554, 560 | `public/sw.js` e `worker-src`/`manifest-src` | bloco seguinte ao I1 (§10.5.1); **pergunta 4** (div. 927) |
-| 564 | *"a PR-2 reabre"* | com o Google (§10.1.15) |
-| 568 | memoização das setlists | bloco seguinte ao I1 (§10.5.9) |
+| 554, 560 | `public/sw.js` e `worker-src`/`manifest-src` | bloco seguinte ao I1 (§10.5.1) |
+| 568 | memoização das setlists | Bloco D (§10.1.16) |
 | 606 | `g1.sh` cego para arquivo não rastreado | W5 (§10.4.2) |
 | 607 | o `native.yml` pelo pacote só | W5 (§10.4.4) |
-| 611 | o tamanho 20 da I1-E6 | **pergunta 7** |
-| 636 | o asset do Google | **pergunta 8** |
 | 660 | `/verify-email` → `/login` no 1º render | Bloco D (§10.1.11) |
 | 672 | o cabeçalho do `g-faixa-auth.ts` | W5 (§10.4.6) |
 | 689 | toda rota `ƒ` pelo nonce da CSP no layout | Bloco D (§10.1.10) |
@@ -382,24 +391,34 @@ escondia — erro engolido, `status` perdido, campo que nunca vai no corpo, text
 | 837 | os specs do `ux-audit` em inglês | bloco seguinte ao I1 (§10.5.6) |
 | 845 | testes do editor instáveis | W5 (§10.4.5) |
 | 864 | `getSetlistById` importado e não usado no núcleo | Bloco D (§10.1.14) |
-| 892 | o aval cortado | **pergunta 6** |
 | 913 | o triângulo do `<summary>` | bloco seguinte ao I1 (§10.5.7) |
+| 937 | o `init.json` 404 do Firebase no popup (lado Firebase) | registrado; sem ação |
+| 948 | o `text-amber-500` do `toBeInFavoriteState` | bloco seguinte ao I1 (§10.5.10) |
+| 954 | as regras 24–32 e casos 29–37 fora do `LOGS-OCTAVIA.md` | com o Marcel |
+
+**Fechadas no fecho**: 564 e 920 (PR-2), 611 e 892 (aval), 636 (o asset, PR-2), 918, 927, 929,
+932 (aval).
 
 ### 7.4 A origem P — onde o revisor errou
 
-**123 de 419 (29 %)** são de origem **P**: o prompt do revisor presumiu o que não era. É o
+**143 de 457 (31 %)** são de origem **P**: o prompt do revisor presumiu o que não era. É o
 registro honesto do bloco — e o maior número absoluto de P de um bloco até aqui (33 no N3). Por
 PR, o P mais alto foi o do pre-check (24) e o da PR-6 (17): a primeira leitura do web e a
 primeira superfície, onde o prompt descrevia um código que ninguém tinha aberto ainda. Nas PRs
-de tela seguintes o P caiu para 1–5 (PR-8, PR-11) e voltou a 12 na PR-13, que carregava os três
-defeitos do N2 e o aval mais longo.
+de tela seguintes o P caiu para 1–6 e voltou a 12 na PR-13, que carregava os três defeitos do N2
+e o aval mais longo.
 
-O que se repetiu (leitura desta PR, não medição): **contagem do prompt que não confere com a
+**A mais cara foi a 920** — não uma premissa sobre o código, mas sobre o próprio fatiamento: a
+PR-2 (o Google), decidida desde o pre-check (I1-D6, I1-D15), **foi pulada** pelo revisor, da PR-1
+direto para a PR-3, e nenhuma das treze PRs seguintes a cobrou; só a leitura dos anexos, no
+encerramento, a achou. O commit 1 a registrou como A; o aval a devolveu a P.
+
+O que mais se repetiu (leitura desta PR, não medição): **contagem do prompt que não confere com a
 fonte** (496, 592, 670, 690, 695, 768, 890, 915: número de frases, de arquivos, de linhas);
 **seção ou arquivo citado onde não está** (489, 591, 594, 595, 696, 847, 848, 902); **estado ou
-caminho presumido que o código não tem** (699, 732, 806, 880); e a **série de numeração** (502,
-715, 756, 846). Neste encerramento o padrão se repete **nove** vezes (§15: 917, 919, 921–925,
-929, 931).
+caminho presumido que o código não tem** (699, 732, 806, 880, 933, 944, 945); e a **série de
+numeração** (502, 715, 756, 846). No encerramento o padrão se repete **onze** vezes (917, 919–925,
+929, 931, 951).
 
 ---
 
@@ -433,21 +452,26 @@ caminho presumido que o código não tem** (699, 732, 806, 880); e a **série de
 | **o perfil persistente** (fora da árvore, no `.gitignore`) e a barreira de escrita do medidor | `~/.octavia-g-faixa-perfil`; `x-g-faixa: fabricado` | PR-5 (div. 632); a barreira no molde da PR-6; I1-D37 na PR-12 |
 | **`COMO-RODAR.md`** — uma seção por PR | `scripts/gates-web/COMO-RODAR.md` | PR-5 → PR-14 |
 | **`gates-web.yml`** | `.github/workflows/gates-web.yml` (jobs `g-back`, `g-palco`, `g-tok`, `g-faixa`) | PR-5; linha da cobertura na PR-14 |
+| **CN do *Entrar com Google*** — sem interceptar o Google, com a CSP aplicada no dev, para na página de login do Google; e a **medição diretiva a diretiva** | `tests/gates-web/google-csp.cn.ts`; `docs/ux/I1-PR2-anexos/medir-diretivas.ts` | PR-2 |
+| **o leitor dos dois formatos** — `lerJson` lê `.json` ou `.json.gz`, a mesma medição nos dois = erro (exit 2); o veredito e os 6 scripts de `casca-efeito` leem por ele | `scripts/gates-web/ler-medicao.mjs` | PR-15 |
+| os scripts da **prova por imagem**, commitados | `docs/ux/I1-PR15-anexos/cn/capturar.mjs`, `cn/diff.mjs` | PR-15 (aval 6) |
 
-**Os gates no fim do bloco** `[medido, contabilidade.txt §6]`: G-palco **PASSA** (0) · G-tok
-**PASSA** (132 arquivos; erratas 9, órfãs 0) · cobertura **PASSA** (129/129, FORA 0) · G-faixa
-**PASSA** (14 medições) · `SHA256SUMS` do `DESIGN-I1` **14/14**. O G-back roda sobre o corpo de
+**Os gates no fim do bloco** (`c1640e5`) `[medido, contabilidade.txt §6]`: G-palco **PASSA** (0) ·
+G-tok **PASSA** (132 arquivos; literais 0) · cobertura **PASSA** (129/129, FORA 0) · G-faixa
+**PASSA** (14 medições, lendo a pasta com o rastro em `.gz`) · `cn-main` REPROVA 83 (o registro,
+lido do `.gz`) · `SHA256SUMS` do `DESIGN-I1` **14/14**. O G-back roda sobre o corpo de
 cada PR (as declarações moram lá) e passou em todas (`[lido]` nos README).
 
 ---
 
-## 9. Catálogo — regras e casos propostos **(PARA AVAL)**
+## 9. Catálogo — regras 24–32 e casos 29–37
 
-> **Rascunho.** Nada aqui entra no `LOGS-OCTAVIA.md` antes do aval; os números são a próxima
-> posição livre (as regras do N3 foram até a **23**, os casos até o **28** —
-> `N3-ENCERRAMENTO.md` §5; `LOGS-OCTAVIA.md:284` e `:556`) e podem mudar.
+**Aprovados como numerados** `[Marcel, 2026-09-30, decisão 5 do aval]`, na sequência do N3 (as
+regras foram até a **23**, os casos até o **28** — `N3-ENCERRAMENTO.md` §5; `LOGS-OCTAVIA.md:284`
+e `:556`). A *"errata órfã reprova"* é **ampliação da regra 14**, não regra nova. O texto vive
+aqui; levá-los ao `LOGS-OCTAVIA.md` não estava na lista deste commit (div. 954).
 
-**Regras propostas — 24 em diante**
+**Regras — 24 a 32**
 
 | # | regra | origem |
 |---|---|---|
@@ -460,9 +484,9 @@ cada PR (as declarações moram lá) e passou em todas (`[lido]` nos README).
 | 30 | **Instrumento primeiro, tela depois**: o gate (CN) reprova na `main` **antes** da correção, no commit 1 de cada PR | PR-1 (10 falham); toda PR de tela (gate-first); PR-14 (4/8) |
 | 31 | **Texto sem leitor é poda, não tradução** | PR-14, aval 3; div. 914 |
 | 32 | **O defeito do instrumento se conserta no instrumento**, não com errata da folha | E31 (PR-13) |
-| — | *ampliação da 14*, não regra nova: **errata, isenção e exceção órfãs reprovam** também no web (G-tok (i), `g-tok-sem-ingles.txt`, `g-tok-frases-isentas.txt`) | div. 929 |
+| 14 (ampliada) | **errata, isenção e exceção órfãs reprovam** também no web (G-tok (i), `g-tok-sem-ingles.txt`, `g-tok-frases-isentas.txt`) | div. 929; decisão 5 do aval |
 
-**Casos do padrão propostos — 29 em diante** (o instrumento que leu uma coisa e não a outra)
+**Casos do padrão — 29 a 37** (o instrumento que leu uma coisa e não a outra)
 
 | # | div. | PR | o que o instrumento leu | o que não leu |
 |---|---|---|---|---|
@@ -502,7 +526,8 @@ bloco (regra 23).
 | 12 | **apagar e favoritar**: mudos na lista (os erros são produzidos e ninguém lê); na visualização o favoritar era local e falso e **saiu** com a barra (737) | div. 702 (PR-9); div. 737 (PR-10) |
 | 13 | **URL própria da setlist** (a edição é estado da `/setlists`; `?setlistId=` → `/setlists`) | div. 497; I1-D22 |
 | 14 | `lib/content-service-server.ts:12` (núcleo) importa `getSetlistById` do serviço cliente e não o usa | div. 864 (PR-13) |
-| 15 | **o login com Google** — as três causas da H-I1-3 (`frame-src 'none'`, `script-src` sem `apis.google.com`, COOP `same-origin`), a div. 564 e o asset da marca (636). **Proposta**: aqui, como o `PLANO-TRANSICAO.md` já o listava entre os candidatos do D; **o destino é a pergunta 1** | I1-D6; H-I1-3; div. 920 |
+| 15 | ~~**o login com Google**~~ — **fechado pela PR-2** (#351): as três diretivas, a div. 564 e o asset da marca (636); aceite real do Marcel | I1-D6; H-I1-3; divs. 920, 564 |
+| 16 | **a memoização das setlists**: os `useCallback` com `setlists` nas dependências (div. 568, PR-3), herdados pela PR de setlists e sem registro de pagamento — hoje em `components/setlists/use-setlists.ts` (11 `useCallback`) | div. 568; div. 932; aval 10 |
 
 ### 10.2 N4 (content nos apps)
 
@@ -510,7 +535,8 @@ bloco (regra 23).
 |---|---|---|
 | 1 | **frases unificadas web × nativo**: hoje dois conjuntos (os dez `frases-*.ts` do web, 421 folhas; o `packages/core/src/frases.ts` do nativo) | I1-D10 |
 | 2 | **a harmonização do motivo**: travessão (PR-9) × vírgula (PR-11…13) — uma forma só, na unificação | PR-11 §21.6; PR-13 §28 |
-| 3 | **a `LinhaDeAviso` como componente do core?** — hoje `components/identidade/linha-de-aviso.tsx` (web) e a do nativo; o N4 decide se vira contrato compartilhado (**pergunta 11**) | PR-1; PR-9 (a mudança para `components/identidade/`) |
+| 3 | **a `LinhaDeAviso` como componente do core** — hoje `components/identidade/linha-de-aviso.tsx` (web) e a do nativo: **o N4 decide** se vira contrato compartilhado | PR-1; PR-9; aval 11 |
+| 4 | os três `undefined` do `TokensDaFaixa` (`faixas.A.folha.alturaMin`, `faixas.B.folha.alturaMin`, `faixas.C.reordenar.artistaMin`): *"a medida não existe nesta faixa"*, e o CSS gerado a omite — a forma final vem com o content nas três faixas | `I1-PR4-anexos` §2; div. 932; aval 10 |
 
 ### 10.3 N5 (celular) e I2
 
@@ -518,7 +544,7 @@ bloco (regra 23).
 |---|---|---|
 | 1 | **a composição de A desenhada**: no web, A é a regra 2 aplicada mecanicamente, sem folha (errata da I1-D11); a folha de A é do "I2, se houver" | I1-D11 e errata |
 | 2 | **celular real** para o aceite: todo o celular do projeto segue sendo o AVD | `N3-ENCERRAMENTO.md` §10.1.17 (segue aberta) |
-| 3 | os três `undefined` do `TokensDaFaixa` (`faixas.A.folha.alturaMin`, `faixas.B.folha.alturaMin`, `faixas.C.reordenar.artistaMin`): *"a medida não existe nesta faixa"*, e o CSS gerado a omite — a forma final é de quem desenhar a folha em A | `I1-PR4-anexos` §2; div. 932 |
+| 3 | ~~os três `undefined` do `TokensDaFaixa`~~ — **movido para o N4** (§10.2.4), pelo aval 10 | div. 932 |
 
 ### 10.4 W5 (instrumento)
 
@@ -536,21 +562,22 @@ bloco (regra 23).
 
 | # | item | origem |
 |---|---|---|
-| 1 | **remover `public/sw.js`** (o worker de auto-destruição) e o **`worker-src`/`manifest-src`** da CSP (`lib/security-headers.ts`) — **quando: pergunta 4** | divs. 554, 560; `I1-PR3-anexos` §13; div. 927 |
-| 2 | **as 11 dependências órfãs**: `isomorphic-dompurify`, `react-hook-form`, `@hookform/resolvers`, `zustand`, `immer`, `date-fns`, `cmdk`, `next-themes`, `lru-cache`, `@types/debug`, `autoprefixer` — com o lockfile (**pergunta 3**) | `I1-PR14-anexos` §12.2 |
-| 3 | **`body { font-family: Arial }`** (`app/globals.css:6`) — o último valor literal do tema velho | `I1-PR14-anexos` §17 |
-| 4 | **`generator: "v0.dev"`** (`app/layout.tsx:19`) | idem |
-| 5 | **o matcher de teste** (`lib/__tests__/custom-matchers.ts:189-190`, `bg-primary`/`bg-blue-500`) | idem |
+| 1 | **remover `public/sw.js`** (o worker de auto-destruição) e o **`worker-src`/`manifest-src`** da CSP (`lib/security-headers.ts`) — **confirmado pelo aval 4**; o texto contrário da PR-3 virou errata (div. 951) | divs. 554, 560; `I1-PR3-anexos` §13; div. 927 |
+| 2 | ~~**as 11 dependências órfãs**~~ — **feito na PR-15** (#352): `isomorphic-dompurify`, `react-hook-form`, `@hookform/resolvers`, `zustand`, `immer`, `date-fns`, `cmdk`, `next-themes`, `lru-cache`, `@types/debug`, `autoprefixer`; lockfile −674 | `I1-PR15-anexos` §2 |
+| 3 | ~~**`body { font-family: Arial }`**~~ — **feito na PR-15**: `var(--fonte-ui-familia), sans-serif`; prova por imagem 12 × 0 pixel | `I1-PR15-anexos` §3 |
+| 4 | ~~**`generator: "v0.dev"`**~~ — **feito na PR-15** | `I1-PR15-anexos` §4 |
+| 5 | ~~**o matcher de teste** `toBeVisuallySelected`~~ — **feito na PR-15** (0 usos; saiu inteiro) | `I1-PR15-anexos` §4 |
 | 6 | **os specs do `ux-audit`** (`tests/ux-audit/fase-d/*`, rótulos em inglês) | div. 837; PR-13 |
 | 7 | o triângulo do `<summary>` da tela de erro (`flex` no `summary`, só em dev) | div. 913 |
 | 8 | `public/icons/*`: 10 de 11 sem leitor | div. 553 |
-| 9 | conferir a memoização das setlists (a herança da div. 568 não foi registrada como paga) | div. 568; div. 932 |
+| 9 | ~~conferir a memoização das setlists~~ — **movido para o Bloco D** (§10.1.16), pelo aval 10 | div. 568 |
+| 10 | o **`text-amber-500`** do `toBeInFavoriteState` (`lib/__tests__/custom-matchers.ts:29`), com o resto do arquivo | div. 948 (PR-15) |
 
-### 10.6 Decisão pendente
+### 10.6 A decisão que estava pendente
 
 | # | item | origem |
 |---|---|---|
-| 1 | **os JSON de medição no repositório**: 13 MB + 3,0 MB, 51 arquivos, 868 331 linhas (89 % das inserções do bloco) — **pergunta 2** | §13 |
+| 1 | ~~**os JSON de medição no repositório**~~ — **decidido e feito** (aval 2, PR-15): em texto só o que o veredito lê (as 14 medições vivas e o `esperado/`); os **22** do rastro em `.json.gz` (3 203 276 → 153 610 bytes), lidos pelo `ler-medicao.mjs`; `medicoes/` 13M → 10M | `I1-PR15-anexos` §5 |
 
 ### 10.7 O que o I1 fechou de heranças anteriores
 
@@ -558,6 +585,7 @@ bloco (regra 23).
 |---|---|---|
 | `N2-ENCERRAMENTO.md` §10.3, itens 5 e 6 | remove por `content.id`; id local falso; erro ao apagar setlist já apagada | PR-13 (3/3) |
 | `PLANO-TRANSICAO.md`, Bloco D, item de abertura | o loop mudo do `POST /api/auth/session` | PR-1 |
+| `PLANO-TRANSICAO.md`, Bloco D (o login Google); pre-check H-I1-3 | o *Entrar com Google* morto pela CSP/COOP | PR-2 |
 | `N2-ENCERRAMENTO.md` §10.8 / `N3-ENCERRAMENTO.md` §10.5 | o web com a identidade do nativo, com as seis decisões de composição | o bloco |
 
 ---
@@ -572,6 +600,8 @@ reescrito.
 |---|---|
 | `CLAUDE.md` | `:111` *UI*: tokens de `packages/identidade`, `components/identidade/`, sem Radix/shadcn/Lucide desde a I1-PR-14 · `:113` *Testing*: + os gates do web e o `COMO-RODAR.md` · `:125` `components/identidade/` no lugar de `/ui` · `:263` falha é estado na tela, não toast · `:270` a árvore de exemplo sem `ui/` · `:285` (nova) *Gates do web* em *Test Types* · `:317` *Test offline scenarios* → nota "nenhum offline no web" (fecha a div. 578 da PR-3) · nota do toast antes do exemplo do *Content Management Pattern* (extra, div. 931) |
 | `README.md` | `:88` e `:90` (UI e ícones: a identidade) · `:104` (o passo do shadcn CLI vira nota histórica) · `:255-256` (os créditos, como origem) |
+| `docs/ux/I1-PR3-anexos/README.md` | **commit 2**: uma linha de errata sob o item 2 do §8 (o *"Fica até o encerramento do I1"* do `sw.js` não vale; aval 4, div. 951) |
+| `docs/ux/I1-PRECHECK.md` §17 | a linha do encerramento (commit 1); no commit 2, a da **PR-15** e o sha novo (a da PR-2 veio com a #351) |
 | `ARCHITECTURE.md` | **uma nota no topo** — o documento é histórico: `domains/` saiu no P1-D (`b6292ff`), `DomainErrorBoundary`/`useErrorHandler` não existem; o que existe hoje (limite global + `tela-de-erro.tsx`, a casca, o pacote). O corpo não foi reescrito (div. 926) |
 
 ---
@@ -582,7 +612,8 @@ Sem reescrever (o padrão das erratas). O plano **não tem** uma "seção do web
 depois do I1" (div. 925); as duas notas foram onde o assunto mora:
 
 - **`## Bloco D — Morre com a web`**, logo abaixo da errata do pre-check: o loop mudo foi
-  consertado na PR-1; as heranças do D estão no §10.1 daqui; o Google **não** foi consertado.
+  consertado na PR-1; o Google, na PR-2; as heranças do D estão no §10.1 daqui. (O commit 1
+  dizia que o Google **não** tinha sido consertado — corrigido aqui, div. 952.)
 - **`## Sequência`**, depois do item 10: N2, W4, N3 e I1 encerrados, cada um com a fonte; **a
   ordem depois do I1** é a da I1-D15 — **N4 → N5 → iOS**, com o **W5** à parte.
 
@@ -595,21 +626,26 @@ onde diz `[medido]`.
 
 | item | valor |
 |---|---|
-| **requests a prod pelo executor** | **52 `GET`** de página e estático (probe 2, pre-check commit 3a) + 1 `curl` e 1 navegação ao **preview** (commit 2, pararam no SSO da Vercel); **0 a `/api/*`**; **0 em todas as PRs de código** |
+| **requests a prod pelo executor** | **52 `GET`** de página e estático (probe 2, pre-check commit 3a) + 1 `curl` e 1 navegação ao **preview** (commit 2, pararam no SSO da Vercel); **0 a `/api/*`**; **0 em todas as PRs de código**, a PR-2 e a PR-15 inclusive |
+| requests a terceiros pela PR-2 | **9** `POST …/identitytoolkit/v3/relyingparty/createAuthUri` (o handler do Firebase a cada rodada que chega ao Google: (a), (b), (c) e o controle ×2, + 1 do depois; div. 938) e **1** `curl` a `accounts.google.com` (o cabeçalho de COOP, div. 936); nada se digitou nem se clicou na página do Google |
 | requests a prod pelos scripts do Marcel | só no pre-check: probe 1 (1589 `GET` de página/estático, **60 `GET /api/profile` + 1** que levou 429, ≥ 1 `POST /api/auth/session`) e probe 4 (181 `GET`, 11 `GET /api/*`, 1 `POST`, 1 `PUT`, 2 `DELETE` de setlist, 2 logins) — pisos, pelo furo do listener (div. 518) |
-| **escritas em prod** | **4**, todas da **conta de audit**, todas **desfeitas** (probe 4: criar, renomear, apagar — pre-check §16). Nas PRs de código: **0** (a barreira do medidor aborta `POST`/`PUT`/`DELETE` não fabricado; `prodAbortados` 0 em toda rodada) |
+| **escritas em prod** | **4**, todas da **conta de audit**, todas **desfeitas** (probe 4: criar, renomear, apagar — pre-check §16). Nas PRs de código: **0** (a barreira do medidor aborta `POST`/`PUT`/`DELETE` não fabricado; `prodAbortados` 0 em toda rodada; PR-2 e PR-15: 0) |
 | **contas criadas** | **0** |
-| **logins do Marcel** (conta de audit ou a dele, pela tela ou por script dele) | pre-check **5** (probe 1: os três ramos da 3ª rodada; probe 4: 2) · PR-1 **3** · PR-3 **1** · PR-5 **1** (o que criou o perfil persistente) · PR-6…PR-14: **0 registrados** (perfil persistente; o README da PR-6 não traz a contagem). **≥ 10** |
-| **APKs** | **7** construídos, **7** pulados `[medido: gh run view --json jobs]` |
-| **rodadas do G-faixa** | PR-5 4 (Marcel; duas sem medir, div. 628) · PR-6 3 (Marcel) · PR-7 2 e PR-8 2 (executor, sem sessão, sem `.env`) · PR-9 2 · PR-10 2 · PR-11 2 (Marcel) · PR-12 1 (Marcel) + 5 (executor, I1-D37) · PR-13 10 (executor) · PR-14 o antes e o depois da tela de erro + ~6 cargas do `dashboard` com sessão (número de rodadas não registrado). **≥ 35** |
+| **logins do Marcel** (conta de audit ou a dele, pela tela ou por script dele) | pre-check **5** (probe 1: os três ramos da 3ª rodada; probe 4: 2) · PR-1 **3** · PR-3 **1** · PR-5 **1** (o que criou o perfil persistente) · PR-6…PR-14: **0 registrados** (perfil persistente; o README da PR-6 não traz a contagem) · **PR-2: 1 login real**, com o Google, na conta dele (o aceite) · PR-15: 0. **≥ 11** |
+| **APKs** | **7** construídos, **7** pulados `[medido: gh run view --json jobs]`; a PR-2 e a PR-15 não dispararam o `native.yml` |
+| **rodadas do G-faixa** | PR-5 4 (Marcel; duas sem medir, div. 628) · PR-6 3 (Marcel) · PR-7 2 e PR-8 2 (executor, sem sessão, sem `.env`) · PR-9 2 · PR-10 2 · PR-11 2 (Marcel) · PR-12 1 (Marcel) + 5 (executor, I1-D37) · PR-13 10 (executor) · PR-14 o antes e o depois da tela de erro + ~6 cargas do `dashboard` com sessão · PR-2 a medição por estado de três estados do auth, nos dois commits (I1-D37) · PR-15 nenhuma rodada nova do G-faixa (a prova por imagem: 14 cargas do `dashboard` com sessão). **≥ 37** |
 | **cota máxima numa janela de 15 min** | em prod: **60/60** da conta de audit (probe 1; a 61ª leitura levou 429 real). Em `localhost`, com sessão: **52** (PR-12, rodada 1), **43** (PR-13) — teto 60 |
-| **`.env*` abertos** | **0** pelo executor em todo o bloco. O `.env.uxaudit` foi lido pelos scripts do Marcel (pre-check); o `.env.local` foi carregado pelo `next dev` sem ser aberto (div. 678; copiado com `cp -p` nas PR-13 e PR-14, divs. 849, 916) |
-| **volume dos JSON** `[medido]` | `du -sh`: `tests/gates-web/medicoes` **13M** · `tests/gates-web/esperado` **3.0M**; 51 JSON; `git diff --shortstat c57d81f 1cb897f` nessas pastas: **52 arquivos, +868 331** |
-| suíte `[medido]` | `c57d81f`: 1090 passed · 85 skipped (1175), 119 arquivos → `1cb897f`: 1179 passed · 58 skipped (1237), 121 arquivos |
+| **`.env*` abertos** | **0** pelo executor em todo o bloco. O `.env.uxaudit` foi lido pelos scripts do Marcel (pre-check); o `.env.local` foi carregado pelo `next dev` sem ser aberto (div. 678; copiado com `cp -p` nas PR-13, PR-14, PR-2 e PR-15) |
+| **dependências removidas** `[medido]` | **40** (29 até a PR-14 + 11 na PR-15); 1 adicionada (`@octavia/identidade`) |
+| **volume dos JSON** `[medido]` | `du -sh`: `tests/gates-web/medicoes` **10M** (era 13M antes da PR-15) · `tests/gates-web/esperado` **3.0M**; 51 arquivos, dos quais **22** em `.json.gz`; `git diff --shortstat c57d81f c1640e5` nessas pastas: **52 arquivos, +712 397** (era +868 331 antes da PR-15) |
+| suíte `[medido]` | `c57d81f`: 1090 passed · 85 skipped (1175), 119 arquivos → **`c1640e5`**: **1181 passed · 58 skipped (1239)**, 118 passed · 3 skipped (121) |
 
-**Esta PR**: requests a prod **0**; `adb` **0**; logins **0**; `.env*` **0**; `pnpm build` e
-`pnpm test` na árvore sem `.env`; `pnpm test` também numa worktree temporária de `c57d81f`
-(no scratchpad da sessão, removida); agentes de leitura **5** (só leitura, mesma árvore).
+**Esta PR**: requests a prod **0**; `adb` **0**; logins **0**; `.env*` **0**. Commit 1: `pnpm build`
+e `pnpm test` na árvore sem `.env`, e `pnpm test` numa worktree temporária de `c57d81f` (removida);
+agentes de leitura **5** (só leitura). Commit 2: `pnpm install --frozen-lockfile --offline` (o
+lockfile mudou com a PR-15), `pnpm test`, `pnpm build` e os gates do web na árvore sem `.env`, depois
+do merge da `main` (`1f15083`, sem push forçado; um conflito no `I1-PRECHECK.md` §17, as duas linhas
+mantidas).
 
 O bloco ```` ```gates ```` e o ```` ```gates-web ```` desta PR, verbatim (a cópia que a regra
 do W4-b2 pede):
@@ -624,55 +660,50 @@ do W4-b2 pede):
 
 ---
 
-## 14. Perguntas ao revisor **(PARA AVAL)**
+## 14. Decisões do aval do encerramento — `[Marcel, 2026-09-30]`
 
-Numeradas, sem recomendação.
+As onze perguntas do commit 1, com a resposta e onde ela se aplicou.
 
-1. **O login com Google** (I1-D6): a PR-2 não foi aberta e as três causas da H-I1-3 seguem no
-   código (§3.2.1, div. 920). Qual o destino — uma PR própria antes do N4, o Bloco D (§10.1.15),
-   ou outro?
-2. **Os JSON de medição** (13 MB + 3,0 MB; 89 % das linhas inseridas no bloco): manter tudo no
-   repositório; manter só o veredito em texto e o rastro em `.gz`; ou outra forma?
-3. **As 11 dependências órfãs, o `font-family: Arial`**, o `generator: v0.dev`, o matcher de
-   teste, os specs do `ux-audit` e os ícones sem leitor (§10.5.2–8): uma PR de poda à parte,
-   agora, ou herança do bloco seguinte ao I1?
-4. **O `public/sw.js`** de auto-destruição (e o `worker-src`/`manifest-src`): quando sai? A PR-3
-   deixou dois textos — *"fica até o encerramento do I1"* (aval 2) e *"bloco seguinte ao I1"*
-   (§13) — e o `CLAUDE.md` segue o segundo (div. 927).
-5. **O número final das regras e dos casos** do §9 — quais entram, com que número, e se a
-   *"errata órfã reprova"* entra como ampliação da regra 14 ou como regra nova (div. 929).
-6. **O aval do veredito da PR-13 chegou cortado** (div. 892): faltou alguma decisão?
-7. **O tamanho 20 na I1-E6**, onde a folha desenha o visto em 16 (div. 611): confirmado?
-8. **O asset da marca do Google** no auth (hoje um quadrado tracejado, div. 636): quem o
-   fornece, e em que bloco entra?
-9. **As quatro divergências sem letra de origem** (726, 727, 728, 767 — div. 918): a leitura
-   desta PR é A · A · T · A; vale, ou ficam "sem origem" no registro?
-10. **A memoização das setlists** (div. 568) e **os três `undefined`** do pacote (div. 932):
-    os destinos do §10 (bloco seguinte ao I1; N5) servem?
-11. **A `LinhaDeAviso` como componente do core** no N4 (§10.2.3)?
+| # | pergunta | decisão | aplicada em |
+|---|---|---|---|
+| 1 | o login com Google | **PR-2 agora**, em sessão própria, antes do fecho; é decisão do bloco, não herança; a div. 920 é de origem **P** | #351; §2, §6, §10.1.15, §15 |
+| 2 | os JSON de medição | em texto só o que o veredito lê (as medições vivas, a última rodada, o esperado da folha); o rastro em `.gz`, com o veredito lendo os dois — código, na PR-15 | #352; §10.6 |
+| 3 | a poda (11 dependências, `Arial`, `generator`, o matcher, os `.gz`) | **PR-15 agora**, depois da PR-2, sessão própria | #352; §10.5.2–5 |
+| 4 | o `public/sw.js` | sai no **bloco seguinte ao I1**; o texto da PR-3 que diz o contrário vira errata; o `CLAUDE.md` segue | §10.5.1; `I1-PR3-anexos/README.md` §8 (div. 951) |
+| 5 | as regras e os casos | **regras 24–32 e casos 29–37** aprovados como numerados; a "errata órfã" é **ampliação da 14** | §9 |
+| 6 | o aval cortado da PR-13 (div. 892) | **nada faltou** | div. 892 fechada |
+| 7 | o tamanho da I1-E6 | **20 confirmado** | §5; div. 611 fechada |
+| 8 | o asset do Google | é do Marcel; **entra na PR-2** | #351 (divs. 942, 943) |
+| 9 | as quatro sem letra | **726 D · 727 A · 728 P · 767 A** | §7.1; div. 918 |
+| 10 | a memoização (568) e os três `undefined` | 568 → **Bloco D**; os `undefined` → **N4** | §10.1.16, §10.2.4 |
+| 11 | a `LinhaDeAviso` no core | **decide o N4** | §10.2.3 |
 
 ---
 
-## 15. Divergências desta PR — 917 em diante
+## 15. Divergências desta PR — 917–932 e 951–954
 
 | # | origem | o quê | o que foi feito |
 |---|---|---|---|
-| **917** | P | *"`divergencias.txt` (as 437 linhas de tabela extraídas por grep)"* — `[medido]` são **432** linhas de tabela para **418** números (13 números aparecem em mais de uma tabela) + a **756**, que só existe em prosa (`I1-PR10-anexos/README.md:471`) = **419** atribuídos; **18** números nunca atribuídos (532–549: a faixa reservada da PR-1, que parou na 531) | o anexo traz as 432 linhas e marca a que conta (`*`); a §7 conta 419 |
-| **918** | D | quatro registros **sem letra de origem**: 726, 727, 728 (PR-9, tabela de destinos §18.7) e 767 (PR-10, §23.9) — a origem nunca foi escrita, nem em prosa | contadas como "sem origem" na §7; a leitura desta PR (A · A · T · A) vai à **pergunta 9** |
-| **919** | P | *"14 PRs de código (#336–#349, mais o pre-check #335 e o congelamento #338)"* — #336–#349 são 14 números, e **o #338 está entre eles**: são **13** de código. E a **PR-2** do fatiamento (I1-D15, o Google) **nunca foi aberta** — não há branch, commit, anexo nem número | §2 com as 13 e a linha da PR-2 |
-| **920** | A | **o login com Google não foi consertado**: `lib/security-headers.ts:81` `'frame-src': ["'none'"]`, `script-src` (`:39-47`) sem `https://apis.google.com`, COOP `same-origin` (`:124`) `[medido: grep]` — as três causas da H-I1-3. A PR-6 só deu nome à falha (A2); a div. 564 (*"a PR-2 reabre"*) ficou órfã | §3.2.1, §6, §10.1.15; **pergunta 1** |
+| **917** | P | *"`divergencias.txt` (as 437 linhas de tabela extraídas por grep)"* — `[medido]` no commit 1 (480–916) são **432** linhas de tabela para **418** números (13 números aparecem em mais de uma tabela) + a **756**, que só existe em prosa (`I1-PR10-anexos/README.md:471`) = **419** atribuídos; **18** números nunca atribuídos (532–549: a faixa reservada da PR-1, que parou na 531) | o anexo traz as linhas e marca a que conta (`*`); no fecho (480–954): **472** linhas, **457** números (§7.1) |
+| **918** | D | quatro registros **sem letra de origem**: 726, 727, 728 (PR-9, tabela de destinos §18.7) e 767 (PR-10, §23.9) — a origem nunca foi escrita, nem em prosa **Fechada pelo aval** (decisão 9): **726 D · 727 A · 728 P · 767 A** — a leitura do commit 1 (A · A · T · A) errou duas; a §7 conta assim |
+| **919** | P | *"14 PRs de código (#336–#349, mais o pre-check #335 e o congelamento #338)"* — #336–#349 são 14 números, e **o #338 está entre eles**: são **13** de código. E a **PR-2** do fatiamento (I1-D15, o Google) **nunca foi aberta** — não há branch, commit, anexo nem número | §2 com as 13; **no fecho**, com a PR-2 (#351) e a PR-15 (#352), são **15** |
+| **920** | P | **o login com Google não foi consertado** *(origem A no commit 1; **P** pelo aval, decisão 1: foi o revisor que pulou a PR-2)*: `lib/security-headers.ts:81` `'frame-src': ["'none'"]`, `script-src` (`:39-47`) sem `https://apis.google.com`, COOP `same-origin` (`:124`) `[medido: grep]` — as três causas da H-I1-3. A PR-6 só deu nome à falha (A2); a div. 564 (*"a PR-2 reabre"*) ficou órfã | **Fechada**: a PR-2 aberta agora (decisão 1), #351 — H-I1-3 e div. 564 fechadas (§6) |
 | **921** | P | *"testes antes (pre-check: 1101)"* — nenhum documento do bloco diz 1101 (`git grep 1101` → só um PID num `requests.txt`); `[medido]` em `c57d81f`: **1175** casos (1090 passed · 85 skipped), o mesmo do `N3-ENCERRAMENTO.md` §6 | a §1 usa o medido |
 | **922** | P | *"arquivos de tela na lista do G-tok (129)"* — a lista tem **132**; **129** é a contagem de "arquivo de tela" da cobertura (os outros 3 da lista não são de tela, `g-tok-cobertura.mjs`: *"da lista que não são de tela (informa): 3"*) | as duas na §1 |
 | **923** | P | *"a E19 e a E31 registradas como inexistente/recusada"* — a **E19 existe** (PR-11, div. 775, `erratasFrase`); a inexistente é a **E23** (*"Não houve I1-E23"*, PR-12). A PR-10 registrou *"a I1-E19 não existe"* para a proposta da div. 761 e a PR-11 usou o número depois | §5 com a E23 inexistente e a E31 recusada |
 | **924** | P | *"o 46 → 0 da linha de base"* — a linha de base não vai a 0: é o **registro do web velho** (`cn-main`), e hoje reprova **83** (46 + o 411 contado pela errata da I1-D11) `[medido]`; o que dá 0 são as **medições vivas** (14, PASSA) | §1 com os dois |
 | **925** | P | *"`PLANO-TRANSICAO.md`: a seção do web e a 'Ordem depois do I1'"* — o plano não tem nenhuma das duas: o web mora em `## Bloco D — Morre com a web` (com a errata do pre-check) e a ordem em `## Sequência`, que para no item 10 (antes do N2) | as duas notas onde o assunto mora (§12) |
 | **926** | D | o `ARCHITECTURE.md` descreve uma arquitetura que não existe **desde antes do I1**: a árvore `domains/` (Zustand/immer, repositórios) saiu no **P1-D lote 1** (`b6292ff`); `DomainErrorBoundary` não existe no código (`git grep` fora de `docs/` e `.md` → 0) | nota histórica no topo, sem reescrever o corpo (§11) |
-| **927** | D | o destino do `public/sw.js` tem dois textos na PR-3: *"fica até o encerramento do I1"* (aval 2, §8) × *"bloco seguinte ao I1"* (herança nomeada, §13); o `CLAUDE.md` segue o segundo | este encerramento não o remove (só docs); **pergunta 4** |
+| **927** | D | o destino do `public/sw.js` tem dois textos na PR-3: *"fica até o encerramento do I1"* (aval 2, §8) × *"bloco seguinte ao I1"* (herança nomeada, §13); o `CLAUDE.md` segue o segundo | **Fechada pelo aval** (decisão 4): sai no **bloco seguinte ao I1**; o texto contrário vira errata (div. 951) |
 | **928** | D | a div. 672 (PR-6) dava ao cabeçalho do `g-faixa-auth.ts` o destino *"a próxima PR que tocar o arquivo"*; a **PR-9** (`ed85f23`) e a **PR-11** (`c44c975`) tocaram e **não corrigiram** (`:5-6` ainda diz *"nada sai"*) — a regra 23 | W5, §10.4.6 |
-| **929** | P | *"errata órfã reprova"* entre as **regras novas** — já é a **regra 14** (W4-b1: *"declaração órfã reprova"*, `LOGS-OCTAVIA.md:544`); o I1 a estendeu ao web | proposta como **ampliação da 14** (§9); **pergunta 5** |
+| **929** | P | *"errata órfã reprova"* entre as **regras novas** — já é a **regra 14** (W4-b1: *"declaração órfã reprova"*, `LOGS-OCTAVIA.md:544`); o I1 a estendeu ao web | **Fechada pelo aval** (decisão 5): ampliação da 14 (§9) |
 | **930** | D | a div. 578 (PR-3) deixou `CLAUDE.md:317` (*Test offline scenarios*) *"para o Marcel"*; o §11 do prompt pede o `CLAUDE.md` atualizado no item "offline" | **fechada aqui**: a linha virou a nota "nenhum offline no web" (§11) |
 | **931** | P | o prompt lista, no `CLAUDE.md`, shadcn/Radix, `components/ui`, offline, os gates e o `COMO-RODAR` — o arquivo também manda **toast** (`:263` e o exemplo do *Content Management Pattern*), que o web não tem desde a PR-13 | **extra, declarado**: `:263` e uma nota antes do exemplo, sem reescrever o código dele |
-| **932** | D | três heranças de PR **sem registro de pagamento**: a div. 568 (a memoização → *"a PR de setlists herda"*; a PR-13 não a cita), os três `undefined` do pacote (PR-4 → *"quem der forma final ao `TokensDaFaixa` do web"*; nenhuma PR de tela os cita) e a div. 564 (*"a PR-2 reabre"*) | destino por bloco (§10.5.9, §10.3.3, §10.1.15); **pergunta 10** |
+| **932** | D | três heranças de PR **sem registro de pagamento**: a div. 568 (a memoização → *"a PR de setlists herda"*; a PR-13 não a cita), os três `undefined` do pacote (PR-4 → *"quem der forma final ao `TokensDaFaixa` do web"*; nenhuma PR de tela os cita) e a div. 564 (*"a PR-2 reabre"*) | **Fechada pelo aval** (decisão 10) e pela PR-2: a 568 → **Bloco D** (§10.1.16); os `undefined` → **N4** (§10.2.4); a 564 fechada pela #351 |
+| **951** | P | aval 4: *"o **segundo** texto da PR-3 vira errata"* — no `I1-PR3-anexos/README.md` o primeiro é o aval 2 (`:187`, *"Fica até o encerramento do I1"*) e o segundo a herança nomeada (§13, `:346`, *"bloco seguinte ao I1"*); a decisão do mesmo aval é o bloco seguinte, então o texto que a contraria é o **primeiro** | a errata foi no **primeiro** (uma linha de nota sob o item 2 do §8 da PR-3, sem reescrever); o §13 fica como está; o `CLAUDE.md` já dizia o bloco seguinte |
+| **952** | D | o commit 1 deste documento escreveu, nas notas do `PLANO-TRANSICAO.md`, que o Google **não** foi consertado e que o bloco era #335–#349 — a PR-2 e a PR-15 mudaram os dois fatos antes do merge | as duas notas corrigidas neste commit (texto desta PR, não mergeado: sem errata) |
+| **953** | D | o `I1-PR2-anexos/README.md` lista quatro commits (três + *"este"*, docs); o merge `baeebf7` tem **cinco** — o `a8fdf98` (a div. 943) veio depois | o §2 daqui usa o `git log`; o README da PR-2 não se reescreve |
+| **954** | D | as regras 24–32 e os casos 29–37 estão **aprovados**, mas o catálogo que as regras anteriores citam é o `LOGS-OCTAVIA.md` (as do N3 entraram lá no encerramento dele, §5) — o prompt do commit 2 não o lista | **não tocado** (fora da lista); as regras e casos vivem na §9 daqui até o Marcel decidir levá-los ao catálogo |
 
 ---
 
@@ -683,7 +714,7 @@ comando na primeira linha; nenhum carrega texto de música.
 
 | arquivo | o quê |
 |---|---|
-| [`divergencias.txt`](I1-ENCERRAMENTO-anexos/divergencias.txt) | as 432 linhas de tabela 480–916 + a 756, com origem, doc e linha |
-| [`prs.txt`](I1-ENCERRAMENTO-anexos/prs.txt) | `git log --merges` do bloco, `gh pr view` de #335–#349, os commits de cada merge e as linhas por PR |
-| [`contabilidade.txt`](I1-ENCERRAMENTO-anexos/contabilidade.txt) | os comandos e saídas da §1 e da §13 (suíte nos dois shas, `pnpm build`, dependências, frases, gates, volume, APKs, linhas) |
+| [`divergencias.txt`](I1-ENCERRAMENTO-anexos/divergencias.txt) | as 472 linhas de tabela 480–954 + a 756, com origem, doc e linha, e a contagem por PR (regenerado no commit 2) |
+| [`prs.txt`](I1-ENCERRAMENTO-anexos/prs.txt) | `git log --merges` do bloco, `gh pr view` de #335–#352 (sem a #350, este), os commits de cada merge e as linhas por PR (regenerado no commit 2) |
+| [`contabilidade.txt`](I1-ENCERRAMENTO-anexos/contabilidade.txt) | os comandos e saídas da §1 e da §13 (suíte nos dois shas, `pnpm build`, dependências, frases, gates, volume, APKs, linhas; regenerado no commit 2 sobre `c1640e5`) |
 | [`docs-raiz.txt`](I1-ENCERRAMENTO-anexos/docs-raiz.txt) | as linhas mudadas no `CLAUDE.md`, `README.md`, `ARCHITECTURE.md`, `PLANO-TRANSICAO.md`, `I1-PRECHECK.md` e `DESIGN-N2/README.md` (o `diff` deste commit) |

@@ -1,5 +1,5 @@
-# I1-ENCERRAMENTO — as linhas mudadas nos docs fora do documento novo (rastro; o diff deste commit contra origin/main = 1cb897f)
-$ git diff -U0 1cb897f -- CLAUDE.md README.md ARCHITECTURE.md docs/ux/PLANO-TRANSICAO.md docs/ux/I1-PRECHECK.md docs/native/DESIGN-N2/README.md
+# I1-ENCERRAMENTO — as linhas mudadas nos docs fora do documento novo (rastro; regenerado no commit 2: o diff desta PR contra origin/main = c1640e5)
+$ git diff -U0 c1640e5 -- CLAUDE.md README.md ARCHITECTURE.md docs/ux/PLANO-TRANSICAO.md docs/ux/I1-PRECHECK.md docs/ux/I1-PR3-anexos/README.md docs/native/DESIGN-N2/README.md
 diff --git a/ARCHITECTURE.md b/ARCHITECTURE.md
 index 1e8e1e8..ede77f3 100644
 --- a/ARCHITECTURE.md
@@ -75,15 +75,23 @@ index ca08e96..ac71d94 100644
 +
 +**O `SHA256SUMS` do N2 não muda com esta errata** (ele não lista o `README.md`, §8); o app não muda — já fazia o que esta errata diz.
 +
+diff --git a/docs/ux/I1-PR3-anexos/README.md b/docs/ux/I1-PR3-anexos/README.md
+index baa2fa8..4e66671 100644
+--- a/docs/ux/I1-PR3-anexos/README.md
++++ b/docs/ux/I1-PR3-anexos/README.md
+@@ -187,0 +188 @@ contra o código cortado.
++   > **Errata** `[Marcel, 2026-09-30, aval 4 do encerramento]`: o *"Fica até o encerramento do I1"* acima não vale — o `public/sw.js` e o `worker-src`/`manifest-src` saem no **bloco seguinte ao I1**, como a herança nomeada do §13 (`docs/ux/I1-ENCERRAMENTO.md` §10.5.1, div. 951).
 diff --git a/docs/ux/I1-PRECHECK.md b/docs/ux/I1-PRECHECK.md
-index 818d8b2..0379b4e 100644
+index 2907157..189208f 100644
 --- a/docs/ux/I1-PRECHECK.md
 +++ b/docs/ux/I1-PRECHECK.md
-@@ -1169,0 +1170,2 @@ que ficam sem uso (`components/ui/skeleton.tsx`, `components/ui/switch.tsx`).
+@@ -1171,0 +1172,4 @@ que ficam sem uso (`components/ui/skeleton.tsx`, `components/ui/switch.tsx`).
 +
-+**Encerramento do I1**: [`docs/ux/I1-ENCERRAMENTO.md`](I1-ENCERRAMENTO.md) — a fonte do bloco (#335–#349, sobre `1cb897f`); este pre-check é a fonte das I1-D1…D37 e das H-I1-1…7, e o encerramento só as indexa.
++**I1-PR-15** (poda final: as 11 dependências órfãs, o `Arial`, o `generator`, o matcher, o rastro das medições em `.gz` — PR #352): anexos em [`docs/ux/I1-PR15-anexos/`](I1-PR15-anexos/README.md) — decisões 2 e 3 do aval do encerramento; divs. 944–950.
++
++**Encerramento do I1**: [`docs/ux/I1-ENCERRAMENTO.md`](I1-ENCERRAMENTO.md) — a fonte do bloco (#335–#352, sobre `c1640e5`); este pre-check é a fonte das I1-D1…D37 e das H-I1-1…7, e o encerramento só as indexa.
 diff --git a/docs/ux/PLANO-TRANSICAO.md b/docs/ux/PLANO-TRANSICAO.md
-index 3f74a1a..d455683 100644
+index 3f74a1a..5c08fd0 100644
 --- a/docs/ux/PLANO-TRANSICAO.md
 +++ b/docs/ux/PLANO-TRANSICAO.md
 @@ -872,0 +873,6 @@ cada ✅ e fechar cada ❌/⚠️**. Os números que definem o piso:
@@ -91,14 +99,14 @@ index 3f74a1a..d455683 100644
 +> **Nota do encerramento do I1 (2026-09-30):** o item de abertura abaixo (o loop mudo)
 +> **foi consertado na I1-PR-1** (#336); o que o web deixou para o D, com a fonte de cada
 +> item, está em `docs/ux/I1-ENCERRAMENTO.md` §10.1. O **login com Google** (I1-D6,
-+> *"consertar, não revogar"*) **não foi consertado** no I1 — a PR-2 do fatiamento não foi
-+> aberta (`I1-ENCERRAMENTO.md` §3 e §14).
++> *"consertar, não revogar"*) **foi consertado na I1-PR-2** (#351): `script-src`, `frame-src` e
++> COOP, com aceite real do Marcel (`docs/ux/I1-PR2-anexos/README.md`).
 @@ -1491,0 +1498,8 @@ automaticamente.
 +
 +> **Nota do encerramento do I1 (2026-09-30)** — sem reescrever os itens acima, que param antes
 +> do N2. Encerrados desde então, cada um com a sua fonte: **N2** (`docs/native/N2-ENCERRAMENTO.md`),
 +> **W4** (`docs/native/W4-ENCERRAMENTO.md`), **N3** (`docs/native/N3-ENCERRAMENTO.md`) e **I1 — o
-+> web com a identidade do nativo, só online, sem palco** (#335–#349, `docs/ux/I1-ENCERRAMENTO.md`).
++> web com a identidade do nativo, só online, sem palco** (#335–#352, `docs/ux/I1-ENCERRAMENTO.md`).
 +> **A ordem depois do I1** é a da I1-D15 (`docs/ux/I1-PRECHECK.md` §0.1): **N4** (content nos
 +> apps) → **N5** (celular) → **iOS**; o **W5** (instrumento) corre à parte. As heranças do I1 para
 +> cada um estão no `I1-ENCERRAMENTO.md` §10.
