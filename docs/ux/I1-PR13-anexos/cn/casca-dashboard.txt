@@ -1,0 +1,7 @@
+$ G_FAIXA_SUPERFICIES=dashboard G_FAIXA_ESTADOS=DASH G_FAIXA_SAIDA=<scratchpad>/dash-depois … g-faixa-medir.ts   # 15:16Z, 3 passed (20.6s), com o perfil
+$ node docs/ux/I1-PR13-anexos/cn/casca-dashboard.mjs
+antes: {"rodada":"2026-09-28T18:21:39.882Z","commit":"b496342ce5ff70a31dd210cb5f06fe9caba44d81+sujo"} · depois: 2026-09-30T15:16:21.541Z ab0de377757d3f941fa3b211c8abad986aecf4b0+sujo
+DASH · 1138: casca 9/9 iguais · nós 33 → 32 · idênticos (x, y, w, h) 32 · mudaram 0 · só antes 1 [<section> 1138×0 fca0c0beacd0] · só depois 0 · doc igual
+DASH · 711: casca 9/9 iguais · nós 33 → 32 · idênticos (x, y, w, h) 32 · mudaram 0 · só antes 1 [<section> 711×0 fca0c0beacd0] · só depois 0 · doc igual
+DASH · 411: casca 8/8 iguais · nós 33 → 32 · idênticos (x, y, w, h) 32 · mudaram 0 · só antes 1 [<section> 411×0 fca0c0beacd0] · só depois 0 · doc igual
+Δ: 0 — o único nó que sai é a <section> do Toaster do sonner (fca0c0beacd0 = sha256("Notifications alt+T")[:12], altura 0)

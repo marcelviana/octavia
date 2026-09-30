@@ -8,7 +8,11 @@
 > `Done in 17.9s using pnpm v10.28.0`. **Data**: 2026-09-30.
 > **Convenções**: `[medido]` = comando + saída literal (em `cn/`); `[lido]` = arquivo:linha; `[hipótese]` = o resto.
 > Divergências **a partir de 846** (a PR-12 fechou em 845, §24 dela — o prompt presumia 844: div. 846).
-> **Estado**: **commit 1 (gate-first, `ae78774`)** com o aval (§12). Nenhuma linha de `app/`, `components/` (fora
+> **Estado**: commit 1 (gate-first, `ae78774`) com o aval (§12, `6323dd5`); **commit 2 (a implementação, `ab0de37`, §14–§23)** e
+> o aceite (§19). **Veredito do aceite: PASSA — (e) = 0 e (b) = 0 nas três larguras, nos 20 estados da folha 8, nos 4 medidos
+> contra outra seção, na linha da sessão e nos 5 do "antes"; 532 erratas candidatas, todas cobertas pelas três erratas
+> PROPOSTAS (I1-E28 520 · I1-E29 8 · I1-E30 4); nó velho por componente 0.** Aguarda o aval do veredito. PR
+> [#348](https://github.com/marcelviana/octavia/pull/348). Nenhuma linha de `app/`, `components/` (fora
 > `components/setlists/__tests__/`), `lib/`, `hooks/` mudou.
 
 | arquivo | o que é |
@@ -572,3 +576,334 @@ voltar à aba troca a lista pelos blocos; medir se persiste depois desta PR).
 | executor | Vitest das setlists (os três defeitos, o gate das escritas) | jsdom, `fetch` falso (nada sai) |
 | — | `packages/identidade` · `tailwind.config.ts` · as rotas · `lib/api-schemas.ts` | **não mudaram** |
 | — | código do app (`app/`, `components/`, `lib/`, `hooks/`) | **0 linha** — o commit 1 é gate, esperado, testes, instrumento e docs |
+
+---
+
+## 14. Commit 2 — o que mudou `[medido]`
+
+`ab0de37`: `40 files changed, 1629 insertions(+), 2020 deletions(-)` fora de `docs/` e das medições.
+
+### 14.1 Por grupo (linhas antes → depois)
+
+| grupo | arquivos | o quê |
+|---|---|---|
+| **a rota** | `components/setlists-page-client.tsx` 54 → 24 | os dois textos e o `return null` viram **um** *carregando as setlists…* na casca (`SetlistsCarregando`); o `handleSelectSetlist` para `/setlist/{id}` (div. 498, I1-D33) e o invólucro `flex-1 bg-[#fffcf7]` saíram. `app/setlists/page.tsx` **intocado** |
+| **o gerente** | `components/setlist-manager.tsx` 322 → 78 | só a composição: a lista, o painel, os três diálogos, uma linha por lugar. A lógica foi para o hook |
+| **a lógica** | `components/setlists/use-setlists.ts` (138, novo) | os dados, a setlist aberta (derivada da lista pelo id), os três diálogos, as cinco escritas com a falha de cada uma como estado |
+| **as peças** (nasceram) | `moldura.tsx` 85 · `cartao.tsx` 59 · `detalhe.tsx` 93 · `dialogo.tsx` 81 · `formulario.tsx` 100 · `apagar.tsx` 31 · `picker.tsx` 109 | as colunas 2 : 3, o cabeçalho, a caixa, os blocos; o cartão; a setlist aberta; a casca do diálogo; o formulário; o apagar; o picker — todas < 150 linhas, sem `@/components/ui/*`, sem `lucide-react` |
+| **frases · falhas · tipos** (nasceram) | `frases-setlists.ts` 127 · `falhas-das-setlists.ts` 42 · `tipos.ts` 29 | a §5.9 + N7, N10, N2 e as novas; a espécie pelo `status`; os tipos que viviam em `types/performance.ts` |
+| **o hook dos dados** | `hooks/use-setlist-data.ts` 157 → 167 | `erro` (como veio, com o `status`) no lugar da frase em inglês; `erroDaBiblioteca` (antes engolida); `bibliotecaInteira` (`total ≤ o que veio`); `reload` devolve a lista relida. A carga, o foco e a visibilidade são os de antes |
+| **o serviço** | `lib/setlist-service.ts` 330 → 334 | os seis `Error` levam o `status` (aditivo); o `json()` do erro não lança mais se o corpo não for JSON. **Nenhum corpo muda** |
+| **morreram** | `components/setlist/` (6 arquivos, 1 066 linhas) · `types/performance.ts` (27) · `hooks/use-toast.ts` (194) · `hooks/__tests__/use-toast.test.ts` (45) · `components/ui/toast.tsx` (129) · `components/ui/toaster.tsx` (35) · `components/ui/sonner.tsx` (31) | as cinco peças velhas e o `index.ts`; o tipo (o `git grep` deu 0); os dois sistemas de toast |
+| **o layout** (decisão 18) | `app/layout.tsx` (−2) · `package.json` · `pnpm-lock.yaml` (−14) | o `<Toaster>` do sonner e o import saíram; a dependência `sonner` saiu (`pnpm install --offline`: `- sonner 1.7.4`) |
+| **a linha da sessão** | `components/auth/aviso-de-sessao.tsx` | `/setlists` entra em `ROTAS_QUE_DESENHAM_A_LINHA` (a `LinhaDaTela`, abaixo do título) |
+| **instrumento** | `scripts/gates-web/g-faixa-setlists.ts` · `g-faixa-superficies.ts` · `g-tok-arquivos.txt` (−8, +11) · `COMO-RODAR.md` | os 25 estados novos + os cinco `base-*` com os seletores novos; `setlists` implementada |
+| **docs do congelamento** | `DESIGN-I1/README.md` (§2.2: I1-E28…E31 **propostas**; §5.1: as frases da PR-13) · `erratas.json` · `SHA256SUMS` (a linha do `README.md`: `3af603d2…` → `dc34c0da…`; `shasum -a 256 -c` → **14/14 OK**) | — |
+
+### 14.2 Os três defeitos — antes × depois
+
+| defeito | na `main` (`cn/setlists-defeitos-main.txt`) | agora |
+|---|---|---|
+| (a) remover por `content.id` | `DELETE …/songs/linha-1` (a 1ª ocorrência) e as duas linhas somem | `detalhe.tsx` entrega a **linha**; `use-setlists.ts` (`remover`) manda `DELETE …/songs/linha-3` e filtra por `linha.id` — 3/3 |
+| (b) id local falso | `DELETE …/songs/set-solo-c-asa` | `adicionar` guarda o `id` e o `position` que o `POST` devolveu: `DELETE …/songs/linha-do-servidor-1` |
+| (c) apagar já apagada | o diálogo aberto, mudo | o 404 fecha o diálogo, tira a setlist da lista, **relê** (`reload`) e mostra *esta setlist já foi apagada* abaixo do título, sem ação — **H-I1-5 fechada** |
+
+### 14.3 Onde cada falha era engolida — e como ficou
+
+| ação | antes (§3.2) | agora |
+|---|---|---|
+| criar · salvar | toast invisível; o diálogo **fechava** | o diálogo fica com o digitado; a linha abaixo do título: *não foi possível criar / salvar a setlist — {motivo}* + a N2; *Tentar de novo* (rede, 5xx) reenvia o que está nos campos |
+| apagar | toast invisível; o diálogo aberto, mudo | a linha dentro do diálogo, abaixo da pergunta, **sem** *Tentar de novo* (decisão 25); o *Apagar* repete |
+| adicionar | toast invisível; o picker **fechava** e zerava a seleção | o picker fica; *não foi possível adicionar as músicas — {motivo}*; as que entraram aparecem na lista e saem da seleção; *Tentar de novo* manda só as que faltam (decisão 2) |
+| remover | toast invisível; nada | a linha abaixo do cabeçalho da setlist: *não foi possível remover “{título}” — {motivo}*; *Tentar de novo* repete o mesmo `DELETE` |
+| a carga | uma frase em inglês para toda espécie; *Try Again* recarregava a página | `set.erro` com o motivo pela espécie; *Tentar de novo* (rede, 5xx) repete a **carga** (decisão 16) |
+| a biblioteca do picker | `console.error`; o picker dizia "sem músicas" | `lib.erro` no picker, com *Tentar de novo* (decisão 5) |
+| o 404 de editar, adicionar, remover | toast invisível | fecha, relê; *esta setlist já foi apagada* só se ela não voltou (decisão 3) |
+| os cinco sucessos | toasts invisíveis | nada: a lista já mostra (decisão 7) |
+
+Motivo por espécie (`falhas-das-setlists.ts`): `TypeError` e sem rede → *sem conexão* (com ação) · 401/403 → *o servidor não
+aceitou a sessão, entre de novo* · 429 → *muitas tentativas, tente de novo em instantes* · 400 → *o servidor recusou os
+dados* · o resto → *falha no servidor* (com ação).
+
+### 14.4 Comportamento que muda — por decisão — e os extras
+
+**Por decisão** (I1-D9, N2 §10.3.5/.6; aval do commit 1), cada um com teste que reprova na `main`: os três defeitos
+(§14.2); a falha a meio da adição (decisão 2); o 404 que fecha e relê (decisão 3); *Tentar de novo* de `SET-erro` repete
+a carga (decisão 16); N7, N10 e a biblioteca que falhou (decisões 4, 5); *Nova setlist* ativo com a lista carregando ou
+com erro (decisão 15).
+
+**Extras — declarados aqui, no corpo da PR e no relato, para o aval do veredito** (o prompt pediu para seguir até o veredito):
+
+- **I1-E28** (div. 876) — a folha desenha o nome do cartão em 20 px, que não é tamanho de nenhum token; a tabela dela e o
+  README-design §2.4 dizem `size.title`. Implementado pela tabela (22); 520 candidatas, todas em B (Δy 6). **Não é token
+  que falta** (a decisão 21): é o desenho contra a tabela, o caso da I1-E11.
+- **I1-E31** (div. 875) — em B e A o *Adicionar* do cabeçalho tem como nome acessível o rótulo de C (*Adicionar músicas*),
+  não *Adicionar músicas a {nome}*: o G-faixa só conta como saída "nome-acessível" o nome IGUAL ao texto de C; com o nome
+  longo, eram 40 (e) (*texto some do nó*) na 1ª pré-verificação. São dois botões, um por faixa.
+- **A div. 871 deixa de existir** — a recarga ao voltar à aba não troca mais a lista pelos blocos (os blocos só aparecem
+  sem lista na tela, como na biblioteca) e a setlist aberta é a relida (derivada da lista). Teste em
+  `setlists-estados.test.tsx`. O aval pediu para medir se persistia: **não persiste**; sai da herança D.
+- **A data do show no dia certo** (div. 882) — antes `new Date("2026-10-03").toLocaleDateString()`: meia-noite UTC, que a
+  oeste de Greenwich é o dia **anterior**. Agora a data curta lê o texto da coluna. Só exibição.
+- **`components/auth/aviso-de-sessao.tsx`** — `/setlists` desenha a linha da sessão na tela (o extra da PR-12, aqui).
+- **`components/ui/sonner.tsx`** apagado (sem ele a dependência não saía) — a decisão 18 cita o layout e a dependência.
+- **O `.env.local`** copiado de `../octavia-i1-pr12` com `cp -p`, sem abrir (decisão 1); ignorado pelo git.
+- **A fixture do instrumento**: o artista das três músicas a mais de *Show padrão* passou de *Teste de régua* a *Autor de
+  teste* depois do "antes" (div. 881) — o par com a folha é pelo texto, na ordem, e o *Teste de régua* delas tomava o lugar
+  do da linha do picker.
+- **Frases fora do §4**: *1 setlist* (o singular) e *Adicionar 1 música a {nome}*.
+
+**Não tocado, registrado**: `@radix-ui/react-toast` segue no `package.json` sem importador (div. 884); os quatro
+`vi.mock('sonner', …)` de testes do editor e do upload ficaram (inofensivos; div. 885); `app/layout.tsx:27` (`themeColor`).
+
+## 15. Os testes `[medido]`
+
+| teste | o quê | aqui | na `main` |
+|---|---|---|---|
+| `components/setlists/__tests__/setlists-defeitos.test.tsx` | os três defeitos (§2) | **3/3** | **3 reprovam** (`cn/setlists-defeitos-main.txt`) |
+| `components/setlists/__tests__/setlists-estados.test.tsx` | bloco 1: as cinco falhas com motivo (o criar em 5 espécies), a adição a meio, os dois 404, N7, N10 — 14 casos; bloco 2: os estados da folha e as decisões do aval — 15 casos | **29/29** | **28 reprovam** (`cn/setlists-estados-main.txt`; o 29º, a div. 871, nasceu depois) |
+| `tests/gates/i1-setlists-escritas.test.tsx` | método · caminho · corpo de seis roteiros, **byte a byte** contra a fixture da `main` (só os seletores mudaram) | **6/6** (1 pulado, o `CN_GRAVAR`) | 6/6 (é o antes) |
+| `hooks/__tests__/use-setlist-data.test.tsx` | adaptado: `erro` no lugar de `error` (5 asserções, 3 delas mais fortes); +1 caso (a biblioteca inteira × cortada; `reload` devolve a lista) | 9/9 | 8/8 |
+| `lib/__tests__/setlist-service.test.ts` | intocado | 4/4 | — |
+| `components/auth/__tests__/login-sessao-cn.test.tsx` | o CN da PR-1; a (v) passa a `/privacy-policy` (decisão 17, par declarado) | **15/15** | 15/15 |
+| `hooks/__tests__/use-toast.test.ts` | **morto** com o `use-toast` (4 casos) | — | 4/4 |
+| editor (`editor-estados` 11 + `lib-salvo` 3) · `PUT` · upload | — | **14/14 · 5/5 · 33/33 + 4/4** | — |
+
+**Os do bloco 1, onde param na `main`** (os seletores aceitam o rótulo de antes e o de agora):
+
+```
+criar falha (rede) …                         TestingLibraryElementError: Unable to find role="dialog"   (o diálogo fechou)
+criar falha (400 · 401 · 429 · 500) …         Unable to find an element with the text: não foi possível criar a setlist — {motivo}
+salvar falha (500) …                          Unable to find … não foi possível salvar a setlist — falha no servidor
+apagar falha (500) …                          Unable to find … não foi possível apagar a setlist — falha no servidor   (o diálogo aberto, mudo)
+adicionar falha (500 na 1ª) …                 Unable to find role="dialog"   (o picker fechou)
+adicionar falha A MEIO (201, 500) …           Unable to find role="dialog"
+remover falha (rede) …                        Unable to find … não foi possível remover “Construção” — sem conexão
+editar uma setlist que sumiu (404) …          Unable to find … esta setlist já foi apagada
+remover uma linha que sumiu (404) …           AssertionError: expected 1 to be 2   (nenhuma releitura)
+N7 …                                          Unable to find … a setlist precisa de um nome
+N10 …                                         Unable to find … todas as músicas da biblioteca já estão nesta setlist
+ Test Files  1 failed (1)      Tests  28 failed (28)
+```
+
+`pnpm test` → `Test Files 118 passed | 3 skipped (121)` · `Tests 1172 passed | 58 skipped (1230)` · `# exit: 0`
+(`cn/pnpm-test.txt`; o commit 1 tinha 118 suítes e 1146 casos, 3 reprovando: +1 suíte (os estados), −1 morta (o
+`use-toast`); +29 +1 casos, −4 mortos).
+
+## 16. As escritas byte a byte
+
+`tests/gates/fixtures/setlists-escritas-antes.json` (a `main`) × as setlists novas: **iguais nos seis roteiros** — o corpo
+de `POST /api/setlists` (os cinco campos; só o nome), do `PUT`, dos dois `POST …/songs`, e o alvo dos dois `DELETE`. O que
+muda é o **alvo** do `DELETE` nos dois casos que os defeitos (a) e (b) consertam (§14.2), e o número de `POST` na adição
+que falha a meio (antes o *Add* de novo repetia todas; agora só as que faltam — `setlists-estados.test.tsx`: os
+`content_id` pedidos são `c-asa, c-batch2, c-batch2, c-batch3`).
+
+## 17. A pré-verificação sem sessão (`pre-verificacao/`) `[medido]`
+
+`next dev -p 3110` **sem `.env`** numa cópia da árvore (rsync sem `.env*`, `node_modules` por link), com `pagina-fumaca.tsx`
+em `app/fumaca-i1pr13/[estado]/page.tsx` — a casca e o `SetlistManager` reais; em `SET-carregando`, o próprio
+`SetlistsPageClient` (sem Firebase não há usuário: a rota cai no *carregando as setlists…* de verdade). **Só na cópia**,
+os remendos de `remendos.sh` (um usuário e um token de fumaça no hook da tela, no serviço das setlists e na leitura da
+biblioteca). O `rodar.ts` usa os **mesmos roteiros do aceite**, a mesma `coletar` e o mesmo `classificarEstado`, contra
+`esperado/8-setlists.json`. `SESSAO-nao-renovada` fica fora (sem Firebase não há sessão a renovar). Saída
+`pre-verificacao/saida.txt`; nós `pre-verificacao/medicoes.json` (só fixture).
+
+```
+errata candidata por estado (C + B): {"SET-carregando":0,"SET-carregando-dados":0,"SET-vazio":0,"SET-erro":0,"SET-nenhuma":1,"SET":30,"SET-sem-musicas":7,"SET-criar":30,"SET-criar-validacao":30,"SET-criar-salvando":30,"SET-criar-erro":30,"SET-apagar":30,"SET-apagar-erro":30,"SET-ja-apagada":0,"SET-adicionar":30,"SET-adicionar-vazio":30,"SET-adicionar-busca":30,"SET-adicionar-enviando":30,"SET-adicionar-erro":30,"SET-remover-erro":32,"SET-editar":32,"SET-editar-salvando":32,"SET-editar-erro":34,"SET-adicionar-todas-ja":34,"base-lista":0,"base-detalhe":0,"base-formulario":0,"base-dialogo":0,"base-picker":0}
+respostas fabricadas (não-GET): {"DELETE /api/setlists/g-set-show 500":3,"DELETE /api/setlists/g-set-show 404":3,"POST /api/setlists/g-set-show/songs 500":3}
+TOTAL: 87 (estado × largura) · (e) 0 · (b) 0 · scrollWidth = viewport em 87/87 · errata candidata (C e B) 532 · escritas a /api NÃO fabricadas (abortadas) 0
+```
+
+**Duas rodadas; o que a 1ª achou e foi consertado antes do commit**: (1) **(e) 40** — *Adicionar músicas* → *Adicionar* em B
+e A, *texto some do nó* (div. 875): dois botões, um por faixa, e o nome acessível de B é o rótulo de C (I1-E31); (2) a busca
+do picker pareava pelo texto do placeholder com o `div` do texto da folha (Δw 357): o campo ganhou o `data-testid`
+`picker-busca-campo`, como a busca da casca; (3) o *Teste de régua* das três músicas a mais tomava o par do da linha do
+picker (div. 881); (4) o remendo do usuário de fumaça criava um objeto novo a cada render e a tela relia sem parar — o
+`SET-ja-apagada` não era alcançado (div. 874, do instrumento). Candidatas: 550 → **532**.
+
+**Capturas** (`capturas/`, 33): `SET`, `-nenhuma`, `-vazio`, `-erro`, `-criar-validacao`, `-criar-erro`, `-apagar-erro`,
+`-ja-apagada`, `-adicionar`, `-adicionar-erro`, `-remover-erro` × C-1138 · B-711 · A-411 — da fumaça (fixture, sem conta; o
+"N" no canto é o indicador do `next dev`, e o *"1 Issue"* dele é o `logger.error` da falha fabricada; a conta da casca sai
+vazia porque não há usuário).
+
+## 18. Os gates — verdes `[medido]`
+
+| gate / suíte | resultado | arquivo |
+|---|---|---|
+| G-tok | **PASSA**: (i) 26/26, 0 órfãs; (ii) `arquivos: 123 · literais de identidade acusados: 0 · toasts: 0 · imports de ui: 0` — **563 → 0** | `cn/g-tok-depois.txt` |
+| G-back | **PASSA** — `diff vazio no núcleo`; as cinco rotas das setlists e `lib/api-schemas.ts` não mudaram; `lib/setlist-service.ts` é cliente | `cn/gates-commit2.txt` |
+| G-palco | **PASSA — 0** | idem |
+| `pnpm test` | `118 passed \| 3 skipped (121)` · `1172 passed \| 58 skipped (1230)` | `cn/pnpm-test.txt` |
+| `tsc --noEmit` · `pnpm lint` | 0 · ✔ | `cn/gates-commit2.txt` |
+| `pnpm build` | `✓ Compiled successfully`; `ƒ /setlists 2.89 kB`; `# exit: 0` (cópia sem `.env`) | `cn/build.txt` |
+| inércia das públicas | 12 (estado × largura): **0 nós mudaram**, 0 só no depois, `doc` igual; **só antes: 12 × a `<section>` do Toaster** | `cn/inercia-publicas.txt` |
+| a casca de uma tela já redesenhada | `DASH` antes × depois: casca **9/9 · 9/9 · 8/8**; 32 de 33 nós idênticos; o 33º é a `<section>` do Toaster — **Δ 0** | `cn/casca-dashboard.txt` |
+| `pdf-viewer` · `music-text` · `packages/identidade` · `tailwind.config.ts` · `app/api` · `lib/api-schemas.ts` | `git diff --stat origin/main --` → **vazio** | `cn/gates-commit2.txt` |
+
+**A inércia e o Toaster** (div. 877): o comparador da PR-9 (`inercia-comparar.mjs`) compara o JSON inteiro e **reprova 12**:
+toda página do web trazia um nó do sonner — `<section aria-label="Notifications alt+T">`, altura 0, **em inglês**. Ele saiu
+com o `<Toaster>` (decisão 18). Nó a nó (`cn/inercia-diferenca.mjs`): nada mais mudou. As medições commitadas das outras
+superfícies seguem com esse nó (não foram refeitas; o veredito não o conta: não tem área).
+
+## 19. O aceite `[executor, I1-D37, 2026-09-30]`
+
+`tests/gates-web/medicoes/setlists.json` — três rodadas com a sessão do perfil (`G_FAIXA_SEM_JANELA=1`), sobre o `pnpm dev`
+**desta árvore** na 3000 (decisão 1: o `.env.local` copiado sem abrir; o servidor da PR-12 parado — PIDs 13079/13085 — e o
+desta subido às 14:55Z):
+
+| rodada | quando (UTC) | o quê | commit |
+|---|---|---|---|
+| 1 | 14:58–15:00 | **C**, os 30 estados | `ab0de37` |
+| 2 | 15:14–15:16 | **B**, os 30 estados (15 min depois, a cota) | `ab0de37+sujo` (div. 879) |
+| 3 | 15:32–15:34 | **A**, os 30 estados (15 min depois) | `ab0de37+sujo` |
+
+(30 estados × 3 + o controle = 93 cargas, 31 por largura: C e B juntas já passariam das 60 do `/api/profile` — div. 880.
+Antes da rodada 1 houve uma tentativa, 14:57Z, que parou em *"o perfil não tem sessão"*: o cookie guarda o token de 1 h e
+tinha vencido; a própria checagem fez o cliente renová-lo — `POST /api/auth/session 200`, sem login — e a 2ª tentativa
+entrou. Div. 878.)
+
+Veredito verbatim em `cn/g-faixa-aceite.txt`:
+
+```
+$ node scripts/gates-web/g-faixa-veredito.mjs tests/gates-web/medicoes
+## contados à parte (não reprovam): errata candidata 773 · quebra por dado 42 · sem par folha 656 · sem par app 1226 (C e B) · não medidos 26
+## erratas candidatas sem cobertura (erratasFaixa, div. 681): 0
+G-faixa: PASSA
+# exit: 0
+```
+
+(773 = as 241 de antes desta PR + as **532** das setlists; "não medidos" 26, os mesmos — nenhum é das setlists.)
+
+Por estado (`cn/aceite-por-estado.txt`; célula = (e) · (b) · errata candidata; em A, (e) · (b) · (d′), que é triagem):
+
+| estado | 1138 (C) | 711 (B) | 411 (A) | sem par folha/app (C) | cobertura |
+|---|---|---|---|---|---|
+| `SET-carregando` · `-carregando-dados` · `-vazio` · `-erro` | 0 · 0 · 0 | 0 · 0 · 0 | 0 · 0 · (d′) 1–2 | 1/2 | — |
+| `SET-nenhuma` | 0 · 0 · 0 | 0 · 0 · 1 | 0 · 0 · (d′) 1 | 1/2 | I1-E28 |
+| `SET` | 0 · 0 · 0 | 0 · 0 · 30 | 0 · 0 · (d′) 3 | 1/17 | I1-E28 |
+| `SET-sem-musicas` | 0 · 0 · 0 | 0 · 0 · 7 | 0 · 0 · (d′) 2 | 2/3 | I1-E28 |
+| `SET-criar` · `-validacao` · `-salvando` · `-erro` | 0 · 0 · 0 | 0 · 0 · 30 | 0 · 0 · (d′) 3–5 | 1/18 | I1-E28 |
+| `SET-apagar` · `-apagar-erro` | 0 · 0 · 0 | 0 · 0 · 30 | 0 · 0 · (d′) 4–5 | 1/17 | I1-E28 |
+| `SET-ja-apagada` | 0 · 0 · 0 | 0 · 0 · 0 | 0 · 0 · (d′) 1 | 2/3 | — |
+| `SET-adicionar` · `-enviando` · `-erro` | 0 · 0 · 0 | 0 · 0 · 30 | 0 · 0 · (d′) 5–6 | 3/19 | I1-E28 |
+| `SET-adicionar-vazio` · `-busca` | 0 · 0 · 0 | 0 · 0 · 30 | 0 · 0 · (d′) 4 | 2/18 | I1-E28 |
+| `SET-remover-erro` | 0 · 0 · 0 | 0 · 0 · 32 | 0 · 0 · (d′) 4 | 1/17 | I1-E28 |
+| `SET-editar` · `-salvando` (contra `SET-criar`, `-salvando`) | 0 · 0 · 1 | 0 · 0 · 31 | 0 · 0 · (d′) 3 | 3/20 | I1-E29 (2) + I1-E28 (30) |
+| `SET-editar-erro` (contra `SET-criar-erro`) | 0 · 0 · 2 | 0 · 0 · 32 | 0 · 0 · (d′) 5 | 4/21 | I1-E29 (4) + I1-E28 (30) |
+| `SET-adicionar-todas-ja` (N10, contra `SET-adicionar-vazio`) | 0 · 0 · 2 | 0 · 0 · 32 | 0 · 0 · (d′) 5 | 4/19 | I1-E30 (4) + I1-E28 (30) |
+| `SESSAO-nao-renovada` (sem seção nesta folha) | 0 · 0 | 0 · 0 | 0 · 0 · (d′) 1 | — | — |
+| `base-lista` · `-detalhe` · `-formulario` · `-dialogo` · `-picker` (a casca-efeito) | 0 · 0 | 0 · 0 | 0 · 0 · (d′) 1–5 | — | — |
+
+**(e) = 0 e (b) = 0 nas três larguras, em todo estado medido; `scrollWidth` = viewport nos 90.** As candidatas do aceite
+são **as mesmas 532 da pré-verificação** (6 em C, 526 em B): **I1-E28 520** (todas em B) · **I1-E29 8** · **I1-E30 4**;
+nenhuma de outra causa. **Quebra por dado: 0.** Saída "nome-acessível": 20 em B e 20 em A (o *Adicionar* do cabeçalho, nos
+estados com a setlist aberta). Em C, **0 candidata** nos 20 estados da folha.
+
+**Sem par** (contados à parte; nunca reprovam), por espécie:
+- **da folha**: *Buscar…* (a casca, div. 719) em todos; em `SET-ja-apagada`, *3 setlists* e, em `SET-sem-musicas`, o
+  cartão de *Show padrão* com *8 músicas · 32 min* (as cópias da div. 854; decisão 12); em `SET-adicionar*`, *Selecionar
+  todas (5)* e os textos dentro da busca; no editar, *Nova setlist* e *Criar*; na N10, *nenhuma música disponível* e o apoio;
+- **do app**: a `<nav>` e o campo da busca (div. 719); as três linhas a mais de *Show padrão* (15 nós: número, título,
+  artista, tipo, remover); dentro dos diálogos, os campos sem moldura (a data, o local, a busca do picker); *2 setlists*;
+  *Selecionar todas (4)*; *Editar setlist*, *Salvar*; a N10.
+
+**A fixture, confirmada pelo hash** (`cn/fixture-hash.txt`): os 51 textos que provam cada estado estão nas três larguras.
+**Nenhuma setlist nem content real foi lido.**
+
+**Os requests** (`cn/aceite-por-estado.txt`), iguais nas três larguras: `prodAbortados` **0**; `GET /api/setlists` →
+`fabricado 200` ×28 e `fabricado sem resposta` ×2; `GET /api/content` → `fabricado 200` ×30; e as escritas, **só
+fabricadas**: `POST /api/setlists` sem resposta ×2 (segurado, abortado) · `PUT /api/setlists/{id}` sem resposta ×2 ·
+`DELETE /api/setlists/{id}` `fabricado 500` e `fabricado 404` · `POST …/songs` sem resposta e `fabricado 500` ·
+`DELETE …/songs/{linha}` sem resposta. **Nenhuma escrita saiu.** `POST /api/auth/session` (o cookie) 31–32 por largura +
+o `fabricado 500` do `SESSAO-nao-renovada`. `GET /api/profile`: 31 por largura (uma `FALHA` em B: cortada pela recarga do
+controle). Contas 0, escritas 0.
+
+`SET-carregando` **alcançado com sessão** pelo pedaço do `dynamic` segurado (`components_setlist-manager` no nome do chunk
+— a hipótese casou). **Inalcançáveis com sessão**, com a prova: o *carregando as setlists…* pelo `isLoading` do Firebase e
+pelo "sem usuário" — a mesma tela; pré-verificação (§17: `SET-carregando` é a rota sem usuário, 3/3, (e) 0 (b) 0) e Vitest
+(`setlists-estados.test.tsx`, "SET-carregando": os dois ramos). As variantes de motivo (400, 401, 429, 5xx) de cada falha,
+a adição a meio, os dois 404 que não são o do apagar, a biblioteca cortada pelo teto e a que falhou: Vitest.
+
+### 19.1 Antes × depois (os cinco `base-*`) `[medido]`
+
+`cn/casca-efeito-setlists.txt` (as linhas de 1138, condensadas — a lista de cada coincidência está no arquivo):
+
+```
+base-lista · 1138: casca 9/9 iguais · nó velho por componente 0 · coincidência de texto 0 · (b) 0 → 0 · nós 30 → 22
+base-detalhe · 1138: casca 9/9 iguais · nó velho por componente 0 · coincidência de texto 16 · (b) 0 → 0 · nós 68 → 66
+base-formulario · 1138: casca 9/9 iguais · nó velho por componente 0 · coincidência de texto 1 · (b) 0 → 0 · nós 46 → 38
+base-dialogo · 1138: casca 9/9 iguais · nó velho por componente 0 · coincidência de texto 0 · (b) 0 → 0 · nós 35 → 26
+base-picker · 1138: casca 9/9 iguais · nó velho por componente 0 · coincidência de texto 18 · (b) 0 → 0 · nós 90 → 84
+  "Garota de Ipanema": antes x 691 w 269 · depois x 540.2 w 444.2
+  depois: a coluna da lista x 32 w 419.2 · o painel x 475.2 até 1106 (w 630.8) — razão 0.665 (2 : 3 = 0.667)
+NÓ VELHO POR COMPONENTE: 0 — nas 15 (estado × largura) · (b) do antes 12 → do depois 0
+```
+
+**A casca não se moveu** (9/9 em C e B, 8/8 em A; em `base-formulario` · 411 o critério "y < 120" pega dois nós do diálogo
+velho, que não são casca: 8/10). **Nó velho por componente = 0**: nenhuma das 62 frases de UI das setlists velhas aparece.
+**Coincidência de texto**: o dado (a descrição, os títulos, os artistas, os números das linhas). **Os 12 (b) do web velho
+em 411** (o `truncate`) → **0**. **A largura liberada da PR-9** (div. 728: os 4 nós que a saída da lateral alargou no
+corpo velho, 1 : 1) **fecha pela composição da folha**: a lista ocupa 419,2 e o painel 630,8 dos 1074 úteis — **2 : 3**.
+
+## 20. As erratas propostas — para o aval do veredito
+
+| id | o quê | n (C · B) | onde |
+|---|---|---|---|
+| **I1-E28** | o nome do cartão em `size.title` (a tabela), não nos 20 px do desenho; em B o painel desce 6 px | 0 · **520** | `erratasFaixa` |
+| **I1-E29** | o editar contra `SET-criar*`: *Salvar* mais largo (o *Cancelar* ≈ 8 px à esquerda); a 2ª linha do erro ≈ 9 px mais larga | 4 · 4 | `erratasFaixa` |
+| **I1-E30** | a N10 contra `SET-adicionar-vazio`: sem o apoio, os botões sobem ≈ 27 px | 2 · 2 | `erratasFaixa` |
+| **I1-E31** | em B e A, o nome acessível do *Adicionar* é *Adicionar músicas* | — | `erratasFrase` |
+
+Em `DESIGN-I1/README.md` §2.2 e no `erratas.json`, marcadas PROPOSTA. Se alguma não for aprovada, sai e o veredito acusa as
+candidatas dela sem cobertura (`G-faixa` segue PASSA: candidata não reprova).
+
+## 21. Divergências — 874 a 886
+
+| # | origem | o que se presumiu | o que foi medido | destino |
+|---|---|---|---|---|
+| **874** | T | — | o remendo do usuário de fumaça criava um objeto novo a cada render: a tela relia sem parar e o `SET-ja-apagada` não era alcançado na 1ª pré-verificação | o usuário virou constante do módulo (`remendos.sh`); só na cópia |
+| **875** | T | §5.9: nome acessível *Adicionar músicas a {nome}*, em C e em B | o G-faixa só dá a saída "nome-acessível" quando o nome em B é IGUAL ao texto de C; com o nome longo, 40 (e) | dois botões, um por faixa; **I1-E31** proposta |
+| **876** | D | tabela de tokens: o nome do cartão em `size.title` | a folha o desenha em 20 px (94 ocorrências), sem token | pela tabela; **I1-E28** proposta |
+| **877** | A | *"públicas sem `.env` idênticas"* | toda página trazia a `<section aria-label="Notifications alt+T">` do sonner; saiu com o Toaster — 12 nós a menos, 0 mudados | `cn/inercia-diferenca.mjs`; §18 |
+| **878** | T | I1-D37: a sessão do perfil ativa | a 1ª tentativa do aceite parou em *"o perfil não tem sessão"*: o cookie guarda o token de 1 h, vencido; o cliente o renovou sozinho (sem login) e a 2ª entrou | registrado; +1 leitura de `/api/profile` |
+| **879** | T | — | as rodadas 2 e 3 saíram `ab0de37…+sujo`: o `setlists.json` da rodada 1 estava na árvore sem commit; **nenhum arquivo de `app/`, `components/`, `lib/`, `hooks/` difere** de `ab0de37` | registrado (o caso da 842) |
+| **880** | P | *"duas rodadas (C+B; A 15 min depois)"* | 30 estados: C + B = 62 cargas, acima das 60 | três rodadas |
+| **881** | T | a fixture do "antes" = a do "depois" | o artista das três músicas a mais mudou (*Teste de régua* → *Autor de teste*) depois do "antes" | registrado; a coincidência de texto não muda de espécie (é dado) |
+| **882** | A | decisão 7: *a data curta da PR-9* | a `dataCurta` da PR-9 usa `new Date()`; para uma coluna DATA isso dá o dia anterior a oeste de Greenwich — o que a tela velha já fazia | `dataDoShow` lê o texto; extra declarado |
+| **883** | A | aval: *"871 → herança D; meça se persiste"* | **não persiste**: a lista fica enquanto a releitura não chega e a aberta é a relida | teste; sai da herança |
+| **884** | A | decisão 18: a dependência `sonner` | o `ui/toast.tsx` morto era o único importador de `@radix-ui/react-toast`, que ficou no `package.json` | encerramento (com o `knip`) |
+| **885** | T | — | quatro testes do editor e do upload ainda fazem `vi.mock('sonner', …)` de um pacote que saiu; passam | encerramento |
+| **886** | A | — | o picker velho rolava numa área de altura fixa (80 % da janela); o novo cresce com a lista e é o fundo do diálogo que rola (a folha não dá altura) | registrado |
+
+Próxima divergência: **887**.
+
+## 22. Heranças (commit 2)
+
+| herança | destino |
+|---|---|
+| **o reordenar com persistência**: a rota `PUT /api/setlists/[id]/songs/order` sem chamador no web (decisão 27) | **Bloco D** |
+| **o teto de 100** de `app/api/content/route.ts:119` × o pedido de 1000 do picker (decisão 4; div. 851) | **Bloco D** |
+| os sentinelas *Unknown Artist/Title/Type* das rotas das setlists (div. 853) — a tela os traduz na exibição | **Bloco D** |
+| `position` e `notes: ""` no corpo de `POST …/songs`, que a rota ignora ou recalcula (§1.3) | **Bloco D** |
+| **div. 864** — `lib/content-service-server.ts:12` importa `getSetlistById` do serviço cliente e não usa | encerramento / D |
+| **div. 828** — o inglês em `.ts`: as mensagens de `Error` de `lib/setlist-service.ts` (não chegam à tela) | encerramento |
+| os specs `tests/ux-audit/fase-d/e-setlists.spec.ts` e `set23-descricao.spec.ts` com os rótulos em inglês | quando o gate voltar a ser usado |
+| `@radix-ui/react-toast` sem importador (div. 884); os `vi.mock('sonner')` (div. 885); `themeColor` literal | encerramento |
+| a I1-E31: o nome acessível curto em B e A | N4 (a unificação das frases) |
+| o inventário do §9 | **a 1ª seção do `I1-ENCERRAMENTO.md`** |
+
+## 23. Contabilidade (commit 2)
+
+| quem | item | valor |
+|---|---|---|
+| executor | requests a `https://octavia.rocks` ou preview · logins · senhas digitadas · `.env*` abertos · escritas · contas | **0 · 0 · 0 · 0 · 0 · 0** |
+| executor (decisão 1) | `.env.local` | copiado de `../octavia-i1-pr12` com `cp -p` (5 637 bytes; **não aberto**); `git check-ignore` → `.gitignore:23` |
+| executor (decisão 1) | o `pnpm dev` da 3000 | o da PR-12 (PIDs 13079/13085) parado às 14:55Z; o desta árvore subido (`Environments: .env.local`) e **deixado de pé** |
+| executor (I1-D37) | rodadas com sessão (perfil `~/.octavia-g-faixa-perfil`, `localhost:3000`) | 5: a tentativa que parou (14:57Z, 1 carga), C (14:58Z, 31), B (15:14Z, 31), o `DASH` do painel (15:16Z, 6), A (15:32Z, 31) — em janelas de no máximo 38 em 15 min (o teto é 60) |
+| executor | `next dev` **sem** `.env`, porta 3110, numa cópia da árvore | 1 subida: as duas rodadas da pré-verificação (com os remendos, só na cópia) e a inércia (sem eles); parada |
+| executor | `pnpm build` | na mesma cópia, sem `.env` |
+| executor | a `main` para os testes novos | worktree temporária de `aa772df` (`--detach`), removida |
+| todos | escrita que saiu | **0** (`fabricado 200/404/500` e `fabricado sem resposta`) |
+| — | leitura de setlist ou content real | **nenhuma** (as duas leituras fabricadas; lidos só `/api/profile`, o `securetoken` e, no `DASH`, o painel da conta — SSR, só hash) |
+| — | `packages/identidade` · `tailwind.config.ts` · as rotas · `lib/api-schemas.ts` | **não mudaram** |
+

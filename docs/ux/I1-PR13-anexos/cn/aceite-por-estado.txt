@@ -1,0 +1,84 @@
+$ node docs/ux/I1-PR13-anexos/cn/aceite-por-estado.mjs
+estado · 1138 (e)·(b)·candidatas | 711 (e)·(b)·candidatas | 411 (e)·(b)·(d′) | sem par folha/app (C) | nome-acessível (B) | por errata
+SET-carregando           0·0·0 | 0·0·0 | 0·0·1 | 1/2 | 0 | —
+SET-carregando-dados     0·0·0 | 0·0·0 | 0·0·1 | 1/2 | 0 | —
+SET-vazio                0·0·0 | 0·0·0 | 0·0·2 | 1/2 | 0 | —
+SET-erro                 0·0·0 | 0·0·0 | 0·0·2 | 1/2 | 0 | —
+SET-nenhuma              0·0·0 | 0·0·1 | 0·0·1 | 1/2 | 0 | I1-E28 1
+SET                      0·0·0 | 0·0·30 | 0·0·3 | 1/17 | 1 | I1-E28 30
+SET-sem-musicas          0·0·0 | 0·0·7 | 0·0·2 | 2/3 | 1 | I1-E28 7
+SET-criar                0·0·0 | 0·0·30 | 0·0·3 | 1/18 | 1 | I1-E28 30
+SET-criar-validacao      0·0·0 | 0·0·30 | 0·0·3 | 1/18 | 1 | I1-E28 30
+SET-criar-salvando       0·0·0 | 0·0·30 | 0·0·3 | 1/18 | 1 | I1-E28 30
+SET-criar-erro           0·0·0 | 0·0·30 | 0·0·5 | 1/18 | 1 | I1-E28 30
+SET-apagar               0·0·0 | 0·0·30 | 0·0·4 | 1/17 | 1 | I1-E28 30
+SET-apagar-erro          0·0·0 | 0·0·30 | 0·0·5 | 1/17 | 1 | I1-E28 30
+SET-ja-apagada           0·0·0 | 0·0·0 | 0·0·1 | 2/3 | 0 | —
+SET-adicionar            0·0·0 | 0·0·30 | 0·0·5 | 3/19 | 1 | I1-E28 30
+SET-adicionar-vazio      0·0·0 | 0·0·30 | 0·0·4 | 2/18 | 1 | I1-E28 30
+SET-adicionar-busca      0·0·0 | 0·0·30 | 0·0·4 | 2/18 | 1 | I1-E28 30
+SET-adicionar-enviando   0·0·0 | 0·0·30 | 0·0·5 | 3/19 | 1 | I1-E28 30
+SET-adicionar-erro       0·0·0 | 0·0·30 | 0·0·6 | 3/19 | 1 | I1-E28 30
+SET-remover-erro         0·0·0 | 0·0·32 | 0·0·4 | 1/17 | 1 | I1-E28 32
+SET-editar               0·0·1 | 0·0·31 | 0·0·3 | 3/20 | 1 | I1-E29 2 · I1-E28 30 (contra SET-criar)
+SET-editar-salvando      0·0·1 | 0·0·31 | 0·0·3 | 3/20 | 1 | I1-E29 2 · I1-E28 30 (contra SET-criar-salvando)
+SET-editar-erro          0·0·2 | 0·0·32 | 0·0·5 | 4/21 | 1 | I1-E29 4 · I1-E28 30 (contra SET-criar-erro)
+SET-adicionar-todas-ja   0·0·2 | 0·0·32 | 0·0·5 | 4/19 | 1 | I1-E30 4 · I1-E28 30 (contra SET-adicionar-vazio)
+SESSAO-nao-renovada      0·0·0 | 0·0·0 | 0·0·1 | 0/0 | 0 | —
+base-lista               0·0·0 | 0·0·0 | 0·0·1 | 0/0 | 0 | —
+base-detalhe             0·0·0 | 0·0·0 | 0·0·3 | 0/0 | 1 | —
+base-formulario          0·0·0 | 0·0·0 | 0·0·1 | 0/0 | 0 | —
+base-dialogo             0·0·0 | 0·0·0 | 0·0·2 | 0/0 | 0 | —
+base-picker              0·0·0 | 0·0·0 | 0·0·5 | 0/0 | 1 | —
+
+TOTAL: 90 (estado × largura) · scrollWidth = viewport em 90/90
+  411: (e) 0 · (b) 0 · (d′) 93 · errata candidata 0 · sem par folha/app 0/0 · saídas: nome-acessível 20 · rolagem 4
+  711: (e) 0 · (b) 0 · (d′) 1 · errata candidata 526 · sem par folha/app 44/329 · saídas: nome-acessível 20 · rolagem 0
+  1138: (e) 0 · (b) 0 · (d′) 0 · errata candidata 6 · sem par folha/app 44/329 · saídas: nome-acessível 0 · rolagem 6
+erratas candidatas por causa (C e B): {"I1-E28":520,"I1-E29":8,"I1-E30":4}
+411 · commit ab0de377757d3f941fa3b211c8abad986aecf4b0+sujo · 2026-09-30T15:32:07.955Z · prodAbortados 0
+   GET /api/health → 200 ×2
+   POST /api/auth/session → 200 ×31
+   GET /api/profile → 200 ×31
+   GET /api/setlists → fabricado sem resposta ×2
+   GET /api/content → fabricado 200 ×30
+   GET /api/setlists → fabricado 200 ×28
+   POST /api/setlists → fabricado sem resposta ×2
+   DELETE /api/setlists/{id} → fabricado 500 ×1
+   DELETE /api/setlists/{id} → fabricado 404 ×1
+   POST /api/setlists/{id}/songs → fabricado sem resposta ×1
+   POST /api/setlists/{id}/songs → fabricado 500 ×1
+   DELETE /api/setlists/songs/{linha} → fabricado sem resposta ×1
+   PUT /api/setlists/{id} → fabricado sem resposta ×2
+   POST /api/auth/session → fabricado 500 ×1
+711 · commit ab0de377757d3f941fa3b211c8abad986aecf4b0+sujo · 2026-09-30T15:14:04.205Z · prodAbortados 0
+   GET /api/health → 200 ×2
+   POST /api/auth/session → 200 ×32
+   GET /api/profile → FALHA ×1
+   GET /api/profile → 200 ×31
+   GET /api/setlists → fabricado sem resposta ×2
+   GET /api/content → fabricado 200 ×30
+   GET /api/setlists → fabricado 200 ×28
+   POST /api/setlists → fabricado sem resposta ×2
+   DELETE /api/setlists/{id} → fabricado 500 ×1
+   DELETE /api/setlists/{id} → fabricado 404 ×1
+   POST /api/setlists/{id}/songs → fabricado sem resposta ×1
+   POST /api/setlists/{id}/songs → fabricado 500 ×1
+   DELETE /api/setlists/songs/{linha} → fabricado sem resposta ×1
+   PUT /api/setlists/{id} → fabricado sem resposta ×2
+   POST /api/auth/session → fabricado 500 ×1
+1138 · commit ab0de377757d3f941fa3b211c8abad986aecf4b0 · 2026-09-30T14:58:25.862Z · prodAbortados 0
+   GET /api/health → 200 ×2
+   POST /api/auth/session → 200 ×31
+   GET /api/profile → 200 ×31
+   GET /api/setlists → fabricado sem resposta ×2
+   GET /api/content → fabricado 200 ×30
+   GET /api/setlists → fabricado 200 ×28
+   POST /api/setlists → fabricado sem resposta ×2
+   DELETE /api/setlists/{id} → fabricado 500 ×1
+   DELETE /api/setlists/{id} → fabricado 404 ×1
+   POST /api/setlists/{id}/songs → fabricado sem resposta ×1
+   POST /api/setlists/{id}/songs → fabricado 500 ×1
+   DELETE /api/setlists/songs/{linha} → fabricado sem resposta ×1
+   PUT /api/setlists/{id} → fabricado sem resposta ×2
+   POST /api/auth/session → fabricado 500 ×1
