@@ -8,6 +8,9 @@
 import { render, screen, fireEvent, waitFor, cleanup, within } from '@testing-library/react'
 import { describe, it, expect, vi, afterEach } from 'vitest'
 
+// o 1º teste paga a carga do pedaço do `dynamic` (div. 844): prazo folgado para a suíte
+vi.setConfig({ testTimeout: 40_000 })
+
 const usuario = vi.hoisted(() => ({ atual: { uid: 'cn-user', email: 'cn@exemplo.com', displayName: 'CN' } as { uid: string } | null, isLoading: false }))
 vi.mock('next/navigation', () => ({
   useRouter: () => ({ push: vi.fn(), replace: vi.fn(), back: vi.fn(), prefetch: vi.fn(), refresh: vi.fn() }),
@@ -23,6 +26,16 @@ const toast = vi.hoisted(() => ({ success: vi.fn(), error: vi.fn() }))
 vi.mock('sonner', () => ({ toast }))
 
 import AddContentPageClient from '@/components/add-content-page-client'
+
+/**
+ * Monta a tela e ESPERA o passo 1 (div. 844): o corpo vem por `next/dynamic`, e o 1º teste da suíte paga a carga do
+ * pedaço — sob cobertura no CI ela passou de 1 s (o prazo padrão do `findBy*`) e o roteiro começou com a tela ainda em
+ * *carregando…*. O prazo aqui é folgado; o que se espera é o rótulo do seletor de tipo, o de antes ou o de agora.
+ */
+async function montar() {
+  render(<AddContentPageClient />)
+  await screen.findByText(/^(Content Type|tipo de conteúdo)$/, {}, { timeout: 30_000 })
+}
 
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); vi.clearAllMocks(); usuario.atual = { uid: 'cn-user' }; usuario.isLoading = false })
 
@@ -70,7 +83,6 @@ const escrever = (el: Element | null, v: string) => fireEvent.change(el as Eleme
 const campo = (antes: string, agora: string) => document.getElementById(antes) ?? screen.queryByTestId(agora)
 /** Do zero até o formulário: o criar (o *Próximo* do passo 1, o título, *Next* ou *Próximo*) e o artista. */
 async function ateOFormularioPeloCriar() {
-  await screen.findByText(/^(Content Type|tipo de conteúdo)$/) // o pedaço do `dynamic` chegou
   const proximo = screen.queryByRole('button', { name: 'Próximo' })
   if (proximo) fireEvent.click(proximo)
   await waitFor(() => expect(campo('content-title', 'campo-criar-titulo')).not.toBeNull())
@@ -84,7 +96,7 @@ const salvar = async () => fireEvent.click(await screen.findByRole('button', { n
 describe('1 · a cópia velha do erro de salvar não volta no passo anterior (decisão 24 do DESIGN-I1)', () => {
   it('salvar falha → Cancelar: nenhum alerta na tela', async () => {
     servir([], [{ status: 500, corpo: { error: 'Failed to create content', code: 'INTERNAL_ERROR' } }])
-    render(<AddContentPageClient />)
+    await montar()
     await ateOFormularioPeloCriar()
     await salvar()
     await screen.findByText(/^(Failed to create content|não foi possível salvar — falha no servidor)$/)
@@ -97,7 +109,7 @@ describe('1 · a cópia velha do erro de salvar não volta no passo anterior (de
 describe('2 · o lote importado diz que importou, na tela (UP-lote-sucesso; era toast)', () => {
   it('a linha de sucesso no passo 1, nenhum toast', async () => {
     const pedidos = servir([ENVIO_OK], [CRIADO])
-    render(<AddContentPageClient />)
+    await montar()
     await ateAZona(true)
     enviar(LOTE())
     fireEvent.click(await screen.findByRole('button', { name: /^(Import All|Importar todas)$/ }))
@@ -111,7 +123,7 @@ describe('2 · o lote importado diz que importou, na tela (UP-lote-sucesso; era 
 describe('3 · o limite pela resposta do servidor (N8, decisão 11 do aval)', () => {
   const caso = async (r: Resposta) => {
     servir([r])
-    render(<AddContentPageClient />)
+    await montar()
     await ateAZona()
     enviar(PDF())
     return screen.findByText('o arquivo passa de 4 MiB — escolha um menor')
@@ -129,7 +141,7 @@ describe('3 · o limite pela resposta do servidor (N8, decisão 11 do aval)', ()
 describe('4 · o Tom das Opções avançadas mostra o valor escolhido (decisão 14 do aval)', () => {
   it('escolhido Sol, a caixa diz G — e o corpo leva "key":"G"', async () => {
     const pedidos = servir([], [CRIADO])
-    render(<AddContentPageClient />)
+    await montar()
     await ateOFormularioPeloCriar()
     fireEvent.click(await screen.findByRole('button', { name: /^Opções avançadas/ }))
     const tom = (await screen.findByTestId('campo-tom')) as HTMLSelectElement
@@ -144,7 +156,7 @@ describe('4 · o Tom das Opções avançadas mostra o valor escolhido (decisão 
 describe('5 · o passo 1 é só o como: a zona vem depois do Próximo (I1-E21 — mudança de fluxo declarada)', () => {
   it('Importar de arquivo não mostra a zona; o Próximo mostra; Voltar devolve o passo 1 com a escolha', async () => {
     servir([])
-    render(<AddContentPageClient />)
+    await montar()
     await clicar(/^(Import from File|Importar de arquivo)$/)
     expect(entradaDoArquivo()).toBeNull()
     expect(screen.getByLabelText('passo 1 de 3')).toBeTruthy()
@@ -157,7 +169,7 @@ describe('5 · o passo 1 é só o como: a zona vem depois do Próximo (I1-E21 �
   })
   it('a partitura esconde o como e o lote, como antes (decisão 4)', async () => {
     servir([])
-    render(<AddContentPageClient />)
+    await montar()
     fireEvent.click(await screen.findByRole('radio', { name: 'Partitura' }))
     await waitFor(() => expect(screen.queryByText('como você quer adicionar?')).toBeNull())
     expect(screen.queryByRole('radio', { name: 'Várias músicas num arquivo' })).toBeNull()
@@ -184,7 +196,7 @@ describe('a espera: os três carregamentos de antes são um, na casca (resposta 
 describe('o envio, por espécie', () => {
   const caso = async (r: Resposta, frase: string, tentar: boolean) => {
     const pedidos = servir([r, ENVIO_OK])
-    render(<AddContentPageClient />)
+    await montar()
     await ateAZona()
     enviar(PDF())
     await screen.findByText(frase)
@@ -211,7 +223,7 @@ describe('o envio, por espécie', () => {
     caso({ status: 400, corpo: { error: 'Validation failed', details: [{ field: 'contentType', message: 'x', code: 'custom' }] } }, 'o arquivo não foi enviado — o servidor recusou os dados', false))
   it('enviando: a frase, o nome e o tamanho; sem o Escolher arquivo', async () => {
     servir(['segurar'])
-    render(<AddContentPageClient />)
+    await montar()
     await ateAZona()
     enviar(PDF())
     await screen.findByText('enviando o arquivo…')
@@ -220,7 +232,7 @@ describe('o envio, por espécie', () => {
   })
   it('a extensão recusada fica sob a zona; nenhum request, nenhum toast', async () => {
     const pedidos = servir([ENVIO_OK])
-    render(<AddContentPageClient />)
+    await montar()
     await ateAZona()
     enviar(arquivo('foto.heic', 'image/heic', 'x'))
     await screen.findByText('tipo de arquivo não aceito: foto.heic — use .pdf, .docx ou .txt')
@@ -232,7 +244,7 @@ describe('o envio, por espécie', () => {
 describe('o salvar, por espécie', () => {
   const caso = async (r: Resposta, motivo: string, tentar: boolean) => {
     const pedidos = servir([], [r, CRIADO])
-    render(<AddContentPageClient />)
+    await montar()
     await ateOFormularioPeloCriar()
     await salvar()
     await screen.findByText(`não foi possível salvar — ${motivo}`)
@@ -256,7 +268,7 @@ describe('o salvar, por espécie', () => {
   it('429 → o limite, sem ação', () => caso({ status: 429, corpo: { error: 'x' } }, 'muitas tentativas, tente de novo em instantes', false))
   it('sem título ou artista: o Salvar inativo diz por quê; salvando: Salvando…', async () => {
     servir([], ['segurar'])
-    render(<AddContentPageClient />)
+    await montar()
     await ateOFormularioPeloCriar()
     escrever(screen.getByTestId('campo-artista'), '')
     expect(screen.getByText('título e artista são obrigatórios')).toBeTruthy()
@@ -268,7 +280,7 @@ describe('o salvar, por espécie', () => {
   })
   it('o criar do zero sem título: a validação sob o campo', async () => {
     servir([])
-    render(<AddContentPageClient />)
+    await montar()
     fireEvent.click(await screen.findByRole('button', { name: 'Próximo' }))
     fireEvent.click(await screen.findByRole('button', { name: 'Próximo' }))
     expect(await screen.findByText('o título é obrigatório')).toBeTruthy()
@@ -280,7 +292,7 @@ describe('o lote', () => {
   const ateOLote = async () => { await ateAZona(true); enviar(LOTE()); return screen.findByRole('button', { name: 'Importar todas' }) }
   it('a prévia: a frase do topo, o número, o título, o artista, o corpo e o incluir; só as incluídas sobem', async () => {
     const pedidos = servir([ENVIO_OK], [CRIADO])
-    render(<AddContentPageClient />)
+    await montar()
     await ateOLote()
     expect(screen.getByText('2 músicas encontradas em repertorio.txt')).toBeTruthy()
     expect((screen.getByLabelText('título da música 1') as HTMLInputElement).value).toBe('Anunciação')
@@ -292,13 +304,13 @@ describe('o lote', () => {
   })
   it('importando: Importando…, inativo', async () => {
     servir([ENVIO_OK], ['segurar'])
-    render(<AddContentPageClient />)
+    await montar()
     fireEvent.click(await ateOLote())
     expect(((await screen.findByRole('button', { name: 'Importando…' })) as HTMLButtonElement).disabled).toBe(true)
   })
   it('a falha: a linha com o motivo; Tentar de novo repete o importar (como o Import All de antes: regrava as que já entraram — herança D)', async () => {
     const pedidos = servir([ENVIO_OK], [CRIADO, { status: 500, corpo: { error: 'x' } }, CRIADO])
-    render(<AddContentPageClient />)
+    await montar()
     fireEvent.click(await ateOLote())
     await screen.findByText('não foi possível importar as músicas — falha no servidor')
     expect(toast.error).not.toHaveBeenCalled()
@@ -309,7 +321,7 @@ describe('o lote', () => {
   })
   it('nenhuma música: a linha acima da zona, sem ação', async () => {
     servir([ENVIO_OK])
-    render(<AddContentPageClient />)
+    await montar()
     await ateAZona(true)
     enviar(arquivo('vazio.txt', 'text/plain', '\n\n'))
     await screen.findByText('nenhuma música encontrada no arquivo')
@@ -319,7 +331,7 @@ describe('o lote', () => {
   it('o arquivo não se leu: a linha com Tentar de novo, que lê de novo o mesmo arquivo sem reenviar', async () => {
     const pedidos = servir([ENVIO_OK])
     let vez = 0
-    render(<AddContentPageClient />)
+    await montar()
     await ateAZona(true)
     enviar(arquivo('repertorio.txt', 'text/plain', 'x', async () => { if (vez++ === 0) throw new Error('boom'); return 'Anunciação\num' }))
     await screen.findByText('não foi possível ler o arquivo')
@@ -329,7 +341,7 @@ describe('o lote', () => {
   })
   it('lendo (I1-E2): carregando… no lugar da lista, no passo 2', async () => {
     servir([ENVIO_OK])
-    render(<AddContentPageClient />)
+    await montar()
     await ateAZona(true)
     enviar(arquivo('repertorio.txt', 'text/plain', 'x', () => new Promise<string>(() => undefined)))
     await screen.findByText('carregando…')

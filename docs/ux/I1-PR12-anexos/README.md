@@ -13,7 +13,7 @@
 > commit 2 (a implementação, `9bac7bb`, §15–§22) e **commit 3 (aceite e docs, §23)**. **Veredito do aceite: PASSA — (e) = 0
 > e (b) = 0 nas três larguras, nos 21 estados da folha 7 e nos 5 do "antes"; 122 erratas candidatas, todas cobertas
 > (I1-E22 32 · I1-E24 70 · I1-E27 18 · I1-E2 2); nó velho por componente 0.** **Aval do veredito dado** `[Marcel, 2026-09-30]`
-> (§23.8); commit 4, as decisões do aval (só docs).
+> (§23.8); commit 4, as decisões do aval (só docs, `58130d8`); commit 5, o teste instável que reprovou o `build` (§24).
 > PR [#347](https://github.com/marcelviana/octavia/pull/347).
 
 | arquivo | o que é |
@@ -1028,3 +1028,49 @@ PASSA`, `erratas candidatas sem cobertura: 0`. **Nenhuma divergência nova** —
 | todos | `POST` que saiu | **0** (`fabricado 201/400/500` e `fabricado sem resposta`) |
 | — | leitura de content real | **nenhuma** (a rota não lê content; lidos só `/api/profile` e o `securetoken`) |
 | — | `packages/identidade` · `tailwind.config.ts` · as rotas · `lib/api-schemas.ts` | **não mudaram** |
+
+---
+
+## 24. Commit 5 — o teste instável que reprovou o `build` do commit 4 (div. 844)
+
+O commit 4 (`58130d8`, só docs) saiu com o check **`build` vermelho** e o merge foi recusado (*"the base branch policy
+prohibits the merge"*). O passo que falhou é o *Test coverage* (`pnpm test:ci` = `vitest run --coverage`), num teste
+**desta PR**:
+
+```
+FAIL components/upload/__tests__/upload-estados.test.tsx > 1 · a cópia velha … > salvar falha → Cancelar: nenhum alerta na tela
+ ❯ ateOFormularioPeloCriar components/upload/__tests__/upload-estados.test.tsx:73:16
+     73|   await screen.findByText(/^(Content Type|tipo de conteúdo)$/) // o pe…
+ Test Files  1 failed | 115 passed | 3 skipped (119)
+      Tests  1 failed | 1136 passed | 57 skipped (1194)
+```
+
+A tela no momento da falha era o *carregando…* (o DOM do log): o corpo do upload vem por `next/dynamic`, o **primeiro**
+teste da suíte paga a carga do pedaço, e sob cobertura ela passou de 1 s — o prazo padrão do `findBy*`. O mesmo teste
+passou no CI dos commits 2 (`9bac7bb`) e 3 (`6d8ea55`): é instabilidade do teste, não do código (o commit 4 não toca
+código).
+
+| arquivo | o quê |
+|---|---|
+| `components/upload/__tests__/upload-estados.test.tsx` | `montar()`: monta e **espera o passo 1** (o rótulo do seletor de tipo, o de antes ou o de agora) com prazo de 30 s, no lugar dos 18 `render` dos roteiros (os 2 de "a espera" seguem sem esperar — medem o próprio *carregando…*); `testTimeout` da suíte em 40 s |
+| `tests/gates/i1-upload-post.test.tsx` | a mesma espera depois do `render` (o 1º caso paga a mesma carga); prazo do caso 20 s → 60 s. **A fixture não muda** |
+
+Nenhuma linha de `app/`, `components/` (fora `__tests__`), `lib/`, `hooks/`. `[medido]`: `components/upload` 33/33 em
+três execuções seguidas; o `i1-upload-post` 4/4; e `pnpm test:ci` (o comando do CI), duas vezes, **com os dois arquivos
+desta PR verdes**.
+
+**Div. 845 — a mesma classe de instabilidade nos testes do editor (I1-PR-11), não tocada.** Nessas duas execuções
+locais do `pnpm test:ci` (a máquina com o `pnpm dev` de pé), reprovaram o **primeiro** caso de
+`tests/gates/i1-editor-put.test.tsx` (*Unable to find … `campo-secao-letra`*) e de
+`components/editors/__tests__/editor-estados.test.tsx` (*Unable to find role="button" … Salvar*) — o mesmo desenho (o
+editor por `next/dynamic`, o `findBy*` de 1 s). Os dois arquivos são **os da `main`** (`git diff --stat origin/main`
+vazio) e passaram no CI desta branch nos commits 2, 3 e 4; sem cobertura (`pnpm test`) passam aqui. Não são desta PR:
+ficam como **herança** — o conserto é o mesmo (`montar()` com prazo), numa PR própria ou no encerramento do I1. Se o
+`build` reprovar por eles, é re-rodar o job.
+
+| # | origem | destino |
+|---|---|---|
+| **844** | T — o 1º teste do `upload-estados` dependia de o pedaço do `dynamic` chegar em 1 s | consertado neste commit (os dois testes desta PR) |
+| **845** | T — a mesma instabilidade nos dois testes do editor da I1-PR-11 (da `main`) | herança; não tocado |
+
+Próxima divergência: **846**.

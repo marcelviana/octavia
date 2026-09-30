@@ -183,13 +183,15 @@ describe('I1-PR12 — o que o upload envia, byte a byte contra o da main', () =>
     it(c.nome, async () => {
       servir()
       render(<AddContentPageClient />)
+      // o corpo vem por `next/dynamic`: espera o passo 1 com prazo folgado (div. 844 — o 1º caso paga a carga do pedaço)
+      await screen.findByText('tipo de conteúdo', {}, { timeout: 30_000 })
       await c.roteiro()
       await waitFor(() => expect(envios.filter((e) => e.startsWith('POST /api/content'))).toHaveLength(c.posts))
       gravados[c.nome] = envios
       if (process.env.CN_GRAVAR) return
       const antes = JSON.parse(fs.readFileSync(ANTES, 'utf8')) as Record<string, string[]>
       expect(envios).toEqual(antes[c.nome])
-    }, 20_000)
+    }, 60_000)
   }
   it.runIf(!!process.env.CN_GRAVAR)('grava o antes (CN_GRAVAR=1, só no commit 1, sobre o código da main)', () => {
     fs.mkdirSync(path.dirname(ANTES), { recursive: true })
