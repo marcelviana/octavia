@@ -4472,11 +4472,3485 @@
      "caminho": "/fontes/IBMPlexMono_400Regular.ttf",
      "status": "200",
      "fim": "fim"
+    },
+    {
+     "n": 1,
+     "ms": 161,
+     "metodo": "GET",
+     "caminho": "/dashboard",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 2,
+     "ms": 1120,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 3,
+     "ms": 1121,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 4,
+     "ms": 1132,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 5,
+     "ms": 1134,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 6,
+     "ms": 1135,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 7,
+     "ms": 1137,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/dashboard/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 8,
+     "ms": 1144,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 9,
+     "ms": 1146,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 10,
+     "ms": 1157,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-1",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 11,
+     "ms": 1182,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-2",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 12,
+     "ms": 1194,
+     "metodo": "GET",
+     "caminho": "/dashboard",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 13,
+     "ms": 1805,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 14,
+     "ms": 1806,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 15,
+     "ms": 1812,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 16,
+     "ms": 1814,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 17,
+     "ms": 1817,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 18,
+     "ms": 1818,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/dashboard/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 19,
+     "ms": 1821,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 20,
+     "ms": 1823,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 21,
+     "ms": 2378,
+     "metodo": "POST",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 22,
+     "ms": 2389,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 23,
+     "ms": 2620,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 24,
+     "ms": 2715,
+     "metodo": "GET",
+     "caminho": "/setlists",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 25,
+     "ms": 2761,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 26,
+     "ms": 2764,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 27,
+     "ms": 2769,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 28,
+     "ms": 2774,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 29,
+     "ms": 2775,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 30,
+     "ms": 2776,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/setlists/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 31,
+     "ms": 2778,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 32,
+     "ms": 2779,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 33,
+     "ms": 3400,
+     "metodo": "POST",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 34,
+     "ms": 3413,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 35,
+     "ms": 3587,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_components_setlist-manager_tsx.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 36,
+     "ms": 3590,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 37,
+     "ms": 3996,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_lib_auth-manager_ts.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 38,
+     "ms": 3998,
+     "metodo": "GET",
+     "caminho": "/api/setlists",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 39,
+     "ms": 4339,
+     "metodo": "GET",
+     "caminho": "/api/content",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 40,
+     "ms": 5451,
+     "metodo": "GET",
+     "caminho": "/fontes/IBMPlexMono_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 41,
+     "ms": 6482,
+     "metodo": "GET",
+     "caminho": "/setlists",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 42,
+     "ms": 6516,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 43,
+     "ms": 6520,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 44,
+     "ms": 6523,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 45,
+     "ms": 6527,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 46,
+     "ms": 6527,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 47,
+     "ms": 6528,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/setlists/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 48,
+     "ms": 6531,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 49,
+     "ms": 6532,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 50,
+     "ms": 7116,
+     "metodo": "POST",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 51,
+     "ms": 7137,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 52,
+     "ms": 7295,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_components_setlist-manager_tsx.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 53,
+     "ms": 7298,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 54,
+     "ms": 7699,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_lib_auth-manager_ts.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 55,
+     "ms": 7700,
+     "metodo": "GET",
+     "caminho": "/api/setlists",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 56,
+     "ms": 8026,
+     "metodo": "GET",
+     "caminho": "/api/content",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 57,
+     "ms": 10122,
+     "metodo": "GET",
+     "caminho": "/setlists",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 58,
+     "ms": 10172,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 59,
+     "ms": 10174,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 60,
+     "ms": 10181,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 61,
+     "ms": 10183,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 62,
+     "ms": 10183,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 63,
+     "ms": 10184,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/setlists/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 64,
+     "ms": 10187,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 65,
+     "ms": 10188,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 66,
+     "ms": 10764,
+     "metodo": "POST",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 67,
+     "ms": 10775,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 68,
+     "ms": 11005,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_components_setlist-manager_tsx.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 69,
+     "ms": 11007,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 70,
+     "ms": 11410,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_lib_auth-manager_ts.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 71,
+     "ms": 11412,
+     "metodo": "GET",
+     "caminho": "/api/setlists",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 72,
+     "ms": 11727,
+     "metodo": "GET",
+     "caminho": "/api/content",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 73,
+     "ms": 12797,
+     "metodo": "GET",
+     "caminho": "/fontes/IBMPlexMono_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 74,
+     "ms": 13900,
+     "metodo": "GET",
+     "caminho": "/setlists",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 75,
+     "ms": 13940,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 76,
+     "ms": 13942,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 77,
+     "ms": 13946,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 78,
+     "ms": 13951,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 79,
+     "ms": 13953,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 80,
+     "ms": 13954,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/setlists/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 81,
+     "ms": 13955,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 82,
+     "ms": 13955,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 83,
+     "ms": 14554,
+     "metodo": "POST",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 84,
+     "ms": 14568,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 85,
+     "ms": 14729,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_components_setlist-manager_tsx.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 86,
+     "ms": 14732,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 87,
+     "ms": 15134,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_lib_auth-manager_ts.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 88,
+     "ms": 15137,
+     "metodo": "GET",
+     "caminho": "/api/setlists",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 89,
+     "ms": 15465,
+     "metodo": "GET",
+     "caminho": "/api/content",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 90,
+     "ms": 16533,
+     "metodo": "GET",
+     "caminho": "/fontes/IBMPlexMono_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 91,
+     "ms": 17634,
+     "metodo": "GET",
+     "caminho": "/setlists",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 92,
+     "ms": 17677,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 93,
+     "ms": 17680,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 94,
+     "ms": 17685,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 95,
+     "ms": 17688,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 96,
+     "ms": 17689,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 97,
+     "ms": 17689,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/setlists/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 98,
+     "ms": 17691,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 99,
+     "ms": 17692,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 100,
+     "ms": 18245,
+     "metodo": "POST",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 101,
+     "ms": 18268,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "500",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 102,
+     "ms": 18303,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_components_setlist-manager_tsx.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 103,
+     "ms": 18306,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 104,
+     "ms": 18710,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_lib_auth-manager_ts.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 105,
+     "ms": 18712,
+     "metodo": "GET",
+     "caminho": "/api/setlists",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 106,
+     "ms": 19088,
+     "metodo": "GET",
+     "caminho": "/api/content",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 107,
+     "ms": 20170,
+     "metodo": "GET",
+     "caminho": "/fontes/IBMPlexMono_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 108,
+     "ms": 20280,
+     "metodo": "POST",
+     "caminho": "/api/setlists",
+     "status": "fabricado sem resposta",
+     "fim": "falhou net::ERR_FAILED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 109,
+     "ms": 21319,
+     "metodo": "GET",
+     "caminho": "/setlists",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 110,
+     "ms": 21337,
+     "metodo": "POST",
+     "caminho": "/__nextjs_original-stack-frames",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 111,
+     "ms": 21361,
+     "metodo": "GET",
+     "caminho": "/__nextjs_font/geist-latin.woff2",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 112,
+     "ms": 21369,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 113,
+     "ms": 21370,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 114,
+     "ms": 21373,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 115,
+     "ms": 21376,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 116,
+     "ms": 21377,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 117,
+     "ms": 21378,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/setlists/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 118,
+     "ms": 21381,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 119,
+     "ms": 21382,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 120,
+     "ms": 21931,
+     "metodo": "POST",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 121,
+     "ms": 21940,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 122,
+     "ms": 22575,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_components_setlist-manager_tsx.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 123,
+     "ms": 22576,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 124,
+     "ms": 22979,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_lib_auth-manager_ts.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 125,
+     "ms": 22980,
+     "metodo": "GET",
+     "caminho": "/api/setlists",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 126,
+     "ms": 23282,
+     "metodo": "GET",
+     "caminho": "/api/content",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 127,
+     "ms": 24353,
+     "metodo": "GET",
+     "caminho": "/fontes/IBMPlexMono_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 128,
+     "ms": 24444,
+     "metodo": "POST",
+     "caminho": "/api/setlists",
+     "status": "fabricado sem resposta",
+     "fim": "falhou net::ERR_INTERNET_DISCONNECTED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 129,
+     "ms": 24466,
+     "metodo": "POST",
+     "caminho": "/__nextjs_original-stack-frames",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 130,
+     "ms": 24487,
+     "metodo": "GET",
+     "caminho": "/__nextjs_font/geist-latin.woff2",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 131,
+     "ms": 25483,
+     "metodo": "GET",
+     "caminho": "/setlists",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 132,
+     "ms": 25515,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 133,
+     "ms": 25517,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 134,
+     "ms": 25521,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 135,
+     "ms": 25524,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 136,
+     "ms": 25525,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 137,
+     "ms": 25526,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/setlists/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 138,
+     "ms": 25528,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 139,
+     "ms": 25529,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 140,
+     "ms": 26150,
+     "metodo": "POST",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 141,
+     "ms": 26166,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 142,
+     "ms": 26376,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_components_setlist-manager_tsx.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 143,
+     "ms": 26379,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 144,
+     "ms": 26782,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_lib_auth-manager_ts.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 145,
+     "ms": 26784,
+     "metodo": "GET",
+     "caminho": "/api/setlists",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 146,
+     "ms": 27175,
+     "metodo": "GET",
+     "caminho": "/api/content",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 147,
+     "ms": 28232,
+     "metodo": "GET",
+     "caminho": "/fontes/IBMPlexMono_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 148,
+     "ms": 29302,
+     "metodo": "GET",
+     "caminho": "/setlists",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 149,
+     "ms": 29342,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 150,
+     "ms": 29344,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 151,
+     "ms": 29348,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 152,
+     "ms": 29352,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 153,
+     "ms": 29353,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 154,
+     "ms": 29354,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/setlists/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 155,
+     "ms": 29357,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 156,
+     "ms": 29358,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 157,
+     "ms": 29925,
+     "metodo": "POST",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 158,
+     "ms": 29939,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 159,
+     "ms": 30109,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_components_setlist-manager_tsx.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 160,
+     "ms": 30112,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 161,
+     "ms": 30512,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_lib_auth-manager_ts.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 162,
+     "ms": 30514,
+     "metodo": "GET",
+     "caminho": "/api/setlists",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 163,
+     "ms": 30853,
+     "metodo": "GET",
+     "caminho": "/api/content",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 164,
+     "ms": 31915,
+     "metodo": "GET",
+     "caminho": "/fontes/IBMPlexMono_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 165,
+     "ms": 31994,
+     "metodo": "DELETE",
+     "caminho": "/api/setlists/g-set-show",
+     "status": "fabricado 500",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 166,
+     "ms": 32014,
+     "metodo": "POST",
+     "caminho": "/__nextjs_original-stack-frames",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 167,
+     "ms": 32021,
+     "metodo": "GET",
+     "caminho": "/__nextjs_font/geist-latin.woff2",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 168,
+     "ms": 33048,
+     "metodo": "GET",
+     "caminho": "/setlists",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 169,
+     "ms": 33093,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 170,
+     "ms": 33095,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 171,
+     "ms": 33099,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 172,
+     "ms": 33103,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 173,
+     "ms": 33104,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 174,
+     "ms": 33105,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/setlists/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 175,
+     "ms": 33106,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 176,
+     "ms": 33107,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 177,
+     "ms": 33663,
+     "metodo": "POST",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 178,
+     "ms": 33673,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 179,
+     "ms": 33844,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_components_setlist-manager_tsx.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 180,
+     "ms": 33846,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 181,
+     "ms": 34250,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_lib_auth-manager_ts.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 182,
+     "ms": 34252,
+     "metodo": "GET",
+     "caminho": "/api/setlists",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 183,
+     "ms": 34650,
+     "metodo": "GET",
+     "caminho": "/api/content",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 184,
+     "ms": 35713,
+     "metodo": "GET",
+     "caminho": "/fontes/IBMPlexMono_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 185,
+     "ms": 36927,
+     "metodo": "GET",
+     "caminho": "/setlists",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 186,
+     "ms": 36973,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 187,
+     "ms": 36975,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 188,
+     "ms": 36980,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 189,
+     "ms": 36983,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 190,
+     "ms": 36985,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 191,
+     "ms": 36987,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/setlists/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 192,
+     "ms": 36987,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 193,
+     "ms": 36988,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 194,
+     "ms": 37542,
+     "metodo": "POST",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 195,
+     "ms": 37556,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 196,
+     "ms": 37751,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_components_setlist-manager_tsx.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 197,
+     "ms": 37754,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 198,
+     "ms": 38156,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_lib_auth-manager_ts.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 199,
+     "ms": 38158,
+     "metodo": "GET",
+     "caminho": "/api/setlists",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 200,
+     "ms": 38462,
+     "metodo": "GET",
+     "caminho": "/api/content",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 201,
+     "ms": 39514,
+     "metodo": "GET",
+     "caminho": "/fontes/IBMPlexMono_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 202,
+     "ms": 40614,
+     "metodo": "GET",
+     "caminho": "/setlists",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 203,
+     "ms": 40656,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 204,
+     "ms": 40659,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 205,
+     "ms": 40665,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 206,
+     "ms": 40670,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 207,
+     "ms": 40671,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 208,
+     "ms": 40672,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/setlists/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 209,
+     "ms": 40674,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 210,
+     "ms": 40676,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 211,
+     "ms": 41244,
+     "metodo": "POST",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 212,
+     "ms": 41258,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 213,
+     "ms": 41471,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_components_setlist-manager_tsx.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 214,
+     "ms": 41473,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 215,
+     "ms": 41877,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_lib_auth-manager_ts.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 216,
+     "ms": 41879,
+     "metodo": "GET",
+     "caminho": "/api/setlists",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 217,
+     "ms": 42208,
+     "metodo": "GET",
+     "caminho": "/api/content",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 218,
+     "ms": 43267,
+     "metodo": "GET",
+     "caminho": "/fontes/IBMPlexMono_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 219,
+     "ms": 44368,
+     "metodo": "GET",
+     "caminho": "/setlists",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 220,
+     "ms": 44412,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 221,
+     "ms": 44415,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 222,
+     "ms": 44420,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 223,
+     "ms": 44426,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 224,
+     "ms": 44427,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 225,
+     "ms": 44428,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/setlists/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 226,
+     "ms": 44429,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 227,
+     "ms": 44430,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 228,
+     "ms": 45016,
+     "metodo": "POST",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 229,
+     "ms": 45027,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 230,
+     "ms": 45203,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_components_setlist-manager_tsx.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 231,
+     "ms": 45205,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 232,
+     "ms": 45610,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_lib_auth-manager_ts.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 233,
+     "ms": 45611,
+     "metodo": "GET",
+     "caminho": "/api/setlists",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 234,
+     "ms": 45923,
+     "metodo": "GET",
+     "caminho": "/api/content",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 235,
+     "ms": 46987,
+     "metodo": "GET",
+     "caminho": "/fontes/IBMPlexMono_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 236,
+     "ms": 47185,
+     "metodo": "POST",
+     "caminho": "/api/setlists/g-set-show/songs",
+     "status": "fabricado sem resposta",
+     "fim": "falhou net::ERR_FAILED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 237,
+     "ms": 48210,
+     "metodo": "GET",
+     "caminho": "/setlists",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 238,
+     "ms": 48220,
+     "metodo": "POST",
+     "caminho": "/__nextjs_original-stack-frames",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 239,
+     "ms": 48237,
+     "metodo": "GET",
+     "caminho": "/__nextjs_font/geist-latin.woff2",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 240,
+     "ms": 48259,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 241,
+     "ms": 48268,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 242,
+     "ms": 48273,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 243,
+     "ms": 48277,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 244,
+     "ms": 48278,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 245,
+     "ms": 48281,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/setlists/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 246,
+     "ms": 48282,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 247,
+     "ms": 48283,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 248,
+     "ms": 48837,
+     "metodo": "POST",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 249,
+     "ms": 48848,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 250,
+     "ms": 49020,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_components_setlist-manager_tsx.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 251,
+     "ms": 49023,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 252,
+     "ms": 49427,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_lib_auth-manager_ts.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 253,
+     "ms": 49429,
+     "metodo": "GET",
+     "caminho": "/api/setlists",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 254,
+     "ms": 49734,
+     "metodo": "GET",
+     "caminho": "/api/content",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 255,
+     "ms": 50798,
+     "metodo": "GET",
+     "caminho": "/fontes/IBMPlexMono_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 256,
+     "ms": 50995,
+     "metodo": "POST",
+     "caminho": "/api/setlists/g-set-show/songs",
+     "status": "fabricado 500",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 257,
+     "ms": 51016,
+     "metodo": "POST",
+     "caminho": "/__nextjs_original-stack-frames",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 258,
+     "ms": 51038,
+     "metodo": "GET",
+     "caminho": "/__nextjs_font/geist-latin.woff2",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 259,
+     "ms": 52036,
+     "metodo": "GET",
+     "caminho": "/setlists",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 260,
+     "ms": 52079,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 261,
+     "ms": 52082,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 262,
+     "ms": 52088,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 263,
+     "ms": 52091,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 264,
+     "ms": 52092,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 265,
+     "ms": 52093,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/setlists/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 266,
+     "ms": 52096,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 267,
+     "ms": 52098,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 268,
+     "ms": 52651,
+     "metodo": "POST",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 269,
+     "ms": 52661,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 270,
+     "ms": 52841,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_components_setlist-manager_tsx.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 271,
+     "ms": 52844,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 272,
+     "ms": 53248,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_lib_auth-manager_ts.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 273,
+     "ms": 53249,
+     "metodo": "GET",
+     "caminho": "/api/setlists",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 274,
+     "ms": 53583,
+     "metodo": "GET",
+     "caminho": "/api/content",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 275,
+     "ms": 54653,
+     "metodo": "GET",
+     "caminho": "/fontes/IBMPlexMono_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 276,
+     "ms": 54690,
+     "metodo": "DELETE",
+     "caminho": "/api/setlists/songs/g-set-show-linha-2",
+     "status": "fabricado sem resposta",
+     "fim": "falhou net::ERR_INTERNET_DISCONNECTED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 277,
+     "ms": 54714,
+     "metodo": "POST",
+     "caminho": "/__nextjs_original-stack-frames",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 278,
+     "ms": 54736,
+     "metodo": "GET",
+     "caminho": "/__nextjs_font/geist-latin.woff2",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 279,
+     "ms": 55737,
+     "metodo": "GET",
+     "caminho": "/setlists",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 280,
+     "ms": 55787,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 281,
+     "ms": 55790,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 282,
+     "ms": 55793,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 283,
+     "ms": 55797,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 284,
+     "ms": 55798,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 285,
+     "ms": 55799,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/setlists/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 286,
+     "ms": 55803,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 287,
+     "ms": 55804,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 288,
+     "ms": 56372,
+     "metodo": "POST",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 289,
+     "ms": 56387,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 290,
+     "ms": 56566,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_components_setlist-manager_tsx.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 291,
+     "ms": 56569,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 292,
+     "ms": 56973,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_lib_auth-manager_ts.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 293,
+     "ms": 56975,
+     "metodo": "GET",
+     "caminho": "/api/setlists",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 294,
+     "ms": 57380,
+     "metodo": "GET",
+     "caminho": "/api/content",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 295,
+     "ms": 58454,
+     "metodo": "GET",
+     "caminho": "/fontes/IBMPlexMono_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 296,
+     "ms": 59531,
+     "metodo": "GET",
+     "caminho": "/setlists",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 297,
+     "ms": 59578,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 298,
+     "ms": 59581,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 299,
+     "ms": 59586,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 300,
+     "ms": 59589,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 301,
+     "ms": 59590,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 302,
+     "ms": 59591,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/setlists/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 303,
+     "ms": 59593,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 304,
+     "ms": 59594,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 305,
+     "ms": 60149,
+     "metodo": "POST",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 306,
+     "ms": 60160,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 307,
+     "ms": 60339,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_components_setlist-manager_tsx.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 308,
+     "ms": 60341,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 309,
+     "ms": 60746,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_lib_auth-manager_ts.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 310,
+     "ms": 60748,
+     "metodo": "GET",
+     "caminho": "/api/setlists",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 311,
+     "ms": 61279,
+     "metodo": "GET",
+     "caminho": "/api/content",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 312,
+     "ms": 62328,
+     "metodo": "GET",
+     "caminho": "/fontes/IBMPlexMono_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 313,
+     "ms": 62426,
+     "metodo": "PUT",
+     "caminho": "/api/setlists/g-set-show",
+     "status": "fabricado sem resposta",
+     "fim": "falhou net::ERR_FAILED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 314,
+     "ms": 63464,
+     "metodo": "GET",
+     "caminho": "/setlists",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 315,
+     "ms": 63476,
+     "metodo": "POST",
+     "caminho": "/__nextjs_original-stack-frames",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 316,
+     "ms": 63485,
+     "metodo": "GET",
+     "caminho": "/__nextjs_font/geist-latin.woff2",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 317,
+     "ms": 63511,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 318,
+     "ms": 63514,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 319,
+     "ms": 63519,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 320,
+     "ms": 63522,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 321,
+     "ms": 63523,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 322,
+     "ms": 63525,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/setlists/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 323,
+     "ms": 63527,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 324,
+     "ms": 63528,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 325,
+     "ms": 64103,
+     "metodo": "POST",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 326,
+     "ms": 64120,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 327,
+     "ms": 64298,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_components_setlist-manager_tsx.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 328,
+     "ms": 64301,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 329,
+     "ms": 64703,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_lib_auth-manager_ts.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 330,
+     "ms": 64704,
+     "metodo": "GET",
+     "caminho": "/api/setlists",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 331,
+     "ms": 65018,
+     "metodo": "GET",
+     "caminho": "/api/content",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 332,
+     "ms": 66083,
+     "metodo": "GET",
+     "caminho": "/fontes/IBMPlexMono_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 333,
+     "ms": 66177,
+     "metodo": "PUT",
+     "caminho": "/api/setlists/g-set-show",
+     "status": "fabricado sem resposta",
+     "fim": "falhou net::ERR_INTERNET_DISCONNECTED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 334,
+     "ms": 66197,
+     "metodo": "POST",
+     "caminho": "/__nextjs_original-stack-frames",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 335,
+     "ms": 66203,
+     "metodo": "GET",
+     "caminho": "/__nextjs_font/geist-latin.woff2",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 336,
+     "ms": 67216,
+     "metodo": "GET",
+     "caminho": "/setlists",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 337,
+     "ms": 67253,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 338,
+     "ms": 67256,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 339,
+     "ms": 67261,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 340,
+     "ms": 67267,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 341,
+     "ms": 67269,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 342,
+     "ms": 67271,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/setlists/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 343,
+     "ms": 67272,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 344,
+     "ms": 67272,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 345,
+     "ms": 67872,
+     "metodo": "POST",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 346,
+     "ms": 67887,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 347,
+     "ms": 68443,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_components_setlist-manager_tsx.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 348,
+     "ms": 68446,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 349,
+     "ms": 68850,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_lib_auth-manager_ts.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 350,
+     "ms": 68850,
+     "metodo": "GET",
+     "caminho": "/api/setlists",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 351,
+     "ms": 69144,
+     "metodo": "GET",
+     "caminho": "/api/content",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 352,
+     "ms": 70199,
+     "metodo": "GET",
+     "caminho": "/fontes/IBMPlexMono_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 353,
+     "ms": 71269,
+     "metodo": "GET",
+     "caminho": "/setlists",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 354,
+     "ms": 71307,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 355,
+     "ms": 71309,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 356,
+     "ms": 71315,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 357,
+     "ms": 71318,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 358,
+     "ms": 71319,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 359,
+     "ms": 71320,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/setlists/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 360,
+     "ms": 71321,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 361,
+     "ms": 71322,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 362,
+     "ms": 71922,
+     "metodo": "POST",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 363,
+     "ms": 71938,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 364,
+     "ms": 72117,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_components_setlist-manager_tsx.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 365,
+     "ms": 72120,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 366,
+     "ms": 72521,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_lib_auth-manager_ts.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 367,
+     "ms": 72522,
+     "metodo": "GET",
+     "caminho": "/api/setlists",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 368,
+     "ms": 72810,
+     "metodo": "GET",
+     "caminho": "/api/content",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 369,
+     "ms": 73886,
+     "metodo": "GET",
+     "caminho": "/fontes/IBMPlexMono_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 370,
+     "ms": 74926,
+     "metodo": "GET",
+     "caminho": "/setlists",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 371,
+     "ms": 74970,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 372,
+     "ms": 74973,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 373,
+     "ms": 74977,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 374,
+     "ms": 74982,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 375,
+     "ms": 74983,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 376,
+     "ms": 74985,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/setlists/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 377,
+     "ms": 74987,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 378,
+     "ms": 74988,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 379,
+     "ms": 75545,
+     "metodo": "POST",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "—",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 380,
+     "ms": 75565,
+     "metodo": "GET",
+     "caminho": "/api/profile",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 381,
+     "ms": 75750,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_components_setlist-manager_tsx.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 382,
+     "ms": 75754,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 383,
+     "ms": 76154,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/_app-pages-browser_lib_auth-manager_ts.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 384,
+     "ms": 76155,
+     "metodo": "GET",
+     "caminho": "/api/setlists",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 385,
+     "ms": 76433,
+     "metodo": "GET",
+     "caminho": "/api/content",
+     "status": "fabricado 200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
+    },
+    {
+     "n": 386,
+     "ms": 77534,
+     "metodo": "GET",
+     "caminho": "/fontes/IBMPlexMono_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T17:31:09.632Z"
     }
    ],
    "outrosHosts": {
-    "identitytoolkit.googleapis.com": 32,
-    "securetoken.googleapis.com": 30
+    "identitytoolkit.googleapis.com": 22,
+    "securetoken.googleapis.com": 20
    },
    "prodAbortados": 0
   },
@@ -28395,6 +31869,7 @@
        "h": 64,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -28528,6 +32003,7 @@
        "h": 21,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -28862,7 +32338,7 @@
        "tag": "button",
        "testid": null,
        "h_texto": "967bcf34a913",
-       "h_nome": "26341a1d00eb",
+       "h_nome": "6a6142009b60",
        "n": 9,
        "x": 175.7,
        "y": 771,
@@ -28870,6 +32346,7 @@
        "h": 56,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -34914,6 +38391,7 @@
        "h": 64,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -35047,6 +38525,7 @@
        "h": 21,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -35381,7 +38860,7 @@
        "tag": "button",
        "testid": null,
        "h_texto": "967bcf34a913",
-       "h_nome": "26341a1d00eb",
+       "h_nome": "6a6142009b60",
        "n": 9,
        "x": 175.7,
        "y": 771,
@@ -35389,6 +38868,7 @@
        "h": 56,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -38025,6 +41505,7 @@
        "h": 64,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -38158,6 +41639,7 @@
        "h": 21,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -38492,7 +41974,7 @@
        "tag": "button",
        "testid": null,
        "h_texto": "967bcf34a913",
-       "h_nome": "26341a1d00eb",
+       "h_nome": "6a6142009b60",
        "n": 9,
        "x": 175.7,
        "y": 771,
@@ -38500,6 +41982,7 @@
        "h": 56,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -46416,6 +49899,7 @@
        "h": 64,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -46549,6 +50033,7 @@
        "h": 21,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -46883,7 +50368,7 @@
        "tag": "button",
        "testid": null,
        "h_texto": "967bcf34a913",
-       "h_nome": "26341a1d00eb",
+       "h_nome": "6a6142009b60",
        "n": 9,
        "x": 175.7,
        "y": 771,
@@ -46891,6 +50376,7 @@
        "h": 56,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -54939,6 +58425,7 @@
        "h": 64,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -55072,6 +58559,7 @@
        "h": 21,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -55082,15 +58570,16 @@
        "role": "button",
        "tag": "button",
        "testid": "casca-conta",
-       "h_texto": "aba32a1dc3e1",
-       "h_nome": "c0bf8bd21261",
-       "n": 2,
+       "h_texto": "08f271887ce9",
+       "h_nome": "45f1b3e5178d",
+       "n": 1,
        "x": 339,
        "y": 8,
        "w": 48,
        "h": 48,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -55406,7 +58895,7 @@
        "tag": "button",
        "testid": null,
        "h_texto": "967bcf34a913",
-       "h_nome": "26341a1d00eb",
+       "h_nome": "6a6142009b60",
        "n": 9,
        "x": 175.7,
        "y": 771,
@@ -55414,6 +58903,7 @@
        "h": 56,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -63330,6 +66820,7 @@
        "h": 64,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -63463,6 +66954,7 @@
        "h": 21,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -63797,7 +67289,7 @@
        "tag": "button",
        "testid": null,
        "h_texto": "967bcf34a913",
-       "h_nome": "26341a1d00eb",
+       "h_nome": "6a6142009b60",
        "n": 9,
        "x": 175.7,
        "y": 771,
@@ -63805,6 +67297,7 @@
        "h": 56,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -72117,6 +75610,7 @@
        "h": 64,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -72250,6 +75744,7 @@
        "h": 21,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -72584,7 +76079,7 @@
        "tag": "button",
        "testid": null,
        "h_texto": "967bcf34a913",
-       "h_nome": "26341a1d00eb",
+       "h_nome": "6a6142009b60",
        "n": 9,
        "x": 175.7,
        "y": 771,
@@ -72592,6 +76087,7 @@
        "h": 56,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -79164,6 +82660,7 @@
        "h": 64,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -79297,6 +82794,7 @@
        "h": 21,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -79631,7 +83129,7 @@
        "tag": "button",
        "testid": null,
        "h_texto": "967bcf34a913",
-       "h_nome": "26341a1d00eb",
+       "h_nome": "6a6142009b60",
        "n": 9,
        "x": 175.7,
        "y": 771,
@@ -79639,6 +83137,7 @@
        "h": 56,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -88560,6 +92059,7 @@
        "h": 64,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -88693,6 +92193,7 @@
        "h": 21,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -89027,7 +92528,7 @@
        "tag": "button",
        "testid": null,
        "h_texto": "967bcf34a913",
-       "h_nome": "26341a1d00eb",
+       "h_nome": "6a6142009b60",
        "n": 9,
        "x": 175.7,
        "y": 771,
@@ -89035,6 +92536,7 @@
        "h": 56,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -89873,6 +93375,7 @@
         "rolagem": true,
         "painel": false
        },
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -90263,6 +93766,7 @@
         "rolagem": true,
         "painel": false
        },
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -97243,6 +100747,7 @@
        "h": 64,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -97376,6 +100881,7 @@
        "h": 21,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -97710,7 +101216,7 @@
        "tag": "button",
        "testid": null,
        "h_texto": "967bcf34a913",
-       "h_nome": "26341a1d00eb",
+       "h_nome": "6a6142009b60",
        "n": 9,
        "x": 175.7,
        "y": 771,
@@ -97718,6 +101224,7 @@
        "h": 56,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -98556,6 +102063,7 @@
         "rolagem": true,
         "painel": false
        },
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -104688,6 +108196,7 @@
        "h": 64,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -104821,6 +108330,7 @@
        "h": 21,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -105155,7 +108665,7 @@
        "tag": "button",
        "testid": null,
        "h_texto": "967bcf34a913",
-       "h_nome": "26341a1d00eb",
+       "h_nome": "6a6142009b60",
        "n": 9,
        "x": 175.7,
        "y": 771,
@@ -105163,6 +108673,7 @@
        "h": 56,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -112131,6 +115642,7 @@
        "h": 64,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -112264,6 +115776,7 @@
        "h": 21,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -112598,7 +116111,7 @@
        "tag": "button",
        "testid": null,
        "h_texto": "967bcf34a913",
-       "h_nome": "26341a1d00eb",
+       "h_nome": "6a6142009b60",
        "n": 9,
        "x": 175.7,
        "y": 771,
@@ -112606,6 +116119,7 @@
        "h": 56,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -113444,6 +116958,7 @@
         "rolagem": true,
         "painel": false
        },
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -120812,6 +124327,7 @@
        "h": 64,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -120945,6 +124461,7 @@
        "h": 21,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -121279,7 +124796,7 @@
        "tag": "button",
        "testid": null,
        "h_texto": "967bcf34a913",
-       "h_nome": "26341a1d00eb",
+       "h_nome": "6a6142009b60",
        "n": 9,
        "x": 175.7,
        "y": 771,
@@ -121287,6 +124804,7 @@
        "h": 56,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -122177,6 +125695,7 @@
         "rolagem": true,
         "painel": false
        },
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -122567,6 +126086,7 @@
         "rolagem": true,
         "painel": false
        },
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -129759,6 +133279,7 @@
        "h": 64,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -129892,6 +133413,7 @@
        "h": 21,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -130226,7 +133748,7 @@
        "tag": "button",
        "testid": null,
        "h_texto": "967bcf34a913",
-       "h_nome": "26341a1d00eb",
+       "h_nome": "6a6142009b60",
        "n": 9,
        "x": 175.7,
        "y": 771,
@@ -130234,6 +133756,7 @@
        "h": 56,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -136500,6 +140023,7 @@
        "h": 64,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -136633,6 +140157,7 @@
        "h": 21,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -136967,7 +140492,7 @@
        "tag": "button",
        "testid": null,
        "h_texto": "967bcf34a913",
-       "h_nome": "26341a1d00eb",
+       "h_nome": "6a6142009b60",
        "n": 9,
        "x": 175.7,
        "y": 771,
@@ -136975,6 +140500,7 @@
        "h": 56,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -144891,6 +148417,7 @@
        "h": 64,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -145024,6 +148551,7 @@
        "h": 21,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -145358,7 +148886,7 @@
        "tag": "button",
        "testid": null,
        "h_texto": "967bcf34a913",
-       "h_nome": "26341a1d00eb",
+       "h_nome": "6a6142009b60",
        "n": 9,
        "x": 175.7,
        "y": 771,
@@ -145366,6 +148894,7 @@
        "h": 56,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -153282,6 +156811,7 @@
        "h": 64,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -153415,6 +156945,7 @@
        "h": 21,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -153749,7 +157280,7 @@
        "tag": "button",
        "testid": null,
        "h_texto": "967bcf34a913",
-       "h_nome": "26341a1d00eb",
+       "h_nome": "6a6142009b60",
        "n": 9,
        "x": 175.7,
        "y": 771,
@@ -153757,6 +157288,7 @@
        "h": 56,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -162069,6 +165601,7 @@
        "h": 64,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -162202,6 +165735,7 @@
        "h": 21,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -162536,7 +166070,7 @@
        "tag": "button",
        "testid": null,
        "h_texto": "967bcf34a913",
-       "h_nome": "26341a1d00eb",
+       "h_nome": "6a6142009b60",
        "n": 9,
        "x": 175.7,
        "y": 771,
@@ -162544,6 +166078,7 @@
        "h": 56,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -163382,6 +166917,7 @@
         "rolagem": true,
         "painel": false
        },
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -172144,6 +175680,7 @@
        "h": 64,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -172277,6 +175814,7 @@
        "h": 21,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -172611,7 +176149,7 @@
        "tag": "button",
        "testid": null,
        "h_texto": "967bcf34a913",
-       "h_nome": "26341a1d00eb",
+       "h_nome": "6a6142009b60",
        "n": 9,
        "x": 175.7,
        "y": 771,
@@ -172619,6 +176157,7 @@
        "h": 56,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -180109,6 +183648,7 @@
        "h": 64,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -180242,6 +183782,7 @@
        "h": 21,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -180576,7 +184117,7 @@
        "tag": "button",
        "testid": null,
        "h_texto": "967bcf34a913",
-       "h_nome": "26341a1d00eb",
+       "h_nome": "6a6142009b60",
        "n": 9,
        "x": 175.7,
        "y": 771,
@@ -180584,6 +184125,7 @@
        "h": 56,
        "sr": false,
        "clip": null,
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -181422,6 +184964,7 @@
         "rolagem": true,
         "painel": false
        },
+       "nl": true,
        "corta": {
         "x": false,
         "y": false
@@ -185316,6 +188859,10 @@
  },
  "rodadasPorEstado": {
   "SET": {
+   "411": {
+    "rodada": "2026-09-30T17:31:09.632Z",
+    "commit": "8a75485e02d4622be2f031efca2a66be5df9ce41"
+   },
    "711": {
     "rodada": "2026-09-30T17:15:36.363Z",
     "commit": "42be3f864d3d0dff715bdf87000c18e2d75e7de7"
@@ -185326,6 +188873,10 @@
    }
   },
   "SET-sem-musicas": {
+   "411": {
+    "rodada": "2026-09-30T17:31:09.632Z",
+    "commit": "8a75485e02d4622be2f031efca2a66be5df9ce41"
+   },
    "711": {
     "rodada": "2026-09-30T17:15:36.363Z",
     "commit": "42be3f864d3d0dff715bdf87000c18e2d75e7de7"
@@ -185336,6 +188887,10 @@
    }
   },
   "SET-criar": {
+   "411": {
+    "rodada": "2026-09-30T17:31:09.632Z",
+    "commit": "8a75485e02d4622be2f031efca2a66be5df9ce41"
+   },
    "711": {
     "rodada": "2026-09-30T17:15:36.363Z",
     "commit": "42be3f864d3d0dff715bdf87000c18e2d75e7de7"
@@ -185346,6 +188901,10 @@
    }
   },
   "SET-criar-validacao": {
+   "411": {
+    "rodada": "2026-09-30T17:31:09.632Z",
+    "commit": "8a75485e02d4622be2f031efca2a66be5df9ce41"
+   },
    "711": {
     "rodada": "2026-09-30T17:15:36.363Z",
     "commit": "42be3f864d3d0dff715bdf87000c18e2d75e7de7"
@@ -185356,6 +188915,10 @@
    }
   },
   "SET-criar-salvando": {
+   "411": {
+    "rodada": "2026-09-30T17:31:09.632Z",
+    "commit": "8a75485e02d4622be2f031efca2a66be5df9ce41"
+   },
    "711": {
     "rodada": "2026-09-30T17:15:36.363Z",
     "commit": "42be3f864d3d0dff715bdf87000c18e2d75e7de7"
@@ -185366,6 +188929,10 @@
    }
   },
   "SET-criar-erro": {
+   "411": {
+    "rodada": "2026-09-30T17:31:09.632Z",
+    "commit": "8a75485e02d4622be2f031efca2a66be5df9ce41"
+   },
    "711": {
     "rodada": "2026-09-30T17:15:36.363Z",
     "commit": "42be3f864d3d0dff715bdf87000c18e2d75e7de7"
@@ -185376,6 +188943,10 @@
    }
   },
   "SET-apagar": {
+   "411": {
+    "rodada": "2026-09-30T17:31:09.632Z",
+    "commit": "8a75485e02d4622be2f031efca2a66be5df9ce41"
+   },
    "711": {
     "rodada": "2026-09-30T17:15:36.363Z",
     "commit": "42be3f864d3d0dff715bdf87000c18e2d75e7de7"
@@ -185386,6 +188957,10 @@
    }
   },
   "SET-apagar-erro": {
+   "411": {
+    "rodada": "2026-09-30T17:31:09.632Z",
+    "commit": "8a75485e02d4622be2f031efca2a66be5df9ce41"
+   },
    "711": {
     "rodada": "2026-09-30T17:15:36.363Z",
     "commit": "42be3f864d3d0dff715bdf87000c18e2d75e7de7"
@@ -185396,6 +188971,10 @@
    }
   },
   "SET-adicionar": {
+   "411": {
+    "rodada": "2026-09-30T17:31:09.632Z",
+    "commit": "8a75485e02d4622be2f031efca2a66be5df9ce41"
+   },
    "711": {
     "rodada": "2026-09-30T17:15:36.363Z",
     "commit": "42be3f864d3d0dff715bdf87000c18e2d75e7de7"
@@ -185406,6 +188985,10 @@
    }
   },
   "SET-adicionar-vazio": {
+   "411": {
+    "rodada": "2026-09-30T17:31:09.632Z",
+    "commit": "8a75485e02d4622be2f031efca2a66be5df9ce41"
+   },
    "711": {
     "rodada": "2026-09-30T17:15:36.363Z",
     "commit": "42be3f864d3d0dff715bdf87000c18e2d75e7de7"
@@ -185416,6 +188999,10 @@
    }
   },
   "SET-adicionar-busca": {
+   "411": {
+    "rodada": "2026-09-30T17:31:09.632Z",
+    "commit": "8a75485e02d4622be2f031efca2a66be5df9ce41"
+   },
    "711": {
     "rodada": "2026-09-30T17:15:36.363Z",
     "commit": "42be3f864d3d0dff715bdf87000c18e2d75e7de7"
@@ -185426,6 +189013,10 @@
    }
   },
   "SET-adicionar-enviando": {
+   "411": {
+    "rodada": "2026-09-30T17:31:09.632Z",
+    "commit": "8a75485e02d4622be2f031efca2a66be5df9ce41"
+   },
    "711": {
     "rodada": "2026-09-30T17:15:36.363Z",
     "commit": "42be3f864d3d0dff715bdf87000c18e2d75e7de7"
@@ -185436,6 +189027,10 @@
    }
   },
   "SET-adicionar-erro": {
+   "411": {
+    "rodada": "2026-09-30T17:31:09.632Z",
+    "commit": "8a75485e02d4622be2f031efca2a66be5df9ce41"
+   },
    "711": {
     "rodada": "2026-09-30T17:15:36.363Z",
     "commit": "42be3f864d3d0dff715bdf87000c18e2d75e7de7"
@@ -185446,6 +189041,10 @@
    }
   },
   "SET-remover-erro": {
+   "411": {
+    "rodada": "2026-09-30T17:31:09.632Z",
+    "commit": "8a75485e02d4622be2f031efca2a66be5df9ce41"
+   },
    "711": {
     "rodada": "2026-09-30T17:15:36.363Z",
     "commit": "42be3f864d3d0dff715bdf87000c18e2d75e7de7"
@@ -185456,6 +189055,10 @@
    }
   },
   "SET-editar": {
+   "411": {
+    "rodada": "2026-09-30T17:31:09.632Z",
+    "commit": "8a75485e02d4622be2f031efca2a66be5df9ce41"
+   },
    "711": {
     "rodada": "2026-09-30T17:15:36.363Z",
     "commit": "42be3f864d3d0dff715bdf87000c18e2d75e7de7"
@@ -185466,6 +189069,10 @@
    }
   },
   "SET-editar-salvando": {
+   "411": {
+    "rodada": "2026-09-30T17:31:09.632Z",
+    "commit": "8a75485e02d4622be2f031efca2a66be5df9ce41"
+   },
    "711": {
     "rodada": "2026-09-30T17:15:36.363Z",
     "commit": "42be3f864d3d0dff715bdf87000c18e2d75e7de7"
@@ -185476,6 +189083,10 @@
    }
   },
   "SET-editar-erro": {
+   "411": {
+    "rodada": "2026-09-30T17:31:09.632Z",
+    "commit": "8a75485e02d4622be2f031efca2a66be5df9ce41"
+   },
    "711": {
     "rodada": "2026-09-30T17:15:36.363Z",
     "commit": "42be3f864d3d0dff715bdf87000c18e2d75e7de7"
@@ -185486,6 +189097,10 @@
    }
   },
   "SET-adicionar-todas-ja": {
+   "411": {
+    "rodada": "2026-09-30T17:31:09.632Z",
+    "commit": "8a75485e02d4622be2f031efca2a66be5df9ce41"
+   },
    "711": {
     "rodada": "2026-09-30T17:15:36.363Z",
     "commit": "42be3f864d3d0dff715bdf87000c18e2d75e7de7"
@@ -185496,6 +189111,10 @@
    }
   },
   "base-detalhe": {
+   "411": {
+    "rodada": "2026-09-30T17:31:09.632Z",
+    "commit": "8a75485e02d4622be2f031efca2a66be5df9ce41"
+   },
    "711": {
     "rodada": "2026-09-30T17:15:36.363Z",
     "commit": "42be3f864d3d0dff715bdf87000c18e2d75e7de7"
@@ -185506,6 +189125,10 @@
    }
   },
   "base-picker": {
+   "411": {
+    "rodada": "2026-09-30T17:31:09.632Z",
+    "commit": "8a75485e02d4622be2f031efca2a66be5df9ce41"
+   },
    "711": {
     "rodada": "2026-09-30T17:15:36.363Z",
     "commit": "42be3f864d3d0dff715bdf87000c18e2d75e7de7"
