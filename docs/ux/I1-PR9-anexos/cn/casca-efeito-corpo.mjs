@@ -3,11 +3,12 @@
 // Marcel): zero Δ de tamanho, EXCETO a largura que um corpo fluido ganha em 1138 com a saída da lateral (+144 em duas
 // colunas, +288 em uma; a altura só pode diminuir, pela linha que deixa de quebrar) — contada à parte, "largura liberada".
 // Uso (da raiz): node docs/ux/I1-PR9-anexos/cn/casca-efeito-corpo.mjs [pasta do casca-efeito]
-import fs from 'node:fs'
+// I1-PR15 (decisão 2 do encerramento): o `cn-main/` e o `casca-efeito/` estão em `.gz` — lidos por `ler-medicao.mjs`.
+import { lerJson } from '../../../../scripts/gates-web/ler-medicao.mjs'
 const CASCA_VELHA = new Set(['heading:365feefa2df3', 'button:67b696468610', 'button:6a1ad7ecd437', 'button:∅'])
 for (const s of ['setlists', 'content']) {
-  const a = JSON.parse(fs.readFileSync(`tests/gates-web/medicoes/cn-main/${s}.json`, 'utf8')).estados.base.larguras
-  const b = JSON.parse(fs.readFileSync(`${process.argv[2] ?? 'tests/gates-web/medicoes/casca-efeito'}/${s}.json`, 'utf8')).estados.base.larguras
+  const a = lerJson(`tests/gates-web/medicoes/cn-main/${s}.json`).estados.base.larguras
+  const b = lerJson(`${process.argv[2] ?? 'tests/gates-web/medicoes/casca-efeito'}/${s}.json`).estados.base.larguras
   for (const l of ['1138', '711', '411']) {
     const base = (k) => k.replace(/#\d+$/, '')
     const va = a[l].nos.filter((n) => !CASCA_VELHA.has(base(n.k)))

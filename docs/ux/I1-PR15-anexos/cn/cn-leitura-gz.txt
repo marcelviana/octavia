@@ -1,0 +1,8 @@
+## CN de leitura do .gz (I1-PR15, commit 1) — texto = a árvore em baeebf7 + o leitor; .gz = cópia comprimida (gzip -n -9) num diretório temporário
+veredito cn-main: texto exit=1 (G-faixa: REPROVA — 83 ocorrência(s)) · .gz exit=1 (G-faixa: REPROVA — 83 ocorrência(s)) · divergem: 0
+veredito vivas: texto exit=0 (G-faixa: PASSA) · .gz exit=0 (G-faixa: PASSA) · divergem (fora a linha do nome da pasta): 0
+casca-efeito-corpo: texto exit=0 (6 linhas) · .gz exit=0 (6 linhas) · divergem: 0
+g-faixa-veredito: dup: em texto e em .gz ao mesmo tempo — landing.json
+controle (texto e .gz juntos): exit=2
+tests/gates-web/medicoes: velho × novo divergem 0
+tests/gates-web/medicoes/cn-main: velho × novo divergem 0

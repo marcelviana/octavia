@@ -1,0 +1,18 @@
+# I1-PR15 commit 1 — a prova por imagem, o ANTES (o método da I1-PR14 §14): full page, Chromium do Playwright, pixelmatch threshold 0, o indicador do next dev removido; geometria de todo elemento visível de <body> (tag, hash do texto folha, x, y, w, h).
+# públicas: next dev SEM .env (3114); dashboard: next dev COM o .env.local copiado com cp -p de ../octavia-i1-pr2, sem abrir (3000, o perfil persistente — I1-D37). As capturas ficam FORA da árvore (o scratchpad da sessão).
+# a família computada: nas públicas, 0 nó visível com Arial; no dashboard, 2 nós com Arial e SEM texto folha (o <div> raiz e o <main>) — os filhos declaram a própria família.
+
+## antes × antes2 (o ruído do instrumento)
+dashboard-1138	1138×734 → 1138×734	pixels diferentes: 0	nós com Δ de geometria: 0
+dashboard-411	411×1212 → 411×1212	pixels diferentes: 0	nós com Δ de geometria: 0
+dashboard-711	711×1145 → 711×1145	pixels diferentes: 0	nós com Δ de geometria: 0
+landing-1138	1138×711 → 1138×711	pixels diferentes: 0	nós com Δ de geometria: 0
+landing-411	411×823 → 411×823	pixels diferentes: 0	nós com Δ de geometria: 0
+landing-711	711×1138 → 711×1138	pixels diferentes: 0	nós com Δ de geometria: 0
+login-1138	1138×711 → 1138×711	pixels diferentes: 0	nós com Δ de geometria: 0
+login-411	411×851 → 411×851	pixels diferentes: 0	nós com Δ de geometria: 0
+login-711	711×1138 → 711×1138	pixels diferentes: 0	nós com Δ de geometria: 0
+privacy-policy-1138	1138×1373 → 1138×1373	pixels diferentes: 0	nós com Δ de geometria: 0
+privacy-policy-411	411×2056 → 411×2056	pixels diferentes: 0	nós com Δ de geometria: 0
+privacy-policy-711	711×1448 → 711×1448	pixels diferentes: 0	nós com Δ de geometria: 0
+capturas com diferença: 0
