@@ -83,6 +83,28 @@ describe('G-faixa — (e), (d′) e as saídas contra 1138', () => {
     expect(c['711'].reprova).toBe(true)
     expect(c['1138'].e).toEqual([]) // a referência não se compara consigo
   })
+  it('I1-PR13 (2b; I1-D7 item 4): rótulo curto COM nome acessível longo — o mesmo aria-label em C e em B, que contém o rótulo — é saída nome-acessível, não (e)', () => {
+    const botao = (texto: string, n: number, nome: string | null, nl = !!nome) => ({ ...no(`button:${texto}#1`, 10, 100, 12 * n, 56), role: 'button', tag: 'button', n, h_texto: texto, h_nome: nome, ...(nl ? { nl: true } : {}) })
+    const LONGO = 'Adicionar músicas a X'
+    const c = med(1138, [botao('Adicionar músicas', 17, LONGO)])
+    const comNome = classificarEstado({ larguras: { 1138: c, 711: med(711, [botao('Adicionar', 9, LONGO)]), 411: med(411, [botao('Adicionar', 9, LONGO)]) } })
+    expect(comNome['711'].e).toEqual([])
+    expect(comNome['411'].e).toEqual([])
+    expect(comNome['711'].saidas.nomeAcessivel).toBe(1)
+    // sem o nome acessível o texto que encolheu segue (e): nada diz que é o mesmo controle com o rótulo inteiro
+    const semNome = classificarEstado({ larguras: { 1138: med(1138, [botao('Adicionar músicas', 17, null)]), 711: med(711, [botao('Adicionar', 9, null)]) } })
+    expect(semNome['711'].e).toEqual([{ k: 'button:Adicionar músicas#1', tipo: 'texto some do nó', n: [17, 9] }])
+    // o nome em C e OUTRO nome em B: também (e)
+    const outroNome = classificarEstado({ larguras: { 1138: c, 711: med(711, [botao('Adicionar', 9, 'Adicionar')]) } })
+    expect(outroNome['711'].e).toHaveLength(1)
+    // o nó com o mesmo nome mas SEM área (escondido) não conta
+    const escondido = classificarEstado({ larguras: { 1138: c, 711: med(711, [{ ...botao('Adicionar', 9, LONGO), w: 0 }]) } })
+    expect(escondido['711'].e).toHaveLength(1)
+    // o MESMO aria-label que NÃO contém o texto (o cartão da biblioteca velha: perde um bloco de conteúdo em 711): segue (e)
+    const cartao = (texto: string, n: number) => botao(texto, n, 'Abrir o conteúdo', false)
+    const perdeConteudo = classificarEstado({ larguras: { 1138: med(1138, [cartao('título artista tipo data', 48)]), 711: med(711, [cartao('título artista tipo', 36)]) } })
+    expect(perdeConteudo['711'].e).toEqual([{ k: 'button:título artista tipo data#1', tipo: 'texto some do nó', n: [48, 36] }])
+  })
   it('o nó existe mas perdeu parte do texto (chave mudou): (e) "texto some do nó", não "sem nó"; texto trocado do mesmo tamanho: (d′)', () => {
     const card = (k: string, n: number) => ({ ...no(k, 10, 10, 600, 60), role: 'button', tag: 'div', n })
     const r = med(1138, [card('card-completo', 48), card('rotulo-a', 5)])

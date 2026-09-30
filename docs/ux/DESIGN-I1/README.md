@@ -239,12 +239,12 @@ par" pelo texto. Não houve I1-E23 (decisão 5 do aval: o criar do zero é *Tít
 | **I1-E28** *(proposta)* | o nome da setlist no cartão desenhado em **20 px** (`font-size:20px`, 94 ocorrências — 20 não é tamanho de fonte de nenhum token); a tabela de tokens da própria folha e o `README-design.md` §2.4 declaram `size.title` (22) | vale **`size.title` (22)**, o que a tabela declara (o molde da I1-E11): cada cartão fica ≈ 2 px mais alto; em C nada passa da tolerância; em **B**, onde a setlist aberta desce para baixo da lista, o painel inteiro desce **6 px** (Δy) | `8-setlists`: todo estado com cartões e o painel abaixo deles em B (`SET-nenhuma`, `SET`, `SET-sem-musicas`, `SET-criar*`, `SET-apagar*`, `SET-adicionar*`, `SET-remover-erro`) | 876 (I1-PR-13) | leitura |
 | **I1-E29** *(proposta)* | o editar não tem seção: a nota de `SET-criar` diz *"o mesmo diálogo com 'Editar setlist' e 'Salvar'"* | o editar mede **contra as seções `SET-criar`, `-criar-salvando` e `-criar-erro`** (decisão 20 do aval da I1-PR-13): o título e o botão saem "sem par"; *Salvar*/*Salvando…* é mais largo que *Criar*/*Criando…* e o *Cancelar* fica ≈ 8 px à esquerda; em `-erro`, a 1ª linha (*…salvar a setlist…*) é mais longa e a 2ª, do mesmo bloco, alarga ≈ 9 px | `8-setlists`: `SET-editar`, `SET-editar-salvando`, `SET-editar-erro` (sem seção) | 858 (I1-PR-13) | leitura |
 | **I1-E30** *(proposta)* | a N10 (*todas as músicas da biblioteca já estão nesta setlist*) só existe na nota de `SET-adicionar-vazio` | a N10 mede **contra a seção `SET-adicionar-vazio`** (decisão 20): a frase no lugar de *nenhuma música disponível*, **sem o apoio** (não há o que adicionar à biblioteca) — uma linha a menos, os botões sobem ≈ 27 px | `8-setlists`: `SET-adicionar-todas-ja` (sem seção) | 854 (I1-PR-13) | leitura |
-| **I1-E31** *(proposta)* | em B, o *Adicionar* do cabeçalho da setlist com o nome acessível *Adicionar músicas a {nome}* (o mesmo de C) | em B (e em A) o nome acessível do rótulo curto é **o rótulo de C, *Adicionar músicas*** — a forma da N3-D17 (`Adicionar` / `Adicionar música`), que o G-faixa conta como saída "nome-acessível"; com o nome longo, o rótulo que encolhe de C para B é (e) "texto some do nó". Em C o nome segue *Adicionar músicas a {nome}* | `8-setlists`: todo estado com a setlist aberta, em B | 875 (I1-PR-13) | leitura |
 
-As três primeiras são do G-faixa (`erratasFaixa`, com o `n` do aceite da I1-PR-13, igual ao da pré-verificação sem sessão:
-I1-E28 **520**, todas em B; I1-E29 **8**; I1-E30 **4**); a I1-E31 é de frase (`erratasFrase`, nenhum gate lê). Marcadas
-*proposta* até o aval do veredito; se alguma não for aprovada, sai de `erratasFaixa` e o veredito acusa as candidatas dela
-sem cobertura.
+As três são do G-faixa (`erratasFaixa`, com o `n` do aceite da I1-PR-13, igual ao da pré-verificação sem sessão:
+I1-E28 **520**, todas em B; I1-E29 **8**; I1-E30 **4**). Marcadas *proposta* até o aval do veredito. **Não há I1-E31**: a
+proposta (em B, o nome acessível do *Adicionar* igual ao rótulo de C) foi **recusada** no aval do veredito `[Marcel,
+2026-09-30]` — a regra é a I1-D7 item 4, rótulo curto **com nome acessível longo**; o defeito era do instrumento, consertado
+no commit 2b da I1-PR-13 (div. 875).
 
 ## 3 · O bloco `web` de tokens — insumo da PR-4 (`packages/identidade`)
 

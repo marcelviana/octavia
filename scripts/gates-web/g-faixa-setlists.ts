@@ -95,8 +95,8 @@ const N = {
   cartao: (p: Page, nome: string) => p.getByRole('button', { name: new RegExp(`^${nome}(\\s|$)`, 'i') }).first(),
   botao: (p: Page, nome: string | RegExp) => p.getByRole('button', { name: nome, exact: true }),
   dialogo: (p: Page) => p.getByRole('dialog'),
-  /** o *Adicionar músicas* do cabeçalho: em C o nome longo; em B e A o rótulo de C como nome (o visível é o que conta) */
-  adicionarMusicas: (p: Page) => p.getByRole('button', { name: /^Adicionar músicas( a Show padrão)?$/ }),
+  /** o *Adicionar músicas* do cabeçalho: rótulo curto em B e A, o mesmo nome acessível longo nas três faixas */
+  adicionarMusicas: (p: Page) => p.getByRole('button', { name: 'Adicionar músicas a Show padrão', exact: true }),
 }
 const SHOW = 'Show padrão'
 /** A lista carregada (os três cartões). */

@@ -3,8 +3,8 @@
 /**
  * A setlist aberta (I1-PR-13; folha `8-setlists`: `SET`, `SET-sem-musicas`, `SET-remover-erro`). O cabeçalho (o nome em
  * `font.display` · `size.title` · `tracking.display`; a descrição; *{n} músicas · {duração}*; a data e o local quando
- * houver; *Editar* e *Adicionar músicas* de `touch.list` — em B o rótulo curto *Adicionar* com o rótulo de C como nome
- * acessível, N3-D17); a `LinhaDeAviso` do remover logo abaixo dele; as linhas de música de `web.linhaMusica` — na ordem da
+ * houver; *Editar* e *Adicionar músicas* de `touch.list` — em B o rótulo curto *Adicionar*, o nome acessível longo nas
+ * três faixas, I1-D7 item 4); a `LinhaDeAviso` do remover logo abaixo dele; as linhas de música de `web.linhaMusica` — na ordem da
  * setlist, SEM alça (decisão 27: a ordem é fixa) — com o número em mono, o título, o artista, a nota (13 `muted`), o
  * tipo e o *remover* sempre visível. A linha entrega a LINHA ao remover, não o content (o defeito (a) do N2 §10.3.5).
  */
@@ -49,13 +49,10 @@ export const SetlistAberta = memo(function SetlistAberta({ setlist, falha, onEdi
           <button type="button" onClick={onEditar} className={`${CONTROLE_LISTA} border-cor-line-info`}>
             <Icone nome="renomear" tamanho={24} className="text-cor-accent-ink" />{F["set.editar"]}
           </button>
-          {/* C: o rótulo inteiro e o nome longo. B e A: o rótulo curto com o rótulo de C como nome acessível (N3-D17 — é o
-              que o G-faixa conta como saída "nome-acessível" e não como texto que sumiu) */}
-          <button type="button" aria-label={fraseSet("set.adicionar.nome", { nome: setlist.name })} onClick={onAdicionar} className={`${CONTROLE_LISTA} border-cor-line-info hidden c:flex`}>
-            <Icone nome="adicionar" tamanho={24} className="text-cor-accent-ink" />{F["set.adicionar"]}
-          </button>
-          <button type="button" aria-label={F["set.adicionar"]} onClick={onAdicionar} className={`${CONTROLE_LISTA} border-cor-line-info c:hidden`}>
-            <Icone nome="adicionar" tamanho={24} className="text-cor-accent-ink" />{F["set.adicionar.curto"]}
+          {/* rótulo curto em B e A, o MESMO nome acessível longo nas três faixas (I1-D7 item 4; N3-D17) */}
+          <button type="button" aria-label={fraseSet("set.adicionar.nome", { nome: setlist.name })} onClick={onAdicionar} className={`${CONTROLE_LISTA} border-cor-line-info`}>
+            <Icone nome="adicionar" tamanho={24} className="text-cor-accent-ink" />
+            <span className="hidden c:inline">{F["set.adicionar"]}</span><span className="c:hidden">{F["set.adicionar.curto"]}</span>
           </button>
         </div>
       </div>
