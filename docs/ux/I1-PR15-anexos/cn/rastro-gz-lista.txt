@@ -1,0 +1,62 @@
+# I1-PR15 commit 1 — o rastro: du -sh e a lista do que vira .gz (gzip -n -9, um por arquivo); sobre baeebf7
+## du -sh (antes)
+ 13M	tests/gates-web/medicoes
+3.0M	tests/gates-web/esperado
+## ficam em texto (o que o veredito lê + esperado/)
+      14
+## viram .gz (bytes texto → bytes gzip -n -9)
+    20491 →     1617  tests/gates-web/medicoes/antes-1-auth/confirm-email.json
+    24991 →     1838  tests/gates-web/medicoes/antes-1-auth/forgot-password.json
+    53299 →     3437  tests/gates-web/medicoes/antes-1-auth/signup.json
+   130246 →     4212  tests/gates-web/medicoes/antes-erro-global/erro-global.json
+   208306 →     9152  tests/gates-web/medicoes/casca-efeito/antes/add-content.json
+   373783 →    15145  tests/gates-web/medicoes/casca-efeito/antes/content-edit.json
+   358149 →    16008  tests/gates-web/medicoes/casca-efeito/antes/setlists.json
+    54917 →     3659  tests/gates-web/medicoes/casca-efeito/content.json
+   361476 →    14724  tests/gates-web/medicoes/casca-efeito/depois/content-edit.json
+    85198 →     4757  tests/gates-web/medicoes/casca-efeito/depois/dashboard.json
+    55380 →     3423  tests/gates-web/medicoes/casca-efeito/setlists.json
+    55487 →     3447  tests/gates-web/medicoes/cn-main/content.json
+    70034 →     3511  tests/gates-web/medicoes/cn-main/dashboard.json
+    87208 →     5167  tests/gates-web/medicoes/cn-main/landing.json
+   135527 →     7093  tests/gates-web/medicoes/cn-main/library.json
+    37163 →     2460  tests/gates-web/medicoes/cn-main/login.json
+    48845 →     3748  tests/gates-web/medicoes/cn-main/privacy-policy.json
+    58719 →     3232  tests/gates-web/medicoes/cn-main/setlists.json
+    55245 →     3679  tests/gates-web/medicoes/rodada1/casca-efeito/content.json
+    55431 →     3457  tests/gates-web/medicoes/rodada1/casca-efeito/setlists.json
+   172605 →     9207  tests/gates-web/medicoes/rodada1/dashboard.json
+   700776 →    30637  tests/gates-web/medicoes/rodada1/library.json
+total: 22 arquivos, 3203276 → 153610 bytes
+
+## ficam em texto — as vivas (o veredito lê só o nível de cima de medicoes/)
+  1648074  tests/gates-web/medicoes/add-content.json
+   179531  tests/gates-web/medicoes/confirm-email.json
+  1913196  tests/gates-web/medicoes/content-edit.json
+   473823  tests/gates-web/medicoes/content.json
+   171883  tests/gates-web/medicoes/dashboard.json
+   135273  tests/gates-web/medicoes/erro-global.json
+   145109  tests/gates-web/medicoes/forgot-password.json
+    29735  tests/gates-web/medicoes/landing.json
+   700443  tests/gates-web/medicoes/library.json
+   558684  tests/gates-web/medicoes/login.json
+    73307  tests/gates-web/medicoes/privacy-policy.json
+  3677653  tests/gates-web/medicoes/setlists.json
+   557973  tests/gates-web/medicoes/signup.json
+   280453  tests/gates-web/medicoes/verify-email.json
+## e esperado/ (lido pelo g-faixa-medir.ts e pelo g-faixa-esperado.ts)
+    14078  0-linha-de-aviso.json
+      659  1-auth.ancoras.json
+   457110  1-auth.json
+     3997  2-landing.json
+    21811  3-privacy-policy.json
+      628  4-content-lista.ancoras.json
+   442246  4-content-lista.json
+      531  5-content-visualizacao.ancoras.json
+   285273  5-content-visualizacao.json
+     1660  6-content-editor.ancoras.json
+   575122  6-content-editor.json
+     1896  7-upload.ancoras.json
+   482042  7-upload.json
+     1388  8-setlists.ancoras.json
+   852773  8-setlists.json

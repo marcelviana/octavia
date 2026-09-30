@@ -1,0 +1,254 @@
+# Knip report
+
+## Unused files (25)
+
+| Name                                         | Location                                     | Severity |
+| :------------------------------------------- | :------------------------------------------- | :------- |
+| scripts/gates-web/g-faixa-editor-exemplos.ts | scripts/gates-web/g-faixa-editor-exemplos.ts | error    |
+| scripts/gates-web/privacy-texto-extrair.ts   | scripts/gates-web/privacy-texto-extrair.ts   | error    |
+| apps/native/test/fake-react-native-pdf.tsx   | apps/native/test/fake-react-native-pdf.tsx   | error    |
+| apps/native/test/fake-react-native-svg.tsx   | apps/native/test/fake-react-native-svg.tsx   | error    |
+| apps/native/scripts/__cn__/IconesFalso.ts    | apps/native/scripts/__cn__/IconesFalso.ts    | error    |
+| scripts/gates-web/g-faixa-superficies.ts     | scripts/gates-web/g-faixa-superficies.ts     | error    |
+| apps/native/scripts/__cn__/A20Falso.tsx      | apps/native/scripts/__cn__/A20Falso.tsx      | error    |
+| scripts/gates-web/g-faixa-conteudo.ts        | scripts/gates-web/g-faixa-conteudo.ts        | error    |
+| scripts/gates-web/g-faixa-esperado.ts        | scripts/gates-web/g-faixa-esperado.ts        | error    |
+| scripts/gates-web/g-faixa-setlists.ts        | scripts/gates-web/g-faixa-setlists.ts        | error    |
+| scripts/ux-audit/probe-auth-limit.ts         | scripts/ux-audit/probe-auth-limit.ts         | error    |
+| scripts/gates-web/g-faixa-sessao.ts          | scripts/gates-web/g-faixa-sessao.ts          | error    |
+| scripts/gates-web/g-faixa-upload.ts          | scripts/gates-web/g-faixa-upload.ts          | error    |
+| scripts/gates-web/g-faixa-lista.ts           | scripts/gates-web/g-faixa-lista.ts           | error    |
+| scripts/gates-web/g-faixa-medir.ts           | scripts/gates-web/g-faixa-medir.ts           | error    |
+| scripts/gates-web/g-faixa-auth.ts            | scripts/gates-web/g-faixa-auth.ts            | error    |
+| apps/native/src/fixtures/palco.ts            | apps/native/src/fixtures/palco.ts            | error    |
+| scripts/native/token-oracle.ts               | scripts/native/token-oracle.ts               | error    |
+| scripts/ux-audit/auth-check.ts               | scripts/ux-audit/auth-check.ts               | error    |
+| scripts/storage/reconcile.ts                 | scripts/storage/reconcile.ts                 | error    |
+| scripts/ux-audit/discover.ts                 | scripts/ux-audit/discover.ts                 | error    |
+| apps/native/scripts/g-n3.mjs                 | apps/native/scripts/g-n3.mjs                 | error    |
+| components/library/index.ts                  | components/library/index.ts                  | error    |
+| scripts/ux-audit/cleanup.ts                  | scripts/ux-audit/cleanup.ts                  | error    |
+| scripts/ux-audit/seed.ts                     | scripts/ux-audit/seed.ts                     | error    |
+
+## Unused dependencies (14)
+
+| Name                             | Location                      | Severity |
+| :------------------------------- | :---------------------------- | :------- |
+| @expo-google-fonts/raleway       | apps/native/package.json:10:6 | error    |
+| @expo-google-fonts/ibm-plex-mono | apps/native/package.json:8:6  | error    |
+| @expo-google-fonts/manrope       | apps/native/package.json:9:6  | error    |
+| isomorphic-dompurify             | package.json:38:6             | error    |
+| @hookform/resolvers              | package.json:24:6             | error    |
+| react-hook-form                  | package.json:46:6             | error    |
+| @types/debug                     | package.json:27:6             | error    |
+| autoprefixer                     | package.json:30:6             | error    |
+| next-themes                      | package.json:42:6             | error    |
+| lru-cache                        | package.json:39:6             | error    |
+| date-fns                         | package.json:33:6             | error    |
+| zustand                          | package.json:51:6             | error    |
+| immer                            | package.json:37:6             | error    |
+| cmdk                             | package.json:32:6             | error    |
+
+## Unused devDependencies (7)
+
+| Name                         | Location          | Severity |
+| :--------------------------- | :---------------- | :------- |
+| @testing-library/react-hooks | package.json:58:6 | error    |
+| @testing-library/user-event  | package.json:59:6 | error    |
+| dependency-cruiser           | package.json:66:6 | error    |
+| eslint-config-next           | package.json:69:6 | error    |
+| eslint                       | package.json:68:6 | error    |
+| msw                          | package.json:72:6 | error    |
+| tsx                          | package.json:76:6 | error    |
+
+## Unlisted dependencies (2)
+
+| Name                | Location                | Severity |
+| :------------------ | :---------------------- | :------- |
+| postcss-load-config | postcss.config.mjs:1:10 | error    |
+| expo-updates        | apps/native/app.json    | error    |
+
+## Unlisted binaries (2)
+
+| Name     | Location                       | Severity |
+| :------- | :----------------------------- | :------- |
+| awk      | apps/native/test/gates.test.ts | error    |
+| supabase | package.json                   | error    |
+
+## Unused exports (118)
+
+| Name                              | Location                                              | Severity |
+| :-------------------------------- | :---------------------------------------------------- | :------- |
+| arquivoDe                         | components/content-viewer/SheetMusicDisplay.tsx:24:17 | error    |
+| sanitizeFilename                  | components/add-content/upload-to-storage.ts:13:17     | error    |
+| dificuldadeDe                     | components/content/frases-visualizacao.ts:108:17      | error    |
+| __tamanho                         | apps/native/test/fake-expo-file-system.ts:320:17      | error    |
+| FileMode                          | apps/native/test/fake-expo-file-system.ts:108:14      | error    |
+| statusDe                          | components/setlists/falhas-das-setlists.ts:13:14      | error    |
+| especie                           | components/setlists/falhas-das-setlists.ts:19:17      | error    |
+| useSession                        | components/providers/session-provider.tsx:54:17       | error    |
+| default                           | apps/native/test/fake-datetimepicker.tsx:24:25        | error    |
+| useWindowDimensions               | apps/native/test/fake-react-native.tsx:262:17         | error    |
+| ActivityIndicator                 | apps/native/test/fake-react-native.tsx:151:14         | error    |
+| TouchableOpacity                  | apps/native/test/fake-react-native.tsx:178:14         | error    |
+| SafeAreaView                      | apps/native/test/fake-react-native.tsx:152:14         | error    |
+| ScrollView                        | apps/native/test/fake-react-native.tsx:138:14         | error    |
+| StyleSheet                        | apps/native/test/fake-react-native.tsx:240:14         | error    |
+| Dimensions                        | apps/native/test/fake-react-native.tsx:261:14         | error    |
+| Pressable                         | apps/native/test/fake-react-native.tsx:163:14         | error    |
+| TextInput                         | apps/native/test/fake-react-native.tsx:185:14         | error    |
+| FlatList                          | apps/native/test/fake-react-native.tsx:219:17         | error    |
+| Platform                          | apps/native/test/fake-react-native.tsx:247:14         | error    |
+| Keyboard                          | apps/native/test/fake-react-native.tsx:248:14         | error    |
+| Image                             | apps/native/test/fake-react-native.tsx:150:14         | error    |
+| Modal                             | apps/native/test/fake-react-native.tsx:208:17         | error    |
+| View                              | apps/native/test/fake-react-native.tsx:130:14         | error    |
+| Text                              | apps/native/test/fake-react-native.tsx:131:14         | error    |
+| PanResponder                      | apps/native/test/fake-react-native.tsx:85:14          | error    |
+| BackHandler                       | apps/native/test/fake-react-native.tsx:91:14          | error    |
+| ReguaDeDev                        | apps/native/src/screens/ReguaDeDev.tsx:87:17          | error    |
+| especieDaEscrita                  | components/upload/falhas-do-upload.ts:27:17           | error    |
+| especieDoEnvio                    | components/upload/falhas-do-upload.ts:37:17           | error    |
+| ROTAS_QUE_DESENHAM_A_LINHA        | components/auth/aviso-de-sessao.tsx:20:14             | error    |
+| desenhaNaTela                     | components/auth/aviso-de-sessao.tsx:26:14             | error    |
+| hash                              | scripts/gates-web/g-faixa-coleta.ts:28:14             | error    |
+| createSessionCookieRequest        | lib/__tests__/api-test-helpers.ts:490:14              | error    |
+| mockFirebaseServerUtils           | lib/__tests__/api-test-helpers.ts:155:14              | error    |
+| TEST_UNVERIFIED_USER              | lib/__tests__/api-test-helpers.ts:520:14              | error    |
+| mockSupabaseStorage               | lib/__tests__/api-test-helpers.ts:299:14              | error    |
+| mockSupabaseService               | lib/__tests__/api-test-helpers.ts:337:14              | error    |
+| expectServerError                 | lib/__tests__/api-test-helpers.ts:582:14              | error    |
+| createMockRequest                 | lib/test-utils/api-test-helpers.ts:24:17              | error    |
+| TEST_SETLIST                      | lib/__tests__/api-test-helpers.ts:551:14              | error    |
+| TEST_IDS                          | lib/__tests__/api-test-helpers.ts:528:14              | error    |
+| MOCK_FIREBASE_TOKEN_PAYLOAD       | lib/__tests__/api-test-helpers.ts:14:14               | error    |
+| toShowValidationError             | lib/__tests__/custom-matchers.ts:153:14               | error    |
+| toBeVisuallySelected              | lib/__tests__/custom-matchers.ts:187:14               | error    |
+| toBeVisuallyDisabled              | lib/__tests__/custom-matchers.ts:209:14               | error    |
+| withParamsValidation              | lib/api-validation-middleware.ts:202:14               | error    |
+| withQueryValidation               | lib/api-validation-middleware.ts:199:14               | error    |
+| toBeInContentState                | lib/__tests__/custom-matchers.ts:304:14               | error    |
+| toHaveProperFocus                 | lib/__tests__/custom-matchers.ts:253:14               | error    |
+| toBeInUploadState                 | lib/__tests__/custom-matchers.ts:275:14               | error    |
+| mockFirebaseAdmin                 | lib/__tests__/api-test-helpers.ts:43:14               | error    |
+| toHaveAriaLabel                   | lib/__tests__/custom-matchers.ts:229:14               | error    |
+| toBeAccessible                    | lib/__tests__/custom-matchers.ts:127:14               | error    |
+| customMatchers                    | lib/__tests__/custom-matchers.ts:359:14               | error    |
+| withAuth                          | lib/api-validation-middleware.ts:187:14               | error    |
+| MALFORMED_FIREBASE_TOKEN          | lib/__tests__/api-test-helpers.ts:8:14                | error    |
+| toBeInFavoriteState               | lib/__tests__/custom-matchers.ts:28:14                | error    |
+| toBeInLoadingState                | lib/__tests__/custom-matchers.ts:49:14                | error    |
+| toBeInErrorState                  | lib/__tests__/custom-matchers.ts:70:14                | error    |
+| toBeInteractive                   | lib/__tests__/custom-matchers.ts:99:14                | error    |
+| getSessionCookieFromBrowser       | lib/firebase-session-cookies.ts:89:17                 | error    |
+| lerRetryAfter                     | lib/firebase-session-cookies.ts:23:17                 | error    |
+| CAIXA_DO_MENU                     | components/identidade/menu.tsx:31:14                  | error    |
+| nomesIcones                       | apps/native/src/icones/dados.ts:10:3                  | error    |
+| validateFirebaseTokenServerLegacy | lib/firebase-server-utils.ts:135:14                   | error    |
+| isTokenBlacklisted                | lib/firebase-server-utils.ts:24:17                    | error    |
+| CONTENT_DATA_KEY                  | lib/content-data-contract.ts:22:14                    | error    |
+| dev                               | apps/native/test/dev-flag.ts:12:14                    | error    |
+| urlsGarantidas                    | apps/native/src/prefetch.ts:61:17                     | error    |
+| app                               | apps/native/src/firebase.ts:30:14                     | error    |
+| validateFirebaseTokenServer       | lib/secure-auth-utils.ts:377:14                       | error    |
+| invalidateUserSessions            | lib/secure-auth-utils.ts:370:17                       | error    |
+| blacklistUserTokens               | lib/secure-auth-utils.ts:115:17                       | error    |
+| clearAllAuthCaches                | lib/secure-auth-utils.ts:338:17                       | error    |
+| clearExpiredTokens                | lib/secure-auth-utils.ts:345:17                       | error    |
+| isTokenBlacklisted                | lib/secure-auth-utils.ts:363:10                       | error    |
+| getAuthCacheStats                 | lib/secure-auth-utils.ts:326:17                       | error    |
+| requireAuthServer                 | lib/secure-auth-utils.ts:378:14                       | error    |
+| getUserSessions                   | lib/secure-auth-utils.ts:365:17                       | error    |
+| clearFiles                        | apps/native/src/files.ts:619:17                       | error    |
+| PdfViewer                         | components/pdf-viewer.tsx:52:17                       | error    |
+| apiFetch                          | scripts/ux-audit/auth.ts:169:23                       | error    |
+| cacheDir                          | apps/native/src/store.ts:178:17                       | error    |
+| testIDs                           | apps/native/test/tela.tsx:69:17                       | error    |
+| clear                             | apps/native/src/store.ts:172:17                       | error    |
+| blacklistToken                    | lib/secure-auth-utils.ts:96:17                        | error    |
+| bypassHeaders                     | scripts/ux-audit/auth.ts:31:17                        | error    |
+| auditEmail                        | scripts/ux-audit/auth.ts:48:17                        | error    |
+| Constants                         | types/database.types.ts:469:14                        | error    |
+| BASE_URL                          | scripts/ux-audit/auth.ts:18:14                        | error    |
+| sleep                             | scripts/ux-audit/auth.ts:22:17                        | error    |
+| getFirebaseErrorTranslationKey    | lib/firebase-errors.ts:196:17                         | error    |
+| testSupabaseServiceConnection     | lib/supabase-service.ts:41:23                         | error    |
+| getFirebaseErrorMessage           | lib/firebase-errors.ts:182:17                         | error    |
+| isFirebaseAuthError               | lib/firebase-errors.ts:209:17                         | error    |
+| AUTH_ROUTES                       | lib/protected-routes.ts:23:14                         | error    |
+| getContent                        | lib/content-service.ts:658:14                         | error    |
+| light                             | apps/native/src/theme.ts:15:3                         | error    |
+| FIREBASE_AUTH_ERRORS              | lib/firebase-errors.ts:18:14                          | error    |
+| createCustomToken                 | lib/firebase-admin.ts:110:23                          | error    |
+| checkAuthState                    | lib/content-service.ts:61:23                          | error    |
+| getFirebaseAdminAuth              | lib/firebase-admin.ts:80:17                           | error    |
+| parseTextContent                  | lib/batch-import.ts:220:17                            | error    |
+| ensureAuthConfigured              | lib/auth-manager.ts:12:17                             | error    |
+| contentTypeSchema                 | lib/api-schemas.ts:134:14                             | error    |
+| jsonValueSchema                   | lib/api-schemas.ts:119:14                             | error    |
+| ALLOWED_UPLOADS                   | lib/api-schemas.ts:225:14                             | error    |
+| debugAuthConfig                   | lib/auth-manager.ts:71:23                             | error    |
+| withIgnoredKeys                   | lib/api-schemas.ts:91:17                              | error    |
+| initializePdfJs                   | lib/pdf-utils.ts:32:10                                | error    |
+| getNonce                          | lib/csp-nonce.ts:24:17                                | error    |
+| getSupabaseBrowserClient          | lib/supabase.ts:20:17                                 | error    |
+| getSessionSafe                    | lib/supabase.ts:41:23                                 | error    |
+| default                           | lib/firebase.ts:93:16                                 | error    |
+| app                               | lib/firebase.ts:24:14                                 | error    |
+| db                                | lib/firebase.ts:53:14                                 | error    |
+| logger                            | lib/logger.ts:13:14                                   | error    |
+
+## Unused exported types (33)
+
+| Name                | Location                                              | Severity |
+| :------------------ | :---------------------------------------------------- | :------- |
+| Linha               | components/setlists/__tests__/servidor-falso.ts:26:18 | error    |
+| Especie             | components/setlists/falhas-das-setlists.ts:11:13      | error    |
+| DateTimePickerEvent | apps/native/test/fake-datetimepicker.tsx:20:18        | error    |
+| AcaoDoAviso         | components/identidade/linha-de-aviso.tsx:21:18        | error    |
+| AcaoDoAviso         | apps/native/src/screens/LinhaDeAviso.tsx:38:18        | error    |
+| Editando            | apps/native/src/screens/FolhaDeCriar.tsx:88:18        | error    |
+| EstadoDoGesto       | apps/native/test/fake-react-native.tsx:67:18          | error    |
+| EspecieDaEscrita    | components/upload/falhas-do-upload.ts:14:13           | error    |
+| EspecieDoEnvio      | components/upload/falhas-do-upload.ts:15:13           | error    |
+| CodigoErroAuth      | contexts/firebase-auth-context.tsx:50:13              | error    |
+| OrfaoA              | scripts/storage/reconcile-core.ts:30:13               | error    |
+| RootStackParamList  | apps/native/src/navigation.tsx:23:13                  | error    |
+| TintaIcone          | apps/native/src/icones/dados.ts:14:8                  | error    |
+| Rascunho            | components/content-creator.tsx:15:18                  | error    |
+| ContentDataKey      | lib/content-data-contract.ts:20:13                    | error    |
+| Setlist             | components/setlists/tipos.ts:9:13                     | error    |
+| SignInFailure       | apps/native/src/session.ts:41:18                      | error    |
+| SetlistWithSongs    | hooks/use-setlist-data.ts:10:13                       | error    |
+| ErroDaCarga         | hooks/use-library-data.ts:15:13                       | error    |
+| Filters             | hooks/use-library-data.ts:27:18                       | error    |
+| CompositeTypes      | types/database.types.ts:452:13                        | error    |
+| TablesInsert        | types/database.types.ts:385:13                        | error    |
+| TablesUpdate        | types/database.types.ts:410:13                        | error    |
+| Content             | hooks/use-setlist-data.ts:9:15                        | error    |
+| Tables              | types/database.types.ts:356:13                        | error    |
+| Enums               | types/database.types.ts:435:13                        | error    |
+| ThemeColors         | apps/native/src/theme.ts:27:8                         | error    |
+| ApiErro             | apps/native/src/api.ts:143:18                         | error    |
+| ApiOk               | apps/native/src/api.ts:139:18                         | error    |
+| DifficultyField     | lib/content-service.ts:73:18                          | error    |
+| AlbumField          | lib/content-service.ts:69:18                          | error    |
+| KeyField            | lib/content-service.ts:77:18                          | error    |
+| FirebaseErrorMap    | lib/firebase-errors.ts:8:18                           | error    |
+
+## Duplicate exports (11)
+
+| Name                                                          | Location                               | Severity |
+| :------------------------------------------------------------ | :------------------------------------- | :------- |
+| Pressable|TouchableOpacity                                    | apps/native/test/fake-react-native.tsx | error    |
+| useFirebaseAuth|useAuth                                       | contexts/firebase-auth-context.tsx     | error    |
+| validateFirebaseTokenServer|validateFirebaseTokenServerLegacy | lib/firebase-server-utils.ts           | error    |
+| PdfViewer|default                                             | components/pdf-viewer.tsx              | error    |
+| validateFirebaseTokenSecure|validateFirebaseTokenServer       | lib/secure-auth-utils.ts               | error    |
+| requireAuthServerSecure|requireAuthServer                     | lib/secure-auth-utils.ts               | error    |
+| getEnvironmentSecurityConfig|getEnvironmentCSPConfig          | lib/security-headers.ts                | error    |
+| applyEnhancedSecurityHeaders|applySecurityHeaders             | lib/security-headers.ts                | error    |
+| getUserContent|getContent                                     | lib/content-service.ts                 | error    |
+| app|default                                                   | lib/firebase.ts                        | error    |
+| logger|default                                                | lib/logger.ts                          | error    |
+

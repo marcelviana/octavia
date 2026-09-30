@@ -2,9 +2,10 @@
 // antes × depois. Antes = `tests/gates-web/medicoes/dashboard.json` (o aceite da I1-PR-9, estado `DASH`); depois = o mesmo
 // estado medido sobre esta PR (`tests/gates-web/medicoes/casca-efeito/depois/dashboard.json`, `G_FAIXA_ESTADOS=DASH`).
 // Anexo, não gate. Casca = y < 64 em C, y < 120 em B e A.
-import fs from 'node:fs'
-const a = JSON.parse(fs.readFileSync('tests/gates-web/medicoes/dashboard.json', 'utf8'))
-const d = JSON.parse(fs.readFileSync(process.argv[2] ?? 'tests/gates-web/medicoes/casca-efeito/depois/dashboard.json', 'utf8'))
+// I1-PR15 (decisão 2 do encerramento; aval 4): o rastro está em `.gz` — lido por `ler-medicao.mjs`.
+import { lerJson } from '../../../../scripts/gates-web/ler-medicao.mjs'
+const a = lerJson('tests/gates-web/medicoes/dashboard.json')
+const d = lerJson(process.argv[2] ?? 'tests/gates-web/medicoes/casca-efeito/depois/dashboard.json')
 console.log(`antes: ${JSON.stringify(a.rodadas?.['1138'] ?? { rodada: a.rodada, commit: a.commit })} · depois: ${d.rodada} ${d.commit}`)
 let delta = 0
 for (const L of ['1138', '711', '411']) {

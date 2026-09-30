@@ -4,8 +4,9 @@
 // Os nós DENTRO do visualizador de PDF saem à parte: no "depois" é o nó `t:pdf-viewer#1` e o que cai na caixa dele;
 // no "antes" (sem testid), o que cai na mesma faixa vertical a partir do topo do visualizador.
 // Uso (da raiz): node docs/ux/I1-PR10-anexos/cn/casca-efeito-editor.mjs
-import fs from 'node:fs'
-const ler = (p) => JSON.parse(fs.readFileSync(p, 'utf8'))
+// I1-PR15 (decisão 2 do encerramento; aval 4): o rastro está em `.gz` — lido por `ler-medicao.mjs`.
+import { lerJson } from '../../../../scripts/gates-web/ler-medicao.mjs'
+const ler = lerJson
 const antes = ler('tests/gates-web/medicoes/casca-efeito/antes/content-edit.json')
 const depois = ler('tests/gates-web/medicoes/casca-efeito/depois/content-edit.json')
 const d1 = (a, b) => Math.abs(a - b) > 1

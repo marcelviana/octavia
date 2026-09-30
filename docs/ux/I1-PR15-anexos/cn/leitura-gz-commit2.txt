@@ -1,0 +1,12 @@
+## I1-PR15 commit 2 — o rastro lido em .gz (na árvore, gzip -n -9) × a mesma leitura sobre texto (antes da compressão)
+docs/ux/I1-PR9-anexos/cn/casca-efeito-corpo.mjs: exit=0 · divergem: 0
+docs/ux/I1-PR10-anexos/cn/casca-efeito-editor.mjs: exit=0 · divergem: 0
+docs/ux/I1-PR11-anexos/cn/casca-efeito-editor.mjs: exit=0 · divergem: 0
+docs/ux/I1-PR12-anexos/cn/casca-efeito-upload.mjs: exit=0 · divergem: 0
+docs/ux/I1-PR13-anexos/cn/casca-efeito-setlists.mjs: exit=0 · divergem: 0
+docs/ux/I1-PR13-anexos/cn/casca-dashboard.mjs: exit=0 · divergem: 0
+veredito cn-main (.gz): exit=1 · G-faixa: REPROVA — 83 ocorrência(s) · divergem do texto: 0
+veredito vivas (CI): exit=0 · G-faixa: PASSA · divergem: 0
+## du -sh depois
+ 10M	tests/gates-web/medicoes
+3.0M	tests/gates-web/esperado

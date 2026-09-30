@@ -1,0 +1,46 @@
+# I1-PR15 commit 2 — pnpm build antes (42891d9) × depois (commit 2), cada um numa cópia da árvore sem .env (rsync sem .git, .env*, .next); controle: o antes duas vezes
+## antes × antes2 (o ruído): idêntica
+## antes × depois — as rotas (nomes e tipo): idênticas; os tamanhos:
+2c2
+< ┌ ƒ /                                      511 B         111 kB
+---
+> ┌ ƒ /                                      512 B         111 kB
+27c27
+< ├ ƒ /signup/confirm-email                  818 B         264 kB
+---
+> ├ ƒ /signup/confirm-email                  819 B         264 kB
+## a origem do +1 B: um id de módulo do webpack renumerado (2051 → 98285, um dígito a mais); com os números normalizados os chunks são iguais
+app/page: diff normalizado 0 linhas · app/signup/confirm-email/page: diff normalizado 0 linhas
+
+## a tabela do depois
+Route (app)                                 Size  First Load JS
+┌ ƒ /                                      512 B         111 kB
+├ ƒ /_not-found                            988 B         103 kB
+├ ƒ /add-content                         3.92 kB         277 kB
+├ ƒ /api/auth/session                      183 B         102 kB
+├ ƒ /api/content                           183 B         102 kB
+├ ƒ /api/content/[id]                      183 B         102 kB
+├ ƒ /api/health                            183 B         102 kB
+├ ƒ /api/profile                           183 B         102 kB
+├ ƒ /api/setlists                          183 B         102 kB
+├ ƒ /api/setlists/[id]                     183 B         102 kB
+├ ƒ /api/setlists/[id]/songs               183 B         102 kB
+├ ƒ /api/setlists/[id]/songs/order         183 B         102 kB
+├ ƒ /api/setlists/songs/[songId]           183 B         102 kB
+├ ƒ /api/storage/delete                    183 B         102 kB
+├ ƒ /api/storage/list                      183 B         102 kB
+├ ƒ /api/storage/upload                    183 B         102 kB
+├ ƒ /content/[id]                         118 kB         393 kB
+├ ƒ /content/[id]/edit                   6.01 kB         279 kB
+├ ƒ /dashboard                           3.78 kB         274 kB
+├ ƒ /forgot-password                       995 B         259 kB
+├ ƒ /library                               418 B         274 kB
+├ ƒ /login                               2.23 kB         265 kB
+├ ƒ /privacy-policy                        183 B         102 kB
+├ ƒ /setlists                            1.89 kB         275 kB
+├ ƒ /signup                              1.84 kB         265 kB
+├ ƒ /signup/confirm-email                  819 B         264 kB
+└ ƒ /verify-email                        1.07 kB         261 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/4509c6e4-bdb2941da3d607e5.js  53.3 kB
+  ├ chunks/5586-b5ab0bde052739d7.js        46 kB

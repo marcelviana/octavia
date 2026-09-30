@@ -9,7 +9,8 @@
 //     descrição —, e o que é igual nas duas línguas), listada.
 // (3) O (b) de cada lado (o `truncate` do web velho em 411) e a LARGURA dos nós do corpo em 1138 (a "largura liberada"
 //     da I1-PR-9, div. 728: os nós que a saída da lateral alargou no corpo velho).
-import fs from 'node:fs'
+// I1-PR15 (decisão 2 do encerramento; aval 4): o rastro está em `.gz` — lido por `ler-medicao.mjs`.
+import { lerJson } from '../../../../scripts/gates-web/ler-medicao.mjs'
 import { createHash } from 'node:crypto'
 import { cortes } from '../../../../scripts/gates-web/g-faixa-classificar.mjs'
 const h = (t) => createHash('sha256').update(t).digest('hex').slice(0, 12)
@@ -27,7 +28,7 @@ const FRASES_VELHAS = ['Your Setlists', 'Create Setlist', 'Edit setlist', 'Delet
   '60 songs', '8 songs', '1 song', '4h 6m', '32m', '4m', 'Unknown Artist', 'Unknown Title']
 // FORA da lista, por serem IGUAIS nas duas línguas: *Tab* (o nome do tipo) e *3 setlists* (a contagem).
 const velhas = new Map(FRASES_VELHAS.map((t) => [h(t), t]))
-const ler = (p) => JSON.parse(fs.readFileSync(p, 'utf8'))
+const ler = lerJson
 const antes = ler('tests/gates-web/medicoes/casca-efeito/antes/setlists.json')
 const depois = ler(process.argv[2] ?? 'tests/gates-web/medicoes/setlists.json')
 let velhosTotal = 0, n = 0, bAntes = 0, bDepois = 0

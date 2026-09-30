@@ -27,6 +27,8 @@
 //   da folha, e a cascata de Δy abaixo dele — `quebrasPorDado`/`ehCascata` do classificador)
 //   sai À PARTE das candidatas: listada por estado × largura, contada, nunca reprova e não
 //   pede errata (a decisão (a) da div. 767, I1-PR10).
+//   I1-PR15 (decisão 2 do encerramento): lê `<superficie>.json` e `<superficie>.json.gz` (`ler-medicao.mjs`) — as
+//   vivas ficam em texto; o rastro (`cn-main/` e as outras subpastas) está em `.gz` e o CN da PR-5 o lê igual.
 //
 // Uso (da raiz):  node scripts/gates-web/g-faixa-veredito.mjs [pasta]
 // Sai 0 se passa, 1 se reprova, 2 se o JSON não se lê.
@@ -34,6 +36,7 @@ import { createHash } from "node:crypto"
 import fs from "node:fs"
 import path from "node:path"
 import { classificarEstado, REFERENCIA } from "./g-faixa-classificar.mjs"
+import { lerJson, listarJson } from "./ler-medicao.mjs"
 
 const PASTA = process.argv[2] ?? "tests/gates-web/medicoes"
 const ERRATAS = process.env.G_FAIXA_ERRATAS ?? "docs/ux/DESIGN-I1/erratas.json"
@@ -42,7 +45,8 @@ const CHROMIUM_FIXADO = "140.0.7339.16" // o mesmo do playwright.g-faixa.config.
   const cfg = fs.readFileSync("playwright.g-faixa.config.ts", "utf8").match(/CHROMIUM_FIXADO = '([^']+)'/)?.[1]
   if (cfg !== CHROMIUM_FIXADO) { console.error(`g-faixa-veredito: CHROMIUM_FIXADO da config (${cfg}) ≠ do veredito (${CHROMIUM_FIXADO})`); process.exit(2) }
 }
-const arquivos = fs.existsSync(PASTA) ? fs.readdirSync(PASTA).filter((f) => f.endsWith(".json")).sort() : []
+let arquivos
+try { arquivos = listarJson(PASTA) } catch (e) { console.error(`g-faixa-veredito: ${e.message}`); process.exit(2) }
 console.log(`G-faixa (veredito) — ${PASTA}: ${arquivos.length} medição(ões)`)
 if (arquivos.length === 0) {
   console.log("  nenhuma superfície medida ainda — cada PR de superfície commita a sua (I1-D16)")
@@ -84,7 +88,7 @@ let erratas = 0, semCobertura = 0, semParFolha = 0, semParApp = 0, quebraDado = 
 const LIMITE = 12 // ocorrências listadas por (tipo, largura); o resto só conta
 for (const f of arquivos) {
   let s
-  try { s = JSON.parse(fs.readFileSync(path.join(PASTA, f), "utf8")) } catch (e) { console.error(`g-faixa-veredito: ${f} não é JSON: ${e.message}`); process.exit(2) }
+  try { s = lerJson(path.join(PASTA, f)) } catch (e) { console.error(`g-faixa-veredito: ${f} não é JSON: ${e.message}`); process.exit(2) }
   console.log(`\n## ${s.superficie} (${s.rota}) — rodada ${s.rodada} · base ${s.base} · commit ${s.commit}`)
   if (s.chromium !== CHROMIUM_FIXADO) falha(`Chromium ${s.chromium} ≠ fixado ${CHROMIUM_FIXADO}`)
   for (const [L, c] of Object.entries(s.controlePositivo ?? {}))

@@ -1,0 +1,38 @@
+## G-back (sem declaração)
+G-back — base baeebf7 · head WORKTREE
+núcleo: congelado 39 · derivação BASE 39 · HEAD 39 · união 40
+declarações gback: 0 caminho(s)
+
+## (i) arquivo do núcleo que mudou
+  ✓ nenhum — diff vazio no núcleo
+## (ii) arquivo novo no alcance (derivação do HEAD fora do congelado)
+  ✓ nenhum
+## (iii) declaração órfã (gback: de arquivo que não mudou)
+  ✓ nenhuma
+
+G-back: PASSA
+exit=0
+## G-palco
+  ✓ nenhum
+
+G-palco: PASSA — 0 ocorrências
+exit=0
+## SHA256SUMS do DESIGN-I1
+0
+## G-tok
+## (ii) arquivos redesenhados — scripts/gates-web/g-tok-arquivos.txt
+  arquivos: 132 · literais de identidade acusados: 0 · toasts: 0 · imports de ui: 0 · textos examinados: 33 · isentos de inglês (scripts/gates-web/g-tok-sem-ingles.txt): 1 · vocabulário: 133 · isenções: 9 · strings de .ts examinadas (div. 828): 446 · frases isentas (scripts/gates-web/g-tok-frases-isentas.txt): 5 de 5 entradas
+
+G-tok: PASSA
+exit=0
+## G-tok cobertura
+## cobertura da lista (ii) — scripts/gates-web/g-tok-arquivos.txt (raiz .)
+  arquivos de tela: 129 · na lista: 129 · excluídos: 0 · FORA: 0 · da lista que não são de tela (informa): 3
+
+G-tok (cobertura): PASSA
+exit=0
+## identidade css.test
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m4 passed[39m[22m[90m (4)[39m
+## G-faixa (CI)
+G-faixa: PASSA
