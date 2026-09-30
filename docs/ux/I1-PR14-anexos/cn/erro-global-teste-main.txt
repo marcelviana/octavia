@@ -1,0 +1,14 @@
+# o teste de tela do ErrorBoundary sobre o código da main 6f8299f (gate-first: 4 reprovam — a tela; 4 passam — o comportamento)
+$ pnpm exec vitest run --project web tests/gates/i1-erro-global.test.tsx 2>&1 | sed 's/\x1b\[[0-9;]*m//g' | grep -E '✓|×|Tests |Test Files'
+     ✓ sem erro, renderiza os filhos e nada mais 16ms
+     × com erro: a LinhaDeAviso de falha com "algo deu errado — tente de novo", sem o texto de antes nem o error.message 61ms
+     × a marca do produto, com o nome acessível "Octavia" 15ms
+     × "Tentar de novo" recarrega a página — o que o botão de hoje faz 14ms
+     ✓ o log e o onError do chamador, como antes 6ms
+     ✓ o fallback do chamador, quando vem, vence a tela 4ms
+     ✓ fora de desenvolvimento, sem os detalhes 3ms
+     × em desenvolvimento, os detalhes em pt-BR: "detalhes do erro (só em desenvolvimento)", com a pilha 6ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+ Test Files  1 failed (1)
+      Tests  4 failed | 4 passed (8)
+# exit: 0 — é o do último comando do pipe (grep); o do vitest/g-tok é 1

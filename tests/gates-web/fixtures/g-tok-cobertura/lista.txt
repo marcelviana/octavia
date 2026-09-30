@@ -1,0 +1,3 @@
+app/a/page.tsx
+components/listado.tsx
+lib/servico.ts

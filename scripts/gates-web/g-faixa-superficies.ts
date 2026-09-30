@@ -19,6 +19,20 @@ import { ESTADOS_CONTENT, ESTADOS_CONTENT_EDIT, ID_EDITOR, descobrirPorTipo } fr
 import { ESTADOS_UPLOAD, ESTADOS_UPLOAD_BASE } from './g-faixa-upload'
 import { ESTADOS_SETLISTS, ESTADOS_SETLISTS_BASE } from './g-faixa-setlists'
 
+/** I1-PR14: a tela de erro apareceu (a frase de depois ou a de antes — o "antes" mede a `main`). */
+const telaDeErro = (page: Page) =>
+  page.waitForFunction(() => /algo deu errado|Something went wrong/.test(document.body.innerText), null, { timeout: 60_000 })
+const ESTADOS_ERRO_GLOBAL: Record<string, Estado> = {
+  'ERRO-global': { preparar: async (page) => { await telaDeErro(page) } },
+  'ERRO-global-detalhes': {
+    preparar: async (page) => {
+      await telaDeErro(page)
+      await page.locator('details > summary').first().click()
+      await page.waitForFunction(() => document.querySelector('details')?.open === true)
+    },
+  },
+}
+
 export interface Estado {
   /** I1-PR6: antes de carregar a rota — rotas fabricadas, o usuário falso (`g-faixa-auth.ts`) */
   antes?: (page: Page, base: URL) => Promise<void>
@@ -101,6 +115,13 @@ export const SUPERFICIES: Superficie[] = [
   // 5 MiB inclusive — nunca sai); a navegação ao content criado fica segurada. Mais os cinco do 1b (`base-*`), a
   // `casca-efeito` do upload (antes × depois). Nenhum `POST` sai.
   { id: 'add-content', rota: '/add-content', sessao: true, publica: false, folha: '7-upload', implementada: true, estados: { ...ESTADOS_UPLOAD, ...ESTADOS_UPLOAD_BASE } },
+  // I1-PR14: o limite de erro GLOBAL (`lib/error-boundary.tsx`, de `app/layout.tsx`) — SEM FOLHA: composição mecânica
+  // (a marca + a `LinhaDeAviso`), medida só por (e), (b) e `scrollWidth`. A rota é a FIXTURE que lança no cliente
+  // (`tests/gates-web/fixtures/erro-global/page.tsx`), copiada pelo executor para `app/g-faixa-erro-global/page.tsx` (no
+  // `.gitignore`) só durante a medição. Sem sessão, sem `.env`. Em `next dev` a tela traz os detalhes (só em
+  // desenvolvimento): fechados em `ERRO-global`, abertos em `ERRO-global-detalhes`. A espera casa a frase de antes e a
+  // de depois — o mesmo estado mede a `main` (o "antes") e a PR.
+  { id: 'erro-global', rota: '/g-faixa-erro-global', sessao: false, publica: true, implementada: true, estados: ESTADOS_ERRO_GLOBAL },
 ]
 
 /** `G_FAIXA_SUPERFICIES=login,dashboard` restringe a rodada. */

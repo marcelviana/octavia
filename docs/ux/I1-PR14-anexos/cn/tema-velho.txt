@@ -1,0 +1,31 @@
+# o tema velho do tailwind.config.ts: cada nome × arquivos que o usam, hoje e depois da poda (sem o próprio tailwind.config.ts)
+border · hoje 5 arq · depois 2  → app/globals.css (FORA da lista) ×1; styles/globals.css (FORA da lista) ×1
+input · hoje 6 arq · depois 0
+ring · hoje 13 arq · depois 0
+background · hoje 15 arq · depois 2  → app/globals.css (FORA da lista) ×1; styles/globals.css (FORA da lista) ×1
+foreground · hoje 8 arq · depois 2  → app/globals.css (FORA da lista) ×1; styles/globals.css (FORA da lista) ×1
+primary · hoje 8 arq · depois 1  → lib/__tests__/custom-matchers.ts (FORA da lista) ×1
+primary-foreground · hoje 4 arq · depois 0
+secondary · hoje 5 arq · depois 0
+secondary-foreground · hoje 2 arq · depois 0
+destructive · hoje 3 arq · depois 0
+destructive-foreground · hoje 2 arq · depois 0
+muted · hoje 7 arq · depois 0
+muted-foreground · hoje 12 arq · depois 0
+accent · hoje 6 arq · depois 0
+accent-foreground · hoje 5 arq · depois 0
+popover · hoje 4 arq · depois 0
+popover-foreground · hoje 4 arq · depois 0
+card · hoje 1 arq · depois 0
+card-foreground · hoje 1 arq · depois 0
+cream · hoje 0 arq · depois 0
+cream-light · hoje 0 arq · depois 0
+beige · hoje 0 arq · depois 0
+beige-light · hoje 0 arq · depois 0
+taupe · hoje 0 arq · depois 0
+rounded-lg|md|sm (--radius) · hoje 18 arq · depois 0
+animate-accordion-* · hoje 1 arq · depois 0
+tailwindcss-animate (animate-in/out, fade-, zoom-, slide-in-) · hoje 7 arq · depois 0
+container · hoje 2 arq · depois 2  → tests/gates-web/privacy-texto.test.ts (FORA da lista) ×6; tests/ux-audit/fase-d/h-perf.spec.ts (FORA da lista) ×2
+dark: · hoje 1 arq · depois 0
+safelist (roxo/verde/azul/laranja) · hoje 2 arq · depois 2  → lib/__tests__/custom-matchers.ts (FORA da lista) ×1; types/content.ts (FORA da lista) ×28

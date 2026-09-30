@@ -1,0 +1,150 @@
+# I1-PR14, commit 1 — inventário da poda: importadores de cada item [medido sobre origin/main 6f8299f]
+# git grep por caminho de import e por símbolo; fora docs/, .audit/, .planning/; o próprio arquivo não conta
+
+## components/ui/* (32 arquivos)
+$ git grep -nE "components/ui/accordion['\"]|from ['\"]\./accordion['\"]" -- '*.ts' '*.tsx' ':!components/ui/accordion.tsx'
+(0)
+$ git grep -nE "components/ui/alert-dialog['\"]|from ['\"]\./alert-dialog['\"]" -- '*.ts' '*.tsx' ':!components/ui/alert-dialog.tsx'
+(0)
+$ git grep -nE "components/ui/alert['\"]|from ['\"]\./alert['\"]" -- '*.ts' '*.tsx' ':!components/ui/alert.tsx'
+(0)
+$ git grep -nE "components/ui/aspect-ratio['\"]|from ['\"]\./aspect-ratio['\"]" -- '*.ts' '*.tsx' ':!components/ui/aspect-ratio.tsx'
+(0)
+$ git grep -nE "components/ui/avatar['\"]|from ['\"]\./avatar['\"]" -- '*.ts' '*.tsx' ':!components/ui/avatar.tsx'
+(0)
+$ git grep -nE "components/ui/badge['\"]|from ['\"]\./badge['\"]" -- '*.ts' '*.tsx' ':!components/ui/badge.tsx'
+(0)
+$ git grep -nE "components/ui/breadcrumb['\"]|from ['\"]\./breadcrumb['\"]" -- '*.ts' '*.tsx' ':!components/ui/breadcrumb.tsx'
+(0)
+$ git grep -nE "components/ui/button['\"]|from ['\"]\./button['\"]" -- '*.ts' '*.tsx' ':!components/ui/button.tsx'
+components/ui/alert-dialog.tsx:7:import { buttonVariants } from "@/components/ui/button"
+components/ui/calendar.tsx:8:import { buttonVariants } from "@/components/ui/button"
+components/ui/pagination.tsx:5:import { ButtonProps, buttonVariants } from "@/components/ui/button"
+lib/error-boundary.tsx:5:import { Button } from '@/components/ui/button'
+$ git grep -nE "components/ui/calendar['\"]|from ['\"]\./calendar['\"]" -- '*.ts' '*.tsx' ':!components/ui/calendar.tsx'
+(0)
+$ git grep -nE "components/ui/card['\"]|from ['\"]\./card['\"]" -- '*.ts' '*.tsx' ':!components/ui/card.tsx'
+(0)
+$ git grep -nE "components/ui/checkbox['\"]|from ['\"]\./checkbox['\"]" -- '*.ts' '*.tsx' ':!components/ui/checkbox.tsx'
+(0)
+$ git grep -nE "components/ui/collapsible['\"]|from ['\"]\./collapsible['\"]" -- '*.ts' '*.tsx' ':!components/ui/collapsible.tsx'
+(0)
+$ git grep -nE "components/ui/dialog['\"]|from ['\"]\./dialog['\"]" -- '*.ts' '*.tsx' ':!components/ui/dialog.tsx'
+(0)
+$ git grep -nE "components/ui/dropdown-menu['\"]|from ['\"]\./dropdown-menu['\"]" -- '*.ts' '*.tsx' ':!components/ui/dropdown-menu.tsx'
+(0)
+$ git grep -nE "components/ui/input['\"]|from ['\"]\./input['\"]" -- '*.ts' '*.tsx' ':!components/ui/input.tsx'
+(0)
+$ git grep -nE "components/ui/label['\"]|from ['\"]\./label['\"]" -- '*.ts' '*.tsx' ':!components/ui/label.tsx'
+(0)
+$ git grep -nE "components/ui/pagination['\"]|from ['\"]\./pagination['\"]" -- '*.ts' '*.tsx' ':!components/ui/pagination.tsx'
+(0)
+$ git grep -nE "components/ui/popover['\"]|from ['\"]\./popover['\"]" -- '*.ts' '*.tsx' ':!components/ui/popover.tsx'
+(0)
+$ git grep -nE "components/ui/progress['\"]|from ['\"]\./progress['\"]" -- '*.ts' '*.tsx' ':!components/ui/progress.tsx'
+(0)
+$ git grep -nE "components/ui/resizable['\"]|from ['\"]\./resizable['\"]" -- '*.ts' '*.tsx' ':!components/ui/resizable.tsx'
+(0)
+$ git grep -nE "components/ui/scroll-area['\"]|from ['\"]\./scroll-area['\"]" -- '*.ts' '*.tsx' ':!components/ui/scroll-area.tsx'
+(0)
+$ git grep -nE "components/ui/select['\"]|from ['\"]\./select['\"]" -- '*.ts' '*.tsx' ':!components/ui/select.tsx'
+(0)
+$ git grep -nE "components/ui/separator['\"]|from ['\"]\./separator['\"]" -- '*.ts' '*.tsx' ':!components/ui/separator.tsx'
+(0)
+$ git grep -nE "components/ui/sheet['\"]|from ['\"]\./sheet['\"]" -- '*.ts' '*.tsx' ':!components/ui/sheet.tsx'
+(0)
+$ git grep -nE "components/ui/skeleton['\"]|from ['\"]\./skeleton['\"]" -- '*.ts' '*.tsx' ':!components/ui/skeleton.tsx'
+(0)
+$ git grep -nE "components/ui/slider['\"]|from ['\"]\./slider['\"]" -- '*.ts' '*.tsx' ':!components/ui/slider.tsx'
+(0)
+$ git grep -nE "components/ui/switch['\"]|from ['\"]\./switch['\"]" -- '*.ts' '*.tsx' ':!components/ui/switch.tsx'
+(0)
+$ git grep -nE "components/ui/table['\"]|from ['\"]\./table['\"]" -- '*.ts' '*.tsx' ':!components/ui/table.tsx'
+(0)
+$ git grep -nE "components/ui/tabs['\"]|from ['\"]\./tabs['\"]" -- '*.ts' '*.tsx' ':!components/ui/tabs.tsx'
+(0)
+$ git grep -nE "components/ui/textarea['\"]|from ['\"]\./textarea['\"]" -- '*.ts' '*.tsx' ':!components/ui/textarea.tsx'
+(0)
+$ git grep -nE "components/ui/toggle['\"]|from ['\"]\./toggle['\"]" -- '*.ts' '*.tsx' ':!components/ui/toggle.tsx'
+(0)
+$ git grep -nE "components/ui/tooltip['\"]|from ['\"]\./tooltip['\"]" -- '*.ts' '*.tsx' ':!components/ui/tooltip.tsx'
+(0)
+
+## types/content.ts — os símbolos sem importador (div. 839 + os que só elas usavam)
+$ git grep -nw getContentTypeIcon -- '*.ts' '*.tsx' ':!types/content.ts'
+(0)
+$ git grep -nw getContentTypeColors -- '*.ts' '*.tsx' ':!types/content.ts'
+(0)
+$ git grep -nw CONTENT_TYPE_ICONS -- '*.ts' '*.tsx' ':!types/content.ts'
+(0)
+$ git grep -nw CONTENT_TYPE_COLORS -- '*.ts' '*.tsx' ':!types/content.ts'
+(0)
+$ git grep -nw CONTENT_TYPE_DISPLAY_NAMES -- '*.ts' '*.tsx' ':!types/content.ts'
+(0)
+$ git grep -nw CONTENT_TYPE_IDS -- '*.ts' '*.tsx' ':!types/content.ts'
+(0)
+$ git grep -nw ContentTypeId -- '*.ts' '*.tsx' ':!types/content.ts'
+(0)
+## types/content.ts — o que FICA (tem importador)
+$ git grep -lw ContentType -- '*.ts' '*.tsx' ':!types/content.ts' | wc -l
+22
+$ git grep -lw CONTENT_TYPE_KEYS -- '*.ts' '*.tsx' ':!types/content.ts' | wc -l
+2
+$ git grep -lw normalizeContentType -- '*.ts' '*.tsx' ':!types/content.ts' | wc -l
+4
+
+## contexts/sidebar-context.tsx · hooks/use-navigation-actions.ts
+$ git grep -n sidebar-context -- '*.ts' '*.tsx' ':!contexts/sidebar-context.tsx' ':!hooks/use-navigation-actions.ts'
+contexts/__tests__/sidebar-context.test.tsx:12:  const mod = await import('../sidebar-context')
+contexts/__tests__/sidebar-context.test.tsx:20:    const mod = await import('../sidebar-context')
+$ git grep -n SidebarProvider -- '*.ts' '*.tsx' ':!contexts/sidebar-context.tsx' ':!hooks/use-navigation-actions.ts'
+contexts/__tests__/sidebar-context.test.tsx:14:    'useSidebar must be used within a SidebarProvider'
+contexts/__tests__/sidebar-context.test.tsx:18:describe('SidebarProvider', () => {
+contexts/__tests__/sidebar-context.test.tsx:21:    const wrapper = ({ children }: any) => <mod.SidebarProvider>{children}</mod.SidebarProvider>
+$ git grep -n useSidebar -- '*.ts' '*.tsx' ':!contexts/sidebar-context.tsx' ':!hooks/use-navigation-actions.ts'
+contexts/__tests__/sidebar-context.test.tsx:11:it('throws if useSidebar called outside provider', async () => {
+contexts/__tests__/sidebar-context.test.tsx:13:  expect(() => renderHook(() => mod.useSidebar())).toThrow(
+contexts/__tests__/sidebar-context.test.tsx:14:    'useSidebar must be used within a SidebarProvider'
+contexts/__tests__/sidebar-context.test.tsx:22:    const { result } = renderHook(() => mod.useSidebar(), { wrapper })
+$ git grep -n use-navigation-actions -- '*.ts' '*.tsx' ':!contexts/sidebar-context.tsx' ':!hooks/use-navigation-actions.ts'
+(0)
+$ git grep -n useNavigationActions -- '*.ts' '*.tsx' ':!contexts/sidebar-context.tsx' ':!hooks/use-navigation-actions.ts'
+(0)
+(o único importador do sidebar-context é o próprio teste — morre junto; o use-navigation-actions não tem teste)
+
+## lib/error-boundary.tsx — quem o importa
+$ git grep -nE "error-boundary['\"]|useErrorHandler" -- '*.ts' '*.tsx' ':!lib/error-boundary.tsx'
+app/layout.tsx:10:import { ErrorBoundary } from "@/lib/error-boundary"
+
+## o sonner (div. 885)
+$ ls node_modules/sonner
+ls: node_modules/sonner: No such file or directory
+$ git grep -n "vi.mock('sonner'"
+components/editors/__tests__/editor-estados.test.tsx:28:vi.mock('sonner', () => ({ toast: { success: vi.fn(), error: vi.fn() } }))
+components/upload/__tests__/upload-estados.test.tsx:26:vi.mock('sonner', () => ({ toast }))
+tests/gates/i1-editor-put.test.tsx:39:vi.mock('sonner', () => ({ toast: { success: vi.fn(), error: vi.fn() } }))
+tests/gates/i1-upload-post.test.tsx:36:vi.mock('sonner', () => ({ toast: { success: vi.fn(), error: vi.fn() } }))
+$ git grep -nE "from ['\"]sonner" -- '*.ts' '*.tsx'
+(0)
+
+## lucide-react fora de components/ui
+$ git grep -l lucide-react -- '*.ts' '*.tsx' ':!components/ui' ':!apps' ':!packages'
+lib/error-boundary.tsx
+types/content.ts
+
+## styles/globals.css (achado: duplicata do app/globals.css, do commit inicial)
+$ git grep -n 'styles/globals' ; git log --oneline -- styles/globals.css
+(0)
+cce69b5 Initialized repository for project MusicSheet Pro
+
+## components.json (config do CLI do shadcn — aponta para components/ui)
+$ git grep -n 'components\.json' -- . ':!pnpm-lock.yaml'
+(0)
+
+## os toast.* dos testes do upload: vi.mock('sonner') com asserções que não podem falhar (ninguém importa sonner)
+$ git grep -n "expect(toast" -- '*.test.tsx'
+components/upload/__tests__/upload-estados.test.tsx:118:    expect(toast.success).not.toHaveBeenCalled()
+components/upload/__tests__/upload-estados.test.tsx:134:    expect(toast.error).not.toHaveBeenCalled()
+components/upload/__tests__/upload-estados.test.tsx:204:    expect(toast.error).not.toHaveBeenCalled()
+components/upload/__tests__/upload-estados.test.tsx:240:    expect(toast.error).not.toHaveBeenCalled()
+components/upload/__tests__/upload-estados.test.tsx:316:    expect(toast.error).not.toHaveBeenCalled()

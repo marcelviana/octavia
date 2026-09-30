@@ -1,0 +1,53 @@
+# G-tok com lib/error-boundary.tsx na lista (commit 1), sobre o código da main 6f8299f
+$ node scripts/gates-web/g-tok.mjs
+## (i) a folha — conferir.mjs × erratas.json
+  ✓ I1-E1 (estado) cobre 2
+  ✓ I1-E2 (estado) cobre 1
+  ✓ I1-E2 (estado) cobre 2
+  ✓ I1-E15 (estado) cobre 4
+  ✓ I1-E3 (forma) cobre 1
+  ✓ I1-E4 (inventario-sem-px) cobre 6
+  ✓ I1-E5 (declaracao) cobre 8
+  ✓ I1-E6 (forma) cobre 1
+  ✓ decisao-588 (nome-icone) cobre 1
+  ✓ decisao-589 (forma) cobre 1
+  achados do conferir: 26 · cobertos: 26 · descobertos: 0 · erratas: 9 · órfãs: 0
+## (ii) arquivos redesenhados — scripts/gates-web/g-tok-arquivos.txt
+  ✗ lib/error-boundary.tsx:58 [cor] "text-red-500" — use a custom property de app/styles/identidade.css
+  ✗ lib/error-boundary.tsx:59 [cor] "text-red-800" — use a custom property de app/styles/identidade.css
+  ✗ lib/error-boundary.tsx:60 [cor] "text-red-600" — use a custom property de app/styles/identidade.css
+  ✗ lib/error-boundary.tsx:66 [cor] "bg-red-50" — use a custom property de app/styles/identidade.css
+  ✗ lib/error-boundary.tsx:67 [cor] "text-red-800" — use a custom property de app/styles/identidade.css
+  ✗ lib/error-boundary.tsx:70 [cor] "text-red-700" — use a custom property de app/styles/identidade.css
+  ✗ lib/error-boundary.tsx:81 [cor] "bg-red-600" — use a custom property de app/styles/identidade.css
+  ✗ lib/error-boundary.tsx:81 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ lib/error-boundary.tsx:81 [cor] "bg-red-700" — use a custom property de app/styles/identidade.css
+  ✗ lib/error-boundary.tsx:88 [cor] "border-red-300" — use a custom property de app/styles/identidade.css
+  ✗ lib/error-boundary.tsx:88 [cor] "text-red-700" — use a custom property de app/styles/identidade.css
+  ✗ lib/error-boundary.tsx:88 [cor] "bg-red-50" — use a custom property de app/styles/identidade.css
+  ✗ lib/error-boundary.tsx:59 [tamanho de fonte] "text-xl" — use a custom property de app/styles/identidade.css
+  ✗ lib/error-boundary.tsx:60 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ lib/error-boundary.tsx:70 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ lib/error-boundary.tsx:56 [espaçamento] "p-8" — use a custom property de app/styles/identidade.css
+  ✗ lib/error-boundary.tsx:58 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ lib/error-boundary.tsx:59 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ lib/error-boundary.tsx:60 [espaçamento] "mb-6" — use a custom property de app/styles/identidade.css
+  ✗ lib/error-boundary.tsx:66 [espaçamento] "mb-6" — use a custom property de app/styles/identidade.css
+  ✗ lib/error-boundary.tsx:66 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ lib/error-boundary.tsx:67 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ lib/error-boundary.tsx:78 [espaçamento] "space-x-3" — use a custom property de app/styles/identidade.css
+  ✗ lib/error-boundary.tsx:57 [tamanho] "max-w-md" — use a custom property de app/styles/identidade.css
+  ✗ lib/error-boundary.tsx:58 [tamanho] "w-16" — use a custom property de app/styles/identidade.css
+  ✗ lib/error-boundary.tsx:58 [tamanho] "h-16" — use a custom property de app/styles/identidade.css
+  ✗ lib/error-boundary.tsx:66 [raio] "rounded" — use a custom property de app/styles/identidade.css
+  ✗ lib/error-boundary.tsx:66 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ lib/error-boundary.tsx:56 [valor arbitrário] "min-h-[400px]" — use a custom property de app/styles/identidade.css
+  ✗ lib/error-boundary.tsx:5 [import de ui] "from '@/components/ui/button'" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ lib/error-boundary.tsx:59 [inglês, texto JSX] "Something went wrong" ← termo "something went wrong"
+  ✗ lib/error-boundary.tsx:67 [inglês, texto JSX] "Error Details (Development Only)" ← termo "details"
+  ✗ lib/error-boundary.tsx:82 [inglês, texto JSX] "Try again" ← termo "try again"
+  ✗ lib/error-boundary.tsx:89 [inglês, texto JSX] "Reload page" ← termo "reload"
+  arquivos: 124 · literais de identidade acusados: 29 · toasts: 0 · imports de ui: 1 · textos examinados: 27 · isentos de inglês (scripts/gates-web/g-tok-sem-ingles.txt): 1 · vocabulário: 133 · isenções: 9 · div. 828: desligada
+
+G-tok: REPROVA — 34 ocorrência(s)
+# exit: 1

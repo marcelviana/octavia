@@ -145,6 +145,28 @@ const POSICOES = [
   { nome: "literal JSX {'…'}", re: /\{\s*(?:"([^"]*)"|'([^']*)'|`([^`$]*)`)\s*\}/g },
   { nome: "atributo", re: /\b(?:aria-label|placeholder|title|alt)\s*=\s*(?:"([^"]*)"|\{\s*'([^']*)'\s*\}|\{\s*"([^"]*)"\s*\}|\{\s*`([^`$]*)`\s*\})/g },
 ]
+// I1-PR14 (div. 828): o inglês que mora em STRING de `.ts`/`.tsx` fora do JSX — a forma do `gate:a20` do nativo
+// (`apps/native/scripts/a20.mjs`: a chave de objeto de frases da V1-PR6 e os `EXTRAS` da N2-PR3/PR4).
+// (a) CHAVE DE TEXTO — o valor literal de uma chave cujo nome é de texto (as cinco do a20 + as do web velho em
+//     inglês: `message`, `title`, `description`, `label`, `placeholder`), em todo arquivo da lista;
+// (b) FUNÇÃO DE MENSAGEM — o 1º argumento literal de `alert(`, `confirm(`, `prompt(` (o navegador mostra);
+// (c) ARQUIVO DE FRASES (`frases-*.ts`, o conjunto fechado — o `EXTRAS` do a20): todo valor de chave, menos `valor`
+//     (o dado gravado, não o rótulo), e todo literal de template.
+// Não é texto: argumento de `new Error(`, `logger`/`console`, comparação — a tela escolhe a frase pela espécie
+// (I1-PR12 §21). Nem a string com forma de CHAVE (`up.meta.album`): o `rotulo:` que aponta para o `FRASES`.
+// Desligada até o aval da I1-PR14 (`G_TOK_828=1` liga; o CN em docs/ux/I1-PR14-anexos/cn/).
+const LIGA_828 = process.env.G_TOK_828 === "1"
+const LIT_828 = String.raw`(?:'((?:[^'\\\n]|\\.)*)'|"((?:[^"\\\n]|\\.)*)"|` + "`((?:[^`\\\\]|\\\\.)*)`)"
+const POSICOES_828 = [
+  { nome: "chave de texto", re: new RegExp(String.raw`(?<![\w$.])(?:titulo|apoio|texto|rotulo|motivo|message|title|description|label|placeholder)\s*:\s*` + LIT_828, "g") },
+  { nome: "função de mensagem", re: new RegExp(String.raw`(?<![\w$.])(?:window\.)?(?:alert|confirm|prompt)\s*\(\s*` + LIT_828, "g") },
+]
+const POSICOES_FRASES = [
+  { nome: "frases: valor de chave", re: new RegExp(String.raw`(?:^|[\s{,])(?!valor\s*:)(?:'[^'\n]*'|"[^"\n]*"|[A-Za-z_$][\w$]*)\s*:\s*` + LIT_828, "gm") },
+  { nome: "frases: literal de template", re: /`([^`]*)`/g },
+]
+const ARQUIVO_DE_FRASES = /(^|\/)frases-[^/]*\.ts$/
+const FORMA_DE_CHAVE = /^[\w-]+(?:\.[\w-]+)+$/
 // I1-D26 (div. 634) [I1-PR6]: nenhum toast entra — a falha é a `LinhaDeAviso` da folha. Num arquivo
 // da lista, a CHAMADA (`toast(…)`, `toast.error(…)`, …) ou o hook (`useToast`) reprova.
 const TOAST = /\btoast\s*(?:\.\s*\w+\s*)?\(|\buseToast\b/g
@@ -161,7 +183,7 @@ function arquivos() {
   const lerLista = (f) => fs.readFileSync(f, "utf8").split("\n").map((l) => l.trim()).filter((l) => l && !l.startsWith("#"))
   const semIngles = new Set(fs.existsSync(SEM_INGLES) ? lerLista(SEM_INGLES) : [])
   for (const f of semIngles) if (!lista.includes(f)) falha(`${f}: está em ${SEM_INGLES} e não na lista (ii) — exceção sem arquivo cobrado`)
-  let literais = 0, textos = 0, toasts = 0, importsUi = 0, isentos = 0
+  let literais = 0, textos = 0, toasts = 0, importsUi = 0, isentos = 0, textos828 = 0
   for (const f of lista) {
     if (!fs.existsSync(f)) { falha(`${f}: está na lista e não existe`); continue }
     const src = semComentarios(fs.readFileSync(f, "utf8"))
@@ -193,8 +215,20 @@ function arquivos() {
       const hit = vocabOrdenado.find((v) => new RegExp(`(^|[^a-zà-ÿ])${v.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}([^a-zà-ÿ]|$)`, "i").test(baixo))
       if (hit && !ANGLICISMOS_DO_PRODUTO.includes(hit)) falha(`${f}:${linha(src, m.index)} [inglês, ${nome}] ${JSON.stringify(s)} ← termo "${hit}"`)
     }
+    if (!LIGA_828) continue
+    const fimVisto = new Set() // o mesmo literal casado por duas posições (a chave `rotulo:` num arquivo de frases) conta uma vez
+    for (const { nome, re } of ARQUIVO_DE_FRASES.test(f) ? [...POSICOES_828, ...POSICOES_FRASES] : POSICOES_828) for (const m of src.matchAll(re)) {
+      const s = (m[1] ?? m[2] ?? m[3] ?? "").replace(/\$\{[^}]*\}/g, " ").trim()
+      if (!s || !/[A-Za-z]/.test(s) || FORMA_DE_CHAVE.test(s)) continue
+      const fim = m.index + m[0].length
+      if (fimVisto.has(fim)) continue
+      fimVisto.add(fim)
+      textos828++
+      const hit = vocabOrdenado.find((v) => new RegExp(`(^|[^a-zà-ÿ])${v.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}([^a-zà-ÿ]|$)`, "i").test(s))
+      if (hit && !ANGLICISMOS_DO_PRODUTO.includes(hit)) falha(`${f}:${linha(src, m.index)} [inglês, ${nome}] ${JSON.stringify(s)} ← termo "${hit}" (div. 828)`)
+    }
   }
-  console.log(`  arquivos: ${lista.length} · literais de identidade acusados: ${literais} · toasts: ${toasts} · imports de ui: ${importsUi} · textos examinados: ${textos} · isentos de inglês (${SEM_INGLES}): ${isentos} · vocabulário: ${VOCAB.length} · isenções: ${ANGLICISMOS_DO_PRODUTO.length}`)
+  console.log(`  arquivos: ${lista.length} · literais de identidade acusados: ${literais} · toasts: ${toasts} · imports de ui: ${importsUi} · textos examinados: ${textos} · isentos de inglês (${SEM_INGLES}): ${isentos} · vocabulário: ${VOCAB.length} · isenções: ${ANGLICISMOS_DO_PRODUTO.length}${LIGA_828 ? ` · strings de .ts examinadas (div. 828): ${textos828}` : " · div. 828: desligada"}`)
 }
 
 if (modo !== "--so-arquivos") folha()

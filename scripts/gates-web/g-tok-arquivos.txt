@@ -150,3 +150,7 @@ components/setlists/apagar.tsx
 components/setlists/picker.tsx
 components/setlists/cartao.tsx
 components/setlists/detalhe.tsx
+# I1-PR14 — a poda do encerramento: o limite de erro global (de `app/layout.tsx`), o único ponto em que o web ainda
+# aparecia com a cara velha. Sem folha — composição mecânica: a marca (como no auth) + a `LinhaDeAviso`.
+# Commit 1 (gate-first): ele entra; a cobertura (`g-tok-cobertura.mjs`) lista os que ainda estão fora.
+lib/error-boundary.tsx
