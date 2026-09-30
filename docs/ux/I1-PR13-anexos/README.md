@@ -8,12 +8,12 @@
 > `Done in 17.9s using pnpm v10.28.0`. **Data**: 2026-09-30.
 > **Convenções**: `[medido]` = comando + saída literal (em `cn/`); `[lido]` = arquivo:linha; `[hipótese]` = o resto.
 > Divergências **a partir de 846** (a PR-12 fechou em 845, §24 dela — o prompt presumia 844: div. 846).
-> **Estado**: commit 1 (gate-first, `ae78774`) com o aval (§12, `6323dd5`); **commit 2 (a implementação, `ab0de37`, §14–§23)** e
-> o aceite (§19). **Veredito do aceite: PASSA — (e) = 0 e (b) = 0 nas três larguras, nos 20 estados da folha 8, nos 4 medidos
-> contra outra seção, na linha da sessão e nos 5 do "antes"; 532 erratas candidatas, todas cobertas pelas três erratas
-> PROPOSTAS (I1-E28 520 · I1-E29 8 · I1-E30 4); nó velho por componente 0.** Aguarda o aval do veredito. PR
-> [#348](https://github.com/marcelviana/octavia/pull/348). Nenhuma linha de `app/`, `components/` (fora
-> `components/setlists/__tests__/`), `lib/`, `hooks/` mudou.
+> **Estado**: **pronta para o merge (passo do Marcel)** — commit 1 (gate-first, `ae78774`) e o aval dele (`6323dd5`, §12);
+> commit 2 (a implementação, `ab0de37`, §14–§23) e o aceite (`5a8dc93`, §19); **aval do veredito dado** `[Marcel,
+> 2026-09-30]` (§24); commit 2b (o instrumento: rótulo curto com nome acessível longo, I1-D7.4 — `42be3f8`, `8a75485`,
+> `8baa1f2`, §25); commit 3 (só docs, §26). **Veredito final: PASSA — (e) = 0 e (b) = 0 nas três larguras, nos 30 estados;
+> 532 erratas candidatas, todas cobertas (I1-E28 520 · I1-E29 8 · I1-E30 4, aprovadas); nó velho por componente 0.** PR
+> [#348](https://github.com/marcelviana/octavia/pull/348).
 
 | arquivo | o que é |
 |---|---|
@@ -639,7 +639,9 @@ com erro (decisão 15).
   que falta** (a decisão 21): é o desenho contra a tabela, o caso da I1-E11.
 - **I1-E31** (div. 875) — em B e A o *Adicionar* do cabeçalho tem como nome acessível o rótulo de C (*Adicionar músicas*),
   não *Adicionar músicas a {nome}*: o G-faixa só conta como saída "nome-acessível" o nome IGUAL ao texto de C; com o nome
-  longo, eram 40 (e) (*texto some do nó*) na 1ª pré-verificação. São dois botões, um por faixa.
+  longo, eram 40 (e) (*texto some do nó*) na 1ª pré-verificação. São dois botões, um por faixa. **→ Recusada no aval do
+  veredito** (a regra é a I1-D7 item 4; o defeito era do instrumento): desfeita no commit 2b (§25) — um botão, o nome
+  acessível longo nas três faixas.
 - **A div. 871 deixa de existir** — a recarga ao voltar à aba não troca mais a lista pelos blocos (os blocos só aparecem
   sem lista na tela, como na biblioteca) e a setlist aberta é a relida (derivada da lista). Teste em
   `setlists-estados.test.tsx`. O aval pediu para medir se persistia: **não persiste**; sai da herança D.
@@ -904,6 +906,213 @@ Próxima divergência: **887**.
 | executor | `pnpm build` | na mesma cópia, sem `.env` |
 | executor | a `main` para os testes novos | worktree temporária de `aa772df` (`--detach`), removida |
 | todos | escrita que saiu | **0** (`fabricado 200/404/500` e `fabricado sem resposta`) |
+| — | leitura de setlist ou content real | **nenhuma** (as duas leituras fabricadas; lidos só `/api/profile`, o `securetoken` e, no `DASH`, o painel da conta — SSR, só hash) |
+| — | `packages/identidade` · `tailwind.config.ts` · as rotas · `lib/api-schemas.ts` | **não mudaram** |
+
+---
+
+## 24. O aval do veredito — decisões `[Marcel, 2026-09-30]`
+
+(Transcrição do prompt dos commits 2b e 3; a mensagem chegou cortada no fim — div. 892.)
+
+| # | o que se pediu | decisão |
+|---|---|---|
+| 1 | o veredito: G-faixa PASSA, (e) 0 e (b) 0 nas três larguras; 532 candidatas cobertas | **aceito** |
+| 2 | **I1-E28, I1-E29, I1-E30** | **aprovadas** — sem a marca de proposta (`DESIGN-I1/README.md` §2.2, `erratas.json`) |
+| 3 | **I1-E31** (em B, o nome acessível curto) | **recusada**: a regra é a I1-D7 item 4 — rótulo curto **com nome acessível longo**; o defeito é do instrumento → o commit 2b |
+| 4 | os extras 5–8 do relato (a div. 871 fechada; a data do show pelo texto; `aviso-de-sessao.tsx`; `components/ui/sonner.tsx` apagado) | **aprovados** |
+| 5 | `@radix-ui/react-toast` sem importador, os `vi.mock('sonner')`, o `themeColor` literal | → **a poda do encerramento** |
+
+## 25. Commit 2b — o instrumento: rótulo curto com nome acessível longo (I1-D7.4) `[medido]`
+
+### 25.1 A regra
+
+`scripts/gates-web/g-faixa-classificar.mjs` (e a coleta): o nó de 1138 que não existe na largura W pela chave **não** é
+(e) quando é o mesmo controle com o rótulo encurtado — o nome acessível de 1138 segue lá. Como ficou:
+
+- a **coleta** (`g-faixa-coleta.ts`) grava `nl: true` no nó do app cujo `aria-label` **contém** o texto visível
+  (*Adicionar* ⊂ *Adicionar músicas a Show padrão*). Só no app — na folha não se coleta: o `8-setlists.json` re-gerado
+  saiu **byte a byte igual**; o CN da coleta (página sintética) segue 3/3;
+- o **classificador**: o nó de 1138 com `nl` e nome acessível, sem nó na largura W pela chave, é a saída
+  **nome-acessível** quando há em W um nó com área, fora do leitor de tela, com o **mesmo** nome acessível, também `nl`,
+  e o texto **mais curto** (cada nó de W serve a um só).
+
+**Por que o `nl`** (div. 888): a regra como veio no aval — *"o nome acessível igual ao do nó de C"* — movia a linha de base
+do web velho: `cn-main/library.json` tem 20 cartões com o **mesmo** `aria-label` em C e em B e **12 caracteres a menos**
+em 711 (o bloco `hidden md:flex` que some — é o CN da I1-PR5: *"o web velho tem de reprovar"*). Com a regra literal,
+`divergem: 2` (os 40 (e) desses cartões viravam saída). O que separa os dois casos é o nome **conter** o rótulo: o
+`aria-label` do cartão não contém o texto dele (título, artista, tipo, data), o do *Adicionar* contém. **Por que não "sem
+par pela chave"** (div. 889): a 1ª versão exigia o nó de W sem par; em 4 estados do picker a chave do *Adicionar* do
+cabeçalho em B (`button:<hash de "Adicionar">#1`) é a mesma do *Adicionar* sem número do picker em C — (e) 4 na
+re-medição de C e B. Tirada a exigência (`8a75485`), (e) 0.
+
+### 25.2 O CN — `cn/nome-longo-cn.txt`
+
+```
+$ node docs/ux/I1-PR13-anexos/cn/nome-longo-cn.mjs
+(1) classificador de 5a8dc93 × o de agora, sobre os JSON commitados em 5a8dc93: 34 JSON · 549 (estado × largura) · divergem: 0
+(2) "Adicionar músicas" (C) → "Adicionar" (B), o MESMO aria-label "Adicionar músicas a X": antes (e) 1 · nome-acessível 0 → agora (e) 0 · nome-acessível 1
+(2) "Adicionar músicas" (C) → "Adicionar" (B), SEM aria-label: antes (e) 1 · nome-acessível 0 → agora (e) 1 · nome-acessível 0 [texto some do nó]
+(2) o cartão que perde conteúdo: o MESMO aria-label, que NÃO contém o texto (48 → 36 car.): antes (e) 1 · nome-acessível 0 → agora (e) 1 · nome-acessível 0 [texto some do nó]
+CN: PASSA
+# exit: 0
+```
+
+(1) lê os JSON **do commit** `5a8dc93` (`git show`), todos os 34 de `tests/gates-web/medicoes/` com as subpastas —
+`cn-main/`, `casca-efeito/`, `rodada1/`, `antes-1-auth/` —: nenhum resultado se move. Vitest
+(`tests/gates-web/g-faixa-classificar.test.ts`): +1 caso com os cinco lados (com o nome longo em B e A → (e) 0; sem
+`aria-label` → (e) 1; outro nome → (e) 1; o nó escondido → (e) 1; o cartão que perde conteúdo → (e) 1) — 19/19.
+
+### 25.3 A tela e o congelamento
+
+- `components/setlists/detalhe.tsx`: **um** botão, *Adicionar músicas* em C e *Adicionar* em B e A, com o nome acessível
+  *Adicionar músicas a {nome}* nas três faixas (a §5.9 como está);
+- a I1-E31 **saiu** do `DESIGN-I1/README.md` §2.2 (fica a nota de que foi recusada) e do `erratas.json`; `SHA256SUMS`
+  (`dc34c0da…` → `39b5f632…`); no commit 3, a marca de proposta das outras três sai (`39b5f632…` → `4cf90b34…`); **14/14 OK**.
+
+### 25.4 A re-medição por estado (I1-D37)
+
+Os 20 estados com o cabeçalho da setlist aberta (`SET`, `-sem-musicas`, `-criar*` (4), `-apagar*` (2), `-adicionar*` (5),
+`-remover-erro`, `-editar*` (3), `-adicionar-todas-ja`, `base-detalhe`, `base-picker`), `G_FAIXA_ESTADOS`, mesclados por
+estado (`rodadasPorEstado`):
+
+| rodada | quando (UTC) | larguras | commit |
+|---|---|---|---|
+| 4 | 17:15–17:18 | **C e B** (1138 também: a regra lê o `nl` da referência — div. 887) | `42be3f8` |
+| 5 | 17:31–17:32 | **A** (15 min depois, a cota) | `8a75485` |
+
+(Antes da 4, uma tentativa que parou em *"o perfil não tem sessão"* — o token de 1 h do cookie, vencido; a 2ª entrou. Div. 891.)
+
+```
+G-faixa · setlists · 411:  (e)=0 · (b)=0 · (d′)=93 · errata candidata=0   · saídas: nome-acessível=20 rolagem=4 (faixa A)
+G-faixa · setlists · 711:  (e)=0 · (b)=0 · (d′)=1  · errata candidata=526 · saídas: nome-acessível=20 rolagem=0
+G-faixa · setlists · 1138: (e)=0 · (b)=0 · (d′)=0  · errata candidata=6   · saídas: nome-acessível=0 rolagem=6
+```
+
+As candidatas são as mesmas 532 (I1-E28 520 · I1-E29 8 · I1-E30 4): o botão tem a mesma geometria. A saída
+"nome-acessível" em B e A — 20 cada — é agora o *Adicionar* com o nome longo. A pré-verificação sem sessão (§17) é a do
+commit 2 (os dois botões); não foi refeita.
+
+Verdes do 2b: `pnpm test` → `118 passed | 3 skipped (121)` · `1173 passed | 58 skipped (1231)`; `tsc` 0; lint ✔; G-tok
+PASSA; G-back PASSA; G-palco 0; o veredito PASSA.
+
+## 26. Commit 3 — o fecho `[medido]`
+
+### 26.1 O veredito final — `cn/g-faixa-aceite.txt`
+
+```
+$ node scripts/gates-web/g-faixa-veredito.mjs tests/gates-web/medicoes
+## contados à parte (não reprovam): errata candidata 773 · quebra por dado 42 · sem par folha 656 · sem par app 1226 (C e B) · não medidos 26
+## erratas candidatas sem cobertura (erratasFaixa, div. 681): 0
+G-faixa: PASSA
+# exit: 0
+```
+
+**(e) = 0 e (b) = 0 nas três larguras**, nos 30 estados das setlists (os 20 da folha, os 3 do editar contra `SET-criar*`, a
+N10 contra `SET-adicionar-vazio`, `SESSAO-nao-renovada` e os 5 `base-*`); `scrollWidth` = viewport nos 90. Candidatas
+**532, todas cobertas** (I1-E28 520 · I1-E29 8 · I1-E30 4 — aprovadas). **Quebra por dado: 0.** Sem par: 44 da folha / 329
+do app em C e em B (a lista por espécie no §19). **Inalcançáveis com a sessão**, com a prova: o *carregando as setlists…*
+pelo `isLoading` do Firebase e pelo "sem usuário" (a mesma tela do `SET-carregando`, alcançado pelo pedaço segurado) —
+pré-verificação (§17) e Vitest; as variantes de motivo por status, a adição a meio, os 404 que não são o do apagar, a
+biblioteca cortada e a que falhou — Vitest. A fixture pelo hash: 51/51 (`cn/fixture-hash.txt`).
+
+### 26.2 Antes × depois — `cn/casca-efeito-setlists.txt`
+
+```
+NÓ VELHO POR COMPONENTE: 0 — nas 15 (estado × largura) · (b) do antes 12 → do depois 0
+depois: a coluna da lista x 32 w 419.2 · o painel x 475.2 até 1106 (w 630.8) — razão 0.665 (2 : 3 = 0.667)
+```
+
+- **nó velho por componente = 0** (as 62 frases de UI das setlists velhas);
+- **coincidência de texto** = o dado (a descrição, os títulos, os artistas, os números das linhas) — 0 a 19 por estado;
+- **casca sem Δ**: 9/9 · 9/9 · 8/8 (em `base-formulario` · 411, "8/10": os dois a mais são do diálogo velho acima de
+  y = 120, não da casca); e o `app/layout.tsx` que mudou (o Toaster): o painel (`DASH`), casca 9/9 · 9/9 · 8/8, 32 de 33 nós
+  idênticos — o 33º é a `<section>` do Toaster (`cn/casca-dashboard.txt`);
+- **a largura liberada da PR-9 fechada** pela razão da folha: 419,2 : 630,8 dos 1074 úteis (2 : 3);
+- **os 12 (b) do web velho em 411** (o `truncate` das linhas) → **0**.
+
+### 26.3 `cn-main` — o registro final
+
+`cn/cn-main-veredito.txt`: **`G-faixa: REPROVA — 83 ocorrência(s)`**, a mesma (e o CN do 2b a mantém: `divergem: 0`).
+**Com esta PR, a linha de base do web velho não tem mais superfície viva**: as cinco com sessão que ela mediu
+(`dashboard`, `library`, `setlists`, `content`) e as três públicas (`login`, `landing`, `privacy-policy`) foram
+redesenhadas (I1-PR-6…13). Os 83 são história.
+
+### 26.4 H-I1-5 — fechada
+
+*"Nenhum toast das setlists aparece; o diálogo *Delete Setlist* fica aberto no 404"* (I1-PRECHECK §0.2, probe 4). Agora:
+nenhum toast existe no web (`git grep` de `toast(`/`useToast`/`<Toaster` fora de testes → 0; `hooks/use-toast.ts`,
+`components/ui/{toast,toaster,sonner}.tsx` e a dependência `sonner` morreram); o 404 fecha o diálogo, relê a lista e diz
+*esta setlist já foi apagada* — `setlists-defeitos.test.tsx` (c), que reprova na `main`.
+
+### 26.5 A div. 871 — fechada
+
+A recarga ao voltar à aba (30 s) não troca mais a lista pelos blocos e a setlist aberta é a relida:
+`setlists-estados.test.tsx`, "div. 871". Sai da herança D (extra 5, aprovado).
+
+## 27. O web velho que sobra — a 1ª seção do `I1-ENCERRAMENTO.md` `[medido]`
+
+Sobre `8baa1f2`. Dos **199** `.ts`/`.tsx` de `app/` (sem as rotas de API), `components/`, `hooks/`, `lib/`, `contexts/` e
+`types/` (sem testes), **123** estão em `g-tok-arquivos.txt`; dos **76** de fora, 32 são `components/ui/*` e 44 o resto — o
+G-tok (ii) sobre os 44 acusa **69** (era 70 antes desta PR; o `import` do sonner no layout saiu):
+
+| o que sobra | onde | medido |
+|---|---|---|
+| **o limite de erro global** | `lib/error-boundary.tsx` (de `app/layout.tsx`) | **34**: `ui/button`, `lucide-react` (`AlertTriangle`), cores e espaçamentos literais, **4 frases em inglês** (*Something went wrong* · *Error Details (Development Only)* · *Try again* · *Reload page*). A folha não o desenha (resposta 30) |
+| **`components/ui/*`** | 32 arquivos (eram 35: `toast`, `toaster`, `sonner` morreram aqui) | **31 sem importador nenhum**; o `button` só pelo `error-boundary` (div. 890: o prompt contava 33) |
+| **`types/content.ts`** | `getContentTypeIcon`, `getContentTypeColors` | **33** (`lucide-react`, classes de cor montadas em texto); sem importador (div. 839); o `safelist` de cores do `tailwind.config.ts` que os servia |
+| **o `themeColor`** | `app/layout.tsx:26` | `#f59e0b` (1) |
+| **um literal** | `components/auth/aviso-de-sessao.tsx:38` | `p-2` (1) — a linha da sessão no topo, que agora só as rotas públicas usam |
+| **sem importador** | `contexts/sidebar-context.tsx`, `hooks/use-navigation-actions.ts` (+ os testes deles) | a casca velha da PR-9 |
+| **`lucide-react`** | fora de `components/ui` | só `lib/error-boundary.tsx` e `types/content.ts` |
+| **toasts** | — | **0** |
+| **dependências** | `package.json` | `@radix-ui/react-toast` sem importador (div. 884); os `@radix-ui/*` dos 31 primitivos órfãos; `lucide-react` — a conferir com o `knip` |
+| **inglês em `.ts`** (o G-tok não lê — div. 828) | `lib/setlist-service.ts`, `lib/content-service.ts`, `hooks/useAddContentLogic.ts`, `hooks/useMetadataForm.ts`, `components/add-content/upload-to-storage.ts` | mensagens de `Error` que não chegam à tela; o valor gravado *"Unknown Artist"* do lote (herança D) |
+| **inglês que vem do servidor** | `app/api/setlists/route.ts:67-69`, `[id]/route.ts:275-277` | *Unknown Artist/Title/Type* — a tela das setlists os traduz na exibição (decisão 6); a rota é D |
+| **testes** | `components/editors/__tests__/editor-estados.test.tsx`, `tests/gates/i1-editor-put.test.tsx`, `components/upload/__tests__/upload-estados.test.tsx`, `tests/gates/i1-upload-post.test.tsx` | `vi.mock('sonner', …)` de um pacote que saiu (div. 885) |
+| **specs do `ux-audit`** | `tests/ux-audit/fase-d/*` | rótulos em inglês (fora do CI) |
+| **o tema velho** | `tailwind.config.ts` (`cream`, `beige`, `taupe`, as cores `hsl(var(--…))` do shadcn, o `safelist`, os `keyframes` do acordeão) | a conferir no encerramento, com o `globals.css` |
+
+Poda do encerramento pelo aval (item 5): `@radix-ui/react-toast`, os `vi.mock('sonner')`, o `themeColor`.
+
+## 28. Heranças — finais
+
+| herança | destino |
+|---|---|
+| o reordenar com persistência (a rota `PUT …/songs/order` sem chamador no web; decisão 27) | **Bloco D** |
+| o teto de 100 de `app/api/content/route.ts:119` × o pedido de 1000 do picker (decisão 4) | **Bloco D** |
+| os sentinelas *Unknown Artist/Title/Type* das rotas das setlists | **Bloco D** |
+| `position` e `notes: ""` no corpo de `POST …/songs`, que a rota recalcula ou ignora | **Bloco D** |
+| div. 864 — `lib/content-service-server.ts:12` importa `getSetlistById` do serviço cliente e não o usa | encerramento / D |
+| o §27 inteiro | **a 1ª seção do `I1-ENCERRAMENTO.md`** |
+| div. 845 — os testes do editor instáveis sob cobertura (herança da PR-12) | encerramento |
+| a harmonização do motivo (travessão na PR-9 × vírgula nas PR-11…13) | encerramento |
+
+## 29. Divergências — 887 a 892
+
+| # | origem | o que se presumiu | o que foi medido | destino |
+|---|---|---|---|---|
+| **887** | P | aval: *"re-meça por estado, em 711 e 411"* | a regra lê o `nl` também do nó de **1138** (a referência); os JSON de C não o tinham | re-medido C também (C e B juntos, 42 cargas; A 15 min depois) |
+| **888** | P | aval: *"não é (e) quando o seu nome acessível é igual ao do nó de C"* | ao pé da letra, a regra movia `cn-main/library.json` (os 20 cartões: mesmo `aria-label`, 12 car. a menos em 711) — `divergem: 2` | o `nl` (o nome contém o rótulo), gravado pela coleta; `divergem: 0` (§25.1) |
+| **889** | T | — | a 1ª versão exigia o nó de W sem par pela chave; em 4 estados do picker a chave do *Adicionar* de B coincide com a do *Adicionar* sem número de C — (e) 4 | tirada a exigência (`8a75485`); (e) 0 |
+| **890** | P | aval: *"33 `ui/*` órfãos"* | depois desta PR: 32 arquivos, **31** sem importador (os 3 de toast morreram aqui), 1 com (`button`) | §27 |
+| **891** | T | — | a 1ª tentativa da re-medição (17:15Z) parou no token de 1 h vencido; a 2ª entrou (o caso da 878) | registrado |
+| **892** | P | — | a mensagem do aval chegou **cortada** no meio do item "a pré-verificação e a 1ª rodada (os 40 (e) que eram o…" | o commit 3 segue o que chegou e o §4 do prompt da PR; **a conferir com o Marcel** |
+
+Próxima divergência: **893**.
+
+## 30. Contabilidade final da I1-PR-13
+
+| quem | item | valor |
+|---|---|---|
+| executor | requests a `https://octavia.rocks` ou preview · logins · senhas digitadas · `.env*` abertos · escritas · contas | **0 · 0 · 0 · 0 · 0 · 0** |
+| executor (decisão 1) | `.env.local` | copiado de `../octavia-i1-pr12` com `cp -p`, **não aberto**; ignorado pelo git |
+| executor (decisão 1) | o `pnpm dev` da 3000 | o da PR-12 parado às 14:55Z; o desta árvore subido e **deixado de pé** |
+| executor (I1-D37) | rodadas com sessão (perfil `~/.octavia-g-faixa-perfil`, `localhost:3000`) | 10: a fumaça do "antes" (13:33Z, 6) e o "antes" (13:45Z, 18); a tentativa que parou (14:57Z, 1), C (14:58Z, 31), B (15:14Z, 31), o `DASH` (15:16Z, 6), A (15:32Z, 31); a tentativa que parou (17:15Z, 1), C e B por estado (17:15Z, 42), A por estado (17:31Z, 21) — nenhuma janela de 15 min com mais de 43 |
+| executor | `next dev` **sem** `.env`, porta 3110, numa cópia da árvore | 1 subida: a pré-verificação (com os remendos, só na cópia) e a inércia (sem eles); parada |
+| executor | `pnpm build` | numa cópia da árvore, sem `.env` |
+| executor | a `main` para os testes novos | worktree temporária de `aa772df` (`--detach`), removida |
+| todos | escrita que saiu | **0** |
 | — | leitura de setlist ou content real | **nenhuma** (as duas leituras fabricadas; lidos só `/api/profile`, o `securetoken` e, no `DASH`, o painel da conta — SSR, só hash) |
 | — | `packages/identidade` · `tailwind.config.ts` · as rotas · `lib/api-schemas.ts` | **não mudaram** |
 
