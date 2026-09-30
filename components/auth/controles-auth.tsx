@@ -83,8 +83,8 @@ export function BotaoSecundario({ icone, carregando, children, ...botao }: Botao
 
 /**
  * A marca do Google (20 × 20): `public/marcas/google.svg` (I1-PR2; era o quadrado
- * tracejado da div. 636). O asset é o tile de 40 × 40 com o "G" em 10–30; o
- * `viewBox` mostra só o "G" no quadrado de 20 da folha.
+ * tracejado da div. 636). O asset é o "G" de 40 × 40, fundo transparente, com
+ * o desenho em 10–30; o `viewBox` mostra só o "G" no quadrado de 20 da folha.
  */
 export function MarcaGoogle() {
   return (
