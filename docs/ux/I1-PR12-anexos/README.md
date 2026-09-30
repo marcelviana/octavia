@@ -12,7 +12,8 @@
 > **Estado**: commit 1 (gate-first, `e5fdf5f`) com o aval (§10.1); commit 1b (instrumento, `7b33d06`, §13); o "antes" (§14);
 > commit 2 (a implementação, `9bac7bb`, §15–§22) e **commit 3 (aceite e docs, §23)**. **Veredito do aceite: PASSA — (e) = 0
 > e (b) = 0 nas três larguras, nos 21 estados da folha 7 e nos 5 do "antes"; 122 erratas candidatas, todas cobertas
-> (I1-E22 32 · I1-E24 70 · I1-E27 18 · I1-E2 2); nó velho por componente 0.** Aguarda o aval do veredito (§23.8).
+> (I1-E22 32 · I1-E24 70 · I1-E27 18 · I1-E2 2); nó velho por componente 0.** **Aval do veredito dado** `[Marcel, 2026-09-30]`
+> (§23.8); commit 4, as decisões do aval (só docs).
 > PR [#347](https://github.com/marcelviana/octavia/pull/347).
 
 | arquivo | o que é |
@@ -641,14 +642,14 @@ acha o teto do servidor **pelo schema** (o maior `size` que o `safeParse` aceita
 zod por dentro) e cobra `teto === LIMITE_MIB × 1024 × 1024` e as duas frases com esse número: se o teto mudar, reprova
 até o texto mudar. O cliente segue **sem** cobrar tamanho (decisão 11): o arquivo grande sobe e é a resposta que diz.
 
-### 15.4 Extras — declarados `[aguardam o aval, com o veredito]`
+### 15.4 Extras — declarados; **aprovados no aval do veredito** `[Marcel, 2026-09-30]` (§23.8)
 
 O prompt do aval pediu para seguir até o veredito sem parar; os extras vão declarados aqui, no corpo da PR e no relato:
 
 - **`components/auth/aviso-de-sessao.tsx`** — `/add-content` entra em `ROTAS_QUE_DESENHAM_A_LINHA`: a falha da sessão é
   desenhada DENTRO da tela (a `LinhaDaTela`, abaixo do título), como no painel, na biblioteca, na visualização e no
   editor; sem isso, com a sessão caída haveria duas linhas (a do topo e a da tela).
-- **I1-E27** (proposta, div. 834) — a linha do arquivo copiada em `UP-criar`/`-validacao` (decisão 16: "sem par") empurra
+- **I1-E27** (proposta aqui; **aprovada** no aval do veredito — div. 834) — a linha do arquivo copiada em `UP-criar`/`-validacao` (decisão 16: "sem par") empurra
   o que vem abaixo 44 px na folha: 18 erratas candidatas (C e B) que precisam de cobertura. Proposta: *"a seção vale sem
   a linha"* (o molde das I1-E7…E10). Está em `erratasFaixa` marcada PROPOSTA; se não for aprovada, sai e o veredito
   acusa as 18 sem cobertura.
@@ -813,7 +814,7 @@ Próxima divergência: **841**.
 | commit 1 | 2026-09-29 | as **18** do §10.1 (o extra do gate; o 1b; o *Próximo* no passo 1 + **I1-E21**; a ordem de hoje + **I1-E22**; a partitura como hoje; o criar = Título + Próximo; o lote com os controles + **I1-E24**; *Importar todas* + **I1-E25**; a N2 + **I1-E26**; o pronto pela folha; o *Back* sai; o limite pela resposta; o *Tentar de novo* do lote como hoje; `UP-lote-lendo` contra `UP-lote`; o Tom mostra o valor; as frases novas; as cópias "sem par"; a div. 828 ao encerramento; a cota) |
 | "rodei-antes" | 2026-09-30 | o "antes" do Marcel na árvore; seguir para o commit 2 |
 | **I1-D37** | 2026-09-30 | o executor roda o aceite e o "antes" com o perfil persistente (§14); o aval fica no veredito |
-| **pendente** | — | o veredito e os itens do §23.8 |
+| **veredito** | 2026-09-30 | aceito; a div. 831 → a folha; **I1-E27** aprovada; os extras do commit 2 e as correções do instrumento (divs. 841, 843) aprovados (§23.8) |
 
 ### 23.2 O aceite `[executor, I1-D37, 2026-09-30]`
 
@@ -851,8 +852,8 @@ Por estado (`cn/aceite-por-estado.txt`; célula = (e) · (b) · errata candidata
 | `UP-arquivo` · `-enviando` · `-extensao` · `-limite` · `-envio-rede` · `-envio-servidor` | 0 · 0 · 0 | 0 · 0 · 0 | 0 · 0 · (d′) 1–3 | 1/2 | — |
 | `UP-detalhes` · `-detalhes-inativo` · `-salvando` | 0 · 0 · 0 | 0 · 0 · 0 | 0 · 0 · (d′) 1 | 1/2 | — |
 | `UP-salvar-erro` | 0 · 0 · 0 | 0 · 0 · 0 | 0 · 0 · (d′) 1 | 2/3 | — (a N2 "sem par", I1-E26) |
-| `UP-criar` | 0 · 0 · 4 | 0 · 0 · 4 | 0 · 0 · (d′) 1 | 2/2 | **I1-E27 (proposta)** |
-| `UP-criar-validacao` | 0 · 0 · 5 | 0 · 0 · 5 | 0 · 0 · (d′) 1 | 2/2 | **I1-E27 (proposta)** |
+| `UP-criar` | 0 · 0 · 4 | 0 · 0 · 4 | 0 · 0 · (d′) 1 | 2/2 | **I1-E27** |
+| `UP-criar-validacao` | 0 · 0 · 5 | 0 · 0 · 5 | 0 · 0 · (d′) 1 | 2/2 | **I1-E27** |
 | `UP-lote` · `-lote-importando` | 0 · 0 · 12 | 0 · 0 · 12 | 0 · 0 · (d′) 1 | 1/10 | I1-E24 |
 | `UP-lote-erro` | 0 · 0 · 11 | 0 · 0 · 11 | 0 · 0 · (d′) 2 | 2/11 | I1-E24 (+ *Importar todas* "sem par", I1-E25) |
 | `UP-lote-lendo` (contra `UP-lote`) | 0 · 0 · 1 | 0 · 0 · 1 | 0 · 0 · (d′) 1 | 15/3 | I1-E2 |
@@ -980,10 +981,10 @@ os dois auxiliares sem importador em `types/content.ts`; a vírgula × travessã
 | 828 | → decisão 17: herança de instrumento; a lista no §21 |
 | 829 | → decisão 13 + I1-E2 em `erratasFaixa` |
 | 830 | → decisão 15 (as frases no §5.1 do DESIGN-I1) |
-| **831** | **para o aval** (§23.8): o lote no passo 1 (a folha) × *"o lote chegando ao passo 3"* (o prompt) |
+| **831** | **decidida** no aval do veredito: vale a folha — o lote no passo 1 com *{n} músicas importadas*; *"passo 3"* era premissa do prompt (origem P) |
 | 832 | declarado (§15.4): o caso do criar regravado sobre a `main` |
 | 833 · 835 · 836 | herança D (§17) |
-| **834** | **para o aval** (§23.8): I1-E27 proposta |
+| **834** | **decidida** no aval do veredito: **I1-E27** aprovada |
 | 837 · 839 | herança (§21) |
 | 838 | aplicado na pré-verificação (§18) |
 | 840 | registrado: o "antes" rodado duas vezes, igual; fica o do Marcel |
@@ -993,16 +994,24 @@ os dois auxiliares sem importador em `types/content.ts`; a vírgula × travessã
 
 Próxima divergência: **844**.
 
-### 23.8 O que o aval do veredito decide
+### 23.8 O aval do veredito — decisões `[Marcel, 2026-09-30]`
 
-1. **O veredito**: G-faixa PASSA — (e) 0, (b) 0 nas três larguras; 122 candidatas, 0 sem cobertura; nó velho 0.
-2. **Div. 831** — o lote importado fica no **passo 1** com a linha de sucesso (a folha, T-I1-R239/240) — ou vai ao passo
-   3, como o prompt do commit 2 escreveu? Implementado pela folha.
-3. **I1-E27** (div. 834) — aprova a errata *"`UP-criar` e `-validacao` valem sem a linha do arquivo"*? Sem ela, 18
-   candidatas ficam sem cobertura e o G-faixa reprova.
-4. **Os extras do commit 2** (§15.4): a linha de sessão dentro da tela (`aviso-de-sessao.tsx`); o caso do criar
-   regravado sobre a `main` (div. 832); as frases do singular e o tamanho em KiB/B.
-5. **O instrumento do commit 3**: o pronto sem `id` (div. 841) e o conserto do mesclador (div. 843).
+(As cinco perguntas do commit 3 e a resposta de cada uma; transcrição do prompt do commit 4.)
+
+| # | o que se pediu | decisão |
+|---|---|---|
+| 1 | **o veredito**: G-faixa PASSA — (e) 0 e (b) 0 nas três larguras; 122 candidatas, 0 sem cobertura; nó velho por componente 0 | **aceito** |
+| 2 | **div. 831** — o lote importado no passo 1 (a folha, T-I1-R239/240) ou no passo 3 (o prompt do commit 2)? | **a folha**: o lote no passo 1 com *{n} músicas importadas*; *"passo 3"* era premissa do prompt (origem **P**) |
+| 3 | **I1-E27** (div. 834) — `UP-criar` e `UP-criar-validacao` valem sem a linha do arquivo copiada? | **aprovada** — em `DESIGN-I1/README.md` §2.2 e em `erratasFaixa` (n 18), sem a marca de proposta |
+| 4 | **os extras do commit 2** (§15.4) | **aprovados**: a linha de sessão na tela (`components/auth/aviso-de-sessao.tsx`); o caso "criar do zero" do gate regravado sobre a `main` sem o texto da sonda (div. 832); o singular e o tamanho em KiB/B |
+| 5 | **o instrumento do commit 3** | **aprovado**: o pronto com o content fabricado sem `id` (div. 841); o mesclador preserva o `rodadasPorEstado` (div. 843) |
+
+**Commit 4 — só docs** (nenhuma linha de `app/`, `components/`, `lib/`, `hooks/`, `scripts/`, `tests/`): este quadro; a
+I1-E27 sem a marca de proposta no `DESIGN-I1/README.md` §2.2 e no `erratas.json`; o `SHA256SUMS` (a linha do
+`README.md`: `d978bfa3…` → `3af603d2…`); a **I1-D37** como decisão própria no `docs/ux/I1-PRECHECK.md` §0.1, ao lado da errata da I1-D35 (que já
+estava, desde o commit 2). Conferido `[medido]`: `shasum -a 256 -c docs/ux/DESIGN-I1/SHA256SUMS` → **14/14 OK**; o
+`erratas.json` é JSON válido e o G-tok (i) segue `26 cobertos · 0 descobertos · 0 órfãs`; o veredito segue `G-faixa:
+PASSA`, `erratas candidatas sem cobertura: 0`. **Nenhuma divergência nova** — a próxima segue **844**.
 
 ### 23.9 Contabilidade final da I1-PR-12
 

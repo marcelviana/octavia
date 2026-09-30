@@ -223,11 +223,12 @@ As duas são de **leitura** e nenhum gate as acha: a I1-E19 não tem seção (o 
 | **I1-E24** | a linha do lote: número · título (texto) · artista (campo) | a grade da folha **mantendo** o que cada música tinha: o título num campo, o artista, o **corpo** num campo de duas linhas e a caixa *Incluir “{título}”* abaixo — a linha fica mais alta e o que vem abaixo desce; em A os dois campos empilham | `7-upload`: `UP-lote`, `UP-lote-importando`, `UP-lote-erro` | 813 (I1-PR-12) | leitura |
 | **I1-E25** | em `UP-lote-erro`, o botão *Salvar* | ***Importar todas*** (`up.lote.importar`), como em `UP-lote` — o *Voltar* fica mais à esquerda (o botão é mais largo) | `7-upload`: `UP-lote-erro` | 814 (I1-PR-12) | leitura |
 | **I1-E26** | em `UP-salvar-erro`, a segunda linha *o que você preencheu continua aqui* | a **N2**, *o que você escreveu continua aqui* (`digitado-fica`) — uma frase só no bloco | `7-upload`: `UP-salvar-erro` | 815 (I1-PR-12) | leitura |
-| **I1-E27** *(proposta — aguarda o aval do veredito da I1-PR-12)* | `UP-criar` e `UP-criar-validacao` com a linha do arquivo (*partitura-12-paginas.pdf · 1,8 MiB*), cópia de `UP-detalhes` | no criar do zero não há arquivo: **a seção vale sem a linha**, e o que vem abaixo dela sobe 44 px (consequência da decisão 16 do aval: os nós da linha ficam "sem par") | `7-upload`: `UP-criar`, `UP-criar-validacao` | 812, 834 (I1-PR-12) | leitura |
+| **I1-E27** `[Marcel, 2026-09-30; aval do veredito da I1-PR-12]` | `UP-criar` e `UP-criar-validacao` com a linha do arquivo (*partitura-12-paginas.pdf · 1,8 MiB*), cópia de `UP-detalhes` | no criar do zero não há arquivo: **a seção vale sem a linha**, e o que vem abaixo dela sobe 44 px (consequência da decisão 16 do aval do commit 1: os nós da linha ficam "sem par"; o molde das I1-E7…E10) | `7-upload`: `UP-criar`, `UP-criar-validacao` | 812, 834 (I1-PR-12) | leitura |
 
 A **I1-E2** (acima) passa a ser também do G-faixa: `UP-lote-lendo` não tem seção e mede contra a `UP-lote` (decisão 13 do
 aval) — *carregando…* no lugar do cabeçalho e da lista, com o *Voltar*. Em `erratasFaixa`: I1-E2 (n 2), I1-E22 (n 32),
-I1-E24 (n 70) e I1-E27 (n 18, proposta), com o `n` da pré-verificação sem sessão da I1-PR-12 (o aceite confirma); em
+I1-E24 (n 70) e I1-E27 (n 18), com o `n` da pré-verificação sem sessão da I1-PR-12, que o aceite confirmou (61 em C, 61
+em B); em
 `erratasFrase` (registro, nenhum gate lê): I1-E21, I1-E25 e I1-E26 — o *Próximo*, o *Importar todas* e a N2 saem "sem
 par" pelo texto. Não houve I1-E23 (decisão 5 do aval: o criar do zero é *Título* + *Próximo*, como a folha).
 
