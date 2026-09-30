@@ -3,7 +3,9 @@
 //     JSON commitados de `tests/gates-web/medicoes/` (com as subpastas): a regra nova não pode mover nenhum resultado.
 // (2) A fixture: *Adicionar* / aria-label "Adicionar músicas a X" em B contra *Adicionar músicas* / o mesmo aria-label em
 //     C → (e) 0; sem aria-label → (e) 1; e o cartão que perde conteúdo com o mesmo aria-label (que não contém o texto) → (e) 1.
-// Uso: node docs/ux/I1-PR13-anexos/cn/nome-longo-cn.mjs [<commit do classificador de antes>]   (padrão: 5a8dc93)
+// Os JSON são lidos DO COMMIT de antes (`git show <base>:…`), não da árvore: a prova é sobre o que estava commitado
+// quando a regra mudou, e não se move com a re-medição que vem depois.
+// Uso: node docs/ux/I1-PR13-anexos/cn/nome-longo-cn.mjs [<commit de antes>]   (padrão: 5a8dc93)
 import { execFileSync } from 'node:child_process'
 import fs from 'node:fs'
 import os from 'node:os'
@@ -16,10 +18,10 @@ const tmp = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'g-faixa-cn-')), 'cl
 fs.writeFileSync(tmp, execFileSync('git', ['show', `${base}:scripts/gates-web/g-faixa-classificar.mjs`]))
 const velho = await import(pathToFileURL(tmp).href)
 
-const jsons = execFileSync('git', ['ls-files', 'tests/gates-web/medicoes'], { encoding: 'utf8' }).split('\n').filter((f) => f.endsWith('.json'))
+const jsons = execFileSync('git', ['ls-tree', '-r', '--name-only', base, 'tests/gates-web/medicoes'], { encoding: 'utf8' }).split('\n').filter((f) => f.endsWith('.json'))
 let n = 0, divergem = 0
 for (const f of jsons) {
-  const s = JSON.parse(fs.readFileSync(f, 'utf8'))
+  const s = JSON.parse(execFileSync('git', ['show', `${base}:${f}`], { encoding: 'utf8', maxBuffer: 256 * 1024 * 1024 }))
   for (const [id, estado] of Object.entries(s.estados ?? {})) {
     if (!estado.larguras || Object.keys(estado.larguras).length === 0) continue
     const a = velho.classificarEstado(estado), b = novo.classificarEstado(estado)
@@ -29,7 +31,7 @@ for (const f of jsons) {
     }
   }
 }
-console.log(`(1) classificador de ${base} × o de agora: ${jsons.length} JSON · ${n} (estado × largura) · divergem: ${divergem}`)
+console.log(`(1) classificador de ${base} × o de agora, sobre os JSON commitados em ${base}: ${jsons.length} JSON · ${n} (estado × largura) · divergem: ${divergem}`)
 
 const no = (texto, n_, nome, w = 200, nl = !!nome) => ({ k: `button:${texto}#1`, role: 'button', tag: 'button', testid: null, h_texto: texto, h_nome: nome, n: n_, x: 10, y: 100, w, h: 56, sr: false, clip: null, ...(nl ? { nl: true } : {}), corta: { x: false, y: false } })
 const med = (vw, nos) => ({ viewport: { w: vw, h: 800 }, doc: { scrollWidth: vw, clientWidth: vw }, nos })

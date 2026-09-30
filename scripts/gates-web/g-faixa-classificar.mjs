@@ -24,8 +24,8 @@
 //        nó cujo nome acessível (aria-label) é esse texto (rótulo curto com
 //        nome longo, I1-D7 item 4); ou — I1-PR13 (commit 2b, aval do veredito) —
 //        o nó de 1138 tem o "nome longo" (`nl`: o aria-label CONTÉM o texto
-//        visível) e na largura W há um nó sem par pela chave com o MESMO nome
-//        acessível, também "nome longo", e o texto MAIS CURTO: é o mesmo controle
+//        visível) e na largura W há um nó com o MESMO nome acessível, também
+//        "nome longo", e o texto MAIS CURTO: é o mesmo controle
 //        com o rótulo encurtado (*Adicionar* / `aria-label="Adicionar músicas a
 //        X"`, nas três faixas);
 //        rolagem — o nó está fora, NA VERTICAL, da área visível de um contêiner
@@ -163,15 +163,17 @@ export function classificarEstado(estado) {
       const aqui = porK(med.nos)
       const nomes = new Set(med.nos.filter(temArea).map((n) => n.h_nome).filter(Boolean))
       // I1-PR13 (2b; I1-D7 item 4): rótulo curto COM nome acessível longo. O nó de 1138 tem o "nome longo" (`nl`: o
-      // `aria-label` contém o texto visível — a coleta o grava) e, na largura W, há um nó SEM PAR pela chave (o texto
-      // mudou), com área, fora do leitor de tela, com o MESMO nome acessível, também "nome longo" e com o texto MAIS
-      // CURTO: o rótulo encolheu, o nome diz o que ele dizia. Um nó de W serve a um só de 1138. NÃO vale para o nó cujo
+      // `aria-label` contém o texto visível — a coleta o grava) e, na largura W, há um nó com área, fora do leitor de
+      // tela, com o MESMO nome acessível, também "nome longo" e com o texto MAIS CURTO: o rótulo encolheu, o nome diz o
+      // que ele dizia. (A chave desse nó pode coincidir com a de OUTRO nó de 1138 — o *Adicionar* do cabeçalho em B e o
+      // *Adicionar* sem número do picker em C —, por isso não se exige "sem par pela chave": div. 889.) Um nó de W
+      // serve a um só de 1138. NÃO vale para o nó cujo
       // nome não contém o texto — o cartão que perde um bloco de conteúdo em 711 (`cn-main/library.json`: 20 cartões,
       // o mesmo `aria-label`, 12 caracteres a menos) segue (e) "texto some do nó".
       const usados = new Set()
       const mesmoNome = (r) => {
         if (!r.nl || !r.h_nome) return false
-        const n = med.nos.find((x) => !refK.has(x.k) && !usados.has(x.k) && temArea(x) && !x.sr && x.nl && x.h_nome === r.h_nome && x.n < r.n)
+        const n = med.nos.find((x) => !usados.has(x.k) && temArea(x) && !x.sr && x.nl && x.h_nome === r.h_nome && x.n < r.n)
         if (n) usados.add(n.k)
         return !!n
       }
