@@ -8,7 +8,7 @@
 > `Done in 17.9s using pnpm v10.28.0`. **Data**: 2026-09-30.
 > **Convenções**: `[medido]` = comando + saída literal (em `cn/`); `[lido]` = arquivo:linha; `[hipótese]` = o resto.
 > Divergências **a partir de 846** (a PR-12 fechou em 845, §24 dela — o prompt presumia 844: div. 846).
-> **Estado**: **commit 1 (gate-first)** — aguarda o aval (§10). Nenhuma linha de `app/`, `components/` (fora
+> **Estado**: **commit 1 (gate-first, `ae78774`)** com o aval (§12). Nenhuma linha de `app/`, `components/` (fora
 > `components/setlists/__tests__/`), `lib/`, `hooks/` mudou.
 
 | arquivo | o que é |
@@ -486,7 +486,7 @@ fora, 35 são `components/ui/*` e 44 são o resto — o G-tok (ii) rodado sobre 
     `apagar-setlist`, `adicionar`, `remover`, `n-de-musicas`, `data`, `local`, `garantida`, `busca`) estão no pacote. Se
     faltar, paro e pergunto (div. 713).
 
-## 11. Divergências — 846 a 872
+## 11. Divergências — 846 a 873
 
 | # | origem | o que o prompt (ou o doc) presumiu | o que foi medido | destino |
 |---|---|---|---|---|
@@ -518,9 +518,50 @@ fora, 35 são `components/ui/*` e 44 são o resto — o G-tok (ii) rodado sobre 
 | **871** | A | — | a recarga ao voltar à aba (30 s) põe `loading` e a lista vira os três blocos; a setlist aberta fica com o objeto velho | registrado; não tocado |
 | **872** | T | *"o antes sobre o commit 1"* | a rodada saiu `aa772df…+sujo`: os arquivos do commit 1 estavam sem commit (o JSON faz parte dele); o código do app é o de `aa772df` e o servidor era o da árvore da PR-12, igual | registrado (§7) |
 
-Próxima divergência: **873**.
+| **873** | P | prompt do fecho: *"commite como está (`I1-PR-13 — gate-first`) com o §12 preenchido"* | o commit 1 (`ae78774`) já estava feito, local, quando o aval chegou | o §12 entra num commit de fecho (só docs) por cima, sem reescrever o histórico |
 
-## 12. Contabilidade (commit 1)
+Próxima divergência: **874**.
+
+## 12. O aval do commit 1 — decisões `[Marcel, 2026-09-30]`
+
+(Transcrição do prompt dos commits 1 (fecho), 2 e 3; as perguntas ficam no §10.)
+
+0. **Extras do commit 1 aprovados**: `g-faixa-setlists.ts`, `servidor-falso.ts`, a seção do `COMO-RODAR.md`.
+1. **Servidor do aceite**: o executor copia o `.env.local` de `../octavia-i1-pr12` para esta árvore **sem abrir**, para o
+   `pnpm dev` da 3000 e sobe o desta árvore. Registrado na contabilidade do commit 2.
+2. **Falha a meio da adição**: as que entraram aparecem na lista e saem da seleção; *Tentar de novo* manda só as que
+   faltam. Declarado como comportamento (sem duplicar escrita).
+3. **404 em editar/adicionar/remover**: fecha, relê a lista; *esta setlist já foi apagada* só se ela não voltou.
+4. **N10** só quando a biblioteca coube inteira (abaixo do teto); o teto de 100 de `app/api/content/route.ts:119` × o
+   pedido de 1000 → **herança D**.
+5. **Falha da leitura da biblioteca no picker** → `LinhaDeAviso` com `lib.erro` e *Tentar de novo*.
+6. **O sentinela *Unknown Artist/Title/Type* da rota** → exibido como *artista desconhecido* / *sem título*; só exibição; a
+   rota (núcleo) não muda.
+7. **Data e local** no cartão e no cabeçalho: linha de metadado com os ícones `data`/`local`, a data curta da PR-9.
+8. **A nota da música** na linha, 13 `muted` (`web.metadado`).
+9. ***sem título*** aprovada como frase nova.
+10. ***Descrição* e *Notas*** em `textarea`, na altura da folha.
+11. **Picker** sem tipo na linha; a busca casa o rótulo pt-BR e o valor de hoje.
+12. **Fixture**: *Show padrão* com 8 músicas, o picker com 4; o que sobra da folha sai "sem par".
+13. **Frases novas aprovadas** (a duração, os placeholders, *Adicionar* sem número, o nome acessível do picker, *Salvando…*
+    no editar, os reusos da PR-9).
+14. **`LinhaDeAviso` no diálogo** abaixo do título (a folha vence o README-design).
+15. ***Nova setlist*** ativo onde o gerente está montado; inerte só em `SET-carregando`.
+16. ***Tentar de novo* de `SET-erro`** repete a carga do hook (declarado).
+17. **CN da PR-1, caso (v)** → `/privacy-policy`; par declarado.
+18. **O Toaster do sonner sai nesta PR** (`app/layout.tsx:127`, e a dependência `sonner` se ficar sem importador — o
+    lockfile como extra); o `themeColor` literal fica para a poda do encerramento.
+19. **Remoções declaradas aprovadas** (o arrasto e a alça, *Recent*, o brilho, a estrela, *Share*, *Songs*, os apoios dos
+    diálogos, o segundo *Add Songs*, os toasts).
+20. **O editar** medido contra `SET-criar*`; a **N10** contra `SET-adicionar-vazio`.
+21. **Token**: se faltar, parar e perguntar.
+
+Divergências **846–850 e 868** (origem P): aceitas. **864** e **871**: registradas — a 871 é **herança D** (a recarga ao
+voltar à aba troca a lista pelos blocos; medir se persiste depois desta PR).
+
+(O commit 1, `ae78774`, já existia quando o aval chegou; este quadro entra num commit de fecho, só docs — div. 873.)
+
+## 13. Contabilidade (commit 1)
 
 | quem | item | valor |
 |---|---|---|
