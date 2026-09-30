@@ -1167,3 +1167,5 @@ que ficam sem uso (`components/ui/skeleton.tsx`, `components/ui/switch.tsx`).
   serviços de terceiros — fica intacto pela I1-D19.
 
 **I1-PR-4** (`packages/identidade` + migração do nativo, PR #339): anexos em [`docs/native/I1-PR4-anexos/`](../native/I1-PR4-anexos/README.md) — o pacote é do nativo tanto quanto do web.
+
+**Encerramento do I1**: [`docs/ux/I1-ENCERRAMENTO.md`](I1-ENCERRAMENTO.md) — a fonte do bloco (#335–#349, sobre `1cb897f`); este pre-check é a fonte das I1-D1…D37 e das H-I1-1…7, e o encerramento só as indexa.

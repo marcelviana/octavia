@@ -85,9 +85,9 @@ Octavia is a comprehensive digital music management application designed for mus
 ## 🛠️ Technical Stack
 
 - **Framework**: Next.js 15 with App Router
-- **UI Components**: shadcn/ui component library
+- **UI Components**: the identity shared with the native app — tokens and icons from `packages/identidade`, components in `components/identidade/` (shadcn/ui removed in I1-PR-14; `docs/ux/I1-ENCERRAMENTO.md`)
 - **Styling**: Tailwind CSS with custom color palette
-- **Icons**: Lucide React icon set
+- **Icons**: the icon catalog of `packages/identidade` (the same drawings as the native app; Lucide removed in I1-PR-14)
 - **State Management**: React hooks and context
 - **File Handling**: Multi-format support with drag-and-drop
 - **Testing**: Vitest with React Testing Library + Playwright for E2E testing
@@ -101,7 +101,7 @@ Octavia is a comprehensive digital music management application designed for mus
 #### Use the Built-in Installation (Recommended)
 1. Visit the [live demo](https://vercel.com/marcelvianas-projects/v0-music-sheet-pro)
 2. Click "Download Code" in the top right corner
-3. Follow the shadcn CLI setup instructions
+3. (Historical: the shadcn CLI setup no longer applies — `components.json` and `components/ui/` were removed in I1-PR-14)
 
 The `ALLOWED_PROXY_HOSTS` variable adds hosts (comma‑separated) to the
 optimized-image allow list in `next.config.mjs`. (The offline cache proxy
@@ -252,8 +252,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🙏 Acknowledgments
 
 - Built with [v0.dev](https://v0.dev) - AI-powered development platform
-- UI components from [shadcn/ui](https://ui.shadcn.com)
-- Icons by [Lucide](https://lucide.dev)
+- UI components originally from [shadcn/ui](https://ui.shadcn.com) and icons by [Lucide](https://lucide.dev) — both replaced by the Octavia identity in the I1 block (2026-09)
 - Deployed on [Vercel](https://vercel.com)
 
 ## 📞 Support

@@ -870,6 +870,12 @@ cada ✅ e fechar cada ❌/⚠️**. Os números que definem o piso:
 > auth; só o palco sai (`docs/ux/I1-PRECHECK.md` §0.1). Os itens abaixo seguem valendo
 > com destino **D**. O título fica como estava, para as citações continuarem achando
 > esta seção.
+>
+> **Nota do encerramento do I1 (2026-09-30):** o item de abertura abaixo (o loop mudo)
+> **foi consertado na I1-PR-1** (#336); o que o web deixou para o D, com a fonte de cada
+> item, está em `docs/ux/I1-ENCERRAMENTO.md` §10.1. O **login com Google** (I1-D6,
+> *"consertar, não revogar"*) **não foi consertado** no I1 — a PR-2 do fatiamento não foi
+> aberta (`I1-ENCERRAMENTO.md` §3 e §14).
 
 > **Item de abertura do Bloco D — prioridade máxima (registrado no B3,
 > 2026-08-28)**: o **loop mudo do `POST /api/auth/session`** — falha no
@@ -1489,3 +1495,11 @@ automaticamente.
     Pendência de instrumento que qualquer um dos três resolve de passagem: a
     **prova do D-g** (a primeira PR que toque só `packages/core/**` tem de
     confirmar que o `android-debug-apk` **não** dispara — `N1-ENCERRAMENTO.md` §5).
+
+> **Nota do encerramento do I1 (2026-09-30)** — sem reescrever os itens acima, que param antes
+> do N2. Encerrados desde então, cada um com a sua fonte: **N2** (`docs/native/N2-ENCERRAMENTO.md`),
+> **W4** (`docs/native/W4-ENCERRAMENTO.md`), **N3** (`docs/native/N3-ENCERRAMENTO.md`) e **I1 — o
+> web com a identidade do nativo, só online, sem palco** (#335–#349, `docs/ux/I1-ENCERRAMENTO.md`).
+> **A ordem depois do I1** é a da I1-D15 (`docs/ux/I1-PRECHECK.md` §0.1): **N4** (content nos
+> apps) → **N5** (celular) → **iOS**; o **W5** (instrumento) corre à parte. As heranças do I1 para
+> cada um estão no `I1-ENCERRAMENTO.md` §10.

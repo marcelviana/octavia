@@ -1,0 +1,104 @@
+# I1-ENCERRAMENTO — as linhas mudadas nos docs fora do documento novo (rastro; o diff deste commit contra origin/main = 1cb897f)
+$ git diff -U0 1cb897f -- CLAUDE.md README.md ARCHITECTURE.md docs/ux/PLANO-TRANSICAO.md docs/ux/I1-PRECHECK.md docs/native/DESIGN-N2/README.md
+diff --git a/ARCHITECTURE.md b/ARCHITECTURE.md
+index 1e8e1e8..ede77f3 100644
+--- a/ARCHITECTURE.md
++++ b/ARCHITECTURE.md
+@@ -2,0 +3,10 @@
++> **Nota do encerramento do I1 (2026-09-30) — este documento é histórico.** Ele descreve uma
++> arquitetura que o código não tem: a árvore `domains/` (store Zustand/immer, repositórios) foi
++> removida no P1-D lote 1 (`b6292ff`, *"nunca ligada a rota"*); `DomainErrorBoundary` e
++> `useErrorHandler` não existem (`git grep` fora de `docs/` e dos `.md` → 0; o `useErrorHandler` saiu na
++> I1-PR-14, decisão 5). O que existe hoje no web: o limite de erro global `lib/error-boundary.tsx`
++> (a classe) desenhando `components/identidade/tela-de-erro.tsx` (a tela, pela identidade, pt-BR —
++> I1-PR-14); a **casca** `components/identidade/casca.tsx` em toda página com sessão (I1-PR-9);
++> tokens e ícones de `packages/identidade` (I1-PR-4). Nada abaixo foi reescrito
++> (`docs/ux/I1-ENCERRAMENTO.md` §11).
++
+diff --git a/CLAUDE.md b/CLAUDE.md
+index cbb22f6..920f44d 100644
+--- a/CLAUDE.md
++++ b/CLAUDE.md
+@@ -111 +111 @@ banco** — a fonte é o arquivo de migração. Primeira migração da série:
+-- **UI**: Tailwind CSS + Radix UI components (shadcn/ui)
++- **UI**: Tailwind CSS com os **nomes de token** de `packages/identidade` (CSS custom properties geradas em `app/styles/identidade.css`, gate "gerado == fonte"); componentes da identidade em `components/identidade/`. **Sem Radix/shadcn e sem `lucide-react` desde a I1-PR-14** (`components/ui/` removida; versões antigas deste arquivo diziam "Radix UI components (shadcn/ui)")
+@@ -113 +113 @@ banco** — a fonte é o arquivo de migração. Primeira migração da série:
+-- **Testing**: Vitest (unit) + Playwright (gates do ux-audit, sob demanda)
++- **Testing**: Vitest (unit) + Playwright (gates do ux-audit, sob demanda) + **os gates do web** (`gates-web.yml`: G-back, G-palco, G-tok com a cobertura da lista e a regra 828, G-faixa) — como rodar em [`scripts/gates-web/COMO-RODAR.md`](scripts/gates-web/COMO-RODAR.md); o bloco que os fez é o I1 (`docs/ux/I1-ENCERRAMENTO.md` §8)
+@@ -125 +125 @@ banco** — a fonte é o arquivo de migração. Primeira migração da série:
+-- UI primitives in `/ui` subdirectory
++- Identity components in `/identidade` (casca, `LinhaDeAviso`, controles, ícone, tela de erro) — `components/ui/` (shadcn) was removed in I1-PR-14
+@@ -263 +263 @@ const ContentComponent = () => {
+-- Toast notifications for user feedback
++- Failure is a state on the screen (`LinhaDeAviso` with the reason), not a toast — the web has no toast since I1-PR-13 (both toast systems removed; I1-D26)
+@@ -270 +270 @@ components/
+-  ├── ui/                       # Reusable UI primitives only
++  ├── identidade/               # Identity components shared by the surfaces (was ui/, removed in I1-PR-14)
+@@ -284,0 +285 @@ components/
++- **Gates do web** (I1): `scripts/gates-web/` + `.github/workflows/gates-web.yml` — G-back (backend intocado sem declaração no bloco ```gates-web```), G-palco, G-tok (literais, toast, `ui/*`, inglês; cobertura da lista), G-faixa (medição commitada em `tests/gates-web/medicoes/`, veredito no CI); [`scripts/gates-web/COMO-RODAR.md`](scripts/gates-web/COMO-RODAR.md)
+@@ -316 +317 @@ describe('useContentManagement', () => {
+-- Test offline scenarios
++- (offline: nenhum no web desde a I1-PR-3 — não há cenário offline a testar no web; div. 578)
+@@ -364,0 +366,2 @@ do cache antigo, desregistra-se) para navegadores que ainda têm o worker velho;
++> Nota do I1 (2026-09-30): no web não há `toast` desde a I1-PR-13 — a falha vira estado na tela (`LinhaDeAviso` com o motivo, frases pt-BR em `components/<superfície>/frases-*.ts`); o G-tok reprova `toast` nos arquivos da lista. O `toast` do exemplo abaixo é do padrão antigo.
++
+diff --git a/README.md b/README.md
+index 3597b42..575ff5e 100644
+--- a/README.md
++++ b/README.md
+@@ -88 +88 @@ Octavia is a comprehensive digital music management application designed for mus
+-- **UI Components**: shadcn/ui component library
++- **UI Components**: the identity shared with the native app — tokens and icons from `packages/identidade`, components in `components/identidade/` (shadcn/ui removed in I1-PR-14; `docs/ux/I1-ENCERRAMENTO.md`)
+@@ -90 +90 @@ Octavia is a comprehensive digital music management application designed for mus
+-- **Icons**: Lucide React icon set
++- **Icons**: the icon catalog of `packages/identidade` (the same drawings as the native app; Lucide removed in I1-PR-14)
+@@ -104 +104 @@ Octavia is a comprehensive digital music management application designed for mus
+-3. Follow the shadcn CLI setup instructions
++3. (Historical: the shadcn CLI setup no longer applies — `components.json` and `components/ui/` were removed in I1-PR-14)
+@@ -255,2 +255 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
+-- UI components from [shadcn/ui](https://ui.shadcn.com)
+-- Icons by [Lucide](https://lucide.dev)
++- UI components originally from [shadcn/ui](https://ui.shadcn.com) and icons by [Lucide](https://lucide.dev) — both replaced by the Octavia identity in the I1 block (2026-09)
+diff --git a/docs/native/DESIGN-N2/README.md b/docs/native/DESIGN-N2/README.md
+index ca08e96..ac71d94 100644
+--- a/docs/native/DESIGN-N2/README.md
++++ b/docs/native/DESIGN-N2/README.md
+@@ -450,0 +451,11 @@ O aceite do §3 está em [`N2-PR7-anexos/aparato.md`](../N2-PR7-anexos/aparato.m
++### Errata do I1 (o ícone do Salvar)
++
++**N2-E25 — o ícone do Salvar é o `garantida` do catálogo, na forma do `dados.ts`; a legenda vale, a moldura não.** *(Nota do encerramento do I1, 2026-09-30, `docs/ux/I1-ENCERRAMENTO.md` §5; divs. 599 e 600 da I1-PR-4, `docs/native/I1-PR4-anexos/README.md` §6 e §8. Errata SEM redesenhar moldura, pelo precedente da E16; nenhum texto acima reescrito.)* A folha diz duas coisas diferentes sobre o mesmo ícone:
++
++| div. | a legenda / o código | a moldura | o que vale |
++| --- | --- | --- | --- |
++| **599** (D) | a legenda diz *"garantida existente reaproveitado em três papéis novos: … e o visto do botão de salvar"*; o nativo seguiu a legenda (`FolhaDeCriar.tsx:558`, `ModoDeReordenar.tsx:595`: `nome="garantida"`) | desenha um **visto** sem círculo (`M4.5 12.5l5 5 10-11`, 8 ocorrências no `telas.html`), que não é registro do anexo D | **a legenda**: o Salvar usa o `garantida`. O visto não entrou no pacote (I1-PR-4, decisão 2 (b); **I1-E6** do `DESIGN-I1`) |
++| **600** (D) | o `garantida` do `dados.ts` — hoje `packages/identidade/src/icones.ts:111` — tem **uma** forma: `r 9 · M8 12.2l2.8 2.8L16.2 9.4` | desenha o `garantida` também com **r 8,5** (`M8.4 12.3l2.5 2.5 4.7-5`, 7 ocorrências: "1 criar em S1", "5 picker"); a folha do web a herdou (I1-E3) | **o `dados.ts`**: uma forma, r 9 |
++
++**O `SHA256SUMS` do N2 não muda com esta errata** (ele não lista o `README.md`, §8); o app não muda — já fazia o que esta errata diz.
++
+diff --git a/docs/ux/I1-PRECHECK.md b/docs/ux/I1-PRECHECK.md
+index 818d8b2..0379b4e 100644
+--- a/docs/ux/I1-PRECHECK.md
++++ b/docs/ux/I1-PRECHECK.md
+@@ -1169,0 +1170,2 @@ que ficam sem uso (`components/ui/skeleton.tsx`, `components/ui/switch.tsx`).
++
++**Encerramento do I1**: [`docs/ux/I1-ENCERRAMENTO.md`](I1-ENCERRAMENTO.md) — a fonte do bloco (#335–#349, sobre `1cb897f`); este pre-check é a fonte das I1-D1…D37 e das H-I1-1…7, e o encerramento só as indexa.
+diff --git a/docs/ux/PLANO-TRANSICAO.md b/docs/ux/PLANO-TRANSICAO.md
+index 3f74a1a..d455683 100644
+--- a/docs/ux/PLANO-TRANSICAO.md
++++ b/docs/ux/PLANO-TRANSICAO.md
+@@ -872,0 +873,6 @@ cada ✅ e fechar cada ❌/⚠️**. Os números que definem o piso:
++>
++> **Nota do encerramento do I1 (2026-09-30):** o item de abertura abaixo (o loop mudo)
++> **foi consertado na I1-PR-1** (#336); o que o web deixou para o D, com a fonte de cada
++> item, está em `docs/ux/I1-ENCERRAMENTO.md` §10.1. O **login com Google** (I1-D6,
++> *"consertar, não revogar"*) **não foi consertado** no I1 — a PR-2 do fatiamento não foi
++> aberta (`I1-ENCERRAMENTO.md` §3 e §14).
+@@ -1491,0 +1498,8 @@ automaticamente.
++
++> **Nota do encerramento do I1 (2026-09-30)** — sem reescrever os itens acima, que param antes
++> do N2. Encerrados desde então, cada um com a sua fonte: **N2** (`docs/native/N2-ENCERRAMENTO.md`),
++> **W4** (`docs/native/W4-ENCERRAMENTO.md`), **N3** (`docs/native/N3-ENCERRAMENTO.md`) e **I1 — o
++> web com a identidade do nativo, só online, sem palco** (#335–#349, `docs/ux/I1-ENCERRAMENTO.md`).
++> **A ordem depois do I1** é a da I1-D15 (`docs/ux/I1-PRECHECK.md` §0.1): **N4** (content nos
++> apps) → **N5** (celular) → **iOS**; o **W5** (instrumento) corre à parte. As heranças do I1 para
++> cada um estão no `I1-ENCERRAMENTO.md` §10.

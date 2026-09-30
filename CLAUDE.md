@@ -108,9 +108,9 @@ banco** — a fonte é o arquivo de migração. Primeira migração da série:
 - **Authentication**: Firebase Auth with server-side verification
 - **Database**: Supabase with service role for server operations
 - **Storage**: Supabase Storage (bucket `content-files`) for file uploads — Firebase é só Auth. (Nota B5 PR-0: versões antigas deste arquivo diziam "Firebase Storage" — nunca foi verdade no código atual; medido no `docs/ux/B5-PRECHECK.md` §2.1/§3)
-- **UI**: Tailwind CSS + Radix UI components (shadcn/ui)
+- **UI**: Tailwind CSS com os **nomes de token** de `packages/identidade` (CSS custom properties geradas em `app/styles/identidade.css`, gate "gerado == fonte"); componentes da identidade em `components/identidade/`. **Sem Radix/shadcn e sem `lucide-react` desde a I1-PR-14** (`components/ui/` removida; versões antigas deste arquivo diziam "Radix UI components (shadcn/ui)")
 - **State Management**: React hooks + Context API
-- **Testing**: Vitest (unit) + Playwright (gates do ux-audit, sob demanda)
+- **Testing**: Vitest (unit) + Playwright (gates do ux-audit, sob demanda) + **os gates do web** (`gates-web.yml`: G-back, G-palco, G-tok com a cobertura da lista e a regra 828, G-faixa) — como rodar em [`scripts/gates-web/COMO-RODAR.md`](scripts/gates-web/COMO-RODAR.md); o bloco que os fez é o I1 (`docs/ux/I1-ENCERRAMENTO.md` §8)
 - **Offline Support**: nenhum — o web é **só online desde a I1-PR-3** (PWA, service worker, cache IndexedDB, fila de escrita offline e `/offline` removidos; `public/sw.js` é o worker de auto-destruição até o bloco seguinte ao I1)
 
 ### Directory Structure
@@ -122,7 +122,7 @@ banco** — a fonte é o arquivo de migração. Primeira migração da série:
 
 **`/components`** - React components organized by feature
 - Business logic components in root
-- UI primitives in `/ui` subdirectory
+- Identity components in `/identidade` (casca, `LinhaDeAviso`, controles, ícone, tela de erro) — `components/ui/` (shadcn) was removed in I1-PR-14
 - Authentication components in `/auth`
 - Library management in `/library`
 
@@ -260,14 +260,14 @@ const ContentComponent = () => {
 - All components MUST have error boundaries
 - Use proper loading states
 - Implement graceful degradation
-- Toast notifications for user feedback
+- Failure is a state on the screen (`LinhaDeAviso` with the reason), not a toast — the web has no toast since I1-PR-13 (both toast systems removed; I1-D26)
 
 ### File Organization
 
 ```
 components/
   ├── feature-component.tsx     # <150 lines, focused responsibility
-  ├── ui/                       # Reusable UI primitives only
+  ├── identidade/               # Identity components shared by the surfaces (was ui/, removed in I1-PR-14)
   └── feature-group/           # Related components grouped
       ├── FeatureMain.tsx
       ├── FeatureHeader.tsx
@@ -282,6 +282,7 @@ components/
 - **Unit Tests**: `**/*.test.{ts,tsx}` - All utilities, hooks, and isolated components
 - **Integration Tests**: `**/*.integration.test.{ts,tsx}` - Cross-component workflows  
 - **Gates de fluxo**: `/tests/ux-audit/**/*.spec.ts` - Playwright sob demanda contra preview/prod (a suíte E2E do CI foi removida na B1.0.1)
+- **Gates do web** (I1): `scripts/gates-web/` + `.github/workflows/gates-web.yml` — G-back (backend intocado sem declaração no bloco ```gates-web```), G-palco, G-tok (literais, toast, `ui/*`, inglês; cobertura da lista), G-faixa (medição commitada em `tests/gates-web/medicoes/`, veredito no CI); [`scripts/gates-web/COMO-RODAR.md`](scripts/gates-web/COMO-RODAR.md)
 - **API Tests**: All routes must have integration tests
 
 **Coverage Breakdown Targets**:
@@ -313,7 +314,7 @@ describe('useContentManagement', () => {
 - Mock all external services (Firebase, Supabase)
 - Use MSW for API route testing
 - Mock file uploads and storage operations
-- Test offline scenarios
+- (offline: nenhum no web desde a I1-PR-3 — não há cenário offline a testar no web; div. 578)
 
 ## PERFORMANCE OPTIMIZATION PRIORITIES
 
@@ -361,6 +362,8 @@ do cache antigo, desregistra-se) para navegadores que ainda têm o worker velho;
 ## ARCHITECTURAL PATTERNS (from .cursorrules)
 
 ### Content Management Pattern (REQUIRED)
+
+> Nota do I1 (2026-09-30): no web não há `toast` desde a I1-PR-13 — a falha vira estado na tela (`LinhaDeAviso` com o motivo, frases pt-BR em `components/<superfície>/frases-*.ts`); o G-tok reprova `toast` nos arquivos da lista. O `toast` do exemplo abaixo é do padrão antigo.
 
 ```typescript
 // ALL content operations must follow this pattern

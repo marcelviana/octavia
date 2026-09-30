@@ -1,5 +1,15 @@
 # Domain-Driven Architecture Implementation
 
+> **Nota do encerramento do I1 (2026-09-30) — este documento é histórico.** Ele descreve uma
+> arquitetura que o código não tem: a árvore `domains/` (store Zustand/immer, repositórios) foi
+> removida no P1-D lote 1 (`b6292ff`, *"nunca ligada a rota"*); `DomainErrorBoundary` e
+> `useErrorHandler` não existem (`git grep` fora de `docs/` e dos `.md` → 0; o `useErrorHandler` saiu na
+> I1-PR-14, decisão 5). O que existe hoje no web: o limite de erro global `lib/error-boundary.tsx`
+> (a classe) desenhando `components/identidade/tela-de-erro.tsx` (a tela, pela identidade, pt-BR —
+> I1-PR-14); a **casca** `components/identidade/casca.tsx` em toda página com sessão (I1-PR-9);
+> tokens e ícones de `packages/identidade` (I1-PR-4). Nada abaixo foi reescrito
+> (`docs/ux/I1-ENCERRAMENTO.md` §11).
+
 ## Overview
 
 This document describes the comprehensive architectural improvements implemented for the Octavia music management application. The refactoring focused on implementing domain-driven design principles, centralized state management, and enforcing component size limits to create a more maintainable and scalable codebase.
