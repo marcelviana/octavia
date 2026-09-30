@@ -17,7 +17,7 @@ import { FRASES_SESSAO, fraseDaFalha } from "./frases-sessao"
  * `components/identidade/linha-da-tela.tsx`); nas telas de corpo velho segue aqui,
  * no topo, até a PR de cada uma.
  */
-export const ROTAS_QUE_DESENHAM_A_LINHA: readonly string[] = ["/login", "/dashboard", "/library"]
+export const ROTAS_QUE_DESENHAM_A_LINHA: readonly string[] = ["/login", "/dashboard", "/library", "/add-content"]
 
 /**
  * I1-PR-10 (decisão 14): a visualização `/content/<id>` também desenha a linha (abaixo do cabeçalho). I1-PR-11: o

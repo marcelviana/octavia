@@ -1,0 +1,532 @@
+$ node scripts/gates-web/g-tok.mjs --so-arquivos
+## (ii) arquivos redesenhados — scripts/gates-web/g-tok-arquivos.txt
+  ✗ components/add-content-page-client.tsx:43 [cor] "#fffcf7" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content-page-client.tsx:45 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content-page-client.tsx:45 [cor] "#F2EDE5" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content-page-client.tsx:46 [cor] "#1A1F36" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content-page-client.tsx:61 [cor] "#fffcf7" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content-page-client.tsx:46 [espaçamento] "mt-4" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content-page-client.tsx:45 [tamanho] "w-16" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content-page-client.tsx:45 [tamanho] "h-16" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content-page-client.tsx:45 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content-page-client.tsx:45 [borda] "border-4" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content-page-client.tsx:43 [valor arbitrário] "bg-[#fffcf7]" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content-page-client.tsx:45 [valor arbitrário] "border-t-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content-page-client.tsx:45 [valor arbitrário] "border-[#F2EDE5]" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content-page-client.tsx:46 [valor arbitrário] "text-[#1A1F36]" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content-page-client.tsx:61 [valor arbitrário] "bg-[#fffcf7]" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content-page-client.tsx:11 [inglês, texto JSX] "Loading add content..." ← termo "loading"
+  ✗ components/add-content-page-client.tsx:46 [inglês, texto JSX] "Loading..." ← termo "loading"
+  ✗ components/add-content/RefactoredAddContent.tsx:102 [cor] "from-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/RefactoredAddContent.tsx:102 [cor] "to-orange-50" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/RefactoredAddContent.tsx:109 [cor] "bg-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/RefactoredAddContent.tsx:109 [cor] "text-amber-700" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/RefactoredAddContent.tsx:121 [cor] "border-red-200" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/RefactoredAddContent.tsx:121 [cor] "bg-red-50" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/RefactoredAddContent.tsx:121 [cor] "text-red-700" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/RefactoredAddContent.tsx:128 [cor] "bg-white" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/RefactoredAddContent.tsx:128 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/RefactoredAddContent.tsx:121 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/RefactoredAddContent.tsx:103 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/RefactoredAddContent.tsx:104 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/RefactoredAddContent.tsx:111 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/RefactoredAddContent.tsx:121 [espaçamento] "gap-2" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/RefactoredAddContent.tsx:121 [espaçamento] "p-3" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/RefactoredAddContent.tsx:128 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/RefactoredAddContent.tsx:104 [tamanho] "max-w-4xl" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/RefactoredAddContent.tsx:111 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/RefactoredAddContent.tsx:111 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/RefactoredAddContent.tsx:123 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/RefactoredAddContent.tsx:123 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/RefactoredAddContent.tsx:121 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/RefactoredAddContent.tsx:128 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/RefactoredAddContent.tsx:121 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/RefactoredAddContent.tsx:128 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/RefactoredAddContent.tsx:4 [import de ui] "from \"@/components/ui/button\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/add-content/RefactoredAddContent.tsx:111 [inglês, texto JSX] "Back" ← termo "back"
+  ✗ components/add-content/StepIndicatorComponent.tsx:31 [cor] "from-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/StepIndicatorComponent.tsx:31 [cor] "to-orange-600" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/StepIndicatorComponent.tsx:31 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/StepIndicatorComponent.tsx:32 [cor] "bg-white" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/StepIndicatorComponent.tsx:32 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/StepIndicatorComponent.tsx:32 [cor] "text-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/StepIndicatorComponent.tsx:43 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/StepIndicatorComponent.tsx:43 [cor] "text-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/StepIndicatorComponent.tsx:52 [cor] "bg-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/StepIndicatorComponent.tsx:52 [cor] "bg-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/StepIndicatorComponent.tsx:29 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/StepIndicatorComponent.tsx:42 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/StepIndicatorComponent.tsx:22 [espaçamento] "space-x-3" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/StepIndicatorComponent.tsx:22 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/StepIndicatorComponent.tsx:42 [espaçamento] "mt-1" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/StepIndicatorComponent.tsx:51 [espaçamento] "mx-3" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/StepIndicatorComponent.tsx:29 [tamanho] "w-8" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/StepIndicatorComponent.tsx:29 [tamanho] "h-8" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/StepIndicatorComponent.tsx:36 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/StepIndicatorComponent.tsx:36 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/StepIndicatorComponent.tsx:38 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/StepIndicatorComponent.tsx:38 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/StepIndicatorComponent.tsx:51 [tamanho] "w-12" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/StepIndicatorComponent.tsx:51 [tamanho] "h-0.5" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/StepIndicatorComponent.tsx:29 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/StepIndicatorComponent.tsx:51 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/StepIndicatorComponent.tsx:32 [borda] "border-2" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ContentTypeSelector.tsx:25 [cor] "text-gray-700" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ContentTypeSelector.tsx:40 [cor] "border-gray-200" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ContentTypeSelector.tsx:47 [cor] "bg-gray-50" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ContentTypeSelector.tsx:52 [cor] "text-gray-600" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ContentTypeSelector.tsx:58 [cor] "text-gray-700" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ContentTypeSelector.tsx:25 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ContentTypeSelector.tsx:57 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ContentTypeSelector.tsx:24 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ContentTypeSelector.tsx:25 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ContentTypeSelector.tsx:27 [espaçamento] "gap-2" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ContentTypeSelector.tsx:44 [espaçamento] "p-3" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ContentTypeSelector.tsx:46 [espaçamento] "mb-1" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ContentTypeSelector.tsx:46 [tamanho] "w-10" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ContentTypeSelector.tsx:46 [tamanho] "h-10" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ContentTypeSelector.tsx:51 [tamanho] "w-5" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ContentTypeSelector.tsx:51 [tamanho] "h-5" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ContentTypeSelector.tsx:68 [tamanho] "max-w-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ContentTypeSelector.tsx:46 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ContentTypeSelector.tsx:39 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ContentTypeSelector.tsx:2 [import de ui] "from \"@/components/ui/card\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/add-content/ContentTypeSelector.tsx:3 [import de ui] "from \"@/components/ui/tooltip\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/add-content/ContentTypeSelector.tsx:25 [inglês, texto JSX] "Content Type" ← termo "content"
+  ✗ components/add-content/ModeSelector.tsx:17 [cor] "text-gray-700" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:24 [cor] "ring-blue-500" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:24 [cor] "bg-blue-50" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:24 [cor] "border-blue-200" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:25 [cor] "border-gray-200" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:33 [cor] "bg-blue-500" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:33 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:34 [cor] "bg-gray-100" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:34 [cor] "text-gray-600" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:42 [cor] "text-blue-700" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:42 [cor] "text-gray-700" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:49 [cor] "text-blue-600" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:49 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:63 [cor] "ring-green-500" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:63 [cor] "bg-green-50" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:63 [cor] "border-green-200" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:64 [cor] "border-gray-200" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:72 [cor] "bg-green-500" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:72 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:73 [cor] "bg-gray-100" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:73 [cor] "text-gray-600" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:81 [cor] "text-green-700" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:81 [cor] "text-gray-700" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:88 [cor] "text-green-600" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:88 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:17 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:41 [tamanho de fonte] "text-base" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:48 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:80 [tamanho de fonte] "text-base" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:87 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:16 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:17 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:18 [espaçamento] "gap-3" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:29 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:29 [espaçamento] "gap-3" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:68 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:68 [espaçamento] "gap-3" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:31 [tamanho] "w-12" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:31 [tamanho] "h-12" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:37 [tamanho] "w-6" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:37 [tamanho] "h-6" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:70 [tamanho] "w-12" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:70 [tamanho] "h-12" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:76 [tamanho] "w-6" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:76 [tamanho] "h-6" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:31 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:70 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ModeSelector.tsx:2 [import de ui] "from \"@/components/ui/card\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/add-content/ModeSelector.tsx:17 [inglês, texto JSX] "How would you like to add content?" ← termo "content"
+  ✗ components/add-content/ModeSelector.tsx:44 [inglês, texto JSX] "Create New" ← termo "create"
+  ✗ components/add-content/ModeSelector.tsx:51 [inglês, texto JSX] "Start from scratch and build your content manually with our editor." ← termo "content"
+  ✗ components/add-content/ModeSelector.tsx:83 [inglês, texto JSX] "Import from File" ← termo "import"
+  ✗ components/add-content/ImportModeSelector.tsx:36 [cor] "text-gray-700" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ImportModeSelector.tsx:43 [cor] "ring-orange-500" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ImportModeSelector.tsx:43 [cor] "bg-orange-50" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ImportModeSelector.tsx:43 [cor] "border-orange-200" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ImportModeSelector.tsx:44 [cor] "border-gray-200" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ImportModeSelector.tsx:52 [cor] "bg-orange-500" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ImportModeSelector.tsx:52 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ImportModeSelector.tsx:53 [cor] "bg-gray-100" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ImportModeSelector.tsx:53 [cor] "text-gray-600" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ImportModeSelector.tsx:65 [cor] "text-orange-700" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ImportModeSelector.tsx:65 [cor] "text-gray-700" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ImportModeSelector.tsx:72 [cor] "text-orange-600" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ImportModeSelector.tsx:72 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ImportModeSelector.tsx:36 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ImportModeSelector.tsx:64 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ImportModeSelector.tsx:71 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ImportModeSelector.tsx:35 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ImportModeSelector.tsx:36 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ImportModeSelector.tsx:37 [espaçamento] "gap-2" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ImportModeSelector.tsx:48 [espaçamento] "p-3" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ImportModeSelector.tsx:48 [espaçamento] "gap-3" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ImportModeSelector.tsx:50 [tamanho] "w-10" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ImportModeSelector.tsx:50 [tamanho] "h-10" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ImportModeSelector.tsx:57 [tamanho] "w-5" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ImportModeSelector.tsx:57 [tamanho] "h-5" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ImportModeSelector.tsx:59 [tamanho] "w-5" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ImportModeSelector.tsx:59 [tamanho] "h-5" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ImportModeSelector.tsx:50 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/ImportModeSelector.tsx:2 [import de ui] "from \"@/components/ui/card\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/add-content/ImportModeSelector.tsx:36 [inglês, texto JSX] "Import Type" ← termo "import"
+  ✗ components/add-content/FileUploadZone.tsx:60 [cor] "bg-white" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/FileUploadZone.tsx:60 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/FileUploadZone.tsx:61 [cor] "text-gray-900" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/FileUploadZone.tsx:77 [cor] "border-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/FileUploadZone.tsx:77 [cor] "bg-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/FileUploadZone.tsx:77 [cor] "border-amber-300" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/FileUploadZone.tsx:82 [cor] "text-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/FileUploadZone.tsx:86 [cor] "text-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/FileUploadZone.tsx:88 [cor] "text-gray-600" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/FileUploadZone.tsx:96 [cor] "border-amber-300" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/FileUploadZone.tsx:96 [cor] "text-amber-700" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/FileUploadZone.tsx:96 [cor] "bg-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/FileUploadZone.tsx:111 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/FileUploadZone.tsx:61 [tamanho de fonte] "text-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/FileUploadZone.tsx:111 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/FileUploadZone.tsx:60 [espaçamento] "p-6" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/FileUploadZone.tsx:61 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/FileUploadZone.tsx:76 [espaçamento] "p-8" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/FileUploadZone.tsx:82 [espaçamento] "mb-3" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/FileUploadZone.tsx:86 [espaçamento] "mb-3" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/FileUploadZone.tsx:88 [espaçamento] "mb-3" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/FileUploadZone.tsx:111 [espaçamento] "mt-3" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/FileUploadZone.tsx:82 [tamanho] "w-8" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/FileUploadZone.tsx:82 [tamanho] "h-8" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/FileUploadZone.tsx:86 [tamanho] "w-8" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/FileUploadZone.tsx:86 [tamanho] "h-8" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/FileUploadZone.tsx:60 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/FileUploadZone.tsx:76 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/FileUploadZone.tsx:60 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/FileUploadZone.tsx:76 [borda] "border-2" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/FileUploadZone.tsx:6 [import de ui] "from \"@/components/ui/button\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/add-content/FileUploadZone.tsx:31 [toast] "toast.error(" — nenhum toast entra (I1-D26): a falha é a LinhaDeAviso
+  ✗ components/add-content/FileUploadZone.tsx:52 [toast] "toast.error(" — nenhum toast entra (I1-D26): a falha é a LinhaDeAviso
+  ✗ components/add-content/FileUploadZone.tsx:61 [inglês, texto JSX] "Import Music File" ← termo "import"
+  ✗ components/add-content/FileUploadZone.tsx:97 [inglês, texto JSX] "Browse files" ← termo "browse"
+  ✗ components/add-content/FileUploadZone.tsx:103 [inglês, atributo] "Upload music file" ← termo "upload"
+  ✗ components/add-content/DetailsStep.tsx:48 [cor] "bg-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/DetailsStep.tsx:48 [cor] "text-amber-700" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/DetailsStep.tsx:53 [cor] "from-gray-900" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/DetailsStep.tsx:53 [cor] "to-gray-700" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/DetailsStep.tsx:57 [cor] "text-gray-600" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/DetailsStep.tsx:53 [tamanho de fonte] "text-xl" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/DetailsStep.tsx:57 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/DetailsStep.tsx:42 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/DetailsStep.tsx:44 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/DetailsStep.tsx:50 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/DetailsStep.tsx:53 [espaçamento] "ml-2" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/DetailsStep.tsx:57 [espaçamento] "ml-4" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/DetailsStep.tsx:43 [tamanho] "max-w-4xl" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/DetailsStep.tsx:50 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/DetailsStep.tsx:50 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/DetailsStep.tsx:3 [import de ui] "from \"@/components/ui/button\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/add-content/DetailsStep.tsx:50 [inglês, texto JSX] "Back" ← termo "back"
+  ✗ components/add-content/DetailsStep.tsx:53 [inglês, texto JSX] "Add Content Details" ← termo "content"
+  ✗ components/add-content/DetailsStep.tsx:57 [inglês, texto JSX] "Fill in the details to help organize and find your Sheet Music in your library." ← termo "sheet music"
+  ✗ components/add-content/CompletionStep.tsx:24 [cor] "from-green-400" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:24 [cor] "to-emerald-500" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:25 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:27 [cor] "bg-yellow-400" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:28 [cor] "text-yellow-800" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:33 [cor] "text-gray-600" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:34 [cor] "text-gray-600" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:40 [cor] "border-amber-300" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:40 [cor] "text-amber-700" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:40 [cor] "bg-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:46 [cor] "from-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:46 [cor] "to-orange-600" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:46 [cor] "from-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:46 [cor] "to-orange-700" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:46 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:32 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:33 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:34 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:40 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:46 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:20 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:22 [espaçamento] "space-y-6" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:27 [espaçamento] "-top-1" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:27 [espaçamento] "-right-1" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:32 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:33 [espaçamento] "mb-1" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:36 [espaçamento] "space-x-3" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:40 [espaçamento] "px-4" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:40 [espaçamento] "py-2" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:46 [espaçamento] "px-4" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:46 [espaçamento] "py-2" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:21 [tamanho] "max-w-2xl" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:24 [tamanho] "w-20" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:24 [tamanho] "h-20" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:25 [tamanho] "w-10" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:25 [tamanho] "h-10" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:27 [tamanho] "w-6" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:27 [tamanho] "h-6" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:28 [tamanho] "w-3" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:28 [tamanho] "h-3" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:33 [tamanho] "max-w-md" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:34 [tamanho] "max-w-md" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:24 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:27 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ components/add-content/CompletionStep.tsx:3 [import de ui] "from \"@/components/ui/button\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/add-content/CompletionStep.tsx:32 [inglês, texto JSX] "🎉 Done! Your music is now part of your library." ← termo "library"
+  ✗ components/add-content/CompletionStep.tsx:47 [inglês, texto JSX] "Go to Library" ← termo "library"
+  ✗ components/content-creator.tsx:106 [cor] "text-gray-600" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:126 [cor] "text-gray-900" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:127 [cor] "text-gray-600" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:139 [cor] "border-red-200" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:139 [cor] "bg-red-50" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:141 [cor] "text-red-800" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:169 [cor] "text-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:177 [cor] "from-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:177 [cor] "to-orange-600" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:177 [cor] "from-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:177 [cor] "to-orange-700" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:177 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:126 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:126 [tamanho de fonte] "text-base" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:127 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:127 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:169 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:177 [tamanho de fonte] "text-base" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:101 [espaçamento] "space-y-6" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:109 [espaçamento] "gap-2" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:109 [espaçamento] "gap-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:124 [espaçamento] "p-2" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:124 [espaçamento] "p-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:125 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:125 [espaçamento] "mb-3" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:127 [espaçamento] "mt-1" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:149 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:169 [espaçamento] "space-y-1" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:174 [espaçamento] "pt-2" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:177 [espaçamento] "px-6" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:177 [espaçamento] "py-3" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:125 [tamanho] "w-6" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:125 [tamanho] "h-6" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:125 [tamanho] "w-8" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:125 [tamanho] "h-8" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:140 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:140 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:117 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:117 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:120 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:117 [valor arbitrário] "min-h-[44px]" — use a custom property de app/styles/identidade.css
+  ✗ components/content-creator.tsx:4 [import de ui] "from \"@/components/ui/card\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/content-creator.tsx:5 [import de ui] "from \"@/components/ui/button\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/content-creator.tsx:6 [import de ui] "from \"@/components/ui/input\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/content-creator.tsx:7 [import de ui] "from \"@/components/ui/label\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/content-creator.tsx:8 [import de ui] "from \"@/components/ui/textarea\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/content-creator.tsx:9 [import de ui] "from \"@/components/ui/alert\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/content-creator.tsx:105 [inglês, texto JSX] "Create New Content" ← termo "content"
+  ✗ components/content-creator.tsx:106 [inglês, texto JSX] "Choose the type of musical content you want to create" ← termo "content"
+  ✗ components/content-creator.tsx:151 [inglês, texto JSX] "Title" ← termo "title"
+  ✗ components/content-creator.tsx:179 [inglês, texto JSX] "Next" ← termo "next"
+  ✗ components/content-creator.tsx:159 [inglês, atributo] "Song title" ← termo "title"
+  ✗ components/batch-preview.tsx:138 [cor] "bg-black" — use a custom property de app/styles/identidade.css
+  ✗ components/batch-preview.tsx:138 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ components/batch-preview.tsx:141 [cor] "border-white" — use a custom property de app/styles/identidade.css
+  ✗ components/batch-preview.tsx:74 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ components/batch-preview.tsx:76 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/batch-preview.tsx:77 [espaçamento] "p-3" — use a custom property de app/styles/identidade.css
+  ✗ components/batch-preview.tsx:77 [espaçamento] "pb-1" — use a custom property de app/styles/identidade.css
+  ✗ components/batch-preview.tsx:78 [espaçamento] "space-x-2" — use a custom property de app/styles/identidade.css
+  ✗ components/batch-preview.tsx:101 [espaçamento] "mt-2" — use a custom property de app/styles/identidade.css
+  ✗ components/batch-preview.tsx:115 [espaçamento] "p-3" — use a custom property de app/styles/identidade.css
+  ✗ components/batch-preview.tsx:115 [espaçamento] "pt-1" — use a custom property de app/styles/identidade.css
+  ✗ components/batch-preview.tsx:131 [espaçamento] "pt-2" — use a custom property de app/styles/identidade.css
+  ✗ components/batch-preview.tsx:141 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/batch-preview.tsx:141 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/batch-preview.tsx:141 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/batch-preview.tsx:141 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ components/batch-preview.tsx:141 [borda] "border-2" — use a custom property de app/styles/identidade.css
+  ✗ components/batch-preview.tsx:4 [import de ui] "from \"@/components/ui/card\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/batch-preview.tsx:5 [import de ui] "from \"@/components/ui/button\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/batch-preview.tsx:6 [import de ui] "from \"@/components/ui/input\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/batch-preview.tsx:7 [import de ui] "from \"@/components/ui/textarea\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/batch-preview.tsx:8 [import de ui] "from \"@/components/ui/checkbox\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/batch-preview.tsx:52 [toast] "toast.error(" — nenhum toast entra (I1-D26): a falha é a LinhaDeAviso
+  ✗ components/batch-preview.tsx:63 [toast] "toast.success(" — nenhum toast entra (I1-D26): a falha é a LinhaDeAviso
+  ✗ components/batch-preview.tsx:67 [toast] "toast.error(" — nenhum toast entra (I1-D26): a falha é a LinhaDeAviso
+  ✗ components/batch-preview.tsx:132 [inglês, texto JSX] "Back" ← termo "back"
+  ✗ components/batch-preview.tsx:103 [inglês, atributo] "Artist" ← termo "artist"
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:47 [cor] "bg-amber-100" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:47 [cor] "text-amber-700" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:53 [cor] "text-gray-900" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:54 [cor] "text-gray-600" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:59 [cor] "border-red-200" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:59 [cor] "bg-red-50" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:60 [cor] "text-red-600" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:61 [cor] "text-red-700" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:66 [cor] "border-green-200" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:66 [cor] "bg-green-50" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:67 [cor] "text-green-600" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:68 [cor] "text-green-700" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:72 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:73 [cor] "from-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:73 [cor] "to-orange-50" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:73 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:74 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:92 [cor] "text-amber-700" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:92 [cor] "text-amber-800" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:119 [cor] "border-amber-300" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:119 [cor] "text-amber-700" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:119 [cor] "bg-amber-50" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:126 [cor] "from-amber-500" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:126 [cor] "to-orange-600" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:126 [cor] "from-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:126 [cor] "to-orange-700" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:126 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:53 [tamanho de fonte] "text-xl" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:54 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:42 [espaçamento] "p-6" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:43 [espaçamento] "mb-6" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:49 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:52 [espaçamento] "ml-4" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:59 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:66 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:75 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:79 [espaçamento] "p-6" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:79 [espaçamento] "space-y-6" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:94 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:98 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:98 [espaçamento] "pt-4" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:114 [espaçamento] "space-x-3" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:114 [espaçamento] "pt-4" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:42 [tamanho] "max-w-2xl" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:49 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:49 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:60 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:60 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:67 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:67 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:75 [tamanho] "w-5" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:75 [tamanho] "h-5" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:94 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:94 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:73 [borda] "border-b" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:4 [import de ui] "from \"@/components/ui/card\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:5 [import de ui] "from \"@/components/ui/button\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:6 [import de ui] "from \"@/components/ui/alert\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:7 [import de ui] "from \"@/components/ui/accordion\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:49 [inglês, texto JSX] "Back" ← termo "back"
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:53 [inglês, texto JSX] "Add Metadata" ← termo "add"
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:54 [inglês, texto JSX] "Fill in the details for your content" ← termo "content"
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:75 [inglês, texto JSX] "Content Details" ← termo "content"
+  ✗ components/metadata-form/RefactoredMetadataForm.tsx:120 [inglês, texto JSX] "Cancel" ← termo "cancel"
+  ✗ components/metadata-form/BasicMetadataFields.tsx:37 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/BasicMetadataFields.tsx:37 [cor] "border-amber-400" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/BasicMetadataFields.tsx:50 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/BasicMetadataFields.tsx:50 [cor] "border-amber-400" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/BasicMetadataFields.tsx:64 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/BasicMetadataFields.tsx:64 [cor] "border-amber-400" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/BasicMetadataFields.tsx:77 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/BasicMetadataFields.tsx:77 [cor] "border-amber-400" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/BasicMetadataFields.tsx:92 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/BasicMetadataFields.tsx:92 [cor] "border-amber-400" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/BasicMetadataFields.tsx:105 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/BasicMetadataFields.tsx:105 [cor] "border-amber-400" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/BasicMetadataFields.tsx:29 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/BasicMetadataFields.tsx:42 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/BasicMetadataFields.tsx:56 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/BasicMetadataFields.tsx:69 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/BasicMetadataFields.tsx:83 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/BasicMetadataFields.tsx:97 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/BasicMetadataFields.tsx:28 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/BasicMetadataFields.tsx:41 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/BasicMetadataFields.tsx:54 [espaçamento] "gap-4" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/BasicMetadataFields.tsx:55 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/BasicMetadataFields.tsx:68 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/BasicMetadataFields.tsx:82 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/BasicMetadataFields.tsx:96 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/BasicMetadataFields.tsx:105 [valor arbitrário] "min-h-[80px]" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/BasicMetadataFields.tsx:3 [import de ui] "from \"@/components/ui/input\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/metadata-form/BasicMetadataFields.tsx:4 [import de ui] "from \"@/components/ui/label\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/metadata-form/BasicMetadataFields.tsx:5 [import de ui] "from \"@/components/ui/textarea\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/metadata-form/BasicMetadataFields.tsx:29 [inglês, texto JSX] "Title *" ← termo "title"
+  ✗ components/metadata-form/BasicMetadataFields.tsx:42 [inglês, texto JSX] "Artist *" ← termo "artist"
+  ✗ components/metadata-form/BasicMetadataFields.tsx:56 [inglês, texto JSX] "Album" ← termo "album"
+  ✗ components/metadata-form/BasicMetadataFields.tsx:69 [inglês, texto JSX] "Genre" ← termo "genre"
+  ✗ components/metadata-form/BasicMetadataFields.tsx:97 [inglês, texto JSX] "Notes" ← termo "notes"
+  ✗ components/metadata-form/BasicMetadataFields.tsx:36 [inglês, atributo] "Enter song title" ← termo "title"
+  ✗ components/metadata-form/BasicMetadataFields.tsx:49 [inglês, atributo] "Enter artist name" ← termo "artist"
+  ✗ components/metadata-form/BasicMetadataFields.tsx:63 [inglês, atributo] "Enter album name" ← termo "album"
+  ✗ components/metadata-form/BasicMetadataFields.tsx:76 [inglês, atributo] "Enter genre" ← termo "genre"
+  ✗ components/metadata-form/BasicMetadataFields.tsx:104 [inglês, atributo] "Add any additional notes or comments" ← termo "notes"
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:42 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:42 [cor] "border-amber-400" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:65 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:65 [cor] "border-amber-400" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:74 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:74 [cor] "border-amber-400" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:99 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:99 [cor] "border-amber-400" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:112 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:112 [cor] "border-amber-400" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:126 [cor] "border-amber-200" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:126 [cor] "border-amber-400" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:38 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:56 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:70 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:90 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:104 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:118 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:136 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:36 [espaçamento] "gap-4" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:37 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:55 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:69 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:88 [espaçamento] "gap-4" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:89 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:103 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:117 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:130 [espaçamento] "space-x-2" — use a custom property de app/styles/identidade.css
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:3 [import de ui] "from \"@/components/ui/input\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:4 [import de ui] "from \"@/components/ui/label\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:5 [import de ui] "from \"@/components/ui/select\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:6 [import de ui] "from \"@/components/ui/checkbox\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:38 [inglês, texto JSX] "Key" ← termo "key"
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:70 [inglês, texto JSX] "Difficulty" ← termo "difficulty"
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:90 [inglês, texto JSX] "Capo" ← termo "capo"
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:104 [inglês, texto JSX] "Tuning" ← termo "tuning"
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:136 [inglês, texto JSX] "Mark as favorite" ← termo "favorite"
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:43 [inglês, atributo] "Select key" ← termo "select"
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:75 [inglês, atributo] "Select difficulty" ← termo "difficulty"
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:98 [inglês, atributo] "Fret number" ← termo "fret"
+  ✗ components/metadata-form/AdvancedMetadataFields.tsx:111 [inglês, atributo] "Standard (EADGBE)" ← termo "standard"
+  ✗ lib/content-type-styles.ts:15 [cor] "ring-green-500" — use a custom property de app/styles/identidade.css
+  ✗ lib/content-type-styles.ts:16 [cor] "border-green-200" — use a custom property de app/styles/identidade.css
+  ✗ lib/content-type-styles.ts:17 [cor] "bg-green-50" — use a custom property de app/styles/identidade.css
+  ✗ lib/content-type-styles.ts:18 [cor] "text-green-600" — use a custom property de app/styles/identidade.css
+  ✗ lib/content-type-styles.ts:22 [cor] "ring-blue-500" — use a custom property de app/styles/identidade.css
+  ✗ lib/content-type-styles.ts:23 [cor] "border-blue-200" — use a custom property de app/styles/identidade.css
+  ✗ lib/content-type-styles.ts:24 [cor] "bg-blue-50" — use a custom property de app/styles/identidade.css
+  ✗ lib/content-type-styles.ts:25 [cor] "text-blue-600" — use a custom property de app/styles/identidade.css
+  ✗ lib/content-type-styles.ts:29 [cor] "ring-purple-500" — use a custom property de app/styles/identidade.css
+  ✗ lib/content-type-styles.ts:30 [cor] "border-purple-200" — use a custom property de app/styles/identidade.css
+  ✗ lib/content-type-styles.ts:31 [cor] "bg-purple-50" — use a custom property de app/styles/identidade.css
+  ✗ lib/content-type-styles.ts:32 [cor] "text-purple-600" — use a custom property de app/styles/identidade.css
+  ✗ lib/content-type-styles.ts:36 [cor] "ring-orange-500" — use a custom property de app/styles/identidade.css
+  ✗ lib/content-type-styles.ts:37 [cor] "border-orange-200" — use a custom property de app/styles/identidade.css
+  ✗ lib/content-type-styles.ts:38 [cor] "bg-orange-50" — use a custom property de app/styles/identidade.css
+  ✗ lib/content-type-styles.ts:39 [cor] "text-orange-600" — use a custom property de app/styles/identidade.css
+  ✗ lib/content-type-styles.ts:43 [cor] "ring-gray-500" — use a custom property de app/styles/identidade.css
+  ✗ lib/content-type-styles.ts:44 [cor] "border-gray-200" — use a custom property de app/styles/identidade.css
+  ✗ lib/content-type-styles.ts:45 [cor] "bg-gray-50" — use a custom property de app/styles/identidade.css
+  ✗ lib/content-type-styles.ts:46 [cor] "text-gray-600" — use a custom property de app/styles/identidade.css
+  ✗ lib/content-type-styles.ts:5 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ lib/content-type-styles.ts:16 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ lib/content-type-styles.ts:23 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ lib/content-type-styles.ts:30 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ lib/content-type-styles.ts:37 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ lib/content-type-styles.ts:44 [borda] "border" — use a custom property de app/styles/identidade.css
+  arquivos: 105 · literais de identidade acusados: 443 · toasts: 5 · imports de ui: 30 · textos examinados: 69 · isentos de inglês (scripts/gates-web/g-tok-sem-ingles.txt): 1 · vocabulário: 133 · isenções: 9
+
+G-tok: REPROVA — 526 ocorrência(s)
+# exit: 1

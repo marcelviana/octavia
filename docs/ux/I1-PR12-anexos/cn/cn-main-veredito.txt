@@ -1,0 +1,3 @@
+$ node scripts/gates-web/g-faixa-veredito.mjs tests/gates-web/medicoes/cn-main
+
+G-faixa: REPROVA — 83 ocorrência(s)

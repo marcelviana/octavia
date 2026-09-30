@@ -27,8 +27,10 @@ interface UseMetadataFormProps {
 export function useMetadataForm({ onComplete, initialData }: UseMetadataFormProps) {
   const { user } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+  // I1-PR-12: a falha do salvar é o ERRO como veio (com o `status`); a frase é da tela, pela espécie
+  // (`components/upload/falhas-do-upload.ts`). Eram duas strings cruas em inglês (`error`, `success`); o sucesso
+  // (*"Content saved successfully!"*) piscava junto com o pronto — a mesma notícia, uma frase só (nota de `UP-pronto`).
+  const [falha, setFalha] = useState<unknown>(null);
 
   const [formData, setFormData] = useState<MetadataFormData>({
     title: initialData?.title || "",
@@ -52,22 +54,22 @@ export function useMetadataForm({ onComplete, initialData }: UseMetadataFormProp
       ...prev,
       [field]: value
     }));
-    setError(null);
+    setFalha(null);
   };
 
   const handleSubmit = async () => {
     if (!user) {
-      setError("User not authenticated");
+      setFalha(Object.assign(new Error("User not authenticated"), { status: 401 }));
       return;
     }
 
+    // sem título ou artista o *Salvar* já está inativo, com o motivo ao lado (`UP-detalhes-inativo`)
     if (!formData.title || !formData.artist) {
-      setError("Title and Artist are required");
       return;
     }
 
     setIsSubmitting(true);
-    setError(null);
+    setFalha(null);
 
     try {
       const metadata = {
@@ -87,16 +89,13 @@ export function useMetadataForm({ onComplete, initialData }: UseMetadataFormProp
         tags: formData.tags.length > 0 ? formData.tags : null
       };
 
-      // ADD-14/ADD-01: o save é AGUARDADO e a mensagem de sucesso só aparece
-      // depois que ele conclui de verdade. Antes, setSuccess vinha antes de
-      // onComplete e o onComplete (async) não era aguardado: o "Content saved
-      // successfully!" aparecia mesmo com falha (ADD-01) e o
-      // `disabled={isSubmitting}` do botão liberava no mesmo tick, deixando o
-      // save em voo desprotegido (ADD-14).
+      // ADD-14/ADD-01: o save é AGUARDADO — o `isSubmitting` só libera depois
+      // que ele conclui de verdade (antes, o onComplete async não era aguardado
+      // e o `disabled={isSubmitting}` do botão liberava no mesmo tick, deixando
+      // o save em voo desprotegido).
       await onComplete(metadata);
-      setSuccess("Content saved successfully!");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to save content");
+      setFalha(err);
     } finally {
       setIsSubmitting(false);
     }
@@ -105,8 +104,7 @@ export function useMetadataForm({ onComplete, initialData }: UseMetadataFormProp
   return {
     formData,
     isSubmitting,
-    error,
-    success,
+    falha,
     updateField,
     handleSubmit
   };

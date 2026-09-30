@@ -41,7 +41,10 @@ export function useAddContentLogic() {
   const [metadata, setMetadata] = useState<any>({});
   const [draftContent, setDraftContent] = useState<any>(null);
   const [isUploading, setIsUploading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  // I1-PR-12: a falha da LEITURA do lote, por espécie (a frase é da tela): nenhuma música, ou o arquivo não se leu.
+  // Era `error`, uma string crua que o passo 1 mostrava — e que guardava também o erro do SALVAR (a "cópia velha",
+  // decisão 24 do DESIGN-I1): o salvar falhava, o formulário mostrava o erro e, ao voltar, o passo 1 o mostrava de novo.
+  const [falhaDoLote, setFalhaDoLote] = useState<"vazio" | "ler" | null>(null);
   const { user } = useAuth();
   const isAutoDetectingContentType = useRef(false);
   const saveInFlightRef = useRef(false);
@@ -61,7 +64,7 @@ export function useAddContentLogic() {
     setParsedSongs([]);
     setBatchArtist("");
     setBatchImported(false);
-    setError(null);
+    setFalhaDoLote(null);
 
     // Set mode and import mode based on content type
     if (contentType === ContentType.SHEET) {
@@ -76,37 +79,8 @@ export function useAddContentLogic() {
   // Reset createdContent when switching between create and import modes
   useEffect(() => {
     setCreatedContent(null);
-    setError(null);
+    setFalhaDoLote(null);
   }, [mode]);
-
-  const importModes = [
-    {
-      id: "single",
-      name: "Single Content",
-      subtitle: "Import a file with a single song.",
-    },
-    {
-      id: "batch",
-      name: "Batch Import",
-      subtitle: "Import multiple songs from one file.",
-    },
-  ];
-
-  const availableImportModes =
-    contentType === ContentType.SHEET
-      ? importModes.filter((m) => m.id === "single")
-      : importModes;
-
-  const contentTypes = [
-    { id: "lyrics", name: ContentType.LYRICS },
-    { id: "chords", name: ContentType.CHORDS },
-    { id: "tabs", name: ContentType.TAB },
-    {
-      id: "sheet",
-      name: ContentType.SHEET,
-      tooltip: "Add Sheet Music by uploading PDF or image files. Manual creation is not available for this type.",
-    },
-  ];
 
   const handleFilesUploaded = (files: UploadedFile[]) => {
     if (files.length > 0) {
@@ -121,7 +95,7 @@ export function useAddContentLogic() {
       }
 
       setUploadedFile(file);
-      setError(null);
+      setFalhaDoLote(null);
 
       // For sheet music, go directly to step 2
       if (contentType === ContentType.SHEET) {
@@ -136,7 +110,7 @@ export function useAddContentLogic() {
 
   const handleBatchParsing = async (file: UploadedFile) => {
     setIsParsing(true);
-    setError(null);
+    setFalhaDoLote(null);
 
     try {
       let songs: ParsedSong[] = [];
@@ -150,7 +124,8 @@ export function useAddContentLogic() {
       }
 
       if (songs.length === 0) {
-        throw new Error("No songs found in the file");
+        setFalhaDoLote("vazio");
+        return;
       }
 
       const songsWithArtist = songs.map((song, index) => ({
@@ -162,8 +137,8 @@ export function useAddContentLogic() {
 
       setParsedSongs(songsWithArtist);
       setCurrentStep(2);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to parse file");
+    } catch {
+      setFalhaDoLote("ler");
     } finally {
       setIsParsing(false);
     }
@@ -180,7 +155,6 @@ export function useAddContentLogic() {
     saveInFlightRef.current = true;
 
     setIsUploading(true);
-    setError(null);
 
     try {
       if (parsedSongs.length > 0) {
@@ -256,7 +230,7 @@ export function useAddContentLogic() {
 
       setCurrentStep(3);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to save content");
+      // I1-PR-12: o erro PROPAGA e é do formulário (`useMetadataForm`); a cópia que ficava aqui morreu
       throw err;
     } finally {
       saveInFlightRef.current = false;
@@ -281,11 +255,12 @@ export function useAddContentLogic() {
     setDraftContent,
     isUploading,
     isProcessing,
+    isParsing,
     createdContent,
-    error,
+    falhaDoLote,
     handleFilesUploaded,
-    handleSaveContent,
-    availableImportModes,
-    contentTypes
+    // I1-PR-12: *Tentar de novo* da leitura do lote (`up.lote.ler`) — lê de novo o MESMO arquivo, sem reenviar
+    lerDeNovo: () => { if (uploadedFile) void handleBatchParsing(uploadedFile); },
+    handleSaveContent
   };
 }

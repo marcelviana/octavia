@@ -26,7 +26,8 @@ export function sanitizeFilename(filename: string): string {
 export async function uploadToStorage(file: File): Promise<string> {
   const { token, error } = await getValidToken();
   if (!token) {
-    throw new Error(error || "Authentication required to upload files");
+    // I1-PR-12 (decisão 11 do aval): o erro leva o `status` (aditivo) — sem token é 401, como no `updateContent`
+    throw Object.assign(new Error(error || "Authentication required to upload files"), { status: 401 });
   }
 
   const formData = new FormData();
@@ -41,12 +42,16 @@ export async function uploadToStorage(file: File): Promise<string> {
 
   if (!response.ok) {
     const data = await response.json().catch(() => null);
-    throw new Error(data?.error || `Upload failed with status ${response.status}`);
+    // I1-PR-12: o `status` e os `details` do contrato (aditivos) — é por eles que a tela reconhece o limite de tamanho
+    throw Object.assign(new Error(data?.error || `Upload failed with status ${response.status}`), {
+      status: response.status,
+      details: data?.details,
+    });
   }
 
   const result = await response.json();
   if (!result.url) {
-    throw new Error("Failed to get public URL for uploaded file");
+    throw Object.assign(new Error("Failed to get public URL for uploaded file"), { status: 500 });
   }
   return result.url;
 }

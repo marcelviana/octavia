@@ -1,0 +1,19 @@
+{
+ "criar do zero (letra) + metadados e avançadas": [
+  "POST /api/content {\"title\":\"Linha de 120 colunas\",\"artist\":\"Teste de régua\",\"content_type\":\"Lyrics\",\"content_data\":{\"lyrics\":\"\"},\"album\":\"Álbum do CN\",\"genre\":\"Samba\",\"notes\":\"nota do CN\",\"key\":null,\"bpm\":96,\"difficulty\":null,\"time_signature\":null,\"is_favorite\":false,\"tags\":null,\"user_id\":\"cn-user\"}"
+ ],
+ "importar um arquivo (cifra, .txt)": [
+  "POST /api/storage/upload [[\"file\",{\"name\":\"cifra do cn.txt\",\"type\":\"text/plain\",\"size\":58,\"sha256\":\"b327026364ad9999da0122c4ad0a15a4342f84732892d7bfb3469bf036be7d6b\"}],[\"filename\",\"cifra_do_cn.txt\"]]",
+  "POST /api/content {\"title\":\"Verso curto\",\"artist\":\"Teste de régua\",\"content_type\":\"Chords\",\"file_url\":\"https://cn.supabase.co/storage/v1/object/public/content-files/cn-arquivo\",\"album\":null,\"genre\":null,\"notes\":null,\"key\":null,\"bpm\":null,\"difficulty\":null,\"time_signature\":null,\"is_favorite\":false,\"tags\":null,\"user_id\":\"cn-user\"}"
+ ],
+ "partitura (.pdf)": [
+  "POST /api/storage/upload [[\"file\",{\"name\":\"partitura-12-paginas.pdf\",\"type\":\"application/pdf\",\"size\":27,\"sha256\":\"01a3e5b38274ed9355eca3ced78137999dd40bdb2dbcaa937212900e27d9bada\"}],[\"filename\",\"partitura-12-paginas.pdf\"]]",
+  "POST /api/content {\"title\":\"Partitura de 12 páginas\",\"artist\":\"Compositor anônimo\",\"content_type\":\"Sheet\",\"file_url\":\"https://cn.supabase.co/storage/v1/object/public/content-files/cn-arquivo\",\"album\":null,\"genre\":null,\"notes\":\"nota do CN\",\"key\":null,\"bpm\":null,\"difficulty\":null,\"time_signature\":null,\"is_favorite\":false,\"tags\":null,\"user_id\":\"cn-user\"}"
+ ],
+ "lote (.txt, três músicas)": [
+  "POST /api/storage/upload [[\"file\",{\"name\":\"repertorio.txt\",\"type\":\"text/plain\",\"size\":135,\"sha256\":\"5fa2dbf24e5cb029793c137e94eb4bb2d9aa5403d60e09ec796f6b5e7fe8a3c2\"}],[\"filename\",\"repertorio.txt\"]]",
+  "POST /api/content {\"title\":\"Anunciação\",\"artist\":\"Alceu Valença\",\"content_type\":\"Lyrics\",\"content_data\":{\"lyrics\":\"primeira linha da música um\"}}",
+  "POST /api/content {\"title\":\"Asa branca\",\"artist\":\"Luiz Gonzaga\",\"content_type\":\"Lyrics\",\"content_data\":{\"lyrics\":\"primeira linha da música dois\"}}",
+  "POST /api/content {\"title\":\"Batch três\",\"artist\":\"Unknown Artist\",\"content_type\":\"Lyrics\",\"content_data\":{\"lyrics\":\"primeira linha da música três\"}}"
+ ]
+}

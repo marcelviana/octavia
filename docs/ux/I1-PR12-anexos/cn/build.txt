@@ -1,0 +1,5 @@
+$ pnpm build   # numa cópia da árvore, sem .env
+ ✓ Compiled successfully
+├ ƒ /add-content                         4.92 kB         278 kB
+├ ƒ /library                             1.43 kB         274 kB
+# exit: 0

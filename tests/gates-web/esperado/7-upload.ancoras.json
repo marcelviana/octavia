@@ -1,0 +1,19 @@
+{
+  "_": "Âncoras do esperado (I1-PR12). (1) As da casca, as mesmas das folhas 4, 5 e 6 (I1-PR9…PR11): a CAIXA da busca (só o placeholder \"Buscar…\") e a conta (as iniciais do exemplo, \"MV\"). (2) As caixas dos CAMPOS do upload, no molde da 1-auth e da 6 (I1-PR6, decisão 7; I1-PR11, div. 790): a folha desenha o campo como uma caixa (contorno lineInfo, ou errorInk na validação, raio 12) com o valor de exemplo ou o placeholder dentro, e o app como um input cujo valor é o dado — a caixa recebe o data-testid que o app põe no controle, pelo rótulo escrito no irmão anterior; a chave `t:<testid>` casa dos dois lados. O texto dentro da caixa da folha sai \"sem par\" (o do app é o valor ou o placeholder do input, no mesmo nó do controle). (3) O campo de artista de cada linha do lote não tem rótulo (o irmão anterior é o título, dado): recebe o testid pelo seletor da grade da linha; repetido, pareia pela ordem (#1…#4). (4) A zona de arquivo (web.zonaArquivo, 240): a caixa tracejada não tem texto próprio e não seria nó — recebe o testid do app para que a altura mínima se meça.",
+  "seletor": "div[style*='border-radius:12px'][style*='border:1px solid #6E6A80'], div[style*='border-radius:12px'][style*='border:1px solid #E5686F']",
+  "porRotulo": {
+    "Título *": "campo-titulo",
+    "Artista *": "campo-artista",
+    "Álbum": "campo-album",
+    "Gênero": "campo-genero",
+    "Ano": "campo-ano",
+    "Notas": "campo-notas",
+    "Título": "campo-criar-titulo"
+  },
+  "porSeletor": [
+    { "seletor": "div:has(> svg)", "texto": "Buscar…", "testid": "casca-busca" },
+    { "seletor": "[aria-label^='Conta de']", "testid": "casca-conta" },
+    { "seletor": "div[style*='grid-template-columns:max-content'] > div[style*='height:48px']", "testid": "campo-lote-artista" },
+    { "seletor": "div[style*='min-height:240px']", "testid": "zona-arquivo" }
+  ]
+}

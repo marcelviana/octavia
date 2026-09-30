@@ -1,0 +1,18 @@
+$ node docs/ux/I1-PR12-anexos/cn/casca-efeito-upload.mjs
+base-criar · 1138: casca 9/9 iguais · nó velho por componente 0 · valor gravado 0 · coincidência de texto 1: texto/section 0 car. · nós 31 → 27
+base-criar · 711: casca 9/9 iguais · nó velho por componente 0 · valor gravado 0 · coincidência de texto 1: texto/section 0 car. · nós 31 → 27
+base-criar · 411: casca 8/8 iguais · nó velho por componente 0 · valor gravado 0 · coincidência de texto 2: link/a 9 car.; texto/section 0 car. · nós 31 → 27
+base-arquivo · 1138: casca 9/9 iguais · nó velho por componente 0 · valor gravado 0 · coincidência de texto 1: texto/section 0 car. · nós 34 → 23
+base-arquivo · 711: casca 9/9 iguais · nó velho por componente 0 · valor gravado 0 · coincidência de texto 1: texto/section 0 car. · nós 34 → 23
+base-arquivo · 411: casca 8/8 iguais · nó velho por componente 0 · valor gravado 0 · coincidência de texto 2: link/a 9 car.; texto/section 0 car. · nós 34 → 23
+base-detalhes · 1138: casca 9/9 iguais · nó velho por componente 0 · valor gravado 0 · coincidência de texto 1: texto/section 0 car. · nós 32 → 34
+base-detalhes · 711: casca 9/9 iguais · nó velho por componente 0 · valor gravado 0 · coincidência de texto 1: texto/section 0 car. · nós 32 → 34
+base-detalhes · 411: casca 8/8 iguais · nó velho por componente 0 · valor gravado 0 · coincidência de texto 2: link/a 9 car.; texto/section 0 car. · nós 32 → 34
+base-lote · 1138: casca 9/9 iguais · nó velho por componente 0 · valor gravado 2 · coincidência de texto 9: textbox/input 10 car.; textbox/textarea 27 car.; textbox/input 10 car.; textbox/textarea 29 car.; textbox/input 10 car.; textbox/textarea 29 car.; textbox/input 10 car.; textbox/textarea 31 car.; texto/section 0 car. · nós 30 → 41
+base-lote · 711: casca 9/9 iguais · nó velho por componente 0 · valor gravado 2 · coincidência de texto 9: textbox/input 10 car.; textbox/textarea 27 car.; textbox/input 10 car.; textbox/textarea 29 car.; textbox/input 10 car.; textbox/textarea 29 car.; textbox/input 10 car.; textbox/textarea 31 car.; texto/section 0 car. · nós 30 → 41
+base-lote · 411: casca 8/8 iguais · nó velho por componente 0 · valor gravado 2 · coincidência de texto 10: link/a 9 car.; textbox/input 10 car.; textbox/textarea 27 car.; textbox/input 10 car.; textbox/textarea 29 car.; textbox/input 10 car.; textbox/textarea 29 car.; textbox/input 10 car.; textbox/textarea 31 car.; texto/section 0 car. · nós 30 → 41
+base-pronto · 1138: casca 9/9 iguais · nó velho por componente 0 · valor gravado 0 · coincidência de texto 1: texto/section 0 car. · nós 15 → 21
+base-pronto · 711: casca 9/9 iguais · nó velho por componente 0 · valor gravado 0 · coincidência de texto 1: texto/section 0 car. · nós 15 → 21
+base-pronto · 411: casca 8/8 iguais · nó velho por componente 0 · valor gravado 0 · coincidência de texto 2: link/a 9 car.; texto/section 0 car. · nós 15 → 21
+NÓ VELHO POR COMPONENTE: 0 — nas 15 (estado × largura) · valor gravado "Unknown Artist" no campo do lote: 6
+# exit: 0

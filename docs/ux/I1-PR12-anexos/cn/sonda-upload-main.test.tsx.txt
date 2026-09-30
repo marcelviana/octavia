@@ -1,0 +1,73 @@
+import { render, screen, fireEvent, waitFor, cleanup } from '@testing-library/react'
+import { it, expect, vi, afterEach } from 'vitest'
+vi.mock('next/navigation', () => ({ useRouter: () => ({ push: vi.fn(), replace: vi.fn(), back: vi.fn(), prefetch: vi.fn(), refresh: vi.fn() }), useParams: () => ({}), usePathname: () => '/add-content', useSearchParams: () => new URLSearchParams() }))
+const usuario = { uid: 'cn-user', email: 'cn@exemplo.com', displayName: 'CN' }
+vi.mock('@/contexts/firebase-auth-context', () => { const ctx = () => ({ user: usuario, profile: null, isLoading: false, signOut: vi.fn(), sessao: { estado: 'aberta' }, tentarSessaoDeNovo: vi.fn() }); return { useAuth: ctx, useFirebaseAuth: ctx } })
+vi.mock('@/lib/firebase', () => ({ auth: { currentUser: { uid: 'cn-user' } } }))
+vi.mock('@/lib/auth-manager', () => ({ getValidToken: async () => ({ token: 'cn-token', error: null }) }))
+const toast = vi.hoisted(() => ({ success: vi.fn(), error: vi.fn() }))
+vi.mock('sonner', () => ({ toast }))
+import AddContentPageClient from '@/components/add-content-page-client'
+afterEach(() => { cleanup(); vi.unstubAllGlobals() })
+const arq = (n: string, t: string, s: string) => { const f = new File([s], n, { type: t }); Object.defineProperty(f, 'text', { value: async () => s }); return f }
+it('(1) a cópia velha: o erro do salvar reaparece no passo 1 depois de Cancel', async () => {
+  vi.stubGlobal('fetch', vi.fn(async (u: string, i?: RequestInit) => u === '/api/content' && i?.method === 'POST' ? new Response(JSON.stringify({ error: 'Failed to create content', code: 'INTERNAL_ERROR' }), { status: 500 }) : new Response('{}', { status: 404 })))
+  render(<AddContentPageClient />)
+  fireEvent.change(await screen.findByPlaceholderText('Song title'), { target: { value: 'T' } })
+  fireEvent.click(await screen.findByText('Next'))
+  fireEvent.change(document.getElementById('artist')!, { target: { value: 'A' } })
+  fireEvent.click(await screen.findByText('Save Content'))
+  await screen.findByText('Failed to create content')
+  console.log('SONDA(1) no passo 2 (formulário):', screen.getAllByText('Failed to create content').length, 'ocorrência(s)')
+  fireEvent.click(await screen.findByText('Cancel'))
+  await screen.findByText('How would you like to add content?')
+  console.log('SONDA(1) no passo 1 depois de Cancel:', screen.queryAllByText('Failed to create content').length, 'ocorrência(s) · role=alert:', screen.queryAllByRole('alert').map((e) => e.textContent).join(' | '))
+})
+it('(2) o lote: termina no passo 1 com toast (o passo 3 do lote não se alcança)', async () => {
+  let n = 0
+  vi.stubGlobal('fetch', vi.fn(async (u: string, i?: RequestInit) => {
+    if (u === '/api/storage/upload') return new Response(JSON.stringify({ url: 'https://x/y' }), { status: 201 })
+    if (u === '/api/content' && i?.method === 'POST') return new Response(JSON.stringify({ id: `i${++n}` }), { status: 201 })
+    return new Response('{}', { status: 404 })
+  }))
+  render(<AddContentPageClient />)
+  fireEvent.click(await screen.findByText('Import from File'))
+  fireEvent.click(await screen.findByText('Batch Import'))
+  fireEvent.change(await screen.findByLabelText('Upload music file'), { target: { files: [arq('r.txt', 'text/plain', 'Um\nx\n---\nDois\ny')] } })
+  fireEvent.click(await screen.findByText('Import All'))
+  await waitFor(() => expect(toast.success).toHaveBeenCalled())
+  await screen.findByText('How would you like to add content?')
+  console.log('SONDA(2) toast.success:', JSON.stringify(toast.success.mock.calls), '· na tela: passo 1 =', !!screen.queryByText('How would you like to add content?'), '· "Done!" =', !!screen.queryByText(/Done!/))
+})
+it('(3) a extensão: toast, nada na tela', async () => {
+  vi.stubGlobal('fetch', vi.fn(async () => new Response('{}', { status: 404 })))
+  render(<AddContentPageClient />)
+  fireEvent.click(await screen.findByText('Import from File'))
+  fireEvent.change(await screen.findByLabelText('Upload music file'), { target: { files: [arq('foto.heic', 'image/heic', 'x')] } })
+  await waitFor(() => expect(toast.error).toHaveBeenCalled())
+  console.log('SONDA(3) toast.error:', JSON.stringify(toast.error.mock.calls.at(-1)), '· fetch chamado:', (globalThis.fetch as any).mock.calls.length)
+})
+it('(4) o limite: 400 do servidor (details size) → toast "Validation failed"', async () => {
+  vi.stubGlobal('fetch', vi.fn(async (u: string) => u === '/api/storage/upload' ? new Response(JSON.stringify({ error: 'Validation failed', code: 'VALIDATION_ERROR', details: [{ field: 'size', message: 'File exceeds the 4MB limit', code: 'too_big' }] }), { status: 400 }) : new Response('{}', { status: 404 })))
+  render(<AddContentPageClient />)
+  fireEvent.click(await screen.findByText('Import from File'))
+  fireEvent.change(await screen.findByLabelText('Upload music file'), { target: { files: [arq('grande.pdf', 'application/pdf', 'x')] } })
+  await waitFor(() => expect(toast.error).toHaveBeenCalled())
+  console.log('SONDA(4) toast.error:', JSON.stringify(toast.error.mock.calls.at(-1)), '· "(max 50MB)" na tela:', screen.queryAllByText(/max 50MB/).length)
+})
+it('(5) o 413 da plataforma (sem JSON)', async () => {
+  vi.stubGlobal('fetch', vi.fn(async (u: string) => u === '/api/storage/upload' ? new Response('Request Entity Too Large', { status: 413 }) : new Response('{}', { status: 404 })))
+  render(<AddContentPageClient />)
+  fireEvent.click(await screen.findByText('Import from File'))
+  fireEvent.change(await screen.findByLabelText('Upload music file'), { target: { files: [arq('grande.pdf', 'application/pdf', 'x')] } })
+  await waitFor(() => expect(toast.error).toHaveBeenCalled())
+  console.log('SONDA(5) toast.error:', JSON.stringify(toast.error.mock.calls.at(-1)))
+})
+it('(6) a rede cai no envio', async () => {
+  vi.stubGlobal('fetch', vi.fn(async (u: string) => { if (u === '/api/storage/upload') throw new TypeError('Failed to fetch'); return new Response('{}', { status: 404 }) }))
+  render(<AddContentPageClient />)
+  fireEvent.click(await screen.findByText('Import from File'))
+  fireEvent.change(await screen.findByLabelText('Upload music file'), { target: { files: [arq('a.pdf', 'application/pdf', 'x')] } })
+  await waitFor(() => expect(toast.error).toHaveBeenCalled())
+  console.log('SONDA(6) toast.error:', JSON.stringify(toast.error.mock.calls.at(-1)))
+})

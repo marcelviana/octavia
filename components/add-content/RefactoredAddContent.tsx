@@ -1,8 +1,18 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, AlertCircle } from "lucide-react";
+/**
+ * O upload (I1-PR-12; folha `7-upload`): o título da tela com os passos e, abaixo, a tela do passo.
+ * - passo 1 (*como*): os três seletores, na ORDEM de antes — tipo · como · importar (decisão 3 do aval, I1-E22: trocar
+ *   o tipo zera o modo) — e o *Próximo* (decisão 2, I1-E21: a folha põe a zona e o criar numa tela própria, no passo 2;
+ *   antes ficavam abaixo dos seletores — um clique a mais, mudança de fluxo declarada). A partitura esconde o *como* e
+ *   o lote, como antes (decisão 4);
+ * - passo 2 (*detalhes*): a zona de arquivo ou o criar do zero; depois, o formulário ou o lote;
+ * - passo 3 (*pronto*).
+ * O lote, concluído, volta ao passo 1 com *{n} músicas importadas* na linha da tela (`UP-lote-sucesso` — era um toast).
+ * O alerta do passo 1 com a cópia velha do erro de salvar morreu (decisão 24 do DESIGN-I1); o *Back* do passo 1 saiu
+ * (decisão 10). O que se envia e o que se grava são os de antes (`useAddContentLogic`).
+ */
+import { useState } from "react";
 import { ContentCreator } from "@/components/content-creator";
 import { FileUploadZone } from "./FileUploadZone";
 import { StepIndicator } from "./StepIndicatorComponent";
@@ -12,167 +22,80 @@ import { ImportModeSelector } from "./ImportModeSelector";
 import { ModeSelector } from "./ModeSelector";
 import { ContentTypeSelector } from "./ContentTypeSelector";
 import { useAddContentLogic } from "@/hooks/useAddContentLogic";
-import { ContentType, type ContentTypeId } from "@/types/content";
+import { ContentType } from "@/types/content";
 import type { Database } from "@/types/database.types";
+import { ConteudoDaCasca } from "@/components/identidade/casca";
+import { TituloDaTela } from "@/components/identidade/controles";
+import { LinhaDaTela } from "@/components/identidade/linha-da-tela";
+import { tipoDe } from "@/components/library/frases-lista";
+import { BotaoDoPasso, Botoes } from "@/components/upload/pecas";
+import { FRASES_UP, musicasImportadas } from "@/components/upload/frases-upload";
 
 type Content = Database["public"]["Tables"]["content"]["Row"];
 
 interface RefactoredAddContentProps {
-  onBack: () => void;
   onContentCreated: (content: Content) => void;
   onNavigate: (screen: string) => void;
 }
 
-export function RefactoredAddContent({
-  onBack,
-  onContentCreated,
-  onNavigate,
-}: RefactoredAddContentProps) {
-  const {
-    mode,
-    setMode,
-    currentStep,
-    setCurrentStep,
-    contentType,
-    setContentType,
-    importMode,
-    setImportMode,
-    uploadedFile,
-    metadata,
-    setMetadata,
-    parsedSongs,
-    draftContent,
-    setDraftContent,
-    isUploading,
-    isProcessing,
-    createdContent,
-    error,
-    handleFilesUploaded,
-    handleSaveContent,
-    availableImportModes,
-    contentTypes
-  } = useAddContentLogic();
+export function RefactoredAddContent({ onContentCreated, onNavigate }: RefactoredAddContentProps) {
+  const u = useAddContentLogic();
+  // I1-PR-12: o passo 1 é só o *como*; `entrou` = o *Próximo* foi dado (a zona ou o criar, já no passo 2 da folha)
+  const [entrou, setEntrou] = useState(false);
+  const [importadas, setImportadas] = useState<number | null>(null);
+  const criado = u.currentStep === 3 && u.createdContent && !Array.isArray(u.createdContent) ? u.createdContent : null;
+  const emDetalhes = u.currentStep === 2 || u.isParsing;
+  const limpar = <T,>(mudar: (v: T) => void) => (v: T) => { setImportadas(null); mudar(v); };
 
-  // Step 3: Completion
-  if (currentStep === 3 && createdContent) {
-    const title = Array.isArray(createdContent)
-      ? `${createdContent.length} songs imported successfully`
-      : `"${createdContent.title}" by ${createdContent.artist}`;
-
-    const subtitle = Array.isArray(createdContent)
-      ? "All songs are now available in your library"
-      : "Your new content is now available in your library";
-
-    const secondaryLabel = Array.isArray(createdContent)
-      ? "Import More"
-      : "Add Another";
-
-    return (
-      <CompletionStep
-        title={title}
-        subtitle={subtitle}
-        secondaryLabel={secondaryLabel}
-        onNavigate={onNavigate}
-      />
-    );
-  }
-
-  // Step 2: Details
-  if (currentStep === 2) {
-    return (
+  let tela: React.ReactNode;
+  if (criado) {
+    tela = <CompletionStep titulo={criado.title} artista={criado.artist ?? ""} onIrParaABiblioteca={() => onNavigate("library")} />;
+  } else if (emDetalhes) {
+    tela = (
       <DetailsStep
-        contentType={contentType}
-        isMultipleFiles={parsedSongs.length > 0}
-        uploadedFiles={parsedSongs}
-        metadata={metadata}
-        onMetadataChange={setMetadata}
-        onBack={() => setCurrentStep(1)}
-        onNext={() => setCurrentStep(3)}
-        draftContent={draftContent}
-        setDraftContent={setDraftContent}
-        handleSaveContent={handleSaveContent}
-        isUploading={isUploading}
+        contentType={u.contentType}
+        lendo={u.isParsing}
+        songs={u.parsedSongs}
+        arquivo={u.mode === "import" && u.uploadedFile ? { nome: u.uploadedFile.name, tamanho: u.uploadedFile.size, icone: tipoDe(u.contentType).icone } : null}
+        draftContent={u.draftContent}
+        onBack={() => u.setCurrentStep(1)}
+        onNext={() => u.setCurrentStep(3)}
+        onLoteImportado={(n) => { setImportadas(n); setEntrou(false); }}
+        handleSaveContent={u.handleSaveContent}
         onContentCreated={onContentCreated}
       />
     );
+  } else if (!entrou) {
+    tela = (
+      <>
+        <LinhaDaTela falha={importadas ? { tipo: "sucesso", motivo: musicasImportadas(importadas) } : null} rotuloTentar={FRASES_UP["acao.tentar"]} />
+        <ContentTypeSelector selectedType={u.contentType} onTypeChange={limpar(u.setContentType)} />
+        {u.contentType !== ContentType.SHEET && <ModeSelector selectedMode={u.mode} onModeChange={limpar(u.setMode)} />}
+        {u.mode === "import" && <ImportModeSelector selectedImportMode={u.importMode} contentType={u.contentType} onImportModeChange={limpar(u.setImportMode)} />}
+        <Botoes>
+          <BotaoDoPasso rotulo={FRASES_UP["up.proximo"]} icone="garantida" escrita onClick={() => { setImportadas(null); setEntrou(true); }} />
+        </Botoes>
+      </>
+    );
+  } else if (u.mode === "create") {
+    tela = (
+      <ContentCreator tipo={u.contentType} onVoltar={() => setEntrou(false)}
+        onContentCreated={(content) => { u.setDraftContent(content); u.setCurrentStep(2); }} />
+    );
+  } else {
+    tela = (
+      <FileUploadZone contentType={u.contentType} onFilesUploaded={u.handleFilesUploaded} onVoltar={() => setEntrou(false)}
+        falhaDoLote={u.falhaDoLote} onLerDeNovo={u.lerDeNovo} />
+    );
   }
 
-  // Step 1: Upload/Create
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50">
-      <div className="p-4">
-        <div className="max-w-4xl mx-auto space-y-4">
-          <div className="flex items-center">
-            <Button
-              variant="ghost"
-              onClick={onBack}
-              className="hover:bg-amber-100 text-amber-700"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Button>
-          </div>
-
-          <StepIndicator currentStep={currentStep} />
-
-          {error && (
-            <div
-              role="alert"
-              className="flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700"
-            >
-              <AlertCircle className="w-4 h-4 shrink-0" aria-hidden="true" />
-              {error}
-            </div>
-          )}
-
-          <div className="bg-white rounded-lg shadow-sm border border-amber-200 p-4">
-            <ContentTypeSelector
-              selectedType={contentType}
-              onTypeChange={setContentType}
-            />
-
-            {contentType !== ContentType.SHEET && (
-              <ModeSelector
-                selectedMode={mode}
-                onModeChange={setMode}
-                contentType={contentType}
-              />
-            )}
-
-            {mode === "import" && (
-              <ImportModeSelector
-                selectedImportMode={importMode}
-                contentType={contentType}
-                onImportModeChange={setImportMode}
-              />
-            )}
-          </div>
-
-          {mode === "create" ? (
-            <ContentCreator
-              initialType={
-                contentType === ContentType.LYRICS
-                  ? "lyrics"
-                  : contentType === ContentType.CHORDS
-                  ? "chord_chart"
-                  : contentType === ContentType.TAB
-                  ? "tablature"
-                  : "sheet"
-              }
-              hideTypeSelection={true}
-              onContentCreated={(content) => {
-                setDraftContent(content);
-                setCurrentStep(2);
-              }}
-            />
-          ) : (
-            <FileUploadZone
-              contentType={contentType}
-              onFilesUploaded={handleFilesUploaded}
-            />
-          )}
-        </div>
+    <ConteudoDaCasca>
+      <div className="flex flex-wrap items-center justify-between gap-espaco-lg">
+        <TituloDaTela>{FRASES_UP["up.titulo"]}</TituloDaTela>
+        <StepIndicator currentStep={criado ? 3 : emDetalhes || entrou ? 2 : 1} />
       </div>
-    </div>
+      {tela}
+    </ConteudoDaCasca>
   );
 }

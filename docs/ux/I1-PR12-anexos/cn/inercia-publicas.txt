@@ -1,0 +1,8 @@
+$ next dev -p 3110 (cópia sem .env, sem a fumaça e sem os remendos) · G_FAIXA_SUPERFICIES=landing,login,privacy-policy → <scratchpad>/inercia
+  9 passed (3.8m)
+$ node docs/ux/I1-PR9-anexos/cn/inercia-comparar.mjs <inercia> landing login privacy-policy
+landing: 3 (estado × largura) medidos nos dois lados · 3 idênticos (nós + doc) · 0 só no commitado (pedem o .env — o usuário falso do auth)
+login: 6 (estado × largura) medidos nos dois lados · 6 idênticos (nós + doc) · 33 só no commitado (pedem o .env — o usuário falso do auth)
+privacy-policy: 3 (estado × largura) medidos nos dois lados · 3 idênticos (nós + doc) · 0 só no commitado (pedem o .env — o usuário falso do auth)
+INÉRCIA: PASSA — nenhum nó mudou
+# exit: 0

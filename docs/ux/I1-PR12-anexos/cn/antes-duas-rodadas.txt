@@ -1,0 +1,5 @@
+rodada do Marcel: 2026-09-30T11:23:51.563Z 7b33d06 · rodada do executor (I1-D37): 2026-09-30T11:29:13.386Z 7b33d06
+(estado × largura) 15 · nós byte a byte iguais em 15
+1138 executor — não-GET: [('POST', '/api/content', 'fabricado 201'), ('POST', '/api/storage/upload', 'fabricado 201')] · prodAbortados 0
+711 executor — não-GET: [('POST', '/api/content', 'fabricado 201'), ('POST', '/api/storage/upload', 'fabricado 201')] · prodAbortados 0
+411 executor — não-GET: [('POST', '/api/content', 'fabricado 201'), ('POST', '/api/storage/upload', 'fabricado 201')] · prodAbortados 0

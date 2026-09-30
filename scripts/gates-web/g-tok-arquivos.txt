@@ -99,3 +99,31 @@ components/editors/partes-da-tab.tsx
 components/editors/cabecalho-do-editor.tsx
 components/editors/tela-de-estado.tsx
 lib/sinal-salvo.ts
+# I1-PR12 — superfície 7, upload (folha 7-upload): /add-content.
+# Commit 1 (gate-first): os arquivos do fluxo (a rota, os passos, a zona, o criar, o lote, os metadados, o pronto), os
+# hooks e o que só o upload usa (o `content-type-styles`, desde a PR-11 importado só pelo `content-creator`). O destino
+# de cada um é o §1 do README da PR; os que morrerem no commit 2 saem da lista junto.
+app/add-content/page.tsx
+components/add-content-page-client.tsx
+components/add-content.tsx
+components/add-content/RefactoredAddContent.tsx
+components/add-content/StepIndicatorComponent.tsx
+components/add-content/ContentTypeSelector.tsx
+components/add-content/ModeSelector.tsx
+components/add-content/ImportModeSelector.tsx
+components/add-content/FileUploadZone.tsx
+components/add-content/upload-to-storage.ts
+components/add-content/DetailsStep.tsx
+components/add-content/CompletionStep.tsx
+components/content-creator.tsx
+components/batch-preview.tsx
+components/metadata-form.tsx
+components/metadata-form/RefactoredMetadataForm.tsx
+components/metadata-form/BasicMetadataFields.tsx
+components/metadata-form/AdvancedMetadataFields.tsx
+hooks/useAddContentLogic.ts
+hooks/useMetadataForm.ts
+# Commit 2: o content-type-styles morreu (sem importador; sai da lista); os que nasceram.
+components/upload/frases-upload.ts
+components/upload/falhas-do-upload.ts
+components/upload/pecas.tsx

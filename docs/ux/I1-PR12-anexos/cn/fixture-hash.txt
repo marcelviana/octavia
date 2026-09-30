@@ -1,0 +1,34 @@
+$ node docs/ux/I1-PR12-anexos/cn/fixture-hash.mjs
+UP-carregando          "carregando…" 1138:sim 711:sim 411:sim
+UP-como                "como você quer adicionar?" 1138:sim 711:sim 411:sim
+UP-como                "Próximo" 1138:sim 711:sim 411:sim
+UP-arquivo             "formatos: .pdf, .docx, .txt · até 4 MiB" 1138:sim 711:sim 411:sim
+UP-enviando            "enviando o arquivo…" 1138:sim 711:sim 411:sim
+UP-enviando            "partitura-12-paginas.pdf · 1,8 MiB" 1138:sim 711:sim 411:sim
+UP-extensao            "tipo de arquivo não aceito: foto.heic — use .pdf, .docx ou .txt" 1138:sim 711:sim 411:sim
+UP-limite              "o arquivo passa de 4 MiB — escolha um menor" 1138:sim 711:sim 411:sim
+UP-envio-rede          "o arquivo não foi enviado — sem conexão" 1138:sim 711:sim 411:sim
+UP-envio-servidor      "o arquivo não foi enviado — falha no servidor" 1138:sim 711:sim 411:sim
+UP-detalhes            "Partitura de 12 páginas" 1138:sim 711:sim 411:sim
+UP-detalhes            "Compositor anônimo" 1138:sim 711:sim 411:sim
+UP-detalhes            "partitura-12-paginas.pdf · 1,8 MiB" 1138:sim 711:sim 411:sim
+UP-detalhes-inativo    "título e artista são obrigatórios" 1138:sim 711:sim 411:sim
+UP-salvando            "Salvando…" 1138:sim 711:sim 411:sim
+UP-salvar-erro         "não foi possível salvar — falha no servidor" 1138:sim 711:sim 411:sim
+UP-salvar-erro         "o que você escreveu continua aqui" 1138:sim 711:sim 411:sim
+UP-criar               "título da música" 1138:sim 711:sim 411:sim
+UP-criar-validacao     "o título é obrigatório" 1138:sim 711:sim 411:sim
+UP-lote                "4 músicas encontradas em repertorio.docx" 1138:sim 711:sim 411:sim
+UP-lote                "Anunciação" 1138:sim 711:sim 411:sim
+UP-lote                "Alceu Valença" 1138:sim 711:sim 411:sim
+UP-lote                "Unknown Artist" 1138:sim 711:sim 411:sim
+UP-lote-lendo          "carregando…" 1138:sim 711:sim 411:sim
+UP-lote-importando     "Importando…" 1138:sim 711:sim 411:sim
+UP-lote-erro           "não foi possível importar as músicas — falha no servidor" 1138:sim 711:sim 411:sim
+UP-lote-erro           "Importar todas" 1138:sim 711:sim 411:sim
+UP-lote-vazio          "nenhuma música encontrada no arquivo" 1138:sim 711:sim 411:sim
+UP-lote-sucesso        "4 músicas importadas" 1138:sim 711:sim 411:sim
+UP-pronto              "“Partitura de 12 páginas”, de Compositor anônimo, está na biblioteca" 1138:sim 711:sim 411:sim
+UP-pronto              "Ir para a biblioteca" 1138:sim 711:sim 411:sim
+base-lote              "4 músicas encontradas em repertorio.txt" 1138:sim 711:sim 411:sim
+todos os 32 textos presentes nas três larguras

@@ -216,6 +216,71 @@ G_FAIXA_BASE_URL=http://localhost:3000 G_FAIXA_PERFIL="$HOME/.octavia-g-faixa-pe
 `EDIT-salvar-erro` é abortado no navegador, o do `LIB-salvo` responde 200 no navegador. A rodada fica registrada em
 `rodadasPorEstado` e as linhas do log dela somam-se às da largura. Depois diga **"rodei"**.
 
+## I1-PR12 antes — o upload velho, casca-efeito (Marcel, um comando)
+
+Na árvore `../octavia-i1-pr12`, **no commit 1b** (branch `i1/pr12-upload`; o código do app é o da `main` — o 1b só
+acrescenta o instrumento), com o seu `.env.local` copiado para lá (passo seu), **`pnpm dev`** num terminal que fica aberto
+(porta 3000) e o `✓ Ready`. Perfil de sempre (`~/.octavia-g-faixa-perfil`).
+
+```bash
+G_FAIXA_BASE_URL=http://localhost:3000 G_FAIXA_PERFIL="$HOME/.octavia-g-faixa-perfil" G_FAIXA_SUPERFICIES=add-content G_FAIXA_SAIDA=tests/gates-web/medicoes/casca-efeito/antes pnpm exec playwright test -c playwright.g-faixa.config.ts scripts/gates-web/g-faixa-medir.ts
+```
+
+Mede `/add-content` nas três larguras, cinco estados do web velho: `base-criar` (abre: o passo 1 com o criar),
+`base-arquivo` (*Import from File*: a zona), `base-detalhes` (o upload → o formulário, com o título e o artista da
+folha), `base-lote` (*Batch Import* + o lote da folha → a prévia) e `base-pronto` (o salvar → *Done!*). Grava
+`tests/gates-web/medicoes/casca-efeito/antes/add-content.json`.
+
+**Tudo fabricado no navegador** (`scripts/gates-web/g-faixa-upload.ts`): o `POST /api/storage/upload` responde 201 com
+um `url` fabricado; o `POST /api/content` responde 201 ecoando o corpo; a navegação ao content criado
+(`/content/g-faixa-novo`) fica **segurada** — a tela fica no *Done!*, que hoje pisca. Os arquivos (um PDF de 1,8 MiB e
+o lote `.txt` com as quatro músicas da folha) são **gerados em memória**, nunca lidos do disco; o corpo do `POST` para
+no `route()` e **não sai**. Um `POST` que escapasse cairia na barreira (abortado, a rodada reprova). Lidos de verdade só
+a sessão (`/api/profile`, o `securetoken`). **Cota**: ~16 cargas (5 estados × 3 larguras + o controle). Depois diga
+**"rodei-antes"**.
+
+## I1-PR12 — o aceite do upload (o executor roda — I1-D37; duas rodadas)
+
+**Quem roda** `[I1-D37, Marcel, 2026-09-30]`: o **executor**, com o perfil persistente `~/.octavia-g-faixa-perfil` (já logado
+pelo Marcel — o executor não digita senha) contra `localhost:3000`, com o `pnpm dev` da árvore `../octavia-i1-pr12`
+(branch `i1/pr12-upload`, **no commit 2**) e o `.env.local` do Marcel, que o `next dev` carrega e ninguém abre. O
+`tailwind.config.ts` **não mudou** nesta PR: o servidor de pé não precisa reiniciar.
+
+**Por que duas rodadas (a cota)**: são 26 estados (os 21 da folha `7-upload` + os cinco `base-*` da casca-efeito) × 3
+larguras + o controle ≈ **79 cargas com sessão**, e cada carga pode ler `/api/profile` — 60 em 15 min por usuário
+(`lib/user-rate-limit.ts:54`). Então: **C e B** (≈ 53 cargas), **15 minutos de espera**, e **A** (≈ 27). A gravação
+mescla por largura (o molde da I1-PR6, commit 4). "Por estado" (`G_FAIXA_ESTADOS`) fica para repetir um estado que saia
+NÃO ALCANÇADO — não para a rodada inteira (26 estados).
+
+1. C e B:
+
+   ```bash
+   G_FAIXA_BASE_URL=http://localhost:3000 G_FAIXA_PERFIL="$HOME/.octavia-g-faixa-perfil" G_FAIXA_SEM_JANELA=1 G_FAIXA_SUPERFICIES=add-content pnpm exec playwright test -c playwright.g-faixa.config.ts scripts/gates-web/g-faixa-medir.ts --project C-1138 --project B-711
+   ```
+
+2. 15 min depois, A:
+
+   ```bash
+   G_FAIXA_BASE_URL=http://localhost:3000 G_FAIXA_PERFIL="$HOME/.octavia-g-faixa-perfil" G_FAIXA_SEM_JANELA=1 G_FAIXA_SUPERFICIES=add-content pnpm exec playwright test -c playwright.g-faixa.config.ts scripts/gates-web/g-faixa-medir.ts --project A-411
+   ```
+
+Grava `tests/gates-web/medicoes/add-content.json`. `G_FAIXA_SEM_JANELA=1`: se a sessão do perfil tiver caído, a rodada
+**falha** em vez de abrir a janela de login — o login é do Marcel.
+
+**Tudo fabricado no navegador** (`scripts/gates-web/g-faixa-upload.ts`): o `POST /api/storage/upload` (201 com um `url`
+fabricado; o 400 do contrato com `field: "size"`; 500; segurado; abortado) e o `POST /api/content` (201; 500; segurado).
+Os arquivos são **gerados em memória** — o PDF de 1,8 MiB, o lote `.txt` com as quatro músicas da folha (nomeado
+`repertorio.docx`, como a folha, com o tipo `text/plain`), um lote em PDF (`pdf-lib`), o `foto.heic` e o de **5 MiB** do
+`UP-limite` — e **nenhum sai**: o corpo do `POST` para no `route()`. O content criado vem **sem `id`** (`UP-pronto`: a tela fica
+no pronto em vez de navegar — div. 841); o worker do pdf.js fica segurado (`UP-lote-lendo`); o pedaço do `dynamic` fica segurado
+(`UP-carregando` — `components_add-content` no nome do chunk, `[hipótese]`: se não casar, sai NÃO ALCANÇADO com a razão).
+Um `POST` que escapasse cairia na barreira (abortado, a rodada reprova). Lidos de verdade só a sessão (`/api/profile`, o
+`securetoken`). **Escrita declarada: nenhuma.**
+
+Se um estado sair NÃO ALCANÇADO, repita só ele: o mesmo comando com `G_FAIXA_ESTADOS=<estado>[,<estado>]` e o
+`--project` da largura — mescla por estado e registra em `rodadasPorEstado` (que a rodada por largura preserva desde a
+div. 843).
+
 ## O resto
 
 | o quê | comando |
