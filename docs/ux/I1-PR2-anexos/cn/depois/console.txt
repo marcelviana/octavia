@@ -1,0 +1,18 @@
+# 12 linhas antes do clique
+  1759  login  warning  Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  1811  login  verbose  [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o
+  2364  login  info     %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+  2427  login  log      Firebase client initialized successfully
+  2432  login  log      Firebase Auth initialized
+  2434  login  log      Firebase Firestore initialized
+  2434  login  log      Firebase client configured for production use in development
+  2441  login  warning  %c%s%c Server-side user: No session cookie found background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server  
+  2489  login  log      Initializing Firebase auth context...
+  2513  login  error    WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr' failed: Error in connection establishment: net::ERR_BLOCKED_BY_LOCAL_NETWORK_ACCESS_CHECKS
+  2516  login  log      Firebase auth state changed: No user
+  2523  login  log      Session cookie cleared successfully
+  3122  login  log      Attempting Google sign in
+  4308  popup  error    Failed to load resource: the server responded with a status of 404 ()
+  5711  popup  verbose  [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o
+  7490  login  error    Cross-Origin-Opener-Policy policy would block the window.closed call.
+  7490  login  error    Cross-Origin-Opener-Policy policy would block the window.closed call.

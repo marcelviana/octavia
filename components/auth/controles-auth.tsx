@@ -6,7 +6,7 @@
  * `text`, rótulo `bg`, `font.uiBold` · `size.button`; inativo: contorno
  * `lineInfo`, rótulo `muted`), o secundário (`web.botaoAuth` = touch.list + 2,
  * contorno `lineInfo`, `size.bodySmall`) e a marca do Google (asset de terceiro
- * 20 × 20; sem o asset, o quadrado tracejado da folha — div. 636).
+ * 20 × 20, `public/marcas/google.svg` — I1-PR2).
  */
 import { Icone } from "@/components/identidade/icone"
 import { BOTAO_PRINCIPAL as PRINCIPAL, BOTAO_SECUNDARIO as SECUNDARIO } from "@/components/identidade/link-botao"
@@ -81,11 +81,15 @@ export function BotaoSecundario({ icone, carregando, children, ...botao }: Botao
   )
 }
 
-/** A marca do Google (20 × 20). Sem `public/marcas/google.svg`, o quadrado tracejado da folha (div. 636). */
+/**
+ * A marca do Google (20 × 20): `public/marcas/google.svg` (I1-PR2; era o quadrado
+ * tracejado da div. 636). O asset é o tile de 40 × 40 com o "G" em 10–30; o
+ * `viewBox` mostra só o "G" no quadrado de 20 da folha.
+ */
 export function MarcaGoogle() {
   return (
-    <svg role="img" aria-label={FRASES_AUTH["marca.google"]} width={20} height={20} viewBox="0 0 20 20" className="shrink-0 text-cor-line-info">
-      <rect x="0.5" y="0.5" width="19" height="19" rx="6" fill="none" stroke="currentColor" strokeDasharray="2 2" />
+    <svg role="img" aria-label={FRASES_AUTH["marca.google"]} width={20} height={20} viewBox="10 10 20 20" className="shrink-0">
+      <image href="/marcas/google.svg" x={0} y={0} width={40} height={40} />
     </svg>
   )
 }

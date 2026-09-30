@@ -1760,13 +1760,625 @@
      "caminho": "/api/profile",
      "status": "fabricado 500",
      "fim": "fim"
+    },
+    {
+     "n": 1,
+     "ms": 67,
+     "metodo": "GET",
+     "caminho": "/login",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 2,
+     "ms": 146,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 3,
+     "ms": 149,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 4,
+     "ms": 156,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 5,
+     "ms": 161,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 6,
+     "ms": 163,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 7,
+     "ms": 164,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 8,
+     "ms": 167,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/login/page.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 9,
+     "ms": 168,
+     "metodo": "GET",
+     "caminho": "/marcas/google.svg",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 10,
+     "ms": 173,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 11,
+     "ms": 175,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 12,
+     "ms": 178,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 13,
+     "ms": 196,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-1",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 14,
+     "ms": 235,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-2",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 15,
+     "ms": 236,
+     "metodo": "GET",
+     "caminho": "/login",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 16,
+     "ms": 291,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 17,
+     "ms": 295,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 18,
+     "ms": 298,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 19,
+     "ms": 300,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 20,
+     "ms": 301,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 21,
+     "ms": 302,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 22,
+     "ms": 303,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/login/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 23,
+     "ms": 304,
+     "metodo": "GET",
+     "caminho": "/marcas/google.svg",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 24,
+     "ms": 308,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 25,
+     "ms": 311,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 26,
+     "ms": 311,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 27,
+     "ms": 675,
+     "metodo": "DELETE",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "—",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 28,
+     "ms": 1832,
+     "metodo": "GET",
+     "caminho": "/login",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 29,
+     "ms": 1907,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 30,
+     "ms": 1908,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 31,
+     "ms": 1914,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 32,
+     "ms": 1917,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 33,
+     "ms": 1922,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 34,
+     "ms": 1923,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 35,
+     "ms": 1927,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/login/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 36,
+     "ms": 1930,
+     "metodo": "GET",
+     "caminho": "/marcas/google.svg",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 37,
+     "ms": 1933,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 38,
+     "ms": 1935,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 39,
+     "ms": 1935,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 40,
+     "ms": 2321,
+     "metodo": "DELETE",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "—",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 41,
+     "ms": 3437,
+     "metodo": "GET",
+     "caminho": "/login",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 42,
+     "ms": 3505,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 43,
+     "ms": 3506,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 44,
+     "ms": 3512,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 45,
+     "ms": 3514,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 46,
+     "ms": 3516,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 47,
+     "ms": 3518,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 48,
+     "ms": 3520,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/login/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 49,
+     "ms": 3522,
+     "metodo": "GET",
+     "caminho": "/marcas/google.svg",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 50,
+     "ms": 3526,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 51,
+     "ms": 3527,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 52,
+     "ms": 3528,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 53,
+     "ms": 3872,
+     "metodo": "DELETE",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "—",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 54,
+     "ms": 6244,
+     "metodo": "GET",
+     "caminho": "/login",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 55,
+     "ms": 6308,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 56,
+     "ms": 6309,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 57,
+     "ms": 6314,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 58,
+     "ms": 6317,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 59,
+     "ms": 6318,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 60,
+     "ms": 6318,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 61,
+     "ms": 6318,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/login/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 62,
+     "ms": 6320,
+     "metodo": "GET",
+     "caminho": "/marcas/google.svg",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 63,
+     "ms": 6328,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 64,
+     "ms": 6330,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 65,
+     "ms": 6332,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 66,
+     "ms": 6672,
+     "metodo": "DELETE",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "—",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 67,
+     "ms": 15977,
+     "metodo": "POST",
+     "caminho": "/__nextjs_original-stack-frames",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 68,
+     "ms": 16002,
+     "metodo": "GET",
+     "caminho": "/__nextjs_font/geist-latin.woff2",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
     }
    ],
    "outrosHosts": {
-    "apis.google.com": 7,
-    "octavia-27ebb.firebaseapp.com": 6,
+    "apis.google.com": 4,
+    "octavia-27ebb.firebaseapp.com": 4,
     "identitytoolkit.googleapis.com": 2,
-    "www.googleapis.com": 3
+    "www.googleapis.com": 2
    },
    "prodAbortados": 0
   },
@@ -3491,13 +4103,625 @@
      "caminho": "/api/profile",
      "status": "fabricado 500",
      "fim": "fim"
+    },
+    {
+     "n": 1,
+     "ms": 66,
+     "metodo": "GET",
+     "caminho": "/login",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 2,
+     "ms": 148,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 3,
+     "ms": 150,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 4,
+     "ms": 160,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 5,
+     "ms": 162,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 6,
+     "ms": 166,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 7,
+     "ms": 167,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 8,
+     "ms": 169,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/login/page.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 9,
+     "ms": 172,
+     "metodo": "GET",
+     "caminho": "/marcas/google.svg",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 10,
+     "ms": 177,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 11,
+     "ms": 179,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 12,
+     "ms": 183,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 13,
+     "ms": 198,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-1",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 14,
+     "ms": 242,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-2",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 15,
+     "ms": 244,
+     "metodo": "GET",
+     "caminho": "/login",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 16,
+     "ms": 302,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 17,
+     "ms": 306,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 18,
+     "ms": 310,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 19,
+     "ms": 311,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 20,
+     "ms": 312,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 21,
+     "ms": 312,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 22,
+     "ms": 313,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/login/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 23,
+     "ms": 313,
+     "metodo": "GET",
+     "caminho": "/marcas/google.svg",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 24,
+     "ms": 318,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 25,
+     "ms": 319,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 26,
+     "ms": 319,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 27,
+     "ms": 684,
+     "metodo": "DELETE",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "—",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 28,
+     "ms": 1835,
+     "metodo": "GET",
+     "caminho": "/login",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 29,
+     "ms": 1912,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 30,
+     "ms": 1914,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 31,
+     "ms": 1924,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 32,
+     "ms": 1929,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 33,
+     "ms": 1938,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 34,
+     "ms": 1940,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 35,
+     "ms": 1940,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/login/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 36,
+     "ms": 1941,
+     "metodo": "GET",
+     "caminho": "/marcas/google.svg",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 37,
+     "ms": 1945,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 38,
+     "ms": 1946,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 39,
+     "ms": 1947,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 40,
+     "ms": 2297,
+     "metodo": "DELETE",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "—",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 41,
+     "ms": 3408,
+     "metodo": "GET",
+     "caminho": "/login",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 42,
+     "ms": 3483,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 43,
+     "ms": 3484,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 44,
+     "ms": 3491,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 45,
+     "ms": 3493,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 46,
+     "ms": 3494,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 47,
+     "ms": 3495,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 48,
+     "ms": 3499,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/login/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 49,
+     "ms": 3500,
+     "metodo": "GET",
+     "caminho": "/marcas/google.svg",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 50,
+     "ms": 3505,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 51,
+     "ms": 3506,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 52,
+     "ms": 3507,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 53,
+     "ms": 3845,
+     "metodo": "DELETE",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "—",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 54,
+     "ms": 6224,
+     "metodo": "GET",
+     "caminho": "/login",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 55,
+     "ms": 6288,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 56,
+     "ms": 6289,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 57,
+     "ms": 6294,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 58,
+     "ms": 6295,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 59,
+     "ms": 6297,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 60,
+     "ms": 6298,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 61,
+     "ms": 6299,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/login/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 62,
+     "ms": 6301,
+     "metodo": "GET",
+     "caminho": "/marcas/google.svg",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 63,
+     "ms": 6307,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 64,
+     "ms": 6310,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 65,
+     "ms": 6311,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 66,
+     "ms": 6649,
+     "metodo": "DELETE",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "—",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 67,
+     "ms": 15943,
+     "metodo": "POST",
+     "caminho": "/__nextjs_original-stack-frames",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 68,
+     "ms": 15961,
+     "metodo": "GET",
+     "caminho": "/__nextjs_font/geist-latin.woff2",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
     }
    ],
    "outrosHosts": {
-    "apis.google.com": 6,
-    "octavia-27ebb.firebaseapp.com": 6,
+    "apis.google.com": 4,
+    "octavia-27ebb.firebaseapp.com": 4,
     "identitytoolkit.googleapis.com": 2,
-    "www.googleapis.com": 3
+    "www.googleapis.com": 2
    },
    "prodAbortados": 0
   },
@@ -5222,13 +6446,643 @@
      "caminho": "/api/profile",
      "status": "fabricado 500",
      "fim": "fim"
+    },
+    {
+     "n": 1,
+     "ms": 223,
+     "metodo": "GET",
+     "caminho": "/login",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 2,
+     "ms": 693,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 3,
+     "ms": 695,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 4,
+     "ms": 704,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 5,
+     "ms": 708,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 6,
+     "ms": 709,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 7,
+     "ms": 711,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 8,
+     "ms": 712,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/login/page.js",
+     "status": "FALHA",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 9,
+     "ms": 713,
+     "metodo": "GET",
+     "caminho": "/marcas/google.svg",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 10,
+     "ms": 722,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 11,
+     "ms": 724,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 12,
+     "ms": 728,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 13,
+     "ms": 755,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-1",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 14,
+     "ms": 805,
+     "metodo": "GET",
+     "caminho": "/api/health?cn=controle-2",
+     "status": "200",
+     "fim": "falhou net::ERR_ABORTED",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 15,
+     "ms": 812,
+     "metodo": "GET",
+     "caminho": "/login",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 16,
+     "ms": 875,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 17,
+     "ms": 882,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 18,
+     "ms": 886,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 19,
+     "ms": 888,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 20,
+     "ms": 890,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 21,
+     "ms": 890,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 22,
+     "ms": 891,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/login/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 23,
+     "ms": 892,
+     "metodo": "GET",
+     "caminho": "/marcas/google.svg",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 24,
+     "ms": 895,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 25,
+     "ms": 896,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 26,
+     "ms": 898,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 27,
+     "ms": 1452,
+     "metodo": "DELETE",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "—",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 28,
+     "ms": 1976,
+     "metodo": "GET",
+     "caminho": "/_next/static/webpack/32ebfd858bcfa354.webpack.hot-update.json",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 29,
+     "ms": 2052,
+     "metodo": "GET",
+     "caminho": "/_next/static/webpack/webpack.32ebfd858bcfa354.hot-update.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 30,
+     "ms": 2427,
+     "metodo": "GET",
+     "caminho": "/login",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 31,
+     "ms": 2637,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 32,
+     "ms": 2638,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 33,
+     "ms": 2642,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 34,
+     "ms": 2646,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 35,
+     "ms": 2646,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 36,
+     "ms": 2647,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 37,
+     "ms": 2647,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/login/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 38,
+     "ms": 2648,
+     "metodo": "GET",
+     "caminho": "/marcas/google.svg",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 39,
+     "ms": 2658,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 40,
+     "ms": 2661,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 41,
+     "ms": 2664,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 42,
+     "ms": 3024,
+     "metodo": "DELETE",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "—",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 43,
+     "ms": 4135,
+     "metodo": "GET",
+     "caminho": "/login",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 44,
+     "ms": 4203,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 45,
+     "ms": 4204,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 46,
+     "ms": 4209,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 47,
+     "ms": 4211,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 48,
+     "ms": 4213,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 49,
+     "ms": 4213,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 50,
+     "ms": 4214,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/login/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 51,
+     "ms": 4215,
+     "metodo": "GET",
+     "caminho": "/marcas/google.svg",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 52,
+     "ms": 4222,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 53,
+     "ms": 4225,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 54,
+     "ms": 4227,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 55,
+     "ms": 4573,
+     "metodo": "DELETE",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "—",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 56,
+     "ms": 7014,
+     "metodo": "GET",
+     "caminho": "/login",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 57,
+     "ms": 7090,
+     "metodo": "GET",
+     "caminho": "/_next/static/css/app/layout.css",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 58,
+     "ms": 7092,
+     "metodo": "GET",
+     "caminho": "/marcas/octavia-dark.png",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 59,
+     "ms": 7098,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/webpack.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 60,
+     "ms": 7100,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/main-app.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 61,
+     "ms": 7101,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app-pages-internals.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 62,
+     "ms": 7103,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/layout.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 63,
+     "ms": 7106,
+     "metodo": "GET",
+     "caminho": "/_next/static/chunks/app/login/page.js",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 64,
+     "ms": 7108,
+     "metodo": "GET",
+     "caminho": "/marcas/google.svg",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 65,
+     "ms": 7113,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_400Regular.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 66,
+     "ms": 7114,
+     "metodo": "GET",
+     "caminho": "/fontes/Raleway_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 67,
+     "ms": 7115,
+     "metodo": "GET",
+     "caminho": "/fontes/Manrope_600SemiBold.ttf",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 68,
+     "ms": 7472,
+     "metodo": "DELETE",
+     "caminho": "/api/auth/session",
+     "status": "200",
+     "fim": "—",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 69,
+     "ms": 16791,
+     "metodo": "POST",
+     "caminho": "/__nextjs_original-stack-frames",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
+    },
+    {
+     "n": 70,
+     "ms": 16809,
+     "metodo": "GET",
+     "caminho": "/__nextjs_font/geist-latin.woff2",
+     "status": "200",
+     "fim": "fim",
+     "rodada": "2026-09-30T19:56:27.440Z"
     }
    ],
    "outrosHosts": {
-    "apis.google.com": 6,
-    "octavia-27ebb.firebaseapp.com": 6,
+    "apis.google.com": 4,
+    "octavia-27ebb.firebaseapp.com": 4,
     "identitytoolkit.googleapis.com": 2,
-    "www.googleapis.com": 3
+    "www.googleapis.com": 2
    },
    "prodAbortados": 0
   }
@@ -5520,26 +7374,6 @@
        "y": 784,
        "w": 71.5,
        "h": 19,
-       "sr": false,
-       "clip": null,
-       "corta": {
-        "x": false,
-        "y": false
-       }
-      },
-      {
-       "k": "texto:fca0c0beacd0#1",
-       "role": "texto",
-       "tag": "section",
-       "testid": null,
-       "h_texto": null,
-       "h_nome": "fca0c0beacd0",
-       "n": 0,
-       "rotulo": "Notifications alt+T",
-       "x": 0,
-       "y": 851,
-       "w": 411,
-       "h": 0,
        "sr": false,
        "clip": null,
        "corta": {
@@ -5839,26 +7673,6 @@
         "x": false,
         "y": false
        }
-      },
-      {
-       "k": "texto:fca0c0beacd0#1",
-       "role": "texto",
-       "tag": "section",
-       "testid": null,
-       "h_texto": null,
-       "h_nome": "fca0c0beacd0",
-       "n": 0,
-       "rotulo": "Notifications alt+T",
-       "x": 0,
-       "y": 1138,
-       "w": 711,
-       "h": 0,
-       "sr": false,
-       "clip": null,
-       "corta": {
-        "x": false,
-        "y": false
-       }
       }
      ]
     },
@@ -6146,26 +7960,6 @@
        "y": 517,
        "w": 71.5,
        "h": 19,
-       "sr": false,
-       "clip": null,
-       "corta": {
-        "x": false,
-        "y": false
-       }
-      },
-      {
-       "k": "texto:fca0c0beacd0#1",
-       "role": "texto",
-       "tag": "section",
-       "testid": null,
-       "h_texto": null,
-       "h_nome": "fca0c0beacd0",
-       "n": 0,
-       "rotulo": "Notifications alt+T",
-       "x": 0,
-       "y": 711,
-       "w": 1138,
-       "h": 0,
        "sr": false,
        "clip": null,
        "corta": {
@@ -10099,26 +11893,6 @@
         "x": false,
         "y": false
        }
-      },
-      {
-       "k": "texto:fca0c0beacd0#1",
-       "role": "texto",
-       "tag": "section",
-       "testid": null,
-       "h_texto": null,
-       "h_nome": "fca0c0beacd0",
-       "n": 0,
-       "rotulo": "Notifications alt+T",
-       "x": 0,
-       "y": 851,
-       "w": 411,
-       "h": 0,
-       "sr": false,
-       "clip": null,
-       "corta": {
-        "x": false,
-        "y": false
-       }
       }
      ]
     },
@@ -10412,26 +12186,6 @@
         "x": false,
         "y": false
        }
-      },
-      {
-       "k": "texto:fca0c0beacd0#1",
-       "role": "texto",
-       "tag": "section",
-       "testid": null,
-       "h_texto": null,
-       "h_nome": "fca0c0beacd0",
-       "n": 0,
-       "rotulo": "Notifications alt+T",
-       "x": 0,
-       "y": 1138,
-       "w": 711,
-       "h": 0,
-       "sr": false,
-       "clip": null,
-       "corta": {
-        "x": false,
-        "y": false
-       }
       }
      ]
     },
@@ -10719,26 +12473,6 @@
        "y": 517,
        "w": 71.5,
        "h": 19,
-       "sr": false,
-       "clip": null,
-       "corta": {
-        "x": false,
-        "y": false
-       }
-      },
-      {
-       "k": "texto:fca0c0beacd0#1",
-       "role": "texto",
-       "tag": "section",
-       "testid": null,
-       "h_texto": null,
-       "h_nome": "fca0c0beacd0",
-       "n": 0,
-       "rotulo": "Notifications alt+T",
-       "x": 0,
-       "y": 711,
-       "w": 1138,
-       "h": 0,
        "sr": false,
        "clip": null,
        "corta": {
@@ -18789,26 +20523,6 @@
         "x": false,
         "y": false
        }
-      },
-      {
-       "k": "texto:fca0c0beacd0#1",
-       "role": "texto",
-       "tag": "section",
-       "testid": null,
-       "h_texto": null,
-       "h_nome": "fca0c0beacd0",
-       "n": 0,
-       "rotulo": "Notifications alt+T",
-       "x": 0,
-       "y": 887,
-       "w": 411,
-       "h": 0,
-       "sr": false,
-       "clip": null,
-       "corta": {
-        "x": false,
-        "y": false
-       }
       }
      ]
     },
@@ -19122,26 +20836,6 @@
         "x": false,
         "y": false
        }
-      },
-      {
-       "k": "texto:fca0c0beacd0#1",
-       "role": "texto",
-       "tag": "section",
-       "testid": null,
-       "h_texto": null,
-       "h_nome": "fca0c0beacd0",
-       "n": 0,
-       "rotulo": "Notifications alt+T",
-       "x": 0,
-       "y": 1138,
-       "w": 711,
-       "h": 0,
-       "sr": false,
-       "clip": null,
-       "corta": {
-        "x": false,
-        "y": false
-       }
       }
      ]
     },
@@ -19449,26 +21143,6 @@
        "y": 553,
        "w": 71.5,
        "h": 19,
-       "sr": false,
-       "clip": null,
-       "corta": {
-        "x": false,
-        "y": false
-       }
-      },
-      {
-       "k": "texto:fca0c0beacd0#1",
-       "role": "texto",
-       "tag": "section",
-       "testid": null,
-       "h_texto": null,
-       "h_nome": "fca0c0beacd0",
-       "n": 0,
-       "rotulo": "Notifications alt+T",
-       "x": 0,
-       "y": 711,
-       "w": 1138,
-       "h": 0,
        "sr": false,
        "clip": null,
        "corta": {
@@ -24434,6 +26108,50 @@
   "1138": {
    "rodada": "2026-09-28T12:36:20.991Z",
    "commit": "e45a5665ec091b1a3229eb6de92e6f71909d2eb4+sujo"
+  }
+ },
+ "rodadasPorEstado": {
+  "AUTH-login": {
+   "411": {
+    "rodada": "2026-09-30T19:56:27.440Z",
+    "commit": "1fbdc127d320feb54e8d3322496b492fe6323ffd+sujo"
+   },
+   "711": {
+    "rodada": "2026-09-30T19:56:27.440Z",
+    "commit": "1fbdc127d320feb54e8d3322496b492fe6323ffd+sujo"
+   },
+   "1138": {
+    "rodada": "2026-09-30T19:56:27.440Z",
+    "commit": "1fbdc127d320feb54e8d3322496b492fe6323ffd+sujo"
+   }
+  },
+  "AUTH-login-google": {
+   "411": {
+    "rodada": "2026-09-30T19:56:27.440Z",
+    "commit": "1fbdc127d320feb54e8d3322496b492fe6323ffd+sujo"
+   },
+   "711": {
+    "rodada": "2026-09-30T19:56:27.440Z",
+    "commit": "1fbdc127d320feb54e8d3322496b492fe6323ffd+sujo"
+   },
+   "1138": {
+    "rodada": "2026-09-30T19:56:27.440Z",
+    "commit": "1fbdc127d320feb54e8d3322496b492fe6323ffd+sujo"
+   }
+  },
+  "AUTH-login-google-erro": {
+   "411": {
+    "rodada": "2026-09-30T19:56:27.440Z",
+    "commit": "1fbdc127d320feb54e8d3322496b492fe6323ffd+sujo"
+   },
+   "711": {
+    "rodada": "2026-09-30T19:56:27.440Z",
+    "commit": "1fbdc127d320feb54e8d3322496b492fe6323ffd+sujo"
+   },
+   "1138": {
+    "rodada": "2026-09-30T19:56:27.440Z",
+    "commit": "1fbdc127d320feb54e8d3322496b492fe6323ffd+sujo"
+   }
   }
  }
 }

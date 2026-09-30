@@ -17,8 +17,9 @@
  *
  * Uso (da raiz, com o servidor de produção em :3000):
  *   pnpm tsx tests/gates-web/google-csp.cn.ts [pasta-de-saída]
- * PASSA (exit 0): 0 violações, popup em accounts.google.com, opener com o popup,
- * nenhuma frase de falha. REPROVA (exit 1) com o motivo. Parada = exit 2.
+ * PASSA (exit 0): 0 violações de CSP, nenhum aviso de COOP fora o do Google
+ * (div. 936), popup em accounts.google.com, opener com o popup, nenhuma frase
+ * de falha. REPROVA (exit 1) com o motivo. Parada = exit 2.
  */
 import { chromium, type BrowserContext, type Page, type Request } from '@playwright/test'
 import fs from 'node:fs'
@@ -62,7 +63,7 @@ export async function sondar({ base, cabecalhos, janelaMs = 20_000 }: Sonda): Pr
       const t = m.text()
       r.console.push(`${ms()}  ${onde.padEnd(6)} ${m.type().padEnd(8)} ${t}`)
       if (t.startsWith('CSP-VIOLATION')) r.violacoes.push(`${onde}: ${t}`)
-      else if (m.type() === 'error') r.erros.push(`${onde}: ${t}`)
+      else if (m.type() === 'error' || t.includes('Cross-Origin-Opener-Policy')) r.erros.push(`${onde}: ${t}`)
     })
     page.on('pageerror', (e) => { r.console.push(`${ms()}  ${onde.padEnd(6)} pageerror ${e.message}`); r.erros.push(`${onde}: pageerror ${e.message}`) })
   }
@@ -140,9 +141,19 @@ export async function sondar({ base, cabecalhos, janelaMs = 20_000 }: Sonda): Pr
   return r
 }
 
+/**
+ * Div. 936 (aval do commit 1): o `Cross-Origin-Opener-Policy-Report-Only` da
+ * própria página do Google avisa isto no opener com qualquer COOP nosso
+ * (o controle `unsafe-none` dá o mesmo) — excluído POR TEXTO; outro aviso de
+ * COOP reprova.
+ */
+export const AVISO_COOP_DO_GOOGLE = 'Cross-Origin-Opener-Policy policy would block the window.closed call.'
+
 export function veredito(r: Resultado): string[] {
   const m: string[] = []
   if (r.violacoes.length) m.push(`${r.violacoes.length} violação(ões) de CSP — a 1ª: ${r.violacoes[0]}`)
+  const coop = r.erros.filter((e) => e.includes('Cross-Origin-Opener-Policy') && !e.endsWith(`: ${AVISO_COOP_DO_GOOGLE}`))
+  if (coop.length) m.push(`${coop.length} aviso(s) de COOP no console — o 1º: ${coop[0]}`)
   if (!r.chegouAoGoogle) m.push('o popup não chegou a accounts.google.com')
   if (r.popupFechadoNoOpener !== false) m.push(`o opener não mantém o popup (closed=${r.popupFechadoNoOpener})`)
   if (r.fraseNaTela.length) m.push(`frase de falha na tela: ${JSON.stringify(r.fraseNaTela)}`)
