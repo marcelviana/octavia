@@ -17,7 +17,7 @@ vale a fonte. Nenhum texto de decisão ou de errata é reescrito aqui.
 - **Convenção**: `[medido]` = comando + saída literal nesta sessão, no anexo
   [`I1-ENCERRAMENTO-anexos/contabilidade.txt`](I1-ENCERRAMENTO-anexos/contabilidade.txt);
   `[lido]` = tirado do documento citado, sem medir de novo.
-- **Divergências desta PR**: **917–932** (commit 1) e **951–954** (commit 2) — as 933–950 são da PR-2 e da PR-15 (§15).
+- **Divergências desta PR**: **917–932** (commit 1), **951–954** (commit 2) e **955** (commit 3) — as 933–950 são da PR-2 e da PR-15 (§15).
 - **Como este documento foi lido**: os 15 `README.md` de anexo do bloco (e o do pre-check) foram
   lidos inteiros por cinco agentes de leitura, em paralelo, com extração por roteiro fixo (decisões,
   erratas, divergências, heranças, instrumentos, contabilidade); o `I1-PRECHECK.md`, o
@@ -284,20 +284,20 @@ Fonte: `I1-PRECHECK.md` §0.2; o estado final, pela PR que fechou.
 
 ---
 
-## 7. Divergências 480–954
+## 7. Divergências 480–955
 
 ### 7.1 A contagem
 
-`[medido]` — `git grep -nE '^\| \*\*[0-9]{3}\*\*' -- docs`, filtrado para 480–954 (o bloco,
-480–950, mais as deste documento, 951–954), a origem lida na célula depois do número; o bruto (472
+`[medido]` — `git grep -nE '^\| \*\*[0-9]{3}\*\*' -- docs`, filtrado para 480–955 (o bloco,
+480–950, mais as deste documento, 951–955), a origem lida na célula depois do número; o bruto (474
 linhas de tabela, a marca `*` na que conta) está no anexo
 [`divergencias.txt`](I1-ENCERRAMENTO-anexos/divergencias.txt):
 
 ```
-números atribuídos: 457 de 475   (456 em tabela + a 756, que só existe em prosa)
+números atribuídos: 458 de 476   (457 em tabela + a 756, que só existe em prosa)
 sem registro: 18 → 532–549       (a faixa 522–549 era da PR-1, que usou 522–531; a PR-3 começou em 550)
 sem letra na tabela: 726, 727, 728 (PR-9), 767 (PR-10) → pelo aval: 726 D · 727 A · 728 P · 767 A
-P 143 · A 139 · D 92 · T 80 · X 3 · total 457
+P 144 · A 139 · D 92 · T 80 · X 3 · total 458
 ```
 
 | PR | faixa | P | D | A | T | X | total |
@@ -321,9 +321,10 @@ P 143 · A 139 · D 92 · T 80 · X 3 · total 457
 | PR-2 | 933–943 | 4 | | 4 | | 3 | 11 |
 | PR-15 | 944–950 | 4 | | | 3 | | 7 |
 | encerramento, commit 2 | 951–954 | 1 | 3 | | | | 4 |
-| **I1** | | **143** | **92** | **139** | **80** | **3** | **457** |
+| encerramento, commit 3 | 955 | 1 | | | | | 1 |
+| **I1** | | **144** | **92** | **139** | **80** | **3** | **458** |
 
-**A cresceu** contra o N3 (9 de 85 lá; 139 de 457 aqui): o I1 foi o primeiro bloco a reescrever
+**A cresceu** contra o N3 (9 de 85 lá; 139 de 458 aqui): o I1 foi o primeiro bloco a reescrever
 telas **com dado real atrás**, e a leitura do código de cada superfície achou o que a tela
 escondia — erro engolido, `status` perdido, campo que nunca vai no corpo, texto que mente
 (*"max 50MB"*). **T** é do instrumento que nasceu no bloco (G-faixa, sobretudo) e das rodadas.
@@ -394,14 +395,13 @@ escondia — erro engolido, `status` perdido, campo que nunca vai no corpo, text
 | 913 | o triângulo do `<summary>` | bloco seguinte ao I1 (§10.5.7) |
 | 937 | o `init.json` 404 do Firebase no popup (lado Firebase) | registrado; sem ação |
 | 948 | o `text-amber-500` do `toBeInFavoriteState` | bloco seguinte ao I1 (§10.5.10) |
-| 954 | as regras 24–32 e casos 29–37 fora do `LOGS-OCTAVIA.md` | com o Marcel |
 
 **Fechadas no fecho**: 564 e 920 (PR-2), 611 e 892 (aval), 636 (o asset, PR-2), 918, 927, 929,
-932 (aval).
+932 (aval); 954 no commit 3 (o catálogo).
 
 ### 7.4 A origem P — onde o revisor errou
 
-**143 de 457 (31 %)** são de origem **P**: o prompt do revisor presumiu o que não era. É o
+**144 de 458 (31 %)** são de origem **P**: o prompt do revisor presumiu o que não era. É o
 registro honesto do bloco — e o maior número absoluto de P de um bloco até aqui (33 no N3). Por
 PR, o P mais alto foi o do pre-check (24) e o da PR-6 (17): a primeira leitura do web e a
 primeira superfície, onde o prompt descrevia um código que ninguém tinha aberto ainda. Nas PRs
@@ -417,8 +417,8 @@ O que mais se repetiu (leitura desta PR, não medição): **contagem do prompt q
 fonte** (496, 592, 670, 690, 695, 768, 890, 915: número de frases, de arquivos, de linhas);
 **seção ou arquivo citado onde não está** (489, 591, 594, 595, 696, 847, 848, 902); **estado ou
 caminho presumido que o código não tem** (699, 732, 806, 880, 933, 944, 945); e a **série de
-numeração** (502, 715, 756, 846). No encerramento o padrão se repete **onze** vezes (917, 919–925,
-929, 931, 951).
+numeração** (502, 715, 756, 846). No encerramento o padrão se repete **doze** vezes (917, 919–925,
+929, 931, 951, 955).
 
 ---
 
@@ -464,41 +464,28 @@ cada PR (as declarações moram lá) e passou em todas (`[lido]` nos README).
 
 ---
 
-## 9. Catálogo — regras 24–32 e casos 29–37
+## 9. Catálogo — regras 24–32 e casos 29–37 → [`LOGS-OCTAVIA.md`](../native/LOGS-OCTAVIA.md)
 
-**Aprovados como numerados** `[Marcel, 2026-09-30, decisão 5 do aval]`, na sequência do N3 (as
-regras foram até a **23**, os casos até o **28** — `N3-ENCERRAMENTO.md` §5; `LOGS-OCTAVIA.md:284`
-e `:556`). A *"errata órfã reprova"* é **ampliação da regra 14**, não regra nova. O texto vive
-aqui; levá-los ao `LOGS-OCTAVIA.md` não estava na lista deste commit (div. 954).
+**Aprovados como numerados** `[Marcel, 2026-09-30, decisão 5 do aval]` e **levados ao catálogo**
+no commit 3 desta PR (decisão da div. 954). **O texto vive só no `LOGS-OCTAVIA.md`**: as regras na
+seção *"As regras que o I1 firmou — 24 a 32"*, os casos na tabela de *"O padrão — 'instrumento com
+escopo menor do que parece'"* (linhas 29–37, depois do 28 do N3), e a *"errata órfã reprova"* como
+**ampliação da regra 14** (a linha *"I1 (encerramento…)"* no fim dela). A coluna "rótulo" abaixo é
+para achar a linha, não a regra.
 
-**Regras — 24 a 32**
-
-| # | regra | origem |
+| # | rótulo | origem |
 |---|---|---|
-| 24 | **Medição por estado substitui a rodada inteira**: quando uma rodada deixa estados de fora por causa do instrumento, a correção é uma rodada parcial desses estados, mesclada por estado — não uma rodada inteira nova (a cota é do usuário) | div. 803 (PR-11); div. 843 (PR-12) |
-| 25 | **Quebra por dado não é candidata a errata**: o dado real mais longo que o da folha quebra linha (a folha manda quebrar, nunca elidir); o veredito a conta à parte, com a cascata, e a prova é a pré-verificação com o dado da folha dar 0 | div. 767 (PR-10); automática na PR-11 |
-| 26 | **Rótulo curto com nome acessível longo se reconhece no instrumento** (`nl`), não vira errata da folha | E31 recusada; divs. 875, 888 (PR-13); I1-D7 item 4 / N3-D17 |
-| 27 | **A raiz da casca não estiliza texto**: fonte, entrelinha e cor ficam no cabeçalho e no conteúdo, nunca no invólucro que envolve corpos de outra folha | div. 727 (PR-9) |
-| 28 | **"O executor mede"**: o aceite roda quem escreveu o instrumento, com a barreira de escrita, sem senha e sem abrir `.env*`; o aval fica no veredito | I1-D37 (PR-12) |
-| 29 | **Mudança de tema se prova por imagem**: antes × depois por pixel (limiar 0) e por geometria, com o controle antes × antes = 0; onde não der 0, para antes do commit | PR-14, aval 6 |
-| 30 | **Instrumento primeiro, tela depois**: o gate (CN) reprova na `main` **antes** da correção, no commit 1 de cada PR | PR-1 (10 falham); toda PR de tela (gate-first); PR-14 (4/8) |
-| 31 | **Texto sem leitor é poda, não tradução** | PR-14, aval 3; div. 914 |
-| 32 | **O defeito do instrumento se conserta no instrumento**, não com errata da folha | E31 (PR-13) |
-| 14 (ampliada) | **errata, isenção e exceção órfãs reprovam** também no web (G-tok (i), `g-tok-sem-ingles.txt`, `g-tok-frases-isentas.txt`) | div. 929; decisão 5 do aval |
-
-**Casos do padrão — 29 a 37** (o instrumento que leu uma coisa e não a outra)
-
-| # | div. | PR | o que o instrumento leu | o que não leu |
-|---|---|---|---|---|
-| 29 | 531 | PR-1 | as navegações da página no CN de navegador | que 4 delas eram o *hot update* do `next dev`, disparado pelos `.png` que o próprio script gravava na árvore vigiada |
-| 30 | 726 | PR-9 | o Δ de cada nó contra a moldura da folha | que a folha **passava da própria moldura** (escondia por `overflow`): Δ 0 e a página rolando na horizontal (`scrollWidth` 1145 · 726 · 468) |
-| 31 | 560 | PR-3 | o arquivo do service worker apagado (404) e o `<link rel="manifest">` do DOM | que o worker já instalado **não morre** com o arquivo, e que o marcador não dizia de onde o HTML veio |
-| 32 | 910 | PR-14 | o perfil persistente "logado" | que a sessão do Firebase mora no IndexedDB **por origem**: noutra porta o cliente não acha usuário e **apaga o cookie** |
-| 33 | 518, 522 | pre-check → PR-1 | `requestfinished` como lista completa | que ele só dispara quando a página lê o corpo — os quatro furos do probe |
-| 34 | 828 | PR-12 → PR-14 | o inglês em posição de texto do JSX | as strings de `.ts` (`frases-*`, `message:`, `alert(`) — a contagem de inglês era **por baixo** |
-| 35 | 761 | PR-10 | classes, valores arbitrários e texto | o `800` literal numa expressão de JavaScript |
-| 36 | 901 | PR-14 | o teste verde do upload | que o `vi.mock('sonner', fábrica)` nunca resolvia: cinco asserções que não podiam falhar |
-| 37 | 908 | PR-14 | o `knip` sem órfãos | que ele **ignorava** `components/ui/**` por configuração — a prova foi o `grep` |
+| regra 24 | medição por estado | divs. 803, 843 (PR-11, PR-12) |
+| regra 25 | quebra por dado | div. 767 (PR-10) |
+| regra 26 | rótulo curto, nome acessível longo | E31; divs. 875, 888 (PR-13) |
+| regra 27 | a raiz da casca não estiliza | div. 727 (PR-9) |
+| regra 28 | o executor mede | I1-D37 (PR-12) |
+| regra 29 | prova por imagem | PR-14 (aval 6); PR-15 |
+| regra 30 | instrumento primeiro | PR-1; as PRs de tela; PR-14 |
+| regra 31 | texto sem leitor é poda | div. 914 (PR-14) |
+| regra 32 | defeito do instrumento, no instrumento | E31 (PR-13) |
+| regra 14, ampliada | a órfã reprova também no web | div. 929 |
+| casos 29–37 | divs. 531 · 726 · 560 · 910 · 518/522 · 828 · 761 · 901 · 908 | PR-1 · PR-9 · PR-3 · PR-14 · pre-check/PR-1 · PR-12/14 · PR-10 · PR-14 · PR-14 |
 
 ---
 
@@ -601,6 +588,7 @@ reescrito.
 | `CLAUDE.md` | `:111` *UI*: tokens de `packages/identidade`, `components/identidade/`, sem Radix/shadcn/Lucide desde a I1-PR-14 · `:113` *Testing*: + os gates do web e o `COMO-RODAR.md` · `:125` `components/identidade/` no lugar de `/ui` · `:263` falha é estado na tela, não toast · `:270` a árvore de exemplo sem `ui/` · `:285` (nova) *Gates do web* em *Test Types* · `:317` *Test offline scenarios* → nota "nenhum offline no web" (fecha a div. 578 da PR-3) · nota do toast antes do exemplo do *Content Management Pattern* (extra, div. 931) |
 | `README.md` | `:88` e `:90` (UI e ícones: a identidade) · `:104` (o passo do shadcn CLI vira nota histórica) · `:255-256` (os créditos, como origem) |
 | `docs/ux/I1-PR3-anexos/README.md` | **commit 2**: uma linha de errata sob o item 2 do §8 (o *"Fica até o encerramento do I1"* do `sw.js` não vale; aval 4, div. 951) |
+| `docs/native/LOGS-OCTAVIA.md` | **commit 3**: os casos 29–37 na tabela do padrão; a ampliação da regra 14; a seção *"As regras que o I1 firmou — 24 a 32"* antes de *"A regra de método"* (div. 954) |
 | `docs/ux/I1-PRECHECK.md` §17 | a linha do encerramento (commit 1); no commit 2, a da **PR-15** e o sha novo (a da PR-2 veio com a #351) |
 | `ARCHITECTURE.md` | **uma nota no topo** — o documento é histórico: `domains/` saiu no P1-D (`b6292ff`), `DomainErrorBoundary`/`useErrorHandler` não existem; o que existe hoje (limite global + `tela-de-erro.tsx`, a casca, o pacote). O corpo não foi reescrito (div. 926) |
 
@@ -680,11 +668,11 @@ As onze perguntas do commit 1, com a resposta e onde ela se aplicou.
 
 ---
 
-## 15. Divergências desta PR — 917–932 e 951–954
+## 15. Divergências desta PR — 917–932 e 951–955
 
 | # | origem | o quê | o que foi feito |
 |---|---|---|---|
-| **917** | P | *"`divergencias.txt` (as 437 linhas de tabela extraídas por grep)"* — `[medido]` no commit 1 (480–916) são **432** linhas de tabela para **418** números (13 números aparecem em mais de uma tabela) + a **756**, que só existe em prosa (`I1-PR10-anexos/README.md:471`) = **419** atribuídos; **18** números nunca atribuídos (532–549: a faixa reservada da PR-1, que parou na 531) | o anexo traz as linhas e marca a que conta (`*`); no fecho (480–954): **472** linhas, **457** números (§7.1) |
+| **917** | P | *"`divergencias.txt` (as 437 linhas de tabela extraídas por grep)"* — `[medido]` no commit 1 (480–916) são **432** linhas de tabela para **418** números (13 números aparecem em mais de uma tabela) + a **756**, que só existe em prosa (`I1-PR10-anexos/README.md:471`) = **419** atribuídos; **18** números nunca atribuídos (532–549: a faixa reservada da PR-1, que parou na 531) | o anexo traz as linhas e marca a que conta (`*`); no fecho (480–955): **474** linhas, **458** números (§7.1) |
 | **918** | D | quatro registros **sem letra de origem**: 726, 727, 728 (PR-9, tabela de destinos §18.7) e 767 (PR-10, §23.9) — a origem nunca foi escrita, nem em prosa **Fechada pelo aval** (decisão 9): **726 D · 727 A · 728 P · 767 A** — a leitura do commit 1 (A · A · T · A) errou duas; a §7 conta assim |
 | **919** | P | *"14 PRs de código (#336–#349, mais o pre-check #335 e o congelamento #338)"* — #336–#349 são 14 números, e **o #338 está entre eles**: são **13** de código. E a **PR-2** do fatiamento (I1-D15, o Google) **nunca foi aberta** — não há branch, commit, anexo nem número | §2 com as 13; **no fecho**, com a PR-2 (#351) e a PR-15 (#352), são **15** |
 | **920** | P | **o login com Google não foi consertado** *(origem A no commit 1; **P** pelo aval, decisão 1: foi o revisor que pulou a PR-2)*: `lib/security-headers.ts:81` `'frame-src': ["'none'"]`, `script-src` (`:39-47`) sem `https://apis.google.com`, COOP `same-origin` (`:124`) `[medido: grep]` — as três causas da H-I1-3. A PR-6 só deu nome à falha (A2); a div. 564 (*"a PR-2 reabre"*) ficou órfã | **Fechada**: a PR-2 aberta agora (decisão 1), #351 — H-I1-3 e div. 564 fechadas (§6) |
@@ -703,7 +691,8 @@ As onze perguntas do commit 1, com a resposta e onde ela se aplicou.
 | **951** | P | aval 4: *"o **segundo** texto da PR-3 vira errata"* — no `I1-PR3-anexos/README.md` o primeiro é o aval 2 (`:187`, *"Fica até o encerramento do I1"*) e o segundo a herança nomeada (§13, `:346`, *"bloco seguinte ao I1"*); a decisão do mesmo aval é o bloco seguinte, então o texto que a contraria é o **primeiro** | a errata foi no **primeiro** (uma linha de nota sob o item 2 do §8 da PR-3, sem reescrever); o §13 fica como está; o `CLAUDE.md` já dizia o bloco seguinte |
 | **952** | D | o commit 1 deste documento escreveu, nas notas do `PLANO-TRANSICAO.md`, que o Google **não** foi consertado e que o bloco era #335–#349 — a PR-2 e a PR-15 mudaram os dois fatos antes do merge | as duas notas corrigidas neste commit (texto desta PR, não mergeado: sem errata) |
 | **953** | D | o `I1-PR2-anexos/README.md` lista quatro commits (três + *"este"*, docs); o merge `baeebf7` tem **cinco** — o `a8fdf98` (a div. 943) veio depois | o §2 daqui usa o `git log`; o README da PR-2 não se reescreve |
-| **954** | D | as regras 24–32 e os casos 29–37 estão **aprovados**, mas o catálogo que as regras anteriores citam é o `LOGS-OCTAVIA.md` (as do N3 entraram lá no encerramento dele, §5) — o prompt do commit 2 não o lista | **não tocado** (fora da lista); as regras e casos vivem na §9 daqui até o Marcel decidir levá-los ao catálogo |
+| **954** | D | as regras 24–32 e os casos 29–37 estão **aprovados**, mas o catálogo que as regras anteriores citam é o `LOGS-OCTAVIA.md` (as do N3 entraram lá no encerramento dele, §5) — o prompt do commit 2 não o lista | **Fechada** `[Marcel, 2026-09-30]`: sim — o commit 3 os leva ao `LOGS-OCTAVIA.md`, e a §9 daqui passa a apontar para lá |
+| **955** | P | *"uma linha cada … na forma que o N3 usou lá (as regras 20–23 e os casos 25–28 como molde)"* — no `LOGS-OCTAVIA.md` os **casos** são uma linha de tabela (`# · caso · o instrumento mede · eu li como se medisse`), mas as **regras** 16–23 são **parágrafos** (título em negrito, origem em itálico, 4–7 linhas); as duas instruções não cabem juntas para as regras | os casos: uma linha cada, nas quatro colunas do molde (o *"eu li como se medisse"* reescrito a partir do "o que não leu" do §9). As regras: a forma do N3 — título, origem em itálico com a divergência e a PR, e o texto do §9 (1–4 linhas, sem acréscimo). A regra 14: uma linha de ampliação no fim dela, como a do W4-b1 |
 
 ---
 
@@ -714,7 +703,7 @@ comando na primeira linha; nenhum carrega texto de música.
 
 | arquivo | o quê |
 |---|---|
-| [`divergencias.txt`](I1-ENCERRAMENTO-anexos/divergencias.txt) | as 472 linhas de tabela 480–954 + a 756, com origem, doc e linha, e a contagem por PR (regenerado no commit 2) |
+| [`divergencias.txt`](I1-ENCERRAMENTO-anexos/divergencias.txt) | as 474 linhas de tabela 480–955 + a 756, com origem, doc e linha, e a contagem por PR (regenerado no commit 2) |
 | [`prs.txt`](I1-ENCERRAMENTO-anexos/prs.txt) | `git log --merges` do bloco, `gh pr view` de #335–#352 (sem a #350, este), os commits de cada merge e as linhas por PR (regenerado no commit 2) |
 | [`contabilidade.txt`](I1-ENCERRAMENTO-anexos/contabilidade.txt) | os comandos e saídas da §1 e da §13 (suíte nos dois shas, `pnpm build`, dependências, frases, gates, volume, APKs, linhas; regenerado no commit 2 sobre `c1640e5`) |
 | [`docs-raiz.txt`](I1-ENCERRAMENTO-anexos/docs-raiz.txt) | as linhas mudadas no `CLAUDE.md`, `README.md`, `ARCHITECTURE.md`, `PLANO-TRANSICAO.md`, `I1-PRECHECK.md` e `DESIGN-N2/README.md` (o `diff` deste commit) |

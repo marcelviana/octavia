@@ -282,6 +282,15 @@ perigoso: um instrumento que mede **mais** do que a coisa medida.
 | 26 | **div. 282** (N2-PR5) | o **`gate:icones`**: o coletor lê cada estado de um ícone em UMA linha do `dados.ts` | "todo ícone da tela 2 é cobrado contra o anexo D". A primeira forma da `alca`, escrita em várias linhas, passou com **0 acusações e "4/6 cobrados"** — e o `apagar-setlist` da N2-PR4 **estava assim desde que entrou**: só o `inerte` dele era comparado. O desenho estava certo, mas quem dizia isso era a sorte, não o gate. Regra nova `[legível]`: entrada sem `normal` numa linha é ACUSADA; CN ad hoc com 2 acusações. É o 22 no coletor: o que ficou de fora não foi uma população, foi uma **forma de escrever** a mesma entrada |
 | 27 | **div. 294** (N2-PR5) | o **Metro com `CI=1`**, que não observa o disco | "o aparelho está rodando o conserto". Duas tentativas de conserto da div. 286 rodaram o **bundle velho** e "reprovaram" — mediram nada. Achado por `curl …/index.bundle \| grep -c LinhaFlutuante` → `0`. **É o mesmo mecanismo da div. 127 (W1), que já estava escrito aqui, na regra 4** — *"com `CI=1` o Metro não relê o disco"*. O caso não é o instrumento: é **o registro que existia e não estava onde quem subiu o Metro lê** — o 8 e o 20 outra vez. Daí a regra 13 e o [`APARATO.md`](APARATO.md) |
 | 28 | **div. 461** (N3-PR6b; o (b) nasce na N3-PR6c) | o **G-N3**, calibrado em (e) e (d′) — texto que some e texto que encolhe — mais o 4 dp; o (b) corte do pre-check ficou de fora na N3-PR1, *"o G5/G6 da T3-R5 são outro gate"* | "a faixa B não corta nada". O G5/G6 mede **alvo tocável**, e a fileira de marcas da S5 não é texto nem alvo: com 60 músicas ela pedia 895 dp numa janela de 711,1, e 12 marcas saíam da tela **sem gate nenhum ver** — os 102 pares do consolidado passavam com (e)=0. **Quem a viu foi um estado do V1 (`S5-n-grande`) que nenhum roteiro do bloco alcançava**, e a hipótese estava escrita desde o pre-check (H-N3-3), derivada e nunca medida, porque a fixture tinha 8. Um critério que o instrumento de origem tinha e a cópia deixou de fora não some: fica esperando o estado que o exerce. O (b) volta ao G-N3, e o controle dele é o do (e): o mesmo número do `B3-inventario.jsonl`, dump a dump**Segundo exemplo** (acrescentado no encerramento do N3, div. 468): **o picker de antes da N3-E18** (div. 445). Ali o G-N3 **viu** o estado — o título sumido é (e)=2 —, mas o que tirava função era o `Tentar de novo` **cortado na borda** da janela de 711,1 (84 dp visíveis), e esse corte nenhum gate via: não é texto que some, e o alvo cortado tinha mais de 48 dp. Com o (b), os mesmos dumps dão **(b)=6** (`picker-estado-1`, `picker-adicionar-1` e o `Tentar de novo` na borda, nos dois aparelhos — o CN-B4 de `N3-PR6c-anexos/cn-n3pr6c-commit1.txt`). Um defeito, dois sintomas: o gate pegou o que tinha critério para pegar |
+| 29 | **div. 531** (I1-PR-1) | as navegações da página, contadas pelo CN de navegador do loop mudo | "a página navegou quatro vezes". Eram o *hot update* do `next dev`, disparado pelos `.png` que o próprio script gravava na árvore vigiada; com as capturas fora dela, 0 |
+| 30 | **div. 726** (I1-PR-9) | o Δ de cada nó contra a moldura da folha | "o menu *Filtros* cabe". A folha **passava da própria moldura** (escondia por `overflow`), o Δ dava 0 e a página rolava na horizontal (`scrollWidth` 1145 · 726 · 468) — daí o `scrollWidth` por estado na pré-verificação (I1-E14) |
+| 31 | **div. 560** (I1-PR-3) | o arquivo do service worker apagado (404) e o `<link rel="manifest">` do DOM | "o PWA saiu". O worker já instalado **não morre** com o arquivo, e o marcador não dizia de onde o HTML veio — daí o `public/sw.js` de auto-destruição |
+| 32 | **div. 910** (I1-PR-14) | o perfil persistente do G-faixa, "logado" | "a sessão está aberta". A sessão do Firebase mora no IndexedDB **por origem**: noutra porta o cliente não acha usuário e **apaga o cookie** — o perfil só vale em `localhost:3000` |
+| 33 | **divs. 518, 522** (I1 pre-check → I1-PR-1) | o `requestfinished` do Playwright | "a lista de requests é completa". Ele só dispara quando a página lê o corpo: os quatro furos do probe; o listener passou a ser por `request`/`response` |
+| 34 | **div. 828** (I1-PR-12 → regra na I1-PR-14) | o inglês em posição de texto do JSX, no G-tok | "nenhum texto de UI em inglês nos arquivos da lista". As strings de `.ts` (`frases-*`, `message:`, `alert(`) ficavam de fora: a contagem de inglês era **por baixo** |
+| 35 | **div. 761** (I1-PR-10) | classes, valores arbitrários e texto, no G-tok | "nenhum literal de medida no visualizador". O `800` da largura da página do PDF era um número numa expressão de JavaScript |
+| 36 | **div. 901** (I1-PR-14) | o teste verde do upload | "as asserções do toast passam". O `vi.mock('sonner', fábrica)` nunca resolvia: cinco asserções que não podiam falhar |
+| 37 | **div. 908** (I1-PR-14) | o `knip` sem órfãos | "`components/ui/` não tem arquivo morto". Ele **ignorava** `components/ui/**` por configuração — a prova foi o `grep` |
 
 > **O 19 é o 15 outra vez, e a segunda vez muda o que a primeira parecia ser.** Quando o
 > 15 apareceu, o texto acima o chamou de *"a primeira vez no projeto em que o instrumento
@@ -545,6 +554,10 @@ razão é obrigatória; o coletor continua lendo comentário (div. 83). E **decl
 reprova**: exceção do G1a, par do G1b, errata e remoção do G3 declaradas e não usadas dão
 `exit ≠ 0` (div. 339, que é a 141 medida na `main` — o aviso saía em toda corrida e o job
 ficava verde). A poda deixa de ser disciplina e vira condição de merge.
+**I1 (encerramento, decisão do Marcel, 2026-09-30; div. 929):** a órfã reprova também
+no web — a errata do `DESIGN-I1/erratas.json` sem achado no G-tok (i), a entrada órfã do
+`g-tok-sem-ingles.txt` e a frase isenta sem uso do `g-tok-frases-isentas.txt`. Ampliação desta
+regra, não regra nova.
 
 **15. A TELA VENCE O LOG.** (Origem: div. 270, N2-PR4.) O log estava perfeito —
 `write op=delete … 200`, `resync … 200`, `cache write … invalidated=1` — e S1 voltava
@@ -620,6 +633,45 @@ alguém passar por ali é uma aposta: a div. 390 (a citação `App.tsx:206` no
 destino, as PRs do N3 tocaram os dois arquivos, e nenhuma corrigiu — o prompt não
 pedia, e o item não estava na lista de ninguém. Herança se escreve com o **bloco** que
 a recebe (N5, W5, bloco D…), e o bloco a lista no pre-check.
+
+### As regras que o I1 firmou — 24 a 32
+
+*(Encerramento do I1, 2026-09-30; fonte: `docs/ux/I1-ENCERRAMENTO.md` §9; aprovadas como
+numeradas, decisão 5 do aval.)* Numeradas na sequência das do N3. São do web — o G-faixa, o G-tok
+e o aceite no navegador —, e a 29 e a 30 valem para qualquer PR que mude tela.
+
+**24. Medição por estado substitui a rodada inteira.** *(Div. 803, I1-PR-11; div. 843,
+I1-PR-12.)* Quando uma rodada deixa estados de fora por causa do instrumento, a correção é uma
+rodada parcial desses estados (`G_FAIXA_ESTADOS`), mesclada por estado — não uma rodada inteira
+nova: a cota do `/api/profile` é do usuário.
+
+**25. Quebra por dado não é candidata a errata.** *(Div. 767, I1-PR-10; automática na
+I1-PR-11.)* O dado real mais longo que o da folha quebra linha — a folha manda quebrar, nunca
+elidir; o veredito a conta à parte, com a cascata, e a prova é a pré-verificação com o dado da
+folha dar 0.
+
+**26. Rótulo curto com nome acessível longo se reconhece no instrumento, não vira errata da
+folha.** *(I1-E31 recusada; divs. 875, 888, I1-PR-13; I1-D7 item 4 / N3-D17.)* O G-faixa marca
+o nó (`nl`) e dá a saída *nome-acessível*, não (e).
+
+**27. A raiz da casca não estiliza texto.** *(Div. 727, I1-PR-9.)* Fonte, entrelinha e cor
+ficam no cabeçalho e no conteúdo, nunca no invólucro que envolve corpos de outra folha.
+
+**28. O executor mede.** *(I1-D37, I1-PR-12.)* O aceite roda quem escreveu o instrumento, com
+a barreira de escrita, sem senha e sem abrir `.env*`; o aval do Marcel fica no veredito.
+
+**29. Mudança de tema se prova por imagem.** *(I1-PR-14, aval 6; refeita na I1-PR-15.)* Antes
+× depois por pixel (limiar 0) e por geometria, com o controle antes × antes = 0; onde não der 0,
+para antes do commit.
+
+**30. Instrumento primeiro, tela depois.** *(I1-PR-1, 10 falhando; toda PR de tela do I1,
+gate-first; I1-PR-14, 4/8.)* O gate (CN) reprova na `main` **antes** da correção, no commit 1
+de cada PR.
+
+**31. Texto sem leitor é poda, não tradução.** *(I1-PR-14, aval 3; div. 914.)*
+
+**32. O defeito do instrumento se conserta no instrumento, não com errata da folha.**
+*(I1-E31, I1-PR-13.)*
 
 ### A regra de método que o padrão implica
 
