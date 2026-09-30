@@ -1,0 +1,2 @@
+google-csp: PASSA — 0 violações, popup no Google, opener com o popup, nenhuma frase de falha
+# exit: 0

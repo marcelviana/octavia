@@ -1,0 +1,26 @@
+# (a) script-src + https://apis.google.com (2026-09-30T19:35:18.330Z)
+cabeçalhos do /login:
+  content-security-policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.googleapis.com https://*.gstatic.com localhost:* 127.0.0.1:* https://apis.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://*.supabase.co https://*.firebaseapp.com https://*.googleusercontent.com; media-src 'self' blob: https://*.supabase.co; connect-src 'self' https://*.supabase.co https://*.firebaseio.com https://*.googleapis.com wss://*.supabase.co localhost:* 127.0.0.1:* ws://localhost:* ws://127.0.0.1:*; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; manifest-src 'self'; worker-src 'self' blob:
+  cross-origin-opener-policy: same-origin
+violações de CSP: 1
+  login: CSP-VIOLATION directive=frame-src blocked=https://<authDomain> disposition=enforce
+erros de console (fora as violações): 4
+  login: WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr' failed: Error in connection establishment: net::ERR_BLOCKED_BY_LOCAL_NETWORK_ACCESS_CHECKS
+  login: Framing 'https://<authDomain>/' violates the following Content Security Policy directive: "frame-src 'none'". The request has been blocked.
+
+  popup: Failed to load resource: the server responded with a status of 404 ()
+  login: Google sign in error: Firebase: Error (auth/popup-closed-by-user).
+popups:
+  2302  popup aberto: 
+  2618  popup navegou: https://<authDomain>/__/auth/handler
+  4363  popup navegou: https://accounts.google.com/v3/signin/identifier
+chegou a accounts.google.com: true
+opener — popup.closed: true
+popup — window.opener !== null: false
+frase na tela: ["o login com Google foi cancelado"]
+interceptados no navegador: 1
+parada: (nenhuma)
+veredito: REPROVA
+  - 1 violação(ões) de CSP — a 1ª: login: CSP-VIOLATION directive=frame-src blocked=https://<authDomain> disposition=enforce
+  - o opener não mantém o popup (closed=true)
+  - frase de falha na tela: ["o login com Google foi cancelado"]

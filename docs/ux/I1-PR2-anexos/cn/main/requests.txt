@@ -1,0 +1,21 @@
+  1160  login  GET     200   http://localhost:3000/login
+  1171  login  GET     200   http://localhost:3000/marcas/octavia-dark.png
+  1173  login  GET     200   http://localhost:3000/_next/static/css/app/layout.css
+  1196  login  GET     200   http://localhost:3000/_next/static/chunks/app-pages-internals.js
+  1230  login  GET     200   http://localhost:3000/_next/static/chunks/webpack.js
+  1267  login  GET     200   http://localhost:3000/fontes/Manrope_400Regular.ttf
+  1271  login  GET     200   http://localhost:3000/fontes/Manrope_600SemiBold.ttf
+  1272  login  GET     200   http://localhost:3000/fontes/Raleway_600SemiBold.ttf
+  1361  login  GET     200   http://localhost:3000/_next/static/chunks/main-app.js
+  1435  login  GET     200   http://localhost:3000/_next/static/chunks/app/login/page.js
+  1436  login  GET     200   http://localhost:3000/_next/static/chunks/app/layout.js
+  1544  login  GET     200   http://localhost:3000/icons/icon-192x192.webp
+  1557  login  GET     200   http://localhost:3000/icons/icon-192x192.webp
+  1608  login  DELETE  FALSO http://localhost:3000/api/auth/session
+  2177  login  GET     FALHA https://apis.google.com/js/api.js csp
+  2229  login  POST    200   http://localhost:3000/__nextjs_original-stack-frames
+  2240  login  GET     200   http://localhost:3000/__nextjs_font/geist-latin.woff2
+  2248  login  POST    200   http://localhost:3000/__nextjs_original-stack-frames
+
+# interceptados no navegador
+  1554  DELETE /api/auth/session → 200 falso no navegador

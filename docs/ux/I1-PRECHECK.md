@@ -1167,3 +1167,5 @@ que ficam sem uso (`components/ui/skeleton.tsx`, `components/ui/switch.tsx`).
   serviços de terceiros — fica intacto pela I1-D19.
 
 **I1-PR-4** (`packages/identidade` + migração do nativo, PR #339): anexos em [`docs/native/I1-PR4-anexos/`](../native/I1-PR4-anexos/README.md) — o pacote é do nativo tanto quanto do web.
+
+**I1-PR-2** (login com Google: `script-src`, `frame-src`, COOP — PR #351): anexos em [`docs/ux/I1-PR2-anexos/`](I1-PR2-anexos/README.md) — **H-I1-3 fechada**, div. 564 fechada; aceite real do Marcel em 2026-09-30 (entrou); divs. 933–943 (a 943: o botão no tema Dark do Google, decisão da marca).

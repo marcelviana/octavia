@@ -1,0 +1,20 @@
+# 12 linhas antes do clique
+   795  login  warning  Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+   830  login  verbose  [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o
+  1163  login  info     %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+  1182  login  warning  %c%s%c Server-side user: No session cookie found background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server  
+  1224  login  log      Firebase client initialized successfully
+  1225  login  log      Firebase Auth initialized
+  1228  login  log      Firebase Firestore initialized
+  1228  login  log      Firebase client configured for production use in development
+  1265  login  log      Initializing Firebase auth context...
+  1280  login  error    WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr' failed: Error in connection establishment: net::ERR_BLOCKED_BY_LOCAL_NETWORK_ACCESS_CHECKS
+  1283  login  log      Firebase auth state changed: No user
+  1288  login  log      Session cookie cleared successfully
+  1896  login  log      Attempting Google sign in
+  2286  login  error    Framing 'https://<authDomain>/' violates the following Content Security Policy directive: "frame-src 'none'". The request has been blocked.
+
+  2335  login  error    CSP-VIOLATION directive=frame-src blocked=https://<authDomain> disposition=enforce
+  3100  popup  error    Failed to load resource: the server responded with a status of 404 ()
+  4447  popup  verbose  [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o
+ 12295  login  error    Google sign in error: Firebase: Error (auth/popup-closed-by-user).

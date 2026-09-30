@@ -31,6 +31,14 @@ export interface EnhancedSecurityConfig {
   additionalHeaders: Record<string, string>
 }
 
+// I1-PR2 (I1-D6): o signInWithPopup do Firebase abre um iframe oculto na
+// origem do authDomain (`/__/auth/iframe`) — medido em
+// docs/ux/I1-PR2-anexos/cn/a-script-src. Só a origem exata; sem a variável,
+// nenhum frame.
+const FIREBASE_AUTH_FRAME = process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+  ? [`https://${process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN}`]
+  : ["'none'"]
+
 // PRODUCTION Security Configuration
 export const PRODUCTION_SECURITY_CONFIG: EnhancedSecurityConfig = {
   contentSecurityPolicy: {
@@ -42,6 +50,7 @@ export const PRODUCTION_SECURITY_CONFIG: EnhancedSecurityConfig = {
         'https://*.googleapis.com',
         'https://*.gstatic.com',
         'https://www.google.com',
+        'https://apis.google.com', // I1-PR2: o gapi do signInWithPopup (anexos cn/main → cn/a)
         'https://cdn.jsdelivr.net',
         'https://vercel.live' // Vercel Live feedback widget
       ],
@@ -78,7 +87,8 @@ export const PRODUCTION_SECURITY_CONFIG: EnhancedSecurityConfig = {
       ],
       // I1-PR3 (I1-D24): o único iframe do app (o PDF do palco, PERF-02)
       // morreu com o palco; sem consumidor, o 'blob:' saiu.
-      'frame-src': ["'none'"],
+      // I1-PR2: o iframe de auth do Firebase (anexos cn/a → cn/b).
+      'frame-src': FIREBASE_AUTH_FRAME,
       'object-src': ["'none'"],
       'base-uri': ["'self'"],
       'form-action': ["'self'"],
@@ -115,13 +125,14 @@ export const PRODUCTION_SECURITY_CONFIG: EnhancedSecurityConfig = {
   },
   crossOriginPolicies: {
     embedderPolicy: 'unsafe-none',  // Allow cross-origin resources like Google avatars
-    openerPolicy: 'same-origin',
+    // I1-PR2: o popup do Google precisa do opener (anexos cn/b → cn/c)
+    openerPolicy: 'same-origin-allow-popups',
     resourcePolicy: 'cross-origin'  // Allow cross-origin resources (Firebase/Supabase Storage)
   },
   additionalHeaders: {
     'X-Robots-Tag': 'noindex, nofollow', // Prevent indexing in production
     'X-Permitted-Cross-Domain-Policies': 'none',
-    'Cross-Origin-Opener-Policy': 'same-origin',
+    'Cross-Origin-Opener-Policy': 'same-origin-allow-popups', // I1-PR2 (cn/b → cn/c)
     'Cross-Origin-Embedder-Policy': 'unsafe-none',  // Allow cross-origin resources
     'Cross-Origin-Resource-Policy': 'cross-origin'
   }
@@ -139,6 +150,7 @@ export const DEVELOPMENT_SECURITY_CONFIG: EnhancedSecurityConfig = {
         "'unsafe-eval'", // Allow for HMR
         'https://*.googleapis.com',
         'https://*.gstatic.com',
+        'https://apis.google.com', // I1-PR2: o gapi do signInWithPopup (cn/main → cn/a)
         'localhost:*',
         '127.0.0.1:*'
       ],
