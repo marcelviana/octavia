@@ -20,6 +20,7 @@ export const CONTEUDOS = {
   partitura: conteudo('c-partitura', 'Partitura de 12 páginas', 'Compositor anônimo', 'Sheet'),
   asa: conteudo('c-asa', 'Asa branca', 'Luiz Gonzaga', 'Lyrics'),
   batch2: conteudo('c-batch2', 'Batch dois', null, 'Lyrics'),
+  batch3: conteudo('c-batch3', 'Batch três', null, 'Chords'),
 }
 type Conteudo = ReturnType<typeof conteudo>
 export interface Linha { id: string; position: number; notes: string | null; content: Conteudo }
@@ -44,10 +45,12 @@ export const SETLISTS_DA_FOLHA = (): SetlistFalsa[] => [
   setlist('set-solo', 'Solo', [['linha-solo-1', CONTEUDOS.garota]]),
 ]
 
-type Resp = { status: number; corpo: unknown } | 'rede'
+export type Resp = { status: number; corpo: unknown } | 'rede'
 export interface Roteiro {
-  /** a lista que cada `GET /api/setlists` devolve, em sequência (a última se repete) */
-  listas: SetlistFalsa[][]
+  /** o que cada `GET /api/setlists` devolve, em sequência (o último se repete): a lista, uma falha, ou nunca responde */
+  listas: (SetlistFalsa[] | Resp | 'segurar')[]
+  /** `GET /api/content`: as músicas (padrão: todas), o `total` (padrão: quantas vieram) ou uma falha */
+  biblioteca?: { data?: Conteudo[]; total?: number; falha?: Resp }
   /** por escrita: a resposta (o padrão é o sucesso do contrato) */
   respostas?: Partial<Record<'criar' | 'salvar' | 'apagar' | 'adicionar' | 'remover', Resp[]>>
 }
@@ -71,11 +74,16 @@ export function servir(roteiro: Roteiro) {
     if (metodo !== 'GET') escritas.push(`${metodo} ${caminho}${init?.body ? ` ${String(init.body)}` : ''}`)
     if (caminho === '/api/setlists' && metodo === 'GET') {
       const l = roteiro.listas[Math.min(leituras.setlists++, roteiro.listas.length - 1)]
-      return json({ status: 200, corpo: l })
+      if (l === 'segurar') return new Promise<Response>(() => undefined)
+      if (l === 'rede') throw new TypeError('Failed to fetch')
+      return json(Array.isArray(l) ? { status: 200, corpo: l } : (l as { status: number; corpo: unknown }))
     }
     if (caminho.startsWith('/api/content?') && metodo === 'GET') {
-      const data = Object.values(CONTEUDOS)
-      return json({ status: 200, corpo: { data, total: data.length, page: 1, pageSize: 1000, hasMore: false, totalPages: 1 } })
+      const b = roteiro.biblioteca ?? {}
+      if (b.falha === 'rede') throw new TypeError('Failed to fetch')
+      if (b.falha) return json(b.falha)
+      const data = b.data ?? Object.values(CONTEUDOS)
+      return json({ status: 200, corpo: { data, total: b.total ?? data.length, page: 1, pageSize: 100, hasMore: false, totalPages: 1 } })
     }
     if (caminho === '/api/setlists' && metodo === 'POST') {
       const corpo = JSON.parse(String(init?.body)) as Record<string, unknown>
@@ -101,3 +109,4 @@ export function servir(roteiro: Roteiro) {
 }
 
 export const NAO_ENCONTRADA = { status: 404, corpo: { error: 'Setlist not found', code: 'NOT_FOUND' } }
+export const erro = (status: number): Resp => ({ status, corpo: { error: 'x', code: 'X' } })

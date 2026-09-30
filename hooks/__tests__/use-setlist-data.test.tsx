@@ -163,7 +163,7 @@ describe('useSetlistData', () => {
     expect(result.current.setlists).toEqual([])
     expect(result.current.content).toEqual([])
     expect(result.current.loading).toBe(true) // Should be loading when not ready
-    expect(result.current.error).toBeNull()
+    expect(result.current.erro).toBeNull()
     expect(typeof result.current.reload).toBe('function')
   })
 
@@ -174,7 +174,7 @@ describe('useSetlistData', () => {
 
     expect(result.current.setlists).toHaveLength(0)
     expect(result.current.content).toHaveLength(0)
-    expect(result.current.error).toBeNull()
+    expect(result.current.erro).toBeNull()
     expect(mockGetUserSetlists).not.toHaveBeenCalled()
     expect(mockGetUserContentPage).not.toHaveBeenCalled()
   })
@@ -276,7 +276,9 @@ describe('useSetlistData', () => {
     // retry, not the "No setlists yet" first-use invitation (SET-14)
     expect(result.current.setlists).toHaveLength(0)
     expect(result.current.content).toHaveLength(0)
-    expect(result.current.error).toBeTruthy()
+    // I1-PR-13: o erro vai COMO VEIO (a tela escolhe o motivo pela espécie); a falha da biblioteca deixou de ser engolida
+    expect(result.current.erro).toBe(error)
+    expect(result.current.erroDaBiblioteca).toBe(error)
   })
 
   it('shows error state (no fetch, never first-use empty state) when offline', async () => {
@@ -293,7 +295,7 @@ describe('useSetlistData', () => {
     expect(mockGetUserSetlists).not.toHaveBeenCalled()
     expect(mockGetUserContentPage).not.toHaveBeenCalled()
     expect(result.current.setlists).toHaveLength(0)
-    expect(result.current.error).toBeTruthy()
+    expect(result.current.erro).toEqual({ rede: true }) // I1-PR-13: sem rede declarada = a espécie "rede"
     expect(result.current.loading).toBe(false)
   })
 
@@ -308,7 +310,20 @@ describe('useSetlistData', () => {
     })
 
     expect(result.current.setlists).toHaveLength(0)
-    expect(result.current.error).toBeTruthy()
+    expect(result.current.erro).toBeInstanceOf(TypeError)
+  })
+
+  it('I1-PR-13: a biblioteca inteira × cortada pelo teto da rota (decisão 4); reload devolve a lista relida', async () => {
+    mockGetUserContentPage.mockResolvedValue({ data: mockContentData, total: 250 })
+    const { result } = renderHook(() => useSetlistData(mockUser, true))
+    await act(async () => { await new Promise(resolve => setTimeout(resolve, 200)) })
+    expect(result.current.bibliotecaInteira).toBe(false)
+
+    mockGetUserContentPage.mockResolvedValue({ data: mockContentData, total: mockContentData.length })
+    let relida: unknown
+    await act(async () => { relida = await result.current.reload() })
+    expect(result.current.bibliotecaInteira).toBe(true)
+    expect(relida).toEqual(mockSetlistsData)
   })
 
 })

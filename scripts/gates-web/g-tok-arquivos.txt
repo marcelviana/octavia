@@ -135,13 +135,18 @@ components/upload/pecas.tsx
 app/setlists/page.tsx
 components/setlists-page-client.tsx
 components/setlist-manager.tsx
-components/setlist/index.ts
-components/setlist/setlist-list.tsx
-components/setlist/setlist-card.tsx
-components/setlist/setlist-details.tsx
-components/setlist/setlist-dialog.tsx
-components/setlist/song-selection-dialog.tsx
 hooks/use-setlist-data.ts
 lib/setlist-service.ts
-types/performance.ts
-hooks/use-toast.ts
+# Commit 2: as cinco peças de `components/setlist/`, o `index.ts`, o `types/performance.ts` e o `hooks/use-toast.ts`
+# morreram (saem da lista); os que nasceram em `components/setlists/`.
+components/setlists/frases-setlists.ts
+components/setlists/falhas-das-setlists.ts
+components/setlists/tipos.ts
+components/setlists/use-setlists.ts
+components/setlists/moldura.tsx
+components/setlists/dialogo.tsx
+components/setlists/formulario.tsx
+components/setlists/apagar.tsx
+components/setlists/picker.tsx
+components/setlists/cartao.tsx
+components/setlists/detalhe.tsx

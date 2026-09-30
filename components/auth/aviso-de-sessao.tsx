@@ -15,9 +15,9 @@ import { FRASES_SESSAO, fraseDaFalha } from "./frases-sessao"
  * I1-PR-9 (decisão 9 do aval): no painel e na biblioteca a linha é desenhada pela
  * PRÓPRIA tela, abaixo do título (folha 4, `SESSAO-nao-renovada`;
  * `components/identidade/linha-da-tela.tsx`); nas telas de corpo velho segue aqui,
- * no topo, até a PR de cada uma.
+ * no topo, até a PR de cada uma. I1-PR-13: `/setlists` também (a última) — o topo fica para as rotas públicas.
  */
-export const ROTAS_QUE_DESENHAM_A_LINHA: readonly string[] = ["/login", "/dashboard", "/library", "/add-content"]
+export const ROTAS_QUE_DESENHAM_A_LINHA: readonly string[] = ["/login", "/dashboard", "/library", "/add-content", "/setlists"]
 
 /**
  * I1-PR-10 (decisão 14): a visualização `/content/<id>` também desenha a linha (abaixo do cabeçalho). I1-PR-11: o

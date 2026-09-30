@@ -5,7 +5,8 @@
  * Monta a tela (`components/setlists-page-client.tsx`) com o servidor falso, que GUARDA cada escrita (método · caminho
  * · corpo), e percorre um roteiro por ação — criar, editar, adicionar duas músicas, remover uma, apagar — com a mesma
  * INTENÇÃO antes e depois do redesenho (só os seletores mudam, porque os rótulos mudam). Compara, byte a byte, com
- * `fixtures/setlists-escritas-antes.json`, gravado no commit 1 sobre o código da `main` (`CN_GRAVAR=1`).
+ * `fixtures/setlists-escritas-antes.json`, gravado no commit 1 sobre o código da `main` (`CN_GRAVAR=1`). Commit 2: só os
+ * seletores mudaram; a fixture é a da `main`.
  *
  * O roteiro passa LONGE dos três defeitos que esta PR conserta (I1-D9, N2 §10.3.5/.6 — `setlists-defeitos.test.tsx`):
  * remove uma linha que veio do servidor (id verdadeiro, sem bis) e apaga uma setlist que existe. O que os defeitos
@@ -35,25 +36,25 @@ import { SETLISTS_DA_FOLHA, servir } from '@/components/setlists/__tests__/servi
 
 const ANTES = path.resolve(__dirname, 'fixtures/setlists-escritas-antes.json')
 
-// ---- os seletores do roteiro (commit 1: os da tela de antes, em inglês; o commit 2 troca SÓ isto) -------------------
+// ---- os seletores do roteiro (commit 2: os da folha `8-setlists` — os rótulos mudaram; a intenção é a mesma) -----------
 const botao = (nome: string | RegExp, onde: HTMLElement = document.body) => within(onde).findByRole('button', { name: nome })
 const escrever = async (el: Promise<HTMLElement>, v: string) => fireEvent.change(await el, { target: { value: v } })
 const dialogo = () => screen.findByRole('dialog')
 const A = {
-  novaSetlist: async () => fireEvent.click(await botao('Create Setlist')),
+  novaSetlist: async () => fireEvent.click(await botao('Nova setlist')),
   /** o *Editar* / *Apagar* do cartão, pela posição da setlist na lista */
-  editarCartao: async (i: number) => fireEvent.click((await screen.findAllByRole('button', { name: 'Edit setlist' }))[i] as HTMLElement),
-  apagarCartao: async (i: number) => fireEvent.click((await screen.findAllByRole('button', { name: 'Delete setlist' }))[i] as HTMLElement),
+  editarCartao: async (i: number) => fireEvent.click((await screen.findAllByRole('button', { name: /^Editar a setlist / }))[i] as HTMLElement),
+  apagarCartao: async (i: number) => fireEvent.click((await screen.findAllByRole('button', { name: /^Apagar a setlist / }))[i] as HTMLElement),
   campo: async (qual: 'nome' | 'descricao' | 'data' | 'local' | 'notas', v: string) =>
-    escrever(within(await dialogo()).findByLabelText({ nome: /^Setlist Name/, descricao: 'Description', data: 'Performance Date', local: 'Venue', notas: 'Notes' }[qual]), v),
-  criar: async () => fireEvent.click(await botao('Create Setlist', await dialogo())),
-  salvar: async () => fireEvent.click(await botao('Update Setlist', await dialogo())),
-  confirmarApagar: async () => fireEvent.click(await botao('Delete', await dialogo())),
+    escrever(within(await dialogo()).findByLabelText({ nome: 'Nome', descricao: 'Descrição', data: 'Data do show', local: 'Local', notas: 'Notas' }[qual]), v),
+  criar: async () => fireEvent.click(await botao('Criar', await dialogo())),
+  salvar: async () => fireEvent.click(await botao('Salvar', await dialogo())),
+  confirmarApagar: async () => fireEvent.click(await botao('Apagar', await dialogo())),
   abrir: (nome: string) => fireEvent.click(screen.getAllByText(nome)[0] as HTMLElement),
-  adicionarMusicas: async () => fireEvent.click((await screen.findAllByRole('button', { name: 'Add Songs' }))[0] as HTMLElement),
+  adicionarMusicas: async () => fireEvent.click(await botao(/^Adicionar músicas a /)),
   marcar: async (titulo: string) => fireEvent.click(await within(await dialogo()).findByText(titulo)),
-  adicionar: async (n: number) => fireEvent.click(await botao(`Add ${n} Songs`, await dialogo())),
-  remover: async (i: number) => fireEvent.click((await screen.findAllByRole('button', { name: 'Remove song' }))[i] as HTMLElement),
+  adicionar: async (n: number) => fireEvent.click(await botao(new RegExp(`^Adicionar ${n} músicas? a `), await dialogo())),
+  remover: async (i: number) => fireEvent.click((await screen.findAllByRole('button', { name: /^Remover .+ da setlist$/ }))[i] as HTMLElement),
 }
 
 interface Caso { nome: string; roteiro: () => Promise<void>; escritas: number }

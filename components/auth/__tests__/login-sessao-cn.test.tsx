@@ -295,8 +295,10 @@ describe('I1-PR1 CN — commit 2: frase sem prazo, "Tentar de novo", renovação
 
   it('(v) renovação que falha fora do /login: linha de aviso no topo, 0 navegações, e nada repete sozinho', async () => {
     // I1-PR-9 (decisão 9): no /dashboard e na /library a linha é da própria tela, abaixo do título; o topo
-    // (este CN) segue valendo nas telas de corpo velho — a mesma rota "fora do /login", uma delas
-    fb.pathname = '/setlists'
+    // (este CN) segue valendo nas telas de corpo velho — a mesma rota "fora do /login", uma delas.
+    // I1-PR-13 (decisão 17 do aval): `/setlists`, a última de corpo velho, passou a desenhar a linha na tela; o topo
+    // vale nas rotas públicas — `/privacy-policy` (par declarado, como o da div. 716)
+    fb.pathname = '/privacy-policy'
     instalarFetch([200, 500, 500, 200])
     render(
       <FirebaseAuthProvider>

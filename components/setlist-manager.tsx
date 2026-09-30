@@ -1,323 +1,78 @@
 "use client"
 
-import React, { useState, useCallback } from "react"
-import { useFirebaseAuth } from "@/contexts/firebase-auth-context"
-import { useSetlistData } from "@/hooks/use-setlist-data"
-import { toast } from "@/hooks/use-toast"
-import {
-  createSetlist,
-  deleteSetlist,
-  addSongToSetlist,
-  removeSongFromSetlist,
-  updateSetlist,
-} from "@/lib/setlist-service"
-import {
-  SetlistList,
-  SetlistDetails,
-  SetlistDialog,
-  SongSelectionDialog,
-  type SetlistWithSongs,
-  type SetlistFormData,
-} from "./setlist"
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-} from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
+/**
+ * O gerente de `/setlists` (I1-PR-13; folha `8-setlists`): a lista à esquerda e a setlist aberta à direita (2 : 3 em
+ * C; em B a aberta desce), os três diálogos — o formulário, o apagar, o picker — e UMA linha por lugar: abaixo do
+ * título da lista (a sessão; a carga que falhou sem lista na tela; *esta setlist já foi apagada*), abaixo do cabeçalho
+ * da setlist (o remover) e dentro do diálogo (criar, salvar, apagar, adicionar). A lógica é do `useSetlists`.
+ */
+import { LinhaDaTela, type FalhaDaTela } from "@/components/identidade/linha-da-tela"
+import { CONTROLE_LISTA } from "@/components/identidade/controles"
+import { Icone } from "@/components/identidade/icone"
+import { ApagarSetlist } from "@/components/setlists/apagar"
+import { CartaoDaSetlist } from "@/components/setlists/cartao"
+import { SetlistAberta } from "@/components/setlists/detalhe"
+import { linhaDaFalha } from "@/components/setlists/falhas-das-setlists"
+import { FormularioDeSetlist } from "@/components/setlists/formulario"
+import { FRASES_SET, contagemDeSetlists, exibir } from "@/components/setlists/frases-setlists"
+import { Blocos, CabecalhoDaLista, Caixa, Colunas, FRASE_DA_CAIXA, PainelSemSetlist, SetlistsCarregando } from "@/components/setlists/moldura"
+import { PickerDeMusicas } from "@/components/setlists/picker"
+import { useSetlists } from "@/components/setlists/use-setlists"
 
 export function SetlistManager() {
-  const { user, isLoading: authLoading } = useFirebaseAuth()
-  const isInitialized = !authLoading
-  
-  const {
-    setlists,
-    setSetlists,
-    content: availableContent,
-    loading,
-    error,
-    reload,
-  } = useSetlistData(user, isInitialized)
+  const s = useSetlists()
+  if (s.carregandoSessao || !s.user) return <SetlistsCarregando />
 
-  // State management
-  const [selectedSetlist, setSelectedSetlist] = useState<SetlistWithSongs | null>(null)
-  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
-  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
-  const [isAddSongsDialogOpen, setIsAddSongsDialogOpen] = useState(false)
-  const [editingSetlist, setEditingSetlist] = useState<SetlistWithSongs | null>(null)
-  const [selectedSongsToAdd, setSelectedSongsToAdd] = useState<string[]>([])
-  const [deleteDialogSetlist, setDeleteDialogSetlist] = useState<SetlistWithSongs | null>(null)
-
-  // Handlers
-  const handleSelectSetlist = useCallback((setlist: SetlistWithSongs) => {
-    setSelectedSetlist(setlist)
-  }, [])
-
-  const handleCreateSetlist = useCallback(() => {
-    setEditingSetlist(null)
-    setIsCreateDialogOpen(true)
-  }, [])
-
-  const handleEditSetlist = useCallback((setlist: SetlistWithSongs) => {
-    setEditingSetlist(setlist)
-    setIsEditDialogOpen(true)
-  }, [])
-
-  const handleSubmitSetlist = useCallback(async (data: SetlistFormData) => {
-    if (!user?.uid) return
-
-    try {
-      if (editingSetlist) {
-        // Update existing setlist
-        const updatedSetlist = await updateSetlist(editingSetlist.id, {
-          name: data.name,
-          description: data.description || null,
-          performance_date: data.performance_date || null,
-          venue: data.venue || null,
-          notes: data.notes || null,
-        })
-
-        if (updatedSetlist) {
-          setSetlists(prev => prev.map(s => s.id === editingSetlist.id 
-            ? { ...s, ...updatedSetlist } 
-            : s
-          ))
-          
-          if (selectedSetlist?.id === editingSetlist.id) {
-            setSelectedSetlist(prev => prev ? { ...prev, ...updatedSetlist } : null)
-          }
-
-          toast({ title: "Setlist updated successfully" })
-        }
-      } else {
-        // Create new setlist
-        const newSetlist = await createSetlist({
-          name: data.name,
-          description: data.description || null,
-          performance_date: data.performance_date || null,
-          venue: data.venue || null,
-          notes: data.notes || null,
-        })
-
-        if (newSetlist) {
-          const setlistWithSongs: SetlistWithSongs = {
-            ...newSetlist,
-            setlist_songs: []
-          }
-          
-          setSetlists(prev => [setlistWithSongs, ...prev])
-          toast({ title: "Setlist created successfully" })
-        }
-      }
-    } catch (error) {
-      console.error('Failed to save setlist:', error)
-      toast({
-        title: "Failed to save setlist",
-        description: error instanceof Error ? error.message : "An error occurred",
-        variant: "destructive",
-      })
-    }
-  }, [user?.uid, editingSetlist, selectedSetlist, setSetlists])
-
-  const handleDeleteSetlist = useCallback((setlist: SetlistWithSongs) => {
-    setDeleteDialogSetlist(setlist)
-  }, [])
-
-  const confirmDeleteSetlist = useCallback(async () => {
-    if (!user?.uid || !deleteDialogSetlist) return
-
-    try {
-      await deleteSetlist(deleteDialogSetlist.id)
-      setSetlists(prev => prev.filter(s => s.id !== deleteDialogSetlist.id))
-      
-      if (selectedSetlist?.id === deleteDialogSetlist.id) {
-        setSelectedSetlist(null)
-      }
-      
-      setDeleteDialogSetlist(null)
-      toast({ title: "Setlist deleted successfully" })
-    } catch (error) {
-      console.error('Failed to delete setlist:', error)
-      toast({
-        title: "Failed to delete setlist",
-        description: error instanceof Error ? error.message : "An error occurred",
-        variant: "destructive",
-      })
-    }
-  }, [user?.uid, deleteDialogSetlist, selectedSetlist, setSetlists])
-
-  const handleAddSongsToSetlist = useCallback(async (songIds: string[]) => {
-    if (!selectedSetlist || !user?.uid || songIds.length === 0) return
-
-    try {
-      const updatedSetlist = { ...selectedSetlist }
-      const existingSongs = updatedSetlist.setlist_songs || []
-      const nextPosition = existingSongs.length > 0 
-        ? Math.max(...existingSongs.map(s => s.position)) + 1 
-        : 1
-
-      for (let i = 0; i < songIds.length; i++) {
-        const songId = songIds[i]
-        if (!songId) continue
-        const content = availableContent.find(c => c.id === songId)
-        if (!content) continue
-
-        await addSongToSetlist(selectedSetlist.id, songId, nextPosition + i)
-        
-        updatedSetlist.setlist_songs.push({
-          id: `${selectedSetlist.id}-${songId}`,
-          position: nextPosition + i,
-          notes: null,
-          content,
-        })
-      }
-
-      setSelectedSetlist(updatedSetlist)
-      setSetlists(prev => prev.map(s => s.id === selectedSetlist.id ? updatedSetlist : s))
-      
-      toast({ 
-        title: `Added ${songIds.length} song${songIds.length !== 1 ? 's' : ''} to setlist` 
-      })
-    } catch (error) {
-      console.error('Failed to add songs:', error)
-      toast({
-        title: "Failed to add songs",
-        description: error instanceof Error ? error.message : "An error occurred",
-        variant: "destructive",
-      })
-    }
-  }, [selectedSetlist, user?.uid, availableContent, setSetlists])
-
-  const handleRemoveSongFromSetlist = useCallback(async (songId: string) => {
-    if (!selectedSetlist || !user?.uid) return
-
-    try {
-      const songToRemove = selectedSetlist.setlist_songs.find(s => s.content.id === songId)
-      if (!songToRemove) return
-
-      await removeSongFromSetlist(songToRemove.id)
-      
-      const updatedSetlist = {
-        ...selectedSetlist,
-        setlist_songs: selectedSetlist.setlist_songs.filter(s => s.content.id !== songId)
-      }
-      
-      setSelectedSetlist(updatedSetlist)
-      setSetlists(prev => prev.map(s => s.id === selectedSetlist.id ? updatedSetlist : s))
-      
-      toast({ title: "Song removed from setlist" })
-    } catch (error) {
-      console.error('Failed to remove song:', error)
-      toast({
-        title: "Failed to remove song",
-        description: error instanceof Error ? error.message : "An error occurred",
-        variant: "destructive",
-      })
-    }
-  }, [selectedSetlist, user?.uid, setSetlists])
-
-  // Don't render anything while loading auth
-  if (authLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-t-[#2E7CE4] border-[#F2EDE5] rounded-full animate-spin mx-auto"></div>
-          <p className="mt-4 text-[#1A1F36]">Loading...</p>
-        </div>
-      </div>
-    )
-  }
-
-  if (!user) {
-    return null
-  }
+  const F = FRASES_SET
+  const semLista = s.setlists.length === 0
+  const carregando = s.loading && semLista
+  const falhou = !s.loading && semLista && s.erro !== null
+  const vazio = !s.loading && semLista && s.erro === null
+  const falhaDaLista: FalhaDaTela | null = falhou ? linhaDaFalha("set.erro", s.erro, { onTentar: () => void s.reload() })
+    : s.jaApagada ? { tipo: "falha", motivo: F["set.ja-apagada"] } : null
+  const r = s.falhaDoRemover
+  const falhaDoPainel = r && s.aberta?.setlist_songs.some((l) => l.id === r.linha.id)
+    ? linhaDaFalha("set.erro.remover", r.erro, { dados: { título: exibir(r.linha.content).titulo }, onTentar: () => void s.remover(r.linha) })
+    : null
 
   return (
-    <div className="container mx-auto p-6 max-w-7xl">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-[calc(100vh-8rem)]">
-        {/* Setlist List */}
-        <div className="space-y-4">
-          <SetlistList
-            setlists={setlists}
-            selectedSetlist={selectedSetlist}
-            loading={loading}
-            error={error}
-            onSelectSetlist={handleSelectSetlist}
-            onCreateSetlist={handleCreateSetlist}
-            onEditSetlist={handleEditSetlist}
-            onDeleteSetlist={handleDeleteSetlist}
-          />
-        </div>
-
-        {/* Setlist Details */}
-        <div className="space-y-4">
-          {selectedSetlist ? (
-            <SetlistDetails
-              setlist={selectedSetlist}
-              onAddSongs={() => setIsAddSongsDialogOpen(true)}
-              onEditSetlist={() => handleEditSetlist(selectedSetlist)}
-              onRemoveSong={handleRemoveSongFromSetlist}
-              onReorderSongs={(songId, newPosition) => {
-                // TODO: Implement song reordering
-                console.log('Reorder song', songId, 'to position', newPosition)
-              }}
-            />
-          ) : (
-            <div className="flex items-center justify-center h-full bg-[#F8F9FA] rounded-lg border border-[#E8E3DA]">
-              <p className="text-[#6B7280] text-lg">
-                Select a setlist to view its details
-              </p>
-            </div>
+    <>
+      <Colunas
+        lista={<>
+          <CabecalhoDaLista contagem={semLista ? undefined : contagemDeSetlists(s.setlists.length)} onNova={s.nova} />
+          <LinhaDaTela falha={falhaDaLista} rotuloTentar={F["acao.tentar"]} />
+          {carregando && <Blocos />}
+          {falhou && <Caixa />}
+          {vazio && (
+            <Caixa>
+              <p className={FRASE_DA_CAIXA}>{F["set.vazio"]}</p>
+              <p className="text-tam-label text-cor-muted">{F["set.vazio.apoio"]}</p>
+              <button type="button" onClick={s.nova} className={`${CONTROLE_LISTA} border-cor-accent-ink`}>
+                <Icone nome="nova-setlist" tamanho={24} className="text-cor-accent-ink" />
+                {F["set.vazio.acao"]}
+              </button>
+            </Caixa>
           )}
-        </div>
-      </div>
-
-      {/* Dialogs */}
-      <SetlistDialog
-        open={isCreateDialogOpen}
-        onOpenChange={setIsCreateDialogOpen}
-        onSubmit={handleSubmitSetlist}
+          {s.setlists.map((setlist) => (
+            <CartaoDaSetlist key={setlist.id} setlist={setlist} aberta={s.aberta?.id === setlist.id} onAbrir={s.abrir} onEditar={s.editar} onApagar={s.pedirApagar} />
+          ))}
+        </>}
+        painel={s.aberta
+          ? <SetlistAberta setlist={s.aberta} falha={falhaDoPainel} onEditar={() => s.editar(s.aberta!)} onAdicionar={s.abrirPicker} onRemover={s.remover} />
+          : <PainelSemSetlist frase={semLista ? undefined : F["set.nenhuma"]} />}
       />
-
-      <SetlistDialog
-        open={isEditDialogOpen}
-        onOpenChange={setIsEditDialogOpen}
-        onSubmit={handleSubmitSetlist}
-        editingSetlist={editingSetlist}
-      />
-
-      <SongSelectionDialog
-        open={isAddSongsDialogOpen}
-        onOpenChange={setIsAddSongsDialogOpen}
-        availableContent={availableContent}
-        selectedSongs={selectedSongsToAdd}
-        onSelectedSongsChange={setSelectedSongsToAdd}
-        onAddSongs={handleAddSongsToSetlist}
-        excludeSongIds={selectedSetlist?.setlist_songs?.map(s => s.content.id) || []}
-      />
-
-      {/* Delete Confirmation Dialog */}
-      <Dialog open={!!deleteDialogSetlist} onOpenChange={() => setDeleteDialogSetlist(null)}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Delete Setlist</DialogTitle>
-            <DialogDescription>
-              Are you sure you want to delete &quot;{deleteDialogSetlist?.name}&quot;? This action cannot be undone.
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setDeleteDialogSetlist(null)}>
-              Cancel
-            </Button>
-            <Button variant="destructive" onClick={confirmDeleteSetlist}>
-              Delete
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </div>
+      {s.formulario && (
+        <FormularioDeSetlist key={s.formulario.editando?.id ?? "nova"} editando={s.formulario.editando} enviando={s.formulario.enviando}
+          erro={s.formulario.erro} onEnviar={s.enviarFormulario} onFechar={s.fecharFormulario} />
+      )}
+      {s.apagar && (
+        <ApagarSetlist nome={s.apagar.setlist.name} enviando={s.apagar.enviando} erro={s.apagar.erro} onApagar={s.confirmarApagar} onFechar={s.fecharApagar} />
+      )}
+      {s.picker && s.aberta && (
+        <PickerDeMusicas setlist={s.aberta} biblioteca={s.content} bibliotecaInteira={s.bibliotecaInteira} erroDaBiblioteca={s.erroDaBiblioteca}
+          onRecarregar={() => void s.reload()} selecionadas={s.picker.selecionadas} onSelecionar={s.selecionar} enviando={s.picker.enviando}
+          erro={s.picker.erro} onAdicionar={s.adicionar} onFechar={s.fecharPicker} />
+      )}
+    </>
   )
 }
