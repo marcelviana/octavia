@@ -1,0 +1,12 @@
+# I1-PR15 commit 2 — pnpm test · tsc · lint (a árvore do commit 2)
+## pnpm test
+ Test Files  118 passed | 3 skipped (121)
+      Tests  1181 passed | 58 skipped (1239)
+exit=0
+## pnpm exec tsc --noEmit
+exit=0
+## pnpm lint
+✔ No ESLint warnings or errors
+exit=0
+## pnpm install --frozen-lockfile --offline (o lockfile novo)
+Done — sem erro

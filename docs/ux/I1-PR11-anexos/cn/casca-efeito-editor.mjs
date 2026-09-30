@@ -7,7 +7,8 @@
 //     `FRASES_VELHAS`, as do código da main) que aparece no depois — tem de ser 0; COINCIDÊNCIA DE TEXTO = o resto
 //     (dado — o título, as cordas da tab —, nomes de acorde, palavras iguais nas duas línguas — Capo, BPM —, a casca
 //     empilhada em A), listada.
-import fs from 'node:fs'
+// I1-PR15 (decisão 2 do encerramento; aval 4): o rastro está em `.gz` — lido por `ler-medicao.mjs`.
+import { lerJson } from '../../../../scripts/gates-web/ler-medicao.mjs'
 import { createHash } from 'node:crypto'
 const h = (t) => createHash('sha256').update(t).digest('hex').slice(0, 12)
 const FRASES_VELHAS = ['Song Information', 'Title', 'Artist', 'Key', 'Quick Chords', 'Song Sections', 'Add Section', 'Chord Progression',
@@ -20,7 +21,7 @@ const FRASES_VELHAS = ['Song Information', 'Title', 'Artist', 'Key', 'Quick Chor
 // FORA da lista, por serem IGUAIS à frase nova aprovada (§5.7): *Tags* (`edit.meta.tags`), *Capo*, *BPM* — a 1ª execução
 // deste script contou *Tags* como "nó velho" (15, um por estado × largura): era o rótulo NOVO do *Detalhes* (div. 805)
 const velhas = new Map(FRASES_VELHAS.map((t) => [h(t), t]))
-const ler = (p) => JSON.parse(fs.readFileSync(p, 'utf8'))
+const ler = lerJson
 const antes = ler('tests/gates-web/medicoes/casca-efeito/antes/content-edit.json')
 const depois = ler('tests/gates-web/medicoes/content-edit.json')
 let velhosTotal = 0

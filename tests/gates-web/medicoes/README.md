@@ -10,5 +10,10 @@ por construção e fica fora do veredito do CI. As PRs de superfície medem cont
 `casca-efeito/` (I1-PR9) = o efeito da casca nova sobre as telas de **corpo velho** (`setlists`, `content`): só
 registro, fora do veredito do CI — é a herança das PRs 10–13.
 
+**Formato (I1-PR15, decisão 2 do encerramento do I1)**: em texto só o que o veredito lê — os `<superficie>.json` desta
+pasta. O rastro nas subpastas (`cn-main/`, `casca-efeito/` com `antes/` e `depois/`, `rodada1/`, `antes-*/`) está em
+`.json.gz` (`gzip -n -9`, um por arquivo, mesmo nome + `.gz`); o veredito e os scripts dos anexos leem os dois formatos
+por `scripts/gates-web/ler-medicao.mjs` (a mesma medição nos dois formatos é erro). Para ler à mão: `gzip -dc <arq>.gz`.
+
 Como medir: `scripts/gates-web/COMO-RODAR.md`. Sem texto de música: nas superfícies com sessão o
 texto de cada nó vai só como hash e comprimento.

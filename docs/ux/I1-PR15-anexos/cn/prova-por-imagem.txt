@@ -16,3 +16,23 @@ privacy-policy-1138	1138×1373 → 1138×1373	pixels diferentes: 0	nós com Δ d
 privacy-policy-411	411×2056 → 411×2056	pixels diferentes: 0	nós com Δ de geometria: 0
 privacy-policy-711	711×1448 → 711×1448	pixels diferentes: 0	nós com Δ de geometria: 0
 capturas com diferença: 0
+
+## antes × depois (o commit 2: body { font-family: var(--fonte-ui-familia), sans-serif }, sem o generator)
+# públicas: next dev SEM .env (3114) numa cópia da árvore do commit 2 (rsync sem .git, .env*, .next); dashboard: a árvore (3000, perfil persistente).
+dashboard-1138	1138×734 → 1138×734	pixels diferentes: 0	nós com Δ de geometria: 0
+dashboard-411	411×1212 → 411×1212	pixels diferentes: 0	nós com Δ de geometria: 0
+dashboard-711	711×1145 → 711×1145	pixels diferentes: 0	nós com Δ de geometria: 0
+landing-1138	1138×711 → 1138×711	pixels diferentes: 0	nós com Δ de geometria: 0
+landing-411	411×823 → 411×823	pixels diferentes: 0	nós com Δ de geometria: 0
+landing-711	711×1138 → 711×1138	pixels diferentes: 0	nós com Δ de geometria: 0
+login-1138	1138×711 → 1138×711	pixels diferentes: 0	nós com Δ de geometria: 0
+login-411	411×851 → 411×851	pixels diferentes: 0	nós com Δ de geometria: 0
+login-711	711×1138 → 711×1138	pixels diferentes: 0	nós com Δ de geometria: 0
+privacy-policy-1138	1138×1373 → 1138×1373	pixels diferentes: 0	nós com Δ de geometria: 0
+privacy-policy-411	411×2056 → 411×2056	pixels diferentes: 0	nós com Δ de geometria: 0
+privacy-policy-711	711×1448 → 711×1448	pixels diferentes: 0	nós com Δ de geometria: 0
+capturas com diferença: 0
+
+## o CSS servido no depois (a regra nova em vigor — senão o 0 não prova nada)
+body font-family computado: antes "Arial, Helvetica, sans-serif" (nas 12) → depois "Manrope, sans-serif" (nas 12)
+escritas abortadas pela barreira: 0 (antes, antes2, depois)
