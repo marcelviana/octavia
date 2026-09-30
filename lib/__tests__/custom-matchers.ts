@@ -13,7 +13,6 @@ declare module 'vitest' {
     toBeInteractive(): T
     toBeAccessible(): T
     toShowValidationError(message?: string): T
-    toBeVisuallySelected(): T
     toBeVisuallyDisabled(): T
     toHaveAriaLabel(label?: string): T
     toHaveProperFocus(): T
@@ -182,28 +181,6 @@ export const toShowValidationError = (element: HTMLElement, expectedMessage?: st
 }
 
 /**
- * Custom matcher to check if an element is visually selected
- */
-export const toBeVisuallySelected = (element: HTMLElement) => {
-  const hasSelectedClass = element.classList.contains('selected') ||
-                          element.classList.contains('bg-primary') ||
-                          element.classList.contains('bg-blue-500') ||
-                          element.classList.contains('ring-2')
-  
-  const hasAriaSelected = element.getAttribute('aria-selected') === 'true'
-  const hasAriaPressed = element.getAttribute('aria-pressed') === 'true'
-  
-  return {
-    pass: hasSelectedClass || hasAriaSelected || hasAriaPressed,
-    message: () => 
-      `Expected element to be visually selected but:\n` +
-      `- has selected class: ${hasSelectedClass}\n` +
-      `- has aria-selected: ${hasAriaSelected}\n` +
-      `- has aria-pressed: ${hasAriaPressed}`
-  }
-}
-
-/**
  * Custom matcher to check if an element is visually disabled
  */
 export const toBeVisuallyDisabled = (element: HTMLElement) => {
@@ -346,7 +323,6 @@ export function setupCustomMatchers() {
     toBeInteractive,
     toBeAccessible,
     toShowValidationError,
-    toBeVisuallySelected,
     toBeVisuallyDisabled,
     toHaveAriaLabel,
     toHaveProperFocus,
@@ -363,7 +339,6 @@ export const customMatchers = {
   toBeInteractive,
   toBeAccessible,
   toShowValidationError,
-  toBeVisuallySelected,
   toBeVisuallyDisabled,
   toHaveAriaLabel,
   toHaveProperFocus,

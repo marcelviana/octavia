@@ -1,0 +1,17 @@
+# 12 linhas antes do clique
+  1149  login  warning  Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.
+  1192  login  verbose  [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o
+  1411  login  info     %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+  1432  login  warning  %c%s%c Server-side user: No session cookie found background: #e6e6e6;background: light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.25));color: #000000;color: light-dark(#000000, #ffffff);border-radius: 2px  Server  
+  1478  login  log      Firebase client initialized successfully
+  1482  login  log      Firebase Auth initialized
+  1484  login  log      Firebase Firestore initialized
+  1484  login  log      Firebase client configured for production use in development
+  1526  login  log      Initializing Firebase auth context...
+  1549  login  error    WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr' failed: Error in connection establishment: net::ERR_BLOCKED_BY_LOCAL_NETWORK_ACCESS_CHECKS
+  1553  login  log      Firebase auth state changed: No user
+  1557  login  log      Session cookie cleared successfully
+  2169  login  log      Attempting Google sign in
+  2170  login  error    Loading the script 'https://apis.google.com/js/api.js?onload=__iframefcb904517' violates the following Content Security Policy directive: "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.googleapis.com https://*.gstatic.com localhost:* 127.0.0.1:*". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The action has been blocked.
+  2210  login  error    CSP-VIOLATION directive=script-src-elem blocked=https://apis.google.com/js/api.js disposition=enforce
+  2231  login  error    Google sign in error: Firebase: Error (auth/internal-error).

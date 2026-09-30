@@ -7,7 +7,8 @@
 //     do texto). Separa-se: NÓ VELHO POR COMPONENTE = o texto de UI do upload velho (`FRASES_VELHAS`, as do código da
 //     main) que aparece no depois — tem de ser 0; COINCIDÊNCIA DE TEXTO = o resto (dado — o título, o artista —, e a
 //     casca empilhada em A), listada.
-import fs from 'node:fs'
+// I1-PR15 (decisão 2 do encerramento; aval 4): o rastro está em `.gz` — lido por `ler-medicao.mjs`.
+import { lerJson } from '../../../../scripts/gates-web/ler-medicao.mjs'
 import { createHash } from 'node:crypto'
 const h = (t) => createHash('sha256').update(t).digest('hex').slice(0, 12)
 const FRASES_VELHAS = ['Back', 'Upload', 'Add Details', 'Complete', 'Content Type', 'Lyrics', 'Chords', 'Sheet',
@@ -29,7 +30,7 @@ const FRASES_VELHAS = ['Back', 'Upload', 'Add Details', 'Complete', 'Content Typ
 // à parte (`valor gravado`), não como nó velho.
 const VALOR_GRAVADO = new Set([h('Unknown Artist')])
 const velhas = new Map(FRASES_VELHAS.map((t) => [h(t), t]))
-const ler = (p) => JSON.parse(fs.readFileSync(p, 'utf8'))
+const ler = lerJson
 const antes = ler('tests/gates-web/medicoes/casca-efeito/antes/add-content.json')
 const depois = ler(process.argv[2] ?? 'tests/gates-web/medicoes/add-content.json')
 let velhosTotal = 0, gravados = 0, n = 0

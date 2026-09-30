@@ -16,7 +16,6 @@ import { FRASES_LANDING } from "@/components/landing/frases-landing"
 export const metadata: Metadata = {
   title: "Octavia",
   description: FRASES_LANDING["landing.frase"],
-  generator: "v0.dev",
   icons: {
     icon: "/icons/icon-192x192.webp", // Updated path
     apple: "/icons/icon-192x192.webp",

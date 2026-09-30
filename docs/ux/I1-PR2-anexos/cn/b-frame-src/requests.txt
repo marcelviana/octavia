@@ -1,0 +1,36 @@
+   696  login  GET     200   http://localhost:3000/login
+   705  login  GET     200   http://localhost:3000/marcas/octavia-dark.png
+   707  login  GET     200   http://localhost:3000/_next/static/css/app/layout.css
+   742  login  GET     200   http://localhost:3000/_next/static/chunks/app-pages-internals.js
+   746  login  GET     200   http://localhost:3000/_next/static/chunks/webpack.js
+   777  login  GET     200   http://localhost:3000/fontes/Manrope_400Regular.ttf
+   780  login  GET     200   http://localhost:3000/fontes/Manrope_600SemiBold.ttf
+   785  login  GET     200   http://localhost:3000/fontes/Raleway_600SemiBold.ttf
+   894  login  GET     200   http://localhost:3000/_next/static/chunks/main-app.js
+   966  login  GET     200   http://localhost:3000/_next/static/chunks/app/login/page.js
+   967  login  GET     200   http://localhost:3000/_next/static/chunks/app/layout.js
+  1060  login  GET     200   http://localhost:3000/icons/icon-192x192.webp
+  1067  login  GET     200   http://localhost:3000/icons/icon-192x192.webp
+  1118  login  DELETE  FALSO http://localhost:3000/api/auth/session
+  1868  login  GET     200   https://apis.google.com/js/api.js
+  1921  login  GET     200   https://apis.google.com/_/scs/abc-static/_/js/k=gapi.lb.en.gh7qIZtzO5w.O/m=gapi_iframes/rt=j/sv=1/d=1/ed=1/rs=AHpOoo84YKT1RVy0T6hcXi5rH3LooB1WCw/cb=gapi.loaded_0
+  2088  login  GET     200   https://<authDomain>/__/auth/iframe
+  2147  login  GET     200   https://<authDomain>/__/auth/iframe.js
+  2294  popup  GET     200   https://<authDomain>/__/auth/handler
+  2310  login  GET     200   https://identitytoolkit.googleapis.com/v1/projects
+  2316  popup  GET     200   https://<authDomain>/__/auth/experiments.js
+  2350  popup  GET     200   https://<authDomain>/__/auth/handler.js
+  2532  login  GET     200   https://www.googleapis.com/identitytoolkit/v3/relyingparty/getProjectConfig
+  2740  popup  GET     200   https://www.googleapis.com/identitytoolkit/v3/relyingparty/getProjectConfig
+  2766  popup  GET     404   https://<authDomain>/__/firebase/init.json
+  3226  popup  POST    200   https://www.googleapis.com/identitytoolkit/v3/relyingparty/createAuthUri
+  4564  popup  GET     302   https://accounts.google.com/o/oauth2/auth
+  4943  popup  GET     200   https://accounts.google.com/v3/signin/identifier
+  5093  popup  GET     200   https://ssl.gstatic.com/images/branding/googleg/2x/googleg_standard_color_14dp.png
+  5161  popup  GET     200   https://accounts.google.com/_/bscframe
+  5272  popup  GET     204   https://accounts.google.com/generate_204
+ 12075  login  POST    200   http://localhost:3000/__nextjs_original-stack-frames
+ 12080  login  GET     200   http://localhost:3000/__nextjs_font/geist-latin.woff2
+
+# interceptados no navegador
+  1064  DELETE /api/auth/session → 200 falso no navegador

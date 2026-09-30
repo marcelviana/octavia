@@ -116,6 +116,7 @@ As 32 respostas às perguntas da rodada 1, aplicadas na rodada 2, e as 9 dos tok
 - **588** — o **visto** (DESIGN-N2, R2·2) não está no `dados.ts` por nome: o destino é a **PR-4**, que mede pelo desenho; se faltar, entra no pacote a partir do `DESIGN-N2` (catálogo).
 - **589** — **uma forma só** de `garantida`, a do catálogo (`dados.ts`); a de r 8,5 que vem do `DESIGN-N2` é a errata **I1-E3** (§2.2); a PR-4 confere se o N2 já divergia.
 - **590** e **591** — como registradas (origem P).
+- **943** `[Marcel, 2026-09-30]` — **decisão da marca**: o *Entrar com Google* segue o **tema Dark pré-aprovado do Google** (o "G" colorido direto sobre fundo escuro; origem `Theme=Dark, Show text=No, Shape=Square, Platform=Android+Web.svg`), com as cores do nosso tema no lugar de `#131314`/`#8E918F` — o botão secundário da folha (`lineInfo`) sobre o `bg`; o fundo branco é exigência do tema claro, não deste (I1-PR-2, `docs/ux/I1-PR2-anexos/README.md` div. 943).
 
 ## 2 · Erratas
 
