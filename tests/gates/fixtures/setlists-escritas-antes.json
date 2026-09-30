@@ -1,0 +1,21 @@
+{
+ "criar (os cinco campos)": [
+  "POST /api/setlists {\"name\":\"Ensaio de sexta\",\"description\":\"uma linha sobre esta setlist\",\"performance_date\":\"2026-10-03\",\"venue\":\"Blue Note\",\"notes\":\"outras anotações\"}"
+ ],
+ "criar (só o nome)": [
+  "POST /api/setlists {\"name\":\"Ensaio de sexta\",\"description\":null,\"performance_date\":null,\"venue\":null,\"notes\":null}"
+ ],
+ "editar (o nome muda, a descrição sai)": [
+  "PUT /api/setlists/set-show {\"name\":\"Show de sábado\",\"description\":null,\"performance_date\":null,\"venue\":\"Blue Note\",\"notes\":null}"
+ ],
+ "adicionar duas músicas": [
+  "POST /api/setlists/set-show/songs {\"content_id\":\"c-asa\",\"position\":6,\"notes\":\"\"}",
+  "POST /api/setlists/set-show/songs {\"content_id\":\"c-batch2\",\"position\":7,\"notes\":\"\"}"
+ ],
+ "remover uma música (a 2ª linha)": [
+  "DELETE /api/setlists/songs/linha-2"
+ ],
+ "apagar a setlist": [
+  "DELETE /api/setlists/set-solo"
+ ]
+}

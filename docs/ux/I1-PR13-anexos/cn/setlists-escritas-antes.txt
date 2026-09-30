@@ -1,0 +1,31 @@
+$ pnpm exec vitest run tests/gates/i1-setlists-escritas.test.tsx   # sem CN_GRAVAR: confere com a fixture (2 execuções)
+ ✓ |web| tests/gates/i1-setlists-escritas.test.tsx (7 tests | 1 skipped) 1547ms
+     ✓ criar (os cinco campos)  652ms
+ Test Files  1 passed (1)
+      Tests  6 passed | 1 skipped (7)
+ ✓ |web| tests/gates/i1-setlists-escritas.test.tsx (7 tests | 1 skipped) 1623ms
+     ✓ criar (os cinco campos)  792ms
+ Test Files  1 passed (1)
+      Tests  6 passed | 1 skipped (7)
+$ cat tests/gates/fixtures/setlists-escritas-antes.json
+{
+ "criar (os cinco campos)": [
+  "POST /api/setlists {\"name\":\"Ensaio de sexta\",\"description\":\"uma linha sobre esta setlist\",\"performance_date\":\"2026-10-03\",\"venue\":\"Blue Note\",\"notes\":\"outras anotações\"}"
+ ],
+ "criar (só o nome)": [
+  "POST /api/setlists {\"name\":\"Ensaio de sexta\",\"description\":null,\"performance_date\":null,\"venue\":null,\"notes\":null}"
+ ],
+ "editar (o nome muda, a descrição sai)": [
+  "PUT /api/setlists/set-show {\"name\":\"Show de sábado\",\"description\":null,\"performance_date\":null,\"venue\":\"Blue Note\",\"notes\":null}"
+ ],
+ "adicionar duas músicas": [
+  "POST /api/setlists/set-show/songs {\"content_id\":\"c-asa\",\"position\":6,\"notes\":\"\"}",
+  "POST /api/setlists/set-show/songs {\"content_id\":\"c-batch2\",\"position\":7,\"notes\":\"\"}"
+ ],
+ "remover uma música (a 2ª linha)": [
+  "DELETE /api/setlists/songs/linha-2"
+ ],
+ "apagar a setlist": [
+  "DELETE /api/setlists/set-solo"
+ ]
+}

@@ -281,6 +281,26 @@ Se um estado sair NÃO ALCANÇADO, repita só ele: o mesmo comando com `G_FAIXA_
 `--project` da largura — mescla por estado e registra em `rodadasPorEstado` (que a rodada por largura preserva desde a
 div. 843).
 
+## I1-PR13 antes — as setlists velhas, casca-efeito (o executor roda — I1-D37; um comando)
+
+Na árvore `../octavia-i1-pr13`, **no commit 1** (branch `i1/pr13-setlists`; o código do app é o da `main` — o commit 1 só
+acrescenta gate, esperado, testes e instrumento). Perfil de sempre (`~/.octavia-g-faixa-perfil`), contra o `pnpm dev` da
+porta 3000 com o `.env.local` do Marcel. (Na rodada de 2026-09-30 o servidor de pé era o de `../octavia-i1-pr12`, em
+`bd77cd7` — a mesma árvore da `main` `aa772df`; a árvore da PR-13 ainda não tinha `.env.local`, div. 849.)
+
+```bash
+G_FAIXA_BASE_URL=http://localhost:3000 G_FAIXA_PERFIL="$HOME/.octavia-g-faixa-perfil" G_FAIXA_SEM_JANELA=1 G_FAIXA_SUPERFICIES=setlists G_FAIXA_SAIDA=tests/gates-web/medicoes/casca-efeito/antes pnpm exec playwright test -c playwright.g-faixa.config.ts scripts/gates-web/g-faixa-medir.ts
+```
+
+Mede `/setlists` nas três larguras, cinco estados do web velho: `base-lista`, `base-detalhe` (*Show padrão* aberta),
+`base-formulario` (*Create Setlist*), `base-dialogo` (*Delete Setlist*) e `base-picker` (*Add Songs*). Grava
+`tests/gates-web/medicoes/casca-efeito/antes/setlists.json`.
+
+**Tudo fabricado no navegador** (`scripts/gates-web/g-faixa-setlists.ts`): a `GET /api/setlists` (as três setlists da
+folha 8) e a `GET /api/content` (as músicas da folha) — **nenhuma setlist nem content da conta é lido** — e toda escrita a
+`/api/setlists*` (nenhum botão de escrita é clicado; uma que escapasse cairia na barreira: abortada, a rodada reprova).
+Lidos de verdade só a sessão (`/api/profile`, o `securetoken`). **Cota**: ~18 cargas (5 estados × 3 larguras + o controle).
+
 ## O resto
 
 | o quê | comando |

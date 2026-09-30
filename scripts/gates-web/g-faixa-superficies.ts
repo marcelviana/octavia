@@ -17,6 +17,7 @@ import { ESTADOS_CONFIRM, ESTADOS_FORGOT, ESTADOS_LOGIN, ESTADOS_SIGNUP, ESTADOS
 import { ESTADOS_DASH, ESTADOS_LIB } from './g-faixa-lista'
 import { ESTADOS_CONTENT, ESTADOS_CONTENT_EDIT, ID_EDITOR, descobrirPorTipo } from './g-faixa-conteudo'
 import { ESTADOS_UPLOAD, ESTADOS_UPLOAD_BASE } from './g-faixa-upload'
+import { ESTADOS_SETLISTS_BASE } from './g-faixa-setlists'
 
 export interface Estado {
   /** I1-PR6: antes de carregar a rota — rotas fabricadas, o usuário falso (`g-faixa-auth.ts`) */
@@ -71,7 +72,10 @@ export const SUPERFICIES: Superficie[] = [
   // `DASH-vazio`/`DASH-erro` são SSR (inalcançáveis no navegador, provados no Vitest). Zero escrita.
   { id: 'dashboard', rota: '/dashboard', sessao: true, publica: false, folha: '4-content-lista', implementada: true, estados: ESTADOS_DASH },
   { id: 'library', rota: '/library', sessao: true, publica: false, folha: '4-content-lista', implementada: true, estados: ESTADOS_LIB },
-  { id: 'setlists', rota: '/setlists', sessao: true, publica: false, folha: '8-setlists', implementada: false, estados: { base: {} } },
+  // I1-PR13 (commit 1): o "antes" da superfície 8 — os cinco `base-*` do web velho, TUDO fabricado (`g-faixa-setlists.ts`):
+  // as duas leituras com as linhas da folha, toda escrita respondida no navegador. O `base` da I1-PR5 (as setlists REAIS
+  // da conta, `cn-main/` e a `casca-efeito/` da PR-9) sai: nenhuma setlist da conta é lida daqui em diante.
+  { id: 'setlists', rota: '/setlists', sessao: true, publica: false, folha: '8-setlists', implementada: false, estados: ESTADOS_SETLISTS_BASE },
   // I1-PR10: a superfície 5, content visualização, IMPLEMENTADA — os estados da folha `5-content-visualizacao`: o
   // content REAL de cada tipo (SSR, div. 732; decisão 1 do aval) e o ARQUIVO fabricado (`g-faixa-conteudo.ts`).
   // Os quatro vazios, o erro de formato e o de render: inalcançáveis declarados; os dois da I1-E15: sem código.

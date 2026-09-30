@@ -1,0 +1,11 @@
+$ pnpm test   # commit 1: código do app = main; os 3 que reprovam são o CN desta PR (setlists-defeitos)
+ ❯ |web| components/setlists/__tests__/setlists-defeitos.test.tsx (3 tests | 3 failed) 2269ms
+     × (a) remover o bis: o DELETE leva o id da LINHA clicada e só ela sai da tela 670ms
+     × (b) a música adicionada fica com o id que a rota devolveu: removê-la chama esse id 353ms
+     × (c) apagar a setlist já apagada (404): o diálogo fecha, a lista é relida e a tela diz por quê 1244ms
+ FAIL  |web| components/setlists/__tests__/setlists-defeitos.test.tsx > I1-PR13 — os três defeitos de tela das setlists (N2 §10.3.5/.6) > (a) remover o bis: o DELETE leva o id da LINHA clicada e só ela sai da tela
+ FAIL  |web| components/setlists/__tests__/setlists-defeitos.test.tsx > I1-PR13 — os três defeitos de tela das setlists (N2 §10.3.5/.6) > (b) a música adicionada fica com o id que a rota devolveu: removê-la chama esse id
+ FAIL  |web| components/setlists/__tests__/setlists-defeitos.test.tsx > I1-PR13 — os três defeitos de tela das setlists (N2 §10.3.5/.6) > (c) apagar a setlist já apagada (404): o diálogo fecha, a lista é relida e a tela diz por quê
+ Test Files  1 failed | 117 passed | 3 skipped (121)
+      Tests  3 failed | 1143 passed | 58 skipped (1204)
+# exit: 1

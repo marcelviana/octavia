@@ -1,0 +1,65 @@
+# o que sobra de web velho depois das setlists (item 2.9) — medido sobre aa772df
+
+$ node ui-importadores.mjs   # quem importa cada components/ui/*, fora de testes
+components/ui: 35 arquivos
+com importador fora de components/ui HOJE:
+  badge: setlist/setlist-card.tsx, setlist/setlist-details.tsx, setlist/song-selection-dialog.tsx
+  button: setlist-manager.tsx, setlist/setlist-card.tsx, setlist/setlist-details.tsx, setlist/setlist-dialog.tsx, setlist/setlist-list.tsx, setlist/song-selection-dialog.tsx, lib/error-boundary.tsx
+  card: setlist/setlist-card.tsx, setlist/setlist-details.tsx
+  checkbox: setlist/song-selection-dialog.tsx
+  dialog: setlist-manager.tsx, setlist/setlist-dialog.tsx, setlist/song-selection-dialog.tsx
+  input: setlist/setlist-dialog.tsx, setlist/song-selection-dialog.tsx
+  label: setlist/setlist-dialog.tsx
+  scroll-area: setlist/song-selection-dialog.tsx
+  sonner: app/layout.tsx
+  textarea: setlist/setlist-dialog.tsx
+  toast: hooks/use-toast.ts
+com importador fora de components/ui DEPOIS das setlists:
+  button: lib/error-boundary.tsx
+  sonner: app/layout.tsx
+só com importador DENTRO de components/ui:
+sem importador nenhum (24): accordion · alert-dialog · alert · aspect-ratio · avatar · breadcrumb · calendar · collapsible · dropdown-menu · pagination · popover · progress · resizable · select · separator · sheet · skeleton · slider · switch · table · tabs · toaster · toggle · tooltip
+
+$ git grep -l lucide-react (fora de components/ui, docs, apps, packages, testes, scripts)
+components/setlist/setlist-card.tsx
+components/setlist/setlist-details.tsx
+components/setlist/setlist-dialog.tsx
+components/setlist/setlist-list.tsx
+components/setlist/song-selection-dialog.tsx
+lib/error-boundary.tsx
+types/content.ts
+
+$ toasts (chamadas, hook, Toaster), por arquivo
+   1 app/layout.tsx
+   9 components/setlist-manager.tsx
+   1 components/ui/sonner.tsx
+   2 components/ui/toaster.tsx
+   5 hooks/use-toast.ts
+
+$ G-tok (ii) sobre os 44 arquivos de app/ components/ hooks/ lib/ contexts/ types/ (sem rotas de API, sem testes, sem components/ui) que NÃO estão em g-tok-arquivos.txt
+  arquivos: 44 · literais de identidade acusados: 64 · toasts: 0 · imports de ui: 2 · textos examinados: 23 · isentos de inglês (/dev/null): 0 · vocabulário: 133 · isenções: 9
+
+G-tok: REPROVA — 70 ocorrência(s)
+  34 ✗ lib/error-boundary.tsx
+  33 ✗ types/content.ts
+   2 ✗ app/layout.tsx
+   1 ✗ components/auth/aviso-de-sessao.tsx
+  41 cor
+   9 espaçamento
+   6 borda
+   4 inglês, texto JSX
+   3 tamanho de fonte
+   3 tamanho
+   2 import de ui
+   1 valor arbitrário
+   1 raio
+  ✗ app/layout.tsx:27 [cor] "#f59e0b" — use a custom property de app/styles/identidade.css
+  ✗ app/layout.tsx:10 [import de ui] "from \"@/components/ui/sonner\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/auth/aviso-de-sessao.tsx:38 [espaçamento] "p-2" — use a custom property de app/styles/identidade.css
+  ✗ lib/error-boundary.tsx:59 [inglês, texto JSX] "Something went wrong" ← termo "something went wrong"
+  ✗ lib/error-boundary.tsx:67 [inglês, texto JSX] "Error Details (Development Only)" ← termo "details"
+  ✗ lib/error-boundary.tsx:82 [inglês, texto JSX] "Try again" ← termo "try again"
+  ✗ lib/error-boundary.tsx:89 [inglês, texto JSX] "Reload page" ← termo "reload"
+
+$ sem importador (fora de testes)
+contexts/sidebar-context.tsx · hooks/use-navigation-actions.ts (a casca velha, I1-PR-9) · types/content.ts: getContentTypeIcon, getContentTypeColors (div. 839)

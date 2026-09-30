@@ -1,0 +1,8 @@
+$ pnpm exec tsx scripts/gates-web/g-faixa-esperado.ts 8-setlists
+8-setlists: 130 caixa(s) de campo ancorada(s) · 21 seções · 20 com C e B · nós C 888 · nós B 888 → tests/gates-web/esperado/8-setlists.json
+  ✗ Tokens: sem a moldura C B
+# exit: 0
+
+$ # controle: a folha 7 re-medida com o mesmo script sai byte a byte igual
+7-upload: 170 caixa(s) de campo ancorada(s) · 21 seções · 20 com C e B · nós C 507 · nós B 507 → tests/gates-web/esperado/7-upload.json
+cmp 7-upload.json: iguais

@@ -1,0 +1,569 @@
+$ node scripts/gates-web/g-tok.mjs --so-arquivos   # a lista com os 13 arquivos das setlists, sobre o código da main (aa772df)
+## (ii) arquivos redesenhados — scripts/gates-web/g-tok-arquivos.txt
+  ✗ components/setlists-page-client.tsx:32 [cor] "#fffcf7" — use a custom property de app/styles/identidade.css
+  ✗ components/setlists-page-client.tsx:34 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlists-page-client.tsx:34 [cor] "#F2EDE5" — use a custom property de app/styles/identidade.css
+  ✗ components/setlists-page-client.tsx:35 [cor] "#1A1F36" — use a custom property de app/styles/identidade.css
+  ✗ components/setlists-page-client.tsx:49 [cor] "#fffcf7" — use a custom property de app/styles/identidade.css
+  ✗ components/setlists-page-client.tsx:13 [cor] "border-amber-600" — use a custom property de app/styles/identidade.css
+  ✗ components/setlists-page-client.tsx:14 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/setlists-page-client.tsx:13 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlists-page-client.tsx:35 [espaçamento] "mt-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlists-page-client.tsx:13 [tamanho] "h-8" — use a custom property de app/styles/identidade.css
+  ✗ components/setlists-page-client.tsx:13 [tamanho] "w-8" — use a custom property de app/styles/identidade.css
+  ✗ components/setlists-page-client.tsx:34 [tamanho] "w-16" — use a custom property de app/styles/identidade.css
+  ✗ components/setlists-page-client.tsx:34 [tamanho] "h-16" — use a custom property de app/styles/identidade.css
+  ✗ components/setlists-page-client.tsx:13 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ components/setlists-page-client.tsx:34 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ components/setlists-page-client.tsx:13 [borda] "border-b-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlists-page-client.tsx:34 [borda] "border-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlists-page-client.tsx:11 [valor arbitrário] "min-h-[400px]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlists-page-client.tsx:32 [valor arbitrário] "bg-[#fffcf7]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlists-page-client.tsx:34 [valor arbitrário] "border-t-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlists-page-client.tsx:34 [valor arbitrário] "border-[#F2EDE5]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlists-page-client.tsx:35 [valor arbitrário] "text-[#1A1F36]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlists-page-client.tsx:49 [valor arbitrário] "bg-[#fffcf7]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlists-page-client.tsx:14 [inglês, texto JSX] "Loading setlists..." ← termo "loading"
+  ✗ components/setlists-page-client.tsx:35 [inglês, texto JSX] "Loading your setlists..." ← termo "loading"
+  ✗ components/setlist-manager.tsx:227 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist-manager.tsx:227 [cor] "#F2EDE5" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist-manager.tsx:228 [cor] "#1A1F36" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist-manager.tsx:269 [cor] "#F8F9FA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist-manager.tsx:269 [cor] "#E8E3DA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist-manager.tsx:270 [cor] "#6B7280" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist-manager.tsx:270 [tamanho de fonte] "text-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist-manager.tsx:228 [espaçamento] "mt-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist-manager.tsx:239 [espaçamento] "p-6" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist-manager.tsx:240 [espaçamento] "gap-6" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist-manager.tsx:242 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist-manager.tsx:256 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist-manager.tsx:227 [tamanho] "w-16" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist-manager.tsx:227 [tamanho] "h-16" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist-manager.tsx:239 [tamanho] "max-w-7xl" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist-manager.tsx:227 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist-manager.tsx:269 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist-manager.tsx:227 [borda] "border-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist-manager.tsx:269 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist-manager.tsx:227 [valor arbitrário] "border-t-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist-manager.tsx:227 [valor arbitrário] "border-[#F2EDE5]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist-manager.tsx:228 [valor arbitrário] "text-[#1A1F36]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist-manager.tsx:240 [valor arbitrário] "h-[calc(100vh-8rem)]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist-manager.tsx:269 [valor arbitrário] "bg-[#F8F9FA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist-manager.tsx:269 [valor arbitrário] "border-[#E8E3DA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist-manager.tsx:270 [valor arbitrário] "text-[#6B7280]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist-manager.tsx:29 [import de ui] "from \"@/components/ui/dialog\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/setlist-manager.tsx:30 [import de ui] "from \"@/components/ui/button\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/setlist-manager.tsx:93 [toast] "toast(" — nenhum toast entra (I1-D26): a falha é a LinhaDeAviso
+  ✗ components/setlist-manager.tsx:112 [toast] "toast(" — nenhum toast entra (I1-D26): a falha é a LinhaDeAviso
+  ✗ components/setlist-manager.tsx:117 [toast] "toast(" — nenhum toast entra (I1-D26): a falha é a LinhaDeAviso
+  ✗ components/setlist-manager.tsx:141 [toast] "toast(" — nenhum toast entra (I1-D26): a falha é a LinhaDeAviso
+  ✗ components/setlist-manager.tsx:144 [toast] "toast(" — nenhum toast entra (I1-D26): a falha é a LinhaDeAviso
+  ✗ components/setlist-manager.tsx:181 [toast] "toast(" — nenhum toast entra (I1-D26): a falha é a LinhaDeAviso
+  ✗ components/setlist-manager.tsx:186 [toast] "toast(" — nenhum toast entra (I1-D26): a falha é a LinhaDeAviso
+  ✗ components/setlist-manager.tsx:211 [toast] "toast(" — nenhum toast entra (I1-D26): a falha é a LinhaDeAviso
+  ✗ components/setlist-manager.tsx:214 [toast] "toast(" — nenhum toast entra (I1-D26): a falha é a LinhaDeAviso
+  ✗ components/setlist-manager.tsx:228 [inglês, texto JSX] "Loading..." ← termo "loading"
+  ✗ components/setlist-manager.tsx:270 [inglês, texto JSX] "Select a setlist to view its details" ← termo "details"
+  ✗ components/setlist-manager.tsx:306 [inglês, texto JSX] "Delete Setlist" ← termo "delete"
+  ✗ components/setlist-manager.tsx:312 [inglês, texto JSX] "Cancel" ← termo "cancel"
+  ✗ components/setlist-manager.tsx:315 [inglês, texto JSX] "Delete" ← termo "delete"
+  ✗ components/setlist/setlist-list.tsx:48 [cor] "#E8E3DA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:65 [cor] "#E8E3DA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:65 [cor] "#1A1F36" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:65 [cor] "#F8F9FA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:77 [cor] "#F8F9FA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:77 [cor] "#E8E3DA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:78 [cor] "#6B7280" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:80 [cor] "#1A1F36" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:81 [cor] "#6B7280" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:87 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:87 [cor] "#1E5BB8" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:101 [cor] "#1A1F36" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:102 [cor] "#6B7280" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:108 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:108 [cor] "#1E5BB8" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:48 [cor] "bg-gray-100" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:58 [cor] "text-red-600" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:87 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:108 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:59 [tamanho de fonte] "text-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:60 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:80 [tamanho de fonte] "text-xl" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:101 [tamanho de fonte] "text-2xl" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:44 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:57 [espaçamento] "py-12" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:58 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:75 [espaçamento] "py-12" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:76 [espaçamento] "mb-6" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:77 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:80 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:89 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:97 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:102 [espaçamento] "mt-1" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:110 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:116 [espaçamento] "gap-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:48 [tamanho] "h-48" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:77 [tamanho] "w-20" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:77 [tamanho] "h-20" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:78 [tamanho] "w-8" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:78 [tamanho] "h-8" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:81 [tamanho] "max-w-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:89 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:89 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:110 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:110 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:48 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:77 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:48 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:77 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:48 [valor arbitrário] "border-[#E8E3DA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:65 [valor arbitrário] "border-[#E8E3DA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:65 [valor arbitrário] "text-[#1A1F36]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:65 [valor arbitrário] "bg-[#F8F9FA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:77 [valor arbitrário] "bg-[#F8F9FA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:77 [valor arbitrário] "border-[#E8E3DA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:78 [valor arbitrário] "text-[#6B7280]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:80 [valor arbitrário] "text-[#1A1F36]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:81 [valor arbitrário] "text-[#6B7280]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:87 [valor arbitrário] "bg-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:87 [valor arbitrário] "bg-[#1E5BB8]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:101 [valor arbitrário] "text-[#1A1F36]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:102 [valor arbitrário] "text-[#6B7280]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:108 [valor arbitrário] "bg-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:108 [valor arbitrário] "bg-[#1E5BB8]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-list.tsx:3 [import de ui] "from \"@/components/ui/button\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/setlist/setlist-list.tsx:59 [inglês, texto JSX] "Error loading setlists" ← termo "loading"
+  ✗ components/setlist/setlist-list.tsx:66 [inglês, texto JSX] "Try Again" ← termo "try again"
+  ✗ components/setlist/setlist-list.tsx:81 [inglês, texto JSX] "Create your first setlist to organize songs for your performances." ← termo "create"
+  ✗ components/setlist/setlist-list.tsx:89 [inglês, texto JSX] "Create Your First Setlist" ← termo "create"
+  ✗ components/setlist/setlist-list.tsx:101 [inglês, texto JSX] "Your Setlists" ← termo "your"
+  ✗ components/setlist/setlist-list.tsx:110 [inglês, texto JSX] "Create Setlist" ← termo "create"
+  ✗ components/setlist/setlist-card.tsx:72 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:72 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:73 [cor] "#E8E3DA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:73 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:80 [cor] "#1A1F36" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:80 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:83 [cor] "#F39C12" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:83 [cor] "#F39C12" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:86 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:90 [cor] "#6B7280" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:100 [cor] "#6B7280" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:100 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:100 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:112 [cor] "#6B7280" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:112 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:112 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:124 [cor] "#6B7280" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:143 [cor] "#F8F9FA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:143 [cor] "#6B7280" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:143 [cor] "#E8E3DA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:150 [cor] "#F8F9FA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:150 [cor] "#6B7280" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:150 [cor] "#E8E3DA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:167 [cor] "#6B7280" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:124 [cor] "text-red-600" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:124 [cor] "bg-red-50" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:158 [cor] "bg-green-50" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:158 [cor] "text-green-700" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:158 [cor] "border-green-200" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:80 [tamanho de fonte] "text-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:90 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:143 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:150 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:158 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:167 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:77 [espaçamento] "pb-3" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:80 [espaçamento] "gap-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:90 [espaçamento] "mt-1" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:95 [espaçamento] "gap-1" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:95 [espaçamento] "ml-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:138 [espaçamento] "space-y-3" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:140 [espaçamento] "gap-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:145 [espaçamento] "mr-1" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:152 [espaçamento] "mr-1" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:168 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:172 [espaçamento] "mx-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:83 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:83 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:86 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:86 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:100 [tamanho] "h-7" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:100 [tamanho] "w-7" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:106 [tamanho] "w-3.5" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:106 [tamanho] "h-3.5" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:112 [tamanho] "h-7" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:112 [tamanho] "w-7" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:119 [tamanho] "w-3.5" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:119 [tamanho] "h-3.5" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:124 [tamanho] "h-7" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:124 [tamanho] "w-7" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:131 [tamanho] "w-3.5" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:131 [tamanho] "h-3.5" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:145 [tamanho] "w-3" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:145 [tamanho] "h-3" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:152 [tamanho] "w-3" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:152 [tamanho] "h-3" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:168 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:168 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:70 [valor arbitrário] "border-[1px]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:72 [valor arbitrário] "border-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:72 [valor arbitrário] "from-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:73 [valor arbitrário] "border-[#E8E3DA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:73 [valor arbitrário] "border-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:80 [valor arbitrário] "text-[#1A1F36]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:80 [valor arbitrário] "text-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:83 [valor arbitrário] "fill-[#F39C12]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:83 [valor arbitrário] "text-[#F39C12]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:86 [valor arbitrário] "text-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:90 [valor arbitrário] "text-[#6B7280]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:100 [valor arbitrário] "text-[#6B7280]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:100 [valor arbitrário] "text-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:100 [valor arbitrário] "bg-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:112 [valor arbitrário] "text-[#6B7280]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:112 [valor arbitrário] "text-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:112 [valor arbitrário] "bg-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:124 [valor arbitrário] "text-[#6B7280]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:143 [valor arbitrário] "bg-[#F8F9FA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:143 [valor arbitrário] "text-[#6B7280]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:143 [valor arbitrário] "border-[#E8E3DA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:150 [valor arbitrário] "bg-[#F8F9FA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:150 [valor arbitrário] "text-[#6B7280]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:150 [valor arbitrário] "border-[#E8E3DA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:167 [valor arbitrário] "text-[#6B7280]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-card.tsx:2 [import de ui] "from \"@/components/ui/card\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/setlist/setlist-card.tsx:3 [import de ui] "from \"@/components/ui/button\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/setlist/setlist-card.tsx:4 [import de ui] "from \"@/components/ui/badge\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/setlist/setlist-card.tsx:65 [inglês, texto JSX] "new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)\n\n  return (" ← termo "new"
+  ✗ components/setlist/setlist-card.tsx:159 [inglês, texto JSX] "Recent" ← termo "recent"
+  ✗ components/setlist/setlist-card.tsx:117 [inglês, atributo] "Edit setlist" ← termo "edit"
+  ✗ components/setlist/setlist-card.tsx:129 [inglês, atributo] "Delete setlist" ← termo "delete"
+  ✗ components/setlist/setlist-details.tsx:116 [cor] "#1A1F36" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:123 [cor] "#6B7280" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:128 [cor] "#6B7280" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:158 [cor] "#E8E3DA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:158 [cor] "#1A1F36" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:158 [cor] "#F8F9FA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:172 [cor] "#6B7280" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:173 [cor] "#1A1F36" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:174 [cor] "#6B7280" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:179 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:179 [cor] "#1E5BB8" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:189 [cor] "#1A1F36" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:194 [cor] "#E8E3DA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:194 [cor] "#1A1F36" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:194 [cor] "#F8F9FA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:213 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:213 [cor] "#E8E3DA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:213 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:223 [cor] "#6B7280" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:227 [cor] "#F8F9FA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:227 [cor] "#1A1F36" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:235 [cor] "#1A1F36" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:239 [cor] "#6B7280" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:245 [cor] "#6B7280" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:246 [cor] "#6B7280" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:265 [cor] "#6B7280" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:45 [cor] "bg-green-100" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:45 [cor] "text-green-800" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:47 [cor] "bg-purple-100" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:47 [cor] "text-purple-800" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:49 [cor] "bg-blue-100" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:49 [cor] "text-blue-800" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:51 [cor] "bg-orange-100" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:51 [cor] "text-orange-800" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:53 [cor] "bg-gray-100" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:53 [cor] "text-gray-800" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:179 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:265 [cor] "text-red-600" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:265 [cor] "bg-red-50" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:116 [tamanho de fonte] "text-xl" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:123 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:128 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:173 [tamanho de fonte] "text-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:227 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:239 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:246 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:256 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:113 [espaçamento] "pb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:116 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:121 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:128 [espaçamento] "gap-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:131 [espaçamento] "mr-1" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:137 [espaçamento] "mr-1" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:142 [espaçamento] "mr-1" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:146 [espaçamento] "mr-1" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:153 [espaçamento] "gap-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:153 [espaçamento] "ml-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:160 [espaçamento] "mr-1" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:172 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:173 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:174 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:181 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:187 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:188 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:196 [espaçamento] "mr-1" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:201 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:212 [espaçamento] "gap-3" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:212 [espaçamento] "p-3" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:244 [espaçamento] "mt-1" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:245 [espaçamento] "mr-1" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:253 [espaçamento] "gap-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:253 [espaçamento] "ml-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:131 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:131 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:137 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:137 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:142 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:142 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:146 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:146 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:160 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:160 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:172 [tamanho] "w-12" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:172 [tamanho] "h-12" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:181 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:181 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:196 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:196 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:223 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:223 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:227 [tamanho] "w-8" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:227 [tamanho] "h-8" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:245 [tamanho] "w-3" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:245 [tamanho] "h-3" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:265 [tamanho] "h-7" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:265 [tamanho] "w-7" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:269 [tamanho] "w-3.5" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:269 [tamanho] "h-3.5" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:212 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:227 [raio] "rounded-full" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:212 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:116 [valor arbitrário] "text-[#1A1F36]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:123 [valor arbitrário] "text-[#6B7280]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:128 [valor arbitrário] "text-[#6B7280]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:158 [valor arbitrário] "border-[#E8E3DA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:158 [valor arbitrário] "text-[#1A1F36]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:158 [valor arbitrário] "bg-[#F8F9FA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:172 [valor arbitrário] "text-[#6B7280]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:173 [valor arbitrário] "text-[#1A1F36]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:174 [valor arbitrário] "text-[#6B7280]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:179 [valor arbitrário] "bg-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:179 [valor arbitrário] "bg-[#1E5BB8]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:189 [valor arbitrário] "text-[#1A1F36]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:194 [valor arbitrário] "border-[#E8E3DA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:194 [valor arbitrário] "text-[#1A1F36]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:194 [valor arbitrário] "bg-[#F8F9FA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:213 [valor arbitrário] "border-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:213 [valor arbitrário] "border-[#E8E3DA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:213 [valor arbitrário] "border-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:223 [valor arbitrário] "text-[#6B7280]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:227 [valor arbitrário] "bg-[#F8F9FA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:227 [valor arbitrário] "text-[#1A1F36]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:235 [valor arbitrário] "text-[#1A1F36]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:239 [valor arbitrário] "text-[#6B7280]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:245 [valor arbitrário] "text-[#6B7280]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:246 [valor arbitrário] "text-[#6B7280]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:265 [valor arbitrário] "text-[#6B7280]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-details.tsx:2 [import de ui] "from \"@/components/ui/card\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/setlist/setlist-details.tsx:3 [import de ui] "from \"@/components/ui/button\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/setlist/setlist-details.tsx:4 [import de ui] "from \"@/components/ui/badge\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/setlist/setlist-details.tsx:160 [inglês, texto JSX] "Edit" ← termo "edit"
+  ✗ components/setlist/setlist-details.tsx:173 [inglês, texto JSX] "No songs yet" ← termo "songs"
+  ✗ components/setlist/setlist-details.tsx:174 [inglês, texto JSX] "Add songs from your library to build this setlist." ← termo "library"
+  ✗ components/setlist/setlist-details.tsx:181 [inglês, texto JSX] "Add Songs" ← termo "songs"
+  ✗ components/setlist/setlist-details.tsx:189 [inglês, texto JSX] "Songs" ← termo "songs"
+  ✗ components/setlist/setlist-details.tsx:196 [inglês, texto JSX] "Add Songs" ← termo "songs"
+  ✗ components/setlist/setlist-details.tsx:267 [inglês, atributo] "Remove song" ← termo "remove"
+  ✗ components/setlist/setlist-dialog.tsx:109 [cor] "#1A1F36" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:122 [cor] "#1A1F36" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:130 [cor] "#E8E3DA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:130 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:136 [cor] "#1A1F36" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:144 [cor] "#E8E3DA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:144 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:151 [cor] "#1A1F36" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:159 [cor] "#E8E3DA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:159 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:164 [cor] "#1A1F36" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:172 [cor] "#E8E3DA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:172 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:178 [cor] "#1A1F36" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:186 [cor] "#E8E3DA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:186 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:198 [cor] "#E8E3DA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:198 [cor] "#1A1F36" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:198 [cor] "#F8F9FA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:205 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:205 [cor] "#1E5BB8" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:123 [cor] "text-red-500" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:205 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:120 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:120 [espaçamento] "py-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:121 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:135 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:149 [espaçamento] "gap-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:150 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:163 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:177 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:207 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:207 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:207 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:106 [valor arbitrário] "max-w-[500px]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:109 [valor arbitrário] "text-[#1A1F36]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:122 [valor arbitrário] "text-[#1A1F36]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:130 [valor arbitrário] "border-[#E8E3DA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:130 [valor arbitrário] "border-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:136 [valor arbitrário] "text-[#1A1F36]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:144 [valor arbitrário] "border-[#E8E3DA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:144 [valor arbitrário] "border-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:151 [valor arbitrário] "text-[#1A1F36]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:159 [valor arbitrário] "border-[#E8E3DA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:159 [valor arbitrário] "border-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:164 [valor arbitrário] "text-[#1A1F36]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:172 [valor arbitrário] "border-[#E8E3DA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:172 [valor arbitrário] "border-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:178 [valor arbitrário] "text-[#1A1F36]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:186 [valor arbitrário] "border-[#E8E3DA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:186 [valor arbitrário] "border-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:198 [valor arbitrário] "border-[#E8E3DA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:198 [valor arbitrário] "text-[#1A1F36]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:198 [valor arbitrário] "bg-[#F8F9FA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:205 [valor arbitrário] "bg-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:205 [valor arbitrário] "bg-[#1E5BB8]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/setlist-dialog.tsx:2 [import de ui] "from \"@/components/ui/button\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/setlist/setlist-dialog.tsx:3 [import de ui] "from \"@/components/ui/input\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/setlist/setlist-dialog.tsx:4 [import de ui] "from \"@/components/ui/label\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/setlist/setlist-dialog.tsx:5 [import de ui] "from \"@/components/ui/textarea\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/setlist/setlist-dialog.tsx:13 [import de ui] "from \"@/components/ui/dialog\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/setlist/setlist-dialog.tsx:122 [inglês, texto JSX] "Setlist Name" ← termo "name"
+  ✗ components/setlist/setlist-dialog.tsx:136 [inglês, texto JSX] "Description" ← termo "description"
+  ✗ components/setlist/setlist-dialog.tsx:178 [inglês, texto JSX] "Notes" ← termo "notes"
+  ✗ components/setlist/setlist-dialog.tsx:199 [inglês, texto JSX] "Cancel" ← termo "cancel"
+  ✗ components/setlist/setlist-dialog.tsx:143 [inglês, atributo] "Brief description of this setlist..." ← termo "description"
+  ✗ components/setlist/setlist-dialog.tsx:171 [inglês, atributo] "e.g., The Blue Note" ← termo "the"
+  ✗ components/setlist/setlist-dialog.tsx:185 [inglês, atributo] "Any additional notes about this setlist..." ← termo "notes"
+  ✗ components/setlist/song-selection-dialog.tsx:122 [cor] "#1A1F36" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:131 [cor] "#6B7280" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:136 [cor] "#E8E3DA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:136 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:142 [cor] "#E8E3DA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:148 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:148 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:153 [cor] "#1A1F36" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:164 [cor] "#6B7280" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:165 [cor] "#6B7280" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:169 [cor] "#6B7280" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:170 [cor] "#1A1F36" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:173 [cor] "#6B7280" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:190 [cor] "#F8F9FA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:192 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:192 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:193 [cor] "#E8E3DA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:205 [cor] "#1A1F36" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:209 [cor] "#6B7280" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:232 [cor] "#E8E3DA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:237 [cor] "#E8E3DA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:237 [cor] "#1A1F36" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:237 [cor] "#F8F9FA" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:244 [cor] "#2E7CE4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:244 [cor] "#1E5BB8" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:39 [cor] "bg-green-100" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:39 [cor] "text-green-800" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:41 [cor] "bg-purple-100" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:41 [cor] "text-purple-800" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:43 [cor] "bg-blue-100" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:43 [cor] "text-blue-800" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:45 [cor] "bg-orange-100" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:45 [cor] "text-orange-800" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:47 [cor] "bg-gray-100" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:47 [cor] "text-gray-800" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:244 [cor] "text-white" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:153 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:170 [tamanho de fonte] "text-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:209 [tamanho de fonte] "text-sm" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:217 [tamanho de fonte] "text-xs" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:121 [espaçamento] "px-6" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:121 [espaçamento] "pt-6" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:121 [espaçamento] "pb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:128 [espaçamento] "space-y-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:128 [espaçamento] "px-6" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:131 [espaçamento] "left-3" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:131 [espaçamento] "top-1" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:136 [espaçamento] "pl-10" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:142 [espaçamento] "space-x-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:142 [espaçamento] "py-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:161 [espaçamento] "-mx-6" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:161 [espaçamento] "px-6" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:163 [espaçamento] "py-8" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:165 [espaçamento] "ml-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:168 [espaçamento] "py-8" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:169 [espaçamento] "mb-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:170 [espaçamento] "mb-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:181 [espaçamento] "space-y-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:190 [espaçamento] "space-x-3" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:190 [espaçamento] "p-3" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:214 [espaçamento] "space-x-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:214 [espaçamento] "ml-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:232 [espaçamento] "px-6" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:232 [espaçamento] "py-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:246 [espaçamento] "mr-2" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:131 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:131 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:164 [tamanho] "w-6" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:164 [tamanho] "h-6" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:169 [tamanho] "w-12" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:169 [tamanho] "h-12" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:246 [tamanho] "w-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:246 [tamanho] "h-4" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:190 [raio] "rounded-lg" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:142 [borda] "border-b" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:190 [borda] "border" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:232 [borda] "border-t" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:120 [valor arbitrário] "max-w-[600px]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:120 [valor arbitrário] "h-[80vh]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:122 [valor arbitrário] "text-[#1A1F36]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:131 [valor arbitrário] "text-[#6B7280]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:136 [valor arbitrário] "border-[#E8E3DA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:136 [valor arbitrário] "border-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:142 [valor arbitrário] "border-[#E8E3DA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:148 [valor arbitrário] "bg-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:148 [valor arbitrário] "border-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:153 [valor arbitrário] "text-[#1A1F36]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:164 [valor arbitrário] "text-[#6B7280]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:165 [valor arbitrário] "text-[#6B7280]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:169 [valor arbitrário] "text-[#6B7280]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:170 [valor arbitrário] "text-[#1A1F36]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:173 [valor arbitrário] "text-[#6B7280]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:190 [valor arbitrário] "bg-[#F8F9FA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:192 [valor arbitrário] "border-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:192 [valor arbitrário] "bg-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:193 [valor arbitrário] "border-[#E8E3DA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:205 [valor arbitrário] "text-[#1A1F36]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:209 [valor arbitrário] "text-[#6B7280]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:232 [valor arbitrário] "border-[#E8E3DA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:237 [valor arbitrário] "border-[#E8E3DA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:237 [valor arbitrário] "text-[#1A1F36]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:237 [valor arbitrário] "bg-[#F8F9FA]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:244 [valor arbitrário] "bg-[#2E7CE4]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:244 [valor arbitrário] "bg-[#1E5BB8]" — use a custom property de app/styles/identidade.css
+  ✗ components/setlist/song-selection-dialog.tsx:2 [import de ui] "from \"@/components/ui/button\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/setlist/song-selection-dialog.tsx:3 [import de ui] "from \"@/components/ui/input\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/setlist/song-selection-dialog.tsx:4 [import de ui] "from \"@/components/ui/checkbox\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/setlist/song-selection-dialog.tsx:5 [import de ui] "from \"@/components/ui/scroll-area\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/setlist/song-selection-dialog.tsx:6 [import de ui] "from \"@/components/ui/badge\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/setlist/song-selection-dialog.tsx:14 [import de ui] "from \"@/components/ui/dialog\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ components/setlist/song-selection-dialog.tsx:122 [inglês, texto JSX] "Add Songs to Setlist" ← termo "songs"
+  ✗ components/setlist/song-selection-dialog.tsx:123 [inglês, texto JSX] "Select songs from your library to add to this setlist." ← termo "library"
+  ✗ components/setlist/song-selection-dialog.tsx:165 [inglês, texto JSX] "Loading songs..." ← termo "loading"
+  ✗ components/setlist/song-selection-dialog.tsx:238 [inglês, texto JSX] "Cancel" ← termo "cancel"
+  ✗ components/setlist/song-selection-dialog.tsx:133 [inglês, atributo] "Search by title, artist, or content type..." ← termo "content"
+  ✗ hooks/use-setlist-data.ts:22 [inglês, texto JSX] "content: Content[]\n  setContent: React.Dispatch" ← termo "content"
+  ✗ hooks/use-toast.ts:9 [import de ui] "from \"@/components/ui/toast\"" — arquivo redesenhado não importa @/components/ui/* (decisão 3)
+  ✗ hooks/use-toast.ts:145 [toast] "toast(" — nenhum toast entra (I1-D26): a falha é a LinhaDeAviso
+  ✗ hooks/use-toast.ts:174 [toast] "useToast" — nenhum toast entra (I1-D26): a falha é a LinhaDeAviso
+  ✗ hooks/use-toast.ts:194 [toast] "useToast" — nenhum toast entra (I1-D26): a falha é a LinhaDeAviso
+  arquivos: 120 · literais de identidade acusados: 493 · toasts: 12 · imports de ui: 21 · textos examinados: 60 · isentos de inglês (scripts/gates-web/g-tok-sem-ingles.txt): 1 · vocabulário: 133 · isenções: 9
+
+G-tok: REPROVA — 563 ocorrência(s)
+# exit: 1

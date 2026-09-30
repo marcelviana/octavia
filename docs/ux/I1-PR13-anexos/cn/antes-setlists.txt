@@ -1,0 +1,38 @@
+$ G_FAIXA_BASE_URL=http://localhost:3000 G_FAIXA_PERFIL="$HOME/.octavia-g-faixa-perfil" G_FAIXA_SEM_JANELA=1 G_FAIXA_SUPERFICIES=setlists G_FAIXA_SAIDA=tests/gates-web/medicoes/casca-efeito/antes pnpm exec playwright test -c playwright.g-faixa.config.ts scripts/gates-web/g-faixa-medir.ts   # 13:45Z, 3 passed (1.2m)
+$ node resumo-antes.mjs tests/gates-web/medicoes/casca-efeito/antes/setlists.json
+rodada 2026-09-30T13:45:13.395Z · commit aa772dfd480e79f6e3e69d1178ec9353ff19d968+sujo · base http://localhost:3000 · chromium 140.0.7339.16
+base-lista
+  1138: nós 30 · scrollWidth 1138/1138 · (e) 0 · (b) 0 · (d′) 0
+  711: nós 30 · scrollWidth 711/711 · (e) 0 · (b) 0 · (d′) 0
+  411: nós 30 · scrollWidth 411/411 · (e) 0 · (b) 0 · (d′) 2
+base-detalhe
+  1138: nós 68 · scrollWidth 1138/1138 · (e) 0 · (b) 0 · (d′) 0
+  711: nós 68 · scrollWidth 711/711 · (e) 0 · (b) 0 · (d′) 0
+  411: nós 68 · scrollWidth 411/411 · (e) 0 · (b) 6 · (d′) 3
+    (b) 411 conteúdo cortado no próprio nó heading:4147d54cd0d5#1
+    (b) 411 conteúdo cortado no próprio nó heading:21450a82b38f#1
+    (b) 411 conteúdo cortado no próprio nó heading:8f67a426982d#1
+    (b) 411 conteúdo cortado no próprio nó texto:3e6a67c4410c#1
+    (b) 411 conteúdo cortado no próprio nó heading:a63ccd7780c8#1
+    (b) 411 conteúdo cortado no próprio nó heading:6e00802a3a4c#1
+base-formulario
+  1138: nós 46 · scrollWidth 1138/1138 · (e) 0 · (b) 0 · (d′) 0
+  711: nós 46 · scrollWidth 711/711 · (e) 0 · (b) 0 · (d′) 0
+  411: nós 46 · scrollWidth 411/411 · (e) 0 · (b) 0 · (d′) 4
+base-dialogo
+  1138: nós 35 · scrollWidth 1138/1138 · (e) 0 · (b) 0 · (d′) 0
+  711: nós 35 · scrollWidth 711/711 · (e) 0 · (b) 0 · (d′) 0
+  411: nós 35 · scrollWidth 411/411 · (e) 0 · (b) 0 · (d′) 2
+base-picker
+  1138: nós 90 · scrollWidth 1138/1138 · (e) 0 · (b) 0 · (d′) 0
+  711: nós 90 · scrollWidth 711/711 · (e) 0 · (b) 0 · (d′) 0
+  411: nós 90 · scrollWidth 411/411 · (e) 0 · (b) 6 · (d′) 3
+    (b) 411 conteúdo cortado no próprio nó heading:4147d54cd0d5#1
+    (b) 411 conteúdo cortado no próprio nó heading:21450a82b38f#1
+    (b) 411 conteúdo cortado no próprio nó heading:8f67a426982d#1
+    (b) 411 conteúdo cortado no próprio nó texto:3e6a67c4410c#1
+    (b) 411 conteúdo cortado no próprio nó heading:a63ccd7780c8#1
+    (b) 411 conteúdo cortado no próprio nó heading:6e00802a3a4c#1
+1138 requests a /api: {"GET /api/health → 200":2,"POST /api/auth/session → FALHA":1,"POST /api/auth/session → 200":5,"GET /api/profile → 200":5,"GET /api/setlists → fabricado 200":5,"GET /api/content → fabricado 200":5} · prodAbortados 0 · outros hosts {"identitytoolkit.googleapis.com":7,"securetoken.googleapis.com":5}
+711 requests a /api: {"GET /api/health → 200":2,"POST /api/auth/session → 200":6,"GET /api/profile → FALHA":1,"GET /api/profile → 200":5,"GET /api/setlists → fabricado 200":5,"GET /api/content → fabricado 200":5} · prodAbortados 0 · outros hosts {"identitytoolkit.googleapis.com":7,"securetoken.googleapis.com":5}
+411 requests a /api: {"GET /api/health → 200":2,"POST /api/auth/session → 200":6,"GET /api/profile → 200":6,"GET /api/setlists → fabricado 200":5,"GET /api/content → fabricado 200":5} · prodAbortados 0 · outros hosts {"identitytoolkit.googleapis.com":7,"securetoken.googleapis.com":5}
