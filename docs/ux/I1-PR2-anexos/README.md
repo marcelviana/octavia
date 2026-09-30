@@ -8,14 +8,14 @@ Bloco **I1 — identidade**. Branch `i1/pr2-google`, árvore `../octavia-i1-pr2`
 aberta — o revisor pulou da PR-1 para a PR-3. Ela fecha a **H-I1-3**: o *Entrar com Google* morria no navegador, pela
 CSP e pelo COOP, antes de qualquer coisa do client OAuth. **O console do Google não mudou.**
 
-Convenções: `[medido]` = saída colada em `cn/`; divergências **933–942**. Zero prod, zero login do executor, zero
+Convenções: `[medido]` = saída colada em `cn/`; divergências **933–943**. Zero prod, zero login do executor, zero
 `.env*` aberto (o `.env.local` do Marcel copiado sem abrir; o `next dev` o carrega).
 
 | commit | o quê |
 |---|---|
 | `1fbdc12` | **o gate**: CN `tests/gates-web/google-csp.cn.ts` reprovando na `main` + a medição diretiva a diretiva (`medir-diretivas.ts`, `cn/`) |
 | `c134f7d` | **o conserto**: as três diretivas em `lib/security-headers.ts`, o teste da CSP, o CN no critério do aval, a marca do Google |
-| `cdaee40` | a marca do Google: o asset novo do Marcel, fundo transparente (div. 942) |
+| `cdaee40` | a marca do Google: o asset novo do Marcel, fundo transparente (divs. 942, 943) |
 | este | docs |
 
 ---
@@ -109,7 +109,7 @@ O caso não existe: o PWA saiu na I1-D18 (div. 501); não há popup de janela in
   o probe 2 só alcançara a primeira.
 - **Div. 564 — FECHADA** (§4).
 
-## 9. Divergências 933–942
+## 9. Divergências 933–943
 
 | div. | origem | o que o prompt/o documento dizia | o que se mediu | destino |
 |---|---|---|---|---|
@@ -123,6 +123,7 @@ O caso não existe: o PWA saiu na I1-D18 (div. 501); não há popup de janela in
 | **940** | A | — | o dev sobrescreve o `script-src` inteiro: sem `apis.google.com` nele, o CN (no dev) seguiria reprovando | `apis.google.com` também no dev (aval (iii)) |
 | **941** | A | — | o `frame-src` vem da variável pelo nome; sem ela, `'none'` | aval (ii) |
 | **942** | A | a marca: o asset do Marcel no botão | o 1º asset era o *tile* de 40 × 40 com fundo branco; no aceite, *"o logo do google está escroto"*. O Marcel trocou o arquivo (círculo `#131314`, contorno `#8E918F`) e pediu fundo transparente | os dois paths de fundo saem (`cdaee40`); o `viewBox="10 10 20 20"` mostra só o "G"; sha256 `81ce47e3…683e00` |
+| **943** | P | a leitura da 942: o fundo do asset seria só um defeito a apagar | **decisão da marca** `[Marcel, 2026-09-30]`: o botão segue o **tema Dark pré-aprovado do Google** — o "G" colorido direto sobre fundo escuro, arquivo de origem `Theme=Dark, Show text=No, Shape=Square, Platform=Android+Web.svg` —, com as cores do nosso tema no lugar de `#131314` (fundo) e `#8E918F` (contorno): o fundo e o contorno são os do botão secundário da folha (`bg`, `lineInfo`), por isso saem do asset; a exigência de fundo branco é do tema claro | registrada também no `DESIGN-I1/README.md` §1.4 (e o `SHA256SUMS`); **sem mudança de código** — o `cdaee40` já é isto |
 
 ## 10. Contabilidade
 
