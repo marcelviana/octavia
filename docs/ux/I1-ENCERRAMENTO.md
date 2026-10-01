@@ -521,7 +521,7 @@ bloco (regra 23).
 | # | item | origem |
 |---|---|---|
 | 1 | **frases unificadas web × nativo**: hoje dois conjuntos (os dez `frases-*.ts` do web, 421 folhas; o `packages/core/src/frases.ts` do nativo) | I1-D10 |
-| 2 | **a harmonização do motivo**: travessão (PR-9) × vírgula (PR-11…13) — uma forma só, na unificação | PR-11 §21.6; PR-13 §28 |
+| 2 | **a harmonização do motivo**: travessão (PR-9) × vírgula (PR-11…13) — uma forma só, na unificação — *movido para o bloco seguinte ao I1 (§10.5.11), N4-D29 `[Marcel, 2026-10-01]`: o N4 não troca texto no web* | PR-11 §21.6; PR-13 §28 |
 | 3 | **a `LinhaDeAviso` como componente do core** — hoje `components/identidade/linha-de-aviso.tsx` (web) e a do nativo: **o N4 decide** se vira contrato compartilhado | PR-1; PR-9; aval 11 |
 | 4 | os três `undefined` do `TokensDaFaixa` (`faixas.A.folha.alturaMin`, `faixas.B.folha.alturaMin`, `faixas.C.reordenar.artistaMin`): *"a medida não existe nesta faixa"*, e o CSS gerado a omite — a forma final vem com o content nas três faixas | `I1-PR4-anexos` §2; div. 932; aval 10 |
 
@@ -559,6 +559,7 @@ bloco (regra 23).
 | 8 | `public/icons/*`: 10 de 11 sem leitor | div. 553 |
 | 9 | ~~conferir a memoização das setlists~~ — **movido para o Bloco D** (§10.1.16), pelo aval 10 | div. 568 |
 | 10 | o **`text-amber-500`** do `toBeInFavoriteState` (`lib/__tests__/custom-matchers.ts:29`), com o resto do arquivo | div. 948 (PR-15) |
+| 11 | **a harmonização do motivo dentro do web** (travessão na PR-9 × vírgula nas PR-11…13) — *item novo, vindo do §10.2.2 pela N4-D29 `[Marcel, 2026-10-01]`* | §10.2.2; `docs/native/N4-PRECHECK.md` §9 |
 
 ### 10.6 A decisão que estava pendente
 

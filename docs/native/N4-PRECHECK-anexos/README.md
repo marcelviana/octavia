@@ -23,8 +23,15 @@ commitado imprimem só números e nomes de chave (regra 10).
 | [`a14-contrato-fixture.txt`](a14-contrato-fixture.txt) | A14 | `isValidContent`/`bodyOf` sobre fixture fabricada (script verbatim) |
 | [`a15-capturas.txt`](a15-capturas.txt) | A15 | as capturas commitadas por aparelho, XML × PNG |
 | [`cabecalhos.txt`](cabecalhos.txt) | todas | o `grep` de cada cabeçalho de seção citado |
+| **commit 2** | | |
+| [`l1-ordem-updated-at.txt`](l1-ordem-updated-at.txt) | §10 L1 | todo `sortBy` e toda ordenação por `updated_at`, web e nativo |
+| [`l2-item-mudado-arquivo.txt`](l2-item-mudado-arquivo.txt) | §10 L2 | o arquivo no disco quando o item muda e o `file_url` não; o teste que falta |
+| [`l3-h15-core-no-web.txt`](l3-h15-core-no-web.txt) | §10 L3 | a árvore de rascunho: o diff, o `pnpm build` antes e depois, o G-back, o G-tok, a remoção |
+| [`l4-editor-cifra.txt`](l4-editor-cifra.txt) | §10 L4 | o editor do web na Cifra, na Letra e na Tab; o upload e o lote; o corpo do gate do `PUT` (texto-fixture do projeto) |
+| [`b1-b4-biblioteca-principal.txt`](b1-b4-biblioteca-principal.txt) | §11 B1–B4 | o Tab (estado, md5, logcat do sync), o `.env` do Metro (origem e **nomes** das chaves), os scripts verbatim e as contagens; a remoção dos temporários |
+| [`b5-favoritar-prod.txt`](b5-favoritar-prod.txt) | §11 B5 | o script verbatim e as 4 respostas: status, nomes das chaves, `is_favorite`, `updated_at` |
 
-**Os scripts** (`tsx`, A9, A12, A14) rodaram como arquivo temporário na raiz da árvore e foram apagados; o texto
+**Os scripts** (`tsx`, A9, A12, A14; e, no commit 2, os da B1/B2 e o `b5.mjs`) rodaram como arquivo temporário na raiz da árvore (o da B5, fora do repositório) e foram apagados; o texto
 de cada um está verbatim no cabeçalho do anexo que ele produziu. Os trechos de código foram tirados com
 `awk 'NR>=a&&NR<=b'` e levam `arquivo:linha` em cada linha.
 

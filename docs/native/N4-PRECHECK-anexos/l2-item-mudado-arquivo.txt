@@ -1,0 +1,98 @@
+# L2 — o sync e um item contado como mudado: o arquivo no disco (N4-PR0 commit 2, 2026-10-01; rastro)
+$ awk 'NR>=28&&NR<=33' apps/native/src/files.ts
+apps/native/src/files.ts:28: 
+apps/native/src/files.ts:29: /** Último segmento da URL — o único pedaço que pode entrar em log (N1-D5). */
+apps/native/src/files.ts:30: export function fileNameFromUrl(url: string): string {
+apps/native/src/files.ts:31:   const seg = url.split('/').pop()
+apps/native/src/files.ts:32:   return seg === undefined || seg.length === 0 ? 'file' : seg
+apps/native/src/files.ts:33: }
+
+$ awk 'NR>=122&&NR<=152' apps/native/src/files.ts
+apps/native/src/files.ts:122: function arquivoEm(dir: Directory, url: string): File {
+apps/native/src/files.ts:123:   return new File(dir, fileNameFromUrl(url))
+apps/native/src/files.ts:124: }
+apps/native/src/files.ts:125: 
+apps/native/src/files.ts:126: /**
+apps/native/src/files.ts:127:  * Onde o arquivo está agora — `null` se não está em lugar nenhum.
+apps/native/src/files.ts:128:  *
+apps/native/src/files.ts:129:  * **Um arquivo de 0 byte não está em lugar nenhum** (W1, div. 103). Esta é a
+apps/native/src/files.ts:130:  * única checagem que `localizar` faz, e ela só é honesta PORQUE o download
+apps/native/src/files.ts:131:  * passou a escrever num `.part` (abaixo): enquanto o corpo era gravado direto
+apps/native/src/files.ts:132:  * no alvo, `size > 0` valia para todo download em voo desde o primeiro
+apps/native/src/files.ts:133:  * milissegundo — não era nem o piso (div. 113). Com o `.part`, nada
+apps/native/src/files.ts:134:  * incompleto tem o nome definitivo, e aí um 0 byte no nome final só pode ser
+apps/native/src/files.ts:135:  * lixo: de um download anterior a esta PR, ou de um `moveSync` interrompido.
+apps/native/src/files.ts:136:  *
+apps/native/src/files.ts:137:  * O que ela NÃO alcança: um arquivo truncado em 100 KB de 242 KB, que tem
+apps/native/src/files.ts:138:  * tamanho e não tem forma. Esse é caro de julgar (abre o arquivo) e por isso
+apps/native/src/files.ts:139:  * não corre aqui — `localizar` é chamada em laço. Quem o alcança é o
+apps/native/src/files.ts:140:  * `sanearArquivos()`, uma vez por abertura.
+apps/native/src/files.ts:141:  */
+apps/native/src/files.ts:142: function localizar(url: string): { file: File; guaranteed: boolean } | null {
+apps/native/src/files.ts:143:   const g = arquivoEm(dirGarantido(), url)
+apps/native/src/files.ts:144:   if (g.exists && g.size > 0) return { file: g, guaranteed: true }
+apps/native/src/files.ts:145:   const d = arquivoEm(dirDemanda(), url)
+apps/native/src/files.ts:146:   if (d.exists && d.size > 0) return { file: d, guaranteed: false }
+apps/native/src/files.ts:147:   return null
+apps/native/src/files.ts:148: }
+apps/native/src/files.ts:149: 
+apps/native/src/files.ts:150: export function hasFile(url: string): boolean {
+apps/native/src/files.ts:151:   return uidAtual !== null && localizar(url) !== null
+apps/native/src/files.ts:152: }
+
+$ awk 'NR>=113&&NR<=135' packages/core/src/sync.ts
+packages/core/src/sync.ts:113: /**
+packages/core/src/sync.ts:114:  * T1-R10 no caminho do sync (N2-D8, div. 157). `invalidated` conta os itens
+packages/core/src/sync.ts:115:  * cujo derivado muda — alterados, novos e removidos; é o número da linha
+packages/core/src/sync.ts:116:  * `cache write kind=… invalidated=<n>`, que até a N2-PR1 era um `0` literal.
+packages/core/src/sync.ts:117:  *
+packages/core/src/sync.ts:118:  * Os derivados do app (índice de busca, status offline, layout) são
+packages/core/src/sync.ts:119:  * memoizados por REFERÊNCIA do conjunto. Por isso, quando nada mudou
+packages/core/src/sync.ts:120:  * (`invalidated === 0`) **e** a ordem é a mesma, `items` é o próprio `prev`:
+packages/core/src/sync.ts:121:  * "igual → não re-renderiza". Em qualquer outro caso é o `next` inteiro — a
+packages/core/src/sync.ts:122:  * substituição do T1-R9, sem merge item a item.
+packages/core/src/sync.ts:123:  *
+packages/core/src/sync.ts:124:  * O limite é o do próprio T1-R10: uma edição que não bumpa `updated_at`
+packages/core/src/sync.ts:125:  * (console/SQL) não é vista, e o conjunto anterior continua valendo.
+packages/core/src/sync.ts:126:  */
+packages/core/src/sync.ts:127: export function reconcileByUpdatedAt<T extends Versioned>(
+packages/core/src/sync.ts:128:   prev: T[],
+packages/core/src/sync.ts:129:   next: T[],
+packages/core/src/sync.ts:130: ): { items: T[]; invalidated: number } {
+packages/core/src/sync.ts:131:   const { changed, added, removed } = diffByUpdatedAt(prev, next)
+packages/core/src/sync.ts:132:   const invalidated = changed.length + added.length + removed.length
+packages/core/src/sync.ts:133:   const mesmaOrdem = prev.length === next.length && prev.every((item, i) => item.id === next[i]?.id)
+packages/core/src/sync.ts:134:   return { items: invalidated === 0 && mesmaOrdem ? prev : next, invalidated }
+packages/core/src/sync.ts:135: }
+
+$ awk 'NR>=98&&NR<=110' apps/native/src/sync.ts
+apps/native/src/sync.ts:98:   // T1-R10 (N2-D8): compara com o que o app já tem. Sem cache anterior, tudo
+apps/native/src/sync.ts:99:   // é novo. Quando nada mudou, o conjunto devolvido é o MESMO do anterior —
+apps/native/src/sync.ts:100:   // os derivados memoizados por referência não se recriam.
+apps/native/src/sync.ts:101:   const setlists = reconcileByUpdatedAt(anterior?.setlists ?? [], plano.setlists)
+apps/native/src/sync.ts:102:   const content = reconcileByUpdatedAt(anterior?.content ?? [], plano.content)
+apps/native/src/sync.ts:103: 
+apps/native/src/sync.ts:104:   const syncedAtMs = Date.now()
+apps/native/src/sync.ts:105:   const snapshot: CacheSnapshot = {
+apps/native/src/sync.ts:106:     setlists: setlists.items,
+apps/native/src/sync.ts:107:     content: content.items,
+apps/native/src/sync.ts:108:     syncedAtMs,
+apps/native/src/sync.ts:109:   }
+apps/native/src/sync.ts:110:   save(uid, snapshot, { setlists: setlists.invalidated, content: content.invalidated })
+
+$ git grep -nE 'ensureFile|hasFile|listFiles|presentUrls|remove\(' -- apps/native/App.tsx apps/native/src/sync.ts apps/native/src/store.ts
+apps/native/App.tsx:18:import { presentUrls, sanearArquivos, setFilesUser } from './src/files'
+apps/native/App.tsx:87:    setFilesPresent(presentUrls())
+apps/native/App.tsx:105:    setFilesPresent(presentUrls())
+apps/native/App.tsx:228:    // `ensureFile` vê que o `localizar()` achou e nunca retenta. Roda ANTES
+apps/native/App.tsx:229:    // do primeiro `presentUrls()` para que o cartão nunca chegue a dizer
+apps/native/App.tsx:241:    setFilesPresent(presentUrls())
+
+$ git grep -nE 'remove\(' -- apps/native/src/prefetch.ts apps/native/src/files.ts
+apps/native/src/files.ts:606:export function remove(urls: string[]): number {
+apps/native/src/prefetch.ts:277:    const bytes = remove(evict)
+
+# teste que cubra "updated_at muda, file_url igual → o arquivo fica":
+$ git grep -lE 'updated_at' -- apps/native/test packages/core/src | xargs grep -lE 'ensureFile|hasFile|presentUrls|listFiles'
+packages/core/src/offline.test.ts
+[exit 0]

@@ -1,0 +1,242 @@
+# L4 — o que o editor do web lê e grava numa Cifra (e Letra, Tab); o upload e o lote (N4-PR0 commit 2, 2026-10-01; rastro; 0 requests, 0 aparelho)
+
+## a junção que o editor recebe e devolve
+$ awk 'NR>=30&&NR<=45' components/editors/content-type-editor.tsx
+components/editors/content-type-editor.tsx:30: export function ContentTypeEditor({ content, onChange, aoFalharArquivo }: ContentTypeEditorProps) {
+components/editors/content-type-editor.tsx:31:   const handleContentChange = (newData: any) => {
+components/editors/content-type-editor.tsx:32:     onChange({
+components/editors/content-type-editor.tsx:33:       ...content,
+components/editors/content-type-editor.tsx:34:       content_data: {
+components/editors/content-type-editor.tsx:35:         ...content.content_data,
+components/editors/content-type-editor.tsx:36:         ...newData,
+components/editors/content-type-editor.tsx:37:       },
+components/editors/content-type-editor.tsx:38:     })
+components/editors/content-type-editor.tsx:39:   }
+components/editors/content-type-editor.tsx:40: 
+components/editors/content-type-editor.tsx:41:   const type = normalizeContentType(content.content_type)
+components/editors/content-type-editor.tsx:42:   if (type === ContentType.SHEET) return <SheetMusicDisplay content={content} aoFalhar={aoFalharArquivo} />
+components/editors/content-type-editor.tsx:43:   // `normalizeContentType` cai em Lyrics no resto (types/content.ts): o "not yet implemented" de antes era inalcançável
+components/editors/content-type-editor.tsx:44:   const Editor = POR_TIPO[type] ?? LyricsEditor
+components/editors/content-type-editor.tsx:45:   return <Editor content={{ ...content, ...content.content_data }} onChange={handleContentChange} />
+
+## Cifra — abrir (precedência) e mudar
+$ awk 'NR>=18&&NR<=57' components/chord-editor.tsx
+components/chord-editor.tsx:18: export function ChordEditor({ content, onChange }: ChordEditorProps) {
+components/chord-editor.tsx:19:   const [chordData, setChordData] = useState(() => {
+components/chord-editor.tsx:20:     // Priority 1: Use sections if available (structured format)
+components/chord-editor.tsx:21:     if (content.sections && Array.isArray(content.sections) && content.sections.length > 0) {
+components/chord-editor.tsx:22:       return { title: content.title || "", artist: content.artist || "", key: content.key || "", capo: content.capo || "", bpm: content.bpm || "", sections: content.sections }
+components/chord-editor.tsx:23:     }
+components/chord-editor.tsx:24:     // Priority 2: Convert chords string to sections (legacy format) — o nome "Content" é VALOR gravado (div. 784)
+components/chord-editor.tsx:25:     if (content.chords && typeof content.chords === 'string' && content.chords.trim()) {
+components/chord-editor.tsx:26:       return {
+components/chord-editor.tsx:27:         title: content.title || "", artist: content.artist || "", key: content.key || "", capo: content.capo || "", bpm: content.bpm || "",
+components/chord-editor.tsx:28:         sections: [{ id: Date.now(), name: "Content", chords: "", lyrics: content.chords }],
+components/chord-editor.tsx:29:       }
+components/chord-editor.tsx:30:     }
+components/chord-editor.tsx:31:     // Priority 3: Empty editor for new content — o nome "Verse 1" é VALOR gravado (div. 784)
+components/chord-editor.tsx:32:     return {
+components/chord-editor.tsx:33:       title: content.title || "", artist: content.artist || "", key: content.key || "", capo: content.capo || "", bpm: content.bpm || "",
+components/chord-editor.tsx:34:       sections: [{ id: Date.now(), name: "Verse 1", chords: "", lyrics: "" }],
+components/chord-editor.tsx:35:     }
+components/chord-editor.tsx:36:   })
+components/chord-editor.tsx:37: 
+components/chord-editor.tsx:38:   const updateChordData = (newData: any) => {
+components/chord-editor.tsx:39:     setChordData(newData)
+components/chord-editor.tsx:40:     onChange({ ...content, ...newData })
+components/chord-editor.tsx:41:   }
+components/chord-editor.tsx:42: 
+components/chord-editor.tsx:43:   const addSection = () => {
+components/chord-editor.tsx:44:     const newSection = { id: Date.now(), name: "", chords: "", lyrics: "" }
+components/chord-editor.tsx:45:     updateChordData({ ...chordData, sections: [...chordData.sections, newSection] })
+components/chord-editor.tsx:46:   }
+components/chord-editor.tsx:47: 
+components/chord-editor.tsx:48:   const removeSection = (sectionId: number) => {
+components/chord-editor.tsx:49:     updateChordData({ ...chordData, sections: chordData.sections.filter((section: any) => section.id !== sectionId) })
+components/chord-editor.tsx:50:   }
+components/chord-editor.tsx:51: 
+components/chord-editor.tsx:52:   const updateSection = (sectionId: number, field: string, value: string) => {
+components/chord-editor.tsx:53:     updateChordData({
+components/chord-editor.tsx:54:       ...chordData,
+components/chord-editor.tsx:55:       sections: chordData.sections.map((section: any) => (section.id === sectionId ? { ...section, [field]: value } : section)),
+components/chord-editor.tsx:56:     })
+components/chord-editor.tsx:57:   }
+
+## o corpo do PUT
+$ awk 'NR>=50&&NR<=73' components/content-editor.tsx
+components/content-editor.tsx:50: /** O corpo do `PUT` de antes, sem o `updated_at` (que o salvar põe no fim, como antes). */
+components/content-editor.tsx:51: function corpoDoPut(editedContent: any, annotations: any[], contentType: string) {
+components/content-editor.tsx:52:   return {
+components/content-editor.tsx:53:     title: editedContent.title,
+components/content-editor.tsx:54:     artist: editedContent.artist,
+components/content-editor.tsx:55:     album: editedContent.album,
+components/content-editor.tsx:56:     genre: editedContent.genre,
+components/content-editor.tsx:57:     key: editedContent.key,
+components/content-editor.tsx:58:     bpm: editedContent.bpm ? Number.parseInt(editedContent.bpm) : null,
+components/content-editor.tsx:59:     difficulty: editedContent.difficulty,
+components/content-editor.tsx:60:     tags: editedContent.tags,
+components/content-editor.tsx:61:     notes: editedContent.notes,
+components/content-editor.tsx:62:     is_favorite: editedContent.is_favorite,
+components/content-editor.tsx:63:     is_public: editedContent.is_public,
+components/content-editor.tsx:64:     content_data: {
+components/content-editor.tsx:65:       ...editedContent.content_data,
+components/content-editor.tsx:66:       annotations,
+components/content-editor.tsx:67:       // Store editor-specific data
+components/content-editor.tsx:68:       ...(normalizeContentType(contentType) === ContentType.CHORDS && editedContent.sections && { sections: editedContent.sections }),
+components/content-editor.tsx:69:       ...(normalizeContentType(contentType) === ContentType.LYRICS && editedContent.lyrics && { lyrics: editedContent.lyrics }),
+components/content-editor.tsx:70:       ...(normalizeContentType(contentType) === ContentType.TAB && editedContent.measures && { measures: editedContent.measures }),
+components/content-editor.tsx:71:     },
+components/content-editor.tsx:72:   }
+components/content-editor.tsx:73: }
+
+## Letra e Tab
+$ awk 'NR>=17&&NR<=23' components/lyrics-editor.tsx
+components/lyrics-editor.tsx:17: export function LyricsEditor({ content, onChange }: LyricsEditorProps) {
+components/lyrics-editor.tsx:18:   const [lyrics, setLyrics] = useState(content.lyrics || "")
+components/lyrics-editor.tsx:19: 
+components/lyrics-editor.tsx:20:   const updateLyrics = (newLyrics: string) => {
+components/lyrics-editor.tsx:21:     setLyrics(newLyrics)
+components/lyrics-editor.tsx:22:     onChange({ ...content, lyrics: newLyrics })
+components/lyrics-editor.tsx:23:   }
+
+$ awk 'NR>=19&&NR<=50' components/tab-editor.tsx
+components/tab-editor.tsx:19: // o compasso-fixture de antes: VALOR gravado quando a tab não tem `measures` (div. 776, herança D)
+components/tab-editor.tsx:20: const compassoFixture = () => [
+components/tab-editor.tsx:21:   { id: 1, strings: ["E|--0--3--0--2--0--|", "B|--1--1--1--1--1--|", "G|--0--0--0--0--0--|", "D|--2--2--2--2--2--|", "A|--3-------------|", "E|----------------|"] },
+components/tab-editor.tsx:22: ]
+components/tab-editor.tsx:23: 
+components/tab-editor.tsx:24: export function TabEditor({ content, onChange }: TabEditorProps) {
+components/tab-editor.tsx:25:   const [tabData, setTabData] = useState({
+components/tab-editor.tsx:26:     title: content.title || "",
+components/tab-editor.tsx:27:     artist: content.artist || "",
+components/tab-editor.tsx:28:     tuning: content.tuning || "Standard (EADGBE)",
+components/tab-editor.tsx:29:     capo: content.capo || "",
+components/tab-editor.tsx:30:     bpm: content.bpm || "",
+components/tab-editor.tsx:31:     measures: content.measures || compassoFixture(),
+components/tab-editor.tsx:32:   })
+components/tab-editor.tsx:33: 
+components/tab-editor.tsx:34:   // Update state when content props change
+components/tab-editor.tsx:35:   useEffect(() => {
+components/tab-editor.tsx:36:     setTabData({
+components/tab-editor.tsx:37:       title: content.title || "",
+components/tab-editor.tsx:38:       artist: content.artist || "",
+components/tab-editor.tsx:39:       tuning: content.tuning || "Standard (EADGBE)",
+components/tab-editor.tsx:40:       capo: content.capo || "",
+components/tab-editor.tsx:41:       bpm: content.bpm || "",
+components/tab-editor.tsx:42:       measures: content.measures || compassoFixture(),
+components/tab-editor.tsx:43:     })
+components/tab-editor.tsx:44:   }, [content])
+components/tab-editor.tsx:45: 
+components/tab-editor.tsx:46:   const stringNames = ["E", "B", "G", "D", "A", "E"]
+components/tab-editor.tsx:47: 
+components/tab-editor.tsx:48:   const updateTabData = (newData: any) => {
+components/tab-editor.tsx:49:     setTabData(newData)
+components/tab-editor.tsx:50:     onChange({ ...content, ...newData })
+
+## o upload (criar do zero) e o lote
+$ awk 'NR>=30&&NR<=33' components/content-creator.tsx
+components/content-creator.tsx:30:       return
+components/content-creator.tsx:31:     }
+components/content-creator.tsx:32:     onContentCreated({ type: tipo, content: { [CONTENT_TYPE_KEYS[tipo]]: "" }, title: title.trim() })
+components/content-creator.tsx:33:   }
+
+$ awk 'NR>=164&&NR<=186' hooks/useAddContentLogic.ts
+hooks/useAddContentLogic.ts:164: 
+hooks/useAddContentLogic.ts:165:         for (const song of songsToImport) {
+hooks/useAddContentLogic.ts:166:           const content = await createContent({
+hooks/useAddContentLogic.ts:167:             title: song.title,
+hooks/useAddContentLogic.ts:168:             artist: song.artist,
+hooks/useAddContentLogic.ts:169:             content_type: contentType,
+hooks/useAddContentLogic.ts:170:             content_data: song.body,
+hooks/useAddContentLogic.ts:171:             user_id: user.uid
+hooks/useAddContentLogic.ts:172:           });
+hooks/useAddContentLogic.ts:173:           createdSongs.push(content);
+hooks/useAddContentLogic.ts:174:         }
+hooks/useAddContentLogic.ts:175: 
+hooks/useAddContentLogic.ts:176:         setCreatedContent(createdSongs);
+hooks/useAddContentLogic.ts:177:       } else if (draftContent) {
+hooks/useAddContentLogic.ts:178:         // Handle created content from ContentCreator
+hooks/useAddContentLogic.ts:179:         const metadataToUse = customMetadata || metadata;
+hooks/useAddContentLogic.ts:180:         const content = await createContent({
+hooks/useAddContentLogic.ts:181:           title: metadataToUse.title || draftContent.title,
+hooks/useAddContentLogic.ts:182:           artist: metadataToUse.artist || "Unknown Artist",
+hooks/useAddContentLogic.ts:183:           content_type: draftContent.type,
+hooks/useAddContentLogic.ts:184:           content_data: draftContent.content,
+hooks/useAddContentLogic.ts:185:           album: metadataToUse.album || null,
+hooks/useAddContentLogic.ts:186:           genre: metadataToUse.genre || null,
+
+$ git grep -nE 'sections' -- hooks components/upload components/add-content lib ':!**/__tests__/**' ':!*.test.*'
+[exit 1]
+
+## o corpo que o gate do PUT guarda (tests/gates/fixtures/editor-put-antes.json) — texto-fixture do projeto (regra 10 não alcança)
+== cifra em texto (a forma de hoje da cifra): chaves do content_data: ['album', 'annotations', 'artist', 'bpm', 'capo', 'chords', 'content_data', 'content_type', 'created_at', 'difficulty', 'file_url', 'genre', 'id', 'is_favorite', 'is_public', 'key', 'notes', 'sections', 'tags', 'thumbnail_url', 'time_signature', 'title', 'tuning', 'updated_at', 'user_id']
+   seção name='Content' chords='' lyrics='[Verso curto — controle]\nC7M      G7\nLa la la, la la lá\nLa la lá (CN)'
+   chords do topo: '[Verso curto — controle]\nC7M      G7\nLa la la, la la lá'
+   content_data aninhado: chaves ['chords']
+== cifra em seções: chaves do content_data: ['album', 'annotations', 'artist', 'bpm', 'capo', 'chords', 'content_data', 'content_type', 'created_at', 'difficulty', 'file_url', 'genre', 'id', 'is_favorite', 'is_public', 'key', 'notes', 'sections', 'tags', 'thumbnail_url', 'time_signature', 'title', 'tuning', 'updated_at', 'user_id']
+   seção name='Verso curto — controle' chords='C7M G7 Dm7' lyrics='La la la, la la lá'
+   chords do topo: 'C7M G7'
+   content_data aninhado: chaves ['chords', 'sections']
+== letra: chaves do content_data: ['album', 'annotations', 'artist', 'bpm', 'capo', 'content_data', 'content_type', 'created_at', 'difficulty', 'file_url', 'genre', 'id', 'is_favorite', 'is_public', 'key', 'lyrics', 'notes', 'tags', 'thumbnail_url', 'time_signature', 'title', 'tuning', 'updated_at', 'user_id']
+   lyrics: 'Primeira estrofe da música três\n\n[Refrão]'
+   content_data aninhado: chaves ['lyrics']
+== tab (tablatura em texto, sem compassos): chaves do content_data: ['album', 'annotations', 'artist', 'bpm', 'capo', 'content_data', 'content_type', 'created_at', 'difficulty', 'file_url', 'genre', 'id', 'is_favorite', 'is_public', 'key', 'measures', 'notes', 'tablature', 'tags', 'thumbnail_url', 'time_signature', 'title', 'tuning', 'updated_at', 'user_id']
+   tablature: 'e|-------0-----------0-------|\nB|-----1---1-------1---1-----|'
+   measures: lista(1)
+   content_data aninhado: chaves ['tablature']
+== partitura (PDF): chaves do content_data: ['annotations']
+
+## o que o gate faz antes de salvar (a entrada de cada caso e a edição roteirizada)
+$ awk 'NR>=61&&NR<=104' tests/gates/i1-editor-put.test.tsx
+tests/gates/i1-editor-put.test.tsx:61: const CASOS: Caso[] = [
+tests/gates/i1-editor-put.test.tsx:62:   {
+tests/gates/i1-editor-put.test.tsx:63:     nome: 'cifra em texto (a forma de hoje da cifra)',
+tests/gates/i1-editor-put.test.tsx:64:     content: { ...base, id: ID(1), title: 'Linha de 120 colunas', content_type: 'Chords',
+tests/gates/i1-editor-put.test.tsx:65:       content_data: { chords: '[Verso curto — controle]\nC7M      G7\nLa la la, la la lá' } },
+tests/gates/i1-editor-put.test.tsx:66:     editar: async () => {
+tests/gates/i1-editor-put.test.tsx:67:       await mudar(campo('campo-secao-letra'), (v) => `${v}\nLa la lá (CN)`)
+tests/gates/i1-editor-put.test.tsx:68:       await mudar(campo('campo-album'), () => 'Álbum do CN')
+tests/gates/i1-editor-put.test.tsx:69:     },
+tests/gates/i1-editor-put.test.tsx:70:   },
+tests/gates/i1-editor-put.test.tsx:71:   {
+tests/gates/i1-editor-put.test.tsx:72:     nome: 'cifra em seções',
+tests/gates/i1-editor-put.test.tsx:73:     content: { ...base, id: ID(2), title: 'Linha de 120 colunas', content_type: 'Chords', key: 'C', bpm: 96,
+tests/gates/i1-editor-put.test.tsx:74:       content_data: { chords: 'C7M G7', sections: [{ id: 1, name: 'Verso curto — controle', chords: 'C7M G7', lyrics: 'La la la, la la lá' }] } },
+tests/gates/i1-editor-put.test.tsx:75:     editar: async () => { await mudar(campo('campo-secao-progressao'), (v) => `${v} Dm7`) },
+tests/gates/i1-editor-put.test.tsx:76:   },
+tests/gates/i1-editor-put.test.tsx:77:   {
+tests/gates/i1-editor-put.test.tsx:78:     nome: 'letra',
+tests/gates/i1-editor-put.test.tsx:79:     content: { ...base, id: ID(3), title: 'Batch três', artist: null, content_type: 'Lyrics',
+tests/gates/i1-editor-put.test.tsx:80:       content_data: { lyrics: 'Primeira estrofe da música três' } },
+tests/gates/i1-editor-put.test.tsx:81:     editar: async () => {
+tests/gates/i1-editor-put.test.tsx:82:       const t = (await screen.findAllByRole('textbox')).find((e) => (e as HTMLTextAreaElement).value.startsWith('Primeira estrofe')) as HTMLTextAreaElement
+tests/gates/i1-editor-put.test.tsx:83:       fireEvent.change(t, { target: { value: `${t.value}\n\n[Refrão]` } })
+tests/gates/i1-editor-put.test.tsx:84:     },
+tests/gates/i1-editor-put.test.tsx:85:   },
+tests/gates/i1-editor-put.test.tsx:86:   {
+tests/gates/i1-editor-put.test.tsx:87:     nome: 'tab (tablatura em texto, sem compassos)',
+tests/gates/i1-editor-put.test.tsx:88:     content: { ...base, id: ID(4), title: 'Trenzinho do caipira', artist: 'Villa-Lobos', content_type: 'Tab', difficulty: 'Advanced',
+tests/gates/i1-editor-put.test.tsx:89:       content_data: { tablature: 'e|-------0-----------0-------|\nB|-----1---1-------1---1-----|' } },
+tests/gates/i1-editor-put.test.tsx:90:     editar: async () => {
+tests/gates/i1-editor-put.test.tsx:91:       const e = (await screen.findAllByRole('textbox')).find((x) => (x as HTMLInputElement).value.startsWith('E|--0--3')) as HTMLInputElement
+tests/gates/i1-editor-put.test.tsx:92:       fireEvent.change(e, { target: { value: 'E|--0--3--0--2--0--5|' } })
+tests/gates/i1-editor-put.test.tsx:93:     },
+tests/gates/i1-editor-put.test.tsx:94:   },
+tests/gates/i1-editor-put.test.tsx:95:   {
+tests/gates/i1-editor-put.test.tsx:96:     nome: 'partitura (PDF)',
+tests/gates/i1-editor-put.test.tsx:97:     content: { ...base, id: ID(5), title: 'Partitura de 12 páginas', artist: 'Compositor anônimo', content_type: 'Sheet',
+tests/gates/i1-editor-put.test.tsx:98:       file_url: 'https://cn.supabase.co/storage/v1/object/public/content-files/cn-partitura.pdf', content_data: null },
+tests/gates/i1-editor-put.test.tsx:99:     editar: async () => {
+tests/gates/i1-editor-put.test.tsx:100:       // antes: abrir o acordeão *Organization*; o *Detalhes* novo não tem acordeão (decisão 10)
+tests/gates/i1-editor-put.test.tsx:101:       await mudar(campo('campo-notas'), () => 'nota do CN')
+tests/gates/i1-editor-put.test.tsx:102:     },
+tests/gates/i1-editor-put.test.tsx:103:   },
+tests/gates/i1-editor-put.test.tsx:104: ]
+
+## conclusão da leitura
+# Cifra: abrir lê sections[] primeiro (chord-editor.tsx:21-22); sem seções, converte o chords do topo numa seção "Content" (:25-28). Mudar devolve { ...content, ...newData } com newData = { title, artist, key, capo, bpm, sections } (:38-41) — o chords do topo NÃO é reescrito: vai ao PUT como estava (content-type-editor.tsx:31-38; content-editor.tsx:64-68 só acrescenta sections).
+# o gate prova: caso 1, a seção ganhou "La la lá (CN)" e o chords do topo ficou o de antes; caso 2, entrada com topo e seção iguais ("C7M G7"), a seção ganhou "Dm7" e o topo ficou "C7M G7".
+# => uma Cifra editada hoje no web chega ao PALCO (que lê o chords do topo, content-contract.ts:21-26) com o texto VELHO; a visualização do web (sections primeiro, corpo-de-texto.ts:47-55) mostra o NOVO.
+# Letra: lê e grava lyrics (lyrics-editor.tsx:18-22) — o palco recebe o texto novo.
+# Tab: lê e grava measures (tab-editor.tsx:25-50; sem measures abre o compasso-fixture, div. 776); tablature fica intocado — a edição não chega nem ao palco nem à visualização do web (os dois leem tablature).
+# upload (criar do zero) grava { <chave do tipo>: "" } (content-creator.tsx:32); o lote grava song.body (useAddContentLogic.ts:170); nenhum dos dois escreve sections (git grep → exit 1).

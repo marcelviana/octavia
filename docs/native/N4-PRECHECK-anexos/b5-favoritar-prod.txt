@@ -1,0 +1,96 @@
+# B5 — favoritar e desfavoritar em prod, conta de audit, content descartável "DESCARTÁVEL N4" criado pelo Marcel no web (N4-PR0 commit 2, 2026-10-01; rastro)
+# autorizações: o id veio do Marcel; .env.uxaudit (N4-D36) e .env.local só para a NEXT_PUBLIC_FIREBASE_API_KEY (autorizado na sessão), lidos pelo script, nenhum valor impresso
+# o id aparece só pelos 8 primeiros caracteres; nenhum título, artista ou corpo é impresso; o descartável fica para o Marcel apagar
+# sem POST /api/auth/session: o Bearer basta às rotas (requireAuthServer) — 4 requests a prod, como o orçamento
+# script verbatim (fora do repositório, rodado da raiz do checkout principal, onde moram os .env):
+#   // B5 — favoritar e desfavoritar em prod, conta de audit, content descartável (N4-PR0 commit 2).
+#   // Exatamente: 1 login (Firebase, terceiro) · GET antes · PUT true · PUT false · GET depois.
+#   // Nenhum valor de .env é impresso. Qualquer não-2xx: para, não repete.
+#   import { readFileSync } from 'node:fs'
+#   
+#   const ID = process.argv[2]
+#   const BASE = 'https://octavia.rocks'
+#   const env = {}
+#   for (const f of ['.env.uxaudit', '.env.local']) {
+#     for (const linha of readFileSync(f, 'utf8').split('\n')) {
+#       const m = /^\s*([A-Z0-9_]+)\s*=\s*(.*)\s*$/.exec(linha)
+#       if (m) env[m[1]] = m[2].replace(/^["']|["']$/g, '')
+#     }
+#   }
+#   for (const k of ['USER_AUDIT', 'PASSWORD_AUDIT', 'NEXT_PUBLIC_FIREBASE_API_KEY']) {
+#     if (!env[k]) { console.log(`falta a chave ${k} (valor não impresso)`); process.exit(2) }
+#   }
+#   const id8 = ID.slice(0, 8)
+#   const r0 = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${env.NEXT_PUBLIC_FIREBASE_API_KEY}`, {
+#     method: 'POST', headers: { 'Content-Type': 'application/json' },
+#     body: JSON.stringify({ email: env.USER_AUDIT, password: env.PASSWORD_AUDIT, returnSecureToken: true }),
+#   })
+#   const login = await r0.json()
+#   console.log(`login firebase: status=${r0.status}${r0.ok ? '' : ` code=${login?.error?.message}`}`)
+#   if (!r0.ok) process.exit(1)
+#   const auth = { Authorization: `Bearer ${login.idToken}` }
+#   
+#   async function passo(nome, metodo, caminho, corpo) {
+#     const t0 = Date.now()
+#     const r = await fetch(`${BASE}${caminho}`, {
+#       method: metodo,
+#       headers: corpo ? { ...auth, 'Content-Type': 'application/json' } : auth,
+#       body: corpo ? JSON.stringify(corpo) : undefined,
+#     })
+#     const ms = Date.now() - t0
+#     const texto = await r.text()
+#     let j = null
+#     try { j = JSON.parse(texto) } catch {}
+#     const rl = ['x-ratelimit-limit', 'x-ratelimit-remaining'].map((h) => `${h}=${r.headers.get(h) ?? '-'}`).join(' ')
+#     console.log(`\n${nome}: ${metodo} ${caminho.replace(ID, `<id ${id8}>`)}${corpo ? ` corpo=${JSON.stringify(corpo).replace(ID, `<id ${id8}>`)}` : ''}`)
+#     console.log(`  status=${r.status} ms=${ms} bytes=${texto.length} ${rl}`)
+#     if (j && typeof j === 'object' && !Array.isArray(j)) {
+#       console.log(`  chaves da resposta (${Object.keys(j).length}): ${Object.keys(j).sort().join(', ')}`)
+#       console.log(`  id confere: ${j.id === ID} · is_favorite=${j.is_favorite} · updated_at=${j.updated_at}`)
+#     } else console.log(`  corpo não é objeto JSON (${texto.length} bytes; não impresso)`)
+#     if (!r.ok) { console.log('  FORA DE 2xx — para aqui, sem repetir'); process.exit(1) }
+#     return j
+#   }
+#   
+#   const antes = await passo('GET 1 (antes)', 'GET', `/api/content/${ID}`)
+#   const p1 = await passo('PUT 1', 'PUT', '/api/content', { id: ID, is_favorite: true })
+#   const p2 = await passo('PUT 2', 'PUT', '/api/content', { id: ID, is_favorite: false })
+#   const depois = await passo('GET 2 (depois)', 'GET', `/api/content/${ID}`)
+#   console.log('\nresumo:')
+#   console.log(`  is_favorite: antes=${antes.is_favorite} → PUT1=${p1.is_favorite} → PUT2=${p2.is_favorite} → GET2=${depois.is_favorite}`)
+#   console.log(`  updated_at:  antes=${antes.updated_at} → PUT1=${p1.updated_at} → PUT2=${p2.updated_at} → GET2=${depois.updated_at}`)
+#   console.log(`  PUT devolve a linha inteira (mesmas chaves do GET): ${JSON.stringify(Object.keys(p1).sort()) === JSON.stringify(Object.keys(antes).sort())}`)
+#   console.log(`  GET2 === PUT2 (todas as chaves, valores comparados sem imprimir): ${JSON.stringify(depois) === JSON.stringify(p2)}`)
+#   const iguais = Object.keys(antes).filter((k) => JSON.stringify(antes[k]) === JSON.stringify(depois[k]))
+#   const mudaram = Object.keys(antes).filter((k) => !iguais.includes(k))
+#   console.log(`  chaves que mudaram entre GET1 e GET2: ${mudaram.join(', ') || '(nenhuma)'}`)
+$ node b5.mjs <id>
+login firebase: status=200
+
+GET 1 (antes): GET /api/content/<id 4dadcb78>
+  status=200 ms=584 bytes=503 x-ratelimit-limit=- x-ratelimit-remaining=-
+  chaves da resposta (22): album, artist, bpm, capo, content_data, content_type, created_at, difficulty, file_url, genre, id, is_favorite, is_public, key, notes, tags, thumbnail_url, time_signature, title, tuning, updated_at, user_id
+  id confere: true · is_favorite=false · updated_at=2026-10-01T15:00:00.754+00:00
+
+PUT 1: PUT /api/content corpo={"id":"<id 4dadcb78>","is_favorite":true}
+  status=200 ms=280 bytes=502 x-ratelimit-limit=- x-ratelimit-remaining=-
+  chaves da resposta (22): album, artist, bpm, capo, content_data, content_type, created_at, difficulty, file_url, genre, id, is_favorite, is_public, key, notes, tags, thumbnail_url, time_signature, title, tuning, updated_at, user_id
+  id confere: true · is_favorite=true · updated_at=2026-10-01T15:48:59.295+00:00
+
+PUT 2: PUT /api/content corpo={"id":"<id 4dadcb78>","is_favorite":false}
+  status=200 ms=258 bytes=503 x-ratelimit-limit=- x-ratelimit-remaining=-
+  chaves da resposta (22): album, artist, bpm, capo, content_data, content_type, created_at, difficulty, file_url, genre, id, is_favorite, is_public, key, notes, tags, thumbnail_url, time_signature, title, tuning, updated_at, user_id
+  id confere: true · is_favorite=false · updated_at=2026-10-01T15:48:59.572+00:00
+
+GET 2 (depois): GET /api/content/<id 4dadcb78>
+  status=200 ms=205 bytes=503 x-ratelimit-limit=- x-ratelimit-remaining=-
+  chaves da resposta (22): album, artist, bpm, capo, content_data, content_type, created_at, difficulty, file_url, genre, id, is_favorite, is_public, key, notes, tags, thumbnail_url, time_signature, title, tuning, updated_at, user_id
+  id confere: true · is_favorite=false · updated_at=2026-10-01T15:48:59.572+00:00
+
+resumo:
+  is_favorite: antes=false → PUT1=true → PUT2=false → GET2=false
+  updated_at:  antes=2026-10-01T15:00:00.754+00:00 → PUT1=2026-10-01T15:48:59.295+00:00 → PUT2=2026-10-01T15:48:59.572+00:00 → GET2=2026-10-01T15:48:59.572+00:00
+  PUT devolve a linha inteira (mesmas chaves do GET): true
+  GET2 === PUT2 (todas as chaves, valores comparados sem imprimir): true
+  chaves que mudaram entre GET1 e GET2: updated_at
+[exit 0]

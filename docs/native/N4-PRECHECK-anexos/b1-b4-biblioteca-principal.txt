@@ -1,0 +1,247 @@
+# B1 — a biblioteca da conta principal, pelo cache do Tab S6 depois de um sync de leitura (N4-PR0 commit 2, 2026-10-01; rastro)
+# autorizações do Marcel nesta sessão: o Tab destravado por ele; o sync e o apps/native/.env para o Metro ("eu autorizo o sync")
+# nomes de arquivo do Storage e o uid da conta trocados por <objeto N> e <uid>; nenhum título, artista ou corpo
+
+## estado do Tab, lido antes (nada mudado além do stay_on, restaurado no fim)
+global stay_on_while_plugged_in = 0   → posto em 7 para a rodada
+system accelerometer_rotation = 1 · system user_rotation = 0 · global airplane_mode_on = 0 · adb reverse: (vazio)
+dev client: lastUpdateTime=2026-09-23 19:11:34 · pkgFlags DEBUGGABLE
+
+## md5 do cache ANTES (run-as … md5sum)
+42ce8bbdd9d229d91880e3de1d034314  setlists.json
+62d555598c8fc1972277edad745e7f6e  content.json
+10480521b6276d88e1e7966dcb224745  files-index.json
+05253d4239dadb2696115b934a546bb1  files/<objeto 1>.pdf
+cache/octavia-<uid>/files/ (demanda): vazio
+
+## o segredo e o Metro
+$ cp -p ../octavia/apps/native/.env apps/native/.env   (não aberto) ; shasum -a 256 dos dois → f2bfa179cd8e… nos dois
+$ npx expo start --dev-client --port 8081   (sem CI=1)
+$ curl …/apps/native/index.bundle?platform=android&dev=true | grep -c  →  octavia.rocks: 1 · localhost:8788: 0 · getContentPage: 3  (regra 13: o bundle servido aponta para prod)
+
+## o sync (adb reverse tcp:8081; force-stop; logcat -c uma vez; abrir pelo exp+octavia://…)
+$ adb logcat -d -s ReactNativeJS | grep -oE "OCTAVIA: .*" | grep -v "auth uid"
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: cache hit kind=setlists n=2
+OCTAVIA: cache hit kind=content n=63
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=2526
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=460
+OCTAVIA: cache write kind=setlists n=2 invalidated=0
+OCTAVIA: cache write kind=content n=63 invalidated=0
+OCTAVIA: sync ok setlists=2 content=63 pages=1 t=3310
+OCTAVIA: prefetch plan n=0 reason=7d
+
+## md5 do cache DEPOIS (app parado)
+7e668ad17c9850b63ed46789d7df5a7b  setlists.json      ← mudou: o syncedAtMs (invalidated=0)
+62d555598c8fc1972277edad745e7f6e  content.json      ← igual
+10480521b6276d88e1e7966dcb224745  files-index.json  ← igual
+05253d4239dadb2696115b934a546bb1  files/<objeto 1>.pdf ← igual
+
+## a medição (script tsx verbatim abaixo; o content.json copiado para um diretório temporário FORA do repositório)
+#   // B1/B2/B4 + insumo da B3 — só contagens, nomes de chave, extensões, bytes e comprimentos. Nenhum texto do dado sai.
+#   import { readFileSync } from 'node:fs'
+#   import { isValidContent, bodyOf } from './packages/core/src/content-contract'
+#   import { textoDaCifra, textoDaTab, textoDaLetra, textoDaNotacao } from './components/content/corpo-de-texto'
+#   import { normalizeContentType } from './types/content'
+#   const DIR = process.env.B1_DIR as string
+#   const raw = readFileSync(`${DIR}/content.json`)
+#   const itens = JSON.parse(raw.toString('utf8')) as Record<string, unknown>[]
+#   const idx = JSON.parse(readFileSync(`${DIR}/files-index.json`, 'utf8')) as Record<string, { bytes: number }>
+#   const cont = (m: Map<string, number>, k: string) => m.set(k, (m.get(k) ?? 0) + 1)
+#   const show = (t: string, m: Map<string, number>) => console.log(t, JSON.stringify(Object.fromEntries([...m].sort())))
+#   console.log('B1 bytes do content.json:', raw.length, '· total de itens:', itens.length)
+#   const porTipo = new Map<string, number>(); const fav = new Map<string, number>(); const validade = new Map<string, number>()
+#   const chaves = new Map<string, number>(); const ext = new Map<string, number>(); const gpar = new Map<string, number>()
+#   let favPresente = 0, semArtista = 0, maxTitulo = 0, maxArtista = 0
+#   const arquivos = new Set<string>()
+#   const web = (t: string, d: Record<string, unknown> | null) => { const n = normalizeContentType(t); return n === 'Chords' ? textoDaCifra(d) : n === 'Tab' ? textoDaTab(d) : n === 'Sheet' ? textoDaNotacao(d) : textoDaLetra(d) }
+#   for (const c of itens) {
+#     const t = String(c.content_type); const d = (c.content_data ?? null) as Record<string, unknown> | null; const f = (c.file_url ?? null) as string | null
+#     cont(porTipo, t)
+#     if ('is_favorite' in c) favPresente++
+#     cont(fav, `${t}:${String(c.is_favorite)}`)
+#     const v = isValidContent(t, d, f); cont(validade, `${t}:${v.ok ? 'ok-' + v.body : v.reason}`)
+#     cont(chaves, `${t}:${d === null ? 'null' : '[' + Object.keys(d).sort().map(k => k + '=' + (Array.isArray(d[k]) ? 'array' : typeof d[k])).join(',') + ']'}`)
+#     if (f) cont(ext, `${t}:${(f.split('?')[0].match(/\.[A-Za-z0-9]+$/)?.[0] ?? '(sem)').toLowerCase()}:${v.ok && v.body === 'file' ? 'arquivo' : 'nao-arquivo'}`)
+#     if (v.ok && v.body === 'file' && f) arquivos.add(f)
+#     const n = bodyOf(t, d), w = web(t, d)
+#     cont(gpar, `${t}:${n === w ? 'igual' : n === null && w !== null ? 'core-vazio-web-texto' : n !== null && w === null ? 'core-texto-web-vazio' : 'ambos-texto-diferentes'}`)
+#     const ti = typeof c.title === 'string' ? [...c.title].length : 0; if (ti > maxTitulo) maxTitulo = ti
+#     const ar = typeof c.artist === 'string' ? [...c.artist].length : 0; if (ar > maxArtista) maxArtista = ar
+#     if (c.artist === null || c.artist === undefined || c.artist === '') semArtista++
+#   }
+#   show('B1 por tipo:', porTipo); console.log('B1 is_favorite presente em', favPresente, 'de', itens.length); show('B1 is_favorite por tipo:', fav)
+#   show('B2 validade (tipo:resultado):', validade); show('B2 conjuntos de chaves do content_data (tipo:[chave=tipo]):', chaves); show('B2 G-par web × core (tipo:resultado):', gpar)
+#   show('B4 extensão × tipo (tipo:ext:o contrato trata como):', ext)
+#   const baixados = [...arquivos].filter(u => idx[u] !== undefined)
+#   console.log('B3 arquivos distintos com body=file:', arquivos.size, '· baixados (no índice):', baixados.length, '· não baixados:', arquivos.size - baixados.length)
+#   console.log('B3 bytes dos baixados, pelo índice:', JSON.stringify(baixados.map(u => idx[u].bytes)))
+#   console.log('brief: comprimento do maior título:', maxTitulo, '· do maior artista:', maxArtista, '· sem artista:', semArtista)
+#   if (process.env.B3_URLS) require('node:fs').writeFileSync(process.env.B3_URLS, [...arquivos].filter(u => idx[u] === undefined).join('\n'))
+$ B1_DIR=<tmp> npx tsx ./.b2-tmp.ts
+B1 bytes do content.json: 111580 · total de itens: 63
+B1 por tipo: {"Chords":3,"Lyrics":57,"Sheet":1,"Tab":2}
+B1 is_favorite presente em 63 de 63
+B1 is_favorite por tipo: {"Chords:false":3,"Lyrics:false":56,"Lyrics:true":1,"Sheet:false":1,"Tab:false":2}
+B2 validade (tipo:resultado): {"Chords:ok-text":3,"Lyrics:ok-text":57,"Sheet:ok-file":1,"Tab:ok-text":2}
+B2 conjuntos de chaves do content_data (tipo:[chave=tipo]): {"Chords:[album=string,annotations=array,artist=string,bpm=string,capo=string,chords=string,content_data=object,content_type=string,created_at=string,difficulty=string,file_url=object,genre=string,id=string,is_favorite=boolean,is_public=boolean,key=string,notes=string,sections=array,tags=array,thumbnail_url=object,time_signature=object,title=string,tuning=object,updated_at=string,user_id=string]":1,"Chords:[album=string,annotations=array,artist=string,bpm=string,capo=string,chords=string,content_data=object,content_type=string,created_at=string,difficulty=string,file_url=object,genre=string,id=string,is_favorite=boolean,is_public=boolean,key=string,notes=string,sections=array,tags=array,thumbnail_url=object,time_signature=string,title=string,tuning=object,updated_at=string,user_id=string]":1,"Chords:[chords=string]":1,"Lyrics:[album=string,annotations=array,artist=string,bpm=string,capo=object,content_data=object,content_type=string,created_at=string,difficulty=string,file_url=object,genre=string,id=string,is_favorite=boolean,is_public=boolean,key=string,lyrics=string,notes=string,tags=array,thumbnail_url=object,time_signature=object,title=string,tuning=object,updated_at=string,user_id=string]":1,"Lyrics:[album=string,annotations=array,artist=string,bpm=string,capo=object,content_data=object,content_type=string,created_at=string,difficulty=string,file_url=object,genre=string,id=string,is_favorite=boolean,is_public=boolean,key=string,lyrics=string,notes=string,tags=array,thumbnail_url=object,time_signature=string,title=string,tuning=object,updated_at=string,user_id=string]":3,"Lyrics:[annotations=array,lyrics=string]":2,"Lyrics:[lyrics=string]":51,"Sheet:[annotations=array,file=string]":1,"Tab:[tablature=string]":2}
+B2 G-par web × core (tipo:resultado): {"Chords:ambos-texto-diferentes":2,"Chords:igual":1,"Lyrics:igual":57,"Sheet:igual":1,"Tab:igual":2}
+B4 extensão × tipo (tipo:ext:o contrato trata como): {"Sheet:.pdf:arquivo":1}
+B3 arquivos distintos com body=file: 1 · baixados (no índice): 1 · não baixados: 0
+B3 bytes dos baixados, pelo índice: [138916]
+brief: comprimento do maior título: 27 · do maior artista: 13 · sem artista: 52
+
+## o detalhe das diferenças do G-par e os sentinelas (script verbatim)
+#   // B2, detalhe das diferenças do G-par e dos sentinelas — só comprimentos e contagens.
+#   import { readFileSync } from 'node:fs'
+#   import { bodyOf } from './packages/core/src/content-contract'
+#   import { textoDaCifra } from './components/content/corpo-de-texto'
+#   const itens = JSON.parse(readFileSync(`${process.env.B1_DIR}/content.json`, 'utf8')) as Record<string, any>[]
+#   let i = 0
+#   for (const c of itens) {
+#     if (c.content_type !== 'Chords') continue
+#     const d = c.content_data ?? null, n = bodyOf('Chords', d), w = textoDaCifra(d)
+#     if (n === w) continue
+#     i++
+#     const aninhado = d && typeof d.content_data === 'object' && d.content_data ? Object.keys(d.content_data).sort().join(',') : '-'
+#     console.log(`Chords diferente #${i}: core=${n?.length ?? 'null'} caracteres · web=${w?.length ?? 'null'} caracteres · sections=${Array.isArray(d?.sections) ? d.sections.length : '-'} itens (chaves do 1º: ${Array.isArray(d?.sections) && d.sections[0] ? Object.keys(d.sections[0]).sort().join(',') : '-'}) · content_data aninhado: [${aninhado}]`)
+#   }
+#   const sent = (k: string, v: string) => itens.filter(c => c[k] === v).length
+#   console.log('sentinelas: artist="Unknown Artist":', sent('artist', 'Unknown Artist'), '· title="Unknown Title":', sent('title', 'Unknown Title'), '· artist null:', itens.filter(c => c.artist === null).length, '· artist "":', sent('artist', ''))
+#   const polu = itens.filter(c => c.content_data && typeof c.content_data === 'object' && 'content_data' in c.content_data).length
+#   console.log('poluídos pelo editor (content_data com content_data dentro):', polu)
+$ B1_DIR=<tmp> npx tsx ./.b2b-tmp.ts
+Chords diferente #1: core=2027 caracteres · web=2028 caracteres · sections=1 itens (chaves do 1º: chords,id,lyrics,name) · content_data aninhado: [chords]
+Chords diferente #2: core=10 caracteres · web=32 caracteres · sections=1 itens (chaves do 1º: chords,id,lyrics,name) · content_data aninhado: [chords]
+sentinelas: artist="Unknown Artist": 0 · title="Unknown Title": 0 · artist null: 49 · artist "": 3
+poluídos pelo editor (content_data com content_data dentro): 6
+
+## o fim da rodada
+$ kill <pid do Metro na 8081>; lsof -iTCP:8081 -sTCP:LISTEN | wc -l → 0
+$ adb reverse --remove-all; adb reverse --list → []
+$ settings put global stay_on_while_plugged_in 0; get → 0
+$ settings get system accelerometer_rotation → 1 · user_rotation → 0 · airplane_mode_on → 0
+$ rm -f apps/native/.env; ls apps/native/.env → No such file or directory
+$ rm -rf <tmp>/b1-tmp; ls -la <tmp>/b1-tmp → No such file or directory   (o content.json, o files-index.json, o setlists.json e o logcat copiados: apagados)
+o app ficou parado (force-stop); o cache do Tab ficou como o sync o deixou (só o setlists.json mudou, pelo syncedAtMs)
+
+## B2, complemento (resposta à parada): as duas Cifras com sections[] — ordinal, chaves e a causa da diferença
+# segunda leitura do cache do Tab (0 requests): exec-out run-as cat → <tmp>/b2-tmp/content.json; md5 62d555598c8fc1972277edad745e7f6e (o mesmo do depois do sync), 111580 bytes
+
+# script verbatim (.b2c-tmp.ts):
+#   // B2, item 3 da resposta à parada: as duas Cifras com sections[] — ordinal, chaves, e a causa da diferença. Só nomes, comprimentos e códigos de caractere de controle.
+#   import { readFileSync } from 'node:fs'
+#   import { bodyOf } from './packages/core/src/content-contract'
+#   import { textoDaCifra } from './components/content/corpo-de-texto'
+#   const itens = JSON.parse(readFileSync(`${process.env.B1_DIR}/content.json`, 'utf8')) as Record<string, any>[]
+#   const fins = (s: string | null) => s === null ? '-' : `\\n=${(s.match(/\n/g) ?? []).length} \\r=${(s.match(/\r/g) ?? []).length} termina-em-\\n=${s.endsWith('\n')}`
+#   itens.forEach((c, i) => {
+#     const d = c.content_data
+#     if (c.content_type !== 'Chords' || !d || !Array.isArray(d.sections)) return
+#     const n = bodyOf('Chords', d), w = textoDaCifra(d)
+#     const s0 = d.sections[0] ?? {}
+#     const str = (v: unknown) => typeof v === 'string' ? `string(${v.length})` : Array.isArray(v) ? `array(${v.length})` : v === null ? 'null' : typeof v
+#     console.log(`ordinal ${i + 1} de ${itens.length} no content.json`)
+#     console.log(`  chaves do content_data: ${Object.keys(d).sort().join(', ')}`)
+#     console.log(`  chaves do content_data aninhado: ${d.content_data && typeof d.content_data === 'object' ? Object.keys(d.content_data).sort().join(', ') : '-'}`)
+#     console.log(`  chaves da seção 1: ${Object.keys(s0).sort().map(k => `${k}=${str(s0[k])}`).join(', ')}`)
+#     console.log(`  o core lê: content_data.chords = ${str(d.chords)} → ${n?.length ?? 'null'} caracteres · ${fins(n)}`)
+#     console.log(`  o web lê: sections[] (juntar([name, chords, lyrics], "\\n") por seção) → ${w?.length ?? 'null'} caracteres · ${fins(w)}`)
+#     console.log(`  content_data.chords === sections[0].chords: ${d.chords === s0.chords} · sections[0].lyrics vazio/ausente: ${!s0.lyrics} · sections[0].name: ${str(s0.name)}`)
+#     const dif = (w?.length ?? 0) - (n?.length ?? 0), nome = typeof s0.name === 'string' && s0.name.length > 0 ? s0.name.length : 0
+#     console.log(`  diferença = ${dif} = name(${nome}) + 1 separador "\\n" ? ${dif === nome + 1}`)
+#   })
+$ B1_DIR=<tmp> npx tsx ./.b2c-tmp.ts
+ordinal 3 de 63 no content.json
+  chaves do content_data: album, annotations, artist, bpm, capo, chords, content_data, content_type, created_at, difficulty, file_url, genre, id, is_favorite, is_public, key, notes, sections, tags, thumbnail_url, time_signature, title, tuning, updated_at, user_id
+  chaves do content_data aninhado: chords
+  chaves da seção 1: chords=string(0), id=number, lyrics=string(2020), name=string(7)
+  o core lê: content_data.chords = string(2027) → 2027 caracteres · \n=104 \r=0 termina-em-\n=false
+  o web lê: sections[] (juntar([name, chords, lyrics], "\n") por seção) → 2028 caracteres · \n=104 \r=0 termina-em-\n=false
+  content_data.chords === sections[0].chords: false · sections[0].lyrics vazio/ausente: false · sections[0].name: string(7)
+  diferença = 1 = name(7) + 1 separador "\n" ? false
+ordinal 8 de 63 no content.json
+  chaves do content_data: album, annotations, artist, bpm, capo, chords, content_data, content_type, created_at, difficulty, file_url, genre, id, is_favorite, is_public, key, notes, sections, tags, thumbnail_url, time_signature, title, tuning, updated_at, user_id
+  chaves do content_data aninhado: chords
+  chaves da seção 1: chords=string(8), id=number, lyrics=string(15), name=string(7)
+  o core lê: content_data.chords = string(10) → 10 caracteres · \n=0 \r=0 termina-em-\n=false
+  o web lê: sections[] (juntar([name, chords, lyrics], "\n") por seção) → 32 caracteres · \n=2 \r=0 termina-em-\n=false
+  content_data.chords === sections[0].chords: false · sections[0].lyrics vazio/ausente: false · sections[0].name: string(7)
+  diferença = 22 = name(7) + 1 separador "\n" ? false
+
+# script verbatim (.b2d-tmp.ts):
+#   // B2, item 3: relações entre as cadeias, só como booleanos e comprimentos (nenhum texto sai).
+#   import { readFileSync } from 'node:fs'
+#   const itens = JSON.parse(readFileSync(`${process.env.B1_DIR}/content.json`, 'utf8')) as Record<string, any>[]
+#   for (const i of [2, 7]) {
+#     const d = itens[i].content_data, s = d.sections[0], c: string = d.chords
+#     const norm = (x: string) => x.replace(/\s+/g, '')
+#     console.log(`ordinal ${i + 1}:`)
+#     console.log(`  web === name+"\\n"+(chords? chords+"\\n" : "")+lyrics: ${[s.name, s.chords || null, s.lyrics].filter(Boolean).join('\n').length} caracteres, igual ao do web: true por construção (corpo-de-texto.ts:50-53)`)
+#     console.log(`  core começa com name: ${c.startsWith(s.name)} · core termina com lyrics: ${c.endsWith(s.lyrics)} · core contém lyrics: ${c.includes(s.lyrics)} · core contém chords da seção: ${s.chords ? c.includes(s.chords) : '-'}`)
+#     console.log(`  core === name+lyrics (sem separador): ${c === s.name + s.lyrics} · core === name+"\\n"+lyrics: ${c === s.name + '\n' + s.lyrics}`)
+#     console.log(`  sem espaço em branco: core=${norm(c).length} · web=${norm([s.name, s.chords || null, s.lyrics].filter(Boolean).join('\n')).length} · iguais=${norm(c) === norm([s.name, s.chords || null, s.lyrics].filter(Boolean).join('\n'))}`)
+#     console.log(`  content_data aninhado .chords === core: ${d.content_data?.chords === c} · comprimento do aninhado: ${typeof d.content_data?.chords === 'string' ? d.content_data.chords.length : '-'}`)
+#   }
+$ B1_DIR=<tmp> npx tsx ./.b2d-tmp.ts
+ordinal 3:
+  web === name+"\n"+(chords? chords+"\n" : "")+lyrics: 2028 caracteres, igual ao do web: true por construção (corpo-de-texto.ts:50-53)
+  core começa com name: false · core termina com lyrics: true · core contém lyrics: true · core contém chords da seção: -
+  core === name+lyrics (sem separador): false · core === name+"\n"+lyrics: false
+  sem espaço em branco: core=1110 · web=1112 · iguais=false
+  content_data aninhado .chords === core: true · comprimento do aninhado: 2027
+ordinal 8:
+  web === name+"\n"+(chords? chords+"\n" : "")+lyrics: 32 caracteres, igual ao do web: true por construção (corpo-de-texto.ts:50-53)
+  core começa com name: false · core termina com lyrics: false · core contém lyrics: false · core contém chords da seção: false
+  core === name+lyrics (sem separador): false · core === name+"\n"+lyrics: false
+  sem espaço em branco: core=10 · web=25 · iguais=false
+  content_data aninhado .chords === core: true · comprimento do aninhado: 10
+
+# script verbatim (.b2e-tmp.ts):
+#   // B2, item 3: o prefixo que o core tem antes da letra no ordinal 3 — só booleanos e comprimentos.
+#   import { readFileSync } from 'node:fs'
+#   const d = (JSON.parse(readFileSync(`${process.env.B1_DIR}/content.json`, 'utf8')) as any[])[2].content_data
+#   const c: string = d.chords, s = d.sections[0], p = c.slice(0, c.length - s.lyrics.length)
+#   console.log(`prefixo do core: ${p.length} caracteres · termina em \\n: ${p.endsWith('\n')} · linha do prefixo sem o \\n: ${p.replace(/\n$/, '').length} caracteres`)
+#   console.log(`name da seção: ${s.name.length} caracteres · name começa com a linha do prefixo: ${s.name.startsWith(p.replace(/\n$/, ''))} · a linha do prefixo começa com "[": ${p.startsWith('[')} · o name começa com "[": ${s.name.startsWith('[')}`)
+#   console.log(`só diferem em maiúsculas/minúsculas ou colchetes: ${p.replace(/\n$/, '').replace(/[\[\]]/g, '').toLowerCase() === s.name.replace(/[\[\]]/g, '').toLowerCase()}`)
+$ B1_DIR=<tmp> npx tsx ./.b2e-tmp.ts
+prefixo do core: 7 caracteres · termina em \n: true · linha do prefixo sem o \n: 6 caracteres
+name da seção: 7 caracteres · name começa com a linha do prefixo: false · a linha do prefixo começa com "[": false · o name começa com "[": false
+só diferem em maiúsculas/minúsculas ou colchetes: false
+
+# leitura: ordinal 3 — o core lê content_data.chords (2027) = uma linha de 6 caracteres + "
+" + a letra da seção (2020); o web lê sections[0] = name (7) + "
+" + lyrics (2020), sem a chords vazia; a letra é a mesma; a diferença de 1 NÃO é fim de linha (os dois têm 104 "
+", nenhum "", nenhum termina em "
+"): é a 1ª linha — 6 caracteres no core, o name de 7 no web, cadeias diferentes
+# leitura: ordinal 8 — o core lê content_data.chords (10, sem "
+"); o web lê name (7) + chords da seção (8) + lyrics (15), com 2 "
+" = 32; nenhuma das três partes da seção está dentro do chords do topo: são dois conteúdos diferentes no mesmo content_data
+# nos dois, o content_data aninhado tem só a chave chords, igual à do topo (a poluição do editor)
+
+$ rm -rf <tmp>/b2-tmp; ls <tmp>/b2-tmp
+ls: /private/tmp/claude-501/-Users-marcelviana-projects-octavia/09940a32-84aa-4799-b749-ead30125361d/scratchpad/b2-tmp: No such file or directory
+
+## B1, complemento (resposta à parada): o apps/native/.env criado e apagado — só os NOMES das chaves
+$ sed -E "s/=.*$//" ../octavia/apps/native/.env | grep -vE "^\s*(#|$)"   (a fonte do cp -p; sha256 f2bfa179cd8e…, o mesmo da cópia)
+EXPO_PUBLIC_FIREBASE_API_KEY
+EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN
+EXPO_PUBLIC_FIREBASE_PROJECT_ID
+EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET
+EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+EXPO_PUBLIC_FIREBASE_APP_ID
+EXPO_PUBLIC_API_BASE_URL
+$ grep -E "^EXPO_PUBLIC_API_BASE_URL=" … | (só o host)
+host da API: octavia.rocks
+# o app apontava a API para PROD (octavia.rocks); as seis do Firebase não foram lidas (só os nomes) — a sessão no Tab é a conta principal do Marcel no Tab, a mesma do uso real; o bundle servido confirmou (octavia.rocks: 1 · localhost:8788: 0)
+
+## B1, complemento (item 5 da resposta seguinte): de onde veio o apps/native/.env
+origem: /Users/marcelviana/projects/octavia/apps/native/.env (o checkout principal; 419 bytes; modificado em 2026-09-07)
+comando: cp -p ../octavia/apps/native/.env ../octavia-n4-precheck/apps/native/.env   (cópia de arquivo, sem abrir)
+conferência: shasum -a 256 dos dois → f2bfa179cd8e… (só o prefixo impresso)
+nenhum VALOR foi lido nem impresso: a única leitura do conteúdo foi a dos NOMES (sed "s/=.*$//") e a do HOST da API (sed que corta tudo depois do host), acima; apagado no fim (rm -f; ls → No such file or directory)

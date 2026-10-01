@@ -661,13 +661,17 @@ folha, com os tokens por faixa (N3-D28) e a regra única da folha — sem redese
 depois. O que o N2 deixou para o content segue no `N2-ENCERRAMENTO.md` §10.2
 (itens 1–6, destino N4 pela errata do topo daquela seção).
 
+> **Nota do N4 pre-check (2026-10-01; N4-D7, div. 971):** a errata do N4 no topo do
+> `N2-ENCERRAMENTO.md` §10.2 muda o destino dos itens **1–5** para o **Bloco D**; só o **6** (C-D7) fica no N4,
+> como medição. Onde este parágrafo diz *"itens 1–6, destino N4"*, vale aquela errata.
+
 ### 10.7 Do V1, do N2 e do W4, que segue aberto
 
 O N3 **não tocou** estes — cite-os pela fonte:
 
 | de onde | itens |
 |---|---|
-| `N2-ENCERRAMENTO.md` §10.2 | 1–6 (N4) |
+| `N2-ENCERRAMENTO.md` §10.2 | 1–6 (N4) — *nota do N4 pre-check (div. 971): 1–5 → Bloco D, 6 no N4 como medição; vale a errata do topo do §10.2 de lá* |
 | `N2-ENCERRAMENTO.md` §10.3 | 1–9 (bloco D) — o N3 não tocou backend |
 | `N2-ENCERRAMENTO.md` §10.4 | P1 (selo de bis — a N3-PR5 mexeu no palco, só na barra), P2, P3 |
 | `N2-ENCERRAMENTO.md` §10.5 | 1 (chevrons e os cinco desabilitados), 2 (tema claro), 3 (`cor.offline`), 5 (opção C do teto), 6 (div. 108), 7 (cobertura dos gates) |

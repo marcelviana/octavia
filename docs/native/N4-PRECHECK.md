@@ -44,17 +44,21 @@ achou algo que toca uma delas, a decisão fica como está e a divergência apont
 | **N4-D7** | Errata do `N2-ENCERRAMENTO.md` §10.2: os itens 1–5 mudam de destino para o Bloco D; o item 6 (C-D7) fica no N4 só como medição. **A errata se escreve nesta PR**, no topo daquela seção, no molde da errata do N3 que já está lá. *(Escrita: ver §3.3.)* |
 | **N4-D8** | A visualização é **tela própria, diferente do palco**: mostra as informações cadastradas da música que o palco não mostra (e não deve mostrar). Da lista, o usuário pode **só visualizar** ou **abrir direto no palco**. |
 | **N4-D9** | Offline: tudo garantido se o pre-check medir que cabe no teto de download; se não couber, lista em cache e corpo só do que está em setlist garantida, com o estado "não baixada" desenhado. *(Ver divs. 959, 960; Q6.)* |
+| ↳ *errata* | **Errata da N4-D9 pela N4-D27** `[Marcel, 2026-10-01]`: o texto de toda a biblioteca já é offline; a garantia e o estado "não baixada" dizem respeito só a arquivos. A escolha entre as duas opções se decide depois da B3 (§9, §12 Q6). |
 | **N4-D10** | O teto de 100 do `GET /api/content` fica (herança D): a lista mostra o que veio e uma linha de aviso quando o total passar do recebido. Sem paginação no N4. *(Ver div. 958; Q7.)* |
+| ↳ *errata* | **Errata da N4-D10 pela N4-D28** `[Marcel, 2026-10-01]`: a linha de aviso do teto sai do recorte do nativo (div. 958; §9). |
 | **N4-D11** | A entrada da biblioteca é decisão do desenho, com restrição: S1 continua a tela inicial e a composição de S1 em C não muda fora o controle novo, que entra como errata declarada do G-inv. |
 | **N4-D12** | Faixas: a folha desenha A, B e C; a implementação cobre C e B; A só "não quebra", com a lista de inalcançáveis como herança do N5. |
 | **N4-D13** | A quebra de linha na letra (N3-D15) segue bloco próprio entre o N4 e o N5. |
 | **N4-D14** | Frases: unifica-se só o vocabulário de content que o nativo vai usar, num módulo do `packages/core` que o web importa com texto byte a byte igual. As demais frases do web ficam onde estão, com destino nomeado no encerramento. |
 | **N4-D15** | O motivo (travessão × vírgula): vence a forma que o nativo já usa; se a troca cair no web, sai em PR própria. *(Ver div. 961; Q8.)* |
+| ↳ *errata* | **Errata da N4-D15 pela N4-D29** `[Marcel, 2026-10-01]`: o core guarda o motivo isolado e cada lado compõe do seu jeito; nenhuma troca de texto no web no N4; as duas formas do motivo dentro do web vão ao bloco seguinte ao I1 (§9). |
 | **N4-D16** | `LinhaDeAviso`: compartilha-se só o contrato (props e espécies) no core; duas implementações. |
 | **N4-D17** | Os três `undefined` do `TokensDaFaixa` se decidem no congelamento. |
 | **N4-D18** | Brief e desenho próprios: `docs/native/DESIGN-N4/`, duas rodadas, requisitos no lugar de PRD. |
 | **N4-D19** | Gates do bloco: G-inv, G-N3 estendido às telas novas, **G-par** (novo: o mesmo content fabricado mostra o mesmo texto no web e no nativo) e G-back verde em toda PR. Escrita em prod: **só o favoritar**, pela regra 12, na conta de audit, em recurso descartável. |
 | **N4-D20** | Fatiamento: PR-0 pre-check · brief/desenho/congelamento · PR-1 gates (entram reprovando) · PR-2 frases e contrato da linha de aviso · PR-3 core da biblioteca sem tela · PR-4 a tela da biblioteca · PR-5 visualização e palco avulso · PR-6 navegação, estados transversais e aceite completo · encerramento. O pre-check pode propor outra fatia, como pergunta. *(Ver Q11.)* |
+| ↳ *errata* | **Errata da N4-D20 pela N4-D32** `[Marcel, 2026-10-01]`: o fatiamento passa a ser o da N4-D32 (§9) — PR-1 gates · PR-2 core de frases e contrato · PR-3 core da biblioteca · PR-4 a tela da biblioteca com a entrada em S1 · PR-5 o palco avulso sem hospedeira · PR-6 a visualização · PR-7 estados transversais, espécies e aceite · encerramento. |
 | **N4-D21** | Favoritar e desfavoritar ficam disponíveis no tablet. |
 
 ---
@@ -523,6 +527,7 @@ Toda premissa do prompt e do recorte, com veredito.
 | H-N4-1 | o nativo lê content por `GET /api/content` e guarda localmente | **confirmada** — e guarda **tudo**, paginado até o fim | A1; `sync.ts:28-47`, `store.ts:147` |
 | H-N4-2 | existe um `normalize` de content no core, que C-D7 e o G-par usam | **falsa** — `normalize.ts` é só busca; o leitor é o `content-contract.ts` | A14; div. 956 |
 | H-N4-3 | os quatro tipos abrem no palco | **confirmada** na forma do contrato (Letra, Cifra-texto, Tab, Partitura PDF, Cifra escaneada PDF); **não medida** para partitura em imagem e importados de `.docx`/`.txt` (provável `pdf-error`) | A2; div. 963 |
+| ↳ H-N4-3, *errata do commit 2* | na conta principal | **confirmada no dado real**: B4 — 1 arquivo, `.pdf`; nenhuma imagem, `.docx` ou `.txt` (a hipótese sobre imagem segue não medida, sem objeto na principal) | §11 B4 |
 | H-N4-4 | o palco abre com uma fila de uma música que não vem de setlist | **falsa** — o avulso existe, mas exige setlist hospedeira (`lista[0]` quando vem de S1) | A3; div. 964 |
 | H-N4-5 | o favoritar é possível sem mudar backend nem passar pelo corpo do editor | **confirmada** — `PUT /api/content` com `{id, is_favorite}`, update por campo; mesma rota do editor (div. 969) | A5 |
 | H-N4-6 | o corpo do favoritar é valor absoluto | **confirmada** — a negação é calculada no cliente | A5 |
@@ -530,12 +535,16 @@ Toda premissa do prompt e do recorte, com veredito.
 | H-N4-8 | o `GET /api/content` informa o total | **confirmada** — `total`, `hasMore`, `totalPages` | A6 |
 | H-N4-9 | existe um "teto de download" | **falsa** — saiu no W1; existe o teto de **retenção** (200 MB) | A7; div. 959 |
 | H-N4-10 | a biblioteca inteira cabe no teto | **não medida** — `[lido]` 265.002 B no repertório da **audit** (N0-H16); a principal é a B3 | A7; §6 |
+| ↳ H-N4-10, *errata do commit 2* | — | **confirmada**: B3 — 1 arquivo, 138.916 B = **0,066 %** do `CAP_BYTES` (209.715.200 B); 0 `HEAD` | §11 B3 |
 | H-N4-11 | o corpo fora de setlist precisa de download para ser offline | **falsa** para texto (o `content.json` tem todos); **verdadeira** só para arquivos | A7; div. 960 |
 | H-N4-12 | o web e o nativo partem do mesmo leitor de corpo | **falsa** — 6 de 13 iguais sobre fixture; o web não importa o core | A12; div. 965 |
+| ↳ H-N4-12, *errata do commit 2* | — | **falsa também no dado real, em 2 de 63**: B2 — 61 iguais; 2 Cifras com `sections[]` diferem; nenhum item com um lado vazio e o outro com texto | §11 B2 |
 | H-N4-13 | o nativo usa travessão ou vírgula no motivo | **falsa na forma** — motivo com travessão por dentro; composição com `·` | A9; div. 961 |
 | H-N4-14 | são três `undefined` | **confirmada** como três chaves; **duas** literais (A = B por referência) | A11; div. 962 |
 | H-N4-15 | o web pode importar um módulo do core | **não medida** — hoje o web não importa nada do core; o `package.json` raiz só ganhou `@octavia/identidade` (`I1-ENCERRAMENTO.md` §1). Custo (dependência de workspace, `tsconfig`, G-back) é da PR-2 | A12 |
+| ↳ H-N4-15, *errata do commit 2* | — | **confirmada, com custo medido**: L3 — `pnpm build` passa, 27 rotas, +2 kB em 3 rotas, `package.json` +1 e lockfile +3, nenhum arquivo do núcleo do G-back; e a frase que vai ao core **sai do G-tok** (446 → 445, div. 977) | §10 L3 |
 | H-N4-16 | o `is_favorite` chega ao aparelho | **não medida** — lido: o servidor manda (`select('*')`, `route.ts:67`), o sync grava o item sem mapear, o snapshot da audit tem `is_favorite` em 66/66; no aparelho, B1 | A1; A5 |
+| ↳ H-N4-16, *errata do commit 2* | — | **confirmada**: B1 — `is_favorite` presente em 63 de 63 no `content.json` do Tab; 1 `true` | §11 B1 |
 | H-N4-17 | a `LinhaDeAviso` tem contrato comum possível | **confirmada em parte** — nome, `motivo` e ação comuns; espécies: o web tem 4 por `tipo`, o nativo 0 (ícone + cor livres) | A10 |
 | H-N4-18 | busca e filtro por tipo são novos | **meio falsa** — a busca na biblioteca inteira existe (S4, local, offline); o filtro não | A1; A8 |
 | H-N4-19 | a visualização do web mostra campos que o palco não mostra | **confirmada** — 11 campos (A4), três deles não salvos de verdade | A4 |
@@ -798,3 +807,321 @@ formato que o app ainda não mostra (Q13).
 
 O bloco ```` ```gates ```` e o ```` ```gates-web ```` desta PR, verbatim (a cópia que a regra do W4-b2 pede mora no
 [`README.md`](N4-PRECHECK-anexos/README.md) dos anexos).
+
+---
+
+# Commit 2 — o aval e a Fase B
+
+**Este commit** (só docs) registra o aval do Marcel `[2026-10-01]`, quatro leituras (L1–L3 antes da Fase B; a L4
+depois da parada da B2, pedida no aval seguinte) e a Fase B (B1–B5; a B6 dispensada). O texto do commit 1 não foi
+reescrito: as decisões que mudaram ganharam linha de errata no `## 0` (↳), e as hipóteses que mudaram de veredito,
+linha de errata no `## 2`. Divergências **974–982** (§13). Nenhum texto de música, título, artista ou nome de
+objeto do Storage vai a anexo: dos dados reais só saem contagens, nomes de chave, extensões, tamanhos em bytes e
+comprimentos em caracteres.
+
+---
+
+## 9. O aval — N4-D22…D39
+
+`[Marcel, 2026-10-01]`. As N4-D22…D37 vieram com o prompt do commit 2; a N4-D38 com a resposta à parada da B2; a
+N4-D39 com a resposta às leituras.
+
+| # | decisão |
+|---|---|
+| **N4-D22** | (Q1) Favoritar pelo `PUT /api/content` com `{"id","is_favorite"}`, sem mudar backend. O gate byte a byte do corpo do nativo entra na PR-1. |
+| **N4-D23** | (Q2) Favoritar só online, como as escritas do N2. |
+| **N4-D24** | (Q3) O corpo da música na visualização usa o mesmo leitor do palco. |
+| **N4-D25** | (Q4) O leitor que vale para o G-par se decide depois da B2. A opção (c), o web ler pelo core, está descartada. *(Reescrita com os números: §12 Q4.)* |
+| **N4-D26** | (Q5) A visualização leva ao palco por um controle *Tocar*. |
+| **N4-D27** | (Q6) Decide-se depois da B3. **Errata da N4-D9**: o texto de toda a biblioteca já é offline; a garantia e o estado "não baixada" dizem respeito só a arquivos. *(§12 Q6.)* |
+| **N4-D28** | (Q7) **Errata da N4-D10**: a linha de aviso do teto sai do recorte do nativo. |
+| **N4-D29** | (Q8) O core guarda o motivo isolado e cada lado compõe do seu jeito; nenhuma troca de texto no web no N4. **Errata da N4-D15.** O item 2 do `I1-ENCERRAMENTO.md` §10.2 (as duas formas do motivo dentro do web) muda de destino para o bloco seguinte ao I1. *(A nota está lá, e o item novo no §10.5 de lá.)* |
+| **N4-D30** | (Q9) O palco avulso deixa de ter setlist hospedeira quando vem da lista, da visualização ou de S1; o avulso aberto pela busca dentro de uma setlist fica como está. |
+| **N4-D31** | (Q10) A visualização mostra só os campos salvos de verdade (sem compasso, capo e afinação, que ficam declarados como herança D), com as notas do content. Filtros: tipo e *Só as favoritas*; sem dificuldade e sem ordem. As datas de criação e alteração: o desenho propõe. |
+| **N4-D32** | (Q11) **Errata da N4-D20**, o fatiamento passa a ser: PR-0 pre-check · brief (com as capturas de B e do palco avulso), desenho e congelamento · **PR-1** gates (G-par e o gate do corpo do favoritar, entrando reprovados) · **PR-2** core: frases de content e o contrato da `LinhaDeAviso` · **PR-3** core da biblioteca, sem tela · **PR-4** a tela da biblioteca, com a entrada em S1 (sem ela a tela não se alcança no aparelho; a errata declarada do G-inv sobre os 8 dumps vai aqui) · **PR-5** o palco avulso sem hospedeira · **PR-6** a visualização · **PR-7** estados transversais, a troca de `icone`/`cor` por espécie nas quatro telas e o aceite completo · encerramento. A troca por espécie só entra se o mapa devolver **os mesmos pares** de ícone e cor de hoje, com G-inv e `gate:icones` intactos. |
+| **N4-D33** | (Q12) A entrada da biblioteca convive com `Buscar música`; o brief pede ao desenho as duas alternativas lado a lado (conviver × a biblioteca absorver a busca). |
+| **N4-D34** | (Q13) Imagem e `.docx`/`.txt` se decidem depois da B2 e da B4. *(§12 Q13.)* |
+| **N4-D35** | Releitura do favoritar: o cache se atualiza com a linha que o `PUT` devolve, sem sync, **se a B5 confirmar** que a resposta é a linha inteira. Se não confirmar, vira pergunta. *(**Confirmado pela B5**: o `PUT` devolve as 22 colunas, as mesmas do `GET`, e o `GET` seguinte é igual à resposta do `PUT` em todas — §11 B5.)* |
+| **N4-D36** | (Q14) Fase B aprovada: B1 a B4 agora; B5 depois das leituras do §2 do prompt; B6 dispensada, salvo se a B2 achar forma legada no dado real — nesse caso pare e pergunte. O `.env.uxaudit` está autorizado **só para a B5**. *(Ampliações na sessão, pelo Marcel: o `apps/native/.env` para o Metro da B1 — "eu autorizo o sync"; o `.env.local` só para a `NEXT_PUBLIC_FIREBASE_API_KEY` na B5 — "Autorizo". Divs. 979, 982.)* |
+| **N4-D37** | A div. 970 tem destino W5. A div. 971 se paga neste commit (§5 do prompt: as notas no `N3-ENCERRAMENTO.md` §10.6 e §10.7). |
+| **N4-D38** | **B6 dispensada** (a parada da B2, opção a): a forma legada está medida no dado real pela B2; a fixture do G-par ganha o caso que apareceu — **Cifra com `sections[]` e `chords` em texto no mesmo `content_data`**. |
+| **N4-D39** | **L1 aceita**: favoritar no tablet reordena o "Recentes" do painel do web, como o favoritar do web já faz; aceita-se, declara-se no brief, e o `PUT` do favorito mexer no `updated_at` vira **herança do Bloco D**. |
+
+E dois registros do aval que não são decisão numerada:
+
+- **L3 → requisito da PR-2** `[Marcel, 2026-10-01]`: a frase que passar ao core precisa continuar sob gate (o G-tok
+  estendido ao módulo do core, ou um gate de igualdade); **a forma é pergunta da PR-2**, não se decide aqui (div. 977).
+- **A div. 970** (o `vitest` dentro de `packages/core`) → **W5** (N4-D37).
+
+---
+
+## 10. As leituras L1 a L4
+
+### L1 — quem ordena por `updated_at` `[medido: l1-ordem-updated-at.txt]`
+
+- **Ninguém pede `sortBy=updated`**: a rota o aceita (`app/api/content/route.ts:110`; `lib/api-schemas.ts:207`), mas a
+  biblioteca do web só tem `recent`/`title`/`artist` (`hooks/use-library-data.ts:43`, `:75`), o picker do web pede
+  `recent` (`hooks/use-setlist-data.ts:74`) e o nativo `sortBy=recent` = `created_at` (`apps/native/src/api.ts:228`;
+  `route.ts:106-115`).
+- **Uma ordenação por `updated_at`**: o painel do web, `app/dashboard/page.tsx:33-37` (desc., os 5 primeiros → o
+  "Recentes", `components/dashboard.tsx:56`). **O nativo não ordena por `updated_at` em lugar nenhum.**
+- **Efeito do favoritar**: o item sobe ao topo do "Recentes" do painel do web — já é o que o favoritar do web faz;
+  nenhuma lista do nativo e nenhuma outra do web muda. **Aceito pela N4-D39.**
+
+### L2 — um item mudado com o mesmo `file_url` `[medido: l2-item-mudado-arquivo.txt]`
+
+- **O arquivo é reaproveitado**: o disco é endereçado pelo último segmento da URL (`files.ts:30-33`, o `localizar`
+  em `:122-152`); o sync e o store não tocam arquivos (`sync.ts:98-110`; o `reconcileByUpdatedAt` só conta,
+  `core/sync.ts:127-135`); o único caminho que apaga é o despejo do LRU (`prefetch.ts:277`).
+- **Nenhum teste cobre o caso** (o `offline.test.ts` usa `updated_at` só como dado de fixture).
+- **Efeito do favoritar no nativo**: nenhum além do `invalidated` +1 no sync seguinte (o T1-R10 funcionando).
+
+### L3 — a H-N4-15 `[medido: l3-h15-core-no-web.txt]`
+
+Árvore de rascunho `../octavia-n4-h15` (`git worktree add --detach`, sobre `2fce586`, sem `.env*`): o
+`frases-editor.ts` passa a tirar `edit.nada-mudou` do `FRASES["nada-mudou"]` do core (texto byte a byte igual), com
+`"@octavia/core": "workspace:*"` no `package.json` e `pnpm install --offline`.
+
+| | antes | depois |
+|---|---|---|
+| `pnpm build` | passa | passa |
+| rotas | 27 | 27 |
+| primeiro carregamento | `/add-content` 277 kB · `/content/[id]/edit` 279 kB · `/setlists` 275 kB | 279 · 281 · 277 kB (**+2 kB** nas três; as outras 24 iguais; o compartilhado 102 kB igual) |
+| `package.json` · lockfile | — | +1 linha · +3 linhas (`link:packages/core`) |
+| núcleo do G-back | — | **0 de 3** arquivos tocados |
+| G-tok | PASSA, 446 strings de `.ts` | PASSA, **445** — a frase que foi ao core **sai do alcance do gate** (div. 977) |
+
+Removida no fim: `git worktree list` sem `octavia-n4-h15`, `ls` → *No such file or directory* (no anexo).
+
+### L4 — o que o editor do web grava e lê numa Cifra `[medido: l4-editor-cifra.txt]`
+
+- **Abrir uma Cifra**: `sections[]` **primeiro** (`components/chord-editor.tsx:21-22`); sem seções, o `chords` do
+  topo vira uma seção `"Content"` com o texto na `lyrics` (`:25-28`); sem nada, `"Verse 1"` vazia (`:32-35`). O editor
+  recebe `{ ...content, ...content.content_data }` (`components/editors/content-type-editor.tsx:45`).
+- **Salvar**: cada mudança devolve `{ ...content, ...newData }` com `newData = { title, artist, key, capo, bpm,
+  sections }` (`chord-editor.tsx:38-41`), espalhado dentro do `content_data` (`content-type-editor.tsx:31-38`); o
+  corpo do `PUT` acrescenta `sections` (`components/content-editor.tsx:64-68`). **O `chords` do topo nunca é
+  reescrito** — vai ao `PUT` como estava.
+- **O gate do `PUT` guarda exatamente isso** (`tests/gates/fixtures/editor-put-antes.json`, texto-fixture do
+  projeto): no caso *"cifra em texto"* a seção ganhou a linha editada e o `chords` do topo ficou o de antes; no caso
+  *"cifra em seções"* a entrada tinha topo e seção iguais (`C7M G7`), a seção ganhou `Dm7`, o topo ficou `C7M G7`.
+- **Letra**: lê e grava `lyrics` (`components/lyrics-editor.tsx:18-22`) — o palco recebe o texto novo.
+- **Tab**: lê e grava `measures` (`components/tab-editor.tsx:25-50`; sem `measures` abre o compasso-fixture, div.
+  776); **`tablature` fica intocado** — a edição não chega nem ao palco nem à visualização do web, que leem os dois
+  `tablature` (div. 976).
+- **Upload e lote não escrevem `sections`**: criar do zero grava `{ <chave do tipo>: "" }`
+  (`components/content-creator.tsx:32`); o lote grava `song.body` (`hooks/useAddContentLogic.ts:170`);
+  `git grep sections` em `hooks`, `components/upload`, `components/add-content`, `lib` → exit 1.
+
+**Conclusão: uma Cifra editada hoje no web chega ao palco com o texto VELHO** — o palco lê o `chords` do topo
+(`content-contract.ts:21-26`), que o editor não atualiza; a visualização do web, que lê `sections` primeiro
+(`corpo-de-texto.ts:47-55`), mostra o novo. A leitura basta para afirmar o mecanismo (o gate o fixa byte a byte); o
+que ela **não** diz é **quantas** Cifras da principal foram editadas depois de ganhar seções — e isso não se mede no
+dado: o B2 vê 2 Cifras com `sections`, em ambas o topo diverge da seção, e nada no registro diz qual veio por último
+além do próprio mecanismo (div. 975).
+
+---
+
+## 11. Fase B — resultado, com a contabilidade ao lado do orçamento
+
+### B1 — a biblioteca da principal, pelo cache do Tab `[medido: b1-b4-biblioteca-principal.txt]`
+
+- O Marcel destravou o Tab; o `stay_on` foi a 7 e voltou a 0; `accelerometer_rotation` **1**, `user_rotation` 0,
+  avião desligado — lidos e deixados como estavam (div. 980); o app subiu em **B** (`faixa=B w=711.1 h=1137.8`).
+- Metro sem `CI=1`, com o `apps/native/.env` copiado por `cp -p` do checkout principal (origem, comando e os **nomes**
+  das 7 chaves no anexo; nenhum valor lido nem impresso; o host da API, `octavia.rocks`; apagado no fim); o bundle
+  servido conferido pela regra 13 (`octavia.rocks: 1 · localhost:8788: 0`).
+- **O sync**: `api status=200 path=/api/setlists` · `api status=200 path=/api/content` · `cache write kind=content
+  n=63 invalidated=0` · `sync ok setlists=2 content=63 pages=1 t=3310`.
+- **md5 antes → depois**: `content.json`, `files-index.json` e o PDF **iguais**; `setlists.json` **mudou** (o
+  `syncedAtMs`, com `invalidated=0`) — div. 981.
+- **Medida**: **63** itens — Letra **57**, Cifra **3**, Tab **2**, Partitura **1**; `content.json` **111.580 B**;
+  `is_favorite` presente em **63 de 63**, **1** `true` (uma Letra).
+- O `content.json` e o resto copiados foram para um diretório temporário **fora do repositório** e apagados (`ls` →
+  *No such file or directory*, no anexo); uma segunda leitura, para o complemento da B2 pedido no aval, idem.
+
+### B2 — inválidos, formas e o G-par no dado real (0 requests)
+
+- **Validade**: **63 de 63 válidos** — Letra 57 `ok-text`, Cifra 3 `ok-text`, Tab 2 `ok-text`, Partitura 1 `ok-file`.
+- **Formas**: **6 de 63 poluídos pelo editor** (a linha inteira dentro do `content_data`, com `content_data`
+  aninhado e `annotations`): 4 Letras e 2 Cifras; as **2 Cifras poluídas têm `sections[]`**; a Partitura traz uma chave
+  legada `file` (string) ao lado de `annotations`; as Tabs só `tablature` string.
+- **G-par web × core**: **61 iguais de 63**; **2 diferentes** (as duas Cifras com `sections`); **0** com o core vazio
+  e o web com texto, **0** com o inverso.
+- **As duas Cifras** (ordinais 3 e 8 de 63 no `content.json`): `content_data` com as mesmas 25 chaves (a linha +
+  `annotations`, `sections`, `content_data` aninhado só com `chords`); seção com `chords`, `id` (número), `lyrics`,
+  `name`.
+  - **ordinal 3**: o core lê o `chords` do topo (**2.027** caracteres) = uma linha de 6 + `\n` + a letra da seção
+    (2.020); o web lê `name` (7) + `\n` + `lyrics` (2.020) = **2.028** — a mesma letra; **a diferença de 1 não é fim
+    de linha** (os dois têm 104 `\n`, 0 `\r`, nenhum termina em `\n`): é a 1ª linha, 6 caracteres no core × o `name`
+    de 7 no web, cadeias diferentes;
+  - **ordinal 8**: o core lê o `chords` do topo (**10**, sem `\n`); o web lê `name` (7) + `chords` da seção (8) +
+    `lyrics` (15) = **32** — nenhuma das três partes está no `chords` do topo: dois conteúdos diferentes no mesmo
+    `content_data`.
+- **Sentinelas e artista**: `Unknown Artist` 0, `Unknown Title` 0; artista `null` 49, `""` 3.
+
+### B4 — formatos (0 requests)
+
+**1** arquivo, `Partitura:.pdf`, que o contrato trata como arquivo. **Nenhuma** imagem, `.docx` ou `.txt`.
+
+### B3 — o tamanho dos arquivos
+
+**1** arquivo distinto com `body === 'file'`, **já baixado** (pelo `files-index.json`): **138.916 B** = **0,066 %** do
+`CAP_BYTES` (209.715.200 B). **0** não baixados → **0 `HEAD`** ao Storage.
+
+### Medidas para o brief
+
+N = **63**; Letra 57 · Cifra 3 · Tab 2 · Partitura 1; **maior título: 27 caracteres**; **maior artista: 13**; **sem
+artista: 52** (49 `null` + 3 `""`); **arquivos não baixados: 0**; **favoritas: 1**.
+
+### B5 — favoritar e desfavoritar em prod, conta de audit `[medido: b5-favoritar-prod.txt]`
+
+Content `"DESCARTÁVEL N4"` criado pelo Marcel no web (id `4dadcb78…`). Um script fora do repositório: login no
+Firebase (`signInWithPassword`, terceiro) com o `.env.uxaudit` e a `NEXT_PUBLIC_FIREBASE_API_KEY` do `.env.local`
+(nenhum valor impresso); **sem** `POST /api/auth/session` (o `Bearer` basta).
+
+| passo | requisição | status | ms | resposta | `is_favorite` | `updated_at` |
+|---|---|---|---|---|---|---|
+| GET 1 (antes) | `GET /api/content/<id>` | **200** | 584 | 22 chaves (a linha) | `false` | `…15:00:00.754` |
+| PUT 1 | `PUT /api/content` `{"id":"<id>","is_favorite":true}` | **200** | 280 | **22 chaves** — as mesmas do `GET` | `true` | `…15:48:59.295` |
+| PUT 2 | `PUT /api/content` `{"id":"<id>","is_favorite":false}` | **200** | 258 | 22 chaves | `false` | `…15:48:59.572` |
+| GET 2 (depois) | `GET /api/content/<id>` | **200** | 205 | 22 chaves; **igual à resposta do PUT 2 em todas** | `false` | `…15:48:59.572` |
+
+- **O `PUT` devolve a linha inteira** → a N4-D35 vale (o cache se atualiza com a resposta, sem sync).
+- Entre o GET 1 e o GET 2 **só o `updated_at` mudou** — o `is_favorite` voltou ao inicial; o `updated_at` não volta
+  (declarado no orçamento; herança D pela N4-D39).
+- Nenhum 4xx/5xx, nenhum 429; a resposta **não** traz `X-RateLimit-*` no 2xx (o cabeçalho só vem no 429,
+  `lib/user-rate-limit.ts:124-134`). O descartável **fica para o Marcel apagar**.
+
+### Contabilidade real × orçamento
+
+| probe | orçado | real | escritas | o que ficou |
+|---|---|---|---|---|
+| B1 | 1 + ⌈N/100⌉ `GET` (≈3) | **2 `GET`** (`/api/setlists`, `/api/content` p. 1) | 0 (só o cache local) | o `setlists.json` do Tab com o `syncedAtMs` novo |
+| B2 | 0 | 0 (+1 releitura do cache do Tab, local) | 0 | — |
+| B3 | k `HEAD` ao Storage | **0** (k = 0) | 0 | — |
+| B4 | 0 | 0 | 0 | — |
+| B5 | 2 `PUT` + 2 `GET` + login | **2 `PUT` + 2 `GET`** + 1 login Firebase | **2** (audit) | o `updated_at` do descartável; o descartável, para o Marcel |
+| B6 | ≈3 `GET` | **dispensada** (N4-D38) | — | — |
+| **total** | ≈ 7–9 a `/api/*` + k | **6 a `/api/*`** (4 `GET` + 2 `PUT`) + **1** login a terceiro | **2** | — |
+
+Também, fora de prod: 2 `pnpm build` na árvore de rascunho (L3); `adb` no Tab (estado, `stay_on`, `reverse`,
+`force-stop`, `logcat`, duas leituras `run-as cat`); **`.env*`**: `apps/native/.env` (copiado, nomes e host lidos),
+`.env.uxaudit` e `.env.local` (carregados pelo script da B5) — todos com autorização do Marcel nesta sessão;
+**contas criadas: 0**.
+
+---
+
+## 12. As perguntas que sobram
+
+**Q4 — o leitor do G-par** (N4-D25; B2; L4).
+- **Números**: 63 de 63 válidos; **61 iguais**, **2 diferentes** — as 2 Cifras com `sections[]` (de 3 Cifras). E a
+  L4: **o editor do web grava `sections` e nunca atualiza o `chords` do topo** — toda Cifra editada no web depois de
+  ter seções (e toda Cifra-texto editada, que ganha a seção `"Content"`) chega ao palco com o texto **velho**.
+- **(a) o contrato do core como está**, com as 2 Cifras **declaradas** (herança D: o editor que não atualiza o
+  `chords`); o G-par compara 61 e lista as 2 como exceção nomeada; o palco continua a mostrar o `chords` do topo.
+- **(b) o core aprende a ler `sections[]`**, com a **mesma precedência e a mesma junção do web** (`sections`
+  primeiro: `name`/`chords`/`lyrics` por `"\n"`, seções por `"\n\n"`, `corpo-de-texto.ts:47-55`), e o `chords` do topo
+  só quando não há seções: o G-par dá **63 de 63**, e o palco passa a mostrar **o que o músico editou**; custa a errata
+  do T1-R7 (e do C-D7), um caso novo na fixture do G-par (já decidido, N4-D38) e muda o texto do palco nas 2 Cifras da
+  principal (a base do G-inv, que é mock, não tem `sections` — não muda).
+- **Recomendação: (b)**, na **PR-3** (core), com o G-par da PR-1 entrando reprovado pelas 2. Pela L4, (a) mantém o
+  palco mostrando o texto que o músico já trocou — o defeito que o G-par existe para pegar. O editor que não atualiza
+  o `chords` segue herança D em qualquer das duas.
+
+**Q6 — a N4-D9 com a B3** (N4-D27).
+- **Número**: **1** arquivo na principal, **138.916 B = 0,066 %** do teto, já baixado; nenhum por baixar.
+- **(a) garantir todos os arquivos** (a primeira opção da D9): a soma cabe com folga de três ordens de grandeza; custa
+  os itens 1–4 da A7 (conjunto garantido, `prefetch plan reason=<novo>` com errata em par do G3, LRU protegendo
+  tudo, estado por música).
+- **(b) não mudar o mecanismo** e desenhar só o estado "não baixada" por música (Partitura e Cifra escaneada): hoje
+  ele seria inalcançável na principal (0 não baixados), mas não na audit nem numa conta que suba PDFs.
+- **Recomendação: (a)**, com o `lru over` como o sinal de que deixou de caber, e o estado "não baixada" **desenhado
+  mesmo assim** (é o estado entre a criação no web e o próximo sync com rede — regra 17).
+
+**Q13 — imagem e `.docx`/`.txt`** (N4-D34).
+- **Número**: B4 — **só `.pdf`** (1 de 1) na principal; o snapshot da audit já commitado, 5 de 5 `.pdf` (A2).
+- **(a) herança nomeada**, sem estado novo no N4: o palco segue mandando arquivo ao `react-native-pdf`, e o primeiro
+  arquivo não-PDF que aparecer é `pdf-error` — declarado no brief como estado conhecido e fora do recorte.
+- **(b) o estado "formato que o app ainda não mostra"** no palco e na visualização (o par do `VIEW-erro-formato`),
+  sem ramo de imagem — uma decisão pela extensão, antes do `<Pdf>`.
+- **Recomendação: (b)**: é barato (uma condição sobre a extensão, que o web já aceita no upload,
+  `frases-upload.ts:107`), troca uma falha muda por uma frase, e não depende de o dado existir hoje. Se o aval
+  preferir não ter estado sem dado, (a).
+
+**Q15 — a Tab editada no web** (L4, div. 976). O editor grava `measures` e deixa `tablature`; a edição não chega a
+leitor nenhum. **Recomendação**: herança **Bloco D**, junto do §10.1 item 3 do I1 (div. 776), com uma linha no
+brief: *"a tab é mostrada como foi importada"*.
+
+**Q16 — o editor da Cifra no Bloco D** (L4, div. 975). Com a Q4 em (b), o palco deixa de depender do `chords` do
+topo; o `chords` desatualizado continua no banco e é o que o `checkContentData` do `PUT` valida
+(`route.ts:260-278`). **Recomendação**: herança **Bloco D** — o editor passa a escrever o `chords` do topo (ou o
+contrato de escrita passa a aceitar `sections` como corpo da Cifra) —, nomeada no encerramento do N4.
+
+---
+
+## 13. Divergências deste commit — 974 a 982
+
+A última do commit 1 é a **973** `[medido: grep -noE '^\| \*\*9[5-9][0-9]\*\*' docs/native/N4-PRECHECK.md]`.
+
+| div. | origem | o quê | destino |
+|---|---|---|---|
+| **974** | P | O prompt da resposta à parada da B2 presumiu que as leituras **L1–L3** não tinham sido feitas (*"o teu relatório não as traz"*); foram, **antes da B1**, e estavam na mensagem que pediu o destravar do Tab | registrado (pedido do Marcel); a ordem do §2 do prompt foi cumprida |
+| **975** | A | **A Cifra editada no web chega ao palco com o texto velho**: o editor grava `sections` e nunca reescreve o `chords` do topo (`chord-editor.tsx:38-41`; `content-editor.tsx:64-68`), que é o que o palco lê; o gate do `PUT` fixa isso nos dois casos de Cifra (`editor-put-antes.json`) | §12 Q4 (b) e Q16 (Bloco D) |
+| **976** | A | **A Tab editada no web não chega a leitor nenhum**: o editor grava `measures` e deixa `tablature` (`tab-editor.tsx:25-50`); o palco e a visualização do web leem `tablature` | §12 Q15 (Bloco D, com o §10.1 item 3 do I1) |
+| **977** | A | **A frase que vai ao core sai do G-tok** (446 → 445 strings de `.ts` examinadas, L3): o gate do web varre os arquivos da lista, não o `packages/core` — o caso do padrão *"instrumento com escopo menor do que parece"* | **requisito da PR-2** (aval): a forma do gate é pergunta da PR-2 |
+| **978** | A | **Forma legada no dado real**: 2 das 3 Cifras da principal com `sections[]` e `chords` em texto, com textos diferentes nos dois leitores (B2); 6 de 63 poluídos pelo editor | **N4-D38** (B6 dispensada; o caso na fixture do G-par) |
+| **979** | P | O aval autorizou o `.env.uxaudit` **só** para a B5, mas o login da audit pelo caminho do projeto (`scripts/ux-audit/auth.ts:14-16`) lê também o **`.env.local`** (a `NEXT_PUBLIC_FIREBASE_API_KEY`) | autorizado pelo Marcel na sessão ("Autorizo"); o script da B5 os carregou sem imprimir valor |
+| **980** | A | O `accelerometer_rotation` do Tab estava **1** (o `APARATO.md`, *"Rotação por aparelho"*, descreve o retrato com `accelerometer_rotation=0`); o app subiu em B | lido e deixado como estava; nenhum dump comparado contra base nesta PR (sem objeto para o G-inv) |
+| **981** | A | O *"md5 antes e depois"* da receita do `APARATO.md` dá **um arquivo mudado**: o `setlists.json` (o `syncedAtMs` do sync, com `invalidated=0`); os outros três iguais. O cache do Tab é o do uso real e **não se restaura** (orçamento, B1) | declarado no anexo |
+| **982** | P | A B1 orçada como *"o sync normal do app"* pressupunha o app de pé; o app do Tab é o **dev client**, que só sincroniza com o Metro, e o Metro precisa do **`apps/native/.env`** — fora da autorização do `.env.uxaudit` | parei e perguntei; autorizado pelo Marcel ("eu autorizo o sync"); cópia por `cp -p`, nomes e host no anexo, apagado no fim |
+
+**Contagem**: 9 — A 6 · P 3. **Fechadas neste commit**: a **971** (as notas no `N3-ENCERRAMENTO.md`, N4-D37); a
+**970** recebe destino W5 (N4-D37).
+
+---
+
+## 14. A proposta de brief revista
+
+O `## 7` fica como está; o que muda:
+
+- **As medidas da B1, que mudam desenho**: a lista tem **63** itens na principal — **57 de 63 Letras** (o filtro por
+  tipo separa um grupo dominante de três pequenos: Cifra 3, Tab 2, Partitura 1); **52 de 63 sem artista** (a linha
+  sem artista é o caso **comum**, não o raro — o "· artista" do palco e o *"artista desconhecido"* do web se
+  desenham como estado principal); **1 favorita** (*Só as favoritas* com um item é o caso real; o vazio dele, o mais
+  provável numa conta nova).
+- **O comprimento no lugar do "maior título"**: maior título **27** caracteres, maior artista **13** — números, não
+  o texto; o pior caso desenhado continua sendo o do N3 (o título longo da fixture), não o da principal.
+- **As duas alternativas da N4-D33**, lado a lado: a biblioteca **convivendo** com `Buscar música` × a biblioteca
+  **absorvendo** a busca.
+- **A faixa A**: referência = as molduras `N3-A-*` do `DESIGN-N3`, porque em A as telas de hoje usam os tokens de B
+  (`faixas.A = faixaB`) e a captura do celular **não é** a composição de A.
+- **Os campos da N4-D31**: só os salvos de verdade — álbum, dificuldade, gênero, tom, andamento, etiquetas, as notas
+  do content (e as datas, se o desenho propuser); compasso, capo e afinação **fora** (herança D).
+- **Filtros**: tipo e *Só as favoritas*; sem dificuldade, sem ordem.
+- **O favoritar**: só online (N4-D23), com as espécies do N2; e a nota da **N4-D39** — favoritar no tablet reordena o
+  "Recentes" do painel do web.
+- **O corpo**: o leitor do palco (N4-D24) — e, conforme a Q4, a Cifra com seções mostra as seções; a Tab é mostrada
+  como foi importada (Q15).
+- **O offline**: o texto é sempre local; o estado "não baixada" é só de arquivo (N4-D27), desenhado mesmo com 0 na
+  principal (Q6).
+- **O formato não-PDF**: conforme a Q13.
+- **A ordem de PRs** é a da **N4-D32**: o brief e o congelamento vêm antes da PR-1; as capturas novas de B e do palco
+  avulso entram no brief.
+- **Fora do brief**: a linha do teto de 100 (N4-D28).
+
+---
+
+## 15. Contabilidade do commit 2
+
+| | |
+|---|---|
+| requests a `/api/*` em prod | **6**: B1 2 `GET`; B5 2 `GET` + 2 `PUT` |
+| requests a terceiros | **1** login Firebase (B5); **0** `HEAD` ao Storage |
+| escritas em prod | **2** (B5, conta de audit, no descartável; `is_favorite` desfeito; `updated_at` não) |
+| contas criadas | **0** |
+| aparelho | Tab S6 (destravado pelo Marcel); `stay_on` 0 → 7 → 0; nada mais mudado |
+| `.env*` | `apps/native/.env` (B1), `.env.uxaudit` e `.env.local` (B5) — autorizados pelo Marcel; **nenhum valor** impresso, colado ou commitado |
+| temporários | o `content.json` (duas cópias), o índice, o `setlists.json`, o logcat e o bundle: fora do repositório, **apagados**; a árvore `../octavia-n4-h15`: **removida** |
+| arquivos | `docs/native/N4-PRECHECK.md` (§0 e §2 com erratas; §9–§15 novos); anexos novos `l1`…`l4`, `b1-b4`, `b5`; `docs/native/N3-ENCERRAMENTO.md` §10.6 e §10.7 (nota); `docs/ux/I1-ENCERRAMENTO.md` §10.2 item 2 (nota) e §10.5 item 11 (novo) |
+| código | nenhum |
