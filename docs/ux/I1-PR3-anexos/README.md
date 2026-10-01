@@ -185,6 +185,7 @@ contra o código cortado.
 
 1. `next.config.mjs:16`: `'/api/:path((?!proxy).*)'` → `'/api/:path*'`; o `tests/config/next-headers.test.ts` acompanha; declarado no ```gates-web``` (`gback`).
 2. **`public/sw.js` vira worker de auto-destruição** (div. 560): `skipWaiting()` na instalação; na ativação apaga todos os caches, os IndexedDB do app, `unregister()` e recarrega os clientes; sem `fetch` handler; estático, à mão, ≤ 40 linhas. **Fica até o encerramento do I1.** A **div. 561 é aceita** pelo Marcel: as escritas presas na fila offline dos aparelhos se perdem.
+   > **Errata** `[Marcel, 2026-09-30, aval 4 do encerramento]`: o *"Fica até o encerramento do I1"* acima não vale — o `public/sw.js` e o `worker-src`/`manifest-src` saem no **bloco seguinte ao I1**, como a herança nomeada do §13 (`docs/ux/I1-ENCERRAMENTO.md` §10.5.1, div. 951).
 3. Divs. 555, 556 e 558 aprovadas como propostas.
 4. `PERFORMANCE_MODE_TESTING.md` e `scripts/test-performance-mode.sh` entram no corte (grupo palco); `README.md` e `CLAUDE.md` editados no commit 3, só nas linhas de palco e PWA.
 5. **I1-D36 resolvida**: a fonte do tipo do arquivo é a extensão de `content.file_url` (`lib/utils.ts:15-55`), sem lógica nova; URL sem extensão mostra *"Failed to load file"*. A medição das 8 `file_url` é do B5 (`docs/ux/B5-PRECHECK.md:157-177`), não repetida.

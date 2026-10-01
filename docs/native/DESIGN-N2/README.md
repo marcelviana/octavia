@@ -448,6 +448,17 @@ O aceite do §3 está em [`N2-PR7-anexos/aparato.md`](../N2-PR7-anexos/aparato.m
 
 **O `SHA256SUMS` do N2 não muda com esta errata**; os dois congelados seguem conferindo. Nenhum `testID` novo — a posição de cada um por faixa está na seção "testIDs" do `DESIGN-N3/telas.html`. Divs. 393–399 do `DESIGN-N3/README.md` §9.
 
+### Errata do I1 (o ícone do Salvar)
+
+**N2-E25 — o ícone do Salvar é o `garantida` do catálogo, na forma do `dados.ts`; a legenda vale, a moldura não.** *(Nota do encerramento do I1, 2026-09-30, `docs/ux/I1-ENCERRAMENTO.md` §5; divs. 599 e 600 da I1-PR-4, `docs/native/I1-PR4-anexos/README.md` §6 e §8. Errata SEM redesenhar moldura, pelo precedente da E16; nenhum texto acima reescrito.)* A folha diz duas coisas diferentes sobre o mesmo ícone:
+
+| div. | a legenda / o código | a moldura | o que vale |
+| --- | --- | --- | --- |
+| **599** (D) | a legenda diz *"garantida existente reaproveitado em três papéis novos: … e o visto do botão de salvar"*; o nativo seguiu a legenda (`FolhaDeCriar.tsx:558`, `ModoDeReordenar.tsx:595`: `nome="garantida"`) | desenha um **visto** sem círculo (`M4.5 12.5l5 5 10-11`, 8 ocorrências no `telas.html`), que não é registro do anexo D | **a legenda**: o Salvar usa o `garantida`. O visto não entrou no pacote (I1-PR-4, decisão 2 (b); **I1-E6** do `DESIGN-I1`) |
+| **600** (D) | o `garantida` do `dados.ts` — hoje `packages/identidade/src/icones.ts:111` — tem **uma** forma: `r 9 · M8 12.2l2.8 2.8L16.2 9.4` | desenha o `garantida` também com **r 8,5** (`M8.4 12.3l2.5 2.5 4.7-5`, 7 ocorrências: "1 criar em S1", "5 picker"); a folha do web a herdou (I1-E3) | **o `dados.ts`**: uma forma, r 9 |
+
+**O `SHA256SUMS` do N2 não muda com esta errata** (ele não lista o `README.md`, §8); o app não muda — já fazia o que esta errata diz.
+
 **Próxima divergência livre: 335.**
 
 Divergências abertas nesta PR, **221 a 225** (o W4-a parou em 220):

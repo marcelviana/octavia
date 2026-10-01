@@ -1,0 +1,156 @@
+# I1-ENCERRAMENTO — as PRs do bloco (rastro; regenerado no commit 2 sobre origin/main = c1640e5; a #350 é este encerramento)
+$ git log --merges --format="%h %cI %s" c57d81f..c1640e5
+c1640e5 2026-09-30T20:18:27-03:00 Merge pull request #352 from marcelviana/i1/pr15-poda-final
+baeebf7 2026-09-30T19:28:49-03:00 Merge pull request #351 from marcelviana/i1/pr2-google
+1cb897f 2026-09-30T15:55:10-03:00 Merge pull request #349 from marcelviana/i1/pr14-poda
+6f8299f 2026-09-30T14:42:38-03:00 Merge pull request #348 from marcelviana/i1/pr13-setlists
+aa772df 2026-09-30T10:19:02-03:00 Merge pull request #347 from marcelviana/i1/pr12-upload
+434ba79 2026-09-29T18:34:04-03:00 Merge pull request #346 from marcelviana/i1/pr11-content-edit
+8fe45e8 2026-09-29T09:55:31-03:00 Merge pull request #345 from marcelviana/i1/pr10-content-view
+8b662fc 2026-09-28T16:09:44-03:00 Merge pull request #344 from marcelviana/i1/pr9-content-lista
+462b269 2026-09-28T12:05:16-03:00 Merge pull request #343 from marcelviana/i1/pr8-privacy
+d57a832 2026-09-28T11:32:34-03:00 Merge pull request #342 from marcelviana/i1/pr7-landing
+c8533c4 2026-09-28T10:53:39-03:00 Merge pull request #341 from marcelviana/i1/pr6-auth
+98673ed 2026-09-27T18:10:56-03:00 Merge pull request #340 from marcelviana/i1/pr5-gates-web
+73612be 2026-09-27T14:33:39-03:00 Merge pull request #339 from marcelviana/i1/pr4-identidade
+d18b7c4 2026-09-27T13:24:28-03:00 Merge pull request #338 from marcelviana/i1/design-congelamento
+efde410 2026-09-26T18:32:33-03:00 Merge pull request #337 from marcelviana/i1/pr3-corte
+ab66e1a 2026-09-26T16:15:56-03:00 I1-PR-3 — merge da main (#336)
+b68305b 2026-09-26T15:06:02-03:00 Merge pull request #336 from marcelviana/i1/pr1-sessao
+089f72c 2026-09-26T12:52:44-03:00 Merge pull request #335 from marcelviana/i1/precheck
+
+$ para n em 335…349, 351, 352: gh pr view $n --json number,title,mergeCommit,mergedAt,commits,additions,deletions,changedFiles
+#335 | I1 — pre-check (Fase A, só leitura) | merge 089f72c | 2026-09-26T15:52:45Z | 4 commits | +6693 −0 · 81 arquivos
+#336 | I1-PR1 — o loop mudo do POST /api/auth/session (gate-first) | merge b68305b | 2026-09-26T18:06:02Z | 4 commits | +1953 −144 · 46 arquivos
+#337 | I1-PR3 — o corte: palco, PWA/offline e as quatro páginas | merge efde410 | 2026-09-26T21:32:33Z | 7 commits | +3007 −13045 · 153 arquivos
+#338 | I1 — congelamento da folha do web (DESIGN-I1) | merge d18b7c4 | 2026-09-27T16:24:28Z | 2 commits | +31276 −0 · 15 arquivos
+#339 | I1-PR-4 — packages/identidade: tokens e ícones compartilhados; nativo passa a importar | merge 73612be | 2026-09-27T17:33:40Z | 4 commits | +2863 −584 · 31 arquivos
+#340 | I1-PR-5 — os gates do web (G-back, G-palco, G-tok, G-faixa) e gates-web.yml | merge 98673ed | 2026-09-27T21:10:56Z | 3 commits | +27802 −4 · 50 arquivos
+#341 | I1-PR-6 — superfície 1: auth | merge c8533c4 | 2026-09-28T13:53:40Z | 6 commits | +124340 −1005 · 102 arquivos
+#342 | I1-PR-7 — superfície 2: landing (/) | merge d57a832 | 2026-09-28T14:32:34Z | 3 commits | +3620 −366 · 36 arquivos
+#343 | I1-PR-8 — superfície 3: privacy-policy com a identidade da folha | merge 462b269 | 2026-09-28T15:05:17Z | 3 commits | +5435 −43 · 32 arquivos
+#344 | I1-PR-9 — superfície 4: content lista (/dashboard, /library) e a casca | merge 8b662fc | 2026-09-28T19:09:45Z | 4 commits | +132167 −1953 · 114 arquivos
+#345 | I1-PR-10 — superfície 5: content visualização (/content/[id]) | merge 8fe45e8 | 2026-09-29T12:55:31Z | 5 commits | +83264 −1969 · 97 arquivos
+#346 | I1-PR-11 — superfície 6: content editor (/content/[id]/edit) | merge 434ba79 | 2026-09-29T21:34:05Z | 4 commits | +142867 −1655 · 93 arquivos
+#347 | I1-PR-12 — superfície 7: upload (/add-content) | merge aa772df | 2026-09-30T13:19:02Z | 6 commits | +129698 −1981 · 97 arquivos
+#348 | I1-PR-13 — superfície 8: setlists (/setlists) | merge 6f8299f | 2026-09-30T17:42:39Z | 8 commits | +269693 −1968 · 118 arquivos
+#349 | I1-PR-14 — poda: o web velho que sobra, e o error-boundary como tela | merge 1cb897f | 2026-09-30T18:55:11Z | 3 commits | +6122 −3692 · 102 arquivos
+#351 | I1-PR-2 — login com Google no web: script-src, frame-src, COOP (I1-D6) | merge baeebf7 | 2026-09-30T22:28:50Z | 5 commits | +6045 −1539 · 31 arquivos
+#352 | I1-PR-15 — poda final: dependências órfãs, literais do tema velho, rastro comprimido | merge c1640e5 | 2026-09-30T23:18:28Z | 3 commits | +1114 −160222 · 74 arquivos
+
+$ para cada merge M: git log --format="   %h %s" M^1..M^2
+#335 (089f72c)
+   58dec0e I1 — pre-check, commit 3b: Fase B fechada
+   ff39c3c I1 — pre-check, commit 3a: I1-D34…D36, erratas D25/D30, probe 2, scripts dos probes 1 e 4
+   4a88cf4 I1 — pre-check, commit 2: I1-D16…D33, medições 2.1–2.5, Fase B (bloqueada)
+   e799235 I1 — pre-check (Fase A, só leitura)
+#336 (b68305b)
+   0894d51 I1-PR-1 — docs e aceite
+   f8b2485 I1-PR1: CN de navegador não grava na árvore vigiada durante a medição (div. 531)
+   26d2c68 I1-PR1, commit 2: o conserto do loop mudo (cliente, só)
+   1f1525c I1-PR1, commit 1: o gate do loop mudo, reprovando na main
+#337 (efde410)
+   b698c53 I1-PR-3 — aceite A com sessão
+   b53259a I1-PR-3 — CLAUDE.md (div. 572)
+   ab66e1a I1-PR-3 — merge da main (#336)
+   c68170b I1-PR-3 — aceite e docs
+   c88353f I1-PR-3 — poda declarada (localforage, knip, redirects 308)
+   0029d80 I1-PR3 — commit 2: o corte
+   6196d02 I1-PR3 — commit 1: gate e medição (nada apagado)
+#338 (d18b7c4)
+   a81eb45 I1 — congelamento, commit 2: erratas I1-E1…E5 e decisões
+   b2b7ad0 I1 — congelamento da folha do web (DESIGN-I1)
+#339 (73612be)
+   86f1eb3 I1-PR-4 — commit 3: anexos, errata I1-E6 e a linha da §17
+   59b78de I1-PR-4 — ci.yml: tsc do packages/identidade (extra declarado)
+   08cdf6b I1-PR-4 — commit 2: packages/identidade; o nativo importa o pacote
+   4568877 I1-PR-4 — commit 1: CN de igualdade antes do pacote
+#340 (98673ed)
+   2fc4bb0 I1-PR-5 — decisões do aval (614, 616, 619, 621, 622) e fecho
+   86ac70a I1-PR-5 — commit 2: a linha de base do web velho e os anexos
+   a3b58e9 I1-PR-5 — commit 1: os quatro gates do web e os CNs do executor
+#341 (c8533c4)
+   c4e1bd6 I1-PR-6 — aceite em A e fecho
+   7b6fc20 I1-PR-6 — veredito: (e) reprova em 411 (div. 677)
+   e45a566 I1-PR-6 — faixa A: a auth empilha; o veredito reprova (b) em 411
+   ec48262 I1-PR-6 — aceite e docs
+   f87b639 I1-PR-6 — auth com a identidade da folha 1-auth
+   1d47884 I1-PR-6 — commit 1 (gate-first): inventário, esperado da folha, G-tok e a proposta do mecanismo
+#342 (d57a832)
+   1070821 I1-PR-7 — aceite e docs
+   7ae343e I1-PR-7 — landing com a identidade da folha 2-landing
+   ce617f1 I1-PR-7 — gate-first: G-tok com a landing, esperado da folha, veredito lê erratasFaixa
+#343 (462b269)
+   10e5d4e I1-PR-8 — aceite e docs
+   e57f5e2 I1-PR-8 — privacy-policy com a identidade da folha 3-privacy-policy
+   174ced3 I1-PR-8 — gate-first: G-tok com a política e a exceção de inglês, texto congelado, esperado da folha
+#344 (8b662fc)
+   2587cf1 I1-PR-9 — aceite e docs
+   b496342 I1-PR-9 — Filtros cabe no contêiner (I1-E14); a casca não vaza estilo (div. 727)
+   ed85f23 I1-PR-9 — casca, painel e biblioteca com a identidade da folha 4-content-lista
+   d991c73 I1-PR-9 — gate-first: inventário, matriz × folha, G-tok com a lista da content-lista, esperado da folha
+#345 (8fe45e8)
+   489019e I1-PR-10 — aceite e docs
+   3cd1a6d I1-PR-10 — base da escala do PDF pela folha (div. 761)
+   a1f846c I1-PR-10 — visualização com a identidade da folha 5-content-visualizacao
+   e7ab05f I1-PR-10 — instrumento: superfície content-edit no G-faixa (só medição)
+   2420b8d I1-PR-10 — gate-first: G-tok com a visualização, esperado da folha, inventário e o alcance
+#346 (434ba79)
+   8321ffc I1-PR-11 — aceite e docs
+   0f31b04 I1-PR-11 — instrumento: exact no Salvar (div. 801); medição por estado
+   c44c975 I1-PR-11 — editor com a identidade da folha 6-content-editor
+   f5260ec I1-PR-11 — gate-first: G-tok com os 9 arquivos do editor, quebra por dado no veredito, esperado da folha 6, o PUT da main gravado
+#347 (aa772df)
+   bd77cd7 I1-PR-12 — teste: a espera do pedaço do dynamic (o build do commit 4)
+   58130d8 I1-PR-12 — decisões do aval
+   6d8ea55 I1-PR-12 — aceite e docs
+   9bac7bb I1-PR-12 — upload com a identidade da folha 7-upload
+   7b33d06 I1-PR-12 — instrumento: superfície add-content no G-faixa (só medição)
+   e5fdf5f I1-PR-12 — gate-first: G-tok com os 21 arquivos do upload, esperado da folha 7-upload, o POST byte a byte da main
+#348 (6f8299f)
+   ce5a30e I1-PR-13 — aceite e docs
+   8baa1f2 I1-PR-13 — instrumento: a re-medição por estado em A; o veredito com a regra nova
+   8a75485 I1-PR-13 — instrumento: o nome longo sem exigir chave sem par (div. 889); a re-medição por estado em C e B
+   42be3f8 I1-PR-13 — instrumento: rótulo curto com nome acessível longo (I1-D7.4); E31 desfeita
+   5a8dc93 I1-PR-13 — o aceite das setlists e as erratas propostas
+   ab0de37 I1-PR-13 — setlists com a identidade da folha 8-setlists
+   6323dd5 I1-PR-13 — gate-first: as decisões do aval
+   ae78774 I1-PR-13 — gate-first: setlists (os três defeitos, as escritas, G-tok, esperado, o antes)
+#349 (1cb897f)
+   b99ca7d I1-PR-14 — docs
+   5977f98 I1-PR-14 — poda do web velho; a tela de erro global pela identidade
+   747269e I1-PR-14 — gate-first: o error-boundary no G-tok, a cobertura da lista, a 828, a prova da tela de erro
+#351 (baeebf7)
+   a8fdf98 I1-PR-2 — docs: div. 943, o botão do Google no tema Dark (decisão da marca)
+   cb65917 I1-PR-2 — docs: anexo, aceite real do Marcel, H-I1-3 e div. 564 fechadas
+   cdaee40 I1-PR-2 — a marca do Google: o asset novo do Marcel, fundo transparente
+   c134f7d I1-PR-2 — login com Google: script-src, frame-src, COOP (I1-D6)
+   1fbdc12 I1-PR-2 — gate: CN do Entrar com Google reprovando na main + medição diretiva a diretiva
+#352 (c1640e5)
+   9a17b24 I1-PR-15 — docs: o anexo, os scripts da prova por imagem, a nota na PR-14
+   fd6ca71 I1-PR-15 — a poda: 11 dependências, o Arial, o generator, o matcher, o rastro em .gz
+   42891d9 I1-PR-15 — gate-first: o leitor dos dois formatos e as medições (sem apagar)
+
+# linhas por PR — git diff --shortstat M^1 M  |  o mesmo sem docs/, tests/gates-web/medicoes/, tests/gates-web/esperado/, pnpm-lock.yaml
+#335 089f72c | tudo: 81 files changed, 6693 insertions(+) | código:
+#336 b68305b | tudo: 46 files changed, 1953 insertions(+), 144 deletions(-) | código: 7 files changed, 735 insertions(+), 144 deletions(-)
+#337 efde410 | tudo: 153 files changed, 3007 insertions(+), 13045 deletions(-) | código: 121 files changed, 481 insertions(+), 13028 deletions(-)
+#338 d18b7c4 | tudo: 15 files changed, 31276 insertions(+) | código:
+#339 73612be | tudo: 31 files changed, 2863 insertions(+), 584 deletions(-) | código: 25 files changed, 2163 insertions(+), 582 deletions(-)
+#340 98673ed | tudo: 50 files changed, 27802 insertions(+), 4 deletions(-) | código: 22 files changed, 1613 insertions(+), 2 deletions(-)
+#341 c8533c4 | tudo: 102 files changed, 124340 insertions(+), 1005 deletions(-) | código: 45 files changed, 1853 insertions(+), 1004 deletions(-)
+#342 d57a832 | tudo: 36 files changed, 3620 insertions(+), 366 deletions(-) | código: 12 files changed, 135 insertions(+), 363 deletions(-)
+#343 462b269 | tudo: 32 files changed, 5435 insertions(+), 43 deletions(-) | código: 7 files changed, 139 insertions(+), 40 deletions(-)
+#344 8b662fc | tudo: 114 files changed, 132167 insertions(+), 1953 deletions(-) | código: 61 files changed, 1612 insertions(+), 1949 deletions(-)
+#345 8fe45e8 | tudo: 97 files changed, 83264 insertions(+), 1969 deletions(-) | código: 37 files changed, 1322 insertions(+), 1821 deletions(-)
+#346 434ba79 | tudo: 93 files changed, 142867 insertions(+), 1655 deletions(-) | código: 42 files changed, 4835 insertions(+), 1652 deletions(-)
+#347 aa772df | tudo: 97 files changed, 129698 insertions(+), 1981 deletions(-) | código: 35 files changed, 1817 insertions(+), 1978 deletions(-)
+#348 6f8299f | tudo: 118 files changed, 269693 insertions(+), 1968 deletions(-) | código: 44 files changed, 2141 insertions(+), 1952 deletions(-)
+#349 1cb897f | tudo: 102 files changed, 6122 insertions(+), 3692 deletions(-) | código: 76 files changed, 462 insertions(+), 2654 deletions(-)
+#351 baeebf7 | tudo: 31 files changed, 6045 insertions(+), 1539 deletions(-) | código: 5 files changed, 341 insertions(+), 20 deletions(-)
+#352 c1640e5 | tudo: 74 files changed, 1114 insertions(+), 160222 deletions(-) | código: 6 files changed, 36 insertions(+), 41 deletions(-)
+TOTAL tudo +977959 -190170 | código +19685 -27230
+$ git diff --shortstat c57d81f c1640e5
+ 1029 files changed, 816532 insertions(+), 28743 deletions(-)
+$ git diff --shortstat c57d81f c1640e5 -- . ":!docs" ":!tests/gates-web/medicoes" ":!tests/gates-web/esperado" ":!pnpm-lock.yaml"
+ 396 files changed, 19365 insertions(+), 26910 deletions(-)

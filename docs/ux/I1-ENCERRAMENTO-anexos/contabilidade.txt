@@ -1,0 +1,196 @@
+# I1-ENCERRAMENTO — contabilidade e números do §1 (rastro; regenerado no commit 2 sobre origin/main = c1640e5)
+# árvore ../octavia-i1-encerramento = c1640e5 + os commits desta PR (só docs); sem .env* (só .env.example versionado); pnpm install --frozen-lockfile --offline
+
+## 1. suíte, no sha do encerramento (c1640e5)
+$ pnpm test
+ Test Files  118 passed | 3 skipped (121)
+      Tests  1181 passed | 58 skipped (1239)
+# exit: 0
+
+## 2. suíte, no sha do pre-check — medido no commit 1 (worktree temporária em c57d81f, removida), transcrito do anexo do commit 1
+$ git worktree add --detach <scratchpad>/wt-c57 c57d81f && pnpm install --frozen-lockfile --offline && pnpm test
+ Test Files  115 passed | 4 skipped (119)
+      Tests  1090 passed | 85 skipped (1175)
+# exit: 0
+$ git grep -n "1101" -- docs/ux docs/native/I1-PR4-anexos   # a contagem "1101" do prompt
+docs/ux/I1-PRECHECK-anexos/faseB/probe1-out/requests.txt:1073:  81101  b  GET    200       /_next/static/chunks/webpack-
+docs/ux/I1-PRECHECK-anexos/faseB/probe1-out/requests.txt:1074:  81101  b  GET    200       /_next/static/chunks/4509c6e4
+
+
+## 3. rotas — pnpm build (sem .env), em c1640e5
+$ pnpm build
+Route (app)                                 Size  First Load JS
+┌ ƒ /                                      512 B         111 kB
+├ ƒ /_not-found                            988 B         103 kB
+├ ƒ /add-content                         3.92 kB         277 kB
+├ ƒ /api/auth/session                      183 B         102 kB
+├ ƒ /api/content                           183 B         102 kB
+├ ƒ /api/content/[id]                      183 B         102 kB
+├ ƒ /api/health                            183 B         102 kB
+├ ƒ /api/profile                           183 B         102 kB
+├ ƒ /api/setlists                          183 B         102 kB
+├ ƒ /api/setlists/[id]                     183 B         102 kB
+├ ƒ /api/setlists/[id]/songs               183 B         102 kB
+├ ƒ /api/setlists/[id]/songs/order         183 B         102 kB
+├ ƒ /api/setlists/songs/[songId]           183 B         102 kB
+├ ƒ /api/storage/delete                    183 B         102 kB
+├ ƒ /api/storage/list                      183 B         102 kB
+├ ƒ /api/storage/upload                    183 B         102 kB
+├ ƒ /content/[id]                         118 kB         393 kB
+├ ƒ /content/[id]/edit                   6.01 kB         279 kB
+├ ƒ /dashboard                           3.78 kB         274 kB
+├ ƒ /forgot-password                       995 B         259 kB
+├ ƒ /library                               418 B         274 kB
+├ ƒ /login                               2.23 kB         265 kB
+├ ƒ /privacy-policy                        183 B         102 kB
+├ ƒ /setlists                            1.89 kB         275 kB
+├ ƒ /signup                              1.84 kB         265 kB
+├ ƒ /signup/confirm-email                  818 B         264 kB
+└ ƒ /verify-email                        1.07 kB         261 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/4509c6e4-bdb2941da3d607e5.js  53.3 kB
+  ├ chunks/5586-b5ab0bde052739d7.js        46 kB
+  └ other shared chunks (total)          2.91 kB
+
+
+ƒ  (Dynamic)  server-rendered on demand
+# exit: 0
+
+## 4. dependências — package.json da raiz, c57d81f × c1640e5
+$ git diff c57d81f c1640e5 -- package.json | grep -E "^[-+] "
+-    "build": "pnpm exec next build && node scripts/build-sw.js",
+-    "build:sw": "node scripts/build-sw.js",
++    "build": "pnpm exec next build",
+-    "@hookform/resolvers": "^3.9.1",
+-    "@radix-ui/react-accordion": "1.2.2",
+-    "@radix-ui/react-alert-dialog": "1.1.4",
+-    "@radix-ui/react-aspect-ratio": "1.1.1",
+-    "@radix-ui/react-avatar": "1.1.2",
+-    "@radix-ui/react-checkbox": "1.1.3",
+-    "@radix-ui/react-collapsible": "1.1.2",
+-    "@radix-ui/react-context-menu": "2.2.4",
+-    "@radix-ui/react-dialog": "1.1.4",
+-    "@radix-ui/react-dropdown-menu": "2.1.4",
+-    "@radix-ui/react-label": "2.1.1",
+-    "@radix-ui/react-popover": "1.1.4",
+-    "@radix-ui/react-progress": "1.1.1",
+-    "@radix-ui/react-scroll-area": "1.2.2",
+-    "@radix-ui/react-select": "2.1.4",
+-    "@radix-ui/react-separator": "1.1.1",
+-    "@radix-ui/react-slider": "1.2.2",
+-    "@radix-ui/react-slot": "1.1.1",
+-    "@radix-ui/react-switch": "1.1.2",
+-    "@radix-ui/react-tabs": "1.1.2",
+-    "@radix-ui/react-toast": "1.2.4",
+-    "@radix-ui/react-toggle": "1.1.1",
+-    "@radix-ui/react-tooltip": "1.1.6",
++    "@octavia/identidade": "workspace:*",
+-    "@types/debug": "4.1.12",
+-    "autoprefixer": "^10.4.20",
+-    "class-variance-authority": "^0.7.1",
+-    "cmdk": "1.0.4",
+-    "date-fns": "4.1.0",
+-    "immer": "^10.1.3",
+-    "isomorphic-dompurify": "^2.26.0",
+-    "localforage": "1.10.0",
+-    "lru-cache": "^11.1.0",
+-    "lucide-react": "^0.454.0",
+-    "next-themes": "^0.4.4",
+-    "react-day-picker": "8.10.1",
+-    "react-hook-form": "^7.54.1",
+-    "react-resizable-panels": "^2.1.7",
+-    "sonner": "^1.7.1",
+-    "tailwindcss-animate": "^1.0.7",
+-    "zod": "^3.24.1",
+-    "zustand": "^5.0.8"
++    "zod": "^3.24.1"
+removidas: 40 (o zod só perdeu a vírgula final; o build e o build:sw são scripts) — localforage (PR-3), sonner (PR-13), 27 (PR-14), 11 (PR-15) · adicionada: @octavia/identidade
+
+## 5. frases pt-BR — folhas string dos objetos FRASES_* exportados pelos components/*/frases-*.ts (c1640e5)
+$ pnpm exec tsx <contar-frases.ts> components/*/frases-*.ts   # folhas string dos objetos exportados FRASES_*
+components/auth/frases-auth.ts 70
+components/auth/frases-sessao.ts 7
+components/content/frases-visualizacao.ts 47
+components/editors/frases-editor.ts 73
+components/identidade/frases-casca.ts 10
+components/identidade/frases-erro.ts 5
+components/landing/frases-landing.ts 5
+components/library/frases-lista.ts 53
+components/setlists/frases-setlists.ts 72
+components/upload/frases-upload.ts 79
+total 421
+
+## 6. gates do web em c1640e5
+$ sh scripts/gates-web/g-palco.sh | tail -1
+G-palco: PASSA — 0 ocorrências
+$ (cd docs/ux/DESIGN-I1 && shasum -a 256 -c SHA256SUMS | grep -c ": OK")
+14
+$ node scripts/gates-web/g-tok.mjs | tail -4
+## (ii) arquivos redesenhados — scripts/gates-web/g-tok-arquivos.txt
+  arquivos: 132 · literais de identidade acusados: 0 · toasts: 0 · imports de ui: 0 · textos examinados: 33 · isentos de inglês (scripts/gates-web/g-tok-sem-ingles.txt): 1 · vocabulário: 133 · isenções: 9 · strings de .ts examinadas (div. 828): 446 · frases isentas (scripts/gates-web/g-tok-frases-isentas.txt): 5 de 5 entradas
+
+G-tok: PASSA
+$ node scripts/gates-web/g-tok-cobertura.mjs | tail -3
+  arquivos de tela: 129 · na lista: 129 · excluídos: 0 · FORA: 0 · da lista que não são de tela (informa): 3
+
+G-tok (cobertura): PASSA
+$ node scripts/gates-web/g-faixa-veredito.mjs tests/gates-web/medicoes | grep -E "^G-faixa|contados à parte|sem cobertura"
+G-faixa (veredito) — tests/gates-web/medicoes: 14 medição(ões)
+## contados à parte (não reprovam): errata candidata 773 · quebra por dado 42 · sem par folha 656 · sem par app 1226 (C e B) · não medidos 26
+## erratas candidatas sem cobertura (erratasFaixa, div. 681): 0
+G-faixa: PASSA
+$ node scripts/gates-web/g-faixa-veredito.mjs tests/gates-web/medicoes/cn-main | tail -1
+G-faixa: REPROVA — 83 ocorrência(s)
+
+## 7. volume dos JSON de medição
+$ du -sh tests/gates-web/medicoes tests/gates-web/esperado
+ 10M	tests/gates-web/medicoes
+3.0M	tests/gates-web/esperado
+$ find tests/gates-web/medicoes tests/gates-web/esperado \( -name "*.json" -o -name "*.json.gz" \) | wc -l ; ... -name "*.json.gz" | wc -l
+      51
+      22
+$ git diff --shortstat c57d81f c1640e5 -- tests/gates-web/medicoes tests/gates-web/esperado
+ 52 files changed, 712397 insertions(+)
+
+## 8. APKs do bloco — native.yml, job android-debug-apk (runs de branches i1/* e main desde 2026-09-26; o push 53bf0d5 do N3 excluído)
+$ gh run list --workflow=native.yml --created ">=2026-09-26T00:00:00Z"  +  gh run view <id> --json jobs
+36470300274 2026-09-28T19:09:48Z push 8b662fc mudou-nativo=success android-debug-apk=success
+36469768806 2026-09-28T19:05:16Z pull_request 2587cf1 mudou-nativo=success android-debug-apk=success
+36462867415 2026-09-28T18:06:33Z pull_request b496342 mudou-nativo=success android-debug-apk=skipped
+36458680620 2026-09-28T17:31:05Z pull_request ed85f23 mudou-nativo=success android-debug-apk=success
+36431893212 2026-09-28T13:53:44Z push c8533c4 mudou-nativo=success android-debug-apk=success
+36430842417 2026-09-28T13:45:07Z pull_request c4e1bd6 mudou-nativo=success android-debug-apk=skipped
+36430505341 2026-09-28T13:42:22Z pull_request 7b6fc20 mudou-nativo=success android-debug-apk=skipped
+36420311749 2026-09-28T12:12:09Z pull_request e45a566 mudou-nativo=success android-debug-apk=skipped
+36418112130 2026-09-28T11:50:57Z pull_request ec48262 mudou-nativo=success android-debug-apk=skipped
+36357168753 2026-09-27T22:59:51Z pull_request f87b639 mudou-nativo=success android-debug-apk=success
+36337398858 2026-09-27T17:33:43Z push 73612be mudou-nativo=success android-debug-apk=success
+36335728634 2026-09-27T17:07:02Z pull_request 86f1eb3 mudou-nativo=success android-debug-apk=skipped
+36335505455 2026-09-27T17:03:26Z pull_request 59b78de mudou-nativo=success android-debug-apk=skipped
+36334712031 2026-09-27T16:50:23Z pull_request 08cdf6b mudou-nativo=success android-debug-apk=success
+construídos (success): 7 · pulados (skipped): 7 · nenhuma corrida da PR-2 nem da PR-15
+
+## 9. linhas por PR
+# linhas por PR — git diff --shortstat M^1 M  |  o mesmo sem docs/, tests/gates-web/medicoes/, tests/gates-web/esperado/, pnpm-lock.yaml
+#335 089f72c | tudo: 81 files changed, 6693 insertions(+) | código:
+#336 b68305b | tudo: 46 files changed, 1953 insertions(+), 144 deletions(-) | código: 7 files changed, 735 insertions(+), 144 deletions(-)
+#337 efde410 | tudo: 153 files changed, 3007 insertions(+), 13045 deletions(-) | código: 121 files changed, 481 insertions(+), 13028 deletions(-)
+#338 d18b7c4 | tudo: 15 files changed, 31276 insertions(+) | código:
+#339 73612be | tudo: 31 files changed, 2863 insertions(+), 584 deletions(-) | código: 25 files changed, 2163 insertions(+), 582 deletions(-)
+#340 98673ed | tudo: 50 files changed, 27802 insertions(+), 4 deletions(-) | código: 22 files changed, 1613 insertions(+), 2 deletions(-)
+#341 c8533c4 | tudo: 102 files changed, 124340 insertions(+), 1005 deletions(-) | código: 45 files changed, 1853 insertions(+), 1004 deletions(-)
+#342 d57a832 | tudo: 36 files changed, 3620 insertions(+), 366 deletions(-) | código: 12 files changed, 135 insertions(+), 363 deletions(-)
+#343 462b269 | tudo: 32 files changed, 5435 insertions(+), 43 deletions(-) | código: 7 files changed, 139 insertions(+), 40 deletions(-)
+#344 8b662fc | tudo: 114 files changed, 132167 insertions(+), 1953 deletions(-) | código: 61 files changed, 1612 insertions(+), 1949 deletions(-)
+#345 8fe45e8 | tudo: 97 files changed, 83264 insertions(+), 1969 deletions(-) | código: 37 files changed, 1322 insertions(+), 1821 deletions(-)
+#346 434ba79 | tudo: 93 files changed, 142867 insertions(+), 1655 deletions(-) | código: 42 files changed, 4835 insertions(+), 1652 deletions(-)
+#347 aa772df | tudo: 97 files changed, 129698 insertions(+), 1981 deletions(-) | código: 35 files changed, 1817 insertions(+), 1978 deletions(-)
+#348 6f8299f | tudo: 118 files changed, 269693 insertions(+), 1968 deletions(-) | código: 44 files changed, 2141 insertions(+), 1952 deletions(-)
+#349 1cb897f | tudo: 102 files changed, 6122 insertions(+), 3692 deletions(-) | código: 76 files changed, 462 insertions(+), 2654 deletions(-)
+#351 baeebf7 | tudo: 31 files changed, 6045 insertions(+), 1539 deletions(-) | código: 5 files changed, 341 insertions(+), 20 deletions(-)
+#352 c1640e5 | tudo: 74 files changed, 1114 insertions(+), 160222 deletions(-) | código: 6 files changed, 36 insertions(+), 41 deletions(-)
+TOTAL tudo +977959 -190170 | código +19685 -27230
+$ git diff --shortstat c57d81f c1640e5
+ 1029 files changed, 816532 insertions(+), 28743 deletions(-)
+$ git diff --shortstat c57d81f c1640e5 -- . ":!docs" ":!tests/gates-web/medicoes" ":!tests/gates-web/esperado" ":!pnpm-lock.yaml"
+ 396 files changed, 19365 insertions(+), 26910 deletions(-)

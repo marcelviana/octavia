@@ -1169,3 +1169,7 @@ que ficam sem uso (`components/ui/skeleton.tsx`, `components/ui/switch.tsx`).
 **I1-PR-4** (`packages/identidade` + migração do nativo, PR #339): anexos em [`docs/native/I1-PR4-anexos/`](../native/I1-PR4-anexos/README.md) — o pacote é do nativo tanto quanto do web.
 
 **I1-PR-2** (login com Google: `script-src`, `frame-src`, COOP — PR #351): anexos em [`docs/ux/I1-PR2-anexos/`](I1-PR2-anexos/README.md) — **H-I1-3 fechada**, div. 564 fechada; aceite real do Marcel em 2026-09-30 (entrou); divs. 933–943 (a 943: o botão no tema Dark do Google, decisão da marca).
+
+**I1-PR-15** (poda final: as 11 dependências órfãs, o `Arial`, o `generator`, o matcher, o rastro das medições em `.gz` — PR #352): anexos em [`docs/ux/I1-PR15-anexos/`](I1-PR15-anexos/README.md) — decisões 2 e 3 do aval do encerramento; divs. 944–950.
+
+**Encerramento do I1**: [`docs/ux/I1-ENCERRAMENTO.md`](I1-ENCERRAMENTO.md) — a fonte do bloco (#335–#352, sobre `c1640e5`); este pre-check é a fonte das I1-D1…D37 e das H-I1-1…7, e o encerramento só as indexa.
