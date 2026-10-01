@@ -1,0 +1,125 @@
+# gates sobre dae7009 (base 3e3390d), sem aparelho, sem .env
+
+$ sh apps/native/scripts/g-inv.sh docs/native/N3-PRECHECK-anexos/B5-baseline docs/native/N3-PR6c-anexos/dumps-final
+  · N3P6CF-S3-ultima-avd-pai: sem chave na base (fora da conta)
+  · N3P6CF-S3-ultima-tab-pai: sem chave na base (fora da conta)
+  · N3P6CF-S5-fim-avd-pai: sem chave na base (fora da conta)
+  · N3P6CF-S5-fim-tab-pai: sem chave na base (fora da conta)
+G-inv: 34 de 34 idênticos
+G-inv: IDÊNTICO EM DP ✓
+exit=0
+
+$ sh apps/native/scripts/g-inv.sh docs/native/N3-PRECHECK-anexos/B3-referencia-paisagem docs/native/N3-PR6c-anexos/dumps-final
+  · N3P6CF-picker-vazio-avd-pai: sem chave na base (fora da conta)
+  · N3P6CF-picker-vazio-tab-pai: sem chave na base (fora da conta)
+  · N3P6CF-reordenar-aberto-avd-pai: sem chave na base (fora da conta)
+  · N3P6CF-reordenar-aberto-tab-pai: sem chave na base (fora da conta)
+G-inv: 18 de 18 idênticos
+G-inv: IDÊNTICO EM DP ✓
+exit=0
+
+$ node apps/native/scripts/g-n3.mjs --pai docs/native/N3-PR6c-anexos/dumps-n-pai --faixa docs/native/N3-PR6c-anexos/dumps-n-ret
+
+ROLAGEM — o texto está no dump rolado do mesmo estado; não reprova, não soma ao (e): 0
+
+(b) CORTE — nó que sai da janela útil ou encosta na borda lateral, NOVO contra a paisagem — REPROVA: 0
+
+G-N3: (e)=0 · (b)=0 · nome-acessível=0 · rolagem=0 ✓ (d′ e 4 dp não reprovam: triagem e errata)
+exit=0
+
+$ sh apps/native/scripts/g1.sh 3e3390d WORKTREE
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+      EXCEÇÕES DECLARADAS (o escopo desta PR):
+        (nenhuma — nenhum arquivo de comportamento está fora da invariância)
+  G1a: DIFF NÃO VAZIO ✗
+       packages/core/src/content-contract.ts | 62 +++++++++++++++++++++++++++++++++--
+       1 file changed, 59 insertions(+), 3 deletions(-)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+      PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+        (nenhum — nenhuma asserção do core pode mudar nesta PR)
+  G1b: só adição ✓
+exit=1
+
+$ sh apps/native/scripts/g2g3.sh 3e3390d WORKTREE
+G2 — testIDs  antes=80  depois=80
+  G2: antes ⊆ depois ✓
+G3 — declarações: as listas locais deste script (sem GATES_DECL — rodada à mão)
+G3 — linhas log( antes=68  depois=68
+      ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+        (nenhuma)
+      REMOÇÕES DECLARADAS (linha → REMOVIDA: razão; N2-D34):
+        (nenhuma)
+      — nenhuma linha de log pode sumir nesta PR
+  G3: nenhuma linha sumiu ✓
+exit=0
+
+$ cd apps/native && node scripts/a20.mjs
+  arquivos varridos: 34 (inclui 1 de fora da raiz: ../../packages/core/src/frases.ts — N2-PR3, div. 229)
+  vocabulário: 45 termos · isenções do produto: 9
+  literais em posição de texto examinados: 169
+  acusações: 0
+exit=0
+
+$ cd apps/native && node scripts/icones.mjs
+  hex cravado: 0 · tinta por token: 6
+  §6.3 tab: em20 4 cordas · normal 6 cordas · markup de 20 dp no telas.html: idêntico
+  fora do catálogo: 4/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  acusações: 0 · avisos: 0
+exit=0
+
+$ sh scripts/gates-web/g-back.sh 3e3390d WORKTREE
+## (ii) arquivo novo no alcance (derivação do HEAD fora do congelado)
+  ✓ nenhum
+## (iii) declaração órfã (gback: de arquivo que não mudou)
+  ✓ nenhuma
+
+G-back: PASSA
+exit=0
+
+$ sh scripts/gates-web/g-palco.sh
+## 4. TEXTO — referência a rota/arquivo morto
+  ✓ nenhum
+
+G-palco: PASSA — 0 ocorrências
+exit=0
+
+$ node scripts/gates-web/g-tok.mjs
+## (ii) arquivos redesenhados — scripts/gates-web/g-tok-arquivos.txt
+  arquivos: 132 · literais de identidade acusados: 0 · toasts: 0 · imports de ui: 0 · textos examinados: 33 · isentos de inglês (scripts/gates-web/g-tok-sem-ingles.txt): 1 · vocabulário: 133 · isenções: 9 · strings de .ts examinadas (div. 828): 446 · frases isentas (scripts/gates-web/g-tok-frases-isentas.txt): 5 de 5 entradas
+
+G-tok: PASSA
+exit=0
+
+$ node scripts/gates-web/g-tok-cobertura.mjs
+## cobertura da lista (ii) — scripts/gates-web/g-tok-arquivos.txt (raiz .)
+  arquivos de tela: 129 · na lista: 129 · excluídos: 0 · FORA: 0 · da lista que não são de tela (informa): 3
+
+G-tok (cobertura): PASSA
+exit=0
+
+$ node scripts/gates-web/g-faixa-veredito.mjs tests/gates-web/medicoes
+  · signup · AUTH-signup-excecao: INALCANÇÁVEL (declarado) — o contexto não lança (todo catch devolve { error }): o catch da tela não se alcança [hipótese] (div. 640)
+  · verify-email · AUTH-verify-reenviar-excecao: INALCANÇÁVEL (declarado) — o contexto não lança: o catch da tela não se alcança [hipótese] (I1-E1, div. 640)
+
+G-faixa: PASSA
+exit=0
+
+$ cd docs/native/DESIGN-V1 && shasum -a 256 -c SHA256SUMS | sort | uniq -c | awk '{print $1, $NF}' | sort | uniq -c
+   3 1 OK
+exit=0
+
+$ cd docs/native/DESIGN-V1 && shasum -a 256 -c SHA256SUMS
+   3 OK
+exit=0
+
+$ cd docs/native/DESIGN-N2 && shasum -a 256 -c SHA256SUMS
+   2 OK
+exit=0
+
+$ cd docs/native/DESIGN-N3 && shasum -a 256 -c SHA256SUMS
+   2 OK
+exit=0
+
+$ cd docs/ux/DESIGN-I1 && shasum -a 256 -c SHA256SUMS
+  14 OK
+exit=0

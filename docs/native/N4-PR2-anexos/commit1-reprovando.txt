@@ -1,0 +1,290 @@
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-n4-pr2
+
+ ✓ |core| packages/core/src/content-contract.test.ts > isValidContent (T1-R7 (a)–(d)) > Lyrics com lyrics string → ok/text 1ms
+ ✓ |core| packages/core/src/content-contract.test.ts > isValidContent (T1-R7 (a)–(d)) > Lyrics com objeto sem lyrics → no-key (regra c) 0ms
+ ✓ |core| packages/core/src/content-contract.test.ts > isValidContent (T1-R7 (a)–(d)) > Lyrics com lyrics não-string → not-string (regra c) 0ms
+ ✓ |core| packages/core/src/content-contract.test.ts > isValidContent (T1-R7 (a)–(d)) > Chords com chords string → ok/text 0ms
+ ✓ |core| packages/core/src/content-contract.test.ts > isValidContent (T1-R7 (a)–(d)) > Chords com content_data null e file_url → ok/file (cifra escaneada) 0ms
+ ✓ |core| packages/core/src/content-contract.test.ts > isValidContent (T1-R7 (a)–(d)) > Chords com content_data null e sem file_url → no-body (regra b) 0ms
+ ✓ |core| packages/core/src/content-contract.test.ts > isValidContent (T1-R7 (a)–(d)) > Chords com objeto sem chords → no-key (os 2 registros do anexo D5) 0ms
+ ✓ |core| packages/core/src/content-contract.test.ts > isValidContent (T1-R7 (a)–(d)) > Chords poluído pelo editor do web mas com chords → ok/text (regra a) 0ms
+ ✓ |core| packages/core/src/content-contract.test.ts > isValidContent (T1-R7 (a)–(d)) > Tab com tablature string → ok/text 0ms
+ ✓ |core| packages/core/src/content-contract.test.ts > isValidContent (T1-R7 (a)–(d)) > Tab com objeto sem tablature → no-key 0ms
+ ✓ |core| packages/core/src/content-contract.test.ts > isValidContent (T1-R7 (a)–(d)) > Sheet com file_url é ok/file com content_data null, {file} ou {annotations} (D5b) 0ms
+ ✓ |core| packages/core/src/content-contract.test.ts > isValidContent (T1-R7 (a)–(d)) > Sheet sem file_url → no-body 0ms
+ ✓ |core| packages/core/src/content-contract.test.ts > isValidContent (T1-R7 (a)–(d)) > content_type fora do enum → unknown-type (regra d) 0ms
+ ✓ |core| packages/core/src/content-contract.test.ts > bodyOf (T1-R7) > devolve a string da chave de cada tipo 0ms
+ ✓ |core| packages/core/src/content-contract.test.ts > bodyOf (T1-R7) > Sheet, content_data null, chave ausente, não-string ou tipo desconhecido → null 0ms
+ × |core| packages/core/src/content-contract.test.ts > N4-PR2 — sections[] da Cifra (N4-D40) > seções com acordes vazios e letra: o nome e a letra, sem a linha de acordes 6ms
+   → expected 'C  Am\nTexto velho do topo' to be 'Content\nLinha um\nLinha dois' // Object.is equality
+ × |core| packages/core/src/content-contract.test.ts > N4-PR2 — sections[] da Cifra (N4-D40) > seções completas: nome · acordes · letra por "\n"; as seções por "\n\n", na ordem da lista 1ms
+   → expected 'C  Am\nTexto velho do topo' to be 'Verso 1\nG D Em\nTexto do verso\n\nRe…' // Object.is equality
+ ✓ |core| packages/core/src/content-contract.test.ts > N4-PR2 — sections[] da Cifra (N4-D40) > lista de seções vazia: cai no chords do topo (o web faz o mesmo) 0ms
+ × |core| packages/core/src/content-contract.test.ts > N4-PR2 — sections[] da Cifra (N4-D40) > seções sem chords no topo: deixa de ser no-key 2ms
+   → expected { ok: false, reason: 'no-key' } to deeply equal { ok: true, body: 'text' }
+ × |core| packages/core/src/content-contract.test.ts > N4-PR2 — sections[] da Cifra (N4-D40) > seções e file_url: o corpo é o texto das seções (o painel da Cifra do web não mostra arquivo) 1ms
+   → expected { ok: false, reason: 'no-key' } to deeply equal { ok: true, body: 'text' }
+ × |core| packages/core/src/content-contract.test.ts > N4-PR2 — sections[] da Cifra (N4-D40) > seções vencem também o chords do topo em lista 1ms
+   → expected { ok: false, reason: 'not-string' } to deeply equal { ok: true, body: 'text' }
+ × |core| packages/core/src/content-contract.test.ts > N4-PR2 — sections[] da Cifra (N4-D40) > a progression continua fora do contrato (fora do par, Bloco D): só as seções 0ms
+   → expected null to be 'Verso\nTexto' // Object.is equality
+ ✓ |core| packages/core/src/content-contract.test.ts > N4-PR2 — sections[] da Cifra (N4-D40) > malformadas — nunca lança; faz o que o web faz > sections que não é lista (objeto, texto, número, null): cai no chords do topo 0ms
+ ✓ |core| packages/core/src/content-contract.test.ts > N4-PR2 — sections[] da Cifra (N4-D40) > malformadas — nunca lança; faz o que o web faz > sections que não é lista e sem chords no topo: no-key, como antes 0ms
+ × |core| packages/core/src/content-contract.test.ts > N4-PR2 — sections[] da Cifra (N4-D40) > malformadas — nunca lança; faz o que o web faz > item que não é objeto (null, texto, número, lista): pulado 0ms
+   → expected 'C  Am\nTexto velho do topo' to be 'Verso\nTexto' // Object.is equality
+ × |core| packages/core/src/content-contract.test.ts > N4-PR2 — sections[] da Cifra (N4-D40) > malformadas — nunca lança; faz o que o web faz > campo que não é texto (número, lista, objeto) ou texto vazio: a parte é pulada 0ms
+   → expected { ok: false, reason: 'no-key' } to deeply equal { ok: true, body: 'text' }
+ × |core| packages/core/src/content-contract.test.ts > N4-PR2 — sections[] da Cifra (N4-D40) > malformadas — nunca lança; faz o que o web faz > lista não vazia sem nenhuma parte com texto: sem corpo — o web mostra o vazio e NÃO cai no chords do topo 0ms
+   → expected { ok: true, body: 'text' } to deeply equal { ok: false, reason: 'no-body' }
+ ✓ |core| packages/core/src/content-contract.test.ts > N4-PR2 — sections[] da Cifra (N4-D40) > o que não muda > a Cifra escaneada (content_data null + file_url) segue arquivo 0ms
+ ✓ |core| packages/core/src/content-contract.test.ts > N4-PR2 — sections[] da Cifra (N4-D40) > o que não muda > Letra e Tab com uma chave sections: a chave do tipo, como antes 0ms
+ ✓ |core| packages/core/src/content-contract.test.ts > N4-PR2 — sections[] da Cifra (N4-D40) > o que não muda > Partitura e tipo fora do enum com sections: como antes 0ms
+ ✓ |native-tela| apps/native/test/palco-faixa.test.tsx > N3-B-S3 — a barra superior de 88 em duas linhas (N3-D13) > letra, 1ª: `1 DE 8` + setlist na linha 1; `Manhã de ensaio · Banda da fixture · Letra` na linha 2 53ms
+ ✓ |native-tela| apps/native/test/palco-faixa.test.tsx > N3-B-S3 — a barra superior de 88 em duas linhas (N3-D13) > a última (`8 DE 8`): a mesma barra 30ms
+ ✓ |native-tela| apps/native/test/palco-faixa.test.tsx > N3-B-S3 — a barra superior de 88 em duas linhas (N3-D13) > S3e (PDF não baixado, sem rede): a barra de duas linhas, e o ponto de sem rede na linha 1 54ms
+ ✓ |native-tela| apps/native/test/palco-faixa.test.tsx > N3-B-S3 — a barra superior de 88 em duas linhas (N3-D13) > avulsa (aberta pela busca): `AVULSA` na linha 1 29ms
+ ✓ |native-tela| apps/native/test/palco-faixa.test.tsx > N3-B-S3 — a barra superior de 88 em duas linhas (N3-D13) > placeholder (a música sumiu da biblioteca): `—` na linha 2 31ms
+ ✓ |native-tela| apps/native/test/palco-faixa.test.tsx > N3-B-S3 — a barra superior de 88 em duas linhas (N3-D13) > com nota: a nota fica na linha 1, fora da linha do título 30ms
+ × |native-tela| apps/native/test/palco-faixa.test.tsx > N4-PR2 — a Cifra com seções no palco > o nó `corpo` traz o texto das seções 34ms
+   → expected 'C  Am\nTexto velho do topo' to be 'Verso 1\nG D Em\nTexto do verso\n\nRe…' // Object.is equality
+ ✓ |native-tela| apps/native/test/palco-faixa.test.tsx > C — a barra de 64 de uma linha, como hoje (a invariante em jsdom) > janela de C escrita: posição, setlist e título lado a lado no mesmo nó de 64 33ms
+ ✓ |native-tela| apps/native/test/palco-faixa.test.tsx > C — a barra de 64 de uma linha, como hoje (a invariante em jsdom) > padrão do duplo: posição, setlist e título lado a lado no mesmo nó de 64 29ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 10 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |native-tela| apps/native/test/palco-faixa.test.tsx > N4-PR2 — a Cifra com seções no palco > o nó `corpo` traz o texto das seções
+AssertionError: expected 'C  Am\nTexto velho do topo' to be 'Verso 1\nG D Em\nTexto do verso\n\nRe…' // Object.is equality
+
+- Expected
++ Received
+
+- Verso 1
+- G D Em
++ C  Am
+- Texto do verso
+-
+- Refrão
+- Texto do refrão
++ Texto velho do topo
+
+ ❯ apps/native/test/palco-faixa.test.tsx:241:40
+    239|   it('o nó `corpo` traz o texto das seções', async () => {
+    240|     await montar(<StageScreen {...props({ contentById: new Map([LETRA,…
+    241|     expect(exige('corpo').textContent).toBe('Verso 1\nG D Em\nTexto do…
+       |                                        ^
+    242|   })
+    243| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/10]⎯
+
+ FAIL  |core| packages/core/src/content-contract.test.ts > N4-PR2 — sections[] da Cifra (N4-D40) > seções com acordes vazios e letra: o nome e a letra, sem a linha de acordes
+AssertionError: expected 'C  Am\nTexto velho do topo' to be 'Content\nLinha um\nLinha dois' // Object.is equality
+
+- Expected
++ Received
+
+- Content
+- Linha um
+- Linha dois
++ C  Am
++ Texto velho do topo
+
+ ❯ packages/core/src/content-contract.test.ts:135:33
+    133|     }
+    134|     expect(isValidContent('Chords', d, null)).toEqual({ ok: true, body…
+    135|     expect(bodyOf('Chords', d)).toBe('Content\nLinha um\nLinha dois')
+       |                                 ^
+    136|   })
+    137| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/10]⎯
+
+ FAIL  |core| packages/core/src/content-contract.test.ts > N4-PR2 — sections[] da Cifra (N4-D40) > seções completas: nome · acordes · letra por "\n"; as seções por "\n\n", na ordem da lista
+AssertionError: expected 'C  Am\nTexto velho do topo' to be 'Verso 1\nG D Em\nTexto do verso\n\nRe…' // Object.is equality
+
+- Expected
++ Received
+
+- Verso 1
+- G D Em
+- Texto do verso
+-
+- Refrão
+- C G
+- Texto do refrão
++ C  Am
++ Texto velho do topo
+
+ ❯ packages/core/src/content-contract.test.ts:147:33
+    145|     }
+    146|     expect(isValidContent('Chords', d, null)).toEqual({ ok: true, body…
+    147|     expect(bodyOf('Chords', d)).toBe('Verso 1\nG D Em\nTexto do verso\…
+       |                                 ^
+    148|   })
+    149| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/10]⎯
+
+ FAIL  |core| packages/core/src/content-contract.test.ts > N4-PR2 — sections[] da Cifra (N4-D40) > seções sem chords no topo: deixa de ser no-key
+AssertionError: expected { ok: false, reason: 'no-key' } to deeply equal { ok: true, body: 'text' }
+
+- Expected
++ Received
+
+  {
+-   "body": "text",
+-   "ok": true,
++   "ok": false,
++   "reason": "no-key",
+  }
+
+ ❯ packages/core/src/content-contract.test.ts:158:47
+    156|   it('seções sem chords no topo: deixa de ser no-key', () => {
+    157|     const d = { sections: [{ name: 'Verso', chords: 'D A', lyrics: 'Te…
+    158|     expect(isValidContent('Chords', d, null)).toEqual({ ok: true, body…
+       |                                               ^
+    159|     expect(bodyOf('Chords', d)).toBe('Verso\nD A\nTexto')
+    160|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/10]⎯
+
+ FAIL  |core| packages/core/src/content-contract.test.ts > N4-PR2 — sections[] da Cifra (N4-D40) > seções e file_url: o corpo é o texto das seções (o painel da Cifra do web não mostra arquivo)
+AssertionError: expected { ok: false, reason: 'no-key' } to deeply equal { ok: true, body: 'text' }
+
+- Expected
++ Received
+
+  {
+-   "body": "text",
+-   "ok": true,
++   "ok": false,
++   "reason": "no-key",
+  }
+
+ ❯ packages/core/src/content-contract.test.ts:164:83
+    162|   it('seções e file_url: o corpo é o texto das seções (o painel da Cif…
+    163|     const d = { sections: [{ name: 'Verso', lyrics: 'Texto' }] }
+    164|     expect(isValidContent('Chords', d, 'https://host/content-files/1-c…
+       |                                                                                   ^
+    165|     expect(bodyOf('Chords', d)).toBe('Verso\nTexto')
+    166|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/10]⎯
+
+ FAIL  |core| packages/core/src/content-contract.test.ts > N4-PR2 — sections[] da Cifra (N4-D40) > seções vencem também o chords do topo em lista
+AssertionError: expected { ok: false, reason: 'not-string' } to deeply equal { ok: true, body: 'text' }
+
+- Expected
++ Received
+
+  {
+-   "body": "text",
+-   "ok": true,
++   "ok": false,
++   "reason": "not-string",
+  }
+
+ ❯ packages/core/src/content-contract.test.ts:170:47
+    168|   it('seções vencem também o chords do topo em lista', () => {
+    169|     const d = { chords: [{ name: 'C' }], sections: [{ name: 'Verso', l…
+    170|     expect(isValidContent('Chords', d, null)).toEqual({ ok: true, body…
+       |                                               ^
+    171|     expect(bodyOf('Chords', d)).toBe('Verso\nTexto')
+    172|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/10]⎯
+
+ FAIL  |core| packages/core/src/content-contract.test.ts > N4-PR2 — sections[] da Cifra (N4-D40) > a progression continua fora do contrato (fora do par, Bloco D): só as seções
+AssertionError: expected null to be 'Verso\nTexto' // Object.is equality
+
+- Expected: 
+"Verso
+Texto"
+
++ Received: 
+null
+
+ ❯ packages/core/src/content-contract.test.ts:176:33
+    174|   it('a progression continua fora do contrato (fora do par, Bloco D): …
+    175|     const d = { sections: [{ name: 'Verso', lyrics: 'Texto' }], progre…
+    176|     expect(bodyOf('Chords', d)).toBe('Verso\nTexto')
+       |                                 ^
+    177|   })
+    178| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/10]⎯
+
+ FAIL  |core| packages/core/src/content-contract.test.ts > N4-PR2 — sections[] da Cifra (N4-D40) > malformadas — nunca lança; faz o que o web faz > item que não é objeto (null, texto, número, lista): pulado
+AssertionError: expected 'C  Am\nTexto velho do topo' to be 'Verso\nTexto' // Object.is equality
+
+- Expected
++ Received
+
+- Verso
+- Texto
++ C  Am
++ Texto velho do topo
+
+ ❯ packages/core/src/content-contract.test.ts:196:35
+    194|       const d = { chords: VELHO, sections: [null, 'solta', 42, ['a'], …
+    195|       expect(isValidContent('Chords', d, null)).toEqual({ ok: true, bo…
+    196|       expect(bodyOf('Chords', d)).toBe('Verso\nTexto')
+       |                                   ^
+    197|     })
+    198| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/10]⎯
+
+ FAIL  |core| packages/core/src/content-contract.test.ts > N4-PR2 — sections[] da Cifra (N4-D40) > malformadas — nunca lança; faz o que o web faz > campo que não é texto (número, lista, objeto) ou texto vazio: a parte é pulada
+AssertionError: expected { ok: false, reason: 'no-key' } to deeply equal { ok: true, body: 'text' }
+
+- Expected
++ Received
+
+  {
+-   "body": "text",
+-   "ok": true,
++   "ok": false,
++   "reason": "no-key",
+  }
+
+ ❯ packages/core/src/content-contract.test.ts:201:49
+    199|     it('campo que não é texto (número, lista, objeto) ou texto vazio: …
+    200|       const d = { sections: [{ name: 7, chords: ['C', 'G'], lyrics: 'T…
+    201|       expect(isValidContent('Chords', d, null)).toEqual({ ok: true, bo…
+       |                                                 ^
+    202|       expect(bodyOf('Chords', d)).toBe('Texto\n\nOutro')
+    203|     })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/10]⎯
+
+ FAIL  |core| packages/core/src/content-contract.test.ts > N4-PR2 — sections[] da Cifra (N4-D40) > malformadas — nunca lança; faz o que o web faz > lista não vazia sem nenhuma parte com texto: sem corpo — o web mostra o vazio e NÃO cai no chords do topo
+AssertionError: expected { ok: true, body: 'text' } to deeply equal { ok: false, reason: 'no-body' }
+
+- Expected
++ Received
+
+  {
+-   "ok": false,
+-   "reason": "no-body",
++   "body": "text",
++   "ok": true,
+  }
+
+ ❯ packages/core/src/content-contract.test.ts:207:49
+    205|     it('lista não vazia sem nenhuma parte com texto: sem corpo — o web…
+    206|       const d = { chords: VELHO, sections: [{ name: '', chords: '', ly…
+    207|       expect(isValidContent('Chords', d, null)).toEqual({ ok: false, r…
+       |                                                 ^
+    208|       expect(bodyOf('Chords', d)).toBeNull()
+    209|     })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/10]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  10 failed | 29 passed (39)
+   Start at  16:07:43
+   Duration  1.18s (transform 239ms, setup 0ms, import 185ms, tests 556ms, environment 404ms)
+

@@ -1,0 +1,29 @@
+### sobre a árvore do commit 3 (o gate com os três textos), antes de commitar
+
+### CN-A — 'letra' (par, igual) na lista
+lista esperada (1): letra
+reprovados     (0): (nenhum)
+  ✗ declaração ÓRFÃ: letra (passa)
+G-par: ✗ a reprovação não é a lista esperada
+exit=1
+
+### CN-B — 'cifra-em-lista' (fora do par) na lista
+lista esperada (1): cifra-em-lista
+reprovados     (0): (nenhum)
+  ✗ declaração ÓRFÃ: cifra-em-lista (está no fora do par)
+G-par: ✗ a reprovação não é a lista esperada
+exit=1
+
+### CN-C — 'nao-existe' (id inventado) na lista
+lista esperada (1): nao-existe
+reprovados     (0): (nenhum)
+  ✗ declaração ÓRFÃ: nao-existe (não existe na fixture)
+G-par: ✗ a reprovação não é a lista esperada
+exit=1
+
+### desfeitos
+lista esperada (0): (vazia)
+reprovados     (0): (nenhum)
+G-par: reprova exatamente a lista esperada (0) ✓
+exit=0
+ M tests/gates/n4-g-par.test.tsx

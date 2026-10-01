@@ -1,0 +1,98 @@
+# §2 — quem consome o contrato (N4-PR2, sobre dae7009; rastro)
+
+$ git grep -n "isValidContent\|bodyOf" -- apps/native packages ":!*.test.ts" ":!*.md"
+apps/native/src/prefetch.ts:50:  const validade = isValidContent(content.content_type, content.content_data, content.file_url)
+apps/native/src/screens/StageScreen.tsx:289:    content !== null ? isValidContent(content.content_type, content.content_data, content.file_url) : null
+apps/native/src/screens/StageScreen.tsx:290:  const corpo = content !== null ? bodyOf(content.content_type, content.content_data) : null
+apps/native/src/screens/StageScreen.tsx:323:   * decide, `isValidContent(...).body === 'file'`.) A URL vira dependência
+packages/core/src/offline.ts:33:    const validity = isValidContent(content.content_type, content.content_data, content.file_url)
+packages/core/src/search.ts:42:      body: normalizeForSearch(bodyOf(content.content_type, content.content_data) ?? ''),
+packages/core/src/song.ts:27:      : isValidContent(content.content_type, content.content_data, content.file_url)
+
+$ git grep -n "resolveSong(\|labelFor(\|buildIndex(\|offlineStatus(\|selectPrefetch(" -- apps/native/src apps/native/App.tsx packages/core/src ":!*.test.ts"
+apps/native/src/prefetch.ts:66:    selectPrefetch(setlists, contentById, new Set<string>(), hoje()).map((item) => item.url),
+apps/native/src/prefetch.ts:160:  const plano = selectPrefetch(setlists, contentById, presentes, hoje())
+apps/native/src/screens/IndexScreen.tsx:282:  const { content, validity } = resolveSong(song, contentById)
+apps/native/src/screens/IndexScreen.tsx:283:  const rotulo = labelFor(song, contentById, syncDone)
+apps/native/src/screens/ModoDeReordenar.tsx:670:            const { content } = resolveSong(song, contentById)
+apps/native/src/screens/ModoDeReordenar.tsx:697:                const { content } = resolveSong(song, contentById)
+apps/native/src/screens/Picker.tsx:156:  const indice = useMemo(() => buildIndex(biblioteca), [biblioteca])
+apps/native/src/screens/SearchScreen.tsx:176:  const indice = useMemo(() => buildIndex(contents), [contents])
+apps/native/src/screens/SetlistsScreen.tsx:457:    () => new Map(setlists.map((s) => [s.id, offlineStatus(s, contentById, filesPresent)])),
+apps/native/src/screens/StageScreen.tsx:286:  const resolvida = song !== undefined ? resolveSong(song, contentById) : null
+packages/core/src/offline.ts:52:export function offlineStatus(
+packages/core/src/offline.ts:90:export function selectPrefetch(
+packages/core/src/search.ts:32: * (`useMemo(() => buildIndex(…), [lista])` na S4 e no picker): o índice se
+packages/core/src/search.ts:35:export function buildIndex(contents: ContentDTO[]): SearchIndex {
+packages/core/src/song.ts:19:export function resolveSong(
+packages/core/src/song.ts:41:export function labelFor(
+packages/core/src/song.ts:46:  const { content, validity } = resolveSong(song, contentById)
+
+$ sed -n 289,290p;306,311p;318,319p;596,598p apps/native/src/screens/StageScreen.tsx
+apps/native/src/screens/StageScreen.tsx:289:     content !== null ? isValidContent(content.content_type, content.content_data, content.file_url) : null
+apps/native/src/screens/StageScreen.tsx:290:   const corpo = content !== null ? bodyOf(content.content_type, content.content_data) : null
+apps/native/src/screens/StageScreen.tsx:306:    * (T1-R32: "o estado persiste ao trocar de música").
+apps/native/src/screens/StageScreen.tsx:307:    *
+apps/native/src/screens/StageScreen.tsx:308:    * As dependências são só valores ESTÁVEIS (`posicao`, `n`, o id da setlist
+apps/native/src/screens/StageScreen.tsx:309:    * e a chave do placeholder). Com `validade`/`content` na lista, o efeito
+apps/native/src/screens/StageScreen.tsx:310:    * rodava a cada render — inclusive o render causado por `setRodando(true)`
+apps/native/src/screens/StageScreen.tsx:311:    * — e cancelava o `requestAnimationFrame` antes do primeiro frame, o que
+apps/native/src/screens/StageScreen.tsx:318:         ? validade.reason
+apps/native/src/screens/StageScreen.tsx:319:         : null
+apps/native/src/screens/StageScreen.tsx:596:               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+apps/native/src/screens/StageScreen.tsx:597:                 <Text style={estiloTexto} testID="corpo">
+apps/native/src/screens/StageScreen.tsx:598:                   {corpo ?? ''}
+
+$ awk 36-44 packages/core/src/search.ts
+search.ts:36:   return {
+search.ts:37:     entries: contents.map((content) => ({
+search.ts:38:       id: content.id,
+search.ts:39:       title: normalizeForSearch(content.title),
+search.ts:40:       artist: normalizeForSearch(content.artist ?? ''),
+search.ts:41:       album: normalizeForSearch(content.album ?? ''),
+search.ts:42:       body: normalizeForSearch(bodyOf(content.content_type, content.content_data) ?? ''),
+search.ts:43:     })),
+search.ts:44:   }
+
+$ awk 31-35 packages/core/src/offline.ts; 47-53 apps/native/src/prefetch.ts
+offline.ts:31:       continue
+offline.ts:32:     }
+offline.ts:33:     const validity = isValidContent(content.content_type, content.content_data, content.file_url)
+offline.ts:34:     if (!validity.ok || validity.body !== 'file') continue
+offline.ts:35:     const url = content.file_url
+prefetch.ts:47: function urlDe(contentId: string, contentById: Map<string, ContentDTO>): string | null {
+prefetch.ts:48:   const content = contentById.get(contentId)
+prefetch.ts:49:   if (content === undefined) return null
+prefetch.ts:50:   const validade = isValidContent(content.content_type, content.content_data, content.file_url)
+prefetch.ts:51:   if (!validade.ok || validade.body !== 'file') return null
+prefetch.ts:52:   return content.file_url
+prefetch.ts:53: }
+
+# arquivo × seções — o painel da Cifra do web nunca mostra arquivo
+ChordDisplay.tsx:13: export function ChordDisplay({ content }: { content: ConteudoVisto }) {
+ChordDisplay.tsx:14:   const corpo = textoDaCifra(dadosDe(content))
+ChordDisplay.tsx:15:   return (
+ChordDisplay.tsx:16:     <Painel rotulo={rotuloDoTipo("Chords")} testid="painel-cifra">
+ChordDisplay.tsx:17:       {corpo ? <CorpoMono>{corpo}</CorpoMono> : <CentroDoPainel icone frase={FRASES_VIEW["view.vazio.cifra"]} />}
+ChordDisplay.tsx:18:     </Painel>
+ChordDisplay.tsx:19:   )
+ContentDisplay.tsx:22:   const tipo = normalizeContentType(content.content_type)
+ContentDisplay.tsx:23:   return (
+ContentDisplay.tsx:24:     <div className="flex flex-col gap-espaco-lg">
+ContentDisplay.tsx:25:       <LinhaDaTela falha={falha} rotuloTentar={FRASES_VIEW["acao.tentar"]} />
+ContentDisplay.tsx:26:       {tipo === ContentType.SHEET && <SheetMusicDisplay content={content} aoFalhar={setFalha} />}
+ContentDisplay.tsx:27:       {tipo === ContentType.TAB && <TabDisplay content={content} />}
+ContentDisplay.tsx:28:       {tipo === ContentType.CHORDS && <ChordDisplay content={content} />}
+ContentDisplay.tsx:29:       {tipo === ContentType.LYRICS && <LyricsDisplay content={content} />}
+
+# a fixture do mock e as bases do G-inv
+$ grep -c sections docs/native/N3-PRECHECK-anexos/instrumentos/fixture.py apps/native/src/fixtures/aceite.py
+apps/native/src/fixtures/aceite.py:0
+docs/native/N3-PRECHECK-anexos/instrumentos/fixture.py:0
+$ awk 81,89 fixture.py (a forma do content_data da fixture: uma chave por tipo)
+fixture.py:81:     chave = {"Lyrics": "lyrics", "Chords": "chords", "Tab": "tablature", "Sheet": None}[tipo]
+fixture.py:89:         "content_data": ({chave: corpo} if chave and corpo is not None else None),
+$ grep -rl sections docs/native/N3-PRECHECK-anexos/B5-baseline docs/native/N3-PRECHECK-anexos/B3-referencia-paisagem docs/native/N3-PR6c-anexos/dumps-final
+exit=1
+$ grep -n "\"Chords\"" apps/native/src/fixtures/aceite.py
+137:         "content_type": "Chords", "content_data": {"annotations": []}},

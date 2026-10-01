@@ -1,5 +1,5 @@
 {
-  "_leia": "N4-PR1 — fixture do G-par (tests/gates/n4-g-par.test.tsx). FABRICADA: todo texto é do projeto (regra 10 não alcança). 'par' = o que o web e o nativo têm de mostrar igual; 'fora_do_par' = formas que só o web lê e que a B2 NÃO achou no dado real (N4-PRECHECK §11 B2), impressas e contadas em toda corrida, sem reprovar. A lista do que reprova hoje é g-par-reprovados.txt, ao lado.",
+  "_leia": "N4-PR1 — fixture do G-par (tests/gates/n4-g-par.test.tsx). FABRICADA: todo texto é do projeto (regra 10 não alcança). 'par' = o que o web e o nativo têm de mostrar igual; 'fora_do_par' = formas que só o web lê e que a B2 NÃO achou no dado real (N4-PRECHECK §11 B2), impressas e contadas em toda corrida, sem reprovar. A lista g-par-reprovados.txt, ao lado, tem de estar VAZIA desde a N4-PR2 (N4-D50).",
   "par": [
     {
       "id": "letra",
@@ -81,6 +81,19 @@
       }
     },
     {
+      "id": "cifra-duas-secoes",
+      "nota": "N4-D48 (div. 990): Cifra com DUAS seções — a junção ENTRE seções (\"\\n\\n\") só se vê com mais de uma; a segunda sem acordes; o chords do topo diferente",
+      "content_type": "Chords",
+      "file_url": null,
+      "content_data": {
+        "chords": "C G Am F",
+        "sections": [
+          { "id": 1, "name": "Verso 1", "chords": "G D Em", "lyrics": "Texto fabricado do verso" },
+          { "id": 2, "name": "Refrão", "chords": "", "lyrics": "Texto fabricado do refrão\nSegunda linha do refrão" }
+        ]
+      }
+    },
+    {
       "id": "so-aninhado",
       "nota": "Só com content_data aninhado (sem lyrics no topo) — a forma do 'poluido-so-aninhado' do pre-check (A12)",
       "content_type": "Lyrics",
@@ -136,6 +149,14 @@
       "content_type": "Piano",
       "file_url": null,
       "content_data": { "lyrics": "Texto de teste de um tipo fora do enum" }
+    },
+    {
+      "id": "cifra-escaneada",
+      "razao": "Cifra escaneada (content_data nulo com file_url): o web mostra o vazio do painel ('nenhuma cifra' — o ChordDisplay não mostra arquivo), o core a trata como arquivo e o palco mostra o PDF; vale o comportamento do core (N4-D49); nenhum item da conta principal está nesse caso (B2: as 3 Cifras com content_data)",
+      "destino": "Bloco D",
+      "content_type": "Chords",
+      "file_url": "https://host/storage/v1/object/public/content-files/g-par-cifra-escaneada.pdf",
+      "content_data": null
     }
   ]
 }
