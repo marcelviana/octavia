@@ -86,13 +86,6 @@
       "content_type": "Lyrics",
       "file_url": null,
       "content_data": { "content_data": { "lyrics": "Primeira estrofe do teste do G-par" }, "annotations": [] }
-    },
-    {
-      "id": "tipo-fora-do-enum",
-      "nota": "Tipo fora do enum (nem dos quatro, nem apelido legado) — a forma do 'tipo-fora-do-enum' do pre-check (A12)",
-      "content_type": "Piano",
-      "file_url": null,
-      "content_data": { "lyrics": "Texto de teste de um tipo fora do enum" }
     }
   ],
   "fora_do_par": [
@@ -135,6 +128,14 @@
       "content_type": "Guitar Tab",
       "file_url": null,
       "content_data": { "tablature": "e|---0---|" }
+    },
+    {
+      "id": "tipo-fora-do-enum",
+      "razao": "tipo fora do enum (nem dos quatro, nem apelido legado — a forma do pre-check, A12): o web o mostra como Letra (normalizeContentType cai em LYRICS), o core declara unknown-type; o que vale é o do core (N4-D47); a B2 achou os 63 no contrato",
+      "destino": "Bloco D",
+      "content_type": "Piano",
+      "file_url": null,
+      "content_data": { "lyrics": "Texto de teste de um tipo fora do enum" }
     }
   ]
 }
