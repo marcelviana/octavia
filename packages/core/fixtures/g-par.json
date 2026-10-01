@@ -1,0 +1,140 @@
+{
+  "_leia": "N4-PR1 — fixture do G-par (tests/gates/n4-g-par.test.tsx). FABRICADA: todo texto é do projeto (regra 10 não alcança). 'par' = o que o web e o nativo têm de mostrar igual; 'fora_do_par' = formas que só o web lê e que a B2 NÃO achou no dado real (N4-PRECHECK §11 B2), impressas e contadas em toda corrida, sem reprovar. A lista do que reprova hoje é g-par-reprovados.txt, ao lado.",
+  "par": [
+    {
+      "id": "letra",
+      "nota": "Letra na forma do contrato (lyrics string)",
+      "content_type": "Lyrics",
+      "file_url": null,
+      "content_data": { "lyrics": "Primeira linha do texto de teste do G-par\nSegunda linha do texto de teste\n\n[Refrão]\nLinha do refrão de teste" }
+    },
+    {
+      "id": "cifra-texto",
+      "nota": "Cifra em texto na forma do contrato (chords string)",
+      "content_type": "Chords",
+      "file_url": null,
+      "content_data": { "chords": "[Intro] C Am F G\n\nC7M      G7\nLa la la, la la lá" }
+    },
+    {
+      "id": "tab-texto",
+      "nota": "Tab em texto na forma do contrato (tablature string)",
+      "content_type": "Tab",
+      "file_url": null,
+      "content_data": { "tablature": "e|-------0-----------0-------|\nB|-----1---1-------1---1-----|\nG|---2-------2---2-------2---|" }
+    },
+    {
+      "id": "partitura-pdf",
+      "nota": "Partitura com file_url .pdf, content_data null",
+      "content_type": "Sheet",
+      "file_url": "https://exemplo.test/storage/v1/object/public/content-files/g-par-partitura.pdf",
+      "content_data": null
+    },
+    {
+      "id": "letra-poluida-editor",
+      "nota": "Letra poluída pelo editor, na forma do tests/gates/fixtures/editor-put-antes.json (caso 'letra'): a linha inteira dentro do content_data, o content_data velho aninhado e annotations",
+      "content_type": "Lyrics",
+      "file_url": null,
+      "content_data": {
+        "lyrics": "Primeira estrofe do teste do G-par\n\n[Refrão]",
+        "user_id": "g-par-user", "artist": "", "album": "", "bpm": "", "capo": null, "difficulty": "", "genre": "",
+        "is_favorite": false, "is_public": false, "key": "", "notes": "", "tags": [], "thumbnail_url": null,
+        "time_signature": "4/4", "tuning": null, "created_at": "2026-09-10T15:00:00.000Z", "updated_at": "2026-09-10T15:00:00.000Z",
+        "file_url": null, "id": "00000000-0000-4000-8000-0000000000a5", "title": "Letra poluída do G-par", "content_type": "Lyrics",
+        "content_data": { "lyrics": "Primeira estrofe do teste do G-par" },
+        "annotations": []
+      }
+    },
+    {
+      "id": "cifra-secoes-acordes-vazios",
+      "nota": "N4-D38, variante 1 (B2, a forma do ordinal 3): poluída pelo editor, com sections[] — chords da seção VAZIO, lyrics preenchida — e o chords do topo em texto DIFERENTE do das seções (o editor nunca o reescreve: L4)",
+      "content_type": "Chords",
+      "file_url": null,
+      "content_data": {
+        "chords": "C  Am\nTexto de teste da cifra, primeira linha\nTexto de teste da cifra, segunda linha",
+        "sections": [
+          { "id": 1790683200000, "name": "Content", "chords": "", "lyrics": "Texto de teste da cifra, primeira linha\nTexto de teste da cifra, segunda linha\nLinha acrescentada no editor (G-par)" }
+        ],
+        "user_id": "g-par-user", "artist": "", "album": "", "bpm": "", "capo": "", "difficulty": "", "genre": "",
+        "is_favorite": false, "is_public": false, "key": "", "notes": "", "tags": [], "thumbnail_url": null,
+        "time_signature": "4/4", "tuning": null, "created_at": "2026-09-10T15:00:00.000Z", "updated_at": "2026-09-10T15:00:00.000Z",
+        "file_url": null, "id": "00000000-0000-4000-8000-0000000000a6", "title": "Cifra em seções do G-par (1)", "content_type": "Chords",
+        "content_data": { "chords": "C  Am\nTexto de teste da cifra, primeira linha\nTexto de teste da cifra, segunda linha" },
+        "annotations": []
+      }
+    },
+    {
+      "id": "cifra-secoes-completas",
+      "nota": "N4-D38, variante 2 (B2, a forma do ordinal 8): poluída pelo editor, com sections[] — name, chords e lyrics preenchidos — e o chords do topo em texto DIFERENTE do das seções",
+      "content_type": "Chords",
+      "file_url": null,
+      "content_data": {
+        "chords": "C G Am F",
+        "sections": [
+          { "id": 1, "name": "Verso 1", "chords": "G D Em", "lyrics": "Texto fabricado da seção" }
+        ],
+        "user_id": "g-par-user", "artist": "", "album": "", "bpm": "", "capo": "", "difficulty": "", "genre": "",
+        "is_favorite": false, "is_public": false, "key": "", "notes": "", "tags": [], "thumbnail_url": null,
+        "time_signature": "4/4", "tuning": null, "created_at": "2026-09-10T15:00:00.000Z", "updated_at": "2026-09-10T15:00:00.000Z",
+        "file_url": null, "id": "00000000-0000-4000-8000-0000000000a7", "title": "Cifra em seções do G-par (2)", "content_type": "Chords",
+        "content_data": { "chords": "C G Am F" },
+        "annotations": []
+      }
+    },
+    {
+      "id": "so-aninhado",
+      "nota": "Só com content_data aninhado (sem lyrics no topo) — a forma do 'poluido-so-aninhado' do pre-check (A12)",
+      "content_type": "Lyrics",
+      "file_url": null,
+      "content_data": { "content_data": { "lyrics": "Primeira estrofe do teste do G-par" }, "annotations": [] }
+    },
+    {
+      "id": "tipo-fora-do-enum",
+      "nota": "Tipo fora do enum (nem dos quatro, nem apelido legado) — a forma do 'tipo-fora-do-enum' do pre-check (A12)",
+      "content_type": "Piano",
+      "file_url": null,
+      "content_data": { "lyrics": "Texto de teste de um tipo fora do enum" }
+    }
+  ],
+  "fora_do_par": [
+    {
+      "id": "cifra-em-lista",
+      "razao": "chords como lista de {name, diagram, fingering} — só o web lê; a B2 não achou no dado real (0 de 63)",
+      "destino": "Bloco D",
+      "content_type": "Chords",
+      "file_url": null,
+      "content_data": { "chords": [{ "name": "C", "diagram": ["x32010"], "fingering": "032010" }] }
+    },
+    {
+      "id": "cifra-com-progression",
+      "razao": "progression ({seção: acordes}) ao lado do chords — só o web a mostra; a B2 não achou no dado real",
+      "destino": "Bloco D",
+      "content_type": "Chords",
+      "file_url": null,
+      "content_data": { "chords": "C Am", "progression": { "Verso": ["C", "Am"] } }
+    },
+    {
+      "id": "tab-em-lista",
+      "razao": "tablature como lista de linhas — só o web lê; a B2 achou as 2 Tabs com tablature string",
+      "destino": "Bloco D",
+      "content_type": "Tab",
+      "file_url": null,
+      "content_data": { "tablature": ["e|---0---|", "B|---1---|"] }
+    },
+    {
+      "id": "partitura-com-notation",
+      "razao": "Partitura sem arquivo com notation em texto — só o web a mostra; a B2 achou a única Partitura com arquivo (.pdf)",
+      "destino": "Bloco D",
+      "content_type": "Sheet",
+      "file_url": null,
+      "content_data": { "notation": "X:1\nT:Notação de teste do G-par" }
+    },
+    {
+      "id": "tipo-legado",
+      "razao": "content_type legado ('Guitar Tab') que o normalizeContentType do web aceita — o core não; a B2 achou os 63 nos quatro tipos do enum",
+      "destino": "Bloco D",
+      "content_type": "Guitar Tab",
+      "file_url": null,
+      "content_data": { "tablature": "e|---0---|" }
+    }
+  ]
+}
