@@ -1,0 +1,234 @@
+# A3 — o palco sem setlist: trechos (N4-PR0, 2026-10-01; rastro)
+
+$ awk 'NR>=23&&NR<=36' apps/native/src/navigation.tsx
+apps/native/src/navigation.tsx:23: export type RootStackParamList = {
+apps/native/src/navigation.tsx:24:   Login: undefined
+apps/native/src/navigation.tsx:25:   Setlists: undefined
+apps/native/src/navigation.tsx:26:   Index: { setlistId: string; posicaoAtual?: number }
+apps/native/src/navigation.tsx:27:   /**
+apps/native/src/navigation.tsx:28:    * `avulsa` (T1-R22): abrir pela busca uma música que NÃO está na setlist
+apps/native/src/navigation.tsx:29:    * empilha uma segunda instância do palco. O `goBack` devolve a primeira,
+apps/native/src/navigation.tsx:30:    * com a `position` intacta — a pilha É a restauração, sem estado global.
+apps/native/src/navigation.tsx:31:    */
+apps/native/src/navigation.tsx:32:   Stage: { setlistId: string; position: number; avulsa?: string }
+apps/native/src/navigation.tsx:33:   /** `posicao` é a do palco na abertura; ausente quando a busca vem da S1/S2. */
+apps/native/src/navigation.tsx:34:   Search: { setlistId?: string; posicao?: number }
+apps/native/src/navigation.tsx:35:   End: { setlistId: string }
+apps/native/src/navigation.tsx:36: }
+
+$ awk 'NR>=181&&NR<=219' apps/native/src/navigation.tsx
+apps/native/src/navigation.tsx:181:             <Stack.Screen name="Stage">
+apps/native/src/navigation.tsx:182:               {({ navigation, route }) => {
+apps/native/src/navigation.tsx:183:                 const setlist = acharSetlist(route.params.setlistId)
+apps/native/src/navigation.tsx:184:                 if (setlist === undefined) {
+apps/native/src/navigation.tsx:185:                   return <Placeholder titulo="SETLIST" nota="não está no cache" />
+apps/native/src/navigation.tsx:186:                 }
+apps/native/src/navigation.tsx:187:                 return (
+apps/native/src/navigation.tsx:188:                   <StageScreen
+apps/native/src/navigation.tsx:189:                     setlist={setlist}
+apps/native/src/navigation.tsx:190:                     contentById={dados.contentById}
+apps/native/src/navigation.tsx:191:                     posicao={route.params.position}
+apps/native/src/navigation.tsx:192:                     avulsaContentId={route.params.avulsa ?? null}
+apps/native/src/navigation.tsx:193:                     online={dados.online}
+apps/native/src/navigation.tsx:194:                     onPosicao={(position) => navigation.setParams({ position })}
+apps/native/src/navigation.tsx:195:                     onFim={() => navigation.navigate('End', { setlistId: setlist.id })}
+apps/native/src/navigation.tsx:196:                     onIndice={() =>
+apps/native/src/navigation.tsx:197:                       navigation.navigate('Index', {
+apps/native/src/navigation.tsx:198:                         setlistId: setlist.id,
+apps/native/src/navigation.tsx:199:                         posicaoAtual: route.params.position,
+apps/native/src/navigation.tsx:200:                       })
+apps/native/src/navigation.tsx:201:                     }
+apps/native/src/navigation.tsx:202:                     onBusca={() =>
+apps/native/src/navigation.tsx:203:                       navigation.navigate('Search', {
+apps/native/src/navigation.tsx:204:                         setlistId: setlist.id,
+apps/native/src/navigation.tsx:205:                         posicao: route.params.position,
+apps/native/src/navigation.tsx:206:                       })
+apps/native/src/navigation.tsx:207:                     }
+apps/native/src/navigation.tsx:208:                     // No avulso "Sair" é "Voltar": desempilha e o palco de
+apps/native/src/navigation.tsx:209:                     // baixo reaparece na posição em que ficou (T1-R22).
+apps/native/src/navigation.tsx:210:                     onSair={() =>
+apps/native/src/navigation.tsx:211:                       route.params.avulsa !== undefined
+apps/native/src/navigation.tsx:212:                         ? navigation.goBack()
+apps/native/src/navigation.tsx:213:                         : navigation.navigate('Setlists')
+apps/native/src/navigation.tsx:214:                     }
+apps/native/src/navigation.tsx:215:                     onArquivosMudaram={dados.onArquivosMudaram}
+apps/native/src/navigation.tsx:216:                   />
+apps/native/src/navigation.tsx:217:                 )
+apps/native/src/navigation.tsx:218:               }}
+apps/native/src/navigation.tsx:219:             </Stack.Screen>
+
+$ awk 'NR>=247&&NR<=280' apps/native/src/navigation.tsx
+apps/native/src/navigation.tsx:247:             <Stack.Screen name="Search">
+apps/native/src/navigation.tsx:248:               {({ navigation, route }) => {
+apps/native/src/navigation.tsx:249:                 const setlist =
+apps/native/src/navigation.tsx:250:                   route.params.setlistId === undefined
+apps/native/src/navigation.tsx:251:                     ? null
+apps/native/src/navigation.tsx:252:                     : (acharSetlist(route.params.setlistId) ?? null)
+apps/native/src/navigation.tsx:253:                 return (
+apps/native/src/navigation.tsx:254:                   <SearchScreen
+apps/native/src/navigation.tsx:255:                     contents={dados.contents}
+apps/native/src/navigation.tsx:256:                     setlist={setlist}
+apps/native/src/navigation.tsx:257:                     posicao={route.params.posicao ?? null}
+apps/native/src/navigation.tsx:258:                     online={dados.online}
+apps/native/src/navigation.tsx:259:                     onFechar={() => navigation.goBack()}
+apps/native/src/navigation.tsx:260:                     onAbrir={(contentId, posicaoNaSetlist) => {
+apps/native/src/navigation.tsx:261:                       // Na setlist: é um SALTO — o palco existente vai para a
+apps/native/src/navigation.tsx:262:                       // posição. Fora dela: `replace` põe o palco avulso no
+apps/native/src/navigation.tsx:263:                       // lugar da busca, e o `goBack` volta ao palco original.
+apps/native/src/navigation.tsx:264:                       if (setlist !== null && posicaoNaSetlist !== null) {
+apps/native/src/navigation.tsx:265:                         navigation.navigate('Stage', {
+apps/native/src/navigation.tsx:266:                           setlistId: setlist.id,
+apps/native/src/navigation.tsx:267:                           position: posicaoNaSetlist,
+apps/native/src/navigation.tsx:268:                         })
+apps/native/src/navigation.tsx:269:                         return
+apps/native/src/navigation.tsx:270:                       }
+apps/native/src/navigation.tsx:271:                       navigation.replace('Stage', {
+apps/native/src/navigation.tsx:272:                         setlistId: setlist?.id ?? dados.lista[0]?.id ?? '',
+apps/native/src/navigation.tsx:273:                         position: route.params.posicao ?? 1,
+apps/native/src/navigation.tsx:274:                         avulsa: contentId,
+apps/native/src/navigation.tsx:275:                       })
+apps/native/src/navigation.tsx:276:                     }}
+apps/native/src/navigation.tsx:277:                   />
+apps/native/src/navigation.tsx:278:                 )
+apps/native/src/navigation.tsx:279:               }}
+apps/native/src/navigation.tsx:280:             </Stack.Screen>
+
+$ awk 'NR>=77&&NR<=97' apps/native/src/screens/StageScreen.tsx
+apps/native/src/screens/StageScreen.tsx:77: export interface StageScreenProps {
+apps/native/src/screens/StageScreen.tsx:78:   setlist: SetlistDTO
+apps/native/src/screens/StageScreen.tsx:79:   contentById: Map<string, ContentDTO>
+apps/native/src/screens/StageScreen.tsx:80:   posicao: number
+apps/native/src/screens/StageScreen.tsx:81:   /**
+apps/native/src/screens/StageScreen.tsx:82:    * Música AVULSA da biblioteca, aberta pela busca (T1-R22): `content_id` que
+apps/native/src/screens/StageScreen.tsx:83:    * não pertence a esta posição da setlist. Quando presente, o palco mostra
+apps/native/src/screens/StageScreen.tsx:84:    * essa música e as bordas não navegam — sair devolve o palco à posição de
+apps/native/src/screens/StageScreen.tsx:85:    * onde a busca partiu.
+apps/native/src/screens/StageScreen.tsx:86:    */
+apps/native/src/screens/StageScreen.tsx:87:   avulsaContentId: string | null
+apps/native/src/screens/StageScreen.tsx:88:   online: boolean
+apps/native/src/screens/StageScreen.tsx:89:   onPosicao: (p: number) => void
+apps/native/src/screens/StageScreen.tsx:90:   onFim: () => void
+apps/native/src/screens/StageScreen.tsx:91:   onIndice: () => void
+apps/native/src/screens/StageScreen.tsx:92:   onBusca: () => void
+apps/native/src/screens/StageScreen.tsx:93:   onSair: () => void
+apps/native/src/screens/StageScreen.tsx:94:   /** O disco mudou (download ou despejo) — a raiz recalcula `filesPresent`. */
+apps/native/src/screens/StageScreen.tsx:95:   onArquivosMudaram: () => void
+apps/native/src/screens/StageScreen.tsx:96: }
+apps/native/src/screens/StageScreen.tsx:97: 
+
+$ awk 'NR>=196&&NR<=212' apps/native/src/screens/StageScreen.tsx
+apps/native/src/screens/StageScreen.tsx:196:   const posicaoRef = useRef(posicao)
+apps/native/src/screens/StageScreen.tsx:197:   const totalRef = useRef(0)
+apps/native/src/screens/StageScreen.tsx:198:   const avulsaRef = useRef(false)
+apps/native/src/screens/StageScreen.tsx:199: 
+apps/native/src/screens/StageScreen.tsx:200:   useFocusEffect(
+apps/native/src/screens/StageScreen.tsx:201:     useCallback(() => {
+apps/native/src/screens/StageScreen.tsx:202:       void activateKeepAwakeAsync(TAG_PALCO)
+apps/native/src/screens/StageScreen.tsx:203:       log('keepawake on')
+apps/native/src/screens/StageScreen.tsx:204:       if (jaFocou.current && !avulsaRef.current) {
+apps/native/src/screens/StageScreen.tsx:205:         log(`stage restore n=${posicaoRef.current}/${totalRef.current}`)
+apps/native/src/screens/StageScreen.tsx:206:       }
+apps/native/src/screens/StageScreen.tsx:207:       jaFocou.current = true
+apps/native/src/screens/StageScreen.tsx:208:       return () => {
+apps/native/src/screens/StageScreen.tsx:209:         deactivateKeepAwake(TAG_PALCO)
+apps/native/src/screens/StageScreen.tsx:210:         log('keepawake off')
+apps/native/src/screens/StageScreen.tsx:211:       }
+apps/native/src/screens/StageScreen.tsx:212:     }, []),
+
+$ awk 'NR>=280&&NR<=296' apps/native/src/screens/StageScreen.tsx
+apps/native/src/screens/StageScreen.tsx:280:     () => [...setlist.setlist_songs].sort((a, b) => a.position - b.position),
+apps/native/src/screens/StageScreen.tsx:281:     [setlist],
+apps/native/src/screens/StageScreen.tsx:282:   )
+apps/native/src/screens/StageScreen.tsx:283:   const n = songs.length
+apps/native/src/screens/StageScreen.tsx:284:   const avulsa = avulsaContentId !== null
+apps/native/src/screens/StageScreen.tsx:285:   const song = avulsa ? undefined : songs[posicao - 1]
+apps/native/src/screens/StageScreen.tsx:286:   const resolvida = song !== undefined ? resolveSong(song, contentById) : null
+apps/native/src/screens/StageScreen.tsx:287:   const content = avulsa ? (contentById.get(avulsaContentId) ?? null) : (resolvida?.content ?? null)
+apps/native/src/screens/StageScreen.tsx:288:   const validade =
+apps/native/src/screens/StageScreen.tsx:289:     content !== null ? isValidContent(content.content_type, content.content_data, content.file_url) : null
+apps/native/src/screens/StageScreen.tsx:290:   const corpo = content !== null ? bodyOf(content.content_type, content.content_data) : null
+apps/native/src/screens/StageScreen.tsx:291:   const cor = colors[tema]
+apps/native/src/screens/StageScreen.tsx:292: 
+apps/native/src/screens/StageScreen.tsx:293:   // Os refs que o efeito de foco (N1-D17) lê sem entrar nas dependências.
+apps/native/src/screens/StageScreen.tsx:294:   posicaoRef.current = posicao
+apps/native/src/screens/StageScreen.tsx:295:   totalRef.current = n
+apps/native/src/screens/StageScreen.tsx:296:   avulsaRef.current = avulsa
+
+$ awk 'NR>=328&&NR<=342' apps/native/src/screens/StageScreen.tsx
+apps/native/src/screens/StageScreen.tsx:328: 
+apps/native/src/screens/StageScreen.tsx:329:   useEffect(() => {
+apps/native/src/screens/StageScreen.tsx:330:     pararScroll()
+apps/native/src/screens/StageScreen.tsx:331:     setRodando(false)
+apps/native/src/screens/StageScreen.tsx:332:     setMotivoVisivel(null)
+apps/native/src/screens/StageScreen.tsx:333:     y.current = 0
+apps/native/src/screens/StageScreen.tsx:334:     scroll.current?.scrollTo({ y: 0, animated: false })
+apps/native/src/screens/StageScreen.tsx:335:     if (navegouEm.current > 0) {
+apps/native/src/screens/StageScreen.tsx:336:       log(
+apps/native/src/screens/StageScreen.tsx:337:         `nav n=${posicao}/${n} setlist=${setlist.id.slice(0, 8)} t=${Date.now() - navegouEm.current}`,
+apps/native/src/screens/StageScreen.tsx:338:       )
+apps/native/src/screens/StageScreen.tsx:339:       navegouEm.current = 0
+apps/native/src/screens/StageScreen.tsx:340:     }
+apps/native/src/screens/StageScreen.tsx:341:     if (chavePlaceholder !== null) log(`placeholder kind=${chavePlaceholder}`)
+apps/native/src/screens/StageScreen.tsx:342:   }, [posicao, n, setlist.id, chavePlaceholder, pararScroll])
+
+$ awk 'NR>=384&&NR<=395' apps/native/src/screens/StageScreen.tsx
+apps/native/src/screens/StageScreen.tsx:384:     void buscarArquivo(urlArquivo, false)
+apps/native/src/screens/StageScreen.tsx:385:   }, [urlArquivo, buscarArquivo])
+apps/native/src/screens/StageScreen.tsx:386: 
+apps/native/src/screens/StageScreen.tsx:387:   /**
+apps/native/src/screens/StageScreen.tsx:388:    * T1-R16 — prefetch sob demanda a partir desta posição (atual, +1, +2, +3,
+apps/native/src/screens/StageScreen.tsx:389:    * −1, resto). Roda a cada navegação e só com rede; o `ensureFile` deduplica
+apps/native/src/screens/StageScreen.tsx:390:    * o download que o efeito de cima já pode ter começado.
+apps/native/src/screens/StageScreen.tsx:391:    */
+apps/native/src/screens/StageScreen.tsx:392:   useEffect(() => {
+apps/native/src/screens/StageScreen.tsx:393:     if (!online) return
+apps/native/src/screens/StageScreen.tsx:394:     void prefetchDemanda(setlist, contentById, posicao).then(onArquivosMudaram)
+apps/native/src/screens/StageScreen.tsx:395:   }, [setlist, contentById, posicao, online, onArquivosMudaram])
+
+$ awk 'NR>=404&&NR<=418' apps/native/src/screens/StageScreen.tsx
+apps/native/src/screens/StageScreen.tsx:404: 
+apps/native/src/screens/StageScreen.tsx:405:   const avancar = useCallback(() => {
+apps/native/src/screens/StageScreen.tsx:406:     if (avulsa) return
+apps/native/src/screens/StageScreen.tsx:407:     if (endOfSetlist(posicao, n)) {
+apps/native/src/screens/StageScreen.tsx:408:       log(`end-of-setlist n=${n}`)
+apps/native/src/screens/StageScreen.tsx:409:       onFim()
+apps/native/src/screens/StageScreen.tsx:410:       return
+apps/native/src/screens/StageScreen.tsx:411:     }
+apps/native/src/screens/StageScreen.tsx:412:     irPara(nextPosition(posicao, n))
+apps/native/src/screens/StageScreen.tsx:413:   }, [avulsa, posicao, n, onFim, irPara])
+apps/native/src/screens/StageScreen.tsx:414: 
+apps/native/src/screens/StageScreen.tsx:415:   const voltar = useCallback(() => {
+apps/native/src/screens/StageScreen.tsx:416:     if (avulsa || posicao <= 1) return
+apps/native/src/screens/StageScreen.tsx:417:     irPara(prevPosition(posicao, n))
+apps/native/src/screens/StageScreen.tsx:418:   }, [avulsa, posicao, n, irPara])
+
+$ awk 'NR>=545&&NR<=563' apps/native/src/screens/StageScreen.tsx
+apps/native/src/screens/StageScreen.tsx:545:     <View style={[styles.tela, { backgroundColor: cor.bg }]}>
+apps/native/src/screens/StageScreen.tsx:546:       {t.empilha ? (
+apps/native/src/screens/StageScreen.tsx:547:         <View style={[styles.barraTopo, styles.barraEmpilhada, { height: t.barra, borderBottomColor: cor.line }]}>
+apps/native/src/screens/StageScreen.tsx:548:           <View style={styles.linhaDaBarra}>
+apps/native/src/screens/StageScreen.tsx:549:             {posicaoEl}
+apps/native/src/screens/StageScreen.tsx:550:             <Text style={[styles.nomeSetlist, styles.nomeSetlistNaLinha, { color: cor.muted }]} numberOfLines={1}>
+apps/native/src/screens/StageScreen.tsx:551:               {setlist.name}
+apps/native/src/screens/StageScreen.tsx:552:             </Text>
+apps/native/src/screens/StageScreen.tsx:553:             {extrasDaBarra}
+apps/native/src/screens/StageScreen.tsx:554:           </View>
+apps/native/src/screens/StageScreen.tsx:555:           {tituloEl(styles.tituloNaLinha)}
+apps/native/src/screens/StageScreen.tsx:556:         </View>
+apps/native/src/screens/StageScreen.tsx:557:       ) : (
+apps/native/src/screens/StageScreen.tsx:558:         <View style={[styles.barraTopo, { height: t.barra, borderBottomColor: cor.line }]}>
+apps/native/src/screens/StageScreen.tsx:559:           {posicaoEl}
+apps/native/src/screens/StageScreen.tsx:560:           <Text style={[styles.nomeSetlist, { color: cor.muted }]} numberOfLines={1}>
+apps/native/src/screens/StageScreen.tsx:561:             {setlist.name}
+apps/native/src/screens/StageScreen.tsx:562:           </Text>
+apps/native/src/screens/StageScreen.tsx:563:           {tituloEl(null)}
+
+$ awk 'NR>=715&&NR<=722' apps/native/src/screens/StageScreen.tsx
+apps/native/src/screens/StageScreen.tsx:715:           onPress={onBusca}
+apps/native/src/screens/StageScreen.tsx:716:           onMotivo={revelarMotivo}
+apps/native/src/screens/StageScreen.tsx:717:           testID="busca"
+apps/native/src/screens/StageScreen.tsx:718:         />
+apps/native/src/screens/StageScreen.tsx:719:         <Controle
+apps/native/src/screens/StageScreen.tsx:720:           icone={avulsa ? 'voltar' : 'sair'}
+apps/native/src/screens/StageScreen.tsx:721:           accessibilityLabel={avulsa ? 'Voltar para a busca' : 'Sair do palco'}
+apps/native/src/screens/StageScreen.tsx:722:           cor={cor}

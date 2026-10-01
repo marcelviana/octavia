@@ -1,0 +1,150 @@
+# A11 — os undefined do TokensDaFaixa (N4-PR0, 2026-10-01; rastro)
+
+$ git grep -nE 'undefined' -- packages/identidade/src/tokens.ts
+packages/identidade/src/tokens.ts:225:    artistaMin: number | undefined
+packages/identidade/src/tokens.ts:236:    alturaMin: number | undefined
+packages/identidade/src/tokens.ts:350:    artistaCede: 1, artistaMin: undefined,
+packages/identidade/src/tokens.ts:372:  folha: { largura: 663, topo: 96, alturaMin: undefined },
+
+$ awk 'NR>=220&&NR<=240' packages/identidade/src/tokens.ts
+packages/identidade/src/tokens.ts:220:      * *"título e · artista numa linha (o artista cede primeiro, mínimo 60
+packages/identidade/src/tokens.ts:221:      * dp)"*. Em C os dois encolhem por igual (peso 1, sem mínimo), como hoje;
+packages/identidade/src/tokens.ts:222:      * em B o artista encolhe com peso maior até os 60, e só então o título.
+packages/identidade/src/tokens.ts:223:      */
+packages/identidade/src/tokens.ts:224:     artistaCede: number
+packages/identidade/src/tokens.ts:225:     artistaMin: number | undefined
+packages/identidade/src/tokens.ts:226:   }
+packages/identidade/src/tokens.ts:227:   folha: {
+packages/identidade/src/tokens.ts:228:     /**
+packages/identidade/src/tokens.ts:229:      * A folha criar/editar: 720 × 420 a 100 do topo em C (N2 §2); em B
+packages/identidade/src/tokens.ts:230:      * *"a largura da tela menos a margem da faixa (663 em B)"*, altura de
+packages/identidade/src/tokens.ts:231:      * conteúdo, topo 96 — com as duas validações abertas o fundo fica em
+packages/identidade/src/tokens.ts:232:      * ≈ 582 e o teclado de 300 começa em 754.
+packages/identidade/src/tokens.ts:233:      */
+packages/identidade/src/tokens.ts:234:     largura: number
+packages/identidade/src/tokens.ts:235:     topo: number
+packages/identidade/src/tokens.ts:236:     alturaMin: number | undefined
+packages/identidade/src/tokens.ts:237:   }
+packages/identidade/src/tokens.ts:238:   picker: {
+packages/identidade/src/tokens.ts:239:     /**
+packages/identidade/src/tokens.ts:240:      * **N3-E18** (decisão do Marcel, 2026-09-25; div. 445): a linha do picker
+
+$ awk 'NR>=340&&NR<=386' packages/identidade/src/tokens.ts
+packages/identidade/src/tokens.ts:340:     alfaMarcado: number
+packages/identidade/src/tokens.ts:341:     alfaDialogo: number
+packages/identidade/src/tokens.ts:342:   }
+packages/identidade/src/tokens.ts:343: }
+packages/identidade/src/tokens.ts:344: 
+packages/identidade/src/tokens.ts:345: const faixaC: TokensDaFaixa = {
+packages/identidade/src/tokens.ts:346:   s1: { barra: 120, barraTopo: 0, barraBase: 0, vaoDaBarra: space.xl, empilha: false, cartao: 132, cartaoCompacto: 112 },
+packages/identidade/src/tokens.ts:347:   s2: { colunas: 2, rotulosCurtos: false },
+packages/identidade/src/tokens.ts:348:   reordenar: {
+packages/identidade/src/tokens.ts:349:     barra: bar.top + space.xl, empilha: false, barraTopo: 0, barraBase: 0, vaoDoTitulo: space.sm, vaoDasAcoes: 0,
+packages/identidade/src/tokens.ts:350:     artistaCede: 1, artistaMin: undefined,
+packages/identidade/src/tokens.ts:351:   },
+packages/identidade/src/tokens.ts:352:   folha: { largura: 720, topo: 100, alturaMin: 420 },
+packages/identidade/src/tokens.ts:353:   picker: { empilhaFalha: false, linhaFalha: 80 },
+packages/identidade/src/tokens.ts:354:   palco: { barra: bar.top, empilha: false },
+packages/identidade/src/tokens.ts:355:   s5: { fileira: 900 },
+packages/identidade/src/tokens.ts:356:   web: {
+packages/identidade/src/tokens.ts:357:     conteiner: 1138, margem: space.xxl, colunaLateral: 320, razaoListaDetalhe: [2, 3],
+packages/identidade/src/tokens.ts:358:     zonaArquivo: 240, linhaLista: 80, linhaMusica: 72, empilha: false,
+packages/identidade/src/tokens.ts:359:     marca: { largura: 340, altura: 219 }, colunaAuth: 420, vaoAuth: 140,
+packages/identidade/src/tokens.ts:360:     campoAuth: touch.list + 4, botaoAuth: touch.list + 2, botaoAviso: 36, entrelinhaAviso: 20, limiarAviso: 320,
+packages/identidade/src/tokens.ts:361:     metadado: 13, alfaMarcado: 0.12, alfaDialogo: 0.82,
+packages/identidade/src/tokens.ts:362:   },
+packages/identidade/src/tokens.ts:363: }
+packages/identidade/src/tokens.ts:364: 
+packages/identidade/src/tokens.ts:365: const faixaB: TokensDaFaixa = {
+packages/identidade/src/tokens.ts:366:   s1: { barra: 144, barraTopo: 20, barraBase: 14, vaoDaBarra: space.lg, empilha: true, cartao: 184, cartaoCompacto: 184 },
+packages/identidade/src/tokens.ts:367:   s2: { colunas: 1, rotulosCurtos: true },
+packages/identidade/src/tokens.ts:368:   reordenar: {
+packages/identidade/src/tokens.ts:369:     barra: 144, empilha: true, barraTopo: 20, barraBase: 6, vaoDoTitulo: 0, vaoDasAcoes: 14,
+packages/identidade/src/tokens.ts:370:     artistaCede: 100, artistaMin: 60,
+packages/identidade/src/tokens.ts:371:   },
+packages/identidade/src/tokens.ts:372:   folha: { largura: 663, topo: 96, alturaMin: undefined },
+packages/identidade/src/tokens.ts:373:   picker: { empilhaFalha: true, linhaFalha: 138.7 },
+packages/identidade/src/tokens.ts:374:   palco: { barra: bar.top + space.xl, empilha: true },
+packages/identidade/src/tokens.ts:375:   s5: { fileira: 663 },
+packages/identidade/src/tokens.ts:376:   web: {
+packages/identidade/src/tokens.ts:377:     conteiner: null, margem: space.xl, colunaLateral: 'empilha', razaoListaDetalhe: 'empilha',
+packages/identidade/src/tokens.ts:378:     zonaArquivo: 240, linhaLista: 80, linhaMusica: 72, empilha: true,
+packages/identidade/src/tokens.ts:379:     marca: { largura: 340, altura: 219 }, colunaAuth: 420, vaoAuth: space.xxxl,
+packages/identidade/src/tokens.ts:380:     campoAuth: touch.list + 4, botaoAuth: touch.list + 2, botaoAviso: 36, entrelinhaAviso: 20, limiarAviso: 320,
+packages/identidade/src/tokens.ts:381:     metadado: 13, alfaMarcado: 0.12, alfaDialogo: 0.82,
+packages/identidade/src/tokens.ts:382:   },
+packages/identidade/src/tokens.ts:383: }
+packages/identidade/src/tokens.ts:384: 
+packages/identidade/src/tokens.ts:385: export const faixas: Readonly<Record<Faixa, TokensDaFaixa>> = { A: faixaB, B: faixaB, C: faixaC }
+
+$ git grep -nE 'alturaMin|artistaMin' -- apps packages app components lib hooks ':!*.json'
+apps/native/src/screens/FolhaDeCriar.tsx:311:        <View style={[styles.folha, { width: f.largura, marginTop: f.topo, minHeight: f.alturaMin }]}>
+apps/native/src/screens/ModoDeReordenar.tsx:83:type TokensDaLinha = Pick<TokensDaFaixa['reordenar'], 'artistaCede' | 'artistaMin'>
+apps/native/src/screens/ModoDeReordenar.tsx:229:            faixa.artistaMin !== undefined ? { flexShrink: faixa.artistaCede, minWidth: faixa.artistaMin } : null,
+packages/identidade/src/tokens.ts:225:    artistaMin: number | undefined
+packages/identidade/src/tokens.ts:236:    alturaMin: number | undefined
+packages/identidade/src/tokens.ts:350:    artistaCede: 1, artistaMin: undefined,
+packages/identidade/src/tokens.ts:352:  folha: { largura: 720, topo: 100, alturaMin: 420 },
+packages/identidade/src/tokens.ts:370:    artistaCede: 100, artistaMin: 60,
+packages/identidade/src/tokens.ts:372:  folha: { largura: 663, topo: 96, alturaMin: undefined },
+packages/identidade/test/igualdade.test.ts:33: * `undefined` (medido no commit 2: a linha de base perdia o `alturaMin`).
+
+$ awk 'NR>=15&&NR<=25' packages/identidade/scripts/gerar-css.mjs
+packages/identidade/scripts/gerar-css.mjs:15:  * replica o `faixaDe` inclusive na fração. A faixa C também vai num `@media`,
+packages/identidade/scripts/gerar-css.mjs:16:  * e não no `:root` puro: B e A OMITEM a propriedade cujo valor é `'empilha'`
+packages/identidade/scripts/gerar-css.mjs:17:  * (a coluna não existe naquela faixa), e um valor de C no `:root` vazaria
+packages/identidade/scripts/gerar-css.mjs:18:  * para B pela cascata (div. 605). No `:root` puro ficam só os tokens globais.
+packages/identidade/scripts/gerar-css.mjs:19:  * Do bloco da faixa, o CSS leva só `web.*` e `folha.*` — as superfícies do
+packages/identidade/scripts/gerar-css.mjs:20:  * nativo (`s1` … `s5`, `picker`, `palco`, `reordenar`) não são do web.
+packages/identidade/scripts/gerar-css.mjs:21:  */
+packages/identidade/scripts/gerar-css.mjs:22: import { writeFileSync } from 'node:fs'
+packages/identidade/scripts/gerar-css.mjs:23: import { dirname, join, resolve } from 'node:path'
+packages/identidade/scripts/gerar-css.mjs:24: import { fileURLToPath, pathToFileURL } from 'node:url'
+packages/identidade/scripts/gerar-css.mjs:25: import {
+
+$ awk 'NR>=55&&NR<=90' packages/identidade/scripts/gerar-css.mjs
+packages/identidade/scripts/gerar-css.mjs:55:   ]
+packages/identidade/scripts/gerar-css.mjs:56: }
+packages/identidade/scripts/gerar-css.mjs:57: 
+packages/identidade/scripts/gerar-css.mjs:58: /** `web.*` e `folha.*` de uma faixa; `'empilha'` e `undefined` não geram propriedade. */
+packages/identidade/scripts/gerar-css.mjs:59: function daFaixa(t) {
+packages/identidade/scripts/gerar-css.mjs:60:   const out = []
+packages/identidade/scripts/gerar-css.mjs:61:   const w = t.web
+packages/identidade/scripts/gerar-css.mjs:62:   out.push(`  --faixa-conteiner: ${w.conteiner === null ? 'none' : px(w.conteiner)};`)
+packages/identidade/scripts/gerar-css.mjs:63:   out.push(`  --faixa-margem: ${px(w.margem)};`)
+packages/identidade/scripts/gerar-css.mjs:64:   if (w.colunaLateral !== 'empilha') out.push(`  --faixa-coluna-lateral: ${px(w.colunaLateral)};`)
+packages/identidade/scripts/gerar-css.mjs:65:   if (w.razaoListaDetalhe !== 'empilha') {
+packages/identidade/scripts/gerar-css.mjs:66:     out.push(`  --faixa-razao-lista: ${w.razaoListaDetalhe[0]};`)
+packages/identidade/scripts/gerar-css.mjs:67:     out.push(`  --faixa-razao-detalhe: ${w.razaoListaDetalhe[1]};`)
+packages/identidade/scripts/gerar-css.mjs:68:   }
+packages/identidade/scripts/gerar-css.mjs:69:   out.push(`  --faixa-zona-arquivo: ${px(w.zonaArquivo)};`)
+packages/identidade/scripts/gerar-css.mjs:70:   out.push(`  --faixa-linha-lista: ${px(w.linhaLista)};`)
+packages/identidade/scripts/gerar-css.mjs:71:   out.push(`  --faixa-linha-musica: ${px(w.linhaMusica)};`)
+packages/identidade/scripts/gerar-css.mjs:72:   out.push(`  --faixa-empilha: ${w.empilha ? 1 : 0};`)
+packages/identidade/scripts/gerar-css.mjs:73:   // I1-PR-6 (decisão 2): as medidas fixas das folhas 0 e 1, com nome
+packages/identidade/scripts/gerar-css.mjs:74:   out.push(`  --faixa-marca-largura: ${px(w.marca.largura)};`)
+packages/identidade/scripts/gerar-css.mjs:75:   out.push(`  --faixa-marca-altura: ${px(w.marca.altura)};`)
+packages/identidade/scripts/gerar-css.mjs:76:   for (const k of ['colunaAuth', 'vaoAuth', 'campoAuth', 'botaoAuth', 'botaoAviso', 'entrelinhaAviso', 'limiarAviso']) {
+packages/identidade/scripts/gerar-css.mjs:77:     out.push(`  --faixa-${kebab(k)}: ${px(w[k])};`)
+packages/identidade/scripts/gerar-css.mjs:78:   }
+packages/identidade/scripts/gerar-css.mjs:79:   // I1-PR-9 (folha 4): o metadado de linha e as duas alfas, como color-mix do token de cor
+packages/identidade/scripts/gerar-css.mjs:80:   out.push(`  --faixa-metadado: ${px(w.metadado)};`)
+packages/identidade/scripts/gerar-css.mjs:81:   out.push(`  --faixa-cor-marcado: color-mix(in srgb, var(--cor-accent) ${Math.round(w.alfaMarcado * 100)}%, transparent);`)
+packages/identidade/scripts/gerar-css.mjs:82:   out.push(`  --faixa-cor-dialogo: color-mix(in srgb, var(--cor-bg) ${Math.round(w.alfaDialogo * 100)}%, transparent);`)
+packages/identidade/scripts/gerar-css.mjs:83:   for (const [k, v] of Object.entries(t.folha)) {
+packages/identidade/scripts/gerar-css.mjs:84:     if (v !== undefined) out.push(`  --faixa-folha-${kebab(k)}: ${px(v)};`)
+packages/identidade/scripts/gerar-css.mjs:85:   }
+packages/identidade/scripts/gerar-css.mjs:86:   return out
+packages/identidade/scripts/gerar-css.mjs:87: }
+packages/identidade/scripts/gerar-css.mjs:88: 
+packages/identidade/scripts/gerar-css.mjs:89: export function gerarCss() {
+packages/identidade/scripts/gerar-css.mjs:90:   const media = {
+
+$ grep -n 'faixa-folha' app/styles/identidade.css
+103:    --faixa-folha-largura: 720px;
+104:    --faixa-folha-topo: 100px;
+105:    --faixa-folha-altura-min: 420px;
+130:    --faixa-folha-largura: 663px;
+131:    --faixa-folha-topo: 96px;
+156:    --faixa-folha-largura: 663px;
+157:    --faixa-folha-topo: 96px;

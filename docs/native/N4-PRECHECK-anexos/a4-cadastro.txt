@@ -1,0 +1,344 @@
+# A4 — o cadastro inteiro: banco, Zod, tipos, o que cada tela mostra (N4-PR0, 2026-10-01; rastro)
+
+$ awk 'NR>=75&&NR<=98' supabase/schema.dump.sql
+supabase/schema.dump.sql:75: CREATE TABLE IF NOT EXISTS "public"."content" (
+supabase/schema.dump.sql:76:     "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
+supabase/schema.dump.sql:77:     "user_id" "text" NOT NULL,
+supabase/schema.dump.sql:78:     "title" character varying(255) NOT NULL,
+supabase/schema.dump.sql:79:     "artist" character varying(255),
+supabase/schema.dump.sql:80:     "album" character varying(255),
+supabase/schema.dump.sql:81:     "genre" character varying(100),
+supabase/schema.dump.sql:82:     "content_type" character varying(50) NOT NULL,
+supabase/schema.dump.sql:83:     "key" character varying(10),
+supabase/schema.dump.sql:84:     "bpm" integer,
+supabase/schema.dump.sql:85:     "time_signature" character varying(10) DEFAULT '4/4'::character varying,
+supabase/schema.dump.sql:86:     "difficulty" character varying(20),
+supabase/schema.dump.sql:87:     "capo" integer,
+supabase/schema.dump.sql:88:     "tuning" character varying(50),
+supabase/schema.dump.sql:89:     "tags" "text"[],
+supabase/schema.dump.sql:90:     "notes" "text",
+supabase/schema.dump.sql:91:     "content_data" "jsonb",
+supabase/schema.dump.sql:92:     "file_url" "text",
+supabase/schema.dump.sql:93:     "thumbnail_url" "text",
+supabase/schema.dump.sql:94:     "is_favorite" boolean DEFAULT false,
+supabase/schema.dump.sql:95:     "is_public" boolean DEFAULT false,
+supabase/schema.dump.sql:96:     "created_at" timestamp with time zone DEFAULT "now"(),
+supabase/schema.dump.sql:97:     "updated_at" timestamp with time zone DEFAULT "now"()
+supabase/schema.dump.sql:98: );
+
+$ awk 'NR>=60&&NR<=83' types/database.types.ts
+types/database.types.ts:60:         Row: {
+types/database.types.ts:61:           album: string | null
+types/database.types.ts:62:           artist: string | null
+types/database.types.ts:63:           bpm: number | null
+types/database.types.ts:64:           capo: number | null
+types/database.types.ts:65:           content_data: Json | null
+types/database.types.ts:66:           content_type: string
+types/database.types.ts:67:           created_at: string | null
+types/database.types.ts:68:           difficulty: string | null
+types/database.types.ts:69:           file_url: string | null
+types/database.types.ts:70:           genre: string | null
+types/database.types.ts:71:           id: string
+types/database.types.ts:72:           is_favorite: boolean | null
+types/database.types.ts:73:           is_public: boolean | null
+types/database.types.ts:74:           key: string | null
+types/database.types.ts:75:           notes: string | null
+types/database.types.ts:76:           tags: string[] | null
+types/database.types.ts:77:           thumbnail_url: string | null
+types/database.types.ts:78:           time_signature: string | null
+types/database.types.ts:79:           title: string
+types/database.types.ts:80:           tuning: string | null
+types/database.types.ts:81:           updated_at: string | null
+types/database.types.ts:82:           user_id: string
+types/database.types.ts:83:         }
+
+$ awk 'NR>=134&&NR<=199' lib/api-schemas.ts
+lib/api-schemas.ts:134: export const contentTypeSchema = z.nativeEnum(ContentType)
+lib/api-schemas.ts:135: 
+lib/api-schemas.ts:136: // Campos editáveis de content — limites das colunas reais (dump):
+lib/api-schemas.ts:137: // title/artist/album varchar(255) · genre varchar(100) · key/time_signature
+lib/api-schemas.ts:138: // varchar(10) · difficulty varchar(20) · tuning varchar(50)
+lib/api-schemas.ts:139: const contentEditableFields = {
+lib/api-schemas.ts:140:   title: commonSchemas.createSafeText(1, 255),
+lib/api-schemas.ts:141:   artist: commonSchemas.createSafeText(0, 255).nullish(),
+lib/api-schemas.ts:142:   album: commonSchemas.createSafeText(0, 255).nullish(),
+lib/api-schemas.ts:143:   genre: commonSchemas.createSafeText(0, 100).nullish(),
+lib/api-schemas.ts:144:   content_type: contentTypeSchema,
+lib/api-schemas.ts:145:   content_data: z.record(jsonValueSchema).nullish(),
+lib/api-schemas.ts:146:   file_url: z.string().url().nullish(),
+lib/api-schemas.ts:147:   key: z.string().max(10).nullish(),
+lib/api-schemas.ts:148:   bpm: z.number().int().min(1).max(999).nullish(), // faixa única 1-999 (aval, ponto 3)
+lib/api-schemas.ts:149:   time_signature: z.string().max(10).nullish(),
+lib/api-schemas.ts:150:   difficulty: z.enum(['Beginner', 'Intermediate', 'Advanced', 'Expert']).nullish(),
+lib/api-schemas.ts:151:   capo: z.number().int().nullish(),
+lib/api-schemas.ts:152:   tuning: commonSchemas.createSafeText(0, 50).nullish(),
+lib/api-schemas.ts:153:   tags: z.array(commonSchemas.createSafeText(1, 50)).max(20).nullish(),
+lib/api-schemas.ts:154:   notes: commonSchemas.createSafeText(0, 2000).nullish(),
+lib/api-schemas.ts:155:   is_public: z.boolean().nullish(),
+lib/api-schemas.ts:156: }
+lib/api-schemas.ts:157: 
+lib/api-schemas.ts:158: // user_id/created_at/updated_at vêm do servidor; a UI os envia hoje
+lib/api-schemas.ts:159: // (useAddContentLogic manda user_id; content-editor manda updated_at) —
+lib/api-schemas.ts:160: // ignorados por decisão escrita (D1), nunca gravados do body.
+lib/api-schemas.ts:161: const CONTENT_IGNORED_KEYS = ['user_id', 'created_at', 'updated_at'] as const
+lib/api-schemas.ts:162: 
+lib/api-schemas.ts:163: // B7-PR5 (D5, tipado-passthrough): quando o payload traz o PAR content_type ×
+lib/api-schemas.ts:164: // content_data, a chave do tipo é obrigatória e string (Sheet: nenhuma; null:
+lib/api-schemas.ts:165: // aceito). Só valida — nunca altera; 400 nomeia content_data.<chave>
+lib/api-schemas.ts:166: // (issue.path → field por path.join('.') em lib/api-errors.ts). Payload com
+lib/api-schemas.ts:167: // content_data e SEM content_type (o editor do web no PUT) é checado no
+lib/api-schemas.ts:168: // handler, com o tipo da linha (app/api/content/route.ts).
+lib/api-schemas.ts:169: const refineContentData = (
+lib/api-schemas.ts:170:   v: { content_type?: ContentType; content_data?: unknown },
+lib/api-schemas.ts:171:   ctx: z.RefinementCtx
+lib/api-schemas.ts:172: ) => {
+lib/api-schemas.ts:173:   if (v.content_type && v.content_data !== undefined) {
+lib/api-schemas.ts:174:     const r = checkContentData(v.content_type, v.content_data)
+lib/api-schemas.ts:175:     if (!r.ok) ctx.addIssue({ code: 'custom', path: r.field.split('.'), message: r.message })
+lib/api-schemas.ts:176:   }
+lib/api-schemas.ts:177: }
+lib/api-schemas.ts:178: 
+lib/api-schemas.ts:179: export const contentSchemas = {
+lib/api-schemas.ts:180:   create: withIgnoredKeys(
+lib/api-schemas.ts:181:     z.object({
+lib/api-schemas.ts:182:       ...contentEditableFields,
+lib/api-schemas.ts:183:       is_favorite: z.boolean().default(false),
+lib/api-schemas.ts:184:     }).strict().superRefine(refineContentData),
+lib/api-schemas.ts:185:     CONTENT_IGNORED_KEYS
+lib/api-schemas.ts:186:   ),
+lib/api-schemas.ts:187: 
+lib/api-schemas.ts:188:   // update canônico: PUT /api/content com id NO CORPO (o PUT /api/content/[id]
+lib/api-schemas.ts:189:   // foi removido na PR-3 — decisão D6)
+lib/api-schemas.ts:190:   update: withIgnoredKeys(
+lib/api-schemas.ts:191:     z.object({
+lib/api-schemas.ts:192:       id: commonSchemas.objectId,
+lib/api-schemas.ts:193:       ...contentEditableFields,
+lib/api-schemas.ts:194:       title: commonSchemas.createSafeText(1, 255).optional(),
+lib/api-schemas.ts:195:       content_type: contentTypeSchema.optional(),
+lib/api-schemas.ts:196:       is_favorite: z.boolean().nullish(),
+lib/api-schemas.ts:197:     }).strict().superRefine(refineContentData),
+lib/api-schemas.ts:198:     CONTENT_IGNORED_KEYS
+lib/api-schemas.ts:199:   ),
+
+$ awk 'NR>=20&&NR<=45' components/content-viewer/ContentHeader.tsx
+components/content-viewer/ContentHeader.tsx:20:   onBack: () => void
+components/content-viewer/ContentHeader.tsx:21: }
+components/content-viewer/ContentHeader.tsx:22: 
+components/content-viewer/ContentHeader.tsx:23: export function ContentHeader({ content, onBack }: ContentHeaderProps) {
+components/content-viewer/ContentHeader.tsx:24:   const tipo = tipoDe(content.content_type)
+components/content-viewer/ContentHeader.tsx:25:   const artista = content.artist || FRASES_LISTA["lib.artista.desconhecido"]
+components/content-viewer/ContentHeader.tsx:26:   return (
+components/content-viewer/ContentHeader.tsx:27:     <header className="border-b-hairline border-cor-line py-espaco-xl px-web-margem flex flex-wrap items-center gap-y-espaco-lg gap-x-espaco-xl">
+components/content-viewer/ContentHeader.tsx:28:       <div className="grow shrink basis-web-coluna-auth min-w-0 flex items-center gap-espaco-lg">
+components/content-viewer/ContentHeader.tsx:29:         <button type="button" aria-label={FRASES_VIEW["view.voltar"]} onClick={onBack} className="w-toque-min h-toque-min shrink-0 flex items-center justify-center text-cor-text">
+components/content-viewer/ContentHeader.tsx:30:           <Icone nome="voltar" tamanho={24} />
+components/content-viewer/ContentHeader.tsx:31:         </button>
+components/content-viewer/ContentHeader.tsx:32:         <div className="flex-1 min-w-0 flex flex-col gap-espaco-xs">
+components/content-viewer/ContentHeader.tsx:33:           <h1 className="font-fam-display-medium font-peso-display-medium text-tam-title-small leading-natural text-cor-text break-words">{content.title}</h1>
+components/content-viewer/ContentHeader.tsx:34:           <div className="flex flex-wrap items-center gap-espaco-sm">
+components/content-viewer/ContentHeader.tsx:35:             <Icone nome={tipo.icone} tamanho={20} className="text-cor-line-info" />
+components/content-viewer/ContentHeader.tsx:36:             <p className="text-tam-label text-cor-muted">{`${artista} · ${tipo.rotulo.toLocaleLowerCase("pt-BR")}`}</p>
+components/content-viewer/ContentHeader.tsx:37:           </div>
+components/content-viewer/ContentHeader.tsx:38:         </div>
+components/content-viewer/ContentHeader.tsx:39:       </div>
+components/content-viewer/ContentHeader.tsx:40:       <div className="flex flex-wrap gap-espaco-lg pl-recuo-cabecalho c:pl-0">
+components/content-viewer/ContentHeader.tsx:41:         <Link href={`/content/${encodeURIComponent(content.id)}/edit`} className={`${CONTROLE_LISTA} border-cor-line-info`}>
+components/content-viewer/ContentHeader.tsx:42:           <Icone nome="renomear" tamanho={24} className="text-cor-accent-ink" />
+components/content-viewer/ContentHeader.tsx:43:           {FRASES_VIEW["view.editar"]}
+components/content-viewer/ContentHeader.tsx:44:         </Link>
+components/content-viewer/ContentHeader.tsx:45:       </div>
+
+$ awk 'NR>=99&&NR<=135' components/content/frases-visualizacao.ts
+components/content/frases-visualizacao.ts:99: 
+components/content/frases-visualizacao.ts:100: /** O capo (div. 748): vazio → *nenhum*; número → *{n}ª casa*; outro texto, como veio. */
+components/content/frases-visualizacao.ts:101: export function capoDe(capo: unknown): string {
+components/content/frases-visualizacao.ts:102:   if (capo === null || capo === undefined || capo === "" || capo === 0 || capo === "0") return FRASES_VIEW["view.tab.capo.nenhum"]
+components/content/frases-visualizacao.ts:103:   const n = Number(capo)
+components/content/frases-visualizacao.ts:104:   return Number.isInteger(n) && n > 0 ? fraseCom("view.tab.capo.casa", { n: String(n) }) : String(capo)
+components/content/frases-visualizacao.ts:105: }
+components/content/frases-visualizacao.ts:106: 
+components/content/frases-visualizacao.ts:107: /** A dificuldade em pt-BR, minúscula como a folha (*avançado*); o valor desconhecido segue como veio. */
+components/content/frases-visualizacao.ts:108: export function dificuldadeDe(valor: string): string {
+components/content/frases-visualizacao.ts:109:   const d = DIFICULDADES.find((x) => x.valor.toLowerCase() === valor.toLowerCase())
+components/content/frases-visualizacao.ts:110:   return d ? d.rotulo.toLocaleLowerCase("pt-BR") : valor
+components/content/frases-visualizacao.ts:111: }
+components/content/frases-visualizacao.ts:112: 
+components/content/frases-visualizacao.ts:113: export interface CampoDeDetalhe { chave: string; valor: string }
+components/content/frases-visualizacao.ts:114: 
+components/content/frases-visualizacao.ts:115: /** Os pares de *Detalhes* (div. 747): um por campo que existe, na ordem de hoje. */
+components/content/frases-visualizacao.ts:116: export function camposDe(c: {
+components/content/frases-visualizacao.ts:117:   album?: string | null; difficulty?: string | null; genre?: string | null; key?: string | null
+components/content/frases-visualizacao.ts:118:   time_signature?: string | null; bpm?: number | null; tags?: string[] | null
+components/content/frases-visualizacao.ts:119:   created_at?: string | null; updated_at?: string | null
+components/content/frases-visualizacao.ts:120: }): CampoDeDetalhe[] {
+components/content/frases-visualizacao.ts:121:   const out: CampoDeDetalhe[] = []
+components/content/frases-visualizacao.ts:122:   const par = (chave: ChaveView, valor: string | null | undefined) => { if (valor) out.push({ chave: FRASES_VIEW[chave], valor }) }
+components/content/frases-visualizacao.ts:123:   par("campo.album", c.album)
+components/content/frases-visualizacao.ts:124:   par("campo.dificuldade", c.difficulty ? dificuldadeDe(c.difficulty) : null)
+components/content/frases-visualizacao.ts:125:   par("campo.genero", c.genre)
+components/content/frases-visualizacao.ts:126:   par("campo.tom", c.key)
+components/content/frases-visualizacao.ts:127:   par("campo.compasso", c.time_signature)
+components/content/frases-visualizacao.ts:128:   par("campo.andamento", c.bpm ? fraseCom("campo.andamento.bpm", { x: String(c.bpm) }) : null)
+components/content/frases-visualizacao.ts:129:   par("campo.etiquetas", c.tags?.length ? c.tags.join(" · ") : null)
+components/content/frases-visualizacao.ts:130:   par("campo.criado", c.created_at ? dataCurta(c.created_at) : null)
+components/content/frases-visualizacao.ts:131:   par("campo.alterado", c.updated_at ? dataCurta(c.updated_at) : null)
+components/content/frases-visualizacao.ts:132:   return out
+components/content/frases-visualizacao.ts:133: }
+
+$ awk 'NR>=15&&NR<=35' components/content-viewer/ContentSidebar.tsx
+components/content-viewer/ContentSidebar.tsx:15: 
+components/content-viewer/ContentSidebar.tsx:16: export function ContentSidebar({ content }: { content: ConteudoVisto }) {
+components/content-viewer/ContentSidebar.tsx:17:   return (
+components/content-viewer/ContentSidebar.tsx:18:     <aside className="grow shrink basis-full c:grow-0 c:shrink-0 c:basis-web-coluna-lateral min-w-0 flex flex-col gap-espaco-xl">
+components/content-viewer/ContentSidebar.tsx:19:       <section className={CAIXA}>
+components/content-viewer/ContentSidebar.tsx:20:         <h2 className={ROTULO}>{FRASES_VIEW["view.detalhes"]}</h2>
+components/content-viewer/ContentSidebar.tsx:21:         {camposDe(content).map((c) => (
+components/content-viewer/ContentSidebar.tsx:22:           <div key={c.chave} className="flex justify-between gap-espaco-lg text-tam-label">
+components/content-viewer/ContentSidebar.tsx:23:             <span className="text-cor-muted">{c.chave}</span>
+components/content-viewer/ContentSidebar.tsx:24:             <span className="text-cor-text text-right break-words min-w-0">{c.valor}</span>
+components/content-viewer/ContentSidebar.tsx:25:           </div>
+components/content-viewer/ContentSidebar.tsx:26:         ))}
+components/content-viewer/ContentSidebar.tsx:27:       </section>
+components/content-viewer/ContentSidebar.tsx:28:       <section className={CAIXA}>
+components/content-viewer/ContentSidebar.tsx:29:         <h2 className={ROTULO}>{FRASES_VIEW["view.notas"]}</h2>
+components/content-viewer/ContentSidebar.tsx:30:         <p className={`text-tam-label leading-entrelinha-text whitespace-pre-wrap break-words ${content.notes ? "text-cor-text" : "text-cor-muted"}`}>
+components/content-viewer/ContentSidebar.tsx:31:           {content.notes || FRASES_VIEW["view.notas.vazio"]}
+components/content-viewer/ContentSidebar.tsx:32:         </p>
+components/content-viewer/ContentSidebar.tsx:33:       </section>
+components/content-viewer/ContentSidebar.tsx:34:     </aside>
+components/content-viewer/ContentSidebar.tsx:35:   )
+
+$ awk 'NR>=14&&NR<=35' components/content-viewer/TabDisplay.tsx
+components/content-viewer/TabDisplay.tsx:14: import { FRASES_VIEW, capoDe, fraseCom, rotuloDoTipo } from "@/components/content/frases-visualizacao"
+components/content-viewer/TabDisplay.tsx:15: import { dadosDe, type ConteudoVisto } from "@/components/content/tipos"
+components/content-viewer/TabDisplay.tsx:16: 
+components/content-viewer/TabDisplay.tsx:17: export function TabDisplay({ content }: { content: ConteudoVisto }) {
+components/content-viewer/TabDisplay.tsx:18:   const dados = dadosDe(content)
+components/content-viewer/TabDisplay.tsx:19:   const tab = textoDaTab(dados)
+components/content-viewer/TabDisplay.tsx:20:   const acordes = textoDosAcordes(dados?.chords)
+components/content-viewer/TabDisplay.tsx:21:   return (
+components/content-viewer/TabDisplay.tsx:22:     <>
+components/content-viewer/TabDisplay.tsx:23:       <Painel rotulo={rotuloDoTipo("Tab")} testid="painel-tab">
+components/content-viewer/TabDisplay.tsx:24:         {tab ? (
+components/content-viewer/TabDisplay.tsx:25:           <>
+components/content-viewer/TabDisplay.tsx:26:             <CorpoMono tab>{tab}</CorpoMono>
+components/content-viewer/TabDisplay.tsx:27:             <div className="flex flex-wrap gap-x-espaco-xxl px-espaco-xl pb-espaco-xl text-tam-label text-cor-muted">
+components/content-viewer/TabDisplay.tsx:28:               <p>{fraseCom("view.tab.capo", { x: capoDe(content.capo) })}</p>
+components/content-viewer/TabDisplay.tsx:29:               <p>{fraseCom("view.tab.afinacao", { x: content.tuning || FRASES_VIEW["view.tab.afinacao.padrao"] })}</p>
+components/content-viewer/TabDisplay.tsx:30:             </div>
+components/content-viewer/TabDisplay.tsx:31:           </>
+components/content-viewer/TabDisplay.tsx:32:         ) : (
+components/content-viewer/TabDisplay.tsx:33:           <CentroDoPainel icone frase={FRASES_VIEW["view.vazio.tab"]} />
+components/content-viewer/TabDisplay.tsx:34:         )}
+components/content-viewer/TabDisplay.tsx:35:       </Painel>
+
+$ awk 'NR>=51&&NR<=86' components/content-editor.tsx
+components/content-editor.tsx:51: function corpoDoPut(editedContent: any, annotations: any[], contentType: string) {
+components/content-editor.tsx:52:   return {
+components/content-editor.tsx:53:     title: editedContent.title,
+components/content-editor.tsx:54:     artist: editedContent.artist,
+components/content-editor.tsx:55:     album: editedContent.album,
+components/content-editor.tsx:56:     genre: editedContent.genre,
+components/content-editor.tsx:57:     key: editedContent.key,
+components/content-editor.tsx:58:     bpm: editedContent.bpm ? Number.parseInt(editedContent.bpm) : null,
+components/content-editor.tsx:59:     difficulty: editedContent.difficulty,
+components/content-editor.tsx:60:     tags: editedContent.tags,
+components/content-editor.tsx:61:     notes: editedContent.notes,
+components/content-editor.tsx:62:     is_favorite: editedContent.is_favorite,
+components/content-editor.tsx:63:     is_public: editedContent.is_public,
+components/content-editor.tsx:64:     content_data: {
+components/content-editor.tsx:65:       ...editedContent.content_data,
+components/content-editor.tsx:66:       annotations,
+components/content-editor.tsx:67:       // Store editor-specific data
+components/content-editor.tsx:68:       ...(normalizeContentType(contentType) === ContentType.CHORDS && editedContent.sections && { sections: editedContent.sections }),
+components/content-editor.tsx:69:       ...(normalizeContentType(contentType) === ContentType.LYRICS && editedContent.lyrics && { lyrics: editedContent.lyrics }),
+components/content-editor.tsx:70:       ...(normalizeContentType(contentType) === ContentType.TAB && editedContent.measures && { measures: editedContent.measures }),
+components/content-editor.tsx:71:     },
+components/content-editor.tsx:72:   }
+components/content-editor.tsx:73: }
+components/content-editor.tsx:74: 
+components/content-editor.tsx:75: export function ContentEditor({ content, onSave, onCancel, salvando = false, falhaAoSalvar = null }: ContentEditorProps) {
+components/content-editor.tsx:76:   const [editedContent, setEditedContent] = useState(() => estadoInicial(content))
+components/content-editor.tsx:77:   // o `annotations` de antes: estado local que nada escreve — vai `[]` no corpo, como antes (herança D, §1.2)
+components/content-editor.tsx:78:   const [annotations] = useState<any[]>([])
+components/content-editor.tsx:79:   const [falhaDoArquivo, setFalhaDoArquivo] = useState<FalhaDaTela | null>(null)
+components/content-editor.tsx:80:   const inicial = useMemo(() => JSON.stringify(corpoDoPut(estadoInicial(content), [], content.content_type)), [content])
+components/content-editor.tsx:81:   const alterado = JSON.stringify(corpoDoPut(editedContent, annotations, content.content_type)) !== inicial
+components/content-editor.tsx:82: 
+components/content-editor.tsx:83:   const handleSave = () => {
+components/content-editor.tsx:84:     if (salvando) return
+components/content-editor.tsx:85:     const updatedContent = { ...corpoDoPut(editedContent, annotations, content.content_type), updated_at: new Date().toISOString() }
+components/content-editor.tsx:86:     onSave(updatedContent)
+
+$ awk 'NR>=76&&NR<=90' hooks/useMetadataForm.ts
+hooks/useMetadataForm.ts:76:         title: formData.title,
+hooks/useMetadataForm.ts:77:         artist: formData.artist,
+hooks/useMetadataForm.ts:78:         album: formData.album || null,
+hooks/useMetadataForm.ts:79:         genre: formData.genre || null,
+hooks/useMetadataForm.ts:80:         year: formData.year ? parseInt(formData.year) : null,
+hooks/useMetadataForm.ts:81:         notes: formData.notes || null,
+hooks/useMetadataForm.ts:82:         key: formData.key || null,
+hooks/useMetadataForm.ts:83:         bpm: formData.bpm ? parseInt(formData.bpm) : null,
+hooks/useMetadataForm.ts:84:         difficulty: formData.difficulty || null,
+hooks/useMetadataForm.ts:85:         capo: formData.capo ? parseInt(formData.capo) : null,
+hooks/useMetadataForm.ts:86:         tuning: formData.tuning || null,
+hooks/useMetadataForm.ts:87:         time_signature: formData.timeSignature || null,
+hooks/useMetadataForm.ts:88:         is_favorite: formData.isFavorite,
+hooks/useMetadataForm.ts:89:         tags: formData.tags.length > 0 ? formData.tags : null
+hooks/useMetadataForm.ts:90:       };
+
+$ awk 'NR>=186&&NR<=226' hooks/useAddContentLogic.ts
+hooks/useAddContentLogic.ts:186:           genre: metadataToUse.genre || null,
+hooks/useAddContentLogic.ts:187:           notes: metadataToUse.notes || null,
+hooks/useAddContentLogic.ts:188:           key: metadataToUse.key || null,
+hooks/useAddContentLogic.ts:189:           bpm: metadataToUse.bpm ? parseInt(metadataToUse.bpm) : null,
+hooks/useAddContentLogic.ts:190:           difficulty: metadataToUse.difficulty || null,
+hooks/useAddContentLogic.ts:191:           time_signature: metadataToUse.timeSignature || null,
+hooks/useAddContentLogic.ts:192:           is_favorite: metadataToUse.isFavorite || false,
+hooks/useAddContentLogic.ts:193:           tags: metadataToUse.tags || null,
+hooks/useAddContentLogic.ts:194:           user_id: user.uid
+hooks/useAddContentLogic.ts:195:         });
+hooks/useAddContentLogic.ts:196:         setCreatedContent(content);
+hooks/useAddContentLogic.ts:197:         return content;
+hooks/useAddContentLogic.ts:198:       } else if (uploadedFile) {
+hooks/useAddContentLogic.ts:199:         // Handle single file upload
+hooks/useAddContentLogic.ts:200:         // ADD-13: este branch lia `metadata` — estado do hook que o formulário
+hooks/useAddContentLogic.ts:201:         // nunca preenche — em vez de `customMetadata`, e descartava título,
+hooks/useAddContentLogic.ts:202:         // artista e todos os campos avançados (o item 42 da Fase D salvou o
+hooks/useAddContentLogic.ts:203:         // filename e "Unknown Artist"). Alinhado ao branch de draft.
+hooks/useAddContentLogic.ts:204:         const metadataToUse = customMetadata || metadata;
+hooks/useAddContentLogic.ts:205:         const content = await createContent({
+hooks/useAddContentLogic.ts:206:           title: metadataToUse.title || uploadedFile.name,
+hooks/useAddContentLogic.ts:207:           artist: metadataToUse.artist || "Unknown Artist",
+hooks/useAddContentLogic.ts:208:           content_type: contentType,
+hooks/useAddContentLogic.ts:209:           // b6 (aval, ponto 4): o fallback `?? uploadedFile.name` era código
+hooks/useAddContentLogic.ts:210:           // morto (FileUploadZone só entrega o arquivo APÓS upload com URL) e
+hooks/useAddContentLogic.ts:211:           // uma armadilha de contrato — nome de arquivo não passa no
+hooks/useAddContentLogic.ts:212:           // z.string().url(). Removido; url é a única fonte.
+hooks/useAddContentLogic.ts:213:           file_url: uploadedFile.url,
+hooks/useAddContentLogic.ts:214:           album: metadataToUse.album || null,
+hooks/useAddContentLogic.ts:215:           genre: metadataToUse.genre || null,
+hooks/useAddContentLogic.ts:216:           notes: metadataToUse.notes || null,
+hooks/useAddContentLogic.ts:217:           key: metadataToUse.key || null,
+hooks/useAddContentLogic.ts:218:           // ternário antes do parseInt: string vazia vira null (o schema
+hooks/useAddContentLogic.ts:219:           // declara bpm .optional().nullable()), nunca NaN
+hooks/useAddContentLogic.ts:220:           bpm: metadataToUse.bpm ? parseInt(metadataToUse.bpm, 10) : null,
+hooks/useAddContentLogic.ts:221:           difficulty: metadataToUse.difficulty || null,
+hooks/useAddContentLogic.ts:222:           time_signature: metadataToUse.timeSignature || null,
+hooks/useAddContentLogic.ts:223:           is_favorite: metadataToUse.isFavorite || false,
+hooks/useAddContentLogic.ts:224:           tags: metadataToUse.tags || null,
+hooks/useAddContentLogic.ts:225:           user_id: user.uid
+hooks/useAddContentLogic.ts:226:         });
+
+$ awk 'NR>=530&&NR<=540' apps/native/src/screens/StageScreen.tsx
+apps/native/src/screens/StageScreen.tsx:530:         </Text>
+apps/native/src/screens/StageScreen.tsx:531:       ) : null}
+apps/native/src/screens/StageScreen.tsx:532:       {/* T1-R35: a nota da POSIÇÃO, discreta; sem área vazia quando é nula. */}
+apps/native/src/screens/StageScreen.tsx:533:       {song?.notes !== null && song?.notes !== undefined && song.notes.length > 0 ? (
+apps/native/src/screens/StageScreen.tsx:534:         <View style={[styles.nota, { borderColor: cor.line }]}>
+apps/native/src/screens/StageScreen.tsx:535:           <Text style={[styles.notaTexto, { color: cor.muted }]} numberOfLines={1}>
+apps/native/src/screens/StageScreen.tsx:536:             {`Nota: ${song.notes}`}
+apps/native/src/screens/StageScreen.tsx:537:           </Text>
+apps/native/src/screens/StageScreen.tsx:538:         </View>
+apps/native/src/screens/StageScreen.tsx:539:       ) : null}
+apps/native/src/screens/StageScreen.tsx:540:       {!online ? <View style={styles.pontoOffline} /> : null}

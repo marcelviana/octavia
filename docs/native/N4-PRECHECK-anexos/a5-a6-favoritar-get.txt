@@ -1,0 +1,361 @@
+# A5/A6 — favoritar e GET /api/content, trechos conferidos nesta sessão (N4-PR0, 2026-10-01; rastro)
+
+$ awk 'NR>=42&&NR<=50' components/library/LinhaDaBiblioteca.tsx
+components/library/LinhaDaBiblioteca.tsx:42:         <button
+components/library/LinhaDaBiblioteca.tsx:43:           type="button"
+components/library/LinhaDaBiblioteca.tsx:44:           aria-pressed={item.is_favorite}
+components/library/LinhaDaBiblioteca.tsx:45:           aria-label={comDado(item.is_favorite ? "lib.favorita.nome" : "lib.favoritar.nome", titulo)}
+components/library/LinhaDaBiblioteca.tsx:46:           onClick={() => acoes.onToggleFavorite(item)}
+components/library/LinhaDaBiblioteca.tsx:47:           className={`${ACAO} ${item.is_favorite ? "border-cor-accent-ink bg-cor-marcado" : "border-cor-line-info"}`}
+components/library/LinhaDaBiblioteca.tsx:48:         >
+components/library/LinhaDaBiblioteca.tsx:49:           {FRASES_LISTA[item.is_favorite ? "lib.favorita" : "lib.favoritar"]}
+components/library/LinhaDaBiblioteca.tsx:50:         </button>
+
+$ awk 'NR>=46&&NR<=54' components/library/RefactoredLibrary.tsx
+components/library/RefactoredLibrary.tsx:46:   const { content, totalCount, page, setPage, pageSize, searchQuery, setSearchQuery, sortBy, setSortBy, selectedFilters, setSelectedFilters, loading, erro, reload } = dados;
+components/library/RefactoredLibrary.tsx:47: 
+components/library/RefactoredLibrary.tsx:48:   const acoesHook = useContentActions(onSelectContent, { onReload: reload });
+components/library/RefactoredLibrary.tsx:49:   const acoes = useMemo(() => ({
+components/library/RefactoredLibrary.tsx:50:     onSelect: acoesHook.selectItem,
+components/library/RefactoredLibrary.tsx:51:     onEdit: acoesHook.editItem,
+components/library/RefactoredLibrary.tsx:52:     onDelete: acoesHook.deleteDialog.open,
+components/library/RefactoredLibrary.tsx:53:     onToggleFavorite: acoesHook.toggleFavoriteItem,
+components/library/RefactoredLibrary.tsx:54:   }), [acoesHook]);
+
+$ awk 'NR>=74&&NR<=91' hooks/use-content-actions.ts
+hooks/use-content-actions.ts:74:   const toggleFavoriteItem = useCallback(async (content: ContentItem) => {
+hooks/use-content-actions.ts:75:     if (!user) return;
+hooks/use-content-actions.ts:76: 
+hooks/use-content-actions.ts:77:     const newFavoriteStatus = !content.is_favorite;
+hooks/use-content-actions.ts:78:     setIsLoading(true);
+hooks/use-content-actions.ts:79:     
+hooks/use-content-actions.ts:80:     try {
+hooks/use-content-actions.ts:81:       await toggleFavorite(content.id, newFavoriteStatus);
+hooks/use-content-actions.ts:82:       
+hooks/use-content-actions.ts:83:       // I1-PR-9: sem toast — o rótulo Favoritar/Favorita já mudou na lista
+hooks/use-content-actions.ts:84:       // Force reload to ensure UI is updated with fresh data
+hooks/use-content-actions.ts:85:       await options.onReload();
+hooks/use-content-actions.ts:86:     } catch (error) {
+hooks/use-content-actions.ts:87:       console.error('Error toggling favorite:', error);
+hooks/use-content-actions.ts:88:     } finally {
+hooks/use-content-actions.ts:89:       setIsLoading(false);
+hooks/use-content-actions.ts:90:     }
+hooks/use-content-actions.ts:91:   }, [user, options]);
+
+$ awk 'NR>=531&&NR<=564' lib/content-service.ts
+lib/content-service.ts:531: export async function updateContent(id: string, content: ContentUpdate) {
+lib/content-service.ts:532:   try {
+lib/content-service.ts:533:     // I1-PR-11 (decisão 3 do aval): o erro leva o `status` (aditivo), como na carga
+lib/content-service.ts:534:     const { getValidToken } = await import("@/lib/auth-manager");
+lib/content-service.ts:535:     const { token, error: tokenError } = await getValidToken();
+lib/content-service.ts:536:     if (!token) {
+lib/content-service.ts:537:       throw Object.assign(new Error(tokenError || "Authentication failed"), { status: 401 });
+lib/content-service.ts:538:     }
+lib/content-service.ts:539: 
+lib/content-service.ts:540:     const response = await fetch("/api/content", {
+lib/content-service.ts:541:       method: "PUT",
+lib/content-service.ts:542:       headers: {
+lib/content-service.ts:543:         "Content-Type": "application/json",
+lib/content-service.ts:544:         Authorization: `Bearer ${token}`,
+lib/content-service.ts:545:       },
+lib/content-service.ts:546:       body: JSON.stringify({ id, ...content }),
+lib/content-service.ts:547:     });
+lib/content-service.ts:548: 
+lib/content-service.ts:549:     if (!response.ok) {
+lib/content-service.ts:550:       if (response.status === 404) {
+lib/content-service.ts:551:         throw Object.assign(new Error("Content not found"), { status: 404 });
+lib/content-service.ts:552:       }
+lib/content-service.ts:553:       const errorData = await response.json().catch(() => ({}));
+lib/content-service.ts:554:       throw Object.assign(new Error(errorData.error || `Update failed: ${response.status}`), { status: response.status });
+lib/content-service.ts:555:     }
+lib/content-service.ts:556: 
+lib/content-service.ts:557:     clearContentCache();
+lib/content-service.ts:558: 
+lib/content-service.ts:559:     return await response.json();
+lib/content-service.ts:560:   } catch (error) {
+lib/content-service.ts:561:     logger.error("Error in updateContent:", error);
+lib/content-service.ts:562:     throw error;
+lib/content-service.ts:563:   }
+lib/content-service.ts:564: }
+
+$ awk 'NR>=598&&NR<=603' lib/content-service.ts
+lib/content-service.ts:598: }
+lib/content-service.ts:599: 
+lib/content-service.ts:600: export async function toggleFavorite(id: string, isFavorite: boolean) {
+lib/content-service.ts:601:   return updateContent(id, { is_favorite: isFavorite });
+lib/content-service.ts:602: }
+lib/content-service.ts:603: 
+
+$ awk 'NR>=225&&NR<=245' app/api/content/route.ts
+app/api/content/route.ts:225: const updateContentHandler = async (request: NextRequest) => {
+app/api/content/route.ts:226:   try {
+app/api/content/route.ts:227:     const user = await requireAuthServer(request)
+app/api/content/route.ts:228:     
+app/api/content/route.ts:229:     if (!user) {
+app/api/content/route.ts:230:       return authRequired()
+app/api/content/route.ts:231:     }
+app/api/content/route.ts:232: 
+app/api/content/route.ts:233:     const limited = enforceUserLimit(user.uid, 'content-mutate', RATE_LIMITS.MUTATE)
+app/api/content/route.ts:234:     if (limited) return limited
+app/api/content/route.ts:235: 
+app/api/content/route.ts:236:     let body: unknown
+app/api/content/route.ts:237:     try {
+app/api/content/route.ts:238:       body = await parseRequestBody(request)
+app/api/content/route.ts:239:     } catch (e) {
+app/api/content/route.ts:240:       if (e instanceof ValidationError) return validationError(e.issues)
+app/api/content/route.ts:241:       throw e
+app/api/content/route.ts:242:     }
+app/api/content/route.ts:243: 
+app/api/content/route.ts:244:     const bodyValidation = contentSchemas.update.safeParse(body)
+app/api/content/route.ts:245:     if (!bodyValidation.success) {
+
+$ awk 'NR>=278&&NR<=326' app/api/content/route.ts
+app/api/content/route.ts:278:     }
+app/api/content/route.ts:279: 
+app/api/content/route.ts:280:     // Política D1 + semântica SET-23 por campo: undefined = "não mexer"
+app/api/content/route.ts:281:     // (fica fora do UPDATE), null = "limpar".
+app/api/content/route.ts:282:     const contentData: Database['public']['Tables']['content']['Update'] = {
+app/api/content/route.ts:283:       updated_at: new Date().toISOString(),
+app/api/content/route.ts:284:     }
+app/api/content/route.ts:285:     if (v.title !== undefined) contentData.title = v.title
+app/api/content/route.ts:286:     if (v.artist !== undefined) contentData.artist = v.artist
+app/api/content/route.ts:287:     if (v.album !== undefined) contentData.album = v.album
+app/api/content/route.ts:288:     if (v.genre !== undefined) contentData.genre = v.genre
+app/api/content/route.ts:289:     if (v.content_type !== undefined) contentData.content_type = v.content_type
+app/api/content/route.ts:290:     if (v.content_data !== undefined) contentData.content_data = v.content_data
+app/api/content/route.ts:291:     if (v.file_url !== undefined) contentData.file_url = v.file_url
+app/api/content/route.ts:292:     if (v.key !== undefined) contentData.key = v.key
+app/api/content/route.ts:293:     if (v.bpm !== undefined) contentData.bpm = v.bpm
+app/api/content/route.ts:294:     if (v.time_signature !== undefined) contentData.time_signature = v.time_signature
+app/api/content/route.ts:295:     if (v.difficulty !== undefined) contentData.difficulty = v.difficulty
+app/api/content/route.ts:296:     if (v.capo !== undefined) contentData.capo = v.capo
+app/api/content/route.ts:297:     if (v.tuning !== undefined) contentData.tuning = v.tuning
+app/api/content/route.ts:298:     if (v.tags !== undefined) contentData.tags = v.tags
+app/api/content/route.ts:299:     if (v.notes !== undefined) contentData.notes = v.notes
+app/api/content/route.ts:300:     if (v.is_favorite !== undefined && v.is_favorite !== null) contentData.is_favorite = v.is_favorite
+app/api/content/route.ts:301:     if (v.is_public !== undefined && v.is_public !== null) contentData.is_public = v.is_public
+app/api/content/route.ts:302: 
+app/api/content/route.ts:303:     const { data: content, error } = await supabase
+app/api/content/route.ts:304:       .from('content')
+app/api/content/route.ts:305:       .update(contentData)
+app/api/content/route.ts:306:       .eq('id', id)
+app/api/content/route.ts:307:       .eq('user_id', user.uid)
+app/api/content/route.ts:308:       .select()
+app/api/content/route.ts:309:       .single()
+app/api/content/route.ts:310: 
+app/api/content/route.ts:311:     if (error) {
+app/api/content/route.ts:312:       if (error.code === 'PGRST116') {
+app/api/content/route.ts:313:         // Emenda 5 (mudança declarada): "or access denied" morreu — com o
+app/api/content/route.ts:314:         // D2 não há oráculo a disfarçar
+app/api/content/route.ts:315:         return notFound('Content not found')
+app/api/content/route.ts:316:       }
+app/api/content/route.ts:317:       logger.error('Database error updating content:', error)
+app/api/content/route.ts:318:       throw error
+app/api/content/route.ts:319:     }
+app/api/content/route.ts:320: 
+app/api/content/route.ts:321:     return NextResponse.json(content)
+app/api/content/route.ts:322:   } catch (error: any) {
+app/api/content/route.ts:323:     logger.error('Error updating content:', error)
+app/api/content/route.ts:324:     return internalError('Failed to update content')
+app/api/content/route.ts:325:   }
+app/api/content/route.ts:326: }
+
+$ awk 'NR>=186&&NR<=212' lib/api-schemas.ts
+lib/api-schemas.ts:186:   ),
+lib/api-schemas.ts:187: 
+lib/api-schemas.ts:188:   // update canônico: PUT /api/content com id NO CORPO (o PUT /api/content/[id]
+lib/api-schemas.ts:189:   // foi removido na PR-3 — decisão D6)
+lib/api-schemas.ts:190:   update: withIgnoredKeys(
+lib/api-schemas.ts:191:     z.object({
+lib/api-schemas.ts:192:       id: commonSchemas.objectId,
+lib/api-schemas.ts:193:       ...contentEditableFields,
+lib/api-schemas.ts:194:       title: commonSchemas.createSafeText(1, 255).optional(),
+lib/api-schemas.ts:195:       content_type: contentTypeSchema.optional(),
+lib/api-schemas.ts:196:       is_favorite: z.boolean().nullish(),
+lib/api-schemas.ts:197:     }).strict().superRefine(refineContentData),
+lib/api-schemas.ts:198:     CONTENT_IGNORED_KEYS
+lib/api-schemas.ts:199:   ),
+lib/api-schemas.ts:200: 
+lib/api-schemas.ts:201:   // Query de listagem (GET /api/content). Sem transform no search (SAN-01:
+lib/api-schemas.ts:202:   // busca com < > passa literal para o ILIKE escapado do handler).
+lib/api-schemas.ts:203:   query: z.object({
+lib/api-schemas.ts:204:     page: z.string().regex(/^\d+$/, 'Page must be a number').transform(Number).default('1'),
+lib/api-schemas.ts:205:     pageSize: z.string().regex(/^\d+$/, 'Page size must be a number').transform(Number).default('20'),
+lib/api-schemas.ts:206:     search: z.string().max(100).optional(),
+lib/api-schemas.ts:207:     sortBy: z.enum(['recent', 'title', 'artist', 'updated']).default('recent'),
+lib/api-schemas.ts:208:     contentType: z.string().max(100).optional(),
+lib/api-schemas.ts:209:     difficulty: z.string().max(100).optional(),
+lib/api-schemas.ts:210:     key: z.string().max(100).optional(),
+lib/api-schemas.ts:211:     favorite: z.enum(['true', 'false']).optional(),
+lib/api-schemas.ts:212:   }),
+
+$ awk 'NR>=46&&NR<=56' lib/user-rate-limit.ts
+lib/user-rate-limit.ts:46:   SESSION_DELETE: { windowMs: 15 * 60_000, max: 30 },
+lib/user-rate-limit.ts:47:   /** Auth falhada em qualquer rota autenticada (por IP, nos funis de auth) */
+lib/user-rate-limit.ts:48:   AUTH_FAIL: { windowMs: 5 * 60_000, max: 30 },
+lib/user-rate-limit.ts:49:   /** Leituras (content/setlists GET) — performance mode nunca pode engasgar */
+lib/user-rate-limit.ts:50:   READ: { windowMs: 60_000, max: 300 },
+lib/user-rate-limit.ts:51:   /** Mutações (content/setlists POST/PUT/DELETE/PATCH) — montagem de setlist de 56 canções cabe 2× */
+lib/user-rate-limit.ts:52:   MUTATE: { windowMs: 15 * 60_000, max: 120 },
+lib/user-rate-limit.ts:53:   /** Perfil (GET/POST/PATCH) — 1× por load + retry */
+lib/user-rate-limit.ts:54:   PROFILE: { windowMs: 15 * 60_000, max: 60 },
+lib/user-rate-limit.ts:55:   /** storage upload/delete — subir um repertório inteiro numa sessão */
+lib/user-rate-limit.ts:56:   STORAGE: { windowMs: 60 * 60_000, max: 60 },
+
+$ awk 'NR>=60&&NR<=139' app/api/content/route.ts
+app/api/content/route.ts:60:     }
+app/api/content/route.ts:61: 
+app/api/content/route.ts:62:     const supabase = getSupabaseServiceClient()
+app/api/content/route.ts:63:     
+app/api/content/route.ts:64:     // Use the same logic as getUserContentPageServer but inline
+app/api/content/route.ts:65:     let query = supabase
+app/api/content/route.ts:66:       .from('content')
+app/api/content/route.ts:67:       .select('*', { count: 'exact' })
+app/api/content/route.ts:68:       .eq('user_id', user.uid)
+app/api/content/route.ts:69: 
+app/api/content/route.ts:70:     // Apply search with sanitized input
+app/api/content/route.ts:71:     if (search && search.trim()) {
+app/api/content/route.ts:72:       // Escape any special characters for SQL ILIKE to prevent injection
+app/api/content/route.ts:73:       const sanitizedSearch = search.replace(/[%_]/g, '\\$&');
+app/api/content/route.ts:74:       query = query.or(
+app/api/content/route.ts:75:         `title.ilike.%${sanitizedSearch}%,artist.ilike.%${sanitizedSearch}%,album.ilike.%${sanitizedSearch}%`
+app/api/content/route.ts:76:       )
+app/api/content/route.ts:77:     }
+app/api/content/route.ts:78: 
+app/api/content/route.ts:79:     // Apply filters
+app/api/content/route.ts:80:     if (filters.contentType?.length) {
+app/api/content/route.ts:81:       // enum canônico único (D4) — mesma fonte do schema de escrita
+app/api/content/route.ts:82:       const validTypes = Object.values(ContentType) as string[]
+app/api/content/route.ts:83:       const filteredTypes = filters.contentType.filter((type: string) => validTypes.includes(type))
+app/api/content/route.ts:84:       if (filteredTypes.length > 0) {
+app/api/content/route.ts:85:         query = query.in('content_type', filteredTypes)
+app/api/content/route.ts:86:       }
+app/api/content/route.ts:87:     }
+app/api/content/route.ts:88: 
+app/api/content/route.ts:89:     if (filters.difficulty?.length) {
+app/api/content/route.ts:90:       const validDifficulties = ['Beginner', 'Intermediate', 'Advanced']
+app/api/content/route.ts:91:       const filteredDifficulties = filters.difficulty.filter((diff: string) => validDifficulties.includes(diff))
+app/api/content/route.ts:92:       if (filteredDifficulties.length > 0) {
+app/api/content/route.ts:93:         query = query.in('difficulty', filteredDifficulties)
+app/api/content/route.ts:94:       }
+app/api/content/route.ts:95:     }
+app/api/content/route.ts:96: 
+app/api/content/route.ts:97:     if (filters.key?.length) {
+app/api/content/route.ts:98:       query = query.in('key', filters.key)
+app/api/content/route.ts:99:     }
+app/api/content/route.ts:100: 
+app/api/content/route.ts:101:     if (filters.favorite) {
+app/api/content/route.ts:102:       query = query.eq('is_favorite', true)
+app/api/content/route.ts:103:     }
+app/api/content/route.ts:104: 
+app/api/content/route.ts:105:     // Apply sorting
+app/api/content/route.ts:106:     const sortMap = {
+app/api/content/route.ts:107:       recent: ['created_at', false],
+app/api/content/route.ts:108:       title: ['title', true],
+app/api/content/route.ts:109:       artist: ['artist', true],
+app/api/content/route.ts:110:       updated: ['updated_at', false]
+app/api/content/route.ts:111:     } as const
+app/api/content/route.ts:112: 
+app/api/content/route.ts:113:     const [sortColumn, ascending] = sortMap[sortBy] || sortMap.recent
+app/api/content/route.ts:114:     // Desempate determinístico entre páginas (PRD N6; B7-PR4): id asc após a coluna do sort.
+app/api/content/route.ts:115:     query = query.order(sortColumn, { ascending }).order('id', { ascending: true })
+app/api/content/route.ts:116: 
+app/api/content/route.ts:117:     // Apply pagination
+app/api/content/route.ts:118:     const safePage = Math.max(1, page)
+app/api/content/route.ts:119:     const safePageSize = Math.min(Math.max(1, pageSize), 100)
+app/api/content/route.ts:120:     const from = (safePage - 1) * safePageSize
+app/api/content/route.ts:121:     const to = from + safePageSize - 1
+app/api/content/route.ts:122: 
+app/api/content/route.ts:123:     const { data: content, error, count } = await query.range(from, to)
+app/api/content/route.ts:124: 
+app/api/content/route.ts:125:     if (error) {
+app/api/content/route.ts:126:       logger.error('Error fetching content:', error)
+app/api/content/route.ts:127:       throw error
+app/api/content/route.ts:128:     }
+app/api/content/route.ts:129: 
+app/api/content/route.ts:130:     const result = {
+app/api/content/route.ts:131:       data: content || [],
+app/api/content/route.ts:132:       total: count || 0,
+app/api/content/route.ts:133:       page: safePage,
+app/api/content/route.ts:134:       pageSize: safePageSize,
+app/api/content/route.ts:135:       hasMore: (count || 0) > safePage * safePageSize,
+app/api/content/route.ts:136:       totalPages: Math.ceil((count || 0) / safePageSize)
+app/api/content/route.ts:137:     }
+app/api/content/route.ts:138: 
+app/api/content/route.ts:139:     return NextResponse.json(result)
+
+$ awk 'NR>=150&&NR<=160' app/api/content/[id]/route.ts
+app/api/content/[id]/route.ts:150:       { code: 'invalid_type', path: ['id'], message: 'Content ID is required' } as never,
+app/api/content/[id]/route.ts:151:     ])
+app/api/content/[id]/route.ts:152:   }
+app/api/content/[id]/route.ts:153:   
+app/api/content/[id]/route.ts:154:   const params = Promise.resolve({ id })
+app/api/content/[id]/route.ts:155:   return deleteContentByIdHandler(request, { params })
+app/api/content/[id]/route.ts:156: }
+app/api/content/[id]/route.ts:157: 
+app/api/content/[id]/route.ts:158: export const GET = wrappedGetHandler
+app/api/content/[id]/route.ts:159: export const DELETE = wrappedDeleteHandler
+
+$ awk 'NR>=68&&NR<=80' hooks/use-setlist-data.ts
+hooks/use-setlist-data.ts:68:       const [setsResult, contentResult] = await Promise.allSettled([
+hooks/use-setlist-data.ts:69:         getUserSetlists(userForQuery),
+hooks/use-setlist-data.ts:70:         getUserContentPage({
+hooks/use-setlist-data.ts:71:           page: 1,
+hooks/use-setlist-data.ts:72:           pageSize: 1000, // Get all content for setlist management
+hooks/use-setlist-data.ts:73:           search: "",
+hooks/use-setlist-data.ts:74:           sortBy: "recent",
+hooks/use-setlist-data.ts:75:           filters: {},
+hooks/use-setlist-data.ts:76:           useCache: !forceRefresh,
+hooks/use-setlist-data.ts:77:         }, undefined, userForQuery)
+hooks/use-setlist-data.ts:78:       ])
+hooks/use-setlist-data.ts:79: 
+hooks/use-setlist-data.ts:80:       if (setsResult.status === "fulfilled") {
+
+$ awk 'NR>=153&&NR<=157' apps/native/src/screens/Picker.tsx
+apps/native/src/screens/Picker.tsx:153:   // ------------------------------------------------------------- a busca
+apps/native/src/screens/Picker.tsx:154:   // A MESMA do S4: índice memoizado pela biblioteca, busca e agrupamento do core.
+apps/native/src/screens/Picker.tsx:155:   const biblioteca = estado.content
+apps/native/src/screens/Picker.tsx:156:   const indice = useMemo(() => buildIndex(biblioteca), [biblioteca])
+apps/native/src/screens/Picker.tsx:157:   const porId = useMemo(() => new Map(biblioteca.map((c) => [c.id, c])), [biblioteca])
+
+$ awk 'NR>=213&&NR<=229' apps/native/src/api.ts
+apps/native/src/api.ts:213: export interface ContentPageBody {
+apps/native/src/api.ts:214:   data: ContentDTO[]
+apps/native/src/api.ts:215:   total: number
+apps/native/src/api.ts:216:   page: number
+apps/native/src/api.ts:217:   pageSize: number
+apps/native/src/api.ts:218:   hasMore: boolean
+apps/native/src/api.ts:219:   totalPages: number
+apps/native/src/api.ts:220: }
+apps/native/src/api.ts:221: 
+apps/native/src/api.ts:222: /**
+apps/native/src/api.ts:223:  * `GET /api/content` — `pageSize=100` é o teto real do handler (clampado a
+apps/native/src/api.ts:224:  * [1,100], medido em prod) e `sortBy=recent` é a chave estável entre páginas
+apps/native/src/api.ts:225:  * exigida pelo T1-R9b (A22).
+apps/native/src/api.ts:226:  */
+apps/native/src/api.ts:227: export function getContentPage(page: number): Promise<ApiResult<ContentPageBody>> {
+apps/native/src/api.ts:228:   return get<ContentPageBody>(`/api/content?pageSize=100&page=${page}&sortBy=recent`, 'content-read')
+apps/native/src/api.ts:229: }
+
+$ awk 'NR>=27&&NR<=47' apps/native/src/sync.ts
+apps/native/src/sync.ts:27: /** Todas as páginas de content até `hasMore === false`. */
+apps/native/src/sync.ts:28: async function buscarContent(): Promise<
+apps/native/src/sync.ts:29:   | { failed: false; paginas: ContentDTO[][]; total: number }
+apps/native/src/sync.ts:30:   | { failed: true; erro: ApiResult<never>; page: number }
+apps/native/src/sync.ts:31: > {
+apps/native/src/sync.ts:32:   const paginas: ContentDTO[][] = []
+apps/native/src/sync.ts:33:   let page = 1
+apps/native/src/sync.ts:34:   let total = 0
+apps/native/src/sync.ts:35:   for (;;) {
+apps/native/src/sync.ts:36:     const r = await getContentPage(page)
+apps/native/src/sync.ts:37:     // D-d: a página que falhou viaja junto — o `sync fail` tinha `page=1`
+apps/native/src/sync.ts:38:     // hardcoded, e o aceite da N1-PR7 (§3.4) mediu a falha na página 2 sendo
+apps/native/src/sync.ts:39:     // reportada como 1. O catálogo define `page=<p>`.
+apps/native/src/sync.ts:40:     if (!r.ok) return { failed: true, erro: r as ApiResult<never>, page }
+apps/native/src/sync.ts:41:     paginas.push(r.data.data)
+apps/native/src/sync.ts:42:     total = r.data.total
+apps/native/src/sync.ts:43:     if (!r.data.hasMore) break
+apps/native/src/sync.ts:44:     page += 1
+apps/native/src/sync.ts:45:   }
+apps/native/src/sync.ts:46:   return { failed: false, paginas, total }
+apps/native/src/sync.ts:47: }

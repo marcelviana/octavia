@@ -1,0 +1,202 @@
+# A12 (G-par) — quem produz o texto visível do corpo, de cada lado (N4-PR0, 2026-10-01; rastro)
+
+$ awk 'NR>=1&&NR<=70' components/content/corpo-de-texto.ts
+components/content/corpo-de-texto.ts:1: /**
+components/content/corpo-de-texto.ts:2:  * O texto do corpo mono de cada tipo (I1-PR-10, decisão 10 do aval, div. 742): TODO dado que a visualização
+components/content/corpo-de-texto.ts:3:  * velha mostrava continua na tela, no corpo mono do painel do tipo; só os rótulos dos blocos (*"Chords:"*, *"Song
+components/content/corpo-de-texto.ts:4:  * Structure"*, *"Chord Progression"*) saem. `null` = não há dado → o vazio do painel.
+components/content/corpo-de-texto.ts:5:  *
+components/content/corpo-de-texto.ts:6:  * As formas de `content_data` que o código de hoje lê (`components/content-viewer/*Display.tsx`, antes da PR-10):
+components/content/corpo-de-texto.ts:7:  * cifra — `sections[]` (nome · acordes · letra), `chords[]` (nome, diagrama, dedilhado), `chords` texto, e a
+components/content/corpo-de-texto.ts:8:  * `progression` ({seção: acordes}); letra — `lyrics` (+ `chords`, lista ou texto); tab — `tablature` (lista ou
+components/content/corpo-de-texto.ts:9:  * texto) (+ `chords`); partitura — `notation` (texto).
+components/content/corpo-de-texto.ts:10:  */
+components/content/corpo-de-texto.ts:11: export type DadosDoConteudo = Record<string, unknown> | null | undefined
+components/content/corpo-de-texto.ts:12: 
+components/content/corpo-de-texto.ts:13: const texto = (v: unknown): string | null => (typeof v === "string" && v.length > 0 ? v : null)
+components/content/corpo-de-texto.ts:14: const lista = (v: unknown): unknown[] | null => (Array.isArray(v) && v.length > 0 ? v : null)
+components/content/corpo-de-texto.ts:15: const juntar = (partes: (string | null | undefined)[], sep: string) => {
+components/content/corpo-de-texto.ts:16:   const p = partes.filter((x): x is string => !!x)
+components/content/corpo-de-texto.ts:17:   return p.length ? p.join(sep) : null
+components/content/corpo-de-texto.ts:18: }
+components/content/corpo-de-texto.ts:19: 
+components/content/corpo-de-texto.ts:20: /** Os acordes soltos (a lista ou o texto) — o segundo painel *Cifra* da letra e da tab, e a cifra em lista. */
+components/content/corpo-de-texto.ts:21: export function textoDosAcordes(chords: unknown): string | null {
+components/content/corpo-de-texto.ts:22:   const t = texto(chords)
+components/content/corpo-de-texto.ts:23:   if (t) return t
+components/content/corpo-de-texto.ts:24:   const l = lista(chords)
+components/content/corpo-de-texto.ts:25:   if (!l) return null
+components/content/corpo-de-texto.ts:26:   return juntar(
+components/content/corpo-de-texto.ts:27:     l.map((c) => {
+components/content/corpo-de-texto.ts:28:       if (typeof c === "string") return c
+components/content/corpo-de-texto.ts:29:       const o = (c ?? {}) as { name?: unknown; diagram?: unknown; fingering?: unknown }
+components/content/corpo-de-texto.ts:30:       const diagrama = Array.isArray(o.diagram) ? o.diagram.filter((x): x is string => typeof x === "string").join("\n") : null
+components/content/corpo-de-texto.ts:31:       return juntar([texto(o.name), diagrama || null, texto(o.fingering)], "\n")
+components/content/corpo-de-texto.ts:32:     }),
+components/content/corpo-de-texto.ts:33:     "\n\n",
+components/content/corpo-de-texto.ts:34:   )
+components/content/corpo-de-texto.ts:35: }
+components/content/corpo-de-texto.ts:36: 
+components/content/corpo-de-texto.ts:37: function textoDaProgressao(p: unknown): string | null {
+components/content/corpo-de-texto.ts:38:   if (!p || typeof p !== "object" || Array.isArray(p)) return null
+components/content/corpo-de-texto.ts:39:   return juntar(
+components/content/corpo-de-texto.ts:40:     Object.entries(p as Record<string, unknown>).map(([secao, acordes]) =>
+components/content/corpo-de-texto.ts:41:       `${secao}: ${Array.isArray(acordes) ? acordes.join(" - ") : String(acordes)}`),
+components/content/corpo-de-texto.ts:42:     "\n",
+components/content/corpo-de-texto.ts:43:   )
+components/content/corpo-de-texto.ts:44: }
+components/content/corpo-de-texto.ts:45: 
+components/content/corpo-de-texto.ts:46: /** O corpo da cifra: as seções, ou os acordes (lista/texto); a progressão ao fim. */
+components/content/corpo-de-texto.ts:47: export function textoDaCifra(d: DadosDoConteudo): string | null {
+components/content/corpo-de-texto.ts:48:   const secoes = lista(d?.sections)
+components/content/corpo-de-texto.ts:49:   const corpo = secoes
+components/content/corpo-de-texto.ts:50:     ? juntar(secoes.map((s) => {
+components/content/corpo-de-texto.ts:51:         const o = (s ?? {}) as { name?: unknown; chords?: unknown; lyrics?: unknown }
+components/content/corpo-de-texto.ts:52:         return juntar([texto(o.name), texto(o.chords), texto(o.lyrics)], "\n")
+components/content/corpo-de-texto.ts:53:       }), "\n\n")
+components/content/corpo-de-texto.ts:54:     : textoDosAcordes(d?.chords)
+components/content/corpo-de-texto.ts:55:   return juntar([corpo, textoDaProgressao(d?.progression)], "\n\n")
+components/content/corpo-de-texto.ts:56: }
+components/content/corpo-de-texto.ts:57: 
+components/content/corpo-de-texto.ts:58: /** O corpo da tab: as linhas (lista) ou o texto. */
+components/content/corpo-de-texto.ts:59: export function textoDaTab(d: DadosDoConteudo): string | null {
+components/content/corpo-de-texto.ts:60:   const l = lista(d?.tablature)
+components/content/corpo-de-texto.ts:61:   if (l) return juntar(l.map((x) => (typeof x === "string" ? x : null)), "\n")
+components/content/corpo-de-texto.ts:62:   return texto(d?.tablature)
+components/content/corpo-de-texto.ts:63: }
+components/content/corpo-de-texto.ts:64: 
+components/content/corpo-de-texto.ts:65: export const textoDaLetra = (d: DadosDoConteudo): string | null => texto(d?.lyrics)
+components/content/corpo-de-texto.ts:66: export const textoDaNotacao = (d: DadosDoConteudo): string | null => texto(d?.notation)
+
+$ awk 'NR>=1&&NR<=35' components/content-viewer/ContentDisplay.tsx
+components/content-viewer/ContentDisplay.tsx:1: "use client"
+components/content-viewer/ContentDisplay.tsx:2: 
+components/content-viewer/ContentDisplay.tsx:3: /**
+components/content-viewer/ContentDisplay.tsx:4:  * O corpo da visualização (I1-PR-10; folha 5, "corpo | detalhes"): a coluna do corpo — `flex 1 1 0` e
+components/content-viewer/ContentDisplay.tsx:5:  * **`min-width: 0`** (sem ele a linha longa em `whitespace-pre` empurrava a coluna lateral para fora da tela: os 9
+components/content-viewer/ContentDisplay.tsx:6:  * (b) de 1138 da linha de base, `docs/ux/I1-PR10-anexos/README.md` §6) — com a linha da tela no topo (a falha do
+components/content-viewer/ContentDisplay.tsx:7:  * arquivo; a da SESSÃO vence, decisão 14) e o(s) painel(is) do tipo. Em B e A, largura toda.
+components/content-viewer/ContentDisplay.tsx:8:  * O `scale(zoom)` inerte de antes saiu (o zoom estava sempre em 100 — div. 745).
+components/content-viewer/ContentDisplay.tsx:9:  */
+components/content-viewer/ContentDisplay.tsx:10: import { useState } from "react"
+components/content-viewer/ContentDisplay.tsx:11: import { ContentType, normalizeContentType } from "@/types/content"
+components/content-viewer/ContentDisplay.tsx:12: import { LinhaDaTela, type FalhaDaTela } from "@/components/identidade/linha-da-tela"
+components/content-viewer/ContentDisplay.tsx:13: import { FRASES_VIEW } from "@/components/content/frases-visualizacao"
+components/content-viewer/ContentDisplay.tsx:14: import type { ConteudoVisto } from "@/components/content/tipos"
+components/content-viewer/ContentDisplay.tsx:15: import { SheetMusicDisplay } from "./SheetMusicDisplay"
+components/content-viewer/ContentDisplay.tsx:16: import { TabDisplay } from "./TabDisplay"
+components/content-viewer/ContentDisplay.tsx:17: import { ChordDisplay } from "./ChordDisplay"
+components/content-viewer/ContentDisplay.tsx:18: import { LyricsDisplay } from "./LyricsDisplay"
+components/content-viewer/ContentDisplay.tsx:19: 
+components/content-viewer/ContentDisplay.tsx:20: export function ContentDisplay({ content }: { content: ConteudoVisto }) {
+components/content-viewer/ContentDisplay.tsx:21:   const [falha, setFalha] = useState<FalhaDaTela | null>(null)
+components/content-viewer/ContentDisplay.tsx:22:   const tipo = normalizeContentType(content.content_type)
+components/content-viewer/ContentDisplay.tsx:23:   return (
+components/content-viewer/ContentDisplay.tsx:24:     <div className="flex flex-col gap-espaco-lg">
+components/content-viewer/ContentDisplay.tsx:25:       <LinhaDaTela falha={falha} rotuloTentar={FRASES_VIEW["acao.tentar"]} />
+components/content-viewer/ContentDisplay.tsx:26:       {tipo === ContentType.SHEET && <SheetMusicDisplay content={content} aoFalhar={setFalha} />}
+components/content-viewer/ContentDisplay.tsx:27:       {tipo === ContentType.TAB && <TabDisplay content={content} />}
+components/content-viewer/ContentDisplay.tsx:28:       {tipo === ContentType.CHORDS && <ChordDisplay content={content} />}
+components/content-viewer/ContentDisplay.tsx:29:       {tipo === ContentType.LYRICS && <LyricsDisplay content={content} />}
+components/content-viewer/ContentDisplay.tsx:30:     </div>
+components/content-viewer/ContentDisplay.tsx:31:   )
+components/content-viewer/ContentDisplay.tsx:32: }
+
+$ awk 'NR>=1&&NR<=45' types/content.ts
+types/content.ts:1: export enum ContentType {
+types/content.ts:2:   LYRICS = "Lyrics",
+types/content.ts:3:   CHORDS = "Chords",
+types/content.ts:4:   TAB = "Tab",
+types/content.ts:5:   SHEET = "Sheet"
+types/content.ts:6: }
+types/content.ts:7: 
+types/content.ts:8: export const CONTENT_TYPE_KEYS: Record<ContentType, string> = {
+types/content.ts:9:   [ContentType.LYRICS]: "lyrics",
+types/content.ts:10:   [ContentType.CHORDS]: "chords",
+types/content.ts:11:   [ContentType.TAB]: "tablature",
+types/content.ts:12:   [ContentType.SHEET]: "sheet"
+types/content.ts:13: }
+types/content.ts:14: 
+types/content.ts:15: /**
+types/content.ts:16:  * Normalize content type strings to ContentType enum values
+types/content.ts:17:  * Handles legacy formats like "Guitar Tab", "Chord Chart", etc.
+types/content.ts:18:  */
+types/content.ts:19: export function normalizeContentType(contentType: ContentType | string): ContentType {
+types/content.ts:20:   if (Object.values(ContentType).includes(contentType as ContentType)) {
+types/content.ts:21:     return contentType as ContentType
+types/content.ts:22:   }
+types/content.ts:23:   
+types/content.ts:24:   // Handle legacy formats
+types/content.ts:25:   switch (contentType) {
+types/content.ts:26:     case "Guitar Tab":
+types/content.ts:27:     case "tablature":
+types/content.ts:28:       return ContentType.TAB
+types/content.ts:29:     case "Chord Chart":
+types/content.ts:30:     case "chord_chart":
+types/content.ts:31:     case "chords":
+types/content.ts:32:       return ContentType.CHORDS
+types/content.ts:33:     case "Sheet Music":
+types/content.ts:34:     case "sheet":
+types/content.ts:35:     case "sheet_music":
+types/content.ts:36:       return ContentType.SHEET
+types/content.ts:37:     case "lyrics":
+types/content.ts:38:       return ContentType.LYRICS
+types/content.ts:39:     default:
+types/content.ts:40:       return ContentType.LYRICS
+types/content.ts:41:   }
+types/content.ts:42: } 
+
+$ awk 'NR>=1&&NR<=12' components/content/tipos.ts
+components/content/tipos.ts:1: /** O content como a visualização o recebe (a linha do banco, `GET`/SSR) — I1-PR-10. */
+components/content/tipos.ts:2: import type { Database } from "@/types/database.types"
+components/content/tipos.ts:3: import type { DadosDoConteudo } from "@/components/content/corpo-de-texto"
+components/content/tipos.ts:4: 
+components/content/tipos.ts:5: export type ConteudoVisto = Database["public"]["Tables"]["content"]["Row"]
+components/content/tipos.ts:6: 
+components/content/tipos.ts:7: export const dadosDe = (c: Pick<ConteudoVisto, "content_data">): DadosDoConteudo =>
+components/content/tipos.ts:8:   c.content_data && typeof c.content_data === "object" && !Array.isArray(c.content_data) ? (c.content_data as Record<string, unknown>) : null
+
+$ awk 'NR>=15&&NR<=26' packages/core/src/content-contract.ts
+packages/core/src/content-contract.ts:15: import type { ContentType } from './types'
+packages/core/src/content-contract.ts:16: 
+packages/core/src/content-contract.ts:17: /**
+packages/core/src/content-contract.ts:18:  * Chave que carrega o corpo de texto, por tipo. `Sheet` não tem chave
+packages/core/src/content-contract.ts:19:  * obrigatória (D5b do B7): o corpo dele é sempre o arquivo.
+packages/core/src/content-contract.ts:20:  */
+packages/core/src/content-contract.ts:21: export const CONTENT_DATA_KEY: Record<ContentType, string | null> = {
+packages/core/src/content-contract.ts:22:   Lyrics: 'lyrics',
+packages/core/src/content-contract.ts:23:   Chords: 'chords',
+packages/core/src/content-contract.ts:24:   Tab: 'tablature',
+packages/core/src/content-contract.ts:25:   Sheet: null,
+packages/core/src/content-contract.ts:26: }
+
+$ awk 'NR>=76&&NR<=83' packages/core/src/content-contract.ts
+packages/core/src/content-contract.ts:76: /** A string de corpo do tipo, ou `null` (Sheet, ausente ou não-string). */
+packages/core/src/content-contract.ts:77: export function bodyOf(type: string, data: Record<string, unknown> | null): string | null {
+packages/core/src/content-contract.ts:78:   if (!isContentType(type)) return null
+packages/core/src/content-contract.ts:79:   const key = CONTENT_DATA_KEY[type]
+packages/core/src/content-contract.ts:80:   if (key === null || data === null) return null
+packages/core/src/content-contract.ts:81:   const value = data[key]
+packages/core/src/content-contract.ts:82:   return typeof value === 'string' ? value : null
+packages/core/src/content-contract.ts:83: }
+
+$ awk 'NR>=594&&NR<=600' apps/native/src/screens/StageScreen.tsx
+apps/native/src/screens/StageScreen.tsx:594:               // O ScrollView horizontal é o que impede a re-quebra da linha
+apps/native/src/screens/StageScreen.tsx:595:               // longa em qualquer zoom (T1-R25/R31 — provado no spike).
+apps/native/src/screens/StageScreen.tsx:596:               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+apps/native/src/screens/StageScreen.tsx:597:                 <Text style={estiloTexto} testID="corpo">
+apps/native/src/screens/StageScreen.tsx:598:                   {corpo ?? ''}
+apps/native/src/screens/StageScreen.tsx:599:                 </Text>
+apps/native/src/screens/StageScreen.tsx:600:               </ScrollView>
+
+$ git grep -nE '@octavia/core|packages/core' -- app components lib hooks
+components/auth/frases-sessao.ts:4: * `packages/core/src/frases.ts`: minúsculas, travessão. O web não importa o
+
+$ grep -nE 'content' scripts/gates-web/g-back-nucleo.txt
+3:# (a) alcance de app/api/**/route.ts + middleware.ts · (b) git ls-files supabase · (c) lib/require-page-user.ts, lib/content-service-server.ts · (d) next.config.mjs
+6:app/api/content/[id]/route.ts
+7:app/api/content/route.ts
+21:lib/content-data-contract.ts
+22:lib/content-service-server.ts
+23:lib/content-types.ts
+41:types/content.ts

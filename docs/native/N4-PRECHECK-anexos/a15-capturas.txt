@@ -1,0 +1,41 @@
+# A15 — capturas commitadas que servem ao brief (N4-PR0, 2026-10-01; rastro)
+
+$ ls N3-PR6-anexos/dumps-ret | sed -E 's/.*-(avd|tab|phone)-(pai|ret|ret-rolada)\.(xml|png)$/\1 \3/' | sort | uniq -c
+  53 avd xml
+  52 tab xml
+
+$ ls N3-PR6-anexos/dumps-pai | sed -E 's/.*-(avd|tab|phone)-(pai|ret|ret-rolada)\.(xml|png)$/\1 \3/' | sort | uniq -c
+  27 avd xml
+  25 tab xml
+
+$ ls N3-PR6b-anexos/dumps-ret | sed -E 's/.*-(avd|tab|phone)-(pai|ret|ret-rolada)\.(xml|png)$/\1 \3/' | sort | uniq -c
+   7 avd xml
+   7 tab xml
+
+$ ls N3-PR6b-anexos/dumps-pai | sed -E 's/.*-(avd|tab|phone)-(pai|ret|ret-rolada)\.(xml|png)$/\1 \3/' | sort | uniq -c
+   7 avd xml
+   7 tab xml
+
+$ ls N3-PR6c-anexos/dumps-final | sed -E 's/.*-(avd|tab|phone)-(pai|ret|ret-rolada)\.(xml|png)$/\1 \3/' | sort | uniq -c
+  27 avd xml
+  25 tab xml
+
+$ ls N3-PRECHECK-anexos/B4 | sed -E 's/.*-(avd|tab|phone)-(pai|ret|ret-rolada)\.(xml|png)$/\1 \3/' | sort | uniq -c
+  53 phone png
+  53 phone xml
+
+$ ls N3-PR6-anexos/dumps-ret | grep -E 'S4|S3-S3' | grep phone
+
+$ cat N3-PR6-anexos/dumps-ret/SHA256SUMS.txt | wc -l
+N3-PRECHECK-anexos/B2: png 52 · xml 52
+N3-PRECHECK-anexos/B5-baseline: png 34 · xml 34
+N3-PRECHECK-anexos/B3-referencia-paisagem: png 18 · xml 18
+N3-PRECHECK-anexos/B4: png 53 · xml 53
+N2-BRIEF-anexos: png 7 · xml 5
+B2-S0-erro-avd.png B2-S0-erro-avd.xml B2-S0-login-avd.png B2-S0-login-avd.xml B2-S1-S1e-falha-com-cache-avd.png B2-S1-S1e-falha-com-cache-avd.xml B2-S1-S1e-falha-com-cache-tab.png B2-S1-S1e-falha-com-cache-tab.xml B2-S1-S1f-vazia-avd.png B2-S1-S1f-vazia-avd.xml B2-S1-S1f-vazia-tab.png B2-S1-S1f-vazia-tab.xml B2-S1-aviso-sem-rede-avd.png B2-S1-aviso-sem-rede-avd.xml B2-S1-aviso-sem-rede-tab.png B2-S1-aviso-sem-rede-tab.xml B2-S1-setlists-avd.png B2-S1-setlists-avd.xml B2-S1-setlists-tab.png B2-S1-setlists-tab.xml B2-S2-com-edicao-avd.png B2-S2-com-edicao-avd.xml B2-S2-com-edicao-aviso-sem-rede-avd.png B2-S2-com-edicao-aviso-sem-rede-avd.xml B2-S2-com-edicao-aviso-sem-rede-tab.png B2-S2-com-edicao-aviso-sem-rede-tab.xml B2-S2-com-edicao-tab.png B2-S2-com-edicao-tab.xml B2-S2-sem-edicao-S2p-avd.png B2-S2-sem-edicao-S2p-avd.xml B2-S2-sem-edicao-S2p-tab.png B2-S2-sem-edicao-S2p-tab.xml B2-S3-S3a-letra-1a-avd.png B2-S3-S3a-letra-1a-avd.xml B2-S3-S3a-letra-1a-tab.png B2-S3-S3a-letra-1a-tab.xml B2-S3-S3b-cifra-claro-avd.png B2-S3-S3b-cifra-claro-avd.xml B2-S3-S3b-cifra-claro-tab.png B2-S3-S3b-cifra-claro-tab.xml B2-S3-S3b-cifra-escuro-avd.png B2-S3-S3b-cifra-escuro-avd.xml B2-S3-S3b-cifra-escuro-tab.png B2-S3-S3b-cifra-escuro-tab.xml B2-S3-S3c B2-S3-S3d-pdf-12p-avd.png B2-S3-S3d-pdf-12p-avd.xml B2-S3-S3d-pdf-12p-tab.png B2-S3-S3d-pdf-12p-tab.xml B2-S3-S3e-nao-baixado-avd.png B2-S3-S3e-nao-baixado-avd.xml B2-S3-S3e-nao-baixado-tab.png B2-S3-S3e-nao-baixado-tab.xml B2-S3-titulo-longo-avd.png B2-S3-titulo-longo-avd.xml B2-S3-titulo-longo-tab.png B2-S3-titulo-longo-tab.xml B2-S3-ultima-avd.png B2-S3-ultima-avd.xml B2-S3-ultima-tab.png B2-S3-ultima-tab.xml B2-S4-resultados-avd.png B2-S4-resultados-avd.xml B2-S4-resultados-tab.png B2-S4-resultados-tab.xml B2-S4-vazio-avd.png B2-S4-vazio-avd.xml B2-S4-vazio-tab.png B2-S4-vazio-tab.xml B2-S5-fim-avd.png B2-S5-fim-avd.xml B2-S5-fim-tab.png B2-S5-fim-tab.xml B2-dialogo-apagar-avd.png B2-dialogo-apagar-avd.xml B2-dialogo-apagar-tab.png B2-dialogo-apagar-tab.xml B2-folha-criar-avd.png B2-folha-criar-avd.xml B2-folha-criar-tab.png B2-folha-criar-tab.xml B2-folha-falhou-avd.png B2-folha-falhou-avd.xml B2-folha-falhou-tab.png B2-folha-falhou-tab.xml B2-folha-validacao-avd.png B2-folha-validacao-avd.xml B2-folha-validacao-tab.png B2-folha-validacao-tab.xml B2-picker-resultados-avd.png B2-picker-resultados-avd.xml B2-picker-resultados-tab.png B2-picker-resultados-tab.xml B2-picker-vazio-avd.png B2-picker-vazio-avd.xml B2-picker-vazio-tab.png B2-picker-vazio-tab.xml B2-reordenar-aberto-avd.png B2-reordenar-aberto-avd.xml B2-reordenar-aberto-tab.png B2-reordenar-aberto-tab.xml N3-PR2-anexos: png 0 · xml 68
+N3-PR3-anexos: png 0 · xml 96
+N3-PR4-anexos: png 0 · xml 102
+N3-PR5-anexos: png 0 · xml 97
+N3-PR6-anexos: png 0 · xml 234
+N3-PR6b-anexos: png 16 · xml 32
+N3-PR6c-anexos: png 8 · xml 68
