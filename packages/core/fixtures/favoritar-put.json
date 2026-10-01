@@ -1,0 +1,6 @@
+{
+ "_leia": "N4-PR1 — o corpo EXATO que a lista do web envia ao PUT /api/content ao favoritar e ao desfavoritar (gravado por tests/gates/n4-favoritar-put.test.tsx com CN_GRAVAR=1 sobre o código da main). O nativo envia este mesmo corpo, byte a byte, na PR-4 (N4-D22, N4-D45). `id` é o uuid fabricado com que os dois lados montam o corpo.",
+ "id": "00000000-0000-4000-8000-0000000000f1",
+ "favoritar": "{\"id\":\"00000000-0000-4000-8000-0000000000f1\",\"is_favorite\":true}",
+ "desfavoritar": "{\"id\":\"00000000-0000-4000-8000-0000000000f1\",\"is_favorite\":false}"
+}

@@ -1,0 +1,62 @@
+# N4-PR1 — a 1ª corrida do G-par, com a lista que o prompt previa (só as 2 variantes de sections[]); rastro
+$ pnpm exec vitest run --project web tests/gates/n4-g-par.test.tsx
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-n4-pr1
+
+stdout | tests/gates/n4-g-par.test.tsx > G-par (N4-PR1) — o mesmo content, o mesmo texto no web e no nativo > reprova exatamente a lista de g-par-reprovados.txt
+G-par — itens 14 · pares comparados 9 · iguais 6 · diferentes 3 · fora do par 5
+  IGUAL     letra                        web=texto(108)       nativo=texto(108)             [painel-letra]
+  IGUAL     cifra-texto                  web=texto(48)        nativo=texto(48)              [painel-cifra]
+  IGUAL     tab-texto                    web=texto(92)        nativo=texto(92)              [painel-tab]
+  IGUAL     partitura-pdf                web=arquivo(79)      nativo=arquivo(79)            [painel-partitura]
+  IGUAL     letra-poluida-editor         web=texto(44)        nativo=texto(44)              [painel-letra]
+  DIFERENTE cifra-secoes-acordes-vazios  web=texto(123)       nativo=texto(84)              [painel-cifra]
+  DIFERENTE cifra-secoes-completas       web=texto(39)        nativo=texto(8)               [painel-cifra]
+  IGUAL     so-aninhado                  web=sem-corpo        nativo=sem-corpo:no-key       [painel-letra]
+  DIFERENTE tipo-fora-do-enum            web=texto(38)        nativo=sem-corpo:unknown-type [painel-letra]
+
+fora do par (5) — impressos e contados, não reprovam:
+  diferente cifra-em-lista               web=texto(15)        nativo=sem-corpo:not-string   — chords como lista de {name, diagram, fingering} — só o web lê; a B2 não achou no dado real (0 de 63) → Bloco D
+  diferente cifra-com-progression        web=texto(19)        nativo=texto(4)               — progression ({seção: acordes}) ao lado do chords — só o web a mostra; a B2 não achou no dado real → Bloco D
+  diferente tab-em-lista                 web=texto(21)        nativo=sem-corpo:not-string   — tablature como lista de linhas — só o web lê; a B2 achou as 2 Tabs com tablature string → Bloco D
+  diferente partitura-com-notation       web=texto(31)        nativo=sem-corpo:no-body      — Partitura sem arquivo com notation em texto — só o web a mostra; a B2 achou a única Partitura com arquivo (.pdf) → Bloco D
+  diferente tipo-legado                  web=texto(10)        nativo=sem-corpo:unknown-type — content_type legado ('Guitar Tab') que o normalizeContentType do web aceita — o core não; a B2 achou os 63 nos quatro tipos do enum → Bloco D
+
+lista esperada (2): cifra-secoes-acordes-vazios, cifra-secoes-completas
+reprovados     (3): cifra-secoes-acordes-vazios, cifra-secoes-completas, tipo-fora-do-enum
+  ✗ reprovação NÃO DECLARADA: tipo-fora-do-enum
+G-par: ✗ a reprovação não é a lista esperada
+
+ ❯  web  tests/gates/n4-g-par.test.tsx (1 test | 1 failed) 44ms
+     × reprova exatamente a lista de g-par-reprovados.txt 43ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   web  tests/gates/n4-g-par.test.tsx > G-par (N4-PR1) — o mesmo content, o mesmo texto no web e no nativo > reprova exatamente a lista de g-par-reprovados.txt
+AssertionError: reprovação não declarada: expected [ 'tipo-fora-do-enum' ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "tipo-fora-do-enum",
++ ]
+
+ ❯ tests/gates/n4-g-par.test.tsx:137:55
+    135|     expect(ids.size, 'ids repetidos na fixture').toBe(fx.par.length)
+    136|     expect(fx.par.length, 'G-par sem pares: não mediu nada (regra 4)')…
+    137|     expect(naoDeclarados, 'reprovação não declarada').toEqual([])
+       |                                                       ^
+    138|     expect(orfas, 'declaração órfã').toEqual([])
+    139|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  14:43:12
+   Duration  840ms (transform 166ms, setup 201ms, import 173ms, tests 44ms, environment 320ms)
+
+exit=1

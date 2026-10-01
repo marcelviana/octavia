@@ -1,0 +1,15 @@
+# N4-PR1 — a gravação da fixture do favoritar sobre o código da main (CN_GRAVAR=1), commit 2; rastro
+$ shasum -a 256 packages/core/fixtures/favoritar-put.json  (antes)
+bd4354d0b89050ac353ea5738ecc5263c9dc56b2e375e20a73ee93f388ea320a  packages/core/fixtures/favoritar-put.json
+$ CN_GRAVAR=1 pnpm exec vitest run --project web tests/gates/n4-favoritar-put.test.tsx -t "PUT do favoritar"
+ ✓  web  tests/gates/n4-favoritar-put.test.tsx (6 tests | 3 skipped) 154ms
+      Tests  3 passed | 3 skipped (6)
+$ shasum -a 256 packages/core/fixtures/favoritar-put.json  (depois — igual: a gravação é idempotente)
+bd4354d0b89050ac353ea5738ecc5263c9dc56b2e375e20a73ee93f388ea320a  packages/core/fixtures/favoritar-put.json
+$ cat packages/core/fixtures/favoritar-put.json
+{
+ "_leia": "N4-PR1 — o corpo EXATO que a lista do web envia ao PUT /api/content ao favoritar e ao desfavoritar (gravado por tests/gates/n4-favoritar-put.test.tsx com CN_GRAVAR=1 sobre o código da main). O nativo envia este mesmo corpo, byte a byte, na PR-4 (N4-D22, N4-D45). `id` é o uuid fabricado com que os dois lados montam o corpo.",
+ "id": "00000000-0000-4000-8000-0000000000f1",
+ "favoritar": "{\"id\":\"00000000-0000-4000-8000-0000000000f1\",\"is_favorite\":true}",
+ "desfavoritar": "{\"id\":\"00000000-0000-4000-8000-0000000000f1\",\"is_favorite\":false}"
+}

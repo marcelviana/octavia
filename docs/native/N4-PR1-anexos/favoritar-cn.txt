@@ -1,0 +1,46 @@
+# N4-PR1 — o controle negativo do gate do favoritar (regra 4), sobre o commit d44271a; rastro.
+
+## antes do CN
+$ pnpm exec vitest run --project web tests/gates/n4-favoritar-put.test.tsx
+favoritar-put — favoritar: enviado 64 B · fixture 64 B
+favoritar-put — desfavoritar: enviado 65 B · fixture 65 B
+ ✓  web  tests/gates/n4-favoritar-put.test.tsx (6 tests | 1 skipped) 141ms
+      Tests  5 passed | 1 skipped (6)
+exit=0
+
+## CN — uma chave a mais no corpo ESPERADO do favoritar (a fixture), num lado só
+$ git diff
+--- a/packages/core/fixtures/favoritar-put.json
++++ b/packages/core/fixtures/favoritar-put.json
+- "favoritar": "{\"id\":\"00000000-0000-4000-8000-0000000000f1\",\"is_favorite\":true}",
++ "favoritar": "{\"id\":\"00000000-0000-4000-8000-0000000000f1\",\"is_favorite\":true,\"chave_a_mais\":true}",
+$ pnpm exec vitest run --project web tests/gates/n4-favoritar-put.test.tsx
+favoritar-put — favoritar: enviado 64 B · fixture 84 B
+favoritar-put — desfavoritar: enviado 65 B · fixture 65 B
+     × favoritar (a linha com is_favorite=false) 134ms
+     ✓ desfavoritar (a linha com is_favorite=true) 20ms
+     ✓ a rota valida o corpo com contentSchemas.update 0ms
+     × favoritar: o corpo passa; com uma chave desconhecida, não passa (.strict()) 3ms
+     ✓ desfavoritar: o corpo passa; com uma chave desconhecida, não passa (.strict()) 1ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+AssertionError: expected '{"id":"00000000-0000-4000-8000-000000…' to be '{"id":"00000000-0000-4000-8000-000000…' // Object.is equality
+Expected: "{"id":"00000000-0000-4000-8000-0000000000f1","is_favorite":true,"chave_a_mais":true}"
+Received: "{"id":"00000000-0000-4000-8000-0000000000f1","is_favorite":true}"
+     97|       console.log(`favoritar-put — ${c.nome}: enviado ${corpos[0].corp…
+AssertionError: expected false to be true // Object.is equality
+- Expected
++ Received
+- true
++ false
+      Tests  2 failed | 3 passed | 1 skipped (6)
+exit=1
+
+## desfeito
+$ pnpm exec vitest run --project web tests/gates/n4-favoritar-put.test.tsx
+favoritar-put — favoritar: enviado 64 B · fixture 64 B
+favoritar-put — desfavoritar: enviado 65 B · fixture 65 B
+ ✓  web  tests/gates/n4-favoritar-put.test.tsx (6 tests | 1 skipped) 143ms
+      Tests  5 passed | 1 skipped (6)
+exit=0
+$ git status --short
+?? docs/native/N4-PR1-anexos/

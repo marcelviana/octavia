@@ -1,0 +1,22 @@
+# N4-PR1 — o CN3 (declaração órfã) repetido sobre a lista nova, commit 955f8f8; rastro.
+# O item movido (tipo-fora-do-enum) volta à lista esperada: tem de dar órfã — prova de que não ficou declarado.
+$ git diff
+--- a/packages/core/fixtures/g-par-reprovados.txt
++++ b/packages/core/fixtures/g-par-reprovados.txt
++tipo-fora-do-enum
+$ pnpm exec vitest run --project web tests/gates/n4-g-par.test.tsx
+G-par — itens 14 · pares comparados 8 · iguais 6 · diferentes 2 · fora do par 6
+lista esperada (3): cifra-secoes-acordes-vazios, cifra-secoes-completas, tipo-fora-do-enum
+reprovados     (2): cifra-secoes-acordes-vazios, cifra-secoes-completas
+  ✗ declaração ÓRFÃ: tipo-fora-do-enum (não existe na fixture)
+G-par: ✗ a reprovação não é a lista esperada
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  1 failed (1)
+exit=1
+
+## desfeito
+$ pnpm exec vitest run --project web tests/gates/n4-g-par.test.tsx
+G-par: reprova exatamente a lista esperada (2) ✓
+exit=0
+$ git status --short
+?? docs/native/N4-PR1-anexos/

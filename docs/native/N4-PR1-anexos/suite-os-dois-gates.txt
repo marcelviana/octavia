@@ -1,0 +1,15 @@
+# N4-PR1 — os dois gates NA SUÍTE: a suíte inteira com o reporter verbose, sobre o commit 955f8f8; rastro
+# filtrado às linhas dos dois arquivos n4-* e ao total; ✓ = rodou e passou · ↓ = pulado
+$ pnpm exec vitest run --reporter=verbose   (exit 0)
+ ✓  web  tests/gates/n4-favoritar-put.test.tsx > N4-PR1 — o corpo do PUT do favoritar da lista, byte a byte > favoritar (a linha com is_favorite=false)
+ ✓  web  tests/gates/n4-favoritar-put.test.tsx > N4-PR1 — o corpo do PUT do favoritar da lista, byte a byte > desfavoritar (a linha com is_favorite=true)
+ ↓  web  tests/gates/n4-favoritar-put.test.tsx > N4-PR1 — o corpo do PUT do favoritar da lista, byte a byte > grava a fixture (CN_GRAVAR=1, só no commit 2, sobre o código da main)
+ ✓  web  tests/gates/n4-favoritar-put.test.tsx > N4-PR1 — o corpo da fixture contra o schema do PUT /api/content > a rota valida o corpo com contentSchemas.update
+ ✓  web  tests/gates/n4-favoritar-put.test.tsx > N4-PR1 — o corpo da fixture contra o schema do PUT /api/content > favoritar: o corpo passa; com uma chave desconhecida, não passa (.strict())
+ ✓  web  tests/gates/n4-favoritar-put.test.tsx > N4-PR1 — o corpo da fixture contra o schema do PUT /api/content > desfavoritar: o corpo passa; com uma chave desconhecida, não passa (.strict())
+ ✓  web  tests/gates/n4-g-par.test.tsx > G-par (N4-PR1) — o mesmo content, o mesmo texto no web e no nativo > reprova exatamente a lista de g-par-reprovados.txt
+ Test Files  120 passed | 3 skipped (123)
+      Tests  1187 passed | 59 skipped (1246)
+# dos 59 pulados, 1 é deste bloco: o 'grava a fixture', it.runIf(CN_GRAVAR) — só roda para regravar; os outros 58 são de outros arquivos:
+$ … | grep "↓" | grep -c "tests/gates/n4-"
+1
