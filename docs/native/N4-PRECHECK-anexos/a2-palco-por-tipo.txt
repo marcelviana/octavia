@@ -1,0 +1,145 @@
+# A2 — fixtures já commitadas, contadas por tipo × corpo × arquivo, extensão e is_favorite (N4-PR0, 2026-10-01; rastro)
+# script: python3 inline (json.load; Counter por (content_type, content_data truthy?, file_url?)); nenhum texto de música impresso
+== docs/native/V1-PR5-anexos/instrumentos/fixture-S2-invalidos-content.json total 70
+   17 ('Chords', 'cd', '-')
+   3 ('Chords', 'null', 'file')
+   38 ('Lyrics', 'cd', '-')
+   1 ('Lyrics', 'null', '-')
+   1 ('Piano', 'cd', '-')
+   2 ('Sheet', 'null', 'file')
+   8 ('Tab', 'cd', '-')
+   extensões de file_url: {'.pdf': 5}  · is_favorite: {False: 64, True: 3, None: 3}
+   Tab.tablature por tipo python: {'str': 8}
+   Chords: conjuntos de chaves do content_data: {('chords',): 15, (): 3, ('annotations', 'chords'): 1, ('annotations',): 1}
+== docs/ux/C-PRECHECK-anexos/B-P5-content.json total 66
+   15 ('Chords', 'cd', '-')
+   3 ('Chords', 'null', 'file')
+   38 ('Lyrics', 'cd', '-')
+   2 ('Sheet', 'null', 'file')
+   8 ('Tab', 'cd', '-')
+   extensões de file_url: {'.pdf': 5}  · is_favorite: {False: 63, True: 3}
+   Tab.tablature por tipo python: {'str': 8}
+   Chords: conjuntos de chaves do content_data: {(): 3, ('chords',): 14, ('annotations', 'chords'): 1}
+
+## o palco: os ramos por tipo
+$ awk 'NR>=1&&NR<=8' apps/native/src/screens/StageScreen.tsx
+apps/native/src/screens/StageScreen.tsx:1: /**
+apps/native/src/screens/StageScreen.tsx:2:  * S3 — Palco (PRD T1-R24, R25, R26, R27, R28, R29, R30, R31, R32, R33, R34,
+apps/native/src/screens/StageScreen.tsx:3:  * R35; aceites A12, A13, A14, A15, A16, A17, A18). Duas variantes:
+apps/native/src/screens/StageScreen.tsx:4:  *
+apps/native/src/screens/StageScreen.tsx:5:  *  - **texto** (Lyrics, Tab, Chords com corpo) — S3a/b/c;
+apps/native/src/screens/StageScreen.tsx:6:  *  - **arquivo** (Sheet, e Chords escaneada: `content_data` sem corpo e
+apps/native/src/screens/StageScreen.tsx:7:  *    `file_url` presente) — **S3d**, o PDF do disco, paginado; e **S3e**, o
+apps/native/src/screens/StageScreen.tsx:8:  *    placeholder "arquivo não baixado" quando ele não está aqui.
+
+$ awk 'NR>=314&&NR<=327' apps/native/src/screens/StageScreen.tsx
+apps/native/src/screens/StageScreen.tsx:314:   const chavePlaceholder =
+apps/native/src/screens/StageScreen.tsx:315:     content === null
+apps/native/src/screens/StageScreen.tsx:316:       ? 'content-missing'
+apps/native/src/screens/StageScreen.tsx:317:       : validade !== null && !validade.ok
+apps/native/src/screens/StageScreen.tsx:318:         ? validade.reason
+apps/native/src/screens/StageScreen.tsx:319:         : null
+apps/native/src/screens/StageScreen.tsx:320: 
+apps/native/src/screens/StageScreen.tsx:321:   /**
+apps/native/src/screens/StageScreen.tsx:322:    * O corpo desta posição é um ARQUIVO? (Sheet, e Chords escaneada — o core
+apps/native/src/screens/StageScreen.tsx:323:    * decide, `isValidContent(...).body === 'file'`.) A URL vira dependência
+apps/native/src/screens/StageScreen.tsx:324:    * estável dos efeitos do PDF; `null` significa "variante texto".
+apps/native/src/screens/StageScreen.tsx:325:    */
+apps/native/src/screens/StageScreen.tsx:326:   const urlArquivo =
+apps/native/src/screens/StageScreen.tsx:327:     validade !== null && validade.ok && validade.body === 'file' ? content?.file_url ?? null : null
+
+$ awk 'NR>=488&&NR<=496' apps/native/src/screens/StageScreen.tsx
+apps/native/src/screens/StageScreen.tsx:488:   const alturaConteudo = meio === null ? 0 : Math.max(meio.altura, touch.min)
+apps/native/src/screens/StageScreen.tsx:489:   const larguraBorda = meio === null ? 0 : Math.max(meio.largura * 0.15, touch.min)
+apps/native/src/screens/StageScreen.tsx:490: 
+apps/native/src/screens/StageScreen.tsx:491:   const estiloTexto = {
+apps/native/src/screens/StageScreen.tsx:492:     fontFamily: content?.content_type === 'Chords' || content?.content_type === 'Tab' ? font.mono : font.mono,
+apps/native/src/screens/StageScreen.tsx:493:     fontSize: zoom,
+apps/native/src/screens/StageScreen.tsx:494:     lineHeight: zoom * (content?.content_type === 'Tab' ? lineHeight.tab : lineHeight.text),
+apps/native/src/screens/StageScreen.tsx:495:     color: cor.text,
+apps/native/src/screens/StageScreen.tsx:496:   }
+
+$ awk 'NR>=565&&NR<=600' apps/native/src/screens/StageScreen.tsx
+apps/native/src/screens/StageScreen.tsx:565:         </View>
+apps/native/src/screens/StageScreen.tsx:566:       )}
+apps/native/src/screens/StageScreen.tsx:567: 
+apps/native/src/screens/StageScreen.tsx:568:       <View style={styles.meio} onLayout={medirMeio}>
+apps/native/src/screens/StageScreen.tsx:569:         {urlArquivo !== null ? (
+apps/native/src/screens/StageScreen.tsx:570:           <Arquivo
+apps/native/src/screens/StageScreen.tsx:571:             estado={arquivo}
+apps/native/src/screens/StageScreen.tsx:572:             titulo={content?.title ?? ''}
+apps/native/src/screens/StageScreen.tsx:573:             tipo={(TIPO[content?.content_type ?? ''] ?? 'arquivo').toLowerCase()}
+apps/native/src/screens/StageScreen.tsx:574:             online={online}
+apps/native/src/screens/StageScreen.tsx:575:             cor={cor}
+apps/native/src/screens/StageScreen.tsx:576:             onPaginas={(total) => {
+apps/native/src/screens/StageScreen.tsx:577:               log(`pdf-render pages=${total} src=disk`)
+apps/native/src/screens/StageScreen.tsx:578:               setPagina({ n: 1, total })
+apps/native/src/screens/StageScreen.tsx:579:             }}
+apps/native/src/screens/StageScreen.tsx:580:             onPagina={(atual, total) => {
+apps/native/src/screens/StageScreen.tsx:581:               log(`pdf-page n=${atual}/${total}`)
+apps/native/src/screens/StageScreen.tsx:582:               setPagina({ n: atual, total })
+apps/native/src/screens/StageScreen.tsx:583:             }}
+apps/native/src/screens/StageScreen.tsx:584:             onBaixar={() => void buscarArquivo(urlArquivo, true)}
+apps/native/src/screens/StageScreen.tsx:585:           />
+apps/native/src/screens/StageScreen.tsx:586:         ) : (
+apps/native/src/screens/StageScreen.tsx:587:           <ScrollView ref={scroll} style={styles.conteudo} contentContainerStyle={styles.conteudoPad}>
+apps/native/src/screens/StageScreen.tsx:588:             {motivo !== undefined ? (
+apps/native/src/screens/StageScreen.tsx:589:               <View style={styles.placeholder} testID="placeholder">
+apps/native/src/screens/StageScreen.tsx:590:                 <Text style={[styles.placeholderTitulo, { color: cor.text }]}>{motivo.titulo}</Text>
+apps/native/src/screens/StageScreen.tsx:591:                 <Text style={[styles.placeholderApoio, { color: cor.muted }]}>{motivo.apoio}</Text>
+apps/native/src/screens/StageScreen.tsx:592:               </View>
+apps/native/src/screens/StageScreen.tsx:593:             ) : (
+apps/native/src/screens/StageScreen.tsx:594:               // O ScrollView horizontal é o que impede a re-quebra da linha
+apps/native/src/screens/StageScreen.tsx:595:               // longa em qualquer zoom (T1-R25/R31 — provado no spike).
+apps/native/src/screens/StageScreen.tsx:596:               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+apps/native/src/screens/StageScreen.tsx:597:                 <Text style={estiloTexto} testID="corpo">
+apps/native/src/screens/StageScreen.tsx:598:                   {corpo ?? ''}
+apps/native/src/screens/StageScreen.tsx:599:                 </Text>
+apps/native/src/screens/StageScreen.tsx:600:               </ScrollView>
+
+$ awk 'NR>=763&&NR<=768' apps/native/src/screens/StageScreen.tsx
+apps/native/src/screens/StageScreen.tsx:763:   if (estado.fase === 'pronto') {
+apps/native/src/screens/StageScreen.tsx:764:     return (
+apps/native/src/screens/StageScreen.tsx:765:       <View style={styles.pdfArea} testID="s3d">
+apps/native/src/screens/StageScreen.tsx:766:         <Pdf
+apps/native/src/screens/StageScreen.tsx:767:           source={{ uri: estado.uri, cache: false }}
+apps/native/src/screens/StageScreen.tsx:768:           style={[styles.pdf, { backgroundColor: cor.bg }]}
+
+$ git grep -nE "content_type: '(Lyrics|Chords|Tab|Sheet)'" -- apps/native/test
+apps/native/test/apos-escrita.test.tsx:45:    content_type: 'Lyrics', content_data: { lyrics: `letra de ${title}` },
+apps/native/test/escrita.test.ts:68:    content_type: 'Lyrics',
+apps/native/test/palco-faixa.test.tsx:53:  content_type: 'Lyrics', content_data: { lyrics: '[Intro] C Am F G' }, file_url: null, updated_at: T0,
+apps/native/test/palco-faixa.test.tsx:58:  content_type: 'Sheet', content_data: null, file_url: 'https://host/storage/v1/object/public/content-files/p.pdf',
+apps/native/test/picker.test.tsx:115:  content_type: 'Lyrics',
+apps/native/test/prazo-de-rede.test.ts:62:    content_type: 'Lyrics', content_data: { lyrics: `letra de ${title}` },
+apps/native/test/reordenar-folha-faixa.test.tsx:69:  content_type: 'Lyrics', content_data: { lyrics: `letra ${i}` },
+apps/native/test/reordenar.test.tsx:78:    content_type: 'Lyrics', content_data: { lyrics: `letra ${i}` },
+apps/native/test/s1-criar.test.tsx:56:    content_type: 'Lyrics', content_data: { lyrics: `letra de ${title}` },
+apps/native/test/s1-faixa.test.tsx:57:  content_type: 'Lyrics', content_data: { lyrics: `letra ${i}` },
+apps/native/test/s2-edicao.test.tsx:62:    content_type: 'Lyrics', content_data: { lyrics: `letra de ${title}` },
+apps/native/test/s2-faixa.test.tsx:53:  content_type: 'Lyrics', content_data: { lyrics: `letra ${i}` },
+apps/native/test/sync-t1r10.test.ts:62:    content_type: 'Lyrics',
+
+$ ls docs/native/N3-PRECHECK-anexos/B3-referencia-paisagem | grep xml
+REF-S3-S3a-letra-1a-avd-pai.xml
+REF-S3-S3a-letra-1a-tab-pai.xml
+REF-S3-S3b-cifra-claro-avd-pai.xml
+REF-S3-S3b-cifra-claro-tab-pai.xml
+REF-S3-S3b-cifra-escuro-avd-pai.xml
+REF-S3-S3b-cifra-escuro-tab-pai.xml
+REF-S3-S3c-tab-autoscroll-avd-pai.xml
+REF-S3-S3c-tab-autoscroll-tab-pai.xml
+REF-S3-S3d-pdf-12p-avd-pai.xml
+REF-S3-S3d-pdf-12p-tab-pai.xml
+REF-S3-S3e-nao-baixado-avd-pai.xml
+REF-S3-S3e-nao-baixado-tab-pai.xml
+REF-S3-titulo-longo-avd-pai.xml
+REF-S3-titulo-longo-tab-pai.xml
+REF-S3-ultima-avd-pai.xml
+REF-S3-ultima-tab-pai.xml
+REF-S5-fim-avd-pai.xml
+REF-S5-fim-tab-pai.xml
+
+$ awk 'NR>=107&&NR<=108' components/upload/frases-upload.ts
+components/upload/frases-upload.ts:107: export const EXTENSOES_PARTITURA: readonly string[] = [".pdf", ".png", ".jpg", ".jpeg"]
+components/upload/frases-upload.ts:108: export const EXTENSOES_TEXTO: readonly string[] = [".pdf", ".docx", ".txt"]

@@ -1,0 +1,41 @@
+# A1 — quem lê content no nativo: arquivos × ocorrências (N4-PR0, 2026-10-01; rastro)
+$ git grep -cE 'ContentDTO|contentById|content_data|content_type|file_url|contents|bodyOf|isValidContent' -- apps/native/src apps/native/App.tsx packages/core/src ':!*.test.ts' ':!*.test.tsx'
+apps/native/App.tsx:20
+apps/native/src/api.ts:2
+apps/native/src/apos-escrita.ts:4
+apps/native/src/escrita.ts:2
+apps/native/src/fixtures/aceite.py:6
+apps/native/src/navigation.tsx:5
+apps/native/src/prefetch.ts:17
+apps/native/src/screens/IndexScreen.tsx:11
+apps/native/src/screens/ModoDeReordenar.tsx:5
+apps/native/src/screens/Picker.tsx:3
+apps/native/src/screens/SearchScreen.tsx:7
+apps/native/src/screens/SetlistsScreen.tsx:5
+apps/native/src/screens/StageScreen.tsx:19
+apps/native/src/store.ts:8
+apps/native/src/sync.ts:5
+packages/core/src/content-contract.ts:11
+packages/core/src/offline.ts:11
+packages/core/src/search.ts:5
+packages/core/src/song.ts:8
+packages/core/src/sync.ts:6
+packages/core/src/types.ts:7
+
+$ git grep -nE 'getContentPage|api/content' -- apps/native/src apps/native/App.tsx packages/core/src
+apps/native/src/api.ts:7: * `GET /api/content` (PRD §2) — e, desde a N2-PR2, as **seis escritas de
+apps/native/src/api.ts:223: * `GET /api/content` — `pageSize=100` é o teto real do handler (clampado a
+apps/native/src/api.ts:227:export function getContentPage(page: number): Promise<ApiResult<ContentPageBody>> {
+apps/native/src/api.ts:228:  return get<ContentPageBody>(`/api/content?pageSize=100&page=${page}&sortBy=recent`, 'content-read')
+apps/native/src/api.ts:238: * `/api/content`), e por isso `path.split('?')[0]` bastava. As rotas de
+apps/native/src/fixtures/aceite.py:11:  2. `servidor`: um mock HTTP de `/api/setlists` e `/api/content` para os
+apps/native/src/fixtures/aceite.py:149:    69/69 `content_id` da audit existem em `/api/content` (pre-check A3). O
+apps/native/src/fixtures/aceite.py:591:            if u.path == "/api/content":
+apps/native/src/sync.ts:17:import { getContentPage, getSetlists, type ApiResult } from './api'
+apps/native/src/sync.ts:36:    const r = await getContentPage(page)
+packages/core/src/sync.ts:9:/** Uma página de `GET /api/content` já resolvida por quem chamou. */
+packages/core/src/types.ts:19:/** Item de `GET /api/content` (`data[]`) — 22 colunas medidas, 8 usadas. */
+
+$ git grep -n 'is_favorite' -- apps/native packages/core
+packages/core/src/content-contract.test.ts:62:      is_favorite: false,
+(exit 0)

@@ -1,0 +1,133 @@
+# L1 — quem ordena por updated_at (N4-PR0 commit 2, 2026-10-01; rastro)
+$ git grep -nE "sortBy" -- app components lib hooks apps/native/src packages/core/src ':!*.test.*' ':!lib/api-schemas.ts'
+app/api/content/route.ts:43:    const { page, pageSize, search, sortBy, contentType: contentTypeParam, difficulty: difficultyParam, key: keyParam, favorite } = validatedParams
+app/api/content/route.ts:57:      sortBy,
+app/api/content/route.ts:113:    const [sortColumn, ascending] = sortMap[sortBy] || sortMap.recent
+app/api/storage/list/route.ts:44:      .list(prefix, { limit, offset, sortBy: { column: 'name', order: 'asc' } })
+apps/native/src/api.ts:224: * [1,100], medido em prod) e `sortBy=recent` é a chave estável entre páginas
+apps/native/src/api.ts:228:  return get<ContentPageBody>(`/api/content?pageSize=100&page=${page}&sortBy=recent`, 'content-read')
+apps/native/src/fixtures/aceite.py:513:                  f" sortBy={q.get('sortBy', ['-'])[0]}", flush=True)
+components/library-page-client.tsx:18:      <LibraryHeader searchQuery="" onSearchChange={semAcao} sortBy="recent" onSortChange={semAcao} filters={SEM_FILTRO} onFiltersChange={semAcao} onAddContent={semAcao} />
+components/library/LibraryHeader.tsx:20:const LibraryHeader = memo<LibraryHeaderProps>(function LibraryHeader({ sortBy, onSortChange, filters, onFiltersChange }) {
+components/library/LibraryHeader.tsx:49:            {rotuloDaOrdem(sortBy)}
+components/library/RefactoredLibrary.tsx:46:  const { content, totalCount, page, setPage, pageSize, searchQuery, setSearchQuery, sortBy, setSortBy, selectedFilters, setSelectedFilters, loading, erro, reload } = dados;
+components/library/RefactoredLibrary.tsx:70:        sortBy={sortBy}
+hooks/use-library-data.ts:43:  sortBy: 'recent' | 'title' | 'artist'
+hooks/use-library-data.ts:75:  const [sortBy, setSortBy] = useState<'recent' | 'title' | 'artist'>('recent')
+hooks/use-library-data.ts:119:        sortBy,
+hooks/use-library-data.ts:177:  }, [user, page, pageSize, debouncedSearch, sortBy, selectedFilters])
+hooks/use-library-data.ts:200:  }, [ready, debouncedSearch, selectedFilters, sortBy])
+hooks/use-library-data.ts:219:                            sortBy === 'recent'
+hooks/use-library-data.ts:227:  }, [ready, user, page, pageSize, debouncedSearch, sortBy, selectedFilters, load])
+hooks/use-library-data.ts:274:    sortBy,
+hooks/use-setlist-data.ts:74:          sortBy: "recent",
+lib/content-service.ts:182:    sortBy = "recent",
+lib/content-service.ts:192:  const cacheKey = `content-page:${JSON.stringify({ page, pageSize, search, sortBy, filters })}`;
+lib/content-service.ts:251:      sortBy,
+lib/content-service.ts:335:    sortBy = "recent",
+lib/content-service.ts:389:    sortMap[sortBy as keyof typeof sortMap] || sortMap.recent;
+lib/content-types.ts:5:  sortBy?: "recent" | "title" | "artist" | "updated"
+
+$ git grep -nE "updated_at" -- app components hooks lib apps/native/src packages/core/src ':!*.test.*' ':!**/__tests__/**' | grep -viE 'toISOString'
+app/api/content/route.ts:110:      updated: ['updated_at', false]
+app/api/setlists/[id]/songs/route.ts:60:      // updated_at acontece NA transação — o best-effort separado morreu.
+app/api/setlists/songs/[songId]/route.ts:75:    // bump de updated_at viram UMA transação na RPC, sob o lock da
+app/api/storage/list/route.ts:62:        updatedAt: item.updated_at ?? null,
+app/dashboard/page.tsx:35:      new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime(),
+apps/native/src/escrita.ts:290: * merge e deixaria no cache um `updated_at` que o servidor não tem em quatro
+apps/native/src/fixtures/aceite.py:131:        "updated_at": modelo["updated_at"],
+apps/native/src/fixtures/aceite.py:256:    Só o que as seis rotas mexem. O `updated_at` é o relógio do processo, como
+apps/native/src/fixtures/aceite.py:300:            "updated_at": _agora(),
+apps/native/src/fixtures/aceite.py:309:        # (`[id]/route.ts:171-192`). `{}` é válido e só bumpa o updated_at.
+apps/native/src/fixtures/aceite.py:313:        setlist["updated_at"] = _agora()
+apps/native/src/fixtures/aceite.py:332:        setlist["updated_at"] = _agora()
+apps/native/src/fixtures/aceite.py:338:        setlist["updated_at"] = _agora()
+apps/native/src/fixtures/aceite.py:349:        setlist["updated_at"] = _agora()
+apps/native/src/fixtures/aceite.py:646:                # REAL (C7) — e SEM o `updated_at` novo da setlist (§4.1).
+apps/native/src/store.ts:82: * (editar um content não bumpa `setlists.updated_at`) e custa ~35 KB por
+components/content-editor.tsx:11: * ativo quando o corpo do `PUT` (sem o `updated_at`) difere do corpo de abertura (decisão 2; antes o estado normalizado
+components/content-editor.tsx:50:/** O corpo do `PUT` de antes, sem o `updated_at` (que o salvar põe no fim, como antes). */
+components/content/frases-visualizacao.ts:119:  created_at?: string | null; updated_at?: string | null
+components/content/frases-visualizacao.ts:131:  par("campo.alterado", c.updated_at ? dataCurta(c.updated_at) : null)
+components/dashboard.tsx:25:  updated_at: string;
+lib/api-schemas.ts:87:// updated_at vindos do cliente — o servidor os deriva do token) é declarado
+lib/api-schemas.ts:158:// user_id/created_at/updated_at vêm do servidor; a UI os envia hoje
+lib/api-schemas.ts:159:// (useAddContentLogic manda user_id; content-editor manda updated_at) —
+lib/api-schemas.ts:161:const CONTENT_IGNORED_KEYS = ['user_id', 'created_at', 'updated_at'] as const
+lib/content-service.ts:89:  updated_at: string;
+lib/content-service.ts:385:    updated: ["updated_at", false],
+packages/core/src/escrita.ts:25: * gravar (div. 178), nem os quatro que não trazem o `updated_at` novo da
+packages/core/src/song.ts:5: * ignorado, porque editar um content não bumpa `setlists.updated_at` (duas
+packages/core/src/sync.ts:3: * versionamento por `updated_at` (PRD T1-R9, T1-R9b, T1-R10; aceites A7, A21,
+packages/core/src/sync.ts:85:  updated_at: string
+packages/core/src/sync.ts:90: * `updated_at` difere — dois syncs sem mudança no servidor produzem as três
+packages/core/src/sync.ts:97:  const before = new Map(prev.map((item) => [item.id, item.updated_at]))
+packages/core/src/sync.ts:106:    else if (previousUpdatedAt !== item.updated_at) changed.push(item.id)
+packages/core/src/sync.ts:124: * O limite é o do próprio T1-R10: uma edição que não bumpa `updated_at`
+packages/core/src/types.ts:36:  updated_at: string
+packages/core/src/types.ts:64:  updated_at: string
+packages/core/src/validacao.ts:24: *        `updated_at` (C4), e editar e cancelar não pode invalidar a setlist
+packages/core/src/validacao.ts:124:  // enviá-lo bumparia o `updated_at` sem nada mudar de verdade.
+
+$ awk 'NR>=25&&NR<=47' app/dashboard/page.tsx
+app/dashboard/page.tsx:25:   // (conteúdo, números) que falhar vai ao cliente como erro — vazio ≠ erro (DASH-erro)
+app/dashboard/page.tsx:26:   const [conteudo, numeros] = await Promise.allSettled([
+app/dashboard/page.tsx:27:     getUserContentServer(cookieStore, requestUrl),
+app/dashboard/page.tsx:28:     getUserStatsServer(cookieStore, requestUrl),
+app/dashboard/page.tsx:29:   ])
+app/dashboard/page.tsx:30:   const contentData = (conteudo.status === "fulfilled" ? conteudo.value : []) as ContentItem[];
+app/dashboard/page.tsx:31:   const stats = numeros.status === "fulfilled" ? numeros.value : null;
+app/dashboard/page.tsx:32: 
+app/dashboard/page.tsx:33:   const sortedContent = [...contentData].sort(
+app/dashboard/page.tsx:34:     (a: ContentItem, b: ContentItem) =>
+app/dashboard/page.tsx:35:       new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime(),
+app/dashboard/page.tsx:36:   );
+app/dashboard/page.tsx:37:   const recentContent = sortedContent.slice(0, 5);
+app/dashboard/page.tsx:38:   const favoriteContent = contentData
+app/dashboard/page.tsx:39:     .filter((c: ContentItem) => c.is_favorite)
+app/dashboard/page.tsx:40:     .slice(0, 5);
+app/dashboard/page.tsx:41: 
+app/dashboard/page.tsx:42:   return (
+app/dashboard/page.tsx:43:     <DashboardPageClient
+app/dashboard/page.tsx:44:       recentContent={recentContent}
+app/dashboard/page.tsx:45:       favoriteContent={favoriteContent}
+app/dashboard/page.tsx:46:       stats={stats}
+app/dashboard/page.tsx:47:       erroConteudo={conteudo.status === "rejected"}
+
+$ awk 'NR>=51&&NR<=58' components/dashboard.tsx
+components/dashboard.tsx:51: export function Dashboard({ recentContent, favoriteContent, stats, erroConteudo, erroNumeros }: DashboardProps) {
+components/dashboard.tsx:52:   const router = useRouter();
+components/dashboard.tsx:53:   const [aba, setAba] = useState<Aba>("geral");
+components/dashboard.tsx:54:   const falhou = erroConteudo || erroNumeros;
+components/dashboard.tsx:55:   const recentes = (
+components/dashboard.tsx:56:     <ListaDoPainel titulo={FRASES_LISTA["dash.recentes"]} vazio={FRASES_LISTA["dash.vazio.recentes"]} itens={recentContent} falhou={erroConteudo} />
+components/dashboard.tsx:57:   );
+components/dashboard.tsx:58:   const favoritas = (
+
+$ awk 'NR>=43&&NR<=43' hooks/use-library-data.ts
+hooks/use-library-data.ts:43:   sortBy: 'recent' | 'title' | 'artist'
+
+$ awk 'NR>=75&&NR<=75' hooks/use-library-data.ts
+hooks/use-library-data.ts:75:   const [sortBy, setSortBy] = useState<'recent' | 'title' | 'artist'>('recent')
+
+$ awk 'NR>=106&&NR<=115' app/api/content/route.ts
+app/api/content/route.ts:106:     const sortMap = {
+app/api/content/route.ts:107:       recent: ['created_at', false],
+app/api/content/route.ts:108:       title: ['title', true],
+app/api/content/route.ts:109:       artist: ['artist', true],
+app/api/content/route.ts:110:       updated: ['updated_at', false]
+app/api/content/route.ts:111:     } as const
+app/api/content/route.ts:112: 
+app/api/content/route.ts:113:     const [sortColumn, ascending] = sortMap[sortBy] || sortMap.recent
+app/api/content/route.ts:114:     // Desempate determinístico entre páginas (PRD N6; B7-PR4): id asc após a coluna do sort.
+app/api/content/route.ts:115:     query = query.order(sortColumn, { ascending }).order('id', { ascending: true })
+
+$ awk 'NR>=222&&NR<=229' apps/native/src/api.ts
+apps/native/src/api.ts:222: /**
+apps/native/src/api.ts:223:  * `GET /api/content` — `pageSize=100` é o teto real do handler (clampado a
+apps/native/src/api.ts:224:  * [1,100], medido em prod) e `sortBy=recent` é a chave estável entre páginas
+apps/native/src/api.ts:225:  * exigida pelo T1-R9b (A22).
+apps/native/src/api.ts:226:  */
+apps/native/src/api.ts:227: export function getContentPage(page: number): Promise<ApiResult<ContentPageBody>> {
+apps/native/src/api.ts:228:   return get<ContentPageBody>(`/api/content?pageSize=100&page=${page}&sortBy=recent`, 'content-read')
+apps/native/src/api.ts:229: }

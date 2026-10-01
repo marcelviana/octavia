@@ -1,0 +1,48 @@
+# Conferência dos cabeçalhos citados no N4-PRECHECK.md (N4-PR0, 2026-10-01; rastro)
+
+$ grep -nE '^### 10\.(1|2|4) ' docs/ux/I1-ENCERRAMENTO.md
+498:### 10.1 Bloco D (backend e dado)
+519:### 10.2 N4 (content nos apps)
+536:### 10.4 W5 (instrumento)
+
+$ grep -nE '^### 10\.(2|3) ' docs/native/N2-ENCERRAMENTO.md
+567:### 10.2 N3 (content nos apps)
+583:### 10.3 Bloco D (backend)
+
+$ grep -nE '^### 10\.(1|6) ' docs/native/N3-ENCERRAMENTO.md
+556:### 10.1 N5 (celular)
+657:### 10.6 N4 (content)
+
+$ grep -nE '^### Content — (lista|visualização)' docs/ux/DESIGN-I1/README-design.md
+190:### Content — lista — `4-content-lista/telas.html` · 15 estado(s)
+215:### Content — visualização — `5-content-visualizacao/telas.html` · 15 estado(s)
+
+$ grep -nE '^### Content — (lista|visualização)' docs/ux/DESIGN-I1/README.md
+546:### Content — lista — `4-content-lista/telas.html` · T-I1-R115 … T-I1-R144 (15 estados × C, B)
+608:### Content — visualização — `5-content-visualizacao/telas.html` · T-I1-R145 … T-I1-R170 (13 estados × C, B; a I1-E15 tirou `VIEW-carregando-arquivo` e `VIEW-erro-cache`, os antigos T-I1-R155/156 e 167/168)
+
+$ grep -nE '^### 21\.6' docs/ux/I1-PR11-anexos/README.md
+771:### 21.6 As heranças
+
+$ grep -nE '^## 28\.' docs/ux/I1-PR13-anexos/README.md
+1078:## 28. Heranças — finais
+
+$ grep -nE '^\*\*12\. |^### As regras que o I1|^## Errata N3-PR1' docs/native/LOGS-OCTAVIA.md
+527:**12. Prova de escrita em prod usa um recurso DESCARTÁVEL da conta, e o que o nativo cria
+637:### As regras que o I1 firmou — 24 a 32
+1040:## Errata N3-PR1 (2026-09-24) — dois gates que leem DUMP, não código
+
+$ grep -nE '^## ' docs/native/APARATO.md
+9:## Ferramentas
+59:## Aparelhos
+100:## Metro e mock
+124:## Estado do aparelho: ler, declarar, restaurar
+179:## O dev client e os teclados atrapalham o arnês
+235:## O estado de dados do G-inv (N3-PR1, div. 403; revisto na N3-PR2)
+285:## A régua de desenvolvimento (N3-PR1)
+314:## logcat
+321:## `uiautomator dump`
+333:## O que o `native-tela` prova, e o que não prova
+
+$ grep -nE '^## 11' docs/native/PRD-TELA-2.md
+416:## 11. O que a tela 2 NÃO faz

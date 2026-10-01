@@ -1,0 +1,50 @@
+# A12/A14 — G-par em esboço: o texto do corpo pelo leitor do web × pelo do core, sobre fixture FABRICADA (N4-PR0, 2026-10-01; rastro)
+# o "web" aqui é a cadeia normalizeContentType (types/content.ts) → textoDa* (components/content/corpo-de-texto.ts) que o ContentDisplay usa;
+# o segundo painel *Cifra* da letra e da tab (textoDosAcordes) NÃO entra — só o corpo do painel do tipo.
+# script verbatim (arquivo temporário na raiz, apagado):
+#   import { bodyOf, isValidContent } from './packages/core/src/content-contract'
+#   import { textoDaCifra, textoDaTab, textoDaLetra, textoDaNotacao } from './components/content/corpo-de-texto'
+#   import { normalizeContentType } from './types/content'
+#   type D = Record<string, unknown> | null
+#   const web = (t: string, d: D): string | null => {
+#     const n = normalizeContentType(t)
+#     return n === 'Chords' ? textoDaCifra(d) : n === 'Tab' ? textoDaTab(d) : n === 'Sheet' ? textoDaNotacao(d) : textoDaLetra(d)
+#   }
+#   const F: [string, string, D, string | null][] = [
+#     ['lyrics-texto', 'Lyrics', { lyrics: 'Quando a noite chega' }, null],
+#     ['lyrics-com-chords', 'Lyrics', { lyrics: 'Quando a noite chega', chords: 'C Am F G' }, null],
+#     ['chords-texto', 'Chords', { chords: '[Intro] C Am F G' }, null],
+#     ['chords-sections', 'Chords', { sections: [{ name: 'Intro', chords: 'C Am', lyrics: 'la la' }] }, null],
+#     ['chords-lista', 'Chords', { chords: [{ name: 'C', diagram: ['x32010'], fingering: '032010' }] }, null],
+#     ['chords-progression', 'Chords', { chords: 'C Am', progression: { Verso: ['C', 'Am'] } }, null],
+#     ['tab-texto', 'Tab', { tablature: 'e|---0' }, null],
+#     ['tab-lista', 'Tab', { tablature: ['e|---0', 'B|---1'] }, null],
+#     ['sheet-notation', 'Sheet', { notation: 'X:1' }, 'https://x.test/p.pdf'],
+#     ['poluido-editor', 'Lyrics', { lyrics: 'Quando a noite chega', content_data: { lyrics: 'velha' }, annotations: [] }, null],
+#     ['poluido-so-aninhado', 'Lyrics', { content_data: { lyrics: 'Quando a noite chega' }, annotations: [] }, null],
+#     ['tipo-legado-guitar-tab', 'Guitar Tab', { tablature: 'e|---0' }, null],
+#     ['tipo-fora-do-enum', 'Piano', { lyrics: 'x' }, null],
+#   ]
+#   let iguais = 0
+#   for (const [nome, t, d, f] of F) {
+#     const n = bodyOf(t, d), w = web(t, d)
+#     const igual = n === w
+#     if (igual) iguais++
+#     console.log(`${igual ? 'IGUAL    ' : 'DIFERENTE'} ${nome.padEnd(24)} nativo=${n === null ? 'null' : JSON.stringify(n)}  web=${w === null ? 'null' : JSON.stringify(w)}  validade=${JSON.stringify(isValidContent(t, d, f))}`)
+#   }
+#   console.log(`iguais ${iguais} de ${F.length}`)
+$ npx tsx ./.gpar-tmp.ts
+IGUAL     lyrics-texto             nativo="Quando a noite chega"  web="Quando a noite chega"  validade={"ok":true,"body":"text"}
+IGUAL     lyrics-com-chords        nativo="Quando a noite chega"  web="Quando a noite chega"  validade={"ok":true,"body":"text"}
+IGUAL     chords-texto             nativo="[Intro] C Am F G"  web="[Intro] C Am F G"  validade={"ok":true,"body":"text"}
+DIFERENTE chords-sections          nativo=null  web="Intro\nC Am\nla la"  validade={"ok":false,"reason":"no-key"}
+DIFERENTE chords-lista             nativo=null  web="C\nx32010\n032010"  validade={"ok":false,"reason":"not-string"}
+DIFERENTE chords-progression       nativo="C Am"  web="C Am\n\nVerso: C - Am"  validade={"ok":true,"body":"text"}
+IGUAL     tab-texto                nativo="e|---0"  web="e|---0"  validade={"ok":true,"body":"text"}
+DIFERENTE tab-lista                nativo=null  web="e|---0\nB|---1"  validade={"ok":false,"reason":"not-string"}
+DIFERENTE sheet-notation           nativo=null  web="X:1"  validade={"ok":true,"body":"file"}
+IGUAL     poluido-editor           nativo="Quando a noite chega"  web="Quando a noite chega"  validade={"ok":true,"body":"text"}
+IGUAL     poluido-so-aninhado      nativo=null  web=null  validade={"ok":false,"reason":"no-key"}
+DIFERENTE tipo-legado-guitar-tab   nativo=null  web="e|---0"  validade={"ok":false,"reason":"unknown-type"}
+DIFERENTE tipo-fora-do-enum        nativo=null  web="x"  validade={"ok":false,"reason":"unknown-type"}
+iguais 6 de 13

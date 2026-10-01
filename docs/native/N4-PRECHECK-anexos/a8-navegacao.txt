@@ -1,0 +1,135 @@
+# A8 — a navegação e onde uma entrada nova em S1 toca o G-inv (N4-PR0, 2026-10-01; rastro)
+
+$ awk 'NR>=1&&NR<=9' apps/native/src/navigation.tsx
+apps/native/src/navigation.tsx:1: /**
+apps/native/src/navigation.tsx:2:  * Navegação da tela 1 (N1-D1: `@react-navigation/native` + native-stack).
+apps/native/src/navigation.tsx:3:  * Seis rotas: S0 Login, S1 Setlists, S2 Index, S3 Stage, S4 Search, S5 End.
+apps/native/src/navigation.tsx:4:  * Sem header — as barras são do design (T1-R27/R28).
+apps/native/src/navigation.tsx:5:  *
+apps/native/src/navigation.tsx:6:  * A **posição no palco vive nos params da rota** (`Stage.position`): assim
+apps/native/src/navigation.tsx:7:  * ela sobrevive à rotação do device sem estado extra (T1-R27: "girar na
+apps/native/src/navigation.tsx:8:  * música 4 → continua na 4").
+apps/native/src/navigation.tsx:9:  */
+
+$ awk 'NR>=115&&NR<=136' apps/native/src/navigation.tsx
+apps/native/src/navigation.tsx:115:   return (
+apps/native/src/navigation.tsx:116:     <NavigationContainer theme={navTheme}>
+apps/native/src/navigation.tsx:117:       <Stack.Navigator
+apps/native/src/navigation.tsx:118:         screenOptions={{ headerShown: false, contentStyle: { backgroundColor: dark.bg } }}
+apps/native/src/navigation.tsx:119:       >
+apps/native/src/navigation.tsx:120:         {signedIn ? (
+apps/native/src/navigation.tsx:121:           <Stack.Group>
+apps/native/src/navigation.tsx:122:             <Stack.Screen name="Setlists">
+apps/native/src/navigation.tsx:123:               {({ navigation }) => (
+apps/native/src/navigation.tsx:124:                 <SetlistsScreen
+apps/native/src/navigation.tsx:125:                   {...setlists}
+apps/native/src/navigation.tsx:126:                   sumiu={sumiu === 'sumiu' || sumiu === 'sumiu-nao-relido'}
+apps/native/src/navigation.tsx:127:                   sumiuNaoRelido={sumiu === 'sumiu-nao-relido'}
+apps/native/src/navigation.tsx:128:                   apagadaNaoRelida={typeof sumiu === 'object' && sumiu !== null ? sumiu.apagadaNaoRelida : null}
+apps/native/src/navigation.tsx:129:                   onAbrirSetlist={(setlistId) => {
+apps/native/src/navigation.tsx:130:                     setSumiu(null)
+apps/native/src/navigation.tsx:131:                     navigation.navigate('Index', { setlistId })
+apps/native/src/navigation.tsx:132:                   }}
+apps/native/src/navigation.tsx:133:                   onBuscar={() => navigation.navigate('Search', {})}
+apps/native/src/navigation.tsx:134:                 />
+apps/native/src/navigation.tsx:135:               )}
+apps/native/src/navigation.tsx:136:             </Stack.Screen>
+
+$ awk 'NR>=305&&NR<=347' apps/native/App.tsx
+apps/native/App.tsx:305:   )
+apps/native/App.tsx:306: 
+apps/native/App.tsx:307:   return (
+apps/native/App.tsx:308:     <SafeAreaProvider>
+apps/native/App.tsx:309:       <SafeAreaView style={styles.raiz} edges={['top', 'bottom', 'left', 'right']}>
+apps/native/App.tsx:310:         <StatusBar style="light" />
+apps/native/App.tsx:311:         {estado.fase === 'carregando' ? (
+apps/native/App.tsx:312:           <View style={styles.centro}>
+apps/native/App.tsx:313:             <ActivityIndicator color={dark.accent} />
+apps/native/App.tsx:314:           </View>
+apps/native/App.tsx:315:         ) : (
+apps/native/App.tsx:316:           <Navigation
+apps/native/App.tsx:317:             signedIn={estado.fase === 'dentro'}
+apps/native/App.tsx:318:             dados={{
+apps/native/App.tsx:319:               lista: dados.setlists,
+apps/native/App.tsx:320:               contents: dados.content,
+apps/native/App.tsx:321:               contentById: dados.contentById,
+apps/native/App.tsx:322:               syncDone: sync.fase !== 'sincronizando',
+apps/native/App.tsx:323:               online,
+apps/native/App.tsx:324:               onArquivosMudaram: recarregarArquivos,
+apps/native/App.tsx:325:             }}
+apps/native/App.tsx:326:             setlists={{
+apps/native/App.tsx:327:               setlists: dados.setlists,
+apps/native/App.tsx:328:               contentById: dados.contentById,
+apps/native/App.tsx:329:               filesPresent,
+apps/native/App.tsx:330:               baixando,
+apps/native/App.tsx:331:               temCache: dados.temCache,
+apps/native/App.tsx:332:               sync,
+apps/native/App.tsx:333:               online,
+apps/native/App.tsx:334:               onTentarNovamente: tentarNovamente,
+apps/native/App.tsx:335:               // `onAbrirSetlist` e `onBuscar` são navegação: quem os liga é o
+apps/native/App.tsx:336:               // `navigation.tsx`, que tem o `navigation` em mãos. Aqui ficam
+apps/native/App.tsx:337:               // os no-ops que o tipo exige (padrão desde a N1-PR3b).
+apps/native/App.tsx:338:               onAbrirSetlist: () => undefined,
+apps/native/App.tsx:339:               onBuscar: () => undefined,
+apps/native/App.tsx:340:               onBaixarSetlist: baixarEsta,
+apps/native/App.tsx:341:               estadoLocal,
+apps/native/App.tsx:342:               aoRelerNaEscrita,
+apps/native/App.tsx:343:             }}
+apps/native/App.tsx:344:           />
+apps/native/App.tsx:345:         )}
+apps/native/App.tsx:346:         {ReguaDeDev !== null ? <ReguaDeDev /> : null}
+apps/native/App.tsx:347:       </SafeAreaView>
+
+$ awk 'NR>=561&&NR<=566' apps/native/src/screens/SetlistsScreen.tsx
+apps/native/src/screens/SetlistsScreen.tsx:561:       {/* Ordem do congelado: status de sync · ESCREVER · ler. */}
+apps/native/src/screens/SetlistsScreen.tsx:562:       <BotaoNovaSetlist rotulo="Nova setlist" inativo={!podeCriar} onPress={() => setFolhaAberta(true)} />
+apps/native/src/screens/SetlistsScreen.tsx:563:       <Pressable style={styles.botaoSecundario} onPress={onBuscar} testID="buscar">
+apps/native/src/screens/SetlistsScreen.tsx:564:         <Icone nome="buscar-musica" tamanho={24} cor={dark.text} />
+apps/native/src/screens/SetlistsScreen.tsx:565:         <Text style={styles.botaoSecundarioTexto}>Buscar música</Text>
+apps/native/src/screens/SetlistsScreen.tsx:566:       </Pressable>
+
+$ awk 'NR>=345&&NR<=347' packages/identidade/src/tokens.ts
+packages/identidade/src/tokens.ts:345: const faixaC: TokensDaFaixa = {
+packages/identidade/src/tokens.ts:346:   s1: { barra: 120, barraTopo: 0, barraBase: 0, vaoDaBarra: space.xl, empilha: false, cartao: 132, cartaoCompacto: 112 },
+packages/identidade/src/tokens.ts:347:   s2: { colunas: 2, rotulosCurtos: false },
+
+$ awk 'NR>=365&&NR<=367' packages/identidade/src/tokens.ts
+packages/identidade/src/tokens.ts:365: const faixaB: TokensDaFaixa = {
+packages/identidade/src/tokens.ts:366:   s1: { barra: 144, barraTopo: 20, barraBase: 14, vaoDaBarra: space.lg, empilha: true, cartao: 184, cartaoCompacto: 184 },
+packages/identidade/src/tokens.ts:367:   s2: { colunas: 1, rotulosCurtos: true },
+
+$ cd docs/native/N3-PRECHECK-anexos/B5-baseline && for f in *.xml; do printf "%s " "$f"; grep -o 'resource-id="[a-z0-9-]*"' "$f" | grep -cE '"(criar-setlist|s1f|setlist-[0-9a-f]{8})"'; done | sort -k2 -rn
+B5-S1-setlists-tab-pai.xml 4
+B5-S1-setlists-avd-pai.xml 4
+B5-S1-aviso-sem-rede-tab-pai.xml 4
+B5-S1-aviso-sem-rede-avd-pai.xml 4
+B5-S1-S1e-falha-com-cache-tab-pai.xml 4
+B5-S1-S1e-falha-com-cache-avd-pai.xml 4
+B5-S1-S1f-vazia-tab-pai.xml 3
+B5-S1-S1f-vazia-avd-pai.xml 3
+B5-reordenar-aberto-tab-pai.xml 0
+B5-reordenar-aberto-avd-pai.xml 0
+B5-picker-vazio-tab-pai.xml 0
+B5-picker-vazio-avd-pai.xml 0
+B5-picker-resultados-tab-pai.xml 0
+B5-picker-resultados-avd-pai.xml 0
+B5-folha-validacao-tab-pai.xml 0
+B5-folha-validacao-avd-pai.xml 0
+B5-folha-falhou-tab-pai.xml 0
+B5-folha-falhou-avd-pai.xml 0
+B5-folha-criar-tab-pai.xml 0
+B5-folha-criar-avd-pai.xml 0
+B5-dialogo-apagar-tab-pai.xml 0
+B5-dialogo-apagar-avd-pai.xml 0
+B5-S4-vazio-tab-pai.xml 0
+B5-S4-vazio-avd-pai.xml 0
+B5-S4-resultados-tab-pai.xml 0
+B5-S4-resultados-avd-pai.xml 0
+B5-S2-sem-edicao-S2p-tab-pai.xml 0
+B5-S2-sem-edicao-S2p-avd-pai.xml 0
+B5-S2-com-edicao-tab-pai.xml 0
+B5-S2-com-edicao-aviso-sem-rede-tab-pai.xml 0
+B5-S2-com-edicao-aviso-sem-rede-avd-pai.xml 0
+B5-S2-com-edicao-avd-pai.xml 0
+B5-S0-login-avd-pai.xml 0
+B5-S0-erro-avd-pai.xml 0

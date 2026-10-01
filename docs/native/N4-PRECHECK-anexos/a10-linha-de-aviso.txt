@@ -1,0 +1,181 @@
+# A10 — a LinhaDeAviso dos dois lados (N4-PR0, 2026-10-01; rastro)
+
+$ awk 'NR>=1&&NR<=60' components/identidade/linha-de-aviso.tsx
+components/identidade/linha-de-aviso.tsx:1: "use client"
+components/identidade/linha-de-aviso.tsx:2: 
+components/identidade/linha-de-aviso.tsx:3: /**
+components/identidade/linha-de-aviso.tsx:4:  * A LINHA DE AVISO do web — o componente da folha `0-linha-de-aviso` (I1-PR1;
+components/identidade/linha-de-aviso.tsx:5:  * restilizada na I1-PR6 pelos tokens de `@octavia/identidade`). Um só: as
+components/identidade/linha-de-aviso.tsx:6:  * próximas superfícies importam este arquivo. Mesmo nome e mesma forma de props
+components/identidade/linha-de-aviso.tsx:7:  * do nativo (`apps/native/src/screens/LinhaDeAviso.tsx`: `motivo` + `acao`).
+components/identidade/linha-de-aviso.tsx:8:  *
+components/identidade/linha-de-aviso.tsx:9:  * README-design §3: altura mín. `touch.min`; respiro (touch.min − 20) / 2 e
+components/identidade/linha-de-aviso.tsx:10:  * `space.xl`; vão `space.md`; texto `size.label`, entrelinha 20, `text`, cresce e
+components/identidade/linha-de-aviso.tsx:11:  * NUNCA elide; o detalhe em `muted`. O bloco do texto quebra com base no
+components/identidade/linha-de-aviso.tsx:12:  * `web.limiarAviso` e a ação *Tentar de novo* (botão de 36 num alvo `touch.min`)
+components/identidade/linha-de-aviso.tsx:13:  * desce quando não cabe. Tipos: falha · sem conexão · limite · sucesso.
+components/identidade/linha-de-aviso.tsx:14:  * O motivo é o PRIMEIRO `<span>` da linha (o CN da PR-1 o lê assim).
+components/identidade/linha-de-aviso.tsx:15:  */
+components/identidade/linha-de-aviso.tsx:16: import { Icone } from "@/components/identidade/icone"
+components/identidade/linha-de-aviso.tsx:17: import type { NomeIcone } from "@octavia/identidade"
+components/identidade/linha-de-aviso.tsx:18: 
+components/identidade/linha-de-aviso.tsx:19: export type TipoDeAviso = "falha" | "rede" | "limite" | "sucesso"
+components/identidade/linha-de-aviso.tsx:20: 
+components/identidade/linha-de-aviso.tsx:21: export interface AcaoDoAviso {
+components/identidade/linha-de-aviso.tsx:22:   rotulo: string
+components/identidade/linha-de-aviso.tsx:23:   onPress: () => void
+components/identidade/linha-de-aviso.tsx:24:   inativo?: boolean
+components/identidade/linha-de-aviso.tsx:25: }
+components/identidade/linha-de-aviso.tsx:26: 
+components/identidade/linha-de-aviso.tsx:27: export interface LinhaDeAvisoProps {
+components/identidade/linha-de-aviso.tsx:28:   motivo: string
+components/identidade/linha-de-aviso.tsx:29:   tipo?: TipoDeAviso
+components/identidade/linha-de-aviso.tsx:30:   detalhe?: string
+components/identidade/linha-de-aviso.tsx:31:   acao?: AcaoDoAviso
+components/identidade/linha-de-aviso.tsx:32:   className?: string
+components/identidade/linha-de-aviso.tsx:33: }
+components/identidade/linha-de-aviso.tsx:34: 
+components/identidade/linha-de-aviso.tsx:35: const ICONE: Record<TipoDeAviso, { nome: NomeIcone; tinta: string }> = {
+components/identidade/linha-de-aviso.tsx:36:   falha: { nome: "falha", tinta: "text-cor-error-ink" },
+components/identidade/linha-de-aviso.tsx:37:   rede: { nome: "sem-conexao", tinta: "text-cor-offline-ink" },
+components/identidade/linha-de-aviso.tsx:38:   limite: { nome: "ultima-sincronizacao", tinta: "text-cor-offline-ink" },
+components/identidade/linha-de-aviso.tsx:39:   sucesso: { nome: "garantida", tinta: "text-cor-accent-ink" },
+components/identidade/linha-de-aviso.tsx:40: }
+components/identidade/linha-de-aviso.tsx:41: 
+components/identidade/linha-de-aviso.tsx:42: export function LinhaDeAviso({ motivo, tipo = "falha", detalhe, acao, className = "" }: LinhaDeAvisoProps) {
+components/identidade/linha-de-aviso.tsx:43:   const icone = ICONE[tipo]
+components/identidade/linha-de-aviso.tsx:44:   return (
+components/identidade/linha-de-aviso.tsx:45:     <div
+components/identidade/linha-de-aviso.tsx:46:       role={tipo === "sucesso" ? "status" : "alert"}
+components/identidade/linha-de-aviso.tsx:47:       className={`w-full min-h-toque-min bg-cor-bg border-hairline border-cor-line flex flex-wrap items-center gap-espaco-md py-aviso-respiro px-espaco-xl font-fam-ui font-peso-ui ${className}`}
+components/identidade/linha-de-aviso.tsx:48:     >
+components/identidade/linha-de-aviso.tsx:49:       <div className="grow shrink basis-web-limiar-aviso min-w-0 flex items-start gap-espaco-md">
+components/identidade/linha-de-aviso.tsx:50:         <Icone nome={icone.nome} tamanho={20} className={icone.tinta} />
+components/identidade/linha-de-aviso.tsx:51:         <div className="flex flex-col gap-espaco-xs min-w-0">
+components/identidade/linha-de-aviso.tsx:52:           <span className="text-tam-label leading-web-entrelinha-aviso text-cor-text break-words">{motivo}</span>
+components/identidade/linha-de-aviso.tsx:53:           {detalhe && <span className="text-tam-label leading-web-entrelinha-aviso text-cor-muted break-words">{detalhe}</span>}
+components/identidade/linha-de-aviso.tsx:54:         </div>
+components/identidade/linha-de-aviso.tsx:55:       </div>
+components/identidade/linha-de-aviso.tsx:56:       {acao && (
+components/identidade/linha-de-aviso.tsx:57:         <button
+components/identidade/linha-de-aviso.tsx:58:           type="button"
+components/identidade/linha-de-aviso.tsx:59:           onClick={acao.onPress}
+components/identidade/linha-de-aviso.tsx:60:           disabled={acao.inativo}
+
+$ awk 'NR>=1&&NR<=70' apps/native/src/screens/LinhaDeAviso.tsx
+apps/native/src/screens/LinhaDeAviso.tsx:1: /**
+apps/native/src/screens/LinhaDeAviso.tsx:2:  * A LINHA DE AVISO DE 48 dp — componente das DUAS telas (DESIGN-N2 §3.3,
+apps/native/src/screens/LinhaDeAviso.tsx:3:  * achado R1·2a da revisão 1; molduras `N2-S1-sem-rede`,
+apps/native/src/screens/LinhaDeAviso.tsx:4:  * `N2-S1-salvo-nao-relido` e as cinco amostras em tamanho real do §7).
+apps/native/src/screens/LinhaDeAviso.tsx:5:  *
+apps/native/src/screens/LinhaDeAviso.tsx:6:  * Verbatim da folha: *"uma linha de 48 dp, sempre com ícone de 20, sempre com
+apps/native/src/screens/LinhaDeAviso.tsx:7:  * o motivo escrito — nunca um tooltip, nunca um toast que passa"*. Em S1 fica
+apps/native/src/screens/LinhaDeAviso.tsx:8:  * entre a barra de 120 dp e o primeiro cartão; em S2 (PR-4), logo abaixo da
+apps/native/src/screens/LinhaDeAviso.tsx:9:  * faixa de edição. Quando existe, a lista perde 48 dp e nada mais muda de
+apps/native/src/screens/LinhaDeAviso.tsx:10:  * lugar.
+apps/native/src/screens/LinhaDeAviso.tsx:11:  *
+apps/native/src/screens/LinhaDeAviso.tsx:12:  * **Só um aviso por vez, e quem decide é quem chama**: *"se dois caberiam,
+apps/native/src/screens/LinhaDeAviso.tsx:13:  * vale o que bloqueia mais"* — se "salvo; não foi possível recarregar" e "sem
+apps/native/src/screens/LinhaDeAviso.tsx:14:  * conexão" coincidirem, vale a de rede. A regra mora em S1 (`avisoDe`), não
+apps/native/src/screens/LinhaDeAviso.tsx:15:  * aqui: este componente desenha UM aviso, e não sabe da existência de outro.
+apps/native/src/screens/LinhaDeAviso.tsx:16:  *
+apps/native/src/screens/LinhaDeAviso.tsx:17:  * O botão é opcional e, quando existe, tem 48 dp de alvo próprio (G5, a regra
+apps/native/src/screens/LinhaDeAviso.tsx:18:  * das duas bordas) — o mesmo tratamento que a V1-PR1 deu ao "Tentar
+apps/native/src/screens/LinhaDeAviso.tsx:19:  * novamente" do banner de S1e, que era o alvo mais baixo do app.
+apps/native/src/screens/LinhaDeAviso.tsx:20:  *
+apps/native/src/screens/LinhaDeAviso.tsx:21:  * **N3-D19 (N3-PR2): a linha cresce e nunca elide.** *"48 dp mínimos, +20 por
+apps/native/src/screens/LinhaDeAviso.tsx:22:  * linha de texto"*, em toda faixa — é regra do componente, então S1, S2, o
+apps/native/src/screens/LinhaDeAviso.tsx:23:  * reordenar e o picker a herdam sem mudar nada. O motivo não tem mais teto de
+apps/native/src/screens/LinhaDeAviso.tsx:24:  * linhas (o `numberOfLines={2}` da N2 cortava o terceiro verso em A e,
+apps/native/src/screens/LinhaDeAviso.tsx:25:  * com a altura fixa de 48, desenhava a segunda linha por cima da borda). O
+apps/native/src/screens/LinhaDeAviso.tsx:26:  * crescimento vem do respiro de 12 acima e abaixo do TEXTO: com uma linha
+apps/native/src/screens/LinhaDeAviso.tsx:27:  * (≈ 21,8 dp no aparelho) o texto pede 45,8 e a linha fica nos 48 mínimos,
+apps/native/src/screens/LinhaDeAviso.tsx:28:  * com o texto no mesmo lugar de antes — em C nada muda, e o G-inv prova; com
+apps/native/src/screens/LinhaDeAviso.tsx:29:  * duas, 12 + 2 linhas + 12 ≈ 68 (N3-B-X-sem-rede). O alvo da ação continua
+apps/native/src/screens/LinhaDeAviso.tsx:30:  * com 48 próprios e centrado na altura da linha, à direita, em B e C; em A a
+apps/native/src/screens/LinhaDeAviso.tsx:31:  * ação desce para baixo do texto, e isso é do N5.
+apps/native/src/screens/LinhaDeAviso.tsx:32:  */
+apps/native/src/screens/LinhaDeAviso.tsx:33: import { Pressable, StyleSheet, Text, View } from 'react-native'
+apps/native/src/screens/LinhaDeAviso.tsx:34: import { Icone } from '../icones/Icone'
+apps/native/src/screens/LinhaDeAviso.tsx:35: import type { NomeIcone } from '../icones/dados'
+apps/native/src/screens/LinhaDeAviso.tsx:36: import { bar, dark, font, radius, size, space, touch } from '../theme'
+apps/native/src/screens/LinhaDeAviso.tsx:37: 
+apps/native/src/screens/LinhaDeAviso.tsx:38: export interface AcaoDoAviso {
+apps/native/src/screens/LinhaDeAviso.tsx:39:   rotulo: string
+apps/native/src/screens/LinhaDeAviso.tsx:40:   onPress: () => void
+apps/native/src/screens/LinhaDeAviso.tsx:41:   /** Inativo com o motivo escrito ao lado (N2-D23) — nunca sem motivo. */
+apps/native/src/screens/LinhaDeAviso.tsx:42:   inativo?: boolean
+apps/native/src/screens/LinhaDeAviso.tsx:43:   motivoInativo?: string
+apps/native/src/screens/LinhaDeAviso.tsx:44: }
+apps/native/src/screens/LinhaDeAviso.tsx:45: 
+apps/native/src/screens/LinhaDeAviso.tsx:46: export interface LinhaDeAvisoProps {
+apps/native/src/screens/LinhaDeAviso.tsx:47:   icone: NomeIcone
+apps/native/src/screens/LinhaDeAviso.tsx:48:   /** A tinta do ícone e do texto: `offlineInk` sem rede, `muted` no resto. */
+apps/native/src/screens/LinhaDeAviso.tsx:49:   cor: string
+apps/native/src/screens/LinhaDeAviso.tsx:50:   motivo: string
+apps/native/src/screens/LinhaDeAviso.tsx:51:   acao?: AcaoDoAviso
+apps/native/src/screens/LinhaDeAviso.tsx:52:   /** §3.3: recuo de 32 dp em S1, 24 em S2. */
+apps/native/src/screens/LinhaDeAviso.tsx:53:   recuo?: number
+apps/native/src/screens/LinhaDeAviso.tsx:54: }
+apps/native/src/screens/LinhaDeAviso.tsx:55: 
+apps/native/src/screens/LinhaDeAviso.tsx:56: export function LinhaDeAviso({
+apps/native/src/screens/LinhaDeAviso.tsx:57:   icone,
+apps/native/src/screens/LinhaDeAviso.tsx:58:   cor,
+apps/native/src/screens/LinhaDeAviso.tsx:59:   motivo,
+apps/native/src/screens/LinhaDeAviso.tsx:60:   acao,
+apps/native/src/screens/LinhaDeAviso.tsx:61:   recuo = space.xxl,
+apps/native/src/screens/LinhaDeAviso.tsx:62: }: LinhaDeAvisoProps): React.JSX.Element {
+apps/native/src/screens/LinhaDeAviso.tsx:63:   const inativo = acao?.inativo === true
+apps/native/src/screens/LinhaDeAviso.tsx:64:   return (
+apps/native/src/screens/LinhaDeAviso.tsx:65:     <View style={[styles.linha, { marginHorizontal: recuo }]}>
+apps/native/src/screens/LinhaDeAviso.tsx:66:       <View style={styles.esq}>
+apps/native/src/screens/LinhaDeAviso.tsx:67:         <Icone nome={icone} tamanho={20} cor={cor} />
+apps/native/src/screens/LinhaDeAviso.tsx:68:         <Text style={[styles.motivo, { color: cor }]} testID="aviso-motivo">
+apps/native/src/screens/LinhaDeAviso.tsx:69:           {motivo}
+apps/native/src/screens/LinhaDeAviso.tsx:70:         </Text>
+
+$ git grep -nE '<LinhaDeAviso' -- apps/native/src components app
+app/forgot-password/page.tsx:73:        {falha === "indisponivel" && <LinhaDeAviso motivo={FRASES_AUTH["forgot.indisponivel"]} />}
+app/forgot-password/page.tsx:75:          <LinhaDeAviso
+app/signup/confirm-email/page.tsx:50:      {resendSuccess && <LinhaDeAviso tipo="sucesso" motivo={FRASES_AUTH["confirm.enviado"]} />}
+app/signup/confirm-email/page.tsx:52:        <LinhaDeAviso
+app/verify-email/page.tsx:88:      {resendSuccess && <LinhaDeAviso tipo="sucesso" motivo={FRASES_AUTH["confirm.enviado"]} />}
+app/verify-email/page.tsx:90:        <LinhaDeAviso
+apps/native/src/screens/IndexScreen.tsx:784:        <LinhaDeAviso
+apps/native/src/screens/ModoDeReordenar.tsx:641:        <LinhaDeAviso icone={aviso.icone} cor={aviso.cor} motivo={aviso.motivo} recuo={space.xl} />
+apps/native/src/screens/Picker.tsx:421:            <LinhaDeAviso icone={aviso.icone} cor={aviso.cor} motivo={aviso.motivo} acao={aviso.acao} recuo={space.xl} />
+apps/native/src/screens/SetlistsScreen.tsx:595:        <LinhaDeAviso
+components/auth/aviso-de-sessao.tsx:39:      <LinhaDeAviso
+components/auth/login-panel.tsx:56:          <LinhaDeAviso
+components/auth/signup-panel.tsx:40:          <LinhaDeAviso
+components/identidade/linha-da-tela.tsx:27:      <LinhaDeAviso
+components/identidade/linha-da-tela.tsx:35:    <LinhaDeAviso
+components/identidade/tela-de-erro.tsx:29:      <LinhaDeAviso motivo={FRASES_ERRO["erro.motivo"]} acao={{ rotulo: FRASES_ERRO["erro.tentar"], onPress: onTentar }} />
+components/library/LibraryErrorBoundary.tsx:50:        <LinhaDeAviso
+components/pdf-viewer.tsx:96:      {falha && !onFalha && <LinhaDeAviso tipo={falha.tipo} motivo={falha.motivo} acao={{ rotulo: FRASES_VIEW["acao.tentar"], onPress: tentar }} />}
+components/setlists/detalhe.tsx:60:        <LinhaDeAviso tipo={falha.tipo} motivo={falha.motivo} acao={falha.onTentar ? { rotulo: F["acao.tentar"], onPress: falha.onTentar } : undefined} />
+components/setlists/dialogo.tsx:38:    <LinhaDeAviso tipo={falha.tipo} motivo={falha.motivo} detalhe={falha.detalhe}
+components/setlists/picker.tsx:78:        <LinhaDeAviso tipo={falhaDaBiblioteca.tipo} motivo={falhaDaBiblioteca.motivo}
+
+$ git grep -nE 'icone="|icone: .(sem-conexao|falha|ultima-sincronizacao|n-de-musicas)' -- apps/native/src/screens
+apps/native/src/screens/IndexScreen.tsx:568:      return { icone: 'sem-conexao' as NomeIcone, cor: dark.offlineInk, motivo: frase('sem-rede-s2'), acao: undefined }
+apps/native/src/screens/IndexScreen.tsx:573:      return { icone: 'ultima-sincronizacao' as NomeIcone, cor: dark.offlineInk, motivo: falha.frase, acao: undefined }
+apps/native/src/screens/IndexScreen.tsx:585:        icone: 'falha' as NomeIcone,
+apps/native/src/screens/IndexScreen.tsx:609:      return { icone: 'n-de-musicas' as NomeIcone, cor: dark.muted, motivo: frase('teto-100'), acao: undefined }
+apps/native/src/screens/IndexScreen.tsx:613:        icone: 'ultima-sincronizacao' as NomeIcone,
+apps/native/src/screens/ModoDeReordenar.tsx:502:    if (!online) return { icone: 'sem-conexao', cor: dark.offlineInk, motivo: frase('sem-rede-s2') }
+apps/native/src/screens/ModoDeReordenar.tsx:504:    if (falha.especie === 'limite') return { icone: 'ultima-sincronizacao', cor: dark.offlineInk, motivo: falha.frase }
+apps/native/src/screens/ModoDeReordenar.tsx:511:    return { icone: 'falha', cor: dark.errorInk, motivo: oracoes.join('  ·  ') }
+apps/native/src/screens/Picker.tsx:314:    ? { icone: 'sem-conexao' as NomeIcone, cor: dark.offlineInk, motivo: frase('sem-rede-s2'), acao: undefined }
+apps/native/src/screens/Picker.tsx:317:          icone: 'ultima-sincronizacao' as NomeIcone,
+apps/native/src/screens/Picker.tsx:328:        ? { icone: 'n-de-musicas' as NomeIcone, cor: dark.muted, motivo: frase('teto-100'), acao: undefined }
+apps/native/src/screens/SetlistsScreen.tsx:212:      return { icone: 'ultima-sincronizacao', cor: dark.muted, texto: `sincronizado ${haQuantoTempo(sync.syncedAtMs)}` }
+apps/native/src/screens/SetlistsScreen.tsx:215:        ? { icone: 'sem-conexao', cor: dark.offlineInk, texto: 'sem conexão' }
+apps/native/src/screens/SetlistsScreen.tsx:217:            icone: 'sem-conexao',
+apps/native/src/screens/SetlistsScreen.tsx:224:        ? { icone: 'falha', cor: dark.errorInk, texto: textoDoErro(sync.messageKey) }
+apps/native/src/screens/SetlistsScreen.tsx:225:        : { icone: 'ultima-sincronizacao', cor: dark.muted, texto: 'mostrando dados salvos' }
+apps/native/src/screens/SetlistsScreen.tsx:488:        icone: 'sem-conexao' as NomeIcone,
+apps/native/src/screens/SetlistsScreen.tsx:495:          icone: 'falha' as NomeIcone,
+apps/native/src/screens/SetlistsScreen.tsx:507:          icone: 'falha' as NomeIcone,
+apps/native/src/screens/SetlistsScreen.tsx:514:          icone: 'ultima-sincronizacao' as NomeIcone,
+apps/native/src/screens/SetlistsScreen.tsx:528:          icone: 'ultima-sincronizacao' as NomeIcone,

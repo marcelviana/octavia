@@ -515,13 +515,16 @@ bloco (regra 23).
 | 14 | `lib/content-service-server.ts:12` (núcleo) importa `getSetlistById` do serviço cliente e não o usa | div. 864 (PR-13) |
 | 15 | ~~**o login com Google**~~ — **fechado pela PR-2** (#351): as três diretivas, a div. 564 e o asset da marca (636); aceite real do Marcel | I1-D6; H-I1-3; divs. 920, 564 |
 | 16 | **a memoização das setlists**: os `useCallback` com `setlists` nas dependências (div. 568, PR-3), herdados pela PR de setlists e sem registro de pagamento — hoje em `components/setlists/use-setlists.ts` (11 `useCallback`) | div. 568; div. 932; aval 10 |
+| 17 | **a Tab editada no web que nenhum leitor vê** — **primeira da fila do D**: o editor grava `measures` e deixa `tablature` intocada (`components/tab-editor.tsx:25-50`); o palco do nativo e a visualização do web leem `tablature` | N4: div. 976; N4-D44 (`docs/native/N4-PRECHECK.md` §16) |
+| 18 | **o editor da Cifra não atualiza o `chords` do topo**: grava `sections` e leva o `chords` de antes ao `PUT` (`components/chord-editor.tsx:38-41`; `components/content-editor.tsx:64-68`) — o `checkContentData` do `PUT` valida esse `chords` desatualizado | N4: div. 975; N4-D44 |
+| 19 | **o `PUT` do favorito mexe no `updated_at`** (`app/api/content/route.ts:282-284`): favoritar reordena o "Recentes" do painel do web (`app/dashboard/page.tsx:33-37`) e conta como mudança no T1-R10 do nativo | N4: L1; N4-D39 |
 
 ### 10.2 N4 (content nos apps)
 
 | # | item | origem |
 |---|---|---|
 | 1 | **frases unificadas web × nativo**: hoje dois conjuntos (os dez `frases-*.ts` do web, 421 folhas; o `packages/core/src/frases.ts` do nativo) | I1-D10 |
-| 2 | **a harmonização do motivo**: travessão (PR-9) × vírgula (PR-11…13) — uma forma só, na unificação | PR-11 §21.6; PR-13 §28 |
+| 2 | **a harmonização do motivo**: travessão (PR-9) × vírgula (PR-11…13) — uma forma só, na unificação — *movido para o bloco seguinte ao I1 (§10.5.11), N4-D29 `[Marcel, 2026-10-01]`: o N4 não troca texto no web* | PR-11 §21.6; PR-13 §28 |
 | 3 | **a `LinhaDeAviso` como componente do core** — hoje `components/identidade/linha-de-aviso.tsx` (web) e a do nativo: **o N4 decide** se vira contrato compartilhado | PR-1; PR-9; aval 11 |
 | 4 | os três `undefined` do `TokensDaFaixa` (`faixas.A.folha.alturaMin`, `faixas.B.folha.alturaMin`, `faixas.C.reordenar.artistaMin`): *"a medida não existe nesta faixa"*, e o CSS gerado a omite — a forma final vem com o content nas três faixas | `I1-PR4-anexos` §2; div. 932; aval 10 |
 
@@ -559,6 +562,7 @@ bloco (regra 23).
 | 8 | `public/icons/*`: 10 de 11 sem leitor | div. 553 |
 | 9 | ~~conferir a memoização das setlists~~ — **movido para o Bloco D** (§10.1.16), pelo aval 10 | div. 568 |
 | 10 | o **`text-amber-500`** do `toBeInFavoriteState` (`lib/__tests__/custom-matchers.ts:29`), com o resto do arquivo | div. 948 (PR-15) |
+| 11 | **a harmonização do motivo dentro do web** (travessão na PR-9 × vírgula nas PR-11…13) — *item novo, vindo do §10.2.2 pela N4-D29 `[Marcel, 2026-10-01]`* | §10.2.2; `docs/native/N4-PRECHECK.md` §9 |
 
 ### 10.6 A decisão que estava pendente
 

@@ -1,0 +1,186 @@
+# L3 — H-N4-15: o web importa uma constante do packages/core (N4-PR0 commit 2, 2026-10-01; rastro)
+# árvore de rascunho ../octavia-n4-h15 (git worktree add --detach, sobre 2fce586), sem .env*; NADA dela foi commitado; removida no fim
+# o texto escolhido é byte a byte o mesmo nos dois lados ("nada mudou desde que você abriu"), para a tela não mudar
+
+## o diff aplicado na árvore de rascunho
+diff --git a/components/editors/frases-editor.ts b/components/editors/frases-editor.ts
+index 4f53b0a..f966725 100644
+--- a/components/editors/frases-editor.ts
++++ b/components/editors/frases-editor.ts
+@@ -6,12 +6,13 @@
+  * os de antes — só o rótulo muda (o corpo do `PUT` não muda, I1-D9).
+  */
+ import { DIFICULDADES, FRASES_LISTA } from "@/components/library/frases-lista"
++import { FRASES } from "@octavia/core"
+ 
+ export const FRASES_EDIT = {
+   "edit.nao-salvo": "alterações não salvas",
+   "edit.salvar": "Salvar",
+   "edit.salvando": "Salvando…",
+-  "edit.nada-mudou": "nada mudou desde que você abriu",
++  "edit.nada-mudou": FRASES["nada-mudou"],
+   "edit.voltar": "Voltar sem salvar",
+   "edit.carregando": "carregando o conteúdo…",
+   "edit.carregando.editor": "carregando o editor…",
+diff --git a/package.json b/package.json
+index cf127d4..a6b90ee 100644
+--- a/package.json
++++ b/package.json
+@@ -20,6 +20,7 @@
+     "db:dump:storage": "supabase db dump -s storage -f supabase/storage.dump.sql"
+   },
+   "dependencies": {
++    "@octavia/core": "workspace:*",
+     "@octavia/identidade": "workspace:*",
+     "@supabase/ssr": "0.8.0",
+     "@supabase/supabase-js": "2.89.0",
+diff --git a/pnpm-lock.yaml b/pnpm-lock.yaml
+index 949d1a9..e08eed3 100644
+--- a/pnpm-lock.yaml
++++ b/pnpm-lock.yaml
+@@ -8,6 +8,9 @@ importers:
+ 
+   .:
+     dependencies:
++      '@octavia/core':
++        specifier: workspace:*
++        version: link:packages/core
+       '@octavia/identidade':
+         specifier: workspace:*
+         version: link:packages/identidade
+
+## pnpm install --offline (depois de pôr a dependência)
++ @octavia/core 0.0.0 <- packages/core
+
+## pnpm build — ANTES (2fce586 limpo)
+Route (app)                                 Size  First Load JS
+┌ ƒ /                                      513 B         111 kB
+├ ƒ /_not-found                            988 B         103 kB
+├ ƒ /add-content                         3.92 kB         277 kB
+├ ƒ /api/auth/session                      183 B         102 kB
+├ ƒ /api/content                           183 B         102 kB
+├ ƒ /api/content/[id]                      183 B         102 kB
+├ ƒ /api/health                            183 B         102 kB
+├ ƒ /api/profile                           183 B         102 kB
+├ ƒ /api/setlists                          183 B         102 kB
+├ ƒ /api/setlists/[id]                     183 B         102 kB
+├ ƒ /api/setlists/[id]/songs               183 B         102 kB
+├ ƒ /api/setlists/[id]/songs/order         183 B         102 kB
+├ ƒ /api/setlists/songs/[songId]           183 B         102 kB
+├ ƒ /api/storage/delete                    183 B         102 kB
+├ ƒ /api/storage/list                      183 B         102 kB
+├ ƒ /api/storage/upload                    183 B         102 kB
+├ ƒ /content/[id]                         118 kB         393 kB
+├ ƒ /content/[id]/edit                   6.01 kB         279 kB
+├ ƒ /dashboard                           3.77 kB         274 kB
+├ ƒ /forgot-password                       995 B         259 kB
+├ ƒ /library                               418 B         274 kB
+├ ƒ /login                               2.23 kB         265 kB
+├ ƒ /privacy-policy                        183 B         102 kB
+├ ƒ /setlists                            1.89 kB         275 kB
+├ ƒ /signup                              1.84 kB         265 kB
+├ ƒ /signup/confirm-email                  818 B         264 kB
+└ ƒ /verify-email                        1.07 kB         261 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/4509c6e4-bdb2941da3d607e5.js  53.3 kB
+  ├ chunks/5586-b5ab0bde052739d7.js        46 kB
+  └ other shared chunks (total)          2.91 kB
+ƒ  (Dynamic)  server-rendered on demand
+pnpm build  55.61s user 10.51s system 153% cpu 43.035 total
+
+## pnpm build — DEPOIS
+Route (app)                                 Size  First Load JS
+┌ ƒ /                                      513 B         111 kB
+├ ƒ /_not-found                            988 B         103 kB
+├ ƒ /add-content                         2.62 kB         279 kB
+├ ƒ /api/auth/session                      183 B         102 kB
+├ ƒ /api/content                           183 B         102 kB
+├ ƒ /api/content/[id]                      183 B         102 kB
+├ ƒ /api/health                            183 B         102 kB
+├ ƒ /api/profile                           183 B         102 kB
+├ ƒ /api/setlists                          183 B         102 kB
+├ ƒ /api/setlists/[id]                     183 B         102 kB
+├ ƒ /api/setlists/[id]/songs               183 B         102 kB
+├ ƒ /api/setlists/[id]/songs/order         183 B         102 kB
+├ ƒ /api/setlists/songs/[songId]           183 B         102 kB
+├ ƒ /api/storage/delete                    183 B         102 kB
+├ ƒ /api/storage/list                      183 B         102 kB
+├ ƒ /api/storage/upload                    183 B         102 kB
+├ ƒ /content/[id]                         118 kB         393 kB
+├ ƒ /content/[id]/edit                   4.45 kB         281 kB
+├ ƒ /dashboard                           3.77 kB         274 kB
+├ ƒ /forgot-password                       995 B         259 kB
+├ ƒ /library                               418 B         274 kB
+├ ƒ /login                               2.23 kB         265 kB
+├ ƒ /privacy-policy                        183 B         102 kB
+├ ƒ /setlists                              203 B         277 kB
+├ ƒ /signup                              1.84 kB         265 kB
+├ ƒ /signup/confirm-email                  818 B         264 kB
+└ ƒ /verify-email                        1.07 kB         261 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/4509c6e4-bdb2941da3d607e5.js  53.3 kB
+  ├ chunks/5586-b5ab0bde052739d7.js        46 kB
+  └ other shared chunks (total)          2.91 kB
+ƒ  (Dynamic)  server-rendered on demand
+pnpm build  41.48s user 9.19s system 183% cpu 27.536 total
+
+## diff das linhas de rota (antes < > depois)
+3c3
+< ├ ƒ /add-content                         3.92 kB         277 kB
+---
+> ├ ƒ /add-content                         2.62 kB         279 kB
+18c18
+< ├ ƒ /content/[id]/edit                   6.01 kB         279 kB
+---
+> ├ ƒ /content/[id]/edit                   4.45 kB         281 kB
+24c24
+< ├ ƒ /setlists                            1.89 kB         275 kB
+---
+> ├ ƒ /setlists                              203 B         277 kB
+
+## o núcleo do G-back (scripts/gates-web/g-back-nucleo.txt) × os arquivos tocados
+components/editors/frases-editor.ts: 0
+package.json: 0
+pnpm-lock.yaml: 0
+
+## G-tok na árvore de rascunho
+
+G-tok: PASSA
+
+## remoção da árvore de rascunho
+$ git worktree remove --force ../octavia-n4-h15 && git worktree list | grep -c octavia-n4-h15; ls -d ../octavia-n4-h15
+0
+ls: ../octavia-n4-h15: No such file or directory
+$ git worktree list
+/Users/marcelviana/projects/octavia                  046797e [main]
+/Users/marcelviana/projects/octavia-i1-design        a81eb45 [i1/design-congelamento]
+/Users/marcelviana/projects/octavia-i1-encerramento  a8d5d4f [i1/encerramento]
+/Users/marcelviana/projects/octavia-i1-pr1           0894d51 [i1/pr1-sessao]
+/Users/marcelviana/projects/octavia-i1-pr11          8321ffc [i1/pr11-content-edit]
+/Users/marcelviana/projects/octavia-i1-pr12          bd77cd7 [i1/pr12-upload]
+/Users/marcelviana/projects/octavia-i1-pr13          ce5a30e [i1/pr13-setlists]
+/Users/marcelviana/projects/octavia-i1-pr14          b99ca7d [i1/pr14-poda]
+/Users/marcelviana/projects/octavia-i1-pr15          9a17b24 [i1/pr15-poda-final]
+/Users/marcelviana/projects/octavia-i1-pr2           a8fdf98 [i1/pr2-google]
+/Users/marcelviana/projects/octavia-i1-pr4           86f1eb3 [i1/pr4-identidade]
+/Users/marcelviana/projects/octavia-i1-pr5           2fc4bb0 [i1/pr5-gates-web]
+/Users/marcelviana/projects/octavia-i1-pr6           c4e1bd6 [i1/pr6-auth]
+/Users/marcelviana/projects/octavia-i1-precheck      58dec0e [i1/precheck]
+/Users/marcelviana/projects/octavia-n2               d8f57a7 [n2/precheck]
+/Users/marcelviana/projects/octavia-n2-brief         3885278 [n2/brief-capturas]
+/Users/marcelviana/projects/octavia-n2-design        eac97f3 [n2/design-congelado]
+/Users/marcelviana/projects/octavia-n2-pr1           bd250f3 [n2/pr1-t1r10]
+/Users/marcelviana/projects/octavia-n2-pr6           4dcdb94 [n2/pr6-picker]
+/Users/marcelviana/projects/octavia-n2-pr7           de9e655 [n2/pr7-transversais]
+/Users/marcelviana/projects/octavia-n2-prd           ae452e0 [n2/prd]
+/Users/marcelviana/projects/octavia-n3-fim           0222a41 [n3/encerramento]
+/Users/marcelviana/projects/octavia-n3-pr1           6e229b3 [n3/pr1-gate]
+/Users/marcelviana/projects/octavia-n3-pr2           33ded27 [n3/pr2-s1]
+/Users/marcelviana/projects/octavia-n3-pr3           7a564c1 [n3/pr3-s2]
+/Users/marcelviana/projects/octavia-n3-pr4           78aaf2b [n3/pr4-reordenar-folha]
+/Users/marcelviana/projects/octavia-n3-pr5           cf3ff3c [n3/pr5-palco-provas]
+/Users/marcelviana/projects/octavia-n3-pr6           4992667 [n3/pr6-aceite]
+/Users/marcelviana/projects/octavia-n3-pr6b          3acee67 [n3/pr6c-s5]
+/Users/marcelviana/projects/octavia-n3-pre           7531f29 [n3/precheck]
+/Users/marcelviana/projects/octavia-n4-precheck      2fce586 [n4/precheck]
+/Users/marcelviana/projects/octavia-w4b2             bcb3898 [w4b/ci]

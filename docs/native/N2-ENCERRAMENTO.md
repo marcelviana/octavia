@@ -571,6 +571,12 @@ A numeração abaixo é estável — cite por **§10.<bloco>.<n>** (a lição da
 > é o N5. Os itens abaixo seguem valendo, com destino **N4**. O título fica como
 > estava, para as citações de "§10.2" continuarem achando esta seção.
 
+> **Errata do N4 pre-check (2026-10-01; decisão do Marcel, N4-D7):** os itens
+> **1–5** abaixo mudam de destino para o **Bloco D** (backend e dado); o item
+> **6** (C-D7) fica no **N4**, só como medição (`N4-PRECHECK.md` A14 e a Fase B).
+> Os itens e o título ficam como estavam; onde o `N3-ENCERRAMENTO.md` §10.6 e
+> §10.7 dizem *"1–6 (N4)"*, vale esta errata (div. 971).
+
 | # | item | origem |
 |---|---|---|
 | 1 | **B9 na frente** | N2-D1 |

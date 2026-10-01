@@ -1,0 +1,40 @@
+# A14 — o contrato de leitura do core (isValidContent/bodyOf) sobre fixture FABRICADA (N4-PR0, 2026-10-01)
+# rastro: comando e saída literal desta sessão; texto-fixture escrito pelo projeto (regra 10 não alcança)
+# o script, verbatim (rodado como arquivo temporário na raiz da árvore e apagado; nada foi commitado além deste anexo):
+#   import { isValidContent, bodyOf, CONTENT_DATA_KEY } from './packages/core/src/content-contract'
+#   const F: [string, string, Record<string, unknown> | null, string | null][] = [
+#     ['lyrics-ok', 'Lyrics', { lyrics: 'Quando a noite chega' }, null],
+#     ['chords-ok', 'Chords', { chords: '[Intro] C Am F G' }, null],
+#     ['tab-ok', 'Tab', { tablature: 'e|---0' }, null],
+#     ['sheet-arquivo', 'Sheet', null, 'https://x.test/p.pdf'],
+#     ['sheet-sem-arquivo', 'Sheet', { sheet: 'x' }, null],
+#     ['chords-escaneada', 'Chords', null, 'https://x.test/c.pdf'],
+#     ['chords-obj-sem-chave-com-arquivo', 'Chords', { annotations: [] }, 'https://x.test/c.pdf'],
+#     ['lyrics-null-com-arquivo', 'Lyrics', null, 'https://x.test/l.pdf'],
+#     ['tab-nao-string', 'Tab', { tablature: { measures: [] } }, null],
+#     ['poluido-editor', 'Lyrics', { lyrics: 'Quando a noite chega', content_data: { lyrics: 'velha' }, annotations: [], title: 'X' }, null],
+#     ['poluido-so-aninhado', 'Lyrics', { content_data: { lyrics: 'Quando a noite chega' }, annotations: [] }, null],
+#     ['tipo-fora-do-enum', 'Piano', { lyrics: 'x' }, null],
+#     ['tipo-minusculo', 'lyrics', { lyrics: 'x' }, null],
+#   ]
+#   console.log('CONTENT_DATA_KEY =', JSON.stringify(CONTENT_DATA_KEY))
+#   for (const [nome, t, d, f] of F) {
+#     const v = isValidContent(t, d, f)
+#     const b = bodyOf(t, d)
+#     console.log(`${nome.padEnd(34)} type=${t.padEnd(7)} -> ${JSON.stringify(v).padEnd(42)} bodyOf=${b === null ? 'null' : JSON.stringify(b.length) + ' chars'}`)
+#   }
+$ cp a14.ts ./.a14-tmp.ts && npx tsx ./.a14-tmp.ts; rm -f ./.a14-tmp.ts
+CONTENT_DATA_KEY = {"Lyrics":"lyrics","Chords":"chords","Tab":"tablature","Sheet":null}
+lyrics-ok                          type=Lyrics  -> {"ok":true,"body":"text"}                  bodyOf=20 chars
+chords-ok                          type=Chords  -> {"ok":true,"body":"text"}                  bodyOf=16 chars
+tab-ok                             type=Tab     -> {"ok":true,"body":"text"}                  bodyOf=6 chars
+sheet-arquivo                      type=Sheet   -> {"ok":true,"body":"file"}                  bodyOf=null
+sheet-sem-arquivo                  type=Sheet   -> {"ok":false,"reason":"no-body"}            bodyOf=null
+chords-escaneada                   type=Chords  -> {"ok":true,"body":"file"}                  bodyOf=null
+chords-obj-sem-chave-com-arquivo   type=Chords  -> {"ok":false,"reason":"no-key"}             bodyOf=null
+lyrics-null-com-arquivo            type=Lyrics  -> {"ok":false,"reason":"no-body"}            bodyOf=null
+tab-nao-string                     type=Tab     -> {"ok":false,"reason":"not-string"}         bodyOf=null
+poluido-editor                     type=Lyrics  -> {"ok":true,"body":"text"}                  bodyOf=20 chars
+poluido-so-aninhado                type=Lyrics  -> {"ok":false,"reason":"no-key"}             bodyOf=null
+tipo-fora-do-enum                  type=Piano   -> {"ok":false,"reason":"unknown-type"}       bodyOf=null
+tipo-minusculo                     type=lyrics  -> {"ok":false,"reason":"unknown-type"}       bodyOf=null

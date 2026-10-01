@@ -1,0 +1,331 @@
+# A7 — o offline: trechos (N4-PR0, 2026-10-01; rastro)
+
+$ awk 'NR>=1&&NR<=17' apps/native/src/store.ts
+apps/native/src/store.ts:1: /**
+apps/native/src/store.ts:2:  * Cache local da tela 1 (N1-D2: JSON em `Paths.document`, sem SQLite).
+apps/native/src/store.ts:3:  *
+apps/native/src/store.ts:4:  * Um diretório por usuário — `Paths.document/octavia-<uid>/` (PRD §5,
+apps/native/src/store.ts:5:  * "namespace por usuário": trocar de conta no device não mistura dados) — com
+apps/native/src/store.ts:6:  * dois arquivos: `setlists.json` e `content.json`. `Paths.document` é o
+apps/native/src/store.ts:7:  * armazenamento **não purgável** pelo sistema (N0-H16 §4), ao contrário do
+apps/native/src/store.ts:8:  * `Paths.cache` que a prova do N0 usou.
+apps/native/src/store.ts:9:  *
+apps/native/src/store.ts:10:  * **Gravação atômica**: escreve num `.tmp` e só então renomeia sobre o
+apps/native/src/store.ts:11:  * definitivo (`File.move`, existe no expo-file-system 57 — verificado por
+apps/native/src/store.ts:12:  * type-check). Assim uma interrupção no meio da escrita nunca deixa um JSON
+apps/native/src/store.ts:13:  * truncado no lugar do cache bom — é o que sustenta o A21 ("cache byte a byte
+apps/native/src/store.ts:14:  * inalterado" quando o sync falha).
+apps/native/src/store.ts:15:  *
+apps/native/src/store.ts:16:  * Este módulo **não decide nada**: quem decide aplicar ou manter é o
+apps/native/src/store.ts:17:  * `planSync` do core. Aqui só se lê e grava.
+
+$ awk 'NR>=143&&NR<=149' apps/native/src/store.ts
+apps/native/src/store.ts:143: export function save(uid: string, snapshot: CacheSnapshot, invalidated: Invalidated): void {
+apps/native/src/store.ts:144:   const dir = dirDe(uid)
+apps/native/src/store.ts:145:   if (!dir.exists) dir.create({ intermediates: true })
+apps/native/src/store.ts:146:   gravarSetlists(dir, snapshot, invalidated)
+apps/native/src/store.ts:147:   gravarAtomico(dir, 'content.json', JSON.stringify(snapshot.content))
+apps/native/src/store.ts:148:   log(`cache write kind=content n=${snapshot.content.length} invalidated=${invalidated.content}`)
+apps/native/src/store.ts:149: }
+
+$ awk 'NR>=27&&NR<=37' apps/native/src/prefetch.ts
+apps/native/src/prefetch.ts:27: /**
+apps/native/src/prefetch.ts:28:  * Teto de retenção, T1-R14. O PRD propôs 200 MB e o N0-H16 mediu o
+apps/native/src/prefetch.ts:29:  * repertório inteiro da conta de audit em 265.002 B — o teto é folga, não
+apps/native/src/prefetch.ts:30:  * risco: seriam ~830 PDFs do maior objeto medido para tocá-lo. **Valor final
+apps/native/src/prefetch.ts:31:  * em produção: 200 MB**; a prova de despejo da N1-PR5 baixou esta constante
+apps/native/src/prefetch.ts:32:  * temporariamente para forçar vítimas, e a devolveu antes do commit.
+apps/native/src/prefetch.ts:33:  */
+apps/native/src/prefetch.ts:34: export const CAP_BYTES = 200 * 1024 * 1024
+apps/native/src/prefetch.ts:35: 
+apps/native/src/prefetch.ts:36: /** Concorrência do prefetch — 3, como o web (`lib/advanced-content-cache.ts:158`). */
+apps/native/src/prefetch.ts:37: const CONCORRENCIA = 3
+
+$ awk 'NR>=55&&NR<=68' apps/native/src/prefetch.ts
+apps/native/src/prefetch.ts:55: /**
+apps/native/src/prefetch.ts:56:  * Conjunto **garantido** (T1-R14): todos os arquivos das setlists dos
+apps/native/src/prefetch.ts:57:  * próximos 7 dias, presentes ou não. É o mesmo `selectPrefetch` do plano,
+apps/native/src/prefetch.ts:58:  * chamado com "nada no disco" — assim a janela de 7 dias tem uma definição
+apps/native/src/prefetch.ts:59:  * só, no core, e não duas que podem divergir.
+apps/native/src/prefetch.ts:60:  */
+apps/native/src/prefetch.ts:61: export function urlsGarantidas(
+apps/native/src/prefetch.ts:62:   setlists: SetlistDTO[],
+apps/native/src/prefetch.ts:63:   contentById: Map<string, ContentDTO>,
+apps/native/src/prefetch.ts:64: ): Set<string> {
+apps/native/src/prefetch.ts:65:   return new Set(
+apps/native/src/prefetch.ts:66:     selectPrefetch(setlists, contentById, new Set<string>(), hoje()).map((item) => item.url),
+apps/native/src/prefetch.ts:67:   )
+apps/native/src/prefetch.ts:68: }
+
+$ awk 'NR>=225&&NR<=259' apps/native/src/prefetch.ts
+apps/native/src/prefetch.ts:225:  * T1-R15 manual — "baixar esta setlist" (o design mostra o botão só em
+apps/native/src/prefetch.ts:226:  * setlist sem data de show: as datadas já são cobertas pelo plano de 7 dias).
+apps/native/src/prefetch.ts:227:  *
+apps/native/src/prefetch.ts:228:  * **Grava no DURÁVEL** (W1, div. 102). Era a única das quatro formas de
+apps/native/src/prefetch.ts:229:  * baixar que gravava no purgável, e portanto a que dava a garantia **mais
+apps/native/src/prefetch.ts:230:  * fraca** — justamente a única em que o usuário pede o arquivo de forma
+apps/native/src/prefetch.ts:231:  * explícita. O prefetch automático de 7 dias, que ninguém pediu, dava a mais
+apps/native/src/prefetch.ts:232:  * forte: **a hierarquia estava invertida**. E o botão só aparece em setlist
+apps/native/src/prefetch.ts:233:  * SEM data de show — exatamente a que a janela de 7 dias nunca cobre: se ele
+apps/native/src/prefetch.ts:234:  * não durar, nada dura para ela.
+apps/native/src/prefetch.ts:235:  *
+apps/native/src/prefetch.ts:236:  * **Com trava, e a trava é o que fica de fora**: o arquivo sai do alcance do
+apps/native/src/prefetch.ts:237:  * Android (o dano real da 102) e **não** entra no `protectedUrls` do LRU. A
+apps/native/src/prefetch.ts:238:  * política de purga não muda — o arquivo fixado continua candidato normal,
+apps/native/src/prefetch.ts:239:  * despejável por desuso —, e a pergunta grande ("como se solta o que foi
+apps/native/src/prefetch.ts:240:  * fixado", com UI de soltar) fica aberta e honesta, para quando houver
+apps/native/src/prefetch.ts:241:  * repertório que a justifique. Decisão do Marcel, 2026-09-14 (Q1).
+apps/native/src/prefetch.ts:242:  */
+apps/native/src/prefetch.ts:243: export async function baixarSetlist(
+apps/native/src/prefetch.ts:244:   setlist: SetlistDTO,
+apps/native/src/prefetch.ts:245:   contentById: Map<string, ContentDTO>,
+apps/native/src/prefetch.ts:246:   aoArquivo?: () => void,
+apps/native/src/prefetch.ts:247: ): Promise<void> {
+apps/native/src/prefetch.ts:248:   const urls: string[] = []
+apps/native/src/prefetch.ts:249:   const vistas = new Set<string>()
+apps/native/src/prefetch.ts:250:   for (const song of [...setlist.setlist_songs].sort((a, b) => a.position - b.position)) {
+apps/native/src/prefetch.ts:251:     const url = urlDe(song.content_id, contentById)
+apps/native/src/prefetch.ts:252:     if (url === null || vistas.has(url) || hasFile(url)) continue
+apps/native/src/prefetch.ts:253:     vistas.add(url)
+apps/native/src/prefetch.ts:254:     urls.push(url)
+apps/native/src/prefetch.ts:255:   }
+apps/native/src/prefetch.ts:256:   log(`prefetch plan n=${urls.length} reason=manual`)
+apps/native/src/prefetch.ts:257:   if (urls.length > 0) await baixar(urls, true, aoArquivo)
+apps/native/src/prefetch.ts:258: }
+apps/native/src/prefetch.ts:259: 
+
+$ awk 'NR>=261&&NR<=283' apps/native/src/prefetch.ts
+apps/native/src/prefetch.ts:261:  * T1-R14 — LRU com teto, os garantidos como `protectedUrls`. Só loga quando
+apps/native/src/prefetch.ts:262:  * despeja: uma linha `lru evict n=0` por abertura seria ruído no instrumento
+apps/native/src/prefetch.ts:263:  * dos aceites.
+apps/native/src/prefetch.ts:264:  *
+apps/native/src/prefetch.ts:265:  * **O estouro aparece** (W4-b3). O `lruEvict` nunca despeja um protegido, e
+apps/native/src/prefetch.ts:266:  * quando só os protegidos já passam do teto ele devolve o `bytesAfter` real,
+apps/native/src/prefetch.ts:267:  * acima do `CAP_BYTES` — "quem chama decide o que fazer com o estouro". Quem
+apps/native/src/prefetch.ts:268:  * chama o descartava (registro do W1, `W1-PRECHECK.md:469`). Agora ele vira
+apps/native/src/prefetch.ts:269:  * uma linha, `lru over`, com o total, o teto e quantos protegidos o seguram.
+apps/native/src/prefetch.ts:270:  * O que o app faz com isso, além de dizer, é decisão de produto, não desta
+apps/native/src/prefetch.ts:271:  * função: o teto é 200 MB e o repertório medido é 265.002 B.
+apps/native/src/prefetch.ts:272:  */
+apps/native/src/prefetch.ts:273: export function aplicarLru(setlists: SetlistDTO[], contentById: Map<string, ContentDTO>): void {
+apps/native/src/prefetch.ts:274:   const protegidos = urlsGarantidas(setlists, contentById)
+apps/native/src/prefetch.ts:275:   const { evict, bytesAfter } = lruEvict(listFiles(), CAP_BYTES, protegidos)
+apps/native/src/prefetch.ts:276:   if (evict.length > 0) {
+apps/native/src/prefetch.ts:277:     const bytes = remove(evict)
+apps/native/src/prefetch.ts:278:     log(`lru evict n=${evict.length} bytes=${bytes}`)
+apps/native/src/prefetch.ts:279:   }
+apps/native/src/prefetch.ts:280:   if (bytesAfter > CAP_BYTES) {
+apps/native/src/prefetch.ts:281:     log(`lru over bytes=${bytesAfter} cap=${CAP_BYTES} protected=${protegidos.size}`)
+apps/native/src/prefetch.ts:282:   }
+apps/native/src/prefetch.ts:283: }
+
+$ awk 'NR>=1&&NR<=30' apps/native/src/files.ts
+apps/native/src/files.ts:1: /**
+apps/native/src/files.ts:2:  * Arquivos do nativo (PRD T1-R14, T1-R26; aceites A9, A13). Renasce o
+apps/native/src/files.ts:3:  * `files.ts` do N0-PR5 com o que aquele protocolo mediu, mais as duas coisas
+apps/native/src/files.ts:4:  * que o N0 deixou anotadas para o N1 (`N0-H16.md` §4 e "Notas para o N1"):
+apps/native/src/files.ts:5:  *
+apps/native/src/files.ts:6:  * 1. **Dois armazenamentos, por durabilidade** — arquivos *garantidos* (das
+apps/native/src/files.ts:7:  *    setlists dos próximos 7 dias, T1-R15) vivem em `Paths.document`, que o
+apps/native/src/files.ts:8:  *    sistema **não** purga; todo o resto vive em `Paths.cache`, purgável. O
+apps/native/src/files.ts:9:  *    N0 provou o fluxo inteiro no `Paths.cache` e registrou a dívida.
+apps/native/src/files.ts:10:  * 2. **Diretório por `uid`** — mesmo namespace do `store.ts` (PRD §5): trocar
+apps/native/src/files.ts:11:  *    de conta no device não mistura arquivos.
+apps/native/src/files.ts:12:  *
+apps/native/src/files.ts:13:  * Nome do arquivo = último segmento da URL (`<timestamp>-<nome>.pdf`, único
+apps/native/src/files.ts:14:  * por construção do upload B6-D5′ — nota do N0). A chave é a URL inteira.
+apps/native/src/files.ts:15:  *
+apps/native/src/files.ts:16:  * `lastUsedMs` não existe na API do `expo-file-system` 57 (`File` expõe
+apps/native/src/files.ts:17:  * `exists`/`size`, não mtime — medido nos `.d.ts`), então o LRU precisa de um
+apps/native/src/files.ts:18:  * índice próprio: `files-index.json`, no diretório do usuário em
+apps/native/src/files.ts:19:  * `Paths.document`, gravado atomicamente como o `store.ts` grava o cache. O
+apps/native/src/files.ts:20:  * `guaranteed` **não** entra no índice: é derivado de onde o arquivo está, e
+apps/native/src/files.ts:21:  * assim não há dois lugares para o mesmo fato divergirem.
+apps/native/src/files.ts:22:  *
+apps/native/src/files.ts:23:  * Sem retry: uma falha aparece (T1-R37), não é reescrita em silêncio.
+apps/native/src/files.ts:24:  */
+apps/native/src/files.ts:25: import { Directory, File, Paths } from 'expo-file-system'
+apps/native/src/files.ts:26: import { fileVerdict, type FileRejectKind } from '@octavia/core'
+apps/native/src/files.ts:27: import { log } from './log'
+apps/native/src/files.ts:28: 
+apps/native/src/files.ts:29: /** Último segmento da URL — o único pedaço que pode entrar em log (N1-D5). */
+apps/native/src/files.ts:30: export function fileNameFromUrl(url: string): string {
+
+$ awk 'NR>=50&&NR<=62' apps/native/src/files.ts
+apps/native/src/files.ts:50:   return uidAtual
+apps/native/src/files.ts:51: }
+apps/native/src/files.ts:52: 
+apps/native/src/files.ts:53: function dirGarantido(): Directory {
+apps/native/src/files.ts:54:   return new Directory(Paths.document, `octavia-${uid()}`, 'files')
+apps/native/src/files.ts:55: }
+apps/native/src/files.ts:56: 
+apps/native/src/files.ts:57: function dirDemanda(): Directory {
+apps/native/src/files.ts:58:   return new Directory(Paths.cache, `octavia-${uid()}`, 'files')
+apps/native/src/files.ts:59: }
+apps/native/src/files.ts:60: 
+apps/native/src/files.ts:61: function dirIndice(): Directory {
+apps/native/src/files.ts:62:   return new Directory(Paths.document, `octavia-${uid()}`)
+
+$ awk 'NR>=244&&NR<=295' apps/native/src/files.ts
+apps/native/src/files.ts:244: /** Sufixo do arquivo em construção. Um `.part` nunca é o nome de nada. */
+apps/native/src/files.ts:245: export const PARCIAL = '.part'
+apps/native/src/files.ts:246: 
+apps/native/src/files.ts:247: /**
+apps/native/src/files.ts:248:  * **O TETO DE INATIVIDADE NÃO ESTÁ AQUI — e o motivo é uma medição, não um
+apps/native/src/files.ts:249:  * esquecimento.** (Q2 do pre-check, §8.1; derrubada pelo aceite W1-A3.)
+apps/native/src/files.ts:250:  *
+apps/native/src/files.ts:251:  * O desenho era: abortar quando NENHUM byte novo chegasse em `T = 30 s`,
+apps/native/src/files.ts:252:  * rearmando o relógio a cada `onProgress`. Contra a conexão morta, e só
+apps/native/src/files.ts:253:  * contra ela — um download legítimo pode demorar horas numa Wi-Fi ruim de
+apps/native/src/files.ts:254:  * hotel na véspera do show, e é isso que o usuário quer.
+apps/native/src/files.ts:255:  *
+apps/native/src/files.ts:256:  * **O aparelho disse que o sinal de rearme não existe.** Medido duas vezes no
+apps/native/src/files.ts:257:  * AVD `octavia_tab32`, com o dev client, servidor de host entregando 6 pedaços
+apps/native/src/files.ts:258:  * a cada 4 s (download de 20 s):
+apps/native/src/files.ts:259:  *
+apps/native/src/files.ts:260:  *     OCTAVIA: dbg-listener name=… w=8192   ms=20075
+apps/native/src/files.ts:261:  *     OCTAVIA: dbg-progress  name=… w=8192  ms=20081
+apps/native/src/files.ts:262:  *     OCTAVIA: dbg-listener name=… w=242176 ms=20082
+apps/native/src/files.ts:263:  *     OCTAVIA: dbg-progress  name=… w=242176 ms=20083
+apps/native/src/files.ts:264:  *
+apps/native/src/files.ts:265:  * Todos os eventos chegam **em rajada, no fim** — pelo `onProgress` e pelo
+apps/native/src/files.ts:266:  * `addListener`, os dois. E o disco não ajuda: o destino não existe durante o
+apps/native/src/files.ts:267:  * download inteiro e aparece completo de uma vez (medido: alvo vazio de
+apps/native/src/files.ts:268:  * t=01 s a t=22 s, 242.176 B em t=24 s). **Não há, no app, nenhum sinal de
+apps/native/src/files.ts:269:  * "chegou byte" em voo.**
+apps/native/src/files.ts:270:  *
+apps/native/src/files.ts:271:  * Logo um relógio de 30 s rearmado por `onProgress` **nunca é rearmado**: é um
+apps/native/src/files.ts:272:  * teto ABSOLUTO de duração disfarçado — exatamente a opção A, que foi
+apps/native/src/files.ts:273:  * descartada por punir o caso legítimo ("barato e errado é pior que caro e
+apps/native/src/files.ts:274:  * certo quando o erro cai em cima do uso real", Marcel, 2026-09-14). Ficar
+apps/native/src/files.ts:275:  * com ele seria shippar a opção A com o nome da B.
+apps/native/src/files.ts:276:  *
+apps/native/src/files.ts:277:  * O que fica de pé sem o teto: o `.part` (o cartão diz "parcial" o tempo
+apps/native/src/files.ts:278:  * todo, sem mentir), a fila de trabalhadores (um download morto não para os
+apps/native/src/files.ts:279:  * outros) e o saneamento. O que fica em aberto: uma conexão morta segura UMA
+apps/native/src/files.ts:280:  * das três vagas até o processo morrer.
+apps/native/src/files.ts:281:  *
+apps/native/src/files.ts:282:  * **E a razão que fecha a questão, do aval de 2026-09-14: o teto perdeu o
+apps/native/src/files.ts:283:  * objeto.** Ele existia para impedir que um download condenado comesse o
+apps/native/src/files.ts:284:  * orçamento dos outros — e é isso que a fila do `prefetch.ts` impede, melhor,
+apps/native/src/files.ts:285:  * porque impede SEMPRE e não só depois de 30 s. O dano real da div. 122 já
+apps/native/src/files.ts:286:  * está consertado; o que sobra do download morto é uma vaga de três.
+apps/native/src/files.ts:287:  *
+apps/native/src/files.ts:288:  * Se você chegou aqui com um relatório de "prefetch lento" e a mão num
+apps/native/src/files.ts:289:  * `setTimeout`, leia isto primeiro:
+apps/native/src/files.ts:290:  *
+apps/native/src/files.ts:291:  *     UM TETO QUE NÃO PODE DISPARAR É PIOR QUE TETO NENHUM, PORQUE PROMETE.
+apps/native/src/files.ts:292:  *                                               — Marcel, 2026-09-14
+apps/native/src/files.ts:293:  *
+apps/native/src/files.ts:294:  * O que reabre a questão não é um número maior: é **sinal de progresso em
+apps/native/src/files.ts:295:  * voo**. A medida que falta está na W2 (um build de release, para saber se a
+
+$ awk 'NR>=9&&NR<=17' packages/core/src/offline.ts
+packages/core/src/offline.ts:9: export type OfflineKind = 'guaranteed' | 'partial' | 'never'
+packages/core/src/offline.ts:10: 
+packages/core/src/offline.ts:11: export interface OfflineStatus {
+packages/core/src/offline.ts:12:   kind: OfflineKind
+packages/core/src/offline.ts:13:   /** Arquivos distintos já no aparelho. */
+packages/core/src/offline.ts:14:   have: number
+packages/core/src/offline.ts:15:   /** Arquivos distintos que a setlist precisa. */
+packages/core/src/offline.ts:16:   need: number
+packages/core/src/offline.ts:17: }
+
+$ awk 'NR>=43&&NR<=64' packages/core/src/offline.ts
+packages/core/src/offline.ts:43: /**
+packages/core/src/offline.ts:44:  * T1-R17 — ✓ garantida · ◔ parcial ("n de m arquivos") · ✗ nunca sincronizada.
+packages/core/src/offline.ts:45:  *
+packages/core/src/offline.ts:46:  * Leitura declarada (PRD T1-R17 + aceite A10, que diz "antes do download →
+packages/core/src/offline.ts:47:  * ◔ 0 de 2"): **`never` é "nunca sincronizada"** — nenhuma das songs tem
+packages/core/src/offline.ts:48:  * content no cache. Zero arquivos baixados COM os contents presentes é
+packages/core/src/offline.ts:49:  * `partial` com `have: 0`, não `never`. Um bis conta o arquivo uma vez (URLs
+packages/core/src/offline.ts:50:  * distintas). Setlist sem songs está garantida por vacuidade.
+packages/core/src/offline.ts:51:  */
+packages/core/src/offline.ts:52: export function offlineStatus(
+packages/core/src/offline.ts:53:   setlist: SetlistDTO,
+packages/core/src/offline.ts:54:   contentById: Map<string, ContentDTO>,
+packages/core/src/offline.ts:55:   filesPresent: Set<string>,
+packages/core/src/offline.ts:56: ): OfflineStatus {
+packages/core/src/offline.ts:57:   const songs = setlist.setlist_songs
+packages/core/src/offline.ts:58:   const { urls, missingContent } = fileUrlsOf(songs, contentById)
+packages/core/src/offline.ts:59:   const have = urls.filter((url) => filesPresent.has(url)).length
+packages/core/src/offline.ts:60:   const need = urls.length
+packages/core/src/offline.ts:61: 
+packages/core/src/offline.ts:62:   if (songs.length > 0 && missingContent === songs.length) return { kind: 'never', have: 0, need: 0 }
+packages/core/src/offline.ts:63:   if (missingContent === 0 && have === need) return { kind: 'guaranteed', have, need }
+packages/core/src/offline.ts:64:   return { kind: 'partial', have, need }
+
+$ awk 'NR>=83&&NR<=113' packages/core/src/offline.ts
+packages/core/src/offline.ts:83: /**
+packages/core/src/offline.ts:84:  * T1-R15 — arquivos das setlists com `performance_date` entre hoje e hoje+7
+packages/core/src/offline.ts:85:  * (date-only, comparação por string `YYYY-MM-DD`: mesma ordem lexicográfica e
+packages/core/src/offline.ts:86:  * cronológica, sem fuso). Ordem: data mais próxima primeiro, depois
+packages/core/src/offline.ts:87:  * `position`. Setlist sem data **não** entra (só sob demanda ou por "baixar
+packages/core/src/offline.ts:88:  * esta setlist"). Arquivo já presente não entra; URL repetida entra uma vez.
+packages/core/src/offline.ts:89:  */
+packages/core/src/offline.ts:90: export function selectPrefetch(
+packages/core/src/offline.ts:91:   setlists: SetlistDTO[],
+packages/core/src/offline.ts:92:   contentById: Map<string, ContentDTO>,
+packages/core/src/offline.ts:93:   filesPresent: Set<string>,
+packages/core/src/offline.ts:94:   today: string,
+packages/core/src/offline.ts:95: ): PrefetchItem[] {
+packages/core/src/offline.ts:96:   const limit = addDays(today, 7)
+packages/core/src/offline.ts:97:   const janela = setlists
+packages/core/src/offline.ts:98:     .filter((setlist) => {
+packages/core/src/offline.ts:99:       const date = setlist.performance_date
+packages/core/src/offline.ts:100:       return date !== null && date >= today && date <= limit
+packages/core/src/offline.ts:101:     })
+packages/core/src/offline.ts:102:     .sort((a, b) => (a.performance_date ?? '').localeCompare(b.performance_date ?? ''))
+packages/core/src/offline.ts:103: 
+packages/core/src/offline.ts:104:   const out: PrefetchItem[] = []
+packages/core/src/offline.ts:105:   const seen = new Set<string>()
+packages/core/src/offline.ts:106:   for (const setlist of janela) {
+packages/core/src/offline.ts:107:     for (const url of fileUrlsOf(setlist.setlist_songs, contentById).urls) {
+packages/core/src/offline.ts:108:       if (filesPresent.has(url) || seen.has(url)) continue
+packages/core/src/offline.ts:109:       seen.add(url)
+packages/core/src/offline.ts:110:       out.push({ url, setlistId: setlist.id, reason: '7d' })
+packages/core/src/offline.ts:111:     }
+packages/core/src/offline.ts:112:   }
+packages/core/src/offline.ts:113:   return out
+
+$ awk 'NR>=166&&NR<=194' packages/core/src/offline.ts
+packages/core/src/offline.ts:166:   url: string
+packages/core/src/offline.ts:167:   bytes: number
+packages/core/src/offline.ts:168:   lastUsedMs: number
+packages/core/src/offline.ts:169: }
+packages/core/src/offline.ts:170: 
+packages/core/src/offline.ts:171: /**
+packages/core/src/offline.ts:172:  * T1-R14 — retenção LRU com teto (200 MB proposto no PRD; H16 mediu 265.002 B
+packages/core/src/offline.ts:173:  * no repertório inteiro da conta de audit, maior objeto 242.176 B: o teto é
+packages/core/src/offline.ts:174:  * folga). Os arquivos garantidos das setlists dos próximos 7 dias entram em
+packages/core/src/offline.ts:175:  * `protectedUrls` e **nunca** são despejados — se mesmo sem eles não couber,
+packages/core/src/offline.ts:176:  * despeja tudo o que pode e devolve o `bytesAfter` real (quem chama decide o
+packages/core/src/offline.ts:177:  * que fazer com o estouro; T1-R37 manda a falha aparecer).
+packages/core/src/offline.ts:178:  */
+packages/core/src/offline.ts:179: export function lruEvict(
+packages/core/src/offline.ts:180:   files: CachedFile[],
+packages/core/src/offline.ts:181:   capBytes: number,
+packages/core/src/offline.ts:182:   protectedUrls: Set<string>,
+packages/core/src/offline.ts:183: ): { evict: string[]; bytesAfter: number } {
+packages/core/src/offline.ts:184:   let total = files.reduce((sum, file) => sum + file.bytes, 0)
+packages/core/src/offline.ts:185:   if (total <= capBytes) return { evict: [], bytesAfter: total }
+packages/core/src/offline.ts:186: 
+packages/core/src/offline.ts:187:   const candidates = files
+packages/core/src/offline.ts:188:     .filter((file) => !protectedUrls.has(file.url))
+packages/core/src/offline.ts:189:     .sort((a, b) => a.lastUsedMs - b.lastUsedMs)
+packages/core/src/offline.ts:190: 
+packages/core/src/offline.ts:191:   const evict: string[] = []
+packages/core/src/offline.ts:192:   for (const file of candidates) {
+packages/core/src/offline.ts:193:     if (total <= capBytes) break
+packages/core/src/offline.ts:194:     evict.push(file.url)
+
+$ awk 'NR>=1&&NR<=9' apps/native/src/sync.ts
+apps/native/src/sync.ts:1: /**
+apps/native/src/sync.ts:2:  * Orquestração do sync (PRD T1-R9, T1-R9b, T1-R13; aceites A4, A19, A21, A22).
+apps/native/src/sync.ts:3:  * Fino de propósito: busca, entrega ao `planSync` do core e grava pelo `store`
+apps/native/src/sync.ts:4:  * só quando o plano diz `apply`. Nenhuma decisão mora aqui.
+apps/native/src/sync.ts:5:  *
+apps/native/src/sync.ts:6:  * Custo por sync: **1 + ⌈N/100⌉ requests** — hoje 2 (66 content na conta de
+apps/native/src/sync.ts:7:  * audit, 63 na principal). Cache-first é da tela: ela já renderizou o cache
+apps/native/src/sync.ts:8:  * antes desta função ser chamada (T1-R13 passo 1).
+apps/native/src/sync.ts:9:  */

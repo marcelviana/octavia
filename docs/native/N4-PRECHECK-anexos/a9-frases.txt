@@ -1,0 +1,507 @@
+# A9 — os dois conjuntos de frases: contagem e trechos (N4-PR0, 2026-10-01; rastro)
+# script verbatim (arquivo temporário na raiz, apagado):
+#   import * as core from './packages/core/src/frases'
+#   const web = ['components/auth/frases-auth.ts','components/auth/frases-sessao.ts','components/content/frases-visualizacao.ts','components/editors/frases-editor.ts','components/identidade/frases-casca.ts','components/identidade/frases-erro.ts','components/landing/frases-landing.ts','components/library/frases-lista.ts','components/setlists/frases-setlists.ts','components/upload/frases-upload.ts']
+#   function folhas(v: unknown): number { if (typeof v === 'string') return 1; if (v && typeof v === 'object') return Object.values(v).reduce((s: number, x) => s + folhas(x), 0); return 0 }
+#   async function main() {
+#     const fr = (core as Record<string, unknown>).FRASES as Record<string, unknown>
+#     console.log(`packages/core/src/frases.ts  FRASES: ${Object.keys(fr).length} chaves, ${folhas(fr)} folhas de texto; exports em tempo de execução: ${Object.keys(core).length}`)
+#     let total = 0, soFrases = 0
+#     for (const f of web) {
+#       const m = await import('./' + f) as Record<string, unknown>
+#       const objs = Object.entries(m).filter(([, v]) => v && typeof v === 'object')
+#       const n = objs.reduce((s, [, v]) => s + folhas(v), 0)
+#       total += n
+#       soFrases += objs.filter(([k]) => k.startsWith('FRASES_')).reduce((s, [, v]) => s + folhas(v), 0)
+#       console.log(`${f.padEnd(44)} objetos: ${objs.map(([k, v]) => `${k}(${folhas(v)})`).join(' ')}  = ${n}`)
+#     }
+#     console.log(`web, só os FRASES_*: ${soFrases}   ·   todos os objetos exportados: ${total}`)
+#   }
+#   main()
+$ npx tsx ./.a9-tmp.ts
+packages/core/src/frases.ts  FRASES: 45 chaves, 45 folhas de texto; exports em tempo de execução: 17
+components/auth/frases-auth.ts               objetos: FRASES_AUTH(70)  = 70
+components/auth/frases-sessao.ts             objetos: FRASES_SESSAO(7)  = 7
+components/content/frases-visualizacao.ts    objetos: FRASES_VIEW(47)  = 47
+components/editors/frases-editor.ts          objetos: ACORDES_RAPIDOS(10) AFINACOES(8) COMPASSOS(10) DIFICULDADES_EDIT(8) FRASES_EDIT(73) GENEROS(32) TONS(76)  = 217
+components/identidade/frases-casca.ts        objetos: FRASES_CASCA(10)  = 10
+components/identidade/frases-erro.ts         objetos: FRASES_ERRO(5)  = 5
+components/landing/frases-landing.ts         objetos: FRASES_LANDING(5)  = 5
+components/library/frases-lista.ts           objetos: DIFICULDADES(6) FRASES_LISTA(53) MESES(12) TIPOS(12)  = 83
+components/setlists/frases-setlists.ts       objetos: FRASES_SET(72)  = 72
+components/upload/frases-upload.ts           objetos: EXTENSOES_PARTITURA(4) EXTENSOES_TEXTO(3) FRASES_UP(79) TONS_UP(24)  = 110
+web, só os FRASES_*: 421   ·   todos os objetos exportados: 626
+
+## o vocabulário de tipo
+$ awk 'NR>=224&&NR<=290' packages/core/src/frases.ts
+packages/core/src/frases.ts:224: export const FRASES: Readonly<Record<ChaveDeFrase, string>> = {
+packages/core/src/frases.ts:225:   // T2-R15 (`PRD-TELA-2.md`)
+packages/core/src/frases.ts:226:   rede: 'sem conexão — nada foi salvo',
+packages/core/src/frases.ts:227:   // N2-E19: a request saiu e não voltou — o texto é do Marcel (div. 308).
+packages/core/src/frases.ts:228:   'sem-resposta': 'sem resposta do servidor',
+packages/core/src/frases.ts:229:   auth: 'não foi possível salvar — confira sua conta no site',
+packages/core/src/frases.ts:230:   'limite-com-prazo': 'muitas alterações seguidas — tente de novo em {N} s',
+packages/core/src/frases.ts:231:   'limite-sem-prazo': 'Muitas mudanças em pouco tempo. Os controles de escrita voltam em instantes.',
+packages/core/src/frases.ts:232:   'sumiu-setlist': 'esta setlist foi apagada em outro lugar',
+packages/core/src/frases.ts:233:   'sumiu-musica': 'esta música já não estava na setlist',
+packages/core/src/frases.ts:234:   'ordem-mudou': 'a setlist mudou — a ordem foi recarregada',
+packages/core/src/frases.ts:235:   'nome-recusado': 'o nome tem um trecho que o servidor não aceita',
+packages/core/src/frases.ts:236:   'dados-recusados': 'o servidor recusou os dados',
+packages/core/src/frases.ts:237:   servidor: 'falha no servidor — nada foi alterado aqui',
+packages/core/src/frases.ts:238:   generica: 'não foi possível salvar',
+packages/core/src/frases.ts:239: 
+packages/core/src/frases.ts:240:   // DESIGN-N2/telas.html, verbatim das molduras
+packages/core/src/frases.ts:241:   'nome-vazio': 'a setlist precisa de um nome',
+packages/core/src/frases.ts:242:   'data-impossivel': 'essa data não existe',
+packages/core/src/frases.ts:243:   'nada-mudou': 'nada mudou desde que você abriu',
+packages/core/src/frases.ts:244:   criando: 'Criando no servidor…',
+packages/core/src/frases.ts:245:   salvando: 'Salvando no servidor…',
+packages/core/src/frases.ts:246:   'salvando-ordem': 'Salvando a ordem no servidor…',
+packages/core/src/frases.ts:247:   apagando: 'Apagando no servidor…',
+packages/core/src/frases.ts:248:   adicionando: 'adicionando…',
+packages/core/src/frases.ts:249:   relendo: 'relendo…',
+packages/core/src/frases.ts:250:   /**
+packages/core/src/frases.ts:251:    * Div. 227 — a única frase da folha que o core guarda PELA METADE. A
+packages/core/src/frases.ts:252:    * moldura `N2-S1-salvo-nao-relido` diz "Season 4 foi criada. Não foi
+packages/core/src/frases.ts:253:    * possível recarregar a lista, então ela pode não aparecer abaixo ainda." e
+packages/core/src/frases.ts:254:    * NOMEIA a setlist de propósito ("em S1 o objeto da frase não está em
+packages/core/src/frases.ts:255:    * lugar nenhum da tela"). Nome de setlist é dado, não texto: ele não pode
+packages/core/src/frases.ts:256:    * morar numa constante do core, e um buraco `{nome}` faria o conjunto
+packages/core/src/frases.ts:257:    * deixar de ser verificável por comparação literal. Fica aqui a metade
+packages/core/src/frases.ts:258:    * FIXA — a segunda oração, verbatim —, e quem monta `<nome> foi criada. `
+packages/core/src/frases.ts:259:    * na frente é S1. A regra do T2-R15 continua de pé: isto não é frase de
+packages/core/src/frases.ts:260:    * erro, e nenhuma frase de ERRO do conjunto carrega nome.
+packages/core/src/frases.ts:261:    */
+packages/core/src/frases.ts:262:   'salvo-nao-relido-s1': 'Não foi possível recarregar a lista, então ela pode não aparecer abaixo ainda.',
+packages/core/src/frases.ts:263:   'salvo-nao-relido-s2':
+packages/core/src/frases.ts:264:     'Salvo. Não foi possível recarregar a setlist, então o que está na tela pode estar velho.',
+packages/core/src/frases.ts:265:   'salvo-nao-relido-picker':
+packages/core/src/frases.ts:266:     'Salvo. Não foi possível recarregar a setlist, então a contagem abaixo pode estar velha.',
+packages/core/src/frases.ts:267:   'sumiu-declarado': 'Essa setlist não existe mais. A lista abaixo é a que o servidor tem agora.',
+packages/core/src/frases.ts:268:   // N2-E21: as duas primeiras orações de `sumiu-declarado` e de `salvo-nao-relido-s1`.
+packages/core/src/frases.ts:269:   'sumiu-nao-relido': 'Essa setlist não existe mais. Não foi possível recarregar a lista.',
+packages/core/src/frases.ts:270:   // N2-E23: a metade fixa; S1 monta `<nome> foi apagada. ` na frente (div. 227).
+packages/core/src/frases.ts:271:   'apagada-nao-relida': 'Não foi possível recarregar a lista, então ela pode ainda aparecer abaixo.',
+packages/core/src/frases.ts:272:   'sem-rede-s1':
+packages/core/src/frases.ts:273:     'Sem conexão: dá para abrir e tocar o que está no aparelho, não para criar setlist. O controle volta com a rede.',
+packages/core/src/frases.ts:274:   'sem-rede-s2':
+packages/core/src/frases.ts:275:     'Sem conexão: dá para ler e tocar, não para mudar a setlist. Os controles de escrita voltam quando a rede voltar.',
+packages/core/src/frases.ts:276:   'teto-100': 'Acima de 100 músicas, reordenar por arrasto fica inativo. Adicionar e remover continuam.',
+packages/core/src/frases.ts:277:   'pode-ter-gravado': 'pode já ter sido gravada — confira antes de repetir',
+packages/core/src/frases.ts:278: 
+packages/core/src/frases.ts:279:   // As quatro da N2-PR3, verbatim das molduras `N2-F-falhou` e `N2-S1f-criar`.
+packages/core/src/frases.ts:280:   'pode-ter-gravado-folha':
+packages/core/src/frases.ts:281:     'Pode já ter sido gravada — confira a lista antes de tentar de novo. A lista atrás desta folha acabou de ser relida.',
+packages/core/src/frases.ts:282:   'falhou-criar': 'Não foi possível criar',
+packages/core/src/frases.ts:283:   'relendo-a-lista': 'relendo a lista…',
+packages/core/src/frases.ts:284:   'primeira-setlist': 'Nenhuma setlist por aqui ainda. A primeira pode nascer neste aparelho.',
+packages/core/src/frases.ts:285: 
+packages/core/src/frases.ts:286:   // As quatro da N2-PR4, verbatim das molduras `N2-X-falhou`, `N2-S2e` e `N2-D-apagar`.
+packages/core/src/frases.ts:287:   'falhou-salvar': 'Não foi possível salvar',
+packages/core/src/frases.ts:288:   'lista-relida': 'a lista abaixo é a que o servidor acabou de devolver',
+packages/core/src/frases.ts:289:   removendo: 'removendo…',
+packages/core/src/frases.ts:290:   'apagar-arquivos':
+
+$ awk 'NR>=107&&NR<=139' apps/native/src/screens/StageScreen.tsx
+apps/native/src/screens/StageScreen.tsx:107: const TIPO: Record<string, string> = {
+apps/native/src/screens/StageScreen.tsx:108:   Lyrics: 'Letra',
+apps/native/src/screens/StageScreen.tsx:109:   Chords: 'Cifra',
+apps/native/src/screens/StageScreen.tsx:110:   Tab: 'Tab',
+apps/native/src/screens/StageScreen.tsx:111:   Sheet: 'Partitura',
+apps/native/src/screens/StageScreen.tsx:112: }
+apps/native/src/screens/StageScreen.tsx:113: 
+apps/native/src/screens/StageScreen.tsx:114: /** Motivo do placeholder, na linguagem do design (nunca tela vazia). */
+apps/native/src/screens/StageScreen.tsx:115: const MOTIVO: Record<string, { titulo: string; apoio: string }> = {
+apps/native/src/screens/StageScreen.tsx:116:   'no-body': {
+apps/native/src/screens/StageScreen.tsx:117:     titulo: 'este item não tem conteúdo',
+apps/native/src/screens/StageScreen.tsx:118:     apoio:
+apps/native/src/screens/StageScreen.tsx:119:       'A música existe na setlist, mas não tem letra, cifra, tab ou arquivo. Edite na versão web. Toque na borda direita para seguir.',
+apps/native/src/screens/StageScreen.tsx:120:   },
+apps/native/src/screens/StageScreen.tsx:121:   'no-key': {
+apps/native/src/screens/StageScreen.tsx:122:     titulo: 'este item não tem conteúdo',
+apps/native/src/screens/StageScreen.tsx:123:     apoio:
+apps/native/src/screens/StageScreen.tsx:124:       'O conteúdo salvo não traz o texto desta música. Edite na versão web. Toque na borda direita para seguir.',
+apps/native/src/screens/StageScreen.tsx:125:   },
+apps/native/src/screens/StageScreen.tsx:126:   'not-string': {
+apps/native/src/screens/StageScreen.tsx:127:     titulo: 'este item não tem conteúdo',
+apps/native/src/screens/StageScreen.tsx:128:     apoio:
+apps/native/src/screens/StageScreen.tsx:129:       'O conteúdo salvo não traz o texto desta música. Edite na versão web. Toque na borda direita para seguir.',
+apps/native/src/screens/StageScreen.tsx:130:   },
+apps/native/src/screens/StageScreen.tsx:131:   'unknown-type': {
+apps/native/src/screens/StageScreen.tsx:132:     titulo: 'tipo desconhecido',
+apps/native/src/screens/StageScreen.tsx:133:     apoio: 'Este item tem um tipo que o app ainda não sabe mostrar. Toque na borda direita para seguir.',
+apps/native/src/screens/StageScreen.tsx:134:   },
+apps/native/src/screens/StageScreen.tsx:135:   ausente: {
+apps/native/src/screens/StageScreen.tsx:136:     titulo: 'conteúdo não baixado',
+apps/native/src/screens/StageScreen.tsx:137:     apoio:
+apps/native/src/screens/StageScreen.tsx:138:       'Esta música ainda não foi sincronizada neste aparelho. Conecte-se à internet para baixá-la.',
+apps/native/src/screens/StageScreen.tsx:139:   },
+
+$ awk 'NR>=165&&NR<=205' apps/native/src/screens/IndexScreen.tsx
+apps/native/src/screens/IndexScreen.tsx:165:   edicao?: EdicaoDeS2 | null
+apps/native/src/screens/IndexScreen.tsx:166: }
+apps/native/src/screens/IndexScreen.tsx:167: 
+apps/native/src/screens/IndexScreen.tsx:168: /** Ícone e rótulo por tipo (§6.4): o rótulo **é** o nome acessível. */
+apps/native/src/screens/IndexScreen.tsx:169: const TIPO: Record<string, { icone: NomeIcone; rotulo: string }> = {
+apps/native/src/screens/IndexScreen.tsx:170:   Lyrics: { icone: 'letra', rotulo: 'Letra' },
+apps/native/src/screens/IndexScreen.tsx:171:   Chords: { icone: 'cifra', rotulo: 'Cifra' },
+apps/native/src/screens/IndexScreen.tsx:172:   Tab: { icone: 'tab', rotulo: 'Tab' },
+apps/native/src/screens/IndexScreen.tsx:173:   Sheet: { icone: 'partitura', rotulo: 'Partitura' },
+apps/native/src/screens/IndexScreen.tsx:174: }
+apps/native/src/screens/IndexScreen.tsx:175: 
+apps/native/src/screens/IndexScreen.tsx:176: /**
+apps/native/src/screens/IndexScreen.tsx:177:  * O que o item inválido mostra, por `reason` do contrato do core — e não pela
+apps/native/src/screens/IndexScreen.tsx:178:  * ordem em que a fixture os põe na lista. A moldura `S2-invalidos` dá o
+apps/native/src/screens/IndexScreen.tsx:179:  * `tipo-desconhecido` ao item 10, que é um `no-key` (Chords sem a chave
+apps/native/src/screens/IndexScreen.tsx:180:  * `chords`): pelo contrato, `no-key` é falta de CORPO, não tipo fora do enum,
+apps/native/src/screens/IndexScreen.tsx:181:  * e só o `unknown-type` é "tipo não reconhecido". Quem sabe é o core.
+apps/native/src/screens/IndexScreen.tsx:182:  *
+apps/native/src/screens/IndexScreen.tsx:183:  * A tinta é `offlineInk` e não `errorInk` (a nota da moldura): o app está
+apps/native/src/screens/IndexScreen.tsx:184:  * íntegro, o dado é que está incompleto. Âmbar = "não está pronta" (§6.1).
+apps/native/src/screens/IndexScreen.tsx:185:  */
+apps/native/src/screens/IndexScreen.tsx:186: type MotivoInvalido = Extract<ContentValidity, { ok: false }>['reason']
+apps/native/src/screens/IndexScreen.tsx:187: 
+apps/native/src/screens/IndexScreen.tsx:188: function invalidoDe(reason: MotivoInvalido): { icone: NomeIcone; rotulo: string; motivo: string } {
+apps/native/src/screens/IndexScreen.tsx:189:   return reason === 'unknown-type'
+apps/native/src/screens/IndexScreen.tsx:190:     ? { icone: 'tipo-desconhecido', rotulo: '?', motivo: 'tipo não reconhecido — edite na versão web' }
+apps/native/src/screens/IndexScreen.tsx:191:     : { icone: 'sem-conteudo', rotulo: 'vazia', motivo: 'nada para mostrar — edite na versão web' }
+apps/native/src/screens/IndexScreen.tsx:192: }
+apps/native/src/screens/IndexScreen.tsx:193: 
+apps/native/src/screens/IndexScreen.tsx:194: /** Segunda linha do item: o que o design mostra sob o título. */
+apps/native/src/screens/IndexScreen.tsx:195: function sublinha(
+apps/native/src/screens/IndexScreen.tsx:196:   song: SetlistSongDTO,
+apps/native/src/screens/IndexScreen.tsx:197:   titulo: { artist: string | null },
+apps/native/src/screens/IndexScreen.tsx:198:   rotulo: SongLabel,
+apps/native/src/screens/IndexScreen.tsx:199:   motivo: string | null,
+apps/native/src/screens/IndexScreen.tsx:200: ): string {
+apps/native/src/screens/IndexScreen.tsx:201:   const partes: string[] = []
+apps/native/src/screens/IndexScreen.tsx:202:   if (rotulo === 'loading') partes.push('carregando…')
+apps/native/src/screens/IndexScreen.tsx:203:   if (rotulo === 'unavailable') partes.push('indisponível')
+apps/native/src/screens/IndexScreen.tsx:204:   if (motivo !== null) partes.push(motivo)
+apps/native/src/screens/IndexScreen.tsx:205:   if (titulo.artist !== null && titulo.artist.length > 0) partes.push(titulo.artist)
+
+$ awk 'NR>=180&&NR<=192' apps/native/src/screens/SetlistsScreen.tsx
+apps/native/src/screens/SetlistsScreen.tsx:180:  * `messageKey` era calculado e descartado (achado do aceite, N1-PR7 §3.2 —
+apps/native/src/screens/SetlistsScreen.tsx:181:  * o A3 passava no comportamento e falhava no que o músico lê).
+apps/native/src/screens/SetlistsScreen.tsx:182:  */
+apps/native/src/screens/SetlistsScreen.tsx:183: const TEXTO_DE_ERRO: Record<string, string> = {
+apps/native/src/screens/SetlistsScreen.tsx:184:   'erro.sem_conexao': 'sem conexão',
+apps/native/src/screens/SetlistsScreen.tsx:185:   'erro.sessao_invalida': 'sua sessão expirou',
+apps/native/src/screens/SetlistsScreen.tsx:186:   'erro.servidor_ocupado': 'servidor ocupado · tente em instantes',
+apps/native/src/screens/SetlistsScreen.tsx:187:   'erro.nao_encontrado': 'não encontrado no servidor',
+apps/native/src/screens/SetlistsScreen.tsx:188:   'erro.requisicao_invalida': 'o servidor recusou o pedido',
+apps/native/src/screens/SetlistsScreen.tsx:189:   'erro.falha_do_servidor': 'falha no servidor',
+apps/native/src/screens/SetlistsScreen.tsx:190:   'erro.desconhecido': 'falha ao sincronizar',
+apps/native/src/screens/SetlistsScreen.tsx:191: }
+apps/native/src/screens/SetlistsScreen.tsx:192: 
+
+$ awk 'NR>=575&&NR<=615' apps/native/src/screens/IndexScreen.tsx
+apps/native/src/screens/IndexScreen.tsx:575:     if (falha !== null) {
+apps/native/src/screens/IndexScreen.tsx:576:       // As três orações da moldura `N2-X-falhou`, nesta ordem: o que não deu
+apps/native/src/screens/IndexScreen.tsx:577:       // certo, o que o servidor disse, e o que a tela mostra agora. A
+apps/native/src/screens/IndexScreen.tsx:578:       // terceira só existe DEPOIS da releitura (regra 3) — antes dela seria
+apps/native/src/screens/IndexScreen.tsx:579:       // uma promessa sobre uma lista que ainda não chegou.
+apps/native/src/screens/IndexScreen.tsx:580:       const oracoes = [frase('falhou-salvar'), falha.frase]
+apps/native/src/screens/IndexScreen.tsx:581:       // N2-D32: a terceira oração só com a releitura FEITA — nem durante
+apps/native/src/screens/IndexScreen.tsx:582:       // ela, nem depois de ela falhar.
+apps/native/src/screens/IndexScreen.tsx:583:       if (!relendo && !releituraFalhou) oracoes.push(frase('lista-relida'))
+apps/native/src/screens/IndexScreen.tsx:584:       return {
+apps/native/src/screens/IndexScreen.tsx:585:         icone: 'falha' as NomeIcone,
+apps/native/src/screens/IndexScreen.tsx:586:         cor: dark.errorInk,
+apps/native/src/screens/IndexScreen.tsx:587:         motivo: oracoes.join('  ·  '),
+apps/native/src/screens/IndexScreen.tsx:588:         acao:
+apps/native/src/screens/IndexScreen.tsx:589:           repetir === null
+apps/native/src/screens/IndexScreen.tsx:590:             ? undefined
+apps/native/src/screens/IndexScreen.tsx:591:             : releituraFalhou
+apps/native/src/screens/IndexScreen.tsx:592:               ? {
+apps/native/src/screens/IndexScreen.tsx:593:                   rotulo: 'Tentar recarregar',
+apps/native/src/screens/IndexScreen.tsx:594:                   onPress: () => void recarregar(),
+apps/native/src/screens/IndexScreen.tsx:595:                   inativo: relendo,
+apps/native/src/screens/IndexScreen.tsx:596:                   motivoInativo: relendo ? frase('relendo') : undefined,
+apps/native/src/screens/IndexScreen.tsx:597:                 }
+apps/native/src/screens/IndexScreen.tsx:598:               : {
+apps/native/src/screens/IndexScreen.tsx:599:                 rotulo: 'Tentar de novo',
+apps/native/src/screens/IndexScreen.tsx:600:                 onPress: repetir,
+apps/native/src/screens/IndexScreen.tsx:601:                 inativo: relendo || !podeEscrever,
+apps/native/src/screens/IndexScreen.tsx:602:                 motivoInativo: relendo ? frase('relendo') : undefined,
+apps/native/src/screens/IndexScreen.tsx:603:               },
+apps/native/src/screens/IndexScreen.tsx:604:       }
+apps/native/src/screens/IndexScreen.tsx:605:     }
+apps/native/src/screens/IndexScreen.tsx:606:     if (!cabeNoTeto) {
+apps/native/src/screens/IndexScreen.tsx:607:       // A tinta é `muted` e não a `lineInfo` do ícone da moldura: a linha
+apps/native/src/screens/IndexScreen.tsx:608:       // pinta ícone e texto com a mesma cor, e `lineInfo` nunca é texto (§3.3).
+apps/native/src/screens/IndexScreen.tsx:609:       return { icone: 'n-de-musicas' as NomeIcone, cor: dark.muted, motivo: frase('teto-100'), acao: undefined }
+apps/native/src/screens/IndexScreen.tsx:610:     }
+apps/native/src/screens/IndexScreen.tsx:611:     if (salvoNaoRelido) {
+apps/native/src/screens/IndexScreen.tsx:612:       return {
+apps/native/src/screens/IndexScreen.tsx:613:         icone: 'ultima-sincronizacao' as NomeIcone,
+apps/native/src/screens/IndexScreen.tsx:614:         cor: dark.muted,
+apps/native/src/screens/IndexScreen.tsx:615:         motivo: frase('salvo-nao-relido-s2'),
+
+$ awk 'NR>=1&&NR<=90' components/library/frases-lista.ts
+components/library/frases-lista.ts:1: /**
+components/library/frases-lista.ts:2:  * As frases da folha `4-content-lista` — painel e biblioteca (I1-PR-9;
+components/library/frases-lista.ts:3:  * `docs/ux/DESIGN-I1/README-design.md` §5.1 e §5.5; lista declarada da
+components/library/frases-lista.ts:4:  * I1-D10/D17, tabela chave · texto · origem em `docs/ux/I1-PR9-anexos/README.md`).
+components/library/frases-lista.ts:5:  * Frases novas aprovadas no aval do commit 1 (divs. 706–708): `lib.artista.desconhecido`,
+components/library/frases-lista.ts:6:  * os nomes acessíveis do favoritar e os 12 meses da data curta.
+components/library/frases-lista.ts:7:  * O motivo da falha sai do `status` que o erro da carga leva (o padrão da I1-PR-6).
+components/library/frases-lista.ts:8:  */
+components/library/frases-lista.ts:9: import type { NomeIcone } from "@octavia/identidade"
+components/library/frases-lista.ts:10: import { ContentType, normalizeContentType } from "@/types/content"
+components/library/frases-lista.ts:11: 
+components/library/frases-lista.ts:12: export const FRASES_LISTA = {
+components/library/frases-lista.ts:13:   "motivo.rede": "sem conexão",
+components/library/frases-lista.ts:14:   "motivo.auth": "o servidor não aceitou a sessão — entre de novo",
+components/library/frases-lista.ts:15:   "motivo.limite": "muitas tentativas — tente de novo em instantes",
+components/library/frases-lista.ts:16:   "motivo.servidor": "falha no servidor",
+components/library/frases-lista.ts:17:   "motivo.generico": "algo deu errado",
+components/library/frases-lista.ts:18:   "acao.tentar": "Tentar de novo",
+components/library/frases-lista.ts:19:   "acao.cancelar": "Cancelar",
+components/library/frases-lista.ts:20:   "dash.titulo": "Painel",
+components/library/frases-lista.ts:21:   "dash.adicionar": "Adicionar",
+components/library/frases-lista.ts:22:   "dash.abas.geral": "Visão geral",
+components/library/frases-lista.ts:23:   "dash.abas.recentes": "Recentes",
+components/library/frases-lista.ts:24:   "dash.abas.favoritas": "Favoritas",
+components/library/frases-lista.ts:25:   "dash.cont.conteudos": "conteúdos na biblioteca",
+components/library/frases-lista.ts:26:   "dash.cont.setlists": "setlists",
+components/library/frases-lista.ts:27:   "dash.cont.favoritas": "favoritas",
+components/library/frases-lista.ts:28:   "dash.cont.vistas": "vistas há pouco",
+components/library/frases-lista.ts:29:   "dash.cont.desconhecido": "—",
+components/library/frases-lista.ts:30:   "dash.recentes": "Recentes",
+components/library/frases-lista.ts:31:   "dash.favoritas": "Favoritas",
+components/library/frases-lista.ts:32:   "dash.vazio.recentes": "nada visto recentemente",
+components/library/frases-lista.ts:33:   "dash.vazio.favoritas": "nenhuma favorita",
+components/library/frases-lista.ts:34:   "dash.erro": "não foi possível carregar o painel — {motivo}",
+components/library/frases-lista.ts:35:   "lib.titulo": "Biblioteca",
+components/library/frases-lista.ts:36:   "lib.adicionar": "Adicionar",
+components/library/frases-lista.ts:37:   "lib.filtros": "Filtros",
+components/library/frases-lista.ts:38:   "lib.filtros.tipo": "tipo",
+components/library/frases-lista.ts:39:   "lib.filtros.dificuldade": "dificuldade",
+components/library/frases-lista.ts:40:   "lib.filtros.favoritas": "Só as favoritas",
+components/library/frases-lista.ts:41:   "lib.ordenar.recent": "Mais recentes",
+components/library/frases-lista.ts:42:   "lib.ordenar.title": "Título (A–Z)",
+components/library/frases-lista.ts:43:   "lib.ordenar.artist": "Artista (A–Z)",
+components/library/frases-lista.ts:44:   "lib.favoritar": "Favoritar",
+components/library/frases-lista.ts:45:   "lib.favorita": "Favorita",
+components/library/frases-lista.ts:46:   "lib.favoritar.nome": "Favoritar “{título}”",
+components/library/frases-lista.ts:47:   "lib.favorita.nome": "Tirar “{título}” das favoritas",
+components/library/frases-lista.ts:48:   "lib.mais": "Mais",
+components/library/frases-lista.ts:49:   "lib.mais.nome": "Mais ações para “{título}”",
+components/library/frases-lista.ts:50:   "lib.menu.abrir": "Abrir",
+components/library/frases-lista.ts:51:   "lib.menu.editar": "Editar",
+components/library/frases-lista.ts:52:   "lib.menu.apagar": "Apagar",
+components/library/frases-lista.ts:53:   "lib.paginas.anterior": "Anterior",
+components/library/frases-lista.ts:54:   "lib.paginas.proxima": "Próxima",
+components/library/frases-lista.ts:55:   "lib.carregando": "carregando a biblioteca…",
+components/library/frases-lista.ts:56:   "lib.vazio": "nenhum conteúdo ainda",
+components/library/frases-lista.ts:57:   "lib.vazio.apoio": "adicione a primeira música para começar",
+components/library/frases-lista.ts:58:   "lib.vazio.busca": "nada encontrado",
+components/library/frases-lista.ts:59:   "lib.vazio.busca.apoio": "mude a busca ou os filtros",
+components/library/frases-lista.ts:60:   "lib.erro": "não foi possível carregar a biblioteca — {motivo}",
+components/library/frases-lista.ts:61:   // I1-PR-11 (`LIB-salvo`, README-design §5.5): o sucesso de salvar do editor, dito pela biblioteca (decisão 1)
+components/library/frases-lista.ts:62:   "edit.salvo": "alterações salvas",
+components/library/frases-lista.ts:63:   "lib.apagar.titulo": "Apagar conteúdo",
+components/library/frases-lista.ts:64:   "lib.apagar.pergunta": "apagar “{título}”? não dá para desfazer",
+components/library/frases-lista.ts:65:   "lib.apagar.confirmar": "Apagar",
+components/library/frases-lista.ts:66:   "lib.artista.desconhecido": "artista desconhecido",
+components/library/frases-lista.ts:67: } as const
+components/library/frases-lista.ts:68: 
+components/library/frases-lista.ts:69: export type ChaveLista = keyof typeof FRASES_LISTA
+components/library/frases-lista.ts:70: 
+components/library/frases-lista.ts:71: export function comDado(chave: ChaveLista, dados: Record<string, string>): string {
+components/library/frases-lista.ts:72:   return Object.entries(dados).reduce<string>((t, [k, v]) => t.replace(`{${k}}`, v), FRASES_LISTA[chave])
+components/library/frases-lista.ts:73: }
+components/library/frases-lista.ts:74: 
+components/library/frases-lista.ts:75: /** O tipo do content: o ícone do catálogo e o rótulo pt-BR (os quatro de `lib.filtros`, div. 709). */
+components/library/frases-lista.ts:76: export const TIPOS: readonly { valor: ContentType; rotulo: string; icone: NomeIcone }[] = [
+components/library/frases-lista.ts:77:   { valor: ContentType.CHORDS, rotulo: "Cifra", icone: "cifra" },
+components/library/frases-lista.ts:78:   { valor: ContentType.LYRICS, rotulo: "Letra", icone: "letra" },
+components/library/frases-lista.ts:79:   { valor: ContentType.TAB, rotulo: "Tab", icone: "tab" },
+components/library/frases-lista.ts:80:   { valor: ContentType.SHEET, rotulo: "Partitura", icone: "partitura" },
+components/library/frases-lista.ts:81: ]
+components/library/frases-lista.ts:82: 
+components/library/frases-lista.ts:83: export function tipoDe(contentType: string): { rotulo: string; icone: NomeIcone } {
+components/library/frases-lista.ts:84:   const t = TIPOS.find((x) => x.valor === normalizeContentType(contentType))
+components/library/frases-lista.ts:85:   return t ?? { rotulo: "", icone: "tipo-desconhecido" }
+components/library/frases-lista.ts:86: }
+components/library/frases-lista.ts:87: 
+components/library/frases-lista.ts:88: export const DIFICULDADES: readonly { valor: string; rotulo: string }[] = [
+components/library/frases-lista.ts:89:   { valor: "Beginner", rotulo: "Iniciante" },
+components/library/frases-lista.ts:90:   { valor: "Intermediate", rotulo: "Intermediário" },
+
+$ awk 'NR>=76&&NR<=90' components/editors/frases-editor.ts
+components/editors/frases-editor.ts:76:   "estado.carregando": "carregando…",
+components/editors/frases-editor.ts:77:   "acao.voltar": "Voltar",
+components/editors/frases-editor.ts:78:   "acao.tentar": FRASES_LISTA["acao.tentar"],
+components/editors/frases-editor.ts:79:   "motivo.rede": FRASES_LISTA["motivo.rede"],
+components/editors/frases-editor.ts:80:   // decisão 11 do aval: dentro de "não foi possível … — {motivo}" o motivo com travessão o troca por vírgula (a folha)
+components/editors/frases-editor.ts:81:   "motivo.auth": "o servidor não aceitou a sessão, entre de novo",
+components/editors/frases-editor.ts:82:   "motivo.limite": "muitas tentativas, tente de novo em instantes",
+components/editors/frases-editor.ts:83:   "motivo.servidor": FRASES_LISTA["motivo.servidor"],
+components/editors/frases-editor.ts:84:   "motivo.recusado": "o servidor recusou os dados",
+components/editors/frases-editor.ts:85: } as const
+components/editors/frases-editor.ts:86: 
+components/editors/frases-editor.ts:87: export type ChaveEdit = keyof typeof FRASES_EDIT
+components/editors/frases-editor.ts:88: 
+components/editors/frases-editor.ts:89: export function fraseEdit(chave: ChaveEdit, dados: Record<string, string> = {}): string {
+components/editors/frases-editor.ts:90:   return Object.entries(dados).reduce<string>((t, [k, v]) => t.replace(`{${k}}`, v), FRASES_EDIT[chave])
+
+$ awk 'NR>=25&&NR<=45' components/content/frases-visualizacao.ts
+components/content/frases-visualizacao.ts:25:   "view.pdf.largura": "Largura",
+components/content/frases-visualizacao.ts:26:   "view.pdf.largura.nome": "Ajustar à largura",
+components/content/frases-visualizacao.ts:27:   "view.pdf.pagina.ajuste": "Página",
+components/content/frases-visualizacao.ts:28:   "view.pdf.pagina.nome": "Ajustar à página",
+components/content/frases-visualizacao.ts:29:   "view.pdf.tela-cheia": "Tela cheia",
+components/content/frases-visualizacao.ts:30:   "view.pdf.sair": "Sair da tela cheia",
+components/content/frases-visualizacao.ts:31:   "view.pdf.carregando": "carregando o PDF…",
+components/content/frases-visualizacao.ts:32:   "view.vazio.partitura": "nenhuma partitura",
+components/content/frases-visualizacao.ts:33:   "view.vazio.partitura.apoio": "envie um PDF ou uma imagem para ver a partitura",
+components/content/frases-visualizacao.ts:34:   "view.vazio.letra": "nenhuma letra",
+components/content/frases-visualizacao.ts:35:   "view.vazio.letra.apoio": "escreva a letra para ter no palco",
+components/content/frases-visualizacao.ts:36:   "view.vazio.tab": "nenhuma tablatura",
+components/content/frases-visualizacao.ts:37:   "view.vazio.cifra": "nenhuma cifra",
+components/content/frases-visualizacao.ts:38:   "view.erro.formato": "não foi possível abrir o arquivo — confira o formato",
+components/content/frases-visualizacao.ts:39:   "view.erro.pdf": "não foi possível abrir o PDF — {motivo}",
+components/content/frases-visualizacao.ts:40:   "view.erro.pdf.inacessivel": "o arquivo está corrompido ou inacessível",
+components/content/frases-visualizacao.ts:41:   "view.erro.pdf.formato": "formato de PDF inválido",
+components/content/frases-visualizacao.ts:42:   "view.erro.imagem": "não foi possível abrir o arquivo — {motivo}",
+components/content/frases-visualizacao.ts:43:   "view.erro.render": "algo deu errado",
+components/content/frases-visualizacao.ts:44:   "motivo.rede": FRASES_LISTA["motivo.rede"],
+components/content/frases-visualizacao.ts:45:   // na forma composta (`não foi possível … — {motivo}`) o genérico é o curto, como `forgot.erro` e `lib.erro`
+
+$ awk 'NR>=1&&NR<=10' components/setlists/frases-setlists.ts
+components/setlists/frases-setlists.ts:1: /**
+components/setlists/frases-setlists.ts:2:  * As frases da folha `8-setlists` (I1-PR-13; `docs/ux/DESIGN-I1/README-design.md` §5.1, §5.9 e §5.10 — N7, N10, N2;
+components/setlists/frases-setlists.ts:3:  * lista declarada da I1-D10/D17, tabela chave · texto · origem em `docs/ux/I1-PR13-anexos/README.md` §4).
+components/setlists/frases-setlists.ts:4:  * Aprovadas no aval do commit 1 (decisões 6, 9 e 13): a forma da duração, os placeholders do formulário, *Adicionar*
+components/setlists/frases-setlists.ts:5:  * sem número, o nome acessível do picker, *Salvando…* no editar, *sem título*, e os reusos da PR-9 (*artista
+components/setlists/frases-setlists.ts:6:  * desconhecido*, a data curta, os quatro tipos) e da PR-11 (os motivos com vírgula, a N2).
+components/setlists/frases-setlists.ts:7:  */
+components/setlists/frases-setlists.ts:8: import { FRASES_EDIT } from "@/components/editors/frases-editor"
+components/setlists/frases-setlists.ts:9: import { FRASES_LISTA, MESES, tipoDe } from "@/components/library/frases-lista"
+components/setlists/frases-setlists.ts:10: import type { ContentDaLinha, LinhaDaSetlist } from "@/components/setlists/tipos"
+
+$ awk 'NR>=45&&NR<=85' components/setlists/frases-setlists.ts
+components/setlists/frases-setlists.ts:45:   "set.form.criar": "Criar",
+components/setlists/frases-setlists.ts:46:   "set.form.criando": "Criando…",
+components/setlists/frases-setlists.ts:47:   "set.form.salvar": "Salvar",
+components/setlists/frases-setlists.ts:48:   "set.form.salvando": "Salvando…",
+components/setlists/frases-setlists.ts:49:   "set.form.sem-nome": "a setlist precisa de um nome",
+components/setlists/frases-setlists.ts:50:   "set.erro.criar": "não foi possível criar a setlist — {motivo}",
+components/setlists/frases-setlists.ts:51:   "set.erro.salvar": "não foi possível salvar a setlist — {motivo}",
+components/setlists/frases-setlists.ts:52:   "set.apagar.titulo": "Apagar setlist",
+components/setlists/frases-setlists.ts:53:   "set.apagar.pergunta": "apagar “{nome}”? não dá para desfazer",
+components/setlists/frases-setlists.ts:54:   "set.apagar.confirmar": FRASES_LISTA["lib.apagar.confirmar"],
+components/setlists/frases-setlists.ts:55:   "set.erro.apagar": "não foi possível apagar a setlist — {motivo}",
+components/setlists/frases-setlists.ts:56:   "set.ja-apagada": "esta setlist já foi apagada",
+components/setlists/frases-setlists.ts:57:   "set.sem-musicas": "nenhuma música ainda",
+components/setlists/frases-setlists.ts:58:   "set.sem-musicas.apoio": "adicione músicas da biblioteca",
+components/setlists/frases-setlists.ts:59:   "set.picker.titulo": "Adicionar a {nome}",
+components/setlists/frases-setlists.ts:60:   "set.picker.busca": "buscar por título, artista ou tipo",
+components/setlists/frases-setlists.ts:61:   "set.picker.todas": "Selecionar todas ({n})",
+components/setlists/frases-setlists.ts:62:   "set.picker.ok": "Adicionar {n}",
+components/setlists/frases-setlists.ts:63:   "set.picker.ok.nenhuma": "Adicionar",
+components/setlists/frases-setlists.ts:64:   "set.picker.ok.nome": "Adicionar {n} músicas a {nome}",
+components/setlists/frases-setlists.ts:65:   "set.picker.ok.nome.uma": "Adicionar 1 música a {nome}",
+components/setlists/frases-setlists.ts:66:   "set.picker.enviando": "Adicionando…",
+components/setlists/frases-setlists.ts:67:   "set.picker.vazio": "nenhuma música disponível",
+components/setlists/frases-setlists.ts:68:   "set.picker.vazio.apoio": "adicione músicas à biblioteca primeiro",
+components/setlists/frases-setlists.ts:69:   "set.picker.todas-ja": "todas as músicas da biblioteca já estão nesta setlist",
+components/setlists/frases-setlists.ts:70:   "set.picker.busca-vazia": "nada encontrado",
+components/setlists/frases-setlists.ts:71:   "set.picker.busca-vazia.apoio": "mude a busca",
+components/setlists/frases-setlists.ts:72:   "set.erro.adicionar": "não foi possível adicionar as músicas — {motivo}",
+components/setlists/frases-setlists.ts:73:   "set.erro.remover": "não foi possível remover “{título}” — {motivo}",
+components/setlists/frases-setlists.ts:74:   "lib.erro": FRASES_LISTA["lib.erro"],
+components/setlists/frases-setlists.ts:75:   "sem-titulo": "sem título",
+components/setlists/frases-setlists.ts:76:   "artista.desconhecido": FRASES_LISTA["lib.artista.desconhecido"],
+components/setlists/frases-setlists.ts:77:   "digitado-fica": FRASES_EDIT["digitado-fica"],
+components/setlists/frases-setlists.ts:78:   "acao.cancelar": FRASES_LISTA["acao.cancelar"],
+components/setlists/frases-setlists.ts:79:   "acao.tentar": FRASES_LISTA["acao.tentar"],
+components/setlists/frases-setlists.ts:80:   "motivo.rede": FRASES_EDIT["motivo.rede"],
+components/setlists/frases-setlists.ts:81:   "motivo.auth": FRASES_EDIT["motivo.auth"],
+components/setlists/frases-setlists.ts:82:   "motivo.limite": FRASES_EDIT["motivo.limite"],
+components/setlists/frases-setlists.ts:83:   "motivo.servidor": FRASES_EDIT["motivo.servidor"],
+components/setlists/frases-setlists.ts:84:   "motivo.recusado": FRASES_EDIT["motivo.recusado"],
+components/setlists/frases-setlists.ts:85: } as const
+
+$ awk 'NR>=1&&NR<=20' components/auth/frases-sessao.ts
+components/auth/frases-sessao.ts:1: /**
+components/auth/frases-sessao.ts:2:  * I1-PR1 — as frases da sessão (lista declarada da I1-D10/D17; tabela em
+components/auth/frases-sessao.ts:3:  * `docs/ux/I1-PR1-anexos/README.md`). pt-BR, no estilo de
+components/auth/frases-sessao.ts:4:  * `packages/core/src/frases.ts`: minúsculas, travessão. O web não importa o
+components/auth/frases-sessao.ts:5:  * conjunto do nativo neste bloco (I1-D10) — a unificação é herança do N4.
+components/auth/frases-sessao.ts:6:  */
+components/auth/frases-sessao.ts:7: import type { FalhaSessao } from '@/lib/firebase-session-cookies'
+components/auth/frases-sessao.ts:8: 
+components/auth/frases-sessao.ts:9: export const FRASES_SESSAO = {
+components/auth/frases-sessao.ts:10:   rede: 'sem conexão — a sessão não foi aberta',
+components/auth/frases-sessao.ts:11:   recusado: 'o servidor não aceitou o login — entre de novo',
+components/auth/frases-sessao.ts:12:   'limite-com-prazo': 'muitas tentativas de entrar — tente de novo em {N}',
+components/auth/frases-sessao.ts:13:   'limite-sem-prazo': 'muitas tentativas de entrar — tente de novo em instantes',
+components/auth/frases-sessao.ts:14:   servidor: 'falha no servidor — a sessão não foi aberta',
+components/auth/frases-sessao.ts:15:   renovacao: 'a sessão não foi renovada: {razão}',
+components/auth/frases-sessao.ts:16:   'tentar-de-novo': 'Tentar de novo',
+components/auth/frases-sessao.ts:17: } as const
+components/auth/frases-sessao.ts:18: 
+components/auth/frases-sessao.ts:19: /** A razão sem o fecho "a sessão não foi aberta" — o que entra no `{razão}` da renovação. */
+components/auth/frases-sessao.ts:20: const RAZAO_CURTA: Record<FalhaSessao['motivo'], string> = {
+
+## a composição "título + motivo" nos dois lados
+$ git grep -nE "join\('  ·  '\)" -- apps/native/src
+apps/native/src/screens/IndexScreen.tsx:207:  return partes.join('  ·  ')
+apps/native/src/screens/IndexScreen.tsx:587:        motivo: oracoes.join('  ·  '),
+apps/native/src/screens/ModoDeReordenar.tsx:511:    return { icone: 'falha', cor: dark.errorInk, motivo: oracoes.join('  ·  ') }
+apps/native/src/screens/SearchScreen.tsx:91:  return partes.join('  ·  ')
+
+$ awk 'NR>=576&&NR<=590' apps/native/src/screens/IndexScreen.tsx
+apps/native/src/screens/IndexScreen.tsx:576:       // As três orações da moldura `N2-X-falhou`, nesta ordem: o que não deu
+apps/native/src/screens/IndexScreen.tsx:577:       // certo, o que o servidor disse, e o que a tela mostra agora. A
+apps/native/src/screens/IndexScreen.tsx:578:       // terceira só existe DEPOIS da releitura (regra 3) — antes dela seria
+apps/native/src/screens/IndexScreen.tsx:579:       // uma promessa sobre uma lista que ainda não chegou.
+apps/native/src/screens/IndexScreen.tsx:580:       const oracoes = [frase('falhou-salvar'), falha.frase]
+apps/native/src/screens/IndexScreen.tsx:581:       // N2-D32: a terceira oração só com a releitura FEITA — nem durante
+apps/native/src/screens/IndexScreen.tsx:582:       // ela, nem depois de ela falhar.
+apps/native/src/screens/IndexScreen.tsx:583:       if (!relendo && !releituraFalhou) oracoes.push(frase('lista-relida'))
+apps/native/src/screens/IndexScreen.tsx:584:       return {
+apps/native/src/screens/IndexScreen.tsx:585:         icone: 'falha' as NomeIcone,
+apps/native/src/screens/IndexScreen.tsx:586:         cor: dark.errorInk,
+apps/native/src/screens/IndexScreen.tsx:587:         motivo: oracoes.join('  ·  '),
+apps/native/src/screens/IndexScreen.tsx:588:         acao:
+apps/native/src/screens/IndexScreen.tsx:589:           repetir === null
+apps/native/src/screens/IndexScreen.tsx:590:             ? undefined
+
+$ awk 'NR>=502&&NR<=512' apps/native/src/screens/ModoDeReordenar.tsx
+apps/native/src/screens/ModoDeReordenar.tsx:502:     if (!online) return { icone: 'sem-conexao', cor: dark.offlineInk, motivo: frase('sem-rede-s2') }
+apps/native/src/screens/ModoDeReordenar.tsx:503:     if (falha === null) return null
+apps/native/src/screens/ModoDeReordenar.tsx:504:     if (falha.especie === 'limite') return { icone: 'ultima-sincronizacao', cor: dark.offlineInk, motivo: falha.frase }
+apps/native/src/screens/ModoDeReordenar.tsx:505:     // As três orações da moldura `N2-S2e-ordem-falhou`; a terceira só depois
+apps/native/src/screens/ModoDeReordenar.tsx:506:     // da releitura — antes dela seria promessa sobre uma leitura em voo.
+apps/native/src/screens/ModoDeReordenar.tsx:507:     const oracoes = [frase('falhou-ordem'), falha.frase]
+apps/native/src/screens/ModoDeReordenar.tsx:508:     // "a ordem dela não foi aplicada aqui" seria mentira depois da N2-D37,
+apps/native/src/screens/ModoDeReordenar.tsx:509:     // que aplicou exatamente a ordem relida.
+apps/native/src/screens/ModoDeReordenar.tsx:510:     if (releitura === 'ok' && !descartado) oracoes.push(frase('ordem-relida'))
+apps/native/src/screens/ModoDeReordenar.tsx:511:     return { icone: 'falha', cor: dark.errorInk, motivo: oracoes.join('  ·  ') }
+apps/native/src/screens/ModoDeReordenar.tsx:512:   }, [online, falha, releitura, descartado])
+
+$ git grep -nE '— \{motivo\}' -- components
+components/content/frases-visualizacao.ts:39:  "view.erro.pdf": "não foi possível abrir o PDF — {motivo}",
+components/content/frases-visualizacao.ts:42:  "view.erro.imagem": "não foi possível abrir o arquivo — {motivo}",
+components/content/frases-visualizacao.ts:45:  // na forma composta (`não foi possível … — {motivo}`) o genérico é o curto, como `forgot.erro` e `lib.erro`
+components/editors/frases-editor.ts:18:  "edit.erro.carregar": "não foi possível carregar o conteúdo — {motivo}",
+components/editors/frases-editor.ts:21:  "edit.erro.salvar": "não foi possível salvar — {motivo}",
+components/editors/frases-editor.ts:80:  // decisão 11 do aval: dentro de "não foi possível … — {motivo}" o motivo com travessão o troca por vírgula (a folha)
+components/library/frases-lista.ts:34:  "dash.erro": "não foi possível carregar o painel — {motivo}",
+components/library/frases-lista.ts:60:  "lib.erro": "não foi possível carregar a biblioteca — {motivo}",
+components/setlists/falhas-das-setlists.ts:38:/** A linha de uma falha: *não foi possível … — {motivo}*; `onTentar` só entra onde repetir resolve (e se foi dado). */
+components/setlists/frases-setlists.ts:32:  "set.erro": "não foi possível carregar as setlists — {motivo}",
+components/setlists/frases-setlists.ts:50:  "set.erro.criar": "não foi possível criar a setlist — {motivo}",
+components/setlists/frases-setlists.ts:51:  "set.erro.salvar": "não foi possível salvar a setlist — {motivo}",
+components/setlists/frases-setlists.ts:55:  "set.erro.apagar": "não foi possível apagar a setlist — {motivo}",
+components/setlists/frases-setlists.ts:72:  "set.erro.adicionar": "não foi possível adicionar as músicas — {motivo}",
+components/setlists/frases-setlists.ts:73:  "set.erro.remover": "não foi possível remover “{título}” — {motivo}",
+components/upload/falhas-do-upload.ts:51:/** A linha da falha de uma escrita: *não foi possível … — {motivo}*; `onTentar` só entra onde repetir resolve. */
+components/upload/falhas-do-upload.ts:57:/** A linha da falha do envio: o limite (N8, sem ação) ou *o arquivo não foi enviado — {motivo}*. */
+components/upload/frases-upload.ts:40:  "up.erro.envio": "o arquivo não foi enviado — {motivo}",
+components/upload/frases-upload.ts:57:  "up.erro.salvar": "não foi possível salvar — {motivo}",
+components/upload/frases-upload.ts:70:  "up.lote.erro": "não foi possível importar as músicas — {motivo}",
