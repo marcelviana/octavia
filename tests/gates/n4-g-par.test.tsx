@@ -23,7 +23,9 @@
  * O VEREDITO (molde: a lista de exceções com ÓRFÃ REPROVANDO, regra 14 do `LOGS-OCTAVIA.md`, e a linha de base
  * que reprova por construção, `tests/gates-web/medicoes/cn-main/` do G-faixa): o gate REPROVA EXATAMENTE a lista de
  * `packages/core/fixtures/g-par-reprovados.txt`. Reprovado fora da lista = "reprovação não declarada"; item da lista
- * que passa (ou que não existe na fixture) = "declaração órfã". Lista vazia = zero reprovações (a PR-2).
+ * que não reprova = "declaração órfã", com o porquê em um de três textos (div. 987, N4-PR2): "passa" (é par e é
+ * igual), "está no fora do par" (não é par: não pode reprovar) ou "não existe na fixture". Lista vazia = zero
+ * reprovações (a PR-2).
  *
  * FORA DO PAR: `fora_do_par` da fixture — formas que só o web lê e que a B2 não achou no dado real. Impressas e
  * contadas em toda corrida, com o resultado de cada lado; não reprovam e não somem.
@@ -118,6 +120,8 @@ describe('G-par (N4-PR1) — o mesmo content, o mesmo texto no web e no nativo',
     }
 
     const ids = new Set(fx.par.map((i) => i.id))
+    const foraDoPar = new Set(fx.fora_do_par.map((i) => i.id))
+    const porque = (id: string) => (ids.has(id) ? 'passa' : foraDoPar.has(id) ? 'está no fora do par' : 'não existe na fixture')
     const naoDeclarados = reprovados.filter((id) => !esperados.includes(id))
     const orfas = esperados.filter((id) => !reprovados.includes(id))
     const resumo = [
@@ -127,7 +131,7 @@ describe('G-par (N4-PR1) — o mesmo content, o mesmo texto no web e no nativo',
       `lista esperada (${esperados.length}): ${esperados.join(', ') || '(vazia)'}`,
       `reprovados     (${reprovados.length}): ${reprovados.join(', ') || '(nenhum)'}`,
       ...naoDeclarados.map((id) => `  ✗ reprovação NÃO DECLARADA: ${id}`),
-      ...orfas.map((id) => `  ✗ declaração ÓRFÃ: ${id}${ids.has(id) ? ' (passa)' : ' (não existe na fixture)'}`),
+      ...orfas.map((id) => `  ✗ declaração ÓRFÃ: ${id} (${porque(id)})`),
       naoDeclarados.length || orfas.length ? 'G-par: ✗ a reprovação não é a lista esperada' : `G-par: reprova exatamente a lista esperada (${esperados.length}) ✓`,
     ].join('\n')
     console.log(resumo)
