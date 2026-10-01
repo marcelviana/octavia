@@ -59,6 +59,7 @@ achou algo que toca uma delas, a decisão fica como está e a divergência apont
 | **N4-D19** | Gates do bloco: G-inv, G-N3 estendido às telas novas, **G-par** (novo: o mesmo content fabricado mostra o mesmo texto no web e no nativo) e G-back verde em toda PR. Escrita em prod: **só o favoritar**, pela regra 12, na conta de audit, em recurso descartável. |
 | **N4-D20** | Fatiamento: PR-0 pre-check · brief/desenho/congelamento · PR-1 gates (entram reprovando) · PR-2 frases e contrato da linha de aviso · PR-3 core da biblioteca sem tela · PR-4 a tela da biblioteca · PR-5 visualização e palco avulso · PR-6 navegação, estados transversais e aceite completo · encerramento. O pre-check pode propor outra fatia, como pergunta. *(Ver Q11.)* |
 | ↳ *errata* | **Errata da N4-D20 pela N4-D32** `[Marcel, 2026-10-01]`: o fatiamento passa a ser o da N4-D32 (§9) — PR-1 gates · PR-2 core de frases e contrato · PR-3 core da biblioteca · PR-4 a tela da biblioteca com a entrada em S1 · PR-5 o palco avulso sem hospedeira · PR-6 a visualização · PR-7 estados transversais, espécies e aceite · encerramento. |
+| ↳ *errata* | **Errata da N4-D20, de novo, pela N4-D45** `[Marcel, 2026-10-01]`: o fatiamento que vale é o da **N4-D45** (§16), que substitui o da N4-D32. |
 | **N4-D21** | Favoritar e desfavoritar ficam disponíveis no tablet. |
 
 ---
@@ -839,6 +840,7 @@ N4-D39 com a resposta às leituras.
 | **N4-D30** | (Q9) O palco avulso deixa de ter setlist hospedeira quando vem da lista, da visualização ou de S1; o avulso aberto pela busca dentro de uma setlist fica como está. |
 | **N4-D31** | (Q10) A visualização mostra só os campos salvos de verdade (sem compasso, capo e afinação, que ficam declarados como herança D), com as notas do content. Filtros: tipo e *Só as favoritas*; sem dificuldade e sem ordem. As datas de criação e alteração: o desenho propõe. |
 | **N4-D32** | (Q11) **Errata da N4-D20**, o fatiamento passa a ser: PR-0 pre-check · brief (com as capturas de B e do palco avulso), desenho e congelamento · **PR-1** gates (G-par e o gate do corpo do favoritar, entrando reprovados) · **PR-2** core: frases de content e o contrato da `LinhaDeAviso` · **PR-3** core da biblioteca, sem tela · **PR-4** a tela da biblioteca, com a entrada em S1 (sem ela a tela não se alcança no aparelho; a errata declarada do G-inv sobre os 8 dumps vai aqui) · **PR-5** o palco avulso sem hospedeira · **PR-6** a visualização · **PR-7** estados transversais, a troca de `icone`/`cor` por espécie nas quatro telas e o aceite completo · encerramento. A troca por espécie só entra se o mapa devolver **os mesmos pares** de ícone e cor de hoje, com G-inv e `gate:icones` intactos. |
+| ↳ *errata* | **Errata da N4-D32 pela N4-D45** `[Marcel, 2026-10-01]`: o fatiamento passa a ser o da N4-D45 (§16) — gates e o leitor primeiro, em paralelo ao brief; as frases, a biblioteca, a tela, o palco avulso, a visualização e os transversais depois do congelamento. |
 | **N4-D33** | (Q12) A entrada da biblioteca convive com `Buscar música`; o brief pede ao desenho as duas alternativas lado a lado (conviver × a biblioteca absorver a busca). |
 | **N4-D34** | (Q13) Imagem e `.docx`/`.txt` se decidem depois da B2 e da B4. *(§12 Q13.)* |
 | **N4-D35** | Releitura do favoritar: o cache se atualiza com a linha que o `PUT` devolve, sem sync, **se a B5 confirmar** que a resposta é a linha inteira. Se não confirmar, vira pergunta. *(**Confirmado pela B5**: o `PUT` devolve as 22 colunas, as mesmas do `GET`, e o `GET` seguinte é igual à resposta do `PUT` em todas — §11 B5.)* |
@@ -1029,6 +1031,8 @@ Também, fora de prod: 2 `pnpm build` na árvore de rascunho (L3); `adb` no Tab 
   palco mostrando o texto que o músico já trocou — o defeito que o G-par existe para pegar. O editor que não atualiza
   o `chords` segue herança D em qualquer das duas.
 
+> **Respondida** `[Marcel, 2026-10-01]`: N4-D40 (opção b) — o core lê `sections[]` com a precedência e a junção do web (§16).
+
 **Q6 — a N4-D9 com a B3** (N4-D27).
 - **Número**: **1** arquivo na principal, **138.916 B = 0,066 %** do teto, já baixado; nenhum por baixar.
 - **(a) garantir todos os arquivos** (a primeira opção da D9): a soma cabe com folga de três ordens de grandeza; custa
@@ -1038,6 +1042,8 @@ Também, fora de prod: 2 `pnpm build` na árvore de rascunho (L3); `adb` no Tab 
   ele seria inalcançável na principal (0 não baixados), mas não na audit nem numa conta que suba PDFs.
 - **Recomendação: (a)**, com o `lru over` como o sinal de que deixou de caber, e o estado "não baixada" **desenhado
   mesmo assim** (é o estado entre a criação no web e o próximo sync com rede — regra 17).
+
+> **Respondida** `[Marcel, 2026-10-01]`: N4-D42 (opção a) — todos os arquivos garantidos; "não baixada" para antes do download e para a falha (§16).
 
 **Q13 — imagem e `.docx`/`.txt`** (N4-D34).
 - **Número**: B4 — **só `.pdf`** (1 de 1) na principal; o snapshot da audit já commitado, 5 de 5 `.pdf` (A2).
@@ -1049,14 +1055,20 @@ Também, fora de prod: 2 `pnpm build` na árvore de rascunho (L3); `adb` no Tab 
   `frases-upload.ts:107`), troca uma falha muda por uma frase, e não depende de o dado existir hoje. Se o aval
   preferir não ter estado sem dado, (a).
 
+> **Respondida** `[Marcel, 2026-10-01]`: N4-D43 (opção b) — o estado "formato que o app ainda não mostra", pela extensão (§16).
+
 **Q15 — a Tab editada no web** (L4, div. 976). O editor grava `measures` e deixa `tablature`; a edição não chega a
 leitor nenhum. **Recomendação**: herança **Bloco D**, junto do §10.1 item 3 do I1 (div. 776), com uma linha no
 brief: *"a tab é mostrada como foi importada"*.
+
+> **Respondida** `[Marcel, 2026-10-01]`: N4-D44 — Bloco D, primeira da fila (§16).
 
 **Q16 — o editor da Cifra no Bloco D** (L4, div. 975). Com a Q4 em (b), o palco deixa de depender do `chords` do
 topo; o `chords` desatualizado continua no banco e é o que o `checkContentData` do `PUT` valida
 (`route.ts:260-278`). **Recomendação**: herança **Bloco D** — o editor passa a escrever o `chords` do topo (ou o
 contrato de escrita passa a aceitar `sections` como corpo da Cifra) —, nomeada no encerramento do N4.
+
+> **Respondida** `[Marcel, 2026-10-01]`: N4-D44 — Bloco D (§16).
 
 ---
 
@@ -1125,3 +1137,75 @@ O `## 7` fica como está; o que muda:
 | temporários | o `content.json` (duas cópias), o índice, o `setlists.json`, o logcat e o bundle: fora do repositório, **apagados**; a árvore `../octavia-n4-h15`: **removida** |
 | arquivos | `docs/native/N4-PRECHECK.md` (§0 e §2 com erratas; §9–§15 novos); anexos novos `l1`…`l4`, `b1-b4`, `b5`; `docs/native/N3-ENCERRAMENTO.md` §10.6 e §10.7 (nota); `docs/ux/I1-ENCERRAMENTO.md` §10.2 item 2 (nota) e §10.5 item 11 (novo) |
 | código | nenhum |
+
+---
+
+# Commit 3 — as decisões do aval do commit 2
+
+Só docs: nenhuma request, nenhum aparelho, nenhum `.env*`, nenhuma linha de código. Os commits 1 e 2 não foram
+reescritos: as decisões que mudaram ganharam linha de errata (↳) no `## 0` (N4-D20) e no `## 9` (N4-D32); as
+perguntas do `## 12`, uma linha *"Respondida"* apontando para a decisão.
+
+---
+
+## 16. Decisões N4-D40…D46
+
+`[Marcel, 2026-10-01]`.
+
+| # | decisão |
+|---|---|
+| **N4-D40** | (Q4, opção b) O contrato de leitura do core passa a ler `sections[]` da Cifra com a mesma precedência, a mesma ordem e a mesma junção do leitor do web. O G-par vale sobre esse leitor. O nome da seção aparece no palco como aparece no web; o nome padrão que o editor grava é herança do Bloco D. A errata do requisito de leitura que isso exigir se escreve na PR do leitor, não aqui. *(Onde o contrato está escrito `[medido: grep]`: o **T1-R7** do `docs/native/PRD-TELA-1.md` §4 (*"Contrato de `content_data` (C-D7)"*, `:84`, `:100`) e o cabeçalho de `packages/core/src/content-contract.ts` (*"Mudança de um lado é errata declarada nos dois documentos"* — o lado de escrita é `docs/api/CONTENT-DATA.md` e `lib/content-data-contract.ts`). O nome padrão gravado já é herança D: `I1-ENCERRAMENTO.md` §10.1 item 3, div. 784 — sem item novo.)* |
+| **N4-D41** | O conserto do palco não espera o desenho: a PR dos gates e a PR do leitor saem logo depois do merge deste pre-check e correm enquanto o brief e o desenho andam. |
+| **N4-D42** | (Q6, opção a) Todos os arquivos da biblioteca ficam garantidos. O estado "não baixada" se desenha para o intervalo antes do download e para a falha. |
+| **N4-D43** | (Q13, opção b) Estado "formato que o app ainda não mostra", decidido pela extensão do arquivo, no palco e na visualização. Sem ramo de imagem no N4. |
+| **N4-D44** | (Q15 e Q16) Bloco D para as duas: a Tab editada no web que nenhum leitor vê (div. 976), marcada como **primeira da fila do D**, e o editor da Cifra que não atualiza o `chords` do topo (div. 975). *(Escritas no `I1-ENCERRAMENTO.md` §10.1, itens 17 e 18.)* |
+| **N4-D45** | **Errata da N4-D32** — o fatiamento passa a ser, nesta ordem e com estes nomes: **PR-1 — gates**: o G-par, entrando reprovado, com a fixture que inclui a Cifra com `sections[]` e `chords` em texto (N4-D38); e o gate byte a byte do corpo do favoritar. · **PR-2 — o leitor**: o core lê `sections[]` (N4-D40); o G-par fica verde; aceite do Marcel no Tab. · *(brief, desenho e congelamento correm em paralelo às duas acima; as PRs seguintes só começam depois do congelamento)* · **PR-3 — core das frases**: o vocabulário de content e o contrato da `LinhaDeAviso`, com a frase que passa ao core mantida sob gate (div. 977). · **PR-4 — core da biblioteca, sem tela**: a lista e o filtro, a escrita do favoritar (N4-D22, D23, D35), a garantia de todos os arquivos e o estado por música (N4-D42), e o teste do caso da L2 (o `updated_at` muda, o arquivo fica). · **PR-5 — a tela da biblioteca**, com a entrada em S1 e o favoritar na linha. · **PR-6 — o palco avulso sem hospedeira**, com o estado da N4-D43 no palco. · **PR-7 — a visualização**, com o favoritar, o *Tocar* e o estado da N4-D43. · **PR-8 — estados transversais**, a troca por espécie nas quatro telas (com a condição da N4-D32) e o aceite completo. · **encerramento**. Todo documento de PR do bloco termina nomeando **a próxima PR desta lista**; pular uma é divergência no ato, não no encerramento. |
+| **N4-D46** | As autorizações das divs. 979 e 982 (o `.env.local` para o login da audit e o `apps/native/.env` para o Metro) foram dadas pelo Marcel na sessão; as duas ficam como estão. |
+
+**As heranças do Bloco D escritas neste commit** — `docs/ux/I1-ENCERRAMENTO.md`, tabela da `### 10.1 Bloco D`
+(`:498`), itens novos no fim, sem renumerar: **17** a Tab editada que nenhum leitor vê (div. 976, **primeira da fila
+do D**, N4-D44); **18** o editor da Cifra que não atualiza o `chords` do topo (div. 975, N4-D44); **19** o `PUT` do
+favorito que mexe no `updated_at` (N4-D39). O commit 2 **não** o tinha posto lá (`grep -n 'N4-D39\|updated_at'
+docs/ux/I1-ENCERRAMENTO.md` → nada antes deste commit): sem duplicata.
+
+---
+
+## 17. A proposta de brief — revisão final
+
+O `## 7` e o `## 14` ficam como estão; o que esta revisão muda:
+
+- **Estados da N4-D42** — "não baixada" por música (Partitura e Cifra escaneada), em dois casos: **antes do
+  download** (o intervalo entre o sync que trouxe o item e o arquivo no disco) e **a falha** do download (com a
+  frase do conjunto fechado do W2: *não consegui baixar*, *o arquivo chegou vazio*…). Com a garantia de todos os
+  arquivos, nenhum dos dois é o estado de repouso — e os dois se desenham (regra 17).
+- **Estado da N4-D43** — *"formato que o app ainda não mostra"*, pela extensão, no **palco** e na **visualização**
+  (o par do `VIEW-erro-formato` do web, com o título e o tipo do item).
+- **O nome de seção no corpo da Cifra** (N4-D40) — a Cifra com seções mostra, no palco e na visualização, o nome
+  de cada seção antes dos acordes e da letra, como o web (`name` · `chords` · `lyrics` por linha; seções separadas
+  por uma linha em branco). O nome pode ser o padrão que o editor grava (*"Content"*, *"Verse 1"* — herança D,
+  §10.1 item 3 do I1): o desenho não o esconde.
+- **A nota da N4-D39** — favoritar no tablet reordena o "Recentes" do painel do web.
+- **A ordem de PRs** é a da **N4-D45**, no lugar da N4-D32: PR-1 gates e PR-2 o leitor correm **em paralelo** ao
+  brief; o desenho congelado é pré-requisito da PR-3 em diante. As capturas novas de B e do palco avulso continuam
+  no brief.
+
+---
+
+## 18. Divergências deste commit
+
+A última usada é a **982** `[medido: grep -noE '^\| \*\*9[5-9][0-9]\*\*' docs/native/N4-PRECHECK.md]`.
+**Nenhuma** neste commit: as premissas do prompt conferiram com o repositório (o contrato de leitura no T1-R7 do
+`PRD-TELA-1.md` §4; as divs. 975, 976, 979 e 982 como descritas; a N4-D39 ainda fora do §10.1 do I1). A próxima
+livre segue sendo a **983**.
+
+---
+
+## 19. Contabilidade do commit 3
+
+| | |
+|---|---|
+| requests · aparelho · `.env*` · logins · escritas | **0** · **0** · **0** · **0** · **0** |
+| arquivos | `docs/native/N4-PRECHECK.md` (§0 e §9 com erratas; §12 com as respostas; §16–§19 novos); `docs/ux/I1-ENCERRAMENTO.md` §10.1, itens 17–19 |
+| código | nenhum |
+
+**A próxima PR desta lista** (N4-D45): **PR-1 — gates**.
