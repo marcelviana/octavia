@@ -24,8 +24,10 @@
  * que reprova por construção, `tests/gates-web/medicoes/cn-main/` do G-faixa): o gate REPROVA EXATAMENTE a lista de
  * `packages/core/fixtures/g-par-reprovados.txt`. Reprovado fora da lista = "reprovação não declarada"; item da lista
  * que não reprova = "declaração órfã", com o porquê em um de três textos (div. 987, N4-PR2): "passa" (é par e é
- * igual), "está no fora do par" (não é par: não pode reprovar) ou "não existe na fixture". Lista vazia = zero
- * reprovações (a PR-2).
+ * igual), "está no fora do par" (não é par: não pode reprovar) ou "não existe na fixture".
+ * LISTA VAZIA FIXA (N4-D50, N4-PR2): desde a PR-2 (o leitor, N4-D40) o G-par exige a lista VAZIA como condição fixa —
+ * qualquer linha em `g-par-reprovados.txt` reprova, mesmo a de um item que de fato reprova: reprovação declarada não é
+ * mais aceita. A não declarada e a órfã continuam impressas (com os três textos), para dizer o que a linha é.
  *
  * FORA DO PAR: `fora_do_par` da fixture — formas que só o web lê e que a B2 não achou no dado real. Impressas e
  * contadas em toda corrida, com o resultado de cada lado; não reprovam e não somem.
@@ -132,7 +134,12 @@ describe('G-par (N4-PR1) — o mesmo content, o mesmo texto no web e no nativo',
       `reprovados     (${reprovados.length}): ${reprovados.join(', ') || '(nenhum)'}`,
       ...naoDeclarados.map((id) => `  ✗ reprovação NÃO DECLARADA: ${id}`),
       ...orfas.map((id) => `  ✗ declaração ÓRFÃ: ${id} (${porque(id)})`),
-      naoDeclarados.length || orfas.length ? 'G-par: ✗ a reprovação não é a lista esperada' : `G-par: reprova exatamente a lista esperada (${esperados.length}) ✓`,
+      ...(esperados.length
+        ? [`  ✗ LISTA NÃO VAZIA (${esperados.length}): desde a PR-2 (N4-D40) reprovação declarada não é mais aceita — g-par-reprovados.txt tem de estar vazio (N4-D50)`]
+        : []),
+      naoDeclarados.length || orfas.length || esperados.length
+        ? 'G-par: ✗ reprova'
+        : 'G-par: zero reprovações, lista vazia (N4-D50) ✓',
     ].join('\n')
     console.log(resumo)
 
@@ -140,5 +147,6 @@ describe('G-par (N4-PR1) — o mesmo content, o mesmo texto no web e no nativo',
     expect(fx.par.length, 'G-par sem pares: não mediu nada (regra 4)').toBeGreaterThan(0)
     expect(naoDeclarados, 'reprovação não declarada').toEqual([])
     expect(orfas, 'declaração órfã').toEqual([])
+    expect(esperados, 'lista não vazia: desde a PR-2 (N4-D40) reprovação declarada não é mais aceita (N4-D50)').toEqual([])
   })
 })
