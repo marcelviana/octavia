@@ -1,7 +1,5 @@
 # G-par — a lista do que REPROVA hoje (N4-PR1). Um id da fixture g-par.json por linha.
 # O CI exige que o G-par reprove EXATAMENTE esta lista: item reprovado fora dela é
 # "reprovação não declarada"; item da lista que passa é "declaração órfã" (regra 14).
-# A PR-2 (o leitor, N4-D40) esvazia a lista; vazia, o gate exige zero reprovações.
+# A PR-2 (o leitor, N4-D40) esvaziou a lista: vazia, o gate exige zero reprovações.
 # comentário e linha em branco são ignorados.
-cifra-secoes-acordes-vazios
-cifra-secoes-completas
