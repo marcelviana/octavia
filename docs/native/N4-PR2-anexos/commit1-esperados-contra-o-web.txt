@@ -1,0 +1,15 @@
+IGUAL     acordes vazios       web="Content\nLinha um\nLinha dois"
+IGUAL     completas            web="Verso 1\nG D Em\nTexto do verso\n\nRefrão\nC G\nTexto do refrão"
+IGUAL     lista vazia          web="C  Am\nTexto velho do topo"
+IGUAL     sem topo             web="Verso\nD A\nTexto"
+IGUAL     topo em lista        web="Verso\nTexto"
+IGUAL     não-lista objeto     web="C  Am\nTexto velho do topo"
+IGUAL     não-lista texto      web="C  Am\nTexto velho do topo"
+IGUAL     não-lista número     web="C  Am\nTexto velho do topo"
+IGUAL     não-lista null       web="C  Am\nTexto velho do topo"
+IGUAL     não-lista sem topo   web=null
+IGUAL     itens não-objeto     web="Verso\nTexto"
+IGUAL     campos não-texto     web="Texto\n\nOutro"
+IGUAL     tudo vazio           web=null
+IGUAL     palco                web="Verso 1\nG D Em\nTexto do verso\n\nRefrão\nTexto do refrão"
+14 de 14 — o esperado do teste = o textoDaCifra do web (null = o vazio do painel)

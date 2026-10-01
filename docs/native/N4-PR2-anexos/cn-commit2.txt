@@ -1,0 +1,100 @@
+### CN-1 — só o conserto revertido: content-contract.ts da main (3e3390d), a lista vazia do commit 2
+ packages/core/src/content-contract.ts | 62 ++---------------------------------
+ 1 file changed, 3 insertions(+), 59 deletions(-)
+G-par — itens 14 · pares comparados 8 · iguais 6 · diferentes 2 · fora do par 6
+  IGUAL     letra                        web=texto(108)       nativo=texto(108)             [painel-letra]
+  IGUAL     cifra-texto                  web=texto(48)        nativo=texto(48)              [painel-cifra]
+  IGUAL     tab-texto                    web=texto(92)        nativo=texto(92)              [painel-tab]
+  IGUAL     partitura-pdf                web=arquivo(79)      nativo=arquivo(79)            [painel-partitura]
+  IGUAL     letra-poluida-editor         web=texto(44)        nativo=texto(44)              [painel-letra]
+  DIFERENTE cifra-secoes-acordes-vazios  web=texto(123)       nativo=texto(84)              [painel-cifra]
+  DIFERENTE cifra-secoes-completas       web=texto(39)        nativo=texto(8)               [painel-cifra]
+  IGUAL     so-aninhado                  web=sem-corpo        nativo=sem-corpo:no-key       [painel-letra]
+
+
+lista esperada (0): (vazia)
+reprovados     (2): cifra-secoes-acordes-vazios, cifra-secoes-completas
+  ✗ reprovação NÃO DECLARADA: cifra-secoes-acordes-vazios
+  ✗ reprovação NÃO DECLARADA: cifra-secoes-completas
+G-par: ✗ a reprovação não é a lista esperada
+exit=1
+
+### CN-2 — a ORDEM das partes trocada no core: name · lyrics · chords
+ packages/core/src/content-contract.ts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+-      return juntar([textoNaoVazio(o.name), textoNaoVazio(o.chords), textoNaoVazio(o.lyrics)], '\n')
++      return juntar([textoNaoVazio(o.name), textoNaoVazio(o.lyrics), textoNaoVazio(o.chords)], '\n')
+G-par — itens 14 · pares comparados 8 · iguais 7 · diferentes 1 · fora do par 6
+  IGUAL     letra                        web=texto(108)       nativo=texto(108)             [painel-letra]
+  IGUAL     cifra-texto                  web=texto(48)        nativo=texto(48)              [painel-cifra]
+  IGUAL     tab-texto                    web=texto(92)        nativo=texto(92)              [painel-tab]
+  IGUAL     partitura-pdf                web=arquivo(79)      nativo=arquivo(79)            [painel-partitura]
+  IGUAL     letra-poluida-editor         web=texto(44)        nativo=texto(44)              [painel-letra]
+  IGUAL     cifra-secoes-acordes-vazios  web=texto(123)       nativo=texto(123)             [painel-cifra]
+  DIFERENTE cifra-secoes-completas       web=texto(39)        nativo=texto(39)              [painel-cifra]
+  IGUAL     so-aninhado                  web=sem-corpo        nativo=sem-corpo:no-key       [painel-letra]
+
+
+lista esperada (0): (vazia)
+reprovados     (1): cifra-secoes-completas
+  ✗ reprovação NÃO DECLARADA: cifra-secoes-completas
+G-par: ✗ a reprovação não é a lista esperada
+exit=1
+
+### CN-3 — a JUNÇÃO das partes de uma seção trocada no core: "
+" → " "
+-      return juntar([textoNaoVazio(o.name), textoNaoVazio(o.chords), textoNaoVazio(o.lyrics)], '\n')
++      return juntar([textoNaoVazio(o.name), textoNaoVazio(o.chords), textoNaoVazio(o.lyrics)], ' ')
+G-par — itens 14 · pares comparados 8 · iguais 6 · diferentes 2 · fora do par 6
+  IGUAL     letra                        web=texto(108)       nativo=texto(108)             [painel-letra]
+  IGUAL     cifra-texto                  web=texto(48)        nativo=texto(48)              [painel-cifra]
+  IGUAL     tab-texto                    web=texto(92)        nativo=texto(92)              [painel-tab]
+  IGUAL     partitura-pdf                web=arquivo(79)      nativo=arquivo(79)            [painel-partitura]
+  IGUAL     letra-poluida-editor         web=texto(44)        nativo=texto(44)              [painel-letra]
+  DIFERENTE cifra-secoes-acordes-vazios  web=texto(123)       nativo=texto(123)             [painel-cifra]
+  DIFERENTE cifra-secoes-completas       web=texto(39)        nativo=texto(39)              [painel-cifra]
+  IGUAL     so-aninhado                  web=sem-corpo        nativo=sem-corpo:no-key       [painel-letra]
+
+
+lista esperada (0): (vazia)
+reprovados     (2): cifra-secoes-acordes-vazios, cifra-secoes-completas
+  ✗ reprovação NÃO DECLARADA: cifra-secoes-acordes-vazios
+  ✗ reprovação NÃO DECLARADA: cifra-secoes-completas
+G-par: ✗ a reprovação não é a lista esperada
+exit=1
+
+### CN-4 — a JUNÇÃO entre seções trocada no core: "
+
+" → "
+"
+-    '\n\n',
++    '\n',
+G-par — itens 14 · pares comparados 8 · iguais 8 · diferentes 0 · fora do par 6
+  IGUAL     letra                        web=texto(108)       nativo=texto(108)             [painel-letra]
+  IGUAL     cifra-texto                  web=texto(48)        nativo=texto(48)              [painel-cifra]
+  IGUAL     tab-texto                    web=texto(92)        nativo=texto(92)              [painel-tab]
+  IGUAL     partitura-pdf                web=arquivo(79)      nativo=arquivo(79)            [painel-partitura]
+  IGUAL     letra-poluida-editor         web=texto(44)        nativo=texto(44)              [painel-letra]
+  IGUAL     cifra-secoes-acordes-vazios  web=texto(123)       nativo=texto(123)             [painel-cifra]
+  IGUAL     cifra-secoes-completas       web=texto(39)        nativo=texto(39)              [painel-cifra]
+  IGUAL     so-aninhado                  web=sem-corpo        nativo=sem-corpo:no-key       [painel-letra]
+
+
+lista esperada (0): (vazia)
+reprovados     (0): (nenhum)
+G-par: reprova exatamente a lista esperada (0) ✓
+exit=0
+
+### desfeitos
+(vazio = limpo)
+### CN-4 contra os outros dois instrumentos (o teste do contrato e o do palco)
+-    '\n\n',
++    '\n',
+     × seções completas: nome · acordes · letra por "\n"; as seções por "\n\n", na ordem da lista 5ms
+       × campo que não é texto (número, lista, objeto) ou texto vazio: a parte é pulada 0ms
+     × o nó `corpo` traz o texto das seções 34ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+ Test Files  2 failed (2)
+      Tests  3 failed | 36 passed (39)
+exit=1
+(vazio = limpo)

@@ -1,0 +1,123 @@
+# Aceite da N4-PR2 no Tab S6 — MEDIDO PELO EXECUTOR (N4-D53), conferido visualmente pelo Marcel (2026-10-01; rastro)
+# Do dado real só saem: ordinal na ordem do content.json, tipo, comprimento, sha256[:12], igual/diferente.
+# Nenhum título, artista, texto ou nome de arquivo; o uid trocado por <uid>; o nome do PDF por <arquivo>.
+# Cópias do cache, dumps e o teste de comparação: diretório temporário fora do repositório, apagado no fim (ls no fim).
+
+## estado do Tab, lido ANTES
+global stay_on_while_plugged_in = 0   → posto em 7 antes de pedir o destravar
+system accelerometer_rotation = 1 · system user_rotation = 0 · global airplane_mode_on = 0 · wifi_on = 1 · mobile_data = 1
+adb reverse: (vazio)
+dev client: lastUpdateTime=2026-09-23 19:11:34 · pkgFlags=[ DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+md5 do cache ANTES:
+62d555598c8fc1972277edad745e7f6e  content.json
+10480521b6276d88e1e7966dcb224745  files-index.json
+7e668ad17c9850b63ed46789d7df5a7b  setlists.json
+05253d4239dadb2696115b934a546bb1  files/<arquivo>.pdf
+pasta de demanda (cache/octavia-<uid>/files): vazia
+
+## o segredo e o Metro (N4-D53)
+$ cp -p ../octavia/apps/native/.env apps/native/.env   (não aberto) ; shasum -a 256 dos dois → f2bfa179cd8e… nos dois
+$ env -u CI npx expo start --dev-client --port 8081
+$ adb reverse tcp:8081 tcp:8081
+$ curl …/apps/native/index.bundle?platform=android&dev=true | grep -c   (regra 13)
+textoDasSecoes: 3
+octavia.rocks: 1
+localhost:8788: 0
+
+## sync 1 (com rede; app aberto pelo exp+octavia://expo-development-client/?url=…localhost:8081)
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=5181
+OCTAVIA: api status=200 path=/api/content n=1 ms=616
+OCTAVIA: cache write kind=setlists n=2 invalidated=0
+OCTAVIA: cache write kind=content n=63 invalidated=0
+OCTAVIA: sync ok setlists=2 content=63 pages=1 t=6052
+
+## os alvos (ordinal · tipo · id8 · seções?) — abertos pela S4: "busca pelo título do ordinal N", toque em resultado-<id8>
+3 Chords 9e97565f seções · 8 Chords a9ed7dc4 seções · 63 Chords 9484ec51 - · 1 Lyrics 69735e94 - · 7 Tab 2f929c31 - · 9 Sheet b23a3803 -
+(a 1ª tentativa de busca falhou: a consulta tirava pontuação do título e o campo acumulou as seis consultas — instrumento,
+ consertado limpando o campo com DEL e buscando pelo maior trecho contínuo do título; nenhuma medição foi feita nela)
+
+## a comparação ANTES da edição do Marcel — (w) componente real do web, (n) bodyOf desta árvore, (v) bodyOf da main
+ordinal · tipo · modo · nó · len(palco) · sha12(palco) · len(w) · len(n) · len(v) · palco×w · palco×n · n×v
+3 · Chords · rede · corpo · 2028 · 24bd99f875e2 · 2028 · 2028 · 2027 · igual · igual · DIFERENTE
+3 · Chords · aviao · corpo · 2028 · 24bd99f875e2 · 2028 · 2028 · 2027 · igual · igual · DIFERENTE
+8 · Chords · rede · corpo · 32 · 5699489a26b4 · 32 · 32 · 10 · igual · igual · DIFERENTE
+8 · Chords · aviao · corpo · 32 · 5699489a26b4 · 32 · 32 · 10 · igual · igual · DIFERENTE
+63 · Chords · rede · corpo · 8 · 761920247813 · 8 · 8 · 8 · igual · igual · igual
+63 · Chords · aviao · corpo · 8 · 761920247813 · 8 · 8 · 8 · igual · igual · igual
+1 · Lyrics · rede · corpo · 1831 · 8eaa08ad353f · 1831 · 1831 · 1831 · igual · igual · igual
+7 · Tab · rede · corpo · 7 · a63ab36162a4 · 7 · 7 · 7 · igual · igual · igual
+9 · Sheet · rede · s3d · - · - · - · - · - · - · - · -
+
+## a Partitura (ordinal 9): nó s3d e o log
+OCTAVIA: file src=disk name=<arquivo> bytes=138916
+OCTAVIA: pdf-render pages=5 src=disk
+OCTAVIA: pdf-page n=1/5
+
+## avião (regra 11) — as 3 Cifras reabertas; as linhas "aviao" da tabela acima
+antes: airplane=0 wifi=1 data=1
+$ cmd connectivity airplane-mode enable
+airplane_mode_on=1  (não é a prova)
+$ ping -c 2 -W 2 8.8.8.8
+connect: Network is unreachable
+$ cmd connectivity airplane-mode disable
+depois: airplane=0 wifi=1 data=1
+$ ping -c 2 -W 3 8.8.8.8
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 13.262/17.508/21.754/4.246 ms
+OCTAVIA: net offline   (antes de reabrir) · net online (depois de restaurar)
+
+## a conferência do Marcel, 1ª pergunta (ordinal 3), verbatim
+"Eu não havia editar. Só editei agora"
+→ o Marcel editou a Cifra no web DURANTE o aceite; a medição acima é do dado de antes. Opção escolhida por ele:
+  "Sincronizar e remedir". (O primeiro Metro foi parado pelo limite de tempo da tarefa em segundo plano; subido de novo.)
+
+## sync 2 (Metro de novo; o bundle conferido outra vez: textoDasSecoes 3 · octavia.rocks 1 · localhost:8788 0)
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=1073
+OCTAVIA: api status=200 path=/api/content n=1 ms=473
+OCTAVIA: cache write kind=setlists n=2 invalidated=0
+OCTAVIA: cache write kind=content n=63 invalidated=1
+OCTAVIA: sync ok setlists=2 content=63 pages=1 t=1824
+o item mudado: ordinal 3 (Chords), updated_at 2026-10-01T22:10:56Z; ordinais estáveis (os seis id8 conferidos)
+
+## a comparação DEPOIS da edição
+ordinal · tipo · modo · nó · len(palco) · sha12(palco) · len(w) · len(n) · len(v) · palco×w · palco×n · n×v
+3 · Chords · rede · corpo · 2029 · 1b7a6ac7c5ef · 2029 · 2029 · 2027 · igual · igual · DIFERENTE
+8 · Chords · rede · corpo · 32 · 5699489a26b4 · 32 · 32 · 10 · igual · igual · DIFERENTE
+63 · Chords · rede · corpo · 8 · 761920247813 · 8 · 8 · 8 · igual · igual · igual
+1 · Lyrics · rede · corpo · 1831 · 8eaa08ad353f · 1831 · 1831 · 1831 · igual · igual · igual
+7 · Tab · rede · corpo · 7 · a63ab36162a4 · 7 · 7 · 7 · igual · igual · igual
+9 · Sheet · rede · s3d · - · - · - · - · - · - · - · -
+
+## a conferência do Marcel, verbatim
+ordinal 3 (depois do sync 2): "É o texto que eu editei"
+ordinal 8: "É o texto que eu editei"
+
+## requests a /api/* nesta sessão: 4 GET (2 por sync), 0 escrita do executor, 0 login
+## janela sem log: entre o fim do 1º Metro (limite de tempo da tarefa) e a 2ª subida, o app ficou aberto sem Metro;
+## o log do 1º Metro termina em "net online" (a volta do avião) sem sync depois. Uma sync nessa janela não estaria registrada.
+## escrita em prod: 1, do Marcel, no web (a edição do ordinal 3) — fora do aceite, declarada
+
+## desmontagem
+$ lsof -iTCP:8081 -sTCP:LISTEN | wc -l
+       0
+$ rm -f apps/native/.env; ls apps/native/.env
+ls: apps/native/.env: No such file or directory
+$ adb reverse --remove-all; adb reverse --list
+[]
+global stay_on_while_plugged_in = 0
+system accelerometer_rotation = 1
+system user_rotation = 0
+global airplane_mode_on = 0
+global wifi_on = 1
+global mobile_data = 1
+## md5 do cache DEPOIS
+b62f192a347e0adac05e405f92f9711d  <dir>/content.json
+3b949a0ca222bef2b3873be931a5eda1  <dir>/files-index.json
+7a5f4e1026862a05fca5f6435f6658ae  <dir>/setlists.json
+05253d4239dadb2696115b934a546bb1  <dir>/files/<arquivo>.pdf
+## a pasta de demanda
+3
+mudaram: content.json (a edição do Marcel, invalidated=1) · setlists.json (o syncedAtMs) · files-index.json (o PDF aberto: lastUsed)
+igual: o PDF (05253d42…)
+temporários: o diretório do aceite apagado (ls → No such file or directory); os dois arquivos de teste temporários em
+tests/gates/ apagados (git status vazio); os bundles baixados apagados

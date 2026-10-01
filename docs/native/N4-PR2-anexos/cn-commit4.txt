@@ -1,0 +1,62 @@
+# CNs do commit 4 (fixture com duas seções e escaneada fora; lista vazia fixa) — sobre a árvore antes de commitar
+
+### CN-4′ — junção ENTRE seções "
+
+" → "
+" no core (a da div. 990)
+-    '\n\n',
++    '\n',
+G-par — itens 16 · pares comparados 9 · iguais 8 · diferentes 1 · fora do par 7
+  DIFERENTE cifra-duas-secoes            web=texto(97)        nativo=texto(96)              [painel-cifra]
+lista esperada (0): (vazia)
+reprovados     (1): cifra-duas-secoes
+  ✗ reprovação NÃO DECLARADA: cifra-duas-secoes
+G-par: ✗ reprova
+exit=1
+
+### CN-A — 'letra' (par, igual) na lista
+G-par — itens 16 · pares comparados 9 · iguais 9 · diferentes 0 · fora do par 7
+lista esperada (1): letra
+reprovados     (0): (nenhum)
+  ✗ declaração ÓRFÃ: letra (passa)
+  ✗ LISTA NÃO VAZIA (1): desde a PR-2 (N4-D40) reprovação declarada não é mais aceita — g-par-reprovados.txt tem de estar vazio (N4-D50)
+G-par: ✗ reprova
+exit=1
+
+### CN-B — 'cifra-em-lista' (fora do par) na lista
+G-par — itens 16 · pares comparados 9 · iguais 9 · diferentes 0 · fora do par 7
+lista esperada (1): cifra-em-lista
+reprovados     (0): (nenhum)
+  ✗ declaração ÓRFÃ: cifra-em-lista (está no fora do par)
+  ✗ LISTA NÃO VAZIA (1): desde a PR-2 (N4-D40) reprovação declarada não é mais aceita — g-par-reprovados.txt tem de estar vazio (N4-D50)
+G-par: ✗ reprova
+exit=1
+
+### CN-C — 'nao-existe' na lista
+G-par — itens 16 · pares comparados 9 · iguais 9 · diferentes 0 · fora do par 7
+lista esperada (1): nao-existe
+reprovados     (0): (nenhum)
+  ✗ declaração ÓRFÃ: nao-existe (não existe na fixture)
+  ✗ LISTA NÃO VAZIA (1): desde a PR-2 (N4-D40) reprovação declarada não é mais aceita — g-par-reprovados.txt tem de estar vazio (N4-D50)
+G-par: ✗ reprova
+exit=1
+
+### CN-D — reprovação DECLARADA: o conserto revertido (core da main) e as três Cifras com seções na lista
+G-par — itens 16 · pares comparados 9 · iguais 6 · diferentes 3 · fora do par 7
+  DIFERENTE cifra-secoes-acordes-vazios  web=texto(123)       nativo=texto(84)              [painel-cifra]
+  DIFERENTE cifra-secoes-completas       web=texto(39)        nativo=texto(8)               [painel-cifra]
+  DIFERENTE cifra-duas-secoes            web=texto(97)        nativo=texto(8)               [painel-cifra]
+lista esperada (3): cifra-secoes-acordes-vazios, cifra-secoes-completas, cifra-duas-secoes
+reprovados     (3): cifra-secoes-acordes-vazios, cifra-secoes-completas, cifra-duas-secoes
+  ✗ LISTA NÃO VAZIA (3): desde a PR-2 (N4-D40) reprovação declarada não é mais aceita — g-par-reprovados.txt tem de estar vazio (N4-D50)
+G-par: ✗ reprova
+exit=1
+
+### desfeitos
+G-par — itens 16 · pares comparados 9 · iguais 9 · diferentes 0 · fora do par 7
+lista esperada (0): (vazia)
+reprovados     (0): (nenhum)
+G-par: zero reprovações, lista vazia (N4-D50) ✓
+exit=0
+ M packages/core/fixtures/g-par.json
+ M tests/gates/n4-g-par.test.tsx

@@ -1,0 +1,121 @@
+# N4-D51 — a leitura (sobre 050980e; rastro). O que o editor do web faz com uma Cifra sem sections, e quem grava sections.
+
+$ awk NR>=18&&NR<=41 components/chord-editor.tsx
+components/chord-editor.tsx:18: export function ChordEditor({ content, onChange }: ChordEditorProps) {
+components/chord-editor.tsx:19:   const [chordData, setChordData] = useState(() => {
+components/chord-editor.tsx:20:     // Priority 1: Use sections if available (structured format)
+components/chord-editor.tsx:21:     if (content.sections && Array.isArray(content.sections) && content.sections.length > 0) {
+components/chord-editor.tsx:22:       return { title: content.title || "", artist: content.artist || "", key: content.key || "", capo: content.capo || "", bpm: content.bpm || "", sections: content.sections }
+components/chord-editor.tsx:23:     }
+components/chord-editor.tsx:24:     // Priority 2: Convert chords string to sections (legacy format) — o nome "Content" é VALOR gravado (div. 784)
+components/chord-editor.tsx:25:     if (content.chords && typeof content.chords === 'string' && content.chords.trim()) {
+components/chord-editor.tsx:26:       return {
+components/chord-editor.tsx:27:         title: content.title || "", artist: content.artist || "", key: content.key || "", capo: content.capo || "", bpm: content.bpm || "",
+components/chord-editor.tsx:28:         sections: [{ id: Date.now(), name: "Content", chords: "", lyrics: content.chords }],
+components/chord-editor.tsx:29:       }
+components/chord-editor.tsx:30:     }
+components/chord-editor.tsx:31:     // Priority 3: Empty editor for new content — o nome "Verse 1" é VALOR gravado (div. 784)
+components/chord-editor.tsx:32:     return {
+components/chord-editor.tsx:33:       title: content.title || "", artist: content.artist || "", key: content.key || "", capo: content.capo || "", bpm: content.bpm || "",
+components/chord-editor.tsx:34:       sections: [{ id: Date.now(), name: "Verse 1", chords: "", lyrics: "" }],
+components/chord-editor.tsx:35:     }
+components/chord-editor.tsx:36:   })
+components/chord-editor.tsx:37: 
+components/chord-editor.tsx:38:   const updateChordData = (newData: any) => {
+components/chord-editor.tsx:39:     setChordData(newData)
+components/chord-editor.tsx:40:     onChange({ ...content, ...newData })
+components/chord-editor.tsx:41:   }
+
+$ awk NR>=72&&NR<=74 components/chord-editor.tsx
+components/chord-editor.tsx:72:   return (
+components/chord-editor.tsx:73:     <div className="flex flex-col gap-espaco-xl min-w-0">
+components/chord-editor.tsx:74:       <Informacoes dados={chordData} onMudar={(campo, valor) => updateChordData({ ...chordData, [campo]: valor })} />
+
+$ awk NR>=30&&NR<=45 components/editors/content-type-editor.tsx
+components/editors/content-type-editor.tsx:30: export function ContentTypeEditor({ content, onChange, aoFalharArquivo }: ContentTypeEditorProps) {
+components/editors/content-type-editor.tsx:31:   const handleContentChange = (newData: any) => {
+components/editors/content-type-editor.tsx:32:     onChange({
+components/editors/content-type-editor.tsx:33:       ...content,
+components/editors/content-type-editor.tsx:34:       content_data: {
+components/editors/content-type-editor.tsx:35:         ...content.content_data,
+components/editors/content-type-editor.tsx:36:         ...newData,
+components/editors/content-type-editor.tsx:37:       },
+components/editors/content-type-editor.tsx:38:     })
+components/editors/content-type-editor.tsx:39:   }
+components/editors/content-type-editor.tsx:40: 
+components/editors/content-type-editor.tsx:41:   const type = normalizeContentType(content.content_type)
+components/editors/content-type-editor.tsx:42:   if (type === ContentType.SHEET) return <SheetMusicDisplay content={content} aoFalhar={aoFalharArquivo} />
+components/editors/content-type-editor.tsx:43:   // `normalizeContentType` cai em Lyrics no resto (types/content.ts): o "not yet implemented" de antes era inalcançável
+components/editors/content-type-editor.tsx:44:   const Editor = POR_TIPO[type] ?? LyricsEditor
+components/editors/content-type-editor.tsx:45:   return <Editor content={{ ...content, ...content.content_data }} onChange={handleContentChange} />
+
+$ awk NR>=50&&NR<=87 components/content-editor.tsx
+components/content-editor.tsx:50: /** O corpo do `PUT` de antes, sem o `updated_at` (que o salvar põe no fim, como antes). */
+components/content-editor.tsx:51: function corpoDoPut(editedContent: any, annotations: any[], contentType: string) {
+components/content-editor.tsx:52:   return {
+components/content-editor.tsx:53:     title: editedContent.title,
+components/content-editor.tsx:54:     artist: editedContent.artist,
+components/content-editor.tsx:55:     album: editedContent.album,
+components/content-editor.tsx:56:     genre: editedContent.genre,
+components/content-editor.tsx:57:     key: editedContent.key,
+components/content-editor.tsx:58:     bpm: editedContent.bpm ? Number.parseInt(editedContent.bpm) : null,
+components/content-editor.tsx:59:     difficulty: editedContent.difficulty,
+components/content-editor.tsx:60:     tags: editedContent.tags,
+components/content-editor.tsx:61:     notes: editedContent.notes,
+components/content-editor.tsx:62:     is_favorite: editedContent.is_favorite,
+components/content-editor.tsx:63:     is_public: editedContent.is_public,
+components/content-editor.tsx:64:     content_data: {
+components/content-editor.tsx:65:       ...editedContent.content_data,
+components/content-editor.tsx:66:       annotations,
+components/content-editor.tsx:67:       // Store editor-specific data
+components/content-editor.tsx:68:       ...(normalizeContentType(contentType) === ContentType.CHORDS && editedContent.sections && { sections: editedContent.sections }),
+components/content-editor.tsx:69:       ...(normalizeContentType(contentType) === ContentType.LYRICS && editedContent.lyrics && { lyrics: editedContent.lyrics }),
+components/content-editor.tsx:70:       ...(normalizeContentType(contentType) === ContentType.TAB && editedContent.measures && { measures: editedContent.measures }),
+components/content-editor.tsx:71:     },
+components/content-editor.tsx:72:   }
+components/content-editor.tsx:73: }
+components/content-editor.tsx:74: 
+components/content-editor.tsx:75: export function ContentEditor({ content, onSave, onCancel, salvando = false, falhaAoSalvar = null }: ContentEditorProps) {
+components/content-editor.tsx:76:   const [editedContent, setEditedContent] = useState(() => estadoInicial(content))
+components/content-editor.tsx:77:   // o `annotations` de antes: estado local que nada escreve — vai `[]` no corpo, como antes (herança D, §1.2)
+components/content-editor.tsx:78:   const [annotations] = useState<any[]>([])
+components/content-editor.tsx:79:   const [falhaDoArquivo, setFalhaDoArquivo] = useState<FalhaDaTela | null>(null)
+components/content-editor.tsx:80:   const inicial = useMemo(() => JSON.stringify(corpoDoPut(estadoInicial(content), [], content.content_type)), [content])
+components/content-editor.tsx:81:   const alterado = JSON.stringify(corpoDoPut(editedContent, annotations, content.content_type)) !== inicial
+components/content-editor.tsx:82: 
+components/content-editor.tsx:83:   const handleSave = () => {
+components/content-editor.tsx:84:     if (salvando) return
+components/content-editor.tsx:85:     const updatedContent = { ...corpoDoPut(editedContent, annotations, content.content_type), updated_at: new Date().toISOString() }
+components/content-editor.tsx:86:     onSave(updatedContent)
+components/content-editor.tsx:87:   }
+
+$ awk NR>=25&&NR<=26 components/editors/cabecalho-do-editor.tsx
+components/editors/cabecalho-do-editor.tsx:25: export function CabecalhoDoEditor({ titulo, tipo, alterado, salvando, onVoltar, onSalvar }: CabecalhoDoEditorProps) {
+components/editors/cabecalho-do-editor.tsx:26:   const ativo = alterado && !salvando
+
+$ awk NR>=44&&NR<=45 components/editors/cabecalho-do-editor.tsx
+components/editors/cabecalho-do-editor.tsx:44:         {!alterado && <p className="text-tam-label text-cor-muted">{FRASES_EDIT["edit.nada-mudou"]}</p>}
+components/editors/cabecalho-do-editor.tsx:45:         <button type="button" onClick={onSalvar} disabled={!ativo} className={`${CONTROLE_LISTA} border-cor-line-info disabled:text-cor-muted`}>
+
+$ awk NR>=27&&NR<=33 components/content-creator.tsx
+components/content-creator.tsx:27:   const handleCreate = () => {
+components/content-creator.tsx:28:     if (!title.trim()) {
+components/content-creator.tsx:29:       setSemTitulo(true)
+components/content-creator.tsx:30:       return
+components/content-creator.tsx:31:     }
+components/content-creator.tsx:32:     onContentCreated({ type: tipo, content: { [CONTENT_TYPE_KEYS[tipo]]: "" }, title: title.trim() })
+components/content-creator.tsx:33:   }
+
+$ awk NR>=164&&NR<=172 hooks/useAddContentLogic.ts
+hooks/useAddContentLogic.ts:164: 
+hooks/useAddContentLogic.ts:165:         for (const song of songsToImport) {
+hooks/useAddContentLogic.ts:166:           const content = await createContent({
+hooks/useAddContentLogic.ts:167:             title: song.title,
+hooks/useAddContentLogic.ts:168:             artist: song.artist,
+hooks/useAddContentLogic.ts:169:             content_type: contentType,
+hooks/useAddContentLogic.ts:170:             content_data: song.body,
+hooks/useAddContentLogic.ts:171:             user_id: user.uid
+hooks/useAddContentLogic.ts:172:           });
+
+$ git grep -n sections -- hooks components/upload components/add-content components/content-creator.tsx lib/batch-import.ts lib/content-service.ts app
+exit=1

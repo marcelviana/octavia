@@ -1,0 +1,5 @@
+# a suíte inteira sobre o commit 4 (pnpm exec vitest run, NO_COLOR=1) — o resumo (o bruto de 1854 linhas é stderr dos testes de segurança; fora do anexo)
+ Test Files  120 passed | 3 skipped (123)
+      Tests  1203 passed | 59 skipped (1262)
+   Start at  16:19:43
+   Duration  62.56s (transform 5.14s, setup 23.78s, import 10.28s, tests 120.35s, environment 52.88s)

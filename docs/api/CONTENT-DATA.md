@@ -38,6 +38,11 @@ payload, pelo handler com o tipo lido da linha (`app/api/content/route.ts`).
 - **Chaves extras passam** (`annotations`, `sections`, `measures`, e a
   poluição do editor do web — o registro inteiro espalhado). O nativo as
   ignora (T1-R7 (a)); a limpeza é item do Bloco D.
+  *Errata N4-PR2 (2026-10-01; N4-D40): na **Cifra**, `sections` em lista
+  não vazia deixou de ser ignorada pelo nativo — é o corpo, com a leitura
+  do web (errata do T1-R7, `PRD-TELA-1.md` §4). A escrita não muda: o
+  `chords` continua obrigatório quando `content_data` é objeto, e o editor
+  que não o reescreve é herança do Bloco D (div. 975, N4-D44).*
 
 ## Erros (envelope do contrato)
 
