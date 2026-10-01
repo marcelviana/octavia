@@ -216,6 +216,32 @@ describe('N3-B-S3 — a barra superior de 88 em duas linhas (N3-D13)', () => {
   })
 })
 
+// ----------------------------------------------------------------- N4-PR2
+
+/**
+ * N4-PR2 (N4-D40): a Cifra com `sections[]` — o nó `corpo` traz o texto das
+ * seções (nome · acordes · letra por linha; seções separadas por uma linha em
+ * branco), não o `chords` do topo, que o editor do web não reescreve (div. 975).
+ */
+describe('N4-PR2 — a Cifra com seções no palco', () => {
+  const CIFRA: ContentDTO = {
+    id: 'c-3', title: 'Cifra em seções da fixture', artist: null, album: null, content_type: 'Chords',
+    content_data: {
+      chords: 'C  Am\nTexto velho do topo',
+      sections: [
+        { id: 1, name: 'Verso 1', chords: 'G D Em', lyrics: 'Texto do verso' },
+        { id: 2, name: 'Refrão', chords: '', lyrics: 'Texto do refrão' },
+      ],
+    },
+    file_url: null, updated_at: T0,
+  }
+
+  it('o nó `corpo` traz o texto das seções', async () => {
+    await montar(<StageScreen {...props({ contentById: new Map([LETRA, PDF, CIFRA].map((c) => [c.id, c])), avulsaContentId: CIFRA.id })} />)
+    expect(exige('corpo').textContent).toBe('Verso 1\nG D Em\nTexto do verso\n\nRefrão\nTexto do refrão')
+  })
+})
+
 // ----------------------------------------------------------------- faixa C (CP)
 
 describe('C — a barra de 64 de uma linha, como hoje (a invariante em jsdom)', () => {
