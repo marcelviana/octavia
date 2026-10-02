@@ -66,6 +66,18 @@ esta página no mesmo commit (regra 9 do `LOGS-OCTAVIA.md`, aplicada aqui).
 | janela do app (retrato, N3) | 711,1 × 1089,8 dp; **1065,8** abaixo da barra de 24 | 711,1 × 1137,8 dp; **1053,8** entre 24 e 60 | 411,4 × 914,3 dp; **874,3** entre 24 e 16 |
 | estado de repouso | bloqueio + tela de 30 s (div. 202); destravar é do Marcel | conta **de audit**, **em avião** (`airplane=1 wifi=0 data=0`) — divs. 200, 292 | sem conta: o S0 é o repouso (o login é do Marcel); rede ligada; **`accelerometer_rotation` lido 0 e 1 em sessões diferentes** (N3-PR1…PR6) — ler, não supor (div. 473) |
 
+*(N4 release no Tab, N4-D55 `[Marcel, 2026-10-01]`: o Tab S6 **repousa com o release** da `main`, não com o dev client;
+o "reinstalá-lo no fim" da receita do release, em "Ferramentas", deixa de valer para o Tab. Os dois APKs ficam **fora do
+repositório**: o dev client em `~/octavia-aparato/tab-s6-devclient/devclient-2026-09-23-191134.apk` (82.030.412 B, sha256
+`9447edc76f329ba3f66f3badd16268e52c779f1ae3363f6c6b94d1f2d4ab0548`) e o release em
+`~/octavia-aparato/tab-s6-release/release-31d6b3a.apk` (105.139.397 B, sha256
+`6eae4a8b48e827fc4b6bbf86e398547b55dd84af7c0de08e391e25bcb95307b9`, da `main` `31d6b3a`). **Ida** (aceite que precisa do
+mock, do Metro, do `run-as` ou da receita do cache abaixo): `adb -s RX2N8000F3D install -r <devclient>` e conferir
+`pkgFlags` com `DEBUGGABLE`. **Volta**, no fim do mesmo aceite: `adb -s RX2N8000F3D install -r <release>` e conferir
+`pkgFlags` sem `DEBUGGABLE` e o `lastUpdateTime`. O `install -r` mantém dados e sessão nos dois sentidos (div. 372).
+Release novo (outra `main`) → a receita de "Ferramentas", e o caminho e o sha256 trocados aqui.
+`N4-RELEASE-anexos/README.md`.)*
+
 As janelas de retrato e a do celular são do `N3-PRECHECK-anexos/B1-janelas.txt`
 (raiz e janela útil do dump do S1). Criar o celular:
 `echo no | ~/Library/Android/sdk/cmdline-tools/latest/bin/avdmanager create avd -n octavia_phone -k "system-images;android-32;google_apis;arm64-v8a" -d pixel_6`
