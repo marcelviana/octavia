@@ -1,0 +1,36 @@
+antes: airplane=0 wifi=1 data=1
+$ cmd connectivity airplane-mode enable
+ligado: airplane=1 wifi=3 data=1
+$ ping -c 2 -W 2 8.8.8.8
+connect: Network is unreachable
+Starting: Intent { cmp=rocks.octavia.app/.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: rocks.octavia.app/.MainActivity
+TotalTime: 270
+WaitTime: 272
+Complete
+S1 (resource-ids): criar-setlist buscar aviso-motivo setlist-772076b4 baixar-772076b4 setlist-e39d57cf
+tela de login? False
+ordinal 8 · Chords · a9ed7dc4 · nó=corpo · len=32 · sha12=5699489a26b4
+== OCTAVIA
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net offline
+OCTAVIA: auth uid=xVDJ… src=restored
+OCTAVIA: cache hit kind=setlists n=2
+OCTAVIA: cache hit kind=content n=63
+OCTAVIA: sync skip reason=offline
+OCTAVIA: prefetch plan n=0 reason=7d
+OCTAVIA: search q=1 n=50 in-setlist=0
+OCTAVIA: search q=2 n=39 in-setlist=0
+OCTAVIA: search q=3 n=4 in-setlist=0
+OCTAVIA: search q=4 n=2 in-setlist=0
+OCTAVIA: search q=5 n=2 in-setlist=0
+OCTAVIA: search q=6 n=1 in-setlist=0
+OCTAVIA: search q=7 n=1 in-setlist=0
+OCTAVIA: search q=8 n=1 in-setlist=0
+OCTAVIA: search q=9 n=1 in-setlist=0
+OCTAVIA: keepawake on
+OCTAVIA: keepawake off
+api: 0
+FATAL: 0

@@ -1,0 +1,15 @@
+Fri Oct  2 08:56:37 -03 2026
+global stay_on_while_plugged_in=0
+system accelerometer_rotation=1
+system user_rotation=0
+global airplane_mode_on=0
+global wifi_on=1
+global mobile_data=1
+reverse: []
+isKeyguardShowing=true
+    firstInstallTime=2026-09-07 18:08:54
+    lastUpdateTime=2026-10-01 20:53:35
+    pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+pidof: 10443
+exit=0
+stay_on agora=7

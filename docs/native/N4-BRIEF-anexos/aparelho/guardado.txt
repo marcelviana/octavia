@@ -1,0 +1,10 @@
+Fri Oct  2 08:57:09 -03 2026
+== md5 no aparelho (guardado)
+232609e5d87286d2883bafae9ad12ccb  setlists.json
+b62f192a347e0adac05e405f92f9711d  content.json
+b21cc49ba038637f55262202b1fe8f9a  files-index.json
+05253d4239dadb2696115b934a546bb1  files/<arquivo>.pdf
+== demanda
+total 6
+drwx------ 2 u0_a292 u0_a292       3488 2026-09-26 07:52 .
+drwx------ 3 u0_a292 u0_a292_cache 3488 2026-09-11 09:59 ..

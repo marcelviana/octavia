@@ -1,0 +1,13 @@
+# N4 brief — div. 964 no aparelho: as linhas OCTAVIA que o toque no resultado produziu (rastro; mock, fixture do projeto)
+== log-avulso-de-S1-com-setlists-tab-pai.txt
+10-02 09:07:04.911 OCTAVIA: keepawake on
+10-02 09:07:04.924 OCTAVIA: prefetch plan n=1 reason=demand
+10-02 09:07:04.969 OCTAVIA: download-error nao-existe.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+== log-avulso-de-S1-com-setlists-tab-ret.txt
+10-02 09:11:34.762 OCTAVIA: keepawake on
+10-02 09:11:34.775 OCTAVIA: prefetch plan n=1 reason=demand
+10-02 09:11:34.823 OCTAVIA: download-error nao-existe.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+== log-avulso-de-S1-sem-setlists-tab-pai.txt
+
+== log-avulso-de-S1-sem-setlists-tab-ret.txt
+

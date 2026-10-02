@@ -1,0 +1,26 @@
+N4BR-S1-setlists-tab-pai mCurrentRotation=ROTATION_90 png=240539 xml=40862 c23685cb673a
+09:04:53 toque 'buscar' @ 2295,188 (RX2N8000F3D)
+09:04:57 toque 'campo-busca' @ 1397,152 (RX2N8000F3D)
+N4BR-S4-resultados-tab-pai mCurrentRotation=ROTATION_90 png=191710 xml=27534 6ff078d8073b
+09:05:16 toque 'fechar-busca' @ 108,152 (RX2N8000F3D)
+09:05:30 toque canto de setlist-00000001 @ 96,420
+09:05:38 toque 'picker-abrir' @ 266,323 (RX2N8000F3D)
+09:05:42 toque 'picker-campo' @ 1397,152 (RX2N8000F3D)
+N4BR-picker-resultados-tab-pai mCurrentRotation=ROTATION_90 png=259701 xml=43947 1115fc3ab1ce
+09:05:59 toque 'fechar-busca' @ 108,152 (RX2N8000F3D)
+09:06:14 toque canto de setlist-00000001 @ 96,420
+09:06:21 toque 'song-1' @ 658,580 (RX2N8000F3D)
+N4BR-S3-com-setlist-tab-pai mCurrentRotation=ROTATION_90 png=249476 xml=26722 f1ff4f9990df
+09:06:49 toque 'buscar' @ 2295,188 (RX2N8000F3D)
+09:06:54 toque 'campo-busca' @ 1397,152 (RX2N8000F3D)
+09:07:04 toque 'Segunda do ensaio' @ 1221,654 (RX2N8000F3D)
+N4BR-S3-avulso-de-S1-com-setlists-tab-pai mCurrentRotation=ROTATION_90 png=276148 xml=25758 3cfd598817a7
+09:07:21 avulso-de-S1-com-setlists: 3 linhas OCTAVIA depois do toque
+09:07:23 mock modo=normal vazio=True
+09:07:41 toque 'buscar' @ 2295,188 (RX2N8000F3D)
+09:07:46 toque 'campo-busca' @ 1397,152 (RX2N8000F3D)
+09:07:56 toque 'Segunda do ensaio' @ 1221,654 (RX2N8000F3D)
+N4BR-S3-avulso-de-S1-sem-setlists-tab-pai mCurrentRotation=ROTATION_90 png=75299 xml=8651 5a9a75f768e9
+09:08:13 avulso-de-S1-sem-setlists: 0 linhas OCTAVIA depois do toque
+09:08:14 mock modo=normal vazio=False
+capturas=6 falhas=0

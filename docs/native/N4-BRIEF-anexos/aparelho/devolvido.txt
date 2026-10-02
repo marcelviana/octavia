@@ -1,0 +1,32 @@
+Fri Oct  2 09:14:16 -03 2026
+pidof: exit=1
+== antes da limpeza (o que a fixture deixou)
+cache/octavia-<uid>/files:
+partitura-12p.pdf
+
+files/octavia-<uid>/files:
+<arquivo>.pdf
+partitura-1p.pdf
+apagado files/partitura-1p.pdf
+apagado demanda/partitura-12p.pdf
+== md5 no aparelho (devolvido)
+232609e5d87286d2883bafae9ad12ccb  setlists.json
+b62f192a347e0adac05e405f92f9711d  content.json
+b21cc49ba038637f55262202b1fe8f9a  files-index.json
+05253d4239dadb2696115b934a546bb1  files/<arquivo>.pdf
+== demanda
+total 6
+drwx------ 2 u0_a292 u0_a292       3488 2026-10-02 09:14 .
+drwx------ 3 u0_a292 u0_a292_cache 3488 2026-09-11 09:59 ..
+== files/octavia-<uid>
+total 145
+drwx------ 3 u0_a292 u0_a292   3488 2026-10-02 09:13 .
+drwxrwx--x 3 u0_a292 u0_a292   3488 2026-10-02 09:13 ..
+-rw------- 1 u0_a292 u0_a292    163 2026-09-23 19:14 ._content.json
+-rwx------ 1 u0_a292 u0_a292    163 2026-09-24 18:01 ._files
+-rw------- 1 u0_a292 u0_a292    163 2026-09-14 11:49 ._files-index.json
+-rw------- 1 u0_a292 u0_a292    163 2026-09-23 19:14 ._setlists.json
+-rw------- 1 u0_a292 u0_a292 111580 2026-10-02 09:14 content.json
+drwx------ 2 u0_a292 u0_a292   3488 2026-10-02 09:14 files
+-rw------- 1 u0_a292 u0_a292    200 2026-10-02 09:14 files-index.json
+-rw------- 1 u0_a292 u0_a292   2752 2026-10-02 09:14 setlists.json
