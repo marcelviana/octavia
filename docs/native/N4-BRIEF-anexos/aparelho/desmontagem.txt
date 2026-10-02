@@ -1,0 +1,26 @@
+Fri Oct  2 09:16:36 -03 2026
+rotação antes de restaurar: accel=0 user=1
+$ ls apps/native/.env
+ls: apps/native/.env: No such file or directory
+$ ls <scratch>/cache-marcel <scratch>/ord8-titulo <scratch>/uiddir
+ls: <scratch>/cache-marcel: No such file or directory
+ls: <scratch>/ord8-titulo: No such file or directory
+ls: <scratch>/uiddir: No such file or directory
+$ adb shell ls /sdcard/n3pre.xml /sdcard/n3drv.xml
+ls: /sdcard/n3pre.xml: No such file or directory
+ls: /sdcard/n3drv.xml: No such file or directory
+lsof :8081 → 0
+lsof :8788 → 0
+lsof :8789 → 0
+lsof :8790 → 0
+pgrep expo: 0
+reverse: []
+global stay_on_while_plugged_in=0
+system accelerometer_rotation=1
+system user_rotation=0
+global airplane_mode_on=0
+global wifi_on=1
+global mobile_data=1
+    lastUpdateTime=2026-10-02 09:14:31
+    pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+git status: 0 linhas

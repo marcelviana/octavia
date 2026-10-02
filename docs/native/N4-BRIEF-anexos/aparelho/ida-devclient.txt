@@ -1,0 +1,9 @@
+$ shasum -a 256 <devclient>
+9447edc76f329ba3f66f3badd16268e52c779f1ae3363f6c6b94d1f2d4ab0548
+pidof depois do force-stop: exit=1
+$ adb install -r <devclient>
+Performing Streamed Install
+Success
+    firstInstallTime=2026-09-07 18:08:54
+    lastUpdateTime=2026-10-02 08:56:52
+    pkgFlags=[ DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]

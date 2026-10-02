@@ -1,0 +1,10 @@
+$ shasum -a 256 <release>
+6eae4a8b48e827fc4b6bbf86e398547b55dd84af7c0de08e391e25bcb95307b9
+$ adb install -r <release>
+Performing Streamed Install
+Success
+    firstInstallTime=2026-09-07 18:08:54
+    lastUpdateTime=2026-10-02 09:14:31
+    pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+$ run-as
+run-as: package not debuggable: rocks.octavia.app

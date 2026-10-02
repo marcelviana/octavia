@@ -1,0 +1,24 @@
+$ cmd connectivity airplane-mode disable
+depois: airplane=0 wifi=1 data=1
+$ ping -c 2 -W 3 8.8.8.8
+2 packets transmitted, 2 received, 0% packet loss, time 1000ms
+rtt min/avg/max/mdev = 13.043/33.311/53.580/20.269 ms
+Status: ok
+TotalTime: 235
+== OCTAVIA
+09:16:12.199 OCTAVIA: faixa=C w=1137.8 h=711.1
+09:16:12.200 OCTAVIA: net online
+09:16:12.724 OCTAVIA: auth uid=xVDJ… src=restored
+09:16:12.766 OCTAVIA: cache hit kind=setlists n=2
+09:16:12.766 OCTAVIA: cache hit kind=content n=63
+09:16:12.797 OCTAVIA: sync start
+09:16:12.797 OCTAVIA: auth refresh=cached
+09:16:16.039 OCTAVIA: api status=200 path=/api/setlists n=1 ms=3242
+09:16:16.085 OCTAVIA: auth refresh=cached
+09:16:16.553 OCTAVIA: api status=200 path=/api/content n=1 ms=468
+09:16:16.604 OCTAVIA: cache write kind=setlists n=2 invalidated=0
+09:16:16.614 OCTAVIA: cache write kind=content n=63 invalidated=0
+09:16:16.614 OCTAVIA: sync ok setlists=2 content=63 pages=1 t=3817
+09:16:16.616 OCTAVIA: prefetch plan n=0 reason=7d
+api: 2
+FATAL: 0
