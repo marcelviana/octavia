@@ -107,11 +107,12 @@ mais da sessão que tinha dado do Marcel.
 | agentes | **0** |
 | código | **nenhuma linha** |
 
-## 4. Decisão `[Marcel, 2026-10-02]`
+## 4. Decisões `[Marcel, 2026-10-02]`
 
 | # | decisão |
 |---|---|
 | **N4-D56** | (div. 1000) A prova do passo 7 se faz **nas duas formas, nesta ordem**: (1) **em avião** (regra 11: lido, declarado, provado pelo `ping`, restaurado) — o release abre em S1 sem pedir login e a Cifra do ordinal 8 abre com comprimento 32, pelo cache: a prova de que o cache real voltou; (2) **com rede**, um sync de leitura, **2 `GET` a prod, autorizados como exceção** ao "zero request" do prompt — a prova de que a sessão e o sync seguem funcionando. Zero escrita, zero login. |
+| **N4-D57** | No N4 as **notas da música** aparecem **só na visualização**; o palco não muda. O site as chama de *Notas de palco*, e o palco do tablet mostra outra coisa (as notas da posição na setlist): hoje o que o músico escreve em *Notas de palco* não aparece em palco nenhum. **Mostrá-las no palco fica como item nomeado para o encerramento do bloco**, sem destino decidido. *(No brief: §2.2, §7 e a pergunta 10.)* |
 
 ## 5. Os blocos de declaração desta PR (a cópia que a regra do W4-b2 pede)
 
@@ -123,7 +124,7 @@ mais da sessão que tinha dado do Marcel.
   # só docs — N4 brief: nenhum arquivo do núcleo do G-back tocado; nenhuma linha de código.
 ```
 
-## 6. Divergências — 999 a 1002
+## 6. Divergências — 999 a 1003
 
 A última usada era a **998** (`N4-RELEASE-anexos/README.md` §9) `[medido: git grep -noE '\| \*\*(9[89][0-9]|1[0-9]{3})\*\*' -- docs]`.
 Origem: **P** premissa do prompt · **D** doc anterior · **A** ambiente, dado real ou defeito do produto · **T**
@@ -136,7 +137,9 @@ toolchain/aparato · **X** terceiros.
 | **1001** | A | O palco avulso aberto de S1 tem **mais** do que a div. 964 previa: com setlists, oferece `Abrir o índice da setlist` — o índice de uma setlist alheia; com **zero** setlists, a tela cai no placeholder **sem nenhum controle** (sem barra, sem `sair`, sem bordas) | declarado, **não consertado**; vai com a 964 à **PR-6 — o palco avulso sem hospedeira** (N4-D30, N4-D45) |
 | **1002** | T | A fixture do pre-check do N3 dá ids que começam todos por `00000000`: na S4 do mock **todo** resultado sai com o mesmo `testID` `resultado-00000000` (o `id[:8]`). Na conta real os ids diferem | registrado; não afeta o brief (que não cita `testID`). Pesa em quem achar resultado da S4 por `testID` no mock — candidata ao **W5** (instrumento) |
 
-**Contagem**: 4 — D 1 · P 1 · A 1 · T 1.
+| **1003** | P | O prompt dos ajustes da revisão diz que o commit é *"só no `docs/native/N4-BRIEF.md`"*, e o item 1 manda registrar a N4-D57 também *"no README dos anexos"*; mudar o README muda o sha dele, e o `SHA256SUMS.txt` desta pasta tem de ser refeito no mesmo commit | o commit `docs(n4): brief — ajustes da revisão` toca os três: o brief, este README (§4 e esta linha) e o `SHA256SUMS.txt` |
+
+**Contagem**: 5 — D 1 · P 2 · A 1 · T 1.
 
 ## 7. Índice
 

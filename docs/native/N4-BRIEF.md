@@ -47,7 +47,10 @@ música com arquivo, se o arquivo ainda não está no aparelho.
 Uma tela **própria, diferente do palco** (N4-D8): o palco mostra só o necessário para tocar; V mostra o cadastro.
 
 - **cabeçalho**: título · artista · tipo;
-- **os campos da N4-D31** (tabela no §7) e **as notas da música**;
+- **os campos da N4-D31** (tabela no §7) e **as notas da música** — **só aqui** (N4-D57): no N4 o palco não as mostra
+  e não muda. São as notas que o site chama de *Notas de palco*; o palco do tablet mostra outra coisa, as notas **da
+  posição na setlist**, e hoje o que o músico escreve em *Notas de palco* não aparece em palco nenhum. Levá-las ao palco
+  é item nomeado para o encerramento do bloco, sem destino decidido. O rótulo delas no tablet é a pergunta 10;
 - **o corpo da música**, pelo **mesmo leitor do palco** (N4-D24) — o mesmo texto em fonte mono, a partitura pelo mesmo
   leitor de PDF; sem os controles de tocar (rolagem automática, bordas de avançar). A **Cifra com seções** mostra o nome
   de cada seção antes dos acordes e da letra, como o site (N4-D40); o nome pode ser o que o editor do site grava sozinho
@@ -118,6 +121,12 @@ de cada um.
 10. **Falha é um estado na tela, com o motivo** — nunca tela vazia. *(V1, os placeholders do palco; N2, as espécies de
     falha.)*
 11. **Frase nova só como proposta** (§8), em lista separada; o desenho usa as que existem.
+12. **O tema**: as telas de lista de hoje (S1, o índice da setlist, a busca, o fim da setlist) são desenhadas **só no
+    escuro**; o palco tem **os dois**, escuro e claro, com o controle de tema na barra de baixo (`DESIGN-V1`: o par de
+    ícones *Mudar para o tema claro* / *Mudar para o tema escuro* e a moldura `S3-claro`). **As telas novas — a
+    biblioteca, a visualização, a entrada em S1 — seguem o tema das telas de lista: escuro.** O palco avulso é o palco e
+    tem os dois. O **tema claro nas telas de lista** é herança aberta do V1 (`V1-ENCERRAMENTO.md` §3 e §11;
+    `N2-ENCERRAMENTO.md` §10.5 item 2), **fora do N4**.
 
 ## 5. O inventário por estado
 
@@ -149,6 +158,8 @@ e `VIEW-…` são molduras do site (folhas 4 e 5 do `DESIGN-I1`) — referência
 | **sem artista** — o caso **comum** (§6) | existe na busca | `N4BR-S4-resultados-tab-ret` (*Décima do ensaio*: só título e tipo) |
 | **tipo desconhecido** | existe no índice e no palco | `N3P6B-S2-S2-invalidos`; V1 `S2-invalidos` |
 | **item inválido** (sem conteúdo) | existe no índice e no palco | `N3P6B-S2-S2-invalidos`, `N3P6B-S3-S3-nobody` |
+| **lista longa, em rolagem** — as 63 da conta: o que fica fixo no topo (a busca, os filtros) e o que rola | novo para a lista. Hoje, na busca, a barra de 88 (fechar · campo · apagar) fica fixa e os resultados rolam abaixo dela; a régua (*Biblioteca · {n} músicas* · *{n} resultados*) está dentro da área que rola — os dumps não dizem se ela acompanha a rolagem (não há captura rolada da busca) | `N4BR-S4-resultados-tab-pai` (o 6º resultado cortado pela borda de baixo); `N4BR-S4-resultados-tab-ret`; em S1, a barra fixa e os cartões rolando (`N4BR-S1-setlists`) |
+| **busca com o teclado aberto**, em B e em A — o que continua alcançável | existe na busca e no picker, **com defeito conhecido**: em B o teclado encaixado (topo em 761,3 dp) cobre o rodapé do picker — o `Concluir` (y 1034,2) fica sob ele, e fechar o teclado custa um gesto (`N3-ENCERRAMENTO.md` §10.4 item 1, div. 450, herança "polimento do nativo, pós-N3"). Em C o teclado do sistema cobre a metade de baixo e os resultados ficam atrás dele (a lista não encolhe). Em A não há captura; a folha do N3 põe o cartão de criar acima do teclado (N3-D20) | `N2-BRIEF-anexos/C5.png` (C, teclado aberto) e `C5b.png` (o mesmo sem teclado); B e A: sem captura |
 
 ### 5.2 V — a visualização
 
@@ -207,7 +218,7 @@ verdade** (N4-D31), com o nome que o site usa:
 | tom | *tom* | sim |
 | andamento | *andamento* (*{x} BPM*) | sim |
 | etiquetas | *etiquetas* (separadas por ` · `) | sim |
-| notas da música | *Notas de palco* | sim — são as notas **da música**; as do palco são **da posição na setlist** (outra coisa) |
+| notas da música | *Notas de palco* | sim, **só na visualização** (N4-D57) — o rótulo **não** é *Notas de palco* no tablet, onde se confundiria com as notas da posição na setlist que o palco mostra; o rótulo é a pergunta 10 (frase nova, como proposta) |
 | criação e alteração | *criado* · *alterado* | **o desenho propõe** se aparecem (pergunta 4) |
 | favorita | *Favoritar* / *Favorita* | é o controle de favoritar |
 | **compasso** | *compasso* | **não** |
@@ -279,12 +290,17 @@ site com *"… — {motivo}"*. O desenho usa a composição do tablet.
 6. **"Não baixada" na linha**: o que a linha de uma música com arquivo mostra antes de o arquivo chegar, e quando o
    download falhou? (Não acontece com música só de texto.)
 7. *(acréscimo do executor)* **A barra do palco avulso sem setlist** (§2.4): o que ocupa o lugar do nome da setlist, e o
-   que a barra de baixo oferece no lugar de *Abrir o índice da setlist*?
+   que a barra de baixo oferece no lugar de *Abrir o índice da setlist*? E **para onde o palco avulso volta** — ele pode
+   ter sido aberto da biblioteca, da visualização ou da busca — e **o que o controle de voltar diz em cada caso** (hoje,
+   aberto pela busca, ele diz *Voltar para a busca*).
 8. *(acréscimo do executor)* **Favoritando**: enquanto o pedido está em voo, o que a linha e a visualização mostram — e o
    controle fica inerte até a resposta?
 9. *(acréscimo do executor)* **Dois valores que hoje não existem**: a altura mínima da folha (o cartão de criar/editar
    setlist) em B e A, e a largura mínima do artista no modo de reordenar em C. O desenho propõe ou declara que ficam sem
    mínimo (N4-D17).
+10. **O rótulo das notas da música na visualização** (§2.2, §7): o site as chama de *Notas de palco*, mas no tablet esse
+    nome se confundiria com as notas da posição na setlist, que o palco mostra (N4-D57). Que rótulo elas levam? É frase
+    nova: vem como **proposta**, na lista separada.
 
 ## 10. O que se pede de volta
 
@@ -297,6 +313,22 @@ site com *"… — {motivo}"*. O desenho usa a composição do tablet.
   propuser fora do que o brief pede. Cada uma com o porquê.
 - **Duas rodadas**: a primeira volta com as perguntas do §9 respondidas como proposta; o dono do app decide; a segunda
   fecha. Depois vem o congelamento, com sha.
+
+**O formato**, pelo molde do `DESIGN-N3` (o congelado do N3), só o que ele de fato tem:
+
+- **um arquivo único, offline**: `telas.html`, com todas as molduras, e `telas.pdf`, a impressão do mesmo arquivo. No N3
+  o `telas.html` abria com um quadro-resumo (quantas molduras, ícones e frases novas, `testID`, perguntas, propostas) e as
+  decisões de cada revisão;
+- **as molduras identificadas por um ID literal no começo da legenda**, com a dimensão — no N3, `N3-B-…`, `N3-A-…` e
+  `N3-A699-…`; aqui, `N4-C-…`, `N4-B-…`, `N4-A-…`. Procurar o ID no `telas.html` acha a moldura; é por ele que a captura,
+  a moldura e as tabelas se encontram;
+- **a tabela de medidas dentro do `telas.html`**, como a seção *"medidas por origem"* do N3, com a origem de cada valor
+  (lá: `[captura]`, `[medido]`, `[token]`, `[C]`, `[soma]`, `[estimado]`);
+- **as propostas numa seção própria do `telas.html`**, como a *"propostas fora do brief"* do N3 (P1, P2, P3, cada uma com
+  o custo; *"Nada disto está desenhado nas molduras"*), e as perguntas numa seção *"perguntas"*;
+- o resto da pasta **não é do desenho**: no congelamento, o executor escreve o `README.md` (as decisões, o aval, as medidas
+  a conferir, o aparato) e o `SHA256SUMS` dos dois arquivos congelados (`telas.html`, `telas.pdf`); o `medidas.json` do
+  N3 é derivado da tabela, extraído depois, na primeira PR de implementação.
 
 ## 11. Os anexos
 
