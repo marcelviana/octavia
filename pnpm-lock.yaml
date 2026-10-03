@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@octavia/core':
+        specifier: workspace:*
+        version: link:packages/core
       '@octavia/identidade':
         specifier: workspace:*
         version: link:packages/identidade

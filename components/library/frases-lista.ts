@@ -5,8 +5,12 @@
  * Frases novas aprovadas no aval do commit 1 (divs. 706–708): `lib.artista.desconhecido`,
  * os nomes acessíveis do favoritar e os 12 meses da data curta.
  * O motivo da falha sai do `status` que o erro da carga leva (o padrão da I1-PR-6).
+ * N4-PR3 (N4-D14): as frases que o tablet também mostra — o quinto chip, os vazios da lista, os nomes do favoritar,
+ * os tipos e as dificuldades — moram no core (`packages/core/src/frases-content.ts`) e vêm de lá, com o texto byte a
+ * byte igual (gate: `tests/gates-web/frases-n4.test.ts`). As outras ficam aqui.
  */
 import type { NomeIcone } from "@octavia/identidade"
+import { ROTULO_DA_DIFICULDADE, ROTULO_DO_TIPO, VOCABULARIO_DE_CONTENT as VC } from "@octavia/core/src/frases-content"
 import { ContentType, normalizeContentType } from "@/types/content"
 
 export const FRASES_LISTA = {
@@ -21,16 +25,16 @@ export const FRASES_LISTA = {
   "dash.adicionar": "Adicionar",
   "dash.abas.geral": "Visão geral",
   "dash.abas.recentes": "Recentes",
-  "dash.abas.favoritas": "Favoritas",
+  "dash.abas.favoritas": VC["favoritas"],
   "dash.cont.conteudos": "conteúdos na biblioteca",
   "dash.cont.setlists": "setlists",
   "dash.cont.favoritas": "favoritas",
   "dash.cont.vistas": "vistas há pouco",
   "dash.cont.desconhecido": "—",
   "dash.recentes": "Recentes",
-  "dash.favoritas": "Favoritas",
+  "dash.favoritas": VC["favoritas"],
   "dash.vazio.recentes": "nada visto recentemente",
-  "dash.vazio.favoritas": "nenhuma favorita",
+  "dash.vazio.favoritas": VC["vazio-favoritas"],
   "dash.erro": "não foi possível carregar o painel — {motivo}",
   "lib.titulo": "Biblioteca",
   "lib.adicionar": "Adicionar",
@@ -43,8 +47,8 @@ export const FRASES_LISTA = {
   "lib.ordenar.artist": "Artista (A–Z)",
   "lib.favoritar": "Favoritar",
   "lib.favorita": "Favorita",
-  "lib.favoritar.nome": "Favoritar “{título}”",
-  "lib.favorita.nome": "Tirar “{título}” das favoritas",
+  "lib.favoritar.nome": VC["favoritar-nome"],
+  "lib.favorita.nome": VC["tirar-nome"],
   "lib.mais": "Mais",
   "lib.mais.nome": "Mais ações para “{título}”",
   "lib.menu.abrir": "Abrir",
@@ -53,10 +57,10 @@ export const FRASES_LISTA = {
   "lib.paginas.anterior": "Anterior",
   "lib.paginas.proxima": "Próxima",
   "lib.carregando": "carregando a biblioteca…",
-  "lib.vazio": "nenhum conteúdo ainda",
+  "lib.vazio": VC["vazio-biblioteca"],
   "lib.vazio.apoio": "adicione a primeira música para começar",
-  "lib.vazio.busca": "nada encontrado",
-  "lib.vazio.busca.apoio": "mude a busca ou os filtros",
+  "lib.vazio.busca": VC["vazio-filtro"],
+  "lib.vazio.busca.apoio": VC["vazio-filtro-apoio"],
   "lib.erro": "não foi possível carregar a biblioteca — {motivo}",
   // I1-PR-11 (`LIB-salvo`, README-design §5.5): o sucesso de salvar do editor, dito pela biblioteca (decisão 1)
   "edit.salvo": "alterações salvas",
@@ -74,10 +78,10 @@ export function comDado(chave: ChaveLista, dados: Record<string, string>): strin
 
 /** O tipo do content: o ícone do catálogo e o rótulo pt-BR (os quatro de `lib.filtros`, div. 709). */
 export const TIPOS: readonly { valor: ContentType; rotulo: string; icone: NomeIcone }[] = [
-  { valor: ContentType.CHORDS, rotulo: "Cifra", icone: "cifra" },
-  { valor: ContentType.LYRICS, rotulo: "Letra", icone: "letra" },
-  { valor: ContentType.TAB, rotulo: "Tab", icone: "tab" },
-  { valor: ContentType.SHEET, rotulo: "Partitura", icone: "partitura" },
+  { valor: ContentType.CHORDS, rotulo: ROTULO_DO_TIPO.Chords, icone: "cifra" },
+  { valor: ContentType.LYRICS, rotulo: ROTULO_DO_TIPO.Lyrics, icone: "letra" },
+  { valor: ContentType.TAB, rotulo: ROTULO_DO_TIPO.Tab, icone: "tab" },
+  { valor: ContentType.SHEET, rotulo: ROTULO_DO_TIPO.Sheet, icone: "partitura" },
 ]
 
 export function tipoDe(contentType: string): { rotulo: string; icone: NomeIcone } {
@@ -86,9 +90,9 @@ export function tipoDe(contentType: string): { rotulo: string; icone: NomeIcone 
 }
 
 export const DIFICULDADES: readonly { valor: string; rotulo: string }[] = [
-  { valor: "Beginner", rotulo: "Iniciante" },
-  { valor: "Intermediate", rotulo: "Intermediário" },
-  { valor: "Advanced", rotulo: "Avançado" },
+  { valor: "Beginner", rotulo: ROTULO_DA_DIFICULDADE.Beginner },
+  { valor: "Intermediate", rotulo: ROTULO_DA_DIFICULDADE.Intermediate },
+  { valor: "Advanced", rotulo: ROTULO_DA_DIFICULDADE.Advanced },
 ]
 
 /** A data curta da folha (*10 set 2026*, div. 708): dia, mês abreviado da tabela, ano. */

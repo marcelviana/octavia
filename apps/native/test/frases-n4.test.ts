@@ -71,6 +71,15 @@ describe('(1) as P-F aceitas — contra a lista extraída da folha', () => {
     }
   })
 
+  it('o título entra como dado: "$&" e "$1" no título não viram padrão de substituição', () => {
+    for (const t of ['Tom $& Jerry', 'Faixa $1', '$$']) {
+      expect(conteudo.nomeFavoritar(t)).toBe(`Favoritar “${t}”`)
+      expect(conteudo.nomeTirar(t)).toBe(`Tirar “${t}” das favoritas`)
+      expect(conteudo.nomeTocar(t)).toBe(`Tocar “${t}”`)
+    }
+    expect(conteudo.andamentoEmBpm(92)).toBe('92 BPM')
+  })
+
   it('as cinco constantes P-F do core são estas, e só estas', () => {
     expect(Object.keys(conteudo.FRASES_N4).sort()).toEqual(
       ['biblioteca-sem-cache', 'biblioteca-vazia', 'notas-da-musica', 'sem-rede-favoritar', 'voltar-visualizacao'],
