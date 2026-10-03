@@ -1,0 +1,372 @@
+# N4 — requisitos e aceites: a biblioteca no tablet
+
+> **Bloco N4 · PR de desenho** (só docs). Data: 2026-10-02. Base: `origin/main` = `42d1c39` (merge da #357, o brief).
+> **O N4 não tem PRD separado; este documento faz esse papel** (N4-D18). Formato: o do [`N3-REQUISITOS.md`](N3-REQUISITOS.md) — todo requisito `N4-Rn` cita a fonte e tem *Aceite* verificável.
+> **Fontes**: [`N4-PRECHECK.md`](N4-PRECHECK.md) (N4-D1…D46), os anexos da N4-PR1, da N4-PR2, do release e do brief (N4-D47…D57), [`N4-BRIEF.md`](N4-BRIEF.md), e [`DESIGN-N4/README.md`](DESIGN-N4/README.md) (N4-D58…D71, a folha congelada, as erratas N4-E1…E6, as medidas a conferir).
+> **Regra de leitura**: `[lido]` = do documento citado; `[derivado]` = conta ou consequência de decisões, com a conta à vista. As medidas desta PR estão no `DESIGN-N4/README.md` §5. **Moldura** = `N4-{C,B,A}-<id>` da folha; `*` = as três faixas.
+> **Divergências**: as desta PR estão no `DESIGN-N4/README.md` §12 (**1004 a 1024**).
+
+---
+
+## 0. As faixas e o que o N4 faz em cada uma
+
+| faixa | largura útil | no N4 | onde se mede |
+| --- | --- | --- | --- |
+| **C** | > 960 dp | implementada; **as telas que existem não mudam** (G-inv) | Tab S6 e AVD `octavia_tab32` deitados (1137,8 dp) |
+| **B** | 700–960 dp | implementada | Tab S6 e AVD em pé (711,1 dp) |
+| **A** | < 700 dp | **não quebra**: nenhum crash, e a lista do que fica inalcançável, por superfície, é herança do N5; as molduras `N4-A-*` viram requisito do N5 | `octavia_phone` em pé (411,4 dp) |
+
+Fontes: N4-D12, N3-D12, N3-D24; a errata do T3-R3 (`N3-REQUISITOS.md` §1) é o molde do aceite de A.
+
+---
+
+## 1. Requisitos
+
+### 1.1 A entrada e a biblioteca (L)
+
+**N4-R1 — `Buscar música` abre a biblioteca; S1 não muda** `[N4-D59; N4-E1; molduras *-S1-absorver-*]`. O toque em
+`Buscar música` (`testID="buscar"`) em S1 abre **L**, não a S4. Em S1 nada mais muda, em nenhuma faixa e em nenhum estado:
+mesmo rótulo, mesmo nome acessível, mesmo `testID`, mesma posição. A S1 vazia é a de hoje (`N2-S1f-criar`, N4-E1), não a
+moldura `*-S1-absorver-vazia`. A S4 continua existindo, aberta só pela busca do palco (N4-R17).
+*Aceite*: A-N4-1.
+
+**N4-R2 — L abre sem teclado** `[N4-D60; molduras *-L-base, *-L-teclado]`. L abre sem foco no campo e sem teclado; o
+teclado sobe no toque no campo. Com o teclado aberto, a lista termina acima dele (encolhe) e barra, campo, filtros e régua
+continuam acima; nada da L fica sob o teclado (em B o topo do teclado está em 761,3 dp: 317 dp dentro da janela, m23).
+*Aceite*: A-N4-2.
+
+**N4-R3 — a composição de L** `[molduras *-L-base, *-L-rolagem; P-T1, P-T2; m2–m10]`. Fixos no topo: a barra de 88
+(voltar · campo, = S4), a faixa de filtros (P-T1: 64 em C e B, 120 em A, duas linhas 3 + 2) e a régua (`Biblioteca · {n}
+músicas` · `{n} resultados`, fixa). Só a lista rola. Linha de 80 (P-T2; em A mín. 80 e cresce), vão 12. A régua fica fixa
+porque *"é ela que diz quantos resultados sobraram depois de um filtro"* (folha). Os valores por faixa são **token do
+pacote** (regra 21 do `LOGS-OCTAVIA.md`); nenhuma tela faz conta de largura.
+*Aceite*: A-N4-3.
+
+**N4-R4 — ordem alfabética, sem controle de ordem** `[P-X1; N4-D31; N4-D67]`. A lista é alfabética pt-BR **sem acento**
+(*Águas* antes de *Décima*); não há controle de ordenação; as favoritas não sobem ao topo (para isso existe o filtro).
+*Aceite*: A-N4-4.
+
+**N4-R5 — os cinco filtros** `[N4-D31; N4-D62; P-X2; P-F9; molduras *-L-filtro-sem-resultado, *-L-favoritas-1, *-L-favoritas-0]`.
+Cinco chips — Letra, Cifra, Tab, Partitura, Favoritas — cada um com a **contagem fixa da biblioteca inteira** (não muda com
+a busca nem com os outros chips). Os tipos combinam por **"ou"**; *Favoritas* combina por **"e"**. Nome acessível de cada
+chip: *Só {tipo} ({n})* (P-F9). Filtro sem resultado: *nada encontrado* / *mude a busca ou os filtros* (site), com os chips
+marcados à vista; *Favoritas* com 0: *nenhuma favorita* e a estrela vazada de 28 em `lineInfo`; o chip marcado com 0
+continua tocável para desmarcar. Régua no singular, *1 resultado* — frase **existente** (N4-E5).
+*Aceite*: A-N4-5.
+
+**N4-R6 — a linha** `[N4-D61; N4-D62; P-F1; P-F7; molduras *-L-base, *-L-linhas]`. O toque na linha **visualiza**
+(abre V; nome acessível *Ver “{título}”*, P-F7). À direita, dois controles próprios de **48 × 48**, vão de 4: a **estrela**
+(favoritar, sem borda, `accentInk`) e o **▶** (tocar, com borda, **só ícone**, nome acessível *Tocar “{título}”*, P-F1).
+A segunda linha leva **sempre o tipo** (ícone de 20 + palavra) e **o artista depois, quando existe** (o ponto vai com o
+artista); nunca *artista desconhecido*. Música com arquivo: o estado do arquivo na segunda linha, depois do tipo —
+*arquivo não baixado* (`offlineInk`), *baixando o arquivo…*, *não consegui baixar* (`errorInk`); **sem *Baixar* na
+linha**. Inválidos: as frases do índice (*tipo não reconhecido — edite na versão web*, *nada para mostrar — edite na versão
+web*) e o ▶ **inerte**; visualizar e favoritar continuam. Título longo: C e B uma linha com reticência, como a S4; A até
+duas linhas (a linha cresce para 106, e4). Pressionada: contorno `accentInk`, fundo a 6 %.
+*Aceite*: A-N4-6.
+
+**N4-R7 — favoritar: só online, sem otimismo** `[N4-D21; N4-D22; N4-D23; N4-D35; N4-D62; N4-D63; P-F5; molduras *-L-favoritando, *-V-favoritando]`.
+O favoritar é `PUT /api/content` com `{"id","is_favorite"}` (valor absoluto). Enquanto o pedido está em voo, **a estrela
+daquela música fica inerte com o arco** em volta e **só muda quando o servidor responde**; o resto da linha e as outras
+estrelas seguem ativos; nome acessível em voo: P-F5. A resposta (a linha inteira) atualiza o cache sem sync. O pedido
+**continua** se o músico sai de V, e **não há aviso na volta**: o estado final aparece onde a estrela estiver.
+*Aceite*: A-N4-7.
+
+**N4-R8 — favoritar com falha, por espécie** `[N4-D29; N3-D19; molduras *-L-favoritar-falhou, *-V-favoritar-falhou; div. 1018]`.
+A falha vira **uma linha de aviso** sob a barra, composta com as frases **do tablet**: o nome acessível do controle (*Favoritar
+“{título}”* ou *Tirar “{título}” das favoritas*) `·` a frase da espécie — sem rede *sem conexão — nada foi salvo*; sem
+resposta *sem resposta do servidor*; sessão *não foi possível salvar — confira sua conta no site*; limite *muitas alterações
+seguidas — tente de novo em {N} s*; servidor *falha no servidor — nada foi alterado aqui*; genérica *não foi possível
+salvar*. Ícone `falha` em `errorInk`, menos sem rede (`sem-conexao`, `offlineInk`) e limite (`ultima-sincronizacao`,
+`offlineInk`). Cresce e **nunca elide** (48, +20 por linha). Sem *Tentar de novo*: a estrela é a nova tentativa; a estrela
+volta ao estado de antes; a linha some no próximo favoritar ou ao sair da tela.
+*Aceite*: A-N4-8.
+
+**N4-R9 — sem rede** `[N4-D23; P-F4; regra 9 do brief; molduras *-L-sem-rede, *-V-sem-rede]`. A lista, a busca, os filtros,
+a leitura e o ▶ funcionam; **só a estrela fica inerte** (`lineInfo`, traço 1,25), e o motivo está **numa** linha de aviso
+sob a barra, à vista sem toque: *Sem conexão: dá para ler e tocar, não para favoritar. O favoritar volta quando a rede
+voltar.* (P-F4). Nenhum motivo repetido por linha.
+*Aceite*: A-N4-9.
+
+**N4-R10 — os estados de sincronização de L** `[P-F10; P-F11; N4-D66 (P-O3); molduras *-L-carregando, *-L-vazia, *-L-falha-com-cache, *-L-falha-sem-cache]`.
+**Carregando** (a 1ª vez, sem nada no aparelho): *carregando…* (frase do tablet), o ícone `baixando`; filtros à vista,
+inertes e sem contagem; o campo aceita digitar. **Vazia** (a conta sem música): *nenhum conteúdo ainda* e P-F10; a marca em
+repouso, sem tinta de alerta; chips com 0, inertes. **Falha com o que está no aparelho**: a frase do S1e na linha de aviso,
+`Tentar novamente` (em A desce para a linha de baixo); a lista é a do aparelho. **Falha sem nada no aparelho**: a
+composição do S1d com P-F11.
+*Aceite*: A-N4-10.
+
+**N4-R11 — a busca de L** `[N4-D59; T1-R20–R23; molduras *-L-busca-sem-resultado]`. O campo de L faz **a mesma busca local**
+da S4 de hoje — título, artista, álbum e letra, sem internet — e a busca sem resultado usa **as duas frases da S4b,
+intactas** (*nada encontrado para “{termo}”*, *busca em título, artista, álbum e letra de toda a biblioteca ({n}
+músicas)*), a lupa com X em `muted`.
+*Aceite*: A-N4-11.
+
+### 1.2 A visualização (V)
+
+**N4-R12 — o cabeçalho de V** `[N4-D61; molduras *-V-*; m12, m26, e5]`. Igual nas três faixas: voltar · título +
+artista · tipo · **estrela** · **▶** (só ícone, com borda, 48 — o mesmo controle da linha). Uma linha de 88
+(`bar.top + space.xl`), que **cresce** quando o título ou a meta quebram (≈ 118 em C e B com duas linhas; em A até ≈ 196
+com o título longo, e5). Sem artista, a meta é só o tipo. Tipo desconhecido: *tipo desconhecido* em `offlineInk` e o ▶
+inerte.
+*Aceite*: A-N4-12.
+
+**N4-R13 — o corpo de V: duas colunas em C, uma em B e A** `[N4-D24; N4-D65; N4-D66 (P-O1, P-O5); P-T3; e6, m13, m14, m24]`.
+Em **C**, duas colunas: detalhes, notas e datas à esquerda (**340**, P-T3) e o corpo à direita; a coluna da esquerda **fica
+mesmo vazia**, para o corpo não mudar de lugar entre músicas. Em **B** e **A**, uma coluna: os detalhes sobre o corpo, uma
+rolagem só (grade de 3 em B, de 2 em A). O corpo é **o leitor do palco** — mono 22, entrelinha 34, sem quebra de linha, sem
+os controles de tocar (rolagem automática, bordas, zoom) — e fica **escuro** (P-O1). **Custo declarado** (N4-D65): ≈ 56
+colunas em C, e o leitor corta linhas que o palco mostra inteiras (≈ 81), até o bloco da quebra de linha.
+*Aceite*: A-N4-13.
+
+**N4-R14 — os campos de V** `[N4-D31; N4-D57; N4-D62; P-F3; molduras *-V-letra, *-V-campos-vazios]`. V mostra **só os
+campos que o site salva de verdade**, com o nome do site: álbum, dificuldade (Iniciante · Intermediário · Avançado),
+gênero, tom, andamento (*{x} BPM*), etiquetas (separadas por ` · `), sob *Detalhes*; as **notas da música** com o rótulo
+*notas da música* (P-F3) — **só em V**, o palco não muda; e **as duas datas numa linha no fim** (*criado {data} · alterado
+{data}*), que sempre existem. **Campo vazio não aparece**; sem nenhum campo e sem notas, sobra a linha das datas. Compasso,
+capo e afinação **não aparecem** (herança D).
+*Aceite*: A-N4-14.
+
+**N4-R15 — o corpo por tipo e os arquivos em V** `[N4-D24; N4-D40; N4-D43; N4-D44; N4-D66 (P-O2); N4-E6; molduras *-V-cifra, *-V-cifra-secoes, *-V-tab, *-V-partitura, *-V-corpo-vazio, *-V-pdf-baixando, *-V-arquivo-nao-baixado, *-V-arquivo-falhou, *-V-formato]`.
+**Cifra com seções**: o nome de cada seção antes dos acordes e da letra, como o editor gravou (*Content*, *Verse 1* — não
+traduzido nem escondido). **Tab** como foi importada, sem quebra. **Partitura** pelo leitor de PDF do palco, página ajustada
+à largura da coluna, sem os controles de zoom. **Corpo vazio**: *este item não tem conteúdo* para os quatro tipos.
+**Arquivo**: *baixando o arquivo…* com o arco; *arquivo não baixado* — o placeholder do S3e com *Baixar* (sem rede, a
+segunda frase troca para a existente); **falha**: *não consegui baixar* e a espécie embaixo; **formato que o app ainda não
+mostra**, pela extensão: *não foi possível abrir o arquivo — confira o formato* (site), com o nome do arquivo em mono. O ▶
+segue ativo no arquivo não baixado.
+*Aceite*: A-N4-15.
+
+### 1.3 O palco avulso sem setlist e a busca dele
+
+**N4-R16 — o palco avulso sem hospedeira** `[N4-D30; N4-D63; N4-D66 (P-O6); divs. 964, 1001; molduras *-S3-avulso-*]`. Aberto
+da L, de V (ou da S4 do avulso), o palco abre **sem setlist hospedeira**: barra de cima com `AVULSA` e **sem nome de
+setlist**, título · artista · tipo ganhando a largura (64 em C; 88 em B: `AVULSA` / título; 144 em A, título em duas
+linhas); **barra de baixo sem o índice** — os quatro de leitura · busca · voltar (em A, busca e voltar em cima, como hoje);
+bordas de virar página inalteradas (170,7 · 106,7 · 61,7). O **voltar** leva **à origem, na mesma posição** (rolagem,
+filtros, termo), com o nome acessível pela origem: L → *Voltar para a biblioteca* (frase do site); V → *Voltar para a
+visualização* (P-F6); S4 → *Voltar para a busca* (existente). **Com zero setlists o palco abre igual** (hoje cai no
+placeholder sem controle, div. 1001). O prefetch sob demanda baixa **esta** música, não a de uma setlist alheia (div. 964).
+O avulso tem **os dois temas** (no claro, a tinta é `light.text`, N4-E3). Arquivo não baixado: o S3e de hoje, com o título
+da música; o *Baixar* sem ícone, como hoje (N4-E6). Formato: o placeholder de V. **O palco com setlist não muda**, nem o
+avulso aberto pela busca dentro de uma setlist.
+*Aceite*: A-N4-16.
+
+**N4-R17 — a S4 aberta do palco avulso sem setlist** `[N4-D59; N4-D63; moldura *-S4-avulso-sem-setlist; m25]`. É a S4 de
+hoje, sem mudança de composição — barra 88 (fechar · campo · apagar), régua, resultados de 80 — **sem a seção *Nesta
+setlist***: só a régua *Biblioteca · {n} músicas*. Tocar um resultado abre o avulso dessa música, e o voltar do palco diz
+*Voltar para a busca*.
+*Aceite*: A-N4-17.
+
+### 1.4 Ícones, tokens, frases e testIDs
+
+**N4-R18 — os ícones novos** `[N4-D58; N4-D68; P-I1a, P-I1b, P-I2; div. 1013]`. Entram no catálogo do pacote a **estrela**
+(vazada = favoritar; cheia = favorita) e o **tocar**, com os estados que a folha desenha (normal, pressionado, inerte, em
+andamento). Cor é do tema, nunca do desenho; traço por tamanho (20 → 1,5). A forma no catálogo (a estrela como um registro
+com dois estados ou dois nomes) é a pergunta 5 do `DESIGN-N4/README.md` §10.
+*Aceite*: A-N4-18.
+
+**N4-R19 — os quatro ícones de tipo trocam de desenho, no app inteiro e no site** `[N4-D69; P-I9…P-I12; div. 1021]`.
+`letra` = **Aa** (L1), `cifra` = **a palheta** (C2), `tab` = **linhas com um 2** (T1), `partitura` = **a nota única** (P2)
+— **mesmos nomes, mesma caixa** (20 / 24 / 28), no catálogo de `packages/identidade`; tudo que mostra tipo, no tablet e no
+site, passa a mostrar o desenho novo sem mudar composição. `tipo-desconhecido` não muda. Na linha de L o tipo fica em 20.
+Exceção declarada à N4-D4, **só no desenho desses quatro**.
+*Aceite*: A-N4-19.
+
+**N4-R20 — os tokens, no pacote** `[N4-D3; N4-D64; N4-D67; P-T1, P-T2, P-T3; regra 21; div. 1020]`. `faixas.*.lib.filtros`
+(C 64 · B 64 · A 120), `faixas.*.lib.linha` (80; A mín. 80, cresce) e `faixas.C.view.coluna` (340) vivem em
+`packages/identidade`, por faixa. As três medidas da N4-D17 (`folha.alturaMin` em B e A, `reordenar.artistaMin` em C) ficam
+**inexistentes por desenho**; a forma disso no tipo — e a da P-T3, que só existe em C — se decide na PR que tocar o pacote
+(N4-D64). Nenhum token fora do pacote; nenhuma conta de largura em tela.
+*Aceite*: A-N4-20.
+
+**N4-R21 — as frases** `[N4-D14; N4-D29; N4-D67; div. 977; N4-E5]`. As frases novas — P-F1, P-F3, P-F4, P-F5, P-F6, P-F7,
+P-F9, P-F10, P-F11 — e o vocabulário de content que o tablet usa entram no core, **sob gate** (a frase que passa ao core não
+pode sair do G-tok sem outro gate cobri-la, div. 977). P-F8 (*1 resultado*) já existe (`SearchScreen.tsx:156`). O motivo
+fica isolado e cada lado compõe do seu jeito (o tablet com ` · `). Nenhuma troca de texto no site.
+*Aceite*: A-N4-21.
+
+**N4-R22 — testIDs** `[N4-D67 (P-X3); div. 1002]`. Os da P-X3 são **sugestão**: `lib-campo`, `lib-filtro-{tipo}`,
+`lib-filtro-favoritas`, `lib-linha-{id8}`, `lib-favoritar-{id8}`, `lib-tocar-{id8}`, `view-voltar`, `view-favoritar`,
+`view-tocar`. Todo alvo tocável novo tem `testID` (G6); todo `testID` novo é adição (G2). Os existentes não mudam. Com a
+fixture de ids `00000000…` do mock, o `{id8}` colide (div. 1002): o arnês acha a linha por outro caminho, ou a fixture da
+PR muda os ids — decisão da PR da tela.
+*Aceite*: A-N4-22.
+
+### 1.5 O que vale para todo o bloco
+
+**N4-R23 — invariante C e as telas que já existem** `[N3-D3; T3-R2; N4-D58; N4-D59; regra 20]`. Em C, os dumps das telas
+que já existem são **idênticos em dp** à base do mock: `N3-PRECHECK-anexos/B5-baseline/` (34) e
+`B3-referencia-paisagem/` (18). Com a N4-D59, **nenhum dump de S1 muda**; os 4 da S4 mudam **de caminho** — passam a ser
+alcançados pelo palco avulso sem setlist (div. 1019), e têm de dar o mesmo. O ícone de tipo trocar de desenho **não muda
+`bounds`** (div. 1021) e não é diferença de G-inv.
+*Aceite*: A-N4-23.
+
+**N4-R24 — B implementada por superfície; A não quebra** `[N4-D12; errata do T3-R3]`. B se implementa contra as molduras
+`N4-B-*`; A tem o aceite mínimo — nenhum crash e **a lista dos controles inalcançáveis por superfície**, herança do N5. As
+molduras `N4-A-*` viram requisito do N5.
+*Aceite*: A-N4-24.
+
+**N4-R25 — as estimadas se medem primeiro** `[N3-D23; regra 19; DESIGN-N4 §4.1]`. Antes de a tela mudar, a régua de
+desenvolvimento mede, **na ordem da folha**, e1 · e2, e3, e4, e5, e6, e9 — e as contas que não fecham (m6, m14; div. 1015)
+e a linha de aviso com o motivo em 15 dp (div. 1014). Diferença **> 4 dp** contra a tabela é errata **N4-E7** em diante, no
+`DESIGN-N4/README.md` §6, antes de virar layout. Os dumps saem no formato do `N4-BRIEF-anexos/MEDIDAS.md`.
+*Aceite*: A-N4-25.
+
+---
+
+## 2. Aceites do N4
+
+O N4 está pronto quando todos abaixo passam, no **Tab S6 e no AVD `octavia_tab32`**, com o **mock** e a fixture do projeto, e,
+onde o critério diz A, no **`octavia_phone`**. **Quem mede é o executor** (N4-D54): tudo que um instrumento compara é medido
+e colado; **ao Marcel cabe o que só o olho e a mão julgam** — coluna *Marcel*. O Tab repousa com o release e volta a ele no
+fim de todo aceite com mock (N4-D55).
+
+| # | critério | evidência (executor) | Marcel | rastreio |
+| --- | --- | --- | --- | --- |
+| A-N4-1 | `buscar` em S1 abre L (dump de L depois do toque); os 8 dumps de S1 da `B5-baseline/` idênticos (G-inv); a S1 vazia com `Criar a primeira setlist` | G-inv; dump antes/depois do toque | — | N4-R1 |
+| A-N4-2 | L abre sem IME (`dumpsys input_method` sem a janela do teclado; nenhum nó com foco); toque no campo → teclado; com ele aberto, todo controle da L acima do topo do teclado | dumps com e sem teclado; o topo do teclado pela região tocável (`APARATO.md`) | — | N4-R2 |
+| A-N4-3 | barra, filtros, régua e linha com os valores da folha por faixa (> 4 dp = errata); régua e filtros com o mesmo `bounds` antes e depois de rolar | dumps de C e B; o rolado | — | N4-R3 |
+| A-N4-4 | a ordem da lista igual à do teste de unidade do core (pt-BR sem acento) sobre a fixture | teste do core; dump | — | N4-R4 |
+| A-N4-5 | as cinco contagens fixas sob busca e filtro; "ou" entre tipos e "e" com Favoritas (teste do core: tabela verdade); nomes acessíveis P-F9 no `content-desc` | teste do core; dumps | — | N4-R5 |
+| A-N4-6 | linha: toque abre V; estrela e ▶ 48 × 48, vão 4; segunda linha tipo · artista; os estados da `L-linhas` | G5/G6; dumps | o toque na linha × no ▶ × na estrela (a mão: o alvo certo, sem toque errado) | N4-R6 |
+| A-N4-7 | durante o pedido, a estrela `enabled=false` e o cache intacto; depois do 200, o cache com a linha devolvida e sem sync; sair de V não cancela | mock com resposta atrasada; logcat; dumps | — | N4-R7 |
+| A-N4-8 | as **seis** espécies em B, cada uma com a linha de aviso e a altura (pior caso: C 1 · B 2 · A 4 linhas, a conferir) | mock por espécie; dumps de B | — | N4-R8 |
+| A-N4-9 | sem rede (`ping` falhando, regra 1): estrela inerte, linha de aviso P-F4, lista/busca/▶ funcionando | dumps; logcat (`write blocked op=… reason=offline`, se o favoritar usar a linha do N2) | — | N4-R9 |
+| A-N4-10 | os quatro estados de sync de L | mock (store apagado, falha, vazio); dumps | — | N4-R10 |
+| A-N4-11 | o mesmo conjunto de resultados da S4 de hoje para os mesmos termos | teste do core; dumps | — | N4-R11 |
+| A-N4-12 | cabeçalho 88; título longo cresce; sem artista; tipo desconhecido | dumps de C e B | — | N4-R12 |
+| A-N4-13 | C: coluna de 340 (> 4 dp = errata, e6) e corpo à direita; B: uma coluna; o leitor sem quebra; colunas visíveis medidas | dumps; régua | **a leitura do corpo em V em C** (o corte de ≈ 56 colunas é custo aceito; o olho diz se a tela se lê) | N4-R13 |
+| A-N4-14 | só os campos salvos; campo vazio ausente do dump; notas com P-F3; datas no fim; nenhum compasso/capo/afinação | dumps sobre fixture com e sem campos | — | N4-R14 |
+| A-N4-15 | cada estado de corpo e de arquivo, com as frases | mock; dumps | — | N4-R15 |
+| A-N4-16 | avulso aberto de L e de V: sem nome de setlist, sem `indice`, voltar à origem na mesma posição (rolagem/termo/filtros iguais antes e depois), nome acessível por origem; **com zero setlists abre**; nenhum `prefetch` de outra música (logcat); G-inv 18/18 do palco com setlist | dumps; logcat; G-inv | — | N4-R16 |
+| A-N4-17 | a S4 do avulso sem *Nesta setlist*; os 4 dumps da S4 da base **idênticos** por esse caminho | G-inv | — | N4-R17 |
+| A-N4-18 | estrela e tocar no catálogo, cobrados pelo `gate:icones` contra a folha do N4 | `gate:icones` | **o traço da estrela e do tocar em 20 dp no aparelho** | N4-R18 |
+| A-N4-19 | os quatro de tipo no catálogo (gate em par); no app e no site, **antes × depois por imagem** com o controle antes × antes = 0 (regra 29); composição igual (G-inv, G-faixa) | `gate:icones`; imagens; G-inv; G-faixa | **o traço dos quatro em 20 dp no Tab S6 — o *a* minúsculo primeiro** (folha: se não sustentar, o anel de raio 2,75 → 3, sem mudar o A) | N4-R19 |
+| A-N4-20 | os tokens no pacote, lidos pelas telas; nenhum literal de largura nas telas novas; a forma da N4-D64 no tipo, com o `igualdade.test.ts` em par | testes do pacote; `git grep` | — | N4-R20 |
+| A-N4-21 | as frases no core, sob gate (CN: tirar uma → reprova) | o gate da PR-3 | — | N4-R21 |
+| A-N4-22 | G2 só com adição; G6 com todo alvo novo | G2/G3; G5/G6 | — | N4-R22 |
+| A-N4-23 | G-inv 34/34 e 18/18 em toda PR (os 4 da S4 pelo caminho novo, depois da troca) | G-inv | — | N4-R23 |
+| A-N4-24 | B contra as molduras; A sem `FATAL` e a lista de inalcançáveis por superfície | dumps; logcat; toque em cada controle | — | N4-R24 |
+| A-N4-25 | a tabela das estimadas medidas na ordem, com as erratas abertas | régua; tabela no formato do `MEDIDAS.md` | — | N4-R25 |
+
+---
+
+## 3. A ordem — **proposta**, para o aval
+
+> **Proposta, não decisão.** A ordem que vale hoje é a da **N4-D45** (PR-3 frases · PR-4 core da biblioteca · PR-5 tela da
+> biblioteca · PR-6 palco avulso · PR-7 visualização · PR-8 transversais · encerramento). O revisor propôs uma **PR de
+> identidade** antes das telas, porque os ícones e os tokens vivem no pacote e alcançam o site. Os requisitos abaixo estão
+> escritos por essa proposta, com o que a leitura do código sugere de diferente ao fim de cada uma; a escolha é a pergunta
+> 1 do `DESIGN-N4/README.md` §10. **Todo documento de PR do bloco termina nomeando a próxima PR desta lista** (N4-D45).
+
+**O gate vem antes do que ele mede** (regra 30): em cada PR, o commit 1 é o instrumento reprovando a `main`.
+
+### PR-3 — core das frases
+
+- **Entrega**: o vocabulário de content do tablet e as frases P-F1, P-F3…P-F7, P-F9…P-F11 no `packages/core`; o contrato da
+  `LinhaDeAviso` (props e espécies, N4-D16); o motivo isolado (N4-D29). Nenhuma tela muda. P-F8 não entra como nova (N4-E5).
+- **Gate**: a frase que passa ao core continua sob gate (div. 977) — G-tok estendido ao módulo do core ou um gate de
+  igualdade; G1a/G1b, G2/G3 (nada de tela); o `DESIGN-N4` no laço do `shasum -c` (div. 1022).
+- **Mede primeiro**: o G-tok com a contagem de strings antes e depois (446 → 445 foi o sintoma da L3).
+- **Aceite**: A-N4-21 (executor); sem aparelho.
+- **Requisitos**: N4-R21.
+
+### PR-4 — identidade *(proposta do revisor)*
+
+- **Entrega**: a estrela e o tocar novos; os quatro de tipo substituídos no `packages/identidade/src/icones.ts`; os tokens
+  P-T1…P-T3; a forma da N4-D64; as erratas de ponteiro nos congelados que mostram ícone de tipo.
+- **Gate**: `gate:icones` com a folha do N4 como fonte, em par (o desenho velho → o novo; a `em20` da tab); o
+  `igualdade.test.ts` (`linha-de-base.json`) em par; G-inv (a composição não muda); no site, G-faixa e G-tok (o ícone muda
+  no site pelo catálogo, N4-D69).
+- **Mede primeiro**: a prova por imagem antes × depois, no aparelho e no site, com o controle antes × antes = 0 — porque o
+  G-inv e o G-faixa medem caixa e **não veem** o desenho (div. 1021).
+- **Aceite**: A-N4-18, A-N4-19, A-N4-20 (executor); **Marcel**: o traço em 20 dp no Tab S6, o *a* minúsculo primeiro.
+- **Requisitos**: N4-R18, N4-R19, N4-R20.
+- **O que a leitura do código sugere de diferente**:
+  1. **Os tokens P-T1…P-T3 não deviam entrar aqui.** Nenhuma tela os lê até a L e V existirem; o gerador de CSS do site só
+     emite `web.*` e `folha.*` (`N4-PRECHECK.md` A11), então eles não alcançam o site; e a **P-T3 só existe em C**, o que
+     cria um `undefined` novo em B e A no `TokensDaFaixa` (div. 1020). Recomendação: **P-T1 e P-T2 na PR da tela L, P-T3
+     na de V**; aqui só os ícones e a forma da N4-D64 (que mexe no tipo do pacote e no CSS gerado de `folha.*` —
+     `--faixa-folha-altura-min`, `N4-PRECHECK.md` A11 —, e por isso é desta PR).
+  2. **O `gate:icones` reprova por construção** (regras 1, 2 e 4 em `apps/native/scripts/icones.mjs:13-50`): a errata em
+     par é o commit 1 desta PR, antes do desenho novo.
+
+### PR-5 — core da biblioteca, sem tela
+
+- **Entrega**: a lista ordenada (P-X1) e o filtro ("ou" / "e", contagem fixa — P-X2); o estado por música do arquivo (N4-D42);
+  a escrita do favoritar (N4-D22, D23, D35) com as espécies do N2; a garantia de todos os arquivos (N4-D42) com a linha
+  `prefetch plan … reason=<nova>` em **errata em par** do G3 e no `LOGS-OCTAVIA.md`; o teste da L2 (o `updated_at` muda, o
+  arquivo fica).
+- **Gate**: o gate byte a byte do corpo do favoritar (N4-PR1); G1b, G2/G3 em par; testes do core reprovando antes.
+- **Mede primeiro**: a tabela verdade do filtro e a ordem sobre a fixture, em teste de unidade.
+- **Aceite**: A-N4-4, A-N4-5 (a parte do core), A-N4-7 (a parte do core), A-N4-11 (executor; sem tela).
+- **Requisitos**: N4-R4, N4-R5, N4-R7, N4-R11 (o core).
+
+### PR-6 — a tela da biblioteca, com o novo destino de `Buscar música`
+
+- **Entrega**: L em C e B, com a entrada (N4-R1); A não quebra.
+- **Gate**: o G-N3 com par desde a primeira captura; G5/G6 nas quatro colunas; G-inv — com a **errata de caminho** dos 4
+  dumps da S4 (div. 1019).
+- **Mede primeiro**: e1 · e2 (os chips em B, folga 37), e3, e4, e9, m6 — pela régua, antes da tela.
+- **Aceite**: A-N4-1…A-N4-11, A-N4-22…A-N4-25 para L (executor); **Marcel**: o toque na linha × nos dois controles.
+- **Requisitos**: N4-R1…N4-R11.
+- **O que a leitura do código sugere de diferente**: **esta PR depois do palco avulso.** Hoje a base do G-inv chega à S4 **por
+  S1** (`N3-PRECHECK-anexos/instrumentos/roteiro.py:258-264`). Trocado o destino de `Buscar música`, a S4 só se alcança pelo
+  palco — pelo palco com setlist ela traz *Nesta setlist*, que a base não tem —, e o G-inv da S4 fica sem caminho até o
+  avulso sem hospedeira existir. Com o avulso antes, a S4 da base se alcança por ele no mesmo dia em que o destino muda. E o
+  avulso sem hospedeira se prova **antes** da L pelo caminho que existe hoje (S1 → `Buscar música` → S4 → música), que é o
+  avulso *"aberto de S1"* da N4-D30.
+
+### PR-7 — o palco avulso sem hospedeira
+
+- **Entrega**: N4-R16, N4-R17; o estado da N4-D43 no palco.
+- **Gate**: G-inv 18/18 do palco com setlist; o caso de zero setlists (div. 1001) reprovando antes; G2/G3 (nenhuma linha de log
+  nova obrigatória, `N4-PRECHECK.md` A3).
+- **Mede primeiro**: a barra sem o nome (a largura que o título ganha, ≈ 12 caracteres a mais em C e B, folha) e a barra de
+  baixo sem o índice (N4-E4: controles de 66).
+- **Aceite**: A-N4-16, A-N4-17 (executor).
+- **Requisitos**: N4-R16, N4-R17.
+
+### PR-8 — a visualização
+
+- **Entrega**: V em C e B (N4-R12…N4-R15), o favoritar e o ▶ em V, o estado da N4-D43.
+- **Gate**: o G-par (o mesmo texto no web e no nativo) agora sobre o nó `corpo` de V (`N4-PRECHECK.md` A12); G-N3; G5/G6.
+- **Mede primeiro**: e5 (cabeçalho em A, registro) e **e6** (a coluna de 340 em C); m14 (as colunas visíveis do leitor).
+- **Aceite**: A-N4-12…A-N4-15 (executor); **Marcel**: a leitura do corpo em C.
+- **Requisitos**: N4-R12…N4-R15.
+
+### PR-9 — estados transversais, a troca por espécie e o aceite completo
+
+- **Entrega**: os estados de rede, falha e favoritar em L e V (N4-R7…N4-R10) medidos de ponta a ponta; a troca de `icone`/`cor`
+  por espécie nas quatro telas (`IndexScreen`, `ModoDeReordenar`, `Picker`, `SetlistsScreen`) **só se o mapa devolver os
+  mesmos pares** de hoje, com G-inv e `gate:icones` intactos (N4-D32); o aceite completo em C, B e o mínimo de A.
+- **Gate**: G-inv; G-N3 consolidado; G5/G6 consolidado; as seis espécies com CN.
+- **Mede primeiro**: as alturas da linha de aviso com o motivo em 15 dp (div. 1014).
+- **Aceite**: A-N4-6…A-N4-10, A-N4-23, A-N4-24 consolidados (executor); **Marcel**: o que a coluna *Marcel* lista.
+- **Requisitos**: todos.
+
+### Encerramento
+
+O `N4-ENCERRAMENTO.md`, com a herança da §4 e as corridas do bloco no `CI-FAIXA.md` (regra 22).
+
+---
+
+## 4. Herança, com destino
+
+| # | item | origem | destino |
+| --- | --- | --- | --- |
+| 1 | **faixa A inteira** — as molduras `N4-A-*` e a lista de inalcançáveis de cada PR | N4-D12 | **N5** |
+| 2 | **quebra de linha na letra** — cobre o palco **e V** (o corte de ≈ 56 colunas em C, ≈ 26 em A) | N4-D13; N4-D66 (P-O5) | **bloco próprio, entre o N4 e o N5** |
+| 3 | **as notas da música no palco** | N4-D57 | **encerramento do N4** nomeia o bloco |
+| 4 | **botões de palavra por ícone** no site e nas telas que já existem no tablet | N4-D71 | **bloco de identidade** (a definir) |
+| 5 | **outro ícone para a ação de tocar** (o estudo) | N4-D71 | **bloco de identidade** |
+| 6 | **o código de cores por tipo** (o estudo da seção 5b; P-T6…P-T9) | N4-D70, N4-D71 | **bloco de identidade** |
+| 7 | **os tamanhos 13 e 20 dp** que o app usa como literal (div. 1016), se a pergunta 8 ficar em (a) | div. 1016 | **bloco de identidade** |
+| 8 | compasso, capo e afinação, que o site não salva | N4-D31 | **Bloco D** |
+| 9 | o tema claro nas telas de lista (L, V, S1…) | brief §4 regra 12 | herança do V1, **fora do N4** |
+| 10 | o rodapé do picker sob o teclado em B (div. 450) — **não** se repete na L, que não tem rodapé (folha, `N4-*-L-teclado`) | N3 | **polimento do nativo, pós-N3** (sem mudança) |
+
+---
+
+**A próxima PR desta lista** (N4-D45): depois do aval do congelamento, a **PR-3 — core das frases**.
