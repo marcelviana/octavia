@@ -164,3 +164,8 @@ components/music-text.tsx
 components/providers/session-provider.tsx
 contexts/firebase-auth-context.tsx
 hooks/use-debounce.ts
+# N4-PR3 (div. 977) — o vocabulário de content do N4 mora no core e o site o importa: o módulo entra na lista para a
+# frase que sai de `frases-lista.ts`/`frases-visualizacao.ts` continuar ao alcance do G-tok. Não é arquivo de tela
+# (o `g-tok-cobertura.mjs` o conta como "da lista que não são de tela"); o nome `frases-*.ts` o põe na posição (c)
+# da div. 828 — todo valor de chave e todo literal de template examinados.
+packages/core/src/frases-content.ts

@@ -1,0 +1,7 @@
+{
+  // N4-PR3 — compila SÓ a igualdade de tipos da linha de aviso (e o que ela importa), com as opções da raiz.
+  "extends": "../../../tsconfig.json",
+  "compilerOptions": { "incremental": false, "plugins": [] },
+  "include": ["linha-de-aviso.tipos.ts"],
+  "exclude": []
+}
