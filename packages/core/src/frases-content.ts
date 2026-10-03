@@ -103,9 +103,17 @@ export function nomeVer(titulo: string): string {
   return `Ver “${titulo}”`
 }
 
-/** P-F9 — o nome acessível de um chip de filtro, com a contagem fixa da biblioteca inteira (P-X2). */
+/** P-F9 — o nome acessível de um chip de TIPO, com a contagem fixa da biblioteca inteira (P-X2). */
 export function nomeDoFiltro(tipo: string, n: number): string {
   return `Só ${tipo} (${n})`
+}
+
+/**
+ * P-F9, a segunda forma — o nome acessível do quinto chip, *Favoritas* (N4-D85, `[Marcel, 2026-10-03]`; div. 1032).
+ * A folha dá só *Só {tipo} ({n})* e não diz o `{tipo}` das favoritas; a decisão é esta, e não *Só Favoritas ({n})*.
+ */
+export function nomeDoFiltroFavoritas(n: number): string {
+  return `Só as favoritas (${n})`
 }
 
 /** Do site (`favoritar-nome`), para o tablet: o nome da estrela vazada. */

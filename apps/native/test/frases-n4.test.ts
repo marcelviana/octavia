@@ -36,6 +36,9 @@ describe('(1) as P-F aceitas — contra a lista extraída da folha', () => {
     expect(esperado.pf.map((p) => p.id)).toEqual(['P-F1', 'P-F3', 'P-F4', 'P-F5', 'P-F6', 'P-F7', 'P-F9', 'P-F10', 'P-F11'])
   })
 
+  /** N4-D85 `[Marcel, 2026-10-03]` — a forma da P-F9 para o chip Favoritas; vem da decisão, não da folha. */
+  const P_F9_FAVORITAS = 'Só as favoritas ({n})'
+
   /** O que o core dá para cada P-F, com o molde da folha preenchido pelos mesmos valores. */
   const TITULOS = ['Manhã de ensaio', 'Uma música de título bem comprido, para medir a quebra', '{título}']
   const CASOS: Record<string, (molde: string[]) => [obtido: string, esperado: string][]> = {
@@ -50,10 +53,13 @@ describe('(1) as P-F aceitas — contra a lista extraída da folha', () => {
     'P-F6': ([m]) => [[conteudo.FRASES_N4['voltar-visualizacao'], m!]],
     'P-F7': ([m]) => TITULOS.map((t) => [conteudo.nomeVer(t), m!.replace('{título}', t)]),
     // Sem plural: o {n} é a contagem entre parênteses, a mesma forma para 0, 1 e muitos.
-    'P-F9': ([m]) =>
-      (['Letra', 'Cifra', 'Tab', 'Partitura'] as const).flatMap((tipo) =>
+    // N4-D85 (div. 1032): duas formas — o molde da folha para os quatro tipos, e a das favoritas, que a folha não dá.
+    'P-F9': ([m]) => [
+      ...(['Letra', 'Cifra', 'Tab', 'Partitura'] as const).flatMap((tipo) =>
         [0, 1, 57].map((n): [string, string] => [conteudo.nomeDoFiltro(tipo, n), m!.replace('{tipo}', tipo).replace('{n}', String(n))]),
       ),
+      ...[0, 1, 6].map((n): [string, string] => [conteudo.nomeDoFiltroFavoritas(n), P_F9_FAVORITAS.replace('{n}', String(n))]),
+    ],
     'P-F10': ([m]) => [[conteudo.FRASES_N4['biblioteca-vazia'], m!]],
     'P-F11': ([m]) => [[conteudo.FRASES_N4['biblioteca-sem-cache'], m!]],
   }
