@@ -116,6 +116,9 @@ implementar medindo se toca a tela de busca congelada. *(Medido nesta PR: a S4 j
 
 **N4-D68** Ícones novos: estrela vazada, estrela cheia e tocar (catálogo 39 → 41). *(A conta: div. 1013.)*
 
+> **Errata da N4-D68 pela N4-D76** `[Marcel, 2026-10-03]`: a estrela é **um registro com dois estados** (vazada e
+> cheia) e o tocar é outro; o catálogo vai de 39 a 41 **registros** (§13; div. 1013 fechada).
+
 **N4-D69** Os **quatro ícones de tipo trocam de desenho** — Letra: Aa; Cifra: a palheta; Tab: linhas com um 2; Partitura:
 a nota única — no catálogo, com os mesmos nomes e a mesma caixa, **no app inteiro e no site**. É exceção declarada à
 N4-D4, limitada ao desenho desses quatro ícones. Na linha da biblioteca o ícone de tipo fica em 20.
@@ -190,7 +193,8 @@ dumps · `[token]` = valor do pacote · `[folha N3]` = desenhado no N3 · `[deri
 | 6 | **e9** | teclado em C e A (300) | a da tela L |
 
 Pela régua de desenvolvimento, **antes** de a tela mudar (regra 19 do `LOGS-OCTAVIA.md`), e diferença **> 4 dp** contra
-esta tabela é errata desta folha, a partir da **N4-E7** (as seis primeiras estão na §6). **A folga que depende de
+esta tabela é errata desta folha, a partir da **N4-E9** (as oito primeiras estão na §6; a N4-E7 e a N4-E8 vieram do
+aval, N4-D77 e N4-D78). **A folga que depende de
 estimativa**: os cinco chips em B (37 dp). *"A troca de ícone não muda a largura"* (folha, seção 9).
 
 As medidas `[estimado]` da folha usaram **14 dp** no motivo da linha de aviso; o app usa 15 (`size.bodySmall`) — a
@@ -409,10 +413,11 @@ Títulos, artistas, corpos e nomes de seção (*Content*, *Verse 1*, *Intro*) s�
 
 ---
 
-## 6 · Erratas desta folha — N4-E1…N4-E6
+## 6 · Erratas desta folha — N4-E1…N4-E8
 
 **A folha não se edita**: o congelado fica como está e **a errata prevalece sobre a moldura**. As próximas nascem da régua
-e do dump da implementação (diferença > 4 dp contra a §4, a regra da N3-D23), a partir da **N4-E7**.
+e do dump da implementação (diferença > 4 dp contra a §4, a regra da N3-D23), a partir da **N4-E9**. *(Este parágrafo
+dizia N4-E7 antes do aval: a N4-E7 e a N4-E8 nasceram da N4-D77 e da N4-D78, abaixo.)*
 
 **N4-E1 — S1 vazia é a do app de hoje, não a do V1** (div. 1007). `N4-*-S1-absorver-vazia` desenha *"nenhuma setlist"* e
 *"Sua conta não tem setlists. Crie na versão web — elas aparecem aqui na próxima sincronização."*, o S1f do V1. Desde o N2
@@ -448,7 +453,21 @@ com linha embaixo — em `L-linhas` (*arquivo não baixado*), em `V-arquivo-nao-
 `baixar-setlist` (`SetlistsScreen.tsx:342`). **Vale o desenho do catálogo pelo nome** (`packages/identidade/src/icones.ts`);
 nenhum desses traçados é ícone novo. Onde a tela de hoje **não tem** ícone — o *Baixar* do placeholder do palco
 (`StageScreen.tsx:824-829`, só o texto) —, o palco avulso fica como o de hoje. O *Baixar* de V é tela nova: pergunta 7 da
-§10.
+§10 — **decidida pela N4-D78: ícone** (N4-E8).
+
+**N4-E7 — o que é normativo de composição** (div. 1017; N4-D77). As molduras `N4-*-L-linhas`, que o índice marca como
+amostra, são **normativas** para os estados da linha que só aparecem nelas (arquivo não baixado, baixando, falhou, título
+longo, tipo desconhecido, item inválido, pressionada). As `N4-*-S3-setlist-icones` (que o índice conta entre as 147) e as
+`N4-*-S2-linhas-icones` são **amostras de telas que já existem**: valem pelo desenho do ícone de tipo (N4-D69) e **não são
+normativas de composição** — a composição é a do congelado V1/N3 (e a N4-E2 continua valendo). O número do índice (147)
+não se reescreve.
+
+**N4-E8 — o *Baixar* da visualização é ícone** (div. 1024; N4-D78). `N4-*-V-arquivo-nao-baixado` e
+`N4-*-V-arquivo-falhou` desenham *Baixar* com a palavra. **Vale o ícone**: o `baixar-setlist` do catálogo (o único ícone
+de baixar do pacote, `packages/identidade/src/icones.ts:144`; em voo, o `baixando-acao`, `:147` — div. 1025), com borda e
+alvo de 48 como o ▶, e o nome acessível *Baixar*. **O *Baixar* do palco não muda** — com setlist ou avulso, continua a
+palavra (`StageScreen.tsx:824-829`) —, e entra na herança dos botões de palavra (N4-D71). Se V reaproveitar o componente
+do placeholder do palco, o controle é a única diferença, e o palco sai byte a byte igual no G-inv.
 
 ---
 
@@ -533,6 +552,8 @@ Cada uma com as opções e a recomendação. Nenhuma está decidida.
   **Recomendada.**
 - (c) a N4-D45 como está (sem PR de identidade; os ícones entram com a tela L).
 
+> **Decidida** `[Marcel, 2026-10-03]`: **N4-D72** (opção b) — errata da N4-D45 (§13).
+
 **2 — A N4-D59 e a errata do G-inv** (div. 1004, 1019). Medido por leitura: em S1 só muda o destino do toque — o `testID`
 `buscar`, o rótulo, a posição e o tamanho de `Buscar música` ficam, e **nenhum dos 8 dumps de S1 da `B5-baseline/` muda**.
 **A errata da N4-D32 sobre os 8 dumps de S1 deixa de existir.** Mas o G-inv tem **4 dumps da S4** (`B5-S4-resultados` e
@@ -544,6 +565,8 @@ Cada uma com as opções e a recomendação. Nenhuma está decidida.
   setlist a S4 traz a seção *Nesta setlist* e não é o estado da base.
 - (b) recapturar a base da S4 depois da troca — perde a invariância contra o congelado.
 
+> **Decidida** `[Marcel, 2026-10-03]`: **N4-D73** (opção a) (§13).
+
 **3 — As erratas de ponteiro nas folhas congeladas** (div. 1023). A troca dos quatro ícones de tipo (N4-D69) torna velhos
 os desenhos de tipo dos congelados — `DESIGN-V1`, `-N2`, `-N3` e `docs/ux/DESIGN-I1`, quais deles têm ícone de tipo em
 moldura se mede na PR. Congelado não se edita: a errata vai no README de cada um, como a E18 e a N2-E24.
@@ -552,6 +575,8 @@ moldura se mede na PR. Congelado não se edita: a errata vai no README de cada u
 - (b) nesta PR — o prompt diz *"nenhum outro arquivo muda nesta PR"*, e a errata apontaria para um desenho que o pacote
   ainda não tem.
 - (c) no encerramento.
+
+> **Decidida** `[Marcel, 2026-10-03]`: **N4-D74** (opção a) (§13).
 
 **4 — A prova da troca de desenho** (div. 1021). O G-inv e o G-N3 comparam `bounds`: o ícone mudar de desenho na mesma
 caixa **não muda nenhum dump** — os dois passam sem ter visto a troca. E o `gate:icones` reprova por construção: cobra os
@@ -563,6 +588,8 @@ quatro cordas (regra 4) — `apps/native/scripts/icones.mjs:13-50`.
   depois, com o controle antes × antes = 0 (regra 29). **Recomendada.**
 - (b) só o `gate:icones` — sem imagem, ninguém vê o que o músico vê.
 
+> **Decidida** `[Marcel, 2026-10-03]`: **N4-D75** (opção a) (§13).
+
 **5 — O catálogo: 41 ou 42** (div. 1013). A N4-D68 diz *"39 → 41"* com três ícones novos. O 39 é a conta de **registros**
 do `gate:icones` (`icones.mjs:60-64`: 34 do V1 + 5 do N2, com `adicionar`/`remover` como **um** registro); o mapa tem **43
 nomes**. O 41 só fecha se a estrela vazada e a cheia forem **um registro**.
@@ -570,7 +597,11 @@ nomes**. O 41 só fecha se a estrela vazada e a cheia forem **um registro**.
   outro: 39 → **41** registros, 43 → **45** nomes. **Recomendada**: é a leitura que faz a N4-D68 e a folha fecharem.
 - (b) dois nomes (`favoritar`, `favorita`) num registro, como `adicionar`/`remover`: 41 registros, 46 nomes.
 
+> **Decidida** `[Marcel, 2026-10-03]`: **N4-D76** (opção a) — errata da N4-D68 (§13).
+
 **6 — As erratas N4-E1…N4-E6** (§6): aprovar como estão.
+
+> **Decidida** `[Marcel, 2026-10-03]`: **N4-D77** — aprovadas, e acrescenta-se a N4-E7 (§13).
 
 **7 — O *Baixar* da visualização** (div. 1024). A N4-D58 manda *ação é ícone* nas telas novas; `V-arquivo-nao-baixado` e
 `V-arquivo-falhou` desenham *Baixar* com a palavra (o placeholder do palco, *"O placeholder do S3e com Baixar"*).
@@ -578,18 +609,26 @@ nomes**. O 41 só fecha se a estrela vazada e a cheia forem **um registro**.
   (`StageScreen.tsx:824-829`): é o mesmo componente, e o leitor é o mesmo (N4-D24). **Recomendada.**
 - (b) em V o *Baixar* vira ícone (o `baixar-setlist`), com o nome acessível *Baixar*.
 
+> **Decidida** `[Marcel, 2026-10-03]`: **N4-D78** — **opção b, não a recomendada**: em V o *Baixar* é ícone; errata N4-E8 (§13).
+
 **8 — A régua de `L-carregando` e os tamanhos 13 e 20** (div. 1016). (i) A régua mostra *Biblioteca* e *—* enquanto o
 número não existe; (ii) a folha usa 13 e 20 dp, que são literais do app e não tokens.
 - **(a) a PR da tela L segue o que a S4 faz hoje** (os mesmos literais, a régua montada pelo `reguaBiblioteca` do core
   quando houver número) e registra 13 e 20 como herança do bloco de identidade (N4-D71). **Recomendada.**
 - (b) 13 e 20 viram token de `size` na PR dos ícones — muda o pacote dos dois lados.
 
+> **Decidida** `[Marcel, 2026-10-03]`: **N4-D79** (opção a) (§13).
+
 **9 — O `telas.pdf`** (div. 1005).
 - **(a) o congelamento fica sem PDF**, como está. **Recomendada**: nenhum congelado gerou o PDF a partir do HTML.
 - (b) o Marcel traz o PDF do Claude Design e ele entra num commit desta PR, com o `SHA256SUMS` refeito.
 
+> **Decidida** `[Marcel, 2026-10-03]`: **N4-D80** (opção a) (§13).
+
 **10 — O `DESIGN-N4` no laço do CI** (div. 1022): **(a) no commit 1 da primeira PR de código** (a PR-3), como a div. 398
 do N3. **Recomendada.**
+
+> **Decidida** `[Marcel, 2026-10-03]`: **N4-D81** (§13).
 
 ---
 
@@ -638,8 +677,81 @@ toolchain/aparato · **X** terceiros.
 
 **Contagem**: 21 — D 13 · P 5 · A 1 · T 2 · X 0.
 
-**Próxima divergência livre: 1025.**
+**Próxima divergência livre** depois deste commit: **1025** — e depois do aval, **1029** (§13.1).
 
 ---
 
-**O que vem depois**: o **aval do congelamento** (as perguntas da §10) e, depois dele, a **PR-3 — core das frases**.
+## 13 · O aval do congelamento — N4-D72…D84 `[Marcel, 2026-10-03]`
+
+Texto verbatim da decisão. As perguntas da §10 ganharam, cada uma, a linha que aponta para a decisão.
+
+**N4-D72** (pergunta 1, opção b) **Errata da N4-D45** — o fatiamento passa a ser: **PR-3** core das frases · **PR-4**
+identidade: a estrela e o tocar, os quatro ícones de tipo substituídos, a forma da N4-D64 e as erratas de ponteiro nos
+congelados · **PR-5** core da biblioteca, sem tela · **PR-6** o palco avulso sem hospedeira · **PR-7** a tela da
+biblioteca, com o novo destino de `Buscar música` e os tokens P-T1 e P-T2 · **PR-8** a visualização, com o token P-T3 ·
+**PR-9** estados transversais, a troca por espécie, o aceite completo, a prova em prod e o release · **encerramento**.
+Todo documento de PR termina nomeando a próxima desta lista.
+
+**N4-D73** (pergunta 2, opção a) A errata do G-inv sobre os 8 dumps de S1 deixa de existir. A errata passa a ser de
+**caminho**: os 4 dumps da S4 se alcançam pelo palco avulso sem setlist e têm de dar os mesmos 4 de 4; declara-se na PR-7.
+
+**N4-D74** (pergunta 3, opção a) As erratas de ponteiro nas folhas congeladas entram na PR-4, no commit que troca o desenho.
+
+**N4-D75** (pergunta 4, opção a) A troca dos ícones se prova pelo `gate:icones` em par, com a folha do N4 como fonte, e por
+imagem antes × depois no aparelho e no site, com o controle antes × antes. O traço em 20 dp no Tab é julgamento do Marcel,
+o *a* minúsculo primeiro.
+
+**N4-D76** (pergunta 5, opção a) **Errata da N4-D68**: a estrela é **um registro com dois estados** (vazada e cheia) e o
+tocar é outro; o catálogo vai de 39 a 41 registros.
+
+**N4-D77** (pergunta 6) As erratas N4-E1 a N4-E6 estão aprovadas. Acrescenta-se a **N4-E7** (div. 1017): as molduras
+`N4-*-L-linhas` são **normativas** para os estados da linha que só aparecem nelas; as `S3-setlist-icones` e
+`S2-linhas-icones` são amostras de telas que já existem e não são normativas de composição.
+
+**N4-D78** (pergunta 7, **opção b**) **Na visualização, o *Baixar* é ícone**, não palavra: o ícone de baixar que o catálogo
+já tem, com borda e alvo de 48 como o ▶, e o nome acessível *Baixar*. Vale a N4-D58: ação é ícone nas telas novas. Isso é
+a **N4-E8**, errata da folha: as molduras `N4-*-V-arquivo-nao-baixado` e `N4-*-V-arquivo-falhou` desenham a palavra; vale o
+ícone. **O *Baixar* do palco não muda neste bloco** — com setlist ou avulso, continua com a palavra, como hoje — e entra na
+herança dos botões de palavra (N4-D71). Se a visualização reaproveitar o componente do placeholder do palco, o controle é
+a única diferença entre os dois, e o palco tem de sair byte a byte igual no G-inv. *(O nome no pacote: `baixar-setlist` —
+div. 1025.)*
+
+**N4-D79** (pergunta 8, opção a) A tela da biblioteca usa 13 e 20 como a tela de busca de hoje; os dois vão como herança do
+bloco de identidade.
+
+**N4-D80** (pergunta 9, opção a) O congelamento fica sem PDF. O `telas.html` com sha é a fonte.
+
+**N4-D81** (pergunta 10) O `DESIGN-N4` entra no laço do `shasum` do CI no commit 1 da PR-3.
+
+**N4-D82** A garantia de todos os arquivos (N4-D42) vira **requisito próprio**, com aceite: depois de um sync com rede, toda
+música com arquivo tem o arquivo no aparelho, dentro do teto de retenção; a linha de log do plano; os estados transitórios
+(baixando, falhou) e o que acontece quando o teto não comporta. O core na PR-5; a evidência no aparelho na PR-9.
+
+**N4-D83** O estado "formato que o app ainda não mostra" (N4-D43) vale **no palco com setlist também**: é o mesmo
+componente. As telas da base do G-inv não mudam porque a fixture da base não tem esse caso — a PR-6 prova isso. *(Lido: a
+fixture do pre-check do N3 só tem `.pdf` — `N3-PRECHECK-anexos/instrumentos/fixture.py:13-16`, `:136-144`; div. 1028.)*
+
+**N4-D84** A PR-9 inclui: (i) **a prova do favoritar em prod pelo app**, na conta de audit, em recurso descartável, pela
+regra 12, com o orçamento de requests e escritas declarado antes e aprovado pelo Marcel; (ii) **o release do N4 instalado
+no Tab** (N4-D55), com a prova sem Metro e sem `adb reverse`.
+
+**O que fecha com o aval**: as divs. 1004, 1005, 1013, 1016, 1017, 1019, 1020, 1021, 1022, 1023 e 1024 têm decisão (as
+perguntas 1–10). As outras desta PR ficam como registro, com o destino que a tabela da §12 dá.
+
+### 13.1 Divergências do commit do aval — 1025 a 1028
+
+A última usada era a **1024** (§12) `[medido: git grep -h -o -E '^\| \*\*1[0-9]{3}\*\*' -- docs | sort -u | tail -3` →
+`1023 · 1024 · 1138`, este último uma linha de medida].
+
+| div. | origem | o quê | destino |
+| --- | --- | --- | --- |
+| **1025** | D | A N4-D78 pede *"o ícone de baixar que o catálogo já tem"*: o pacote tem **um**, e o nome é **`baixar-setlist`** (`icones.ts:144`; em voo, `baixando-acao`, `:147`) — nome de setlist para baixar o arquivo de uma música. O desenho (seta para a bandeja) não fala de setlist | usa-se o `baixar-setlist` como está (N4-E8); **nenhum ícone renomeado no N4** — renomear muda a lista de nomes do `gate:icones` e o `linha-de-base.json`. O nome genérico vai à herança do bloco de identidade, com os botões de palavra (`N4-REQUISITOS.md` §4) |
+| **1026** | P | O prompt pede o aceite da prova em prod e do release na PR-9 (N4-D84) e numera só um aceite novo (A-N4-26, a garantia dos arquivos) | escritos como **aceites (i) e (ii) da PR-9**, sem número `A-N4-n`, rastreando N4-R7 e N4-D55/N4-D84 (`N4-REQUISITOS.md` §3); se o Marcel quiser número, são A-N4-27 e A-N4-28, sem renumerar nada |
+| **1027** | P | A N4-D77 tira das normativas de composição as três `S3-setlist-icones`, que o índice da folha conta entre as **147**, e põe nelas as três `L-linhas`, que o índice conta como amostra | o 147 do índice não se reescreve (a folha não se edita); a conta de **normativas de composição** dá o mesmo número por coincidência — 147 − 3 + 3 — e a N4-E7 diz quais são |
+| **1028** | D | A N4-D83 põe o estado de formato no **palco com setlist**, e o brief (§4 regra 7) e a N4-D30 dizem que o palco com setlist não muda | reconciliadas pela própria N4-D83: muda o **estado** que a base não tem, não a composição; conferido por leitura — a fixture da base só tem `.pdf` (`fixture.py:13-16`, `:136-144`); a **PR-6** prova com o G-inv 18/18 |
+
+**Contagem**: 4 — D 2 · P 2. **Próxima divergência livre: 1029.**
+
+---
+
+**O que vem depois**: o **merge desta PR**, e depois dele a **PR-3 — core das frases** (N4-D72).

@@ -4,7 +4,8 @@
 > **O N4 não tem PRD separado; este documento faz esse papel** (N4-D18). Formato: o do [`N3-REQUISITOS.md`](N3-REQUISITOS.md) — todo requisito `N4-Rn` cita a fonte e tem *Aceite* verificável.
 > **Fontes**: [`N4-PRECHECK.md`](N4-PRECHECK.md) (N4-D1…D46), os anexos da N4-PR1, da N4-PR2, do release e do brief (N4-D47…D57), [`N4-BRIEF.md`](N4-BRIEF.md), e [`DESIGN-N4/README.md`](DESIGN-N4/README.md) (N4-D58…D71, a folha congelada, as erratas N4-E1…E6, as medidas a conferir).
 > **Regra de leitura**: `[lido]` = do documento citado; `[derivado]` = conta ou consequência de decisões, com a conta à vista. As medidas desta PR estão no `DESIGN-N4/README.md` §5. **Moldura** = `N4-{C,B,A}-<id>` da folha; `*` = as três faixas.
-> **Divergências**: as desta PR estão no `DESIGN-N4/README.md` §12 (**1004 a 1024**).
+> **Divergências**: as desta PR estão no `DESIGN-N4/README.md` §12 (**1004 a 1024**) e §13.1 (**1025 a 1028**, o commit do aval).
+> **O aval** (N4-D72…D84, `DESIGN-N4/README.md` §13) entrou como errata abaixo de cada requisito que ele muda; a §3 foi reescrita como decidida.
 
 ---
 
@@ -135,6 +136,13 @@ traduzido nem escondido). **Tab** como foi importada, sem quebra. **Partitura** 
 segunda frase troca para a existente); **falha**: *não consegui baixar* e a espécie embaixo; **formato que o app ainda não
 mostra**, pela extensão: *não foi possível abrir o arquivo — confira o formato* (site), com o nome do arquivo em mono. O ▶
 segue ativo no arquivo não baixado.
+
+> **Errata do N4-R15 (N4-D78, N4-E8, `[Marcel, 2026-10-03]`).** Em V o ***Baixar* é ícone**, não palavra: o
+> `baixar-setlist` do catálogo (em voo, o `baixando-acao`; div. 1025), **com borda e alvo de 48** como o ▶, e o **nome
+> acessível *Baixar***. Vale para o arquivo não baixado e para a falha. As molduras `*-V-arquivo-nao-baixado` e
+> `*-V-arquivo-falhou`, que desenham a palavra, cedem (N4-E8). Se V reaproveitar o componente do placeholder do palco, o
+> controle é a única diferença entre os dois.
+
 *Aceite*: A-N4-15.
 
 ### 1.3 O palco avulso sem setlist e a busca dele
@@ -150,6 +158,13 @@ placeholder sem controle, div. 1001). O prefetch sob demanda baixa **esta** mús
 O avulso tem **os dois temas** (no claro, a tinta é `light.text`, N4-E3). Arquivo não baixado: o S3e de hoje, com o título
 da música; o *Baixar* sem ícone, como hoje (N4-E6). Formato: o placeholder de V. **O palco com setlist não muda**, nem o
 avulso aberto pela busca dentro de uma setlist.
+
+> **Errata do N4-R16 (N4-D83, N4-D78, `[Marcel, 2026-10-03]`).** (i) O estado **"formato que o app ainda não mostra"**
+> (N4-D43) vale **também no palco com setlist** — é o mesmo componente. As telas da base do G-inv não mudam porque a
+> fixture da base não tem esse caso (só `.pdf`, `N3-PRECHECK-anexos/instrumentos/fixture.py:13-16`, `:136-144`); esta PR
+> o prova (G-inv 18/18; div. 1028). (ii) O ***Baixar* do palco fica com a palavra**, com setlist e avulso, como hoje
+> (`StageScreen.tsx:824-829`); se V reaproveitar o componente, o palco sai **byte a byte igual** no G-inv.
+
 *Aceite*: A-N4-16.
 
 **N4-R17 — a S4 aberta do palco avulso sem setlist** `[N4-D59; N4-D63; moldura *-S4-avulso-sem-setlist; m25]`. É a S4 de
@@ -164,6 +179,10 @@ setlist***: só a régua *Biblioteca · {n} músicas*. Tocar um resultado abre o
 (vazada = favoritar; cheia = favorita) e o **tocar**, com os estados que a folha desenha (normal, pressionado, inerte, em
 andamento). Cor é do tema, nunca do desenho; traço por tamanho (20 → 1,5). A forma no catálogo (a estrela como um registro
 com dois estados ou dois nomes) é a pergunta 5 do `DESIGN-N4/README.md` §10.
+
+> **Errata do N4-R18 (N4-D76, errata da N4-D68, `[Marcel, 2026-10-03]`).** A estrela é **um registro com dois estados** —
+> vazada (favoritar) e cheia (favorita) — e o tocar é **outro registro**: o catálogo vai de **39 a 41 registros**.
+
 *Aceite*: A-N4-18.
 
 **N4-R19 — os quatro ícones de tipo trocam de desenho, no app inteiro e no site** `[N4-D69; P-I9…P-I12; div. 1021]`.
@@ -198,7 +217,8 @@ PR muda os ids — decisão da PR da tela.
 **N4-R23 — invariante C e as telas que já existem** `[N3-D3; T3-R2; N4-D58; N4-D59; regra 20]`. Em C, os dumps das telas
 que já existem são **idênticos em dp** à base do mock: `N3-PRECHECK-anexos/B5-baseline/` (34) e
 `B3-referencia-paisagem/` (18). Com a N4-D59, **nenhum dump de S1 muda**; os 4 da S4 mudam **de caminho** — passam a ser
-alcançados pelo palco avulso sem setlist (div. 1019), e têm de dar o mesmo. O ícone de tipo trocar de desenho **não muda
+alcançados pelo palco avulso sem setlist (div. 1019), e têm de dar o mesmo 4 de 4 — errata de **caminho**, declarada na
+PR-7 (N4-D73). O ícone de tipo trocar de desenho **não muda
 `bounds`** (div. 1021) e não é diferença de G-inv.
 *Aceite*: A-N4-23.
 
@@ -211,7 +231,23 @@ molduras `N4-A-*` viram requisito do N5.
 desenvolvimento mede, **na ordem da folha**, e1 · e2, e3, e4, e5, e6, e9 — e as contas que não fecham (m6, m14; div. 1015)
 e a linha de aviso com o motivo em 15 dp (div. 1014). Diferença **> 4 dp** contra a tabela é errata **N4-E7** em diante, no
 `DESIGN-N4/README.md` §6, antes de virar layout. Os dumps saem no formato do `N4-BRIEF-anexos/MEDIDAS.md`.
+
+> **Errata do N4-R25 (N4-D77, N4-D78).** A N4-E7 e a N4-E8 estão ocupadas pelo aval: as erratas de medida começam na
+> **N4-E9**.
+
 *Aceite*: A-N4-25.
+
+### 1.6 Do aval
+
+**N4-R26 — todo arquivo da biblioteca no aparelho** `[N4-D42; N4-D82; N4-PRECHECK.md A7 itens 1–4]`. Depois de **um sync com
+rede**, **toda música com arquivo** (Partitura, Cifra escaneada) tem o arquivo **no aparelho**, dentro do **teto de
+retenção** (`CAP_BYTES` = 200 MB, `apps/native/src/prefetch.ts:34`): o conjunto garantido passa a ser todo `file_url` com
+`body === 'file'`, protegido do LRU. O plano sai numa linha de log **`prefetch plan n=<n> reason=<nova>`** — errata **em
+par** do G3 e linha nova no `LOGS-OCTAVIA.md` (regra 14). Os estados transitórios — **baixando** e **falhou** — são os da
+linha da L (N4-R6) e de V (N4-R15). **Quando o teto não comporta**: os garantidos não se despejam; o que não coube fica
+*arquivo não baixado*, e o sinal é a linha `lru over …` que já existe — nunca silêncio. O core na **PR-5**; a evidência no
+aparelho na **PR-9**.
+*Aceite*: A-N4-26.
 
 ---
 
@@ -238,113 +274,120 @@ fim de todo aceite com mock (N4-D55).
 | A-N4-12 | cabeçalho 88; título longo cresce; sem artista; tipo desconhecido | dumps de C e B | — | N4-R12 |
 | A-N4-13 | C: coluna de 340 (> 4 dp = errata, e6) e corpo à direita; B: uma coluna; o leitor sem quebra; colunas visíveis medidas | dumps; régua | **a leitura do corpo em V em C** (o corte de ≈ 56 colunas é custo aceito; o olho diz se a tela se lê) | N4-R13 |
 | A-N4-14 | só os campos salvos; campo vazio ausente do dump; notas com P-F3; datas no fim; nenhum compasso/capo/afinação | dumps sobre fixture com e sem campos | — | N4-R14 |
-| A-N4-15 | cada estado de corpo e de arquivo, com as frases | mock; dumps | — | N4-R15 |
-| A-N4-16 | avulso aberto de L e de V: sem nome de setlist, sem `indice`, voltar à origem na mesma posição (rolagem/termo/filtros iguais antes e depois), nome acessível por origem; **com zero setlists abre**; nenhum `prefetch` de outra música (logcat); G-inv 18/18 do palco com setlist | dumps; logcat; G-inv | — | N4-R16 |
+| A-N4-15 | cada estado de corpo e de arquivo, com as frases; o *Baixar* de V é **ícone** (`baixar-setlist`), 48 × 48 com borda, `content-desc` *Baixar*, nenhum nó de texto *Baixar* em V (N4-E8) | mock; dumps | — | N4-R15 |
+| A-N4-16 | avulso aberto de L e de V: sem nome de setlist, sem `indice`, voltar à origem na mesma posição (rolagem/termo/filtros iguais antes e depois), nome acessível por origem; **com zero setlists abre**; nenhum `prefetch` de outra música (logcat); G-inv 18/18 do palco com setlist; **o formato no palco com setlist** (mock com arquivo não-PDF) e a base do G-inv intacta (N4-D83); o *Baixar* do palco com a palavra, nó a nó o de hoje (N4-D78) | dumps; logcat; G-inv | — | N4-R16 |
 | A-N4-17 | a S4 do avulso sem *Nesta setlist*; os 4 dumps da S4 da base **idênticos** por esse caminho | G-inv | — | N4-R17 |
-| A-N4-18 | estrela e tocar no catálogo, cobrados pelo `gate:icones` contra a folha do N4 | `gate:icones` | **o traço da estrela e do tocar em 20 dp no aparelho** | N4-R18 |
+| A-N4-18 | estrela (**um registro, dois estados**: vazada/cheia, N4-D76) e tocar (outro registro) no catálogo — **41 registros** —, cobrados pelo `gate:icones` contra a folha do N4 | `gate:icones` | **o traço da estrela e do tocar em 20 dp no aparelho** | N4-R18 |
 | A-N4-19 | os quatro de tipo no catálogo (gate em par); no app e no site, **antes × depois por imagem** com o controle antes × antes = 0 (regra 29); composição igual (G-inv, G-faixa) | `gate:icones`; imagens; G-inv; G-faixa | **o traço dos quatro em 20 dp no Tab S6 — o *a* minúsculo primeiro** (folha: se não sustentar, o anel de raio 2,75 → 3, sem mudar o A) | N4-R19 |
 | A-N4-20 | os tokens no pacote, lidos pelas telas; nenhum literal de largura nas telas novas; a forma da N4-D64 no tipo, com o `igualdade.test.ts` em par | testes do pacote; `git grep` | — | N4-R20 |
 | A-N4-21 | as frases no core, sob gate (CN: tirar uma → reprova) | o gate da PR-3 | — | N4-R21 |
 | A-N4-22 | G2 só com adição; G6 com todo alvo novo | G2/G3; G5/G6 | — | N4-R22 |
 | A-N4-23 | G-inv 34/34 e 18/18 em toda PR (os 4 da S4 pelo caminho novo, depois da troca) | G-inv | — | N4-R23 |
 | A-N4-24 | B contra as molduras; A sem `FATAL` e a lista de inalcançáveis por superfície | dumps; logcat; toque em cada controle | — | N4-R24 |
-| A-N4-25 | a tabela das estimadas medidas na ordem, com as erratas abertas | régua; tabela no formato do `MEDIDAS.md` | — | N4-R25 |
+| A-N4-25 | a tabela das estimadas medidas na ordem, com as erratas abertas (a partir da N4-E9) | régua; tabela no formato do `MEDIDAS.md` | — | N4-R25 |
+| A-N4-26 | **core** (PR-5): teste do conjunto garantido = todo `file_url` com `body === 'file'`; o LRU não despeja garantido; a linha `prefetch plan … reason=<nova>` no G3 em par e no catálogo. **Aparelho** (PR-9): depois de um sync com rede, o `files-index` tem todo arquivo da fixture com `body === 'file'` (lista e bytes contra a fixture), a linha do plano no logcat, *baixando* e *falhou* (mock de 404) vistos na linha e em V; com o teto reduzido no mock, `lru over` e o *arquivo não baixado* no que não coube | testes do core; G3; logcat; `run-as` do índice de arquivos; dumps | **o tempo até tudo baixar num sync real** (o olho: a biblioteca usável enquanto baixa) | N4-R26 |
 
 ---
 
-## 3. A ordem — **proposta**, para o aval
+## 3. A ordem — **decidida** (N4-D72)
 
-> **Proposta, não decisão.** A ordem que vale hoje é a da **N4-D45** (PR-3 frases · PR-4 core da biblioteca · PR-5 tela da
-> biblioteca · PR-6 palco avulso · PR-7 visualização · PR-8 transversais · encerramento). O revisor propôs uma **PR de
-> identidade** antes das telas, porque os ícones e os tokens vivem no pacote e alcançam o site. Os requisitos abaixo estão
-> escritos por essa proposta, com o que a leitura do código sugere de diferente ao fim de cada uma; a escolha é a pergunta
-> 1 do `DESIGN-N4/README.md` §10. **Todo documento de PR do bloco termina nomeando a próxima PR desta lista** (N4-D45).
+> **Decisão, não proposta** `[Marcel, 2026-10-03]`. A **N4-D72** é errata da N4-D45. **De onde veio a ordem**: a PR de
+> identidade é a proposta do revisor; os tokens na PR da tela que os lê e o palco avulso antes da tela da biblioteca são o
+> que a leitura do código sugeriu (`DESIGN-N4/README.md` §10, pergunta 1; divs. 1019, 1020) — a S4 da base do G-inv se
+> alcança por S1 hoje, e depois da troca de destino só pelo avulso sem setlist. **Todo documento de PR do bloco termina
+> nomeando a próxima PR desta lista** (N4-D72).
 
-**O gate vem antes do que ele mede** (regra 30): em cada PR, o commit 1 é o instrumento reprovando a `main`.
+**O gate vem antes do que ele mede** (regra 30): em cada PR, o commit 1 é o instrumento reprovando a `main`. Quem mede é o
+executor (N4-D54); o Tab repousa com o release e volta a ele no fim de todo aceite com mock (N4-D55).
 
 ### PR-3 — core das frases
 
 - **Entrega**: o vocabulário de content do tablet e as frases P-F1, P-F3…P-F7, P-F9…P-F11 no `packages/core`; o contrato da
   `LinhaDeAviso` (props e espécies, N4-D16); o motivo isolado (N4-D29). Nenhuma tela muda. P-F8 não entra como nova (N4-E5).
-- **Gate**: a frase que passa ao core continua sob gate (div. 977) — G-tok estendido ao módulo do core ou um gate de
-  igualdade; G1a/G1b, G2/G3 (nada de tela); o `DESIGN-N4` no laço do `shasum -c` (div. 1022).
+- **Gate**: a frase que passa ao core continua sob gate (div. 977); G1a/G1b, G2/G3; **o `DESIGN-N4` no laço do `shasum -c`
+  do `gates.yml`, no commit 1** (N4-D81).
 - **Mede primeiro**: o G-tok com a contagem de strings antes e depois (446 → 445 foi o sintoma da L3).
-- **Aceite**: A-N4-21 (executor); sem aparelho.
-- **Requisitos**: N4-R21.
+- **Requisitos**: N4-R21. **Aceites**: A-N4-21 (executor; sem aparelho).
 
-### PR-4 — identidade *(proposta do revisor)*
+### PR-4 — identidade
 
-- **Entrega**: a estrela e o tocar novos; os quatro de tipo substituídos no `packages/identidade/src/icones.ts`; os tokens
-  P-T1…P-T3; a forma da N4-D64; as erratas de ponteiro nos congelados que mostram ícone de tipo.
-- **Gate**: `gate:icones` com a folha do N4 como fonte, em par (o desenho velho → o novo; a `em20` da tab); o
-  `igualdade.test.ts` (`linha-de-base.json`) em par; G-inv (a composição não muda); no site, G-faixa e G-tok (o ícone muda
-  no site pelo catálogo, N4-D69).
-- **Mede primeiro**: a prova por imagem antes × depois, no aparelho e no site, com o controle antes × antes = 0 — porque o
-  G-inv e o G-faixa medem caixa e **não veem** o desenho (div. 1021).
-- **Aceite**: A-N4-18, A-N4-19, A-N4-20 (executor); **Marcel**: o traço em 20 dp no Tab S6, o *a* minúsculo primeiro.
-- **Requisitos**: N4-R18, N4-R19, N4-R20.
-- **O que a leitura do código sugere de diferente**:
-  1. **Os tokens P-T1…P-T3 não deviam entrar aqui.** Nenhuma tela os lê até a L e V existirem; o gerador de CSS do site só
-     emite `web.*` e `folha.*` (`N4-PRECHECK.md` A11), então eles não alcançam o site; e a **P-T3 só existe em C**, o que
-     cria um `undefined` novo em B e A no `TokensDaFaixa` (div. 1020). Recomendação: **P-T1 e P-T2 na PR da tela L, P-T3
-     na de V**; aqui só os ícones e a forma da N4-D64 (que mexe no tipo do pacote e no CSS gerado de `folha.*` —
-     `--faixa-folha-altura-min`, `N4-PRECHECK.md` A11 —, e por isso é desta PR).
-  2. **O `gate:icones` reprova por construção** (regras 1, 2 e 4 em `apps/native/scripts/icones.mjs:13-50`): a errata em
-     par é o commit 1 desta PR, antes do desenho novo.
+- **Entrega**: a **estrela** (um registro, dois estados) e o **tocar** (N4-D76); os **quatro ícones de tipo** substituídos
+  em `packages/identidade/src/icones.ts` (N4-D69); **a forma da N4-D64** no tipo do pacote (o `TokensDaFaixa` e o CSS
+  gerado de `folha.*`); **as erratas de ponteiro** nos READMEs dos congelados que mostram ícone de tipo, no commit que
+  troca o desenho (N4-D74). Os tokens P-T1…P-T3 **não** entram aqui.
+- **Gate**: o `gate:icones` com a folha do N4 como fonte, **em par** (o desenho velho → o novo; a `em20` da tab) — o
+  commit 1, reprovando antes do desenho; o `igualdade.test.ts` (`linha-de-base.json`) em par; G-inv 34/34 e 18/18 (a
+  composição não muda); no site, G-faixa e G-tok.
+- **Mede primeiro**: a **imagem antes × depois**, no aparelho e no site, com o controle antes × antes = 0 (N4-D75; regra 29)
+  — o G-inv e o G-faixa medem caixa e não veem o desenho (div. 1021).
+- **Requisitos**: N4-R18, N4-R19, N4-R20 (a parte da N4-D64). **Aceites**: A-N4-18, A-N4-19, A-N4-20 (executor);
+  **Marcel**: o traço em 20 dp no Tab S6, o *a* minúsculo primeiro (N4-D75).
 
 ### PR-5 — core da biblioteca, sem tela
 
-- **Entrega**: a lista ordenada (P-X1) e o filtro ("ou" / "e", contagem fixa — P-X2); o estado por música do arquivo (N4-D42);
-  a escrita do favoritar (N4-D22, D23, D35) com as espécies do N2; a garantia de todos os arquivos (N4-D42) com a linha
-  `prefetch plan … reason=<nova>` em **errata em par** do G3 e no `LOGS-OCTAVIA.md`; o teste da L2 (o `updated_at` muda, o
-  arquivo fica).
-- **Gate**: o gate byte a byte do corpo do favoritar (N4-PR1); G1b, G2/G3 em par; testes do core reprovando antes.
-- **Mede primeiro**: a tabela verdade do filtro e a ordem sobre a fixture, em teste de unidade.
-- **Aceite**: A-N4-4, A-N4-5 (a parte do core), A-N4-7 (a parte do core), A-N4-11 (executor; sem tela).
-- **Requisitos**: N4-R4, N4-R5, N4-R7, N4-R11 (o core).
+- **Entrega**: a lista ordenada (P-X1) e o filtro ("ou" / "e", contagem fixa — P-X2); a busca de L sobre o mesmo índice da
+  S4; a escrita do favoritar (N4-D22, D23, D35) com as espécies do N2; **a garantia de todos os arquivos** (N4-D42, N4-D82)
+  com o estado por música e a linha `prefetch plan … reason=<nova>` em errata em par do G3 e no `LOGS-OCTAVIA.md`; o teste
+  da L2 (o `updated_at` muda, o arquivo fica).
+- **Gate**: o gate byte a byte do corpo do favoritar (N4-PR1); G1b, G2/G3 em par; os testes do core reprovando antes.
+- **Mede primeiro**: a tabela verdade do filtro, a ordem sobre a fixture e o conjunto garantido, em teste de unidade.
+- **Requisitos**: N4-R4, N4-R5, N4-R7, N4-R11, N4-R26 (o core). **Aceites**: A-N4-4, A-N4-5, A-N4-7, A-N4-11 e A-N4-26 na
+  parte do core (executor; sem tela).
 
-### PR-6 — a tela da biblioteca, com o novo destino de `Buscar música`
+### PR-6 — o palco avulso sem hospedeira
 
-- **Entrega**: L em C e B, com a entrada (N4-R1); A não quebra.
-- **Gate**: o G-N3 com par desde a primeira captura; G5/G6 nas quatro colunas; G-inv — com a **errata de caminho** dos 4
-  dumps da S4 (div. 1019).
-- **Mede primeiro**: e1 · e2 (os chips em B, folga 37), e3, e4, e9, m6 — pela régua, antes da tela.
-- **Aceite**: A-N4-1…A-N4-11, A-N4-22…A-N4-25 para L (executor); **Marcel**: o toque na linha × nos dois controles.
-- **Requisitos**: N4-R1…N4-R11.
-- **O que a leitura do código sugere de diferente**: **esta PR depois do palco avulso.** Hoje a base do G-inv chega à S4 **por
-  S1** (`N3-PRECHECK-anexos/instrumentos/roteiro.py:258-264`). Trocado o destino de `Buscar música`, a S4 só se alcança pelo
-  palco — pelo palco com setlist ela traz *Nesta setlist*, que a base não tem —, e o G-inv da S4 fica sem caminho até o
-  avulso sem hospedeira existir. Com o avulso antes, a S4 da base se alcança por ele no mesmo dia em que o destino muda. E o
-  avulso sem hospedeira se prova **antes** da L pelo caminho que existe hoje (S1 → `Buscar música` → S4 → música), que é o
-  avulso *"aberto de S1"* da N4-D30.
+- **Entrega**: N4-R16 e N4-R17 — o avulso aberto de S1 (pelo caminho que existe hoje: S1 → `Buscar música` → S4 → música)
+  deixa de ter hospedeira; a barra sem o nome e sem o índice; o voltar à origem; zero setlists abre; o estado de formato no
+  palco, **com setlist também** (N4-D83); o *Baixar* do palco **com a palavra**, como hoje (N4-D78). A S4 aberta do avulso
+  sem *Nesta setlist*.
+- **Gate**: G-inv **18/18** do palco com setlist e 34/34 (a base não tem arquivo não-PDF: prova da N4-D83); o caso de zero
+  setlists (div. 1001) reprovando antes; G2/G3 (nenhuma linha de log nova obrigatória, `N4-PRECHECK.md` A3); G-N3 e G5/G6
+  do avulso.
+- **Mede primeiro**: a barra sem o nome (≈ 12 caracteres a mais para o título em C e B) e a barra de baixo sem o índice
+  (controles de 66, N4-E4).
+- **Requisitos**: N4-R16, N4-R17, N4-R23, N4-R24 (o palco). **Aceites**: A-N4-16, A-N4-17, A-N4-23, A-N4-24 (executor).
 
-### PR-7 — o palco avulso sem hospedeira
+### PR-7 — a tela da biblioteca, com o novo destino de `Buscar música`
 
-- **Entrega**: N4-R16, N4-R17; o estado da N4-D43 no palco.
-- **Gate**: G-inv 18/18 do palco com setlist; o caso de zero setlists (div. 1001) reprovando antes; G2/G3 (nenhuma linha de log
-  nova obrigatória, `N4-PRECHECK.md` A3).
-- **Mede primeiro**: a barra sem o nome (a largura que o título ganha, ≈ 12 caracteres a mais em C e B, folha) e a barra de
-  baixo sem o índice (N4-E4: controles de 66).
-- **Aceite**: A-N4-16, A-N4-17 (executor).
-- **Requisitos**: N4-R16, N4-R17.
+- **Entrega**: L em C e B (N4-R2…N4-R11, na tela), a entrada (N4-R1), os tokens **P-T1 e P-T2** no pacote; A não quebra.
+- **Gate**: o G-N3 com par desde a primeira captura; G5/G6 nas quatro colunas; G-inv com a **errata de caminho** dos 4
+  dumps da S4, alcançados pelo palco avulso sem setlist, **4 de 4** (N4-D73); os 8 de S1 sem errata nenhuma.
+- **Mede primeiro**: e1 · e2 (os chips em B, folga 37), e3, e4, e9 e m6 — pela régua, antes da tela (as erratas a partir da
+  N4-E9).
+- **Requisitos**: N4-R1, N4-R2, N4-R3, N4-R4, N4-R5, N4-R6, N4-R7, N4-R8, N4-R9, N4-R10, N4-R11 (na tela de L), N4-R20
+  (P-T1, P-T2), N4-R22, N4-R23, N4-R24, N4-R25. **Aceites**: A-N4-1, A-N4-2, A-N4-3, A-N4-4, A-N4-5, A-N4-6, A-N4-7,
+  A-N4-8, A-N4-9, A-N4-10, A-N4-11 (a parte de tela, em L), A-N4-20, A-N4-22, A-N4-23, A-N4-24, A-N4-25 (executor);
+  **Marcel**: o toque na linha × nos dois controles.
 
 ### PR-8 — a visualização
 
-- **Entrega**: V em C e B (N4-R12…N4-R15), o favoritar e o ▶ em V, o estado da N4-D43.
-- **Gate**: o G-par (o mesmo texto no web e no nativo) agora sobre o nó `corpo` de V (`N4-PRECHECK.md` A12); G-N3; G5/G6.
-- **Mede primeiro**: e5 (cabeçalho em A, registro) e **e6** (a coluna de 340 em C); m14 (as colunas visíveis do leitor).
-- **Aceite**: A-N4-12…A-N4-15 (executor); **Marcel**: a leitura do corpo em C.
-- **Requisitos**: N4-R12…N4-R15.
+- **Entrega**: V em C e B (N4-R12…N4-R15), o favoritar e o ▶ em V, o *Baixar* como **ícone** (N4-D78, N4-E8), o estado da
+  N4-D43, o token **P-T3** no pacote.
+- **Gate**: o G-par sobre o nó `corpo` de V (`N4-PRECHECK.md` A12); G-N3; G5/G6; G-inv (se V reaproveitar o placeholder do
+  palco, o palco **byte a byte igual**).
+- **Mede primeiro**: e5 (cabeçalho em A, registro), **e6** (a coluna de 340 em C) e m14 (as colunas visíveis do leitor).
+- **Requisitos**: N4-R8, N4-R9 (em V), N4-R12, N4-R13, N4-R14, N4-R15, N4-R20 (P-T3), N4-R25. **Aceites**: A-N4-8, A-N4-9
+  (em V), A-N4-12, A-N4-13, A-N4-14, A-N4-15, A-N4-20, A-N4-25 (executor); **Marcel**: a leitura do corpo em C.
 
-### PR-9 — estados transversais, a troca por espécie e o aceite completo
+### PR-9 — estados transversais, a troca por espécie, o aceite completo, a prova em prod e o release
 
-- **Entrega**: os estados de rede, falha e favoritar em L e V (N4-R7…N4-R10) medidos de ponta a ponta; a troca de `icone`/`cor`
-  por espécie nas quatro telas (`IndexScreen`, `ModoDeReordenar`, `Picker`, `SetlistsScreen`) **só se o mapa devolver os
-  mesmos pares** de hoje, com G-inv e `gate:icones` intactos (N4-D32); o aceite completo em C, B e o mínimo de A.
+- **Entrega**: os estados de rede, falha e favoritar em L e V medidos de ponta a ponta (N4-R7…N4-R10); a troca de
+  `icone`/`cor` por espécie nas quatro telas (`IndexScreen`, `ModoDeReordenar`, `Picker`, `SetlistsScreen`) **só se o mapa
+  devolver os mesmos pares** de hoje, com G-inv e `gate:icones` intactos (N4-D32); **a evidência no aparelho da garantia
+  dos arquivos** (N4-R26, N4-D82); o aceite completo em C, B e o mínimo de A; **a prova em prod** e **o release** (N4-D84).
 - **Gate**: G-inv; G-N3 consolidado; G5/G6 consolidado; as seis espécies com CN.
 - **Mede primeiro**: as alturas da linha de aviso com o motivo em 15 dp (div. 1014).
-- **Aceite**: A-N4-6…A-N4-10, A-N4-23, A-N4-24 consolidados (executor); **Marcel**: o que a coluna *Marcel* lista.
-- **Requisitos**: todos.
+- **Requisitos**: N4-R6, N4-R7, N4-R8, N4-R9, N4-R10, N4-R23, N4-R24, N4-R26 (o aparelho). **Aceites**: A-N4-6, A-N4-7,
+  A-N4-8, A-N4-9, A-N4-10, A-N4-23, A-N4-24, A-N4-26 (executor; **Marcel** na coluna dele), e mais dois (div. 1026):
+  - **aceite (i) — o favoritar em prod pelo app** (N4-D84; N4-R7; regra 12): na **conta de audit**, num **recurso
+    descartável** criado pelo Marcel; o **orçamento** de requests e escritas declarado **antes** e aprovado pelo Marcel; a
+    evidência: o `PUT` com `{"id","is_favorite"}` (corpo pelo gate da N4-PR1), o 200 com a linha inteira, o cache atualizado
+    sem sync, a estrela no estado final; favoritar e desfavoritar (o `is_favorite` volta ao inicial; o `updated_at` não,
+    herança D, N4-D39); a contabilidade real ao lado do orçamento; o descartável fica para o Marcel apagar;
+  - **aceite (ii) — o release do N4 no Tab** (N4-D84, N4-D55): o APK de release da `main` do bloco instalado por
+    `install -r`, com o sha256; a prova **sem Metro e sem `adb reverse`** (`lsof` das portas vazio, `reverse` vazio): o app
+    abre em S1 sem login, `Buscar música` abre a L, a L lista a biblioteca do cache, V e o palco avulso abrem; `FATAL` 0; o
+    Tab fica com o release.
 
 ### Encerramento
 
@@ -359,14 +402,15 @@ O `N4-ENCERRAMENTO.md`, com a herança da §4 e as corridas do bloco no `CI-FAIX
 | 1 | **faixa A inteira** — as molduras `N4-A-*` e a lista de inalcançáveis de cada PR | N4-D12 | **N5** |
 | 2 | **quebra de linha na letra** — cobre o palco **e V** (o corte de ≈ 56 colunas em C, ≈ 26 em A) | N4-D13; N4-D66 (P-O5) | **bloco próprio, entre o N4 e o N5** |
 | 3 | **as notas da música no palco** | N4-D57 | **encerramento do N4** nomeia o bloco |
-| 4 | **botões de palavra por ícone** no site e nas telas que já existem no tablet | N4-D71 | **bloco de identidade** (a definir) |
+| 4 | **botões de palavra por ícone** no site e nas telas que já existem no tablet — entre eles o ***Baixar* do palco** (com setlist e avulso), que fica com a palavra no N4 (N4-D78) | N4-D71; N4-D78 | **bloco de identidade** (a definir) |
 | 5 | **outro ícone para a ação de tocar** (o estudo) | N4-D71 | **bloco de identidade** |
 | 6 | **o código de cores por tipo** (o estudo da seção 5b; P-T6…P-T9) | N4-D70, N4-D71 | **bloco de identidade** |
-| 7 | **os tamanhos 13 e 20 dp** que o app usa como literal (div. 1016), se a pergunta 8 ficar em (a) | div. 1016 | **bloco de identidade** |
+| 7 | **os tamanhos 13 e 20 dp** que o app usa como literal (div. 1016; a L os usa como a S4, N4-D79) | div. 1016; N4-D79 | **bloco de identidade** |
+| 11 | **um nome genérico para o ícone de baixar** (`baixar-setlist` serve ao arquivo da música em V) | div. 1025 | **bloco de identidade** |
 | 8 | compasso, capo e afinação, que o site não salva | N4-D31 | **Bloco D** |
 | 9 | o tema claro nas telas de lista (L, V, S1…) | brief §4 regra 12 | herança do V1, **fora do N4** |
 | 10 | o rodapé do picker sob o teclado em B (div. 450) — **não** se repete na L, que não tem rodapé (folha, `N4-*-L-teclado`) | N3 | **polimento do nativo, pós-N3** (sem mudança) |
 
 ---
 
-**A próxima PR desta lista** (N4-D45): depois do aval do congelamento, a **PR-3 — core das frases**.
+**A próxima PR desta lista** (N4-D72): depois do merge do congelamento, a **PR-3 — core das frases**.
