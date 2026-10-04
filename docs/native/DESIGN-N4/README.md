@@ -752,6 +752,14 @@ A última usada era a **1024** (§12) `[medido: git grep -h -o -E '^\| \*\*1[0-9
 
 **Contagem**: 4 — D 2 · P 2. **Próxima divergência livre: 1029.**
 
+### 13.2 Errata da div. 1021 — N4-PR4 `[Marcel, 2026-10-04]`
+
+A div. 1021 dizia que o G-inv e o G-N3 *"leem `bounds` e não veem um ícone mudar de desenho na mesma caixa"*. **O G-inv
+vê**: o `react-native-svg` dá um nó (`PathView`) por primitiva, e a troca dos quatro ícones de tipo mudou a contagem de nós
+em 8 dumps da base (`N4-PR4-anexos/README.md` §4.5, div. 1049). A troca decidida se pagou com **errata em par na base**,
+sem enfraquecer o instrumento (`apps/native/scripts/g-inv-par.mjs`). A prova por imagem (N4-D75) continua necessária: o
+G-inv vê que o desenho mudou, não se o desenho novo é o da folha — isso é o `gate:icones` e o olho do Marcel.
+
 ---
 
 **O que vem depois**: o **merge desta PR**, e depois dele a **PR-3 — core das frases** (N4-D72).

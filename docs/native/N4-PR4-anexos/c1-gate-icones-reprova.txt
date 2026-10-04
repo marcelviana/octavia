@@ -1,0 +1,138 @@
+  ACUSADO ../../packages/identidade/src/icones.ts [nome] falta no mapa: "estrela" (§6.4)
+  ACUSADO ../../packages/identidade/src/icones.ts [nome] falta no mapa: "tocar" (§6.4)
+  ACUSADO ../../packages/identidade/src/icones.ts [em20-N4] o 'em20' de "tab" ainda carrega a tab de quatro cordas: d M3 4.2h18M3 9.4h2.1M11.9 9.4h9.1M3 14.6h5.1M14.9 14.6h6.1M3 19.8h18
+  ACUSADO ../../packages/identidade/src/icones.ts [em20-N4] o 'em20' de "tab" ainda carrega a tab de quatro cordas: rect 5.9 7.7 4.2 3.4 1.7
+  ACUSADO ../../packages/identidade/src/icones.ts [em20-N4] o 'em20' de "tab" ainda carrega a tab de quatro cordas: rect 8.9 12.9 4.2 3.4 1.7
+  ACUSADO ../../packages/identidade/src/icones.ts [em20-N4] "letra" não tem 'em20' — o par sem em20 → P-I9 em 20, traço 1,8 (N4-D86)
+  ACUSADO ../../packages/identidade/src/icones.ts [em20-N4] "cifra" não tem 'em20' — o par sem em20 → P-I10 em 20, traço 1,8 (N4-D86)
+  ACUSADO ../../packages/identidade/src/icones.ts [em20-N4] "partitura" não tem 'em20' — o par sem em20 → P-I12 em 20, traço 1,8 (N4-D86)
+  ACUSADO ../../packages/identidade/src/icones.ts [em20-N4] a tab de 20 dp tem 4 linhas, e a T1 (N4-D69) tem 3
+  ACUSADO ../../packages/identidade/src/icones.ts [em20-N4] a tab de 24/28 dp tem 6 linhas, e a T1 (N4-D69) tem 3
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I9 20: "letra" normal @20 ≠ folha
+      folha: traco 1.8 | M 3 19.8 L 7.5 5.4 l 4.5 14.4 ‖ traco 1.8 | M 4.68 15 h 5.64 ‖ traco 1.8 | M 17.4 13.2 a 3.3 3.3 0 1 0 0 6.6 a 3.3 3.3 0 1 0 0 -6.6 ‖ traco 1.8 | M 20.7 12.6 v 7.2
+      mapa:  traco 1.5 | M 4 5.25 h 13 M 4 9.75 h 16 M 4 14.25 h 10 M 4 18.75 h 14
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I9 24: "letra" normal @24 ≠ folha
+      folha: traco 1.75 | M 3 19.8 L 7.5 5.4 l 4.5 14.4 ‖ traco 1.75 | M 4.68 15 h 5.64 ‖ traco 1.75 | M 17.4 13.2 a 3.3 3.3 0 1 0 0 6.6 a 3.3 3.3 0 1 0 0 -6.6 ‖ traco 1.75 | M 20.7 12.6 v 7.2
+      mapa:  traco 1.75 | M 4 5.25 h 13 M 4 9.75 h 16 M 4 14.25 h 10 M 4 18.75 h 14
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I9 28: "letra" normal @28 ≠ folha
+      folha: traco 2 | M 3 19.8 L 7.5 5.4 l 4.5 14.4 ‖ traco 2 | M 4.68 15 h 5.64 ‖ traco 2 | M 17.4 13.2 a 3.3 3.3 0 1 0 0 6.6 a 3.3 3.3 0 1 0 0 -6.6 ‖ traco 2 | M 20.7 12.6 v 7.2
+      mapa:  traco 2 | M 4 5.25 h 13 M 4 9.75 h 16 M 4 14.25 h 10 M 4 18.75 h 14
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I9 20 (normal): "letra" normal @20 ≠ folha
+      folha: traco 1.8 | M 3 19.8 L 7.5 5.4 l 4.5 14.4 ‖ traco 1.8 | M 4.68 15 h 5.64 ‖ traco 1.8 | M 17.4 13.2 a 3.3 3.3 0 1 0 0 6.6 a 3.3 3.3 0 1 0 0 -6.6 ‖ traco 1.8 | M 20.7 12.6 v 7.2
+      mapa:  traco 1.5 | M 4 5.25 h 13 M 4 9.75 h 16 M 4 14.25 h 10 M 4 18.75 h 14
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I9 20 (inerte): "letra" normal @20 ≠ folha
+      folha: traco 1.8 | M 3 19.8 L 7.5 5.4 l 4.5 14.4 ‖ traco 1.8 | M 4.68 15 h 5.64 ‖ traco 1.8 | M 17.4 13.2 a 3.3 3.3 0 1 0 0 6.6 a 3.3 3.3 0 1 0 0 -6.6 ‖ traco 1.8 | M 20.7 12.6 v 7.2
+      mapa:  traco 1.5 | M 4 5.25 h 13 M 4 9.75 h 16 M 4 14.25 h 10 M 4 18.75 h 14
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I9 20 (claro): "letra" normal @20 ≠ folha
+      folha: traco 1.8 | M 3 19.8 L 7.5 5.4 l 4.5 14.4 ‖ traco 1.8 | M 4.68 15 h 5.64 ‖ traco 1.8 | M 17.4 13.2 a 3.3 3.3 0 1 0 0 6.6 a 3.3 3.3 0 1 0 0 -6.6 ‖ traco 1.8 | M 20.7 12.6 v 7.2
+      mapa:  traco 1.5 | M 4 5.25 h 13 M 4 9.75 h 16 M 4 14.25 h 10 M 4 18.75 h 14
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I9 20 (claro inerte): "letra" normal @20 ≠ folha
+      folha: traco 1.8 | M 3 19.8 L 7.5 5.4 l 4.5 14.4 ‖ traco 1.8 | M 4.68 15 h 5.64 ‖ traco 1.8 | M 17.4 13.2 a 3.3 3.3 0 1 0 0 6.6 a 3.3 3.3 0 1 0 0 -6.6 ‖ traco 1.8 | M 20.7 12.6 v 7.2
+      mapa:  traco 1.5 | M 4 5.25 h 13 M 4 9.75 h 16 M 4 14.25 h 10 M 4 18.75 h 14
+  ACUSADO ../../packages/identidade/src/icones.ts [troca-N4] "letra:normal" ainda carrega o desenho velho (anexo D do V1 · letra (quatro linhas de texto) → P-I9, N4-D69 — L1 · Aa): d M4 5.25h13M4 9.75h16M4 14.25h10M4 18.75h14
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I10 20: "cifra" normal @20 ≠ folha
+      folha: traco 1.8 | M 12 21.3 c -3.84 -4.32 -7.5 -9.12 -7.5 -13.08 C 4.5 4.92 7.92 3 12 3 s 7.5 1.92 7.5 5.22 c 0 3.96 -3.66 8.76 -7.5 13.08 z
+      mapa:  traco 1.5 | M 4 5 h 3 M 11 5 h 3 M 18 5 h 2 ‖ traco 1.5 | M 4 9.5 h 16 ‖ traco 1.5 | M 4 14.5 h 3 M 12 14.5 h 4 ‖ traco 1.5 | M 4 19 h 13
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I10 24: "cifra" normal @24 ≠ folha
+      folha: traco 1.75 | M 12 21.3 c -3.84 -4.32 -7.5 -9.12 -7.5 -13.08 C 4.5 4.92 7.92 3 12 3 s 7.5 1.92 7.5 5.22 c 0 3.96 -3.66 8.76 -7.5 13.08 z
+      mapa:  traco 1.75 | M 4 5 h 3 M 11 5 h 3 M 18 5 h 2 ‖ traco 1.75 | M 4 9.5 h 16 ‖ traco 1.75 | M 4 14.5 h 3 M 12 14.5 h 4 ‖ traco 1.75 | M 4 19 h 13
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I10 28: "cifra" normal @28 ≠ folha
+      folha: traco 2 | M 12 21.3 c -3.84 -4.32 -7.5 -9.12 -7.5 -13.08 C 4.5 4.92 7.92 3 12 3 s 7.5 1.92 7.5 5.22 c 0 3.96 -3.66 8.76 -7.5 13.08 z
+      mapa:  traco 2 | M 4 5 h 3 M 11 5 h 3 M 18 5 h 2 ‖ traco 2 | M 4 9.5 h 16 ‖ traco 2 | M 4 14.5 h 3 M 12 14.5 h 4 ‖ traco 2 | M 4 19 h 13
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I10 20 (normal): "cifra" normal @20 ≠ folha
+      folha: traco 1.8 | M 12 21.3 c -3.84 -4.32 -7.5 -9.12 -7.5 -13.08 C 4.5 4.92 7.92 3 12 3 s 7.5 1.92 7.5 5.22 c 0 3.96 -3.66 8.76 -7.5 13.08 z
+      mapa:  traco 1.5 | M 4 5 h 3 M 11 5 h 3 M 18 5 h 2 ‖ traco 1.5 | M 4 9.5 h 16 ‖ traco 1.5 | M 4 14.5 h 3 M 12 14.5 h 4 ‖ traco 1.5 | M 4 19 h 13
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I10 20 (inerte): "cifra" normal @20 ≠ folha
+      folha: traco 1.8 | M 12 21.3 c -3.84 -4.32 -7.5 -9.12 -7.5 -13.08 C 4.5 4.92 7.92 3 12 3 s 7.5 1.92 7.5 5.22 c 0 3.96 -3.66 8.76 -7.5 13.08 z
+      mapa:  traco 1.5 | M 4 5 h 3 M 11 5 h 3 M 18 5 h 2 ‖ traco 1.5 | M 4 9.5 h 16 ‖ traco 1.5 | M 4 14.5 h 3 M 12 14.5 h 4 ‖ traco 1.5 | M 4 19 h 13
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I10 20 (claro): "cifra" normal @20 ≠ folha
+      folha: traco 1.8 | M 12 21.3 c -3.84 -4.32 -7.5 -9.12 -7.5 -13.08 C 4.5 4.92 7.92 3 12 3 s 7.5 1.92 7.5 5.22 c 0 3.96 -3.66 8.76 -7.5 13.08 z
+      mapa:  traco 1.5 | M 4 5 h 3 M 11 5 h 3 M 18 5 h 2 ‖ traco 1.5 | M 4 9.5 h 16 ‖ traco 1.5 | M 4 14.5 h 3 M 12 14.5 h 4 ‖ traco 1.5 | M 4 19 h 13
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I10 20 (claro inerte): "cifra" normal @20 ≠ folha
+      folha: traco 1.8 | M 12 21.3 c -3.84 -4.32 -7.5 -9.12 -7.5 -13.08 C 4.5 4.92 7.92 3 12 3 s 7.5 1.92 7.5 5.22 c 0 3.96 -3.66 8.76 -7.5 13.08 z
+      mapa:  traco 1.5 | M 4 5 h 3 M 11 5 h 3 M 18 5 h 2 ‖ traco 1.5 | M 4 9.5 h 16 ‖ traco 1.5 | M 4 14.5 h 3 M 12 14.5 h 4 ‖ traco 1.5 | M 4 19 h 13
+  ACUSADO ../../packages/identidade/src/icones.ts [troca-N4] "cifra:normal" ainda carrega o desenho velho (anexo D do V1 · cifra (acordes sobre a letra) → P-I10, N4-D69 — C2 · a palheta): d M4 5h3M11 5h3M18 5h2
+  ACUSADO ../../packages/identidade/src/icones.ts [troca-N4] "cifra:normal" ainda carrega o desenho velho (anexo D do V1 · cifra (acordes sobre a letra) → P-I10, N4-D69 — C2 · a palheta): d M4 9.5h16
+  ACUSADO ../../packages/identidade/src/icones.ts [troca-N4] "cifra:normal" ainda carrega o desenho velho (anexo D do V1 · cifra (acordes sobre a letra) → P-I10, N4-D69 — C2 · a palheta): d M4 14.5h3M12 14.5h4
+  ACUSADO ../../packages/identidade/src/icones.ts [troca-N4] "cifra:normal" ainda carrega o desenho velho (anexo D do V1 · cifra (acordes sobre a letra) → P-I10, N4-D69 — C2 · a palheta): d M4 19h13
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I11 20: "tab" normal @20 ≠ folha
+      folha: traco 1.8 | M 3 4.8 h 4.8 M 16.8 4.8 h 4.2 ‖ traco 1.8 | M 3 12 h 4.8 M 16.8 12 h 4.2 ‖ traco 1.8 | M 3 19.2 h 4.8 M 16.8 19.2 h 4.2 ‖ traco 1.8 | M 9.3 7.92 c 0.48 -1.56 1.68 -2.52 3.12 -2.52 1.8 0 3.12 1.32 3.12 3 0 1.08 -0.48 1.92 -1.44 3 l -4.8 5.4 h 6.48
+      mapa:  traco 1.5 | M 3 4.2 h 18 M 3 9.4 h 2.1 M 11.9 9.4 h 9.1 M 3 14.6 h 5.1 M 14.9 14.6 h 6.1 M 3 19.8 h 18 ‖ não-path | {"x":"5.9","y":"7.7","w":"4.2","h":"3.4","rx":"1.7","fill":"true"} ‖ não-path | {"x":"8.9","y":"12.9","w":"4.2","h":"3.4","rx":"1.7","fill":"true"}
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I11 24: "tab" normal @24 ≠ folha
+      folha: traco 1.75 | M 3 4.8 h 4.8 M 16.8 4.8 h 4.2 ‖ traco 1.75 | M 3 12 h 4.8 M 16.8 12 h 4.2 ‖ traco 1.75 | M 3 19.2 h 4.8 M 16.8 19.2 h 4.2 ‖ traco 1.75 | M 9.3 7.92 c 0.48 -1.56 1.68 -2.52 3.12 -2.52 1.8 0 3.12 1.32 3.12 3 0 1.08 -0.48 1.92 -1.44 3 l -4.8 5.4 h 6.48
+      mapa:  traco 1.75 | M 3 3 h 18 M 3 6.6 h 1.225 M 11.175 6.6 h 9.825 M 3 10.2 h 9.225 M 19.175 10.2 h 1.825 M 3 13.8 h 4.225 M 14.175 13.8 h 6.825 M 3 17.4 h 18 M 3 21 h 18 ‖ não-path | {"x":"5.5","y":"4.9","w":"4.4","h":"3.4","rx":"1.7","fill":"true"} ‖ não-path | {"x":"13.5","y":"8.5","w":"4.4","h":"3.4","rx":"1.7","fill":"true"} ‖ não-path | {"x":"8.5","y":"12.1","w":"4.4","h":"3.4","rx":"1.7","fill":"true"}
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I11 28: "tab" normal @28 ≠ folha
+      folha: traco 2 | M 3 4.8 h 4.8 M 16.8 4.8 h 4.2 ‖ traco 2 | M 3 12 h 4.8 M 16.8 12 h 4.2 ‖ traco 2 | M 3 19.2 h 4.8 M 16.8 19.2 h 4.2 ‖ traco 2 | M 9.3 7.92 c 0.48 -1.56 1.68 -2.52 3.12 -2.52 1.8 0 3.12 1.32 3.12 3 0 1.08 -0.48 1.92 -1.44 3 l -4.8 5.4 h 6.48
+      mapa:  traco 2 | M 3 3 h 18 M 3 6.6 h 1.225 M 11.175 6.6 h 9.825 M 3 10.2 h 9.225 M 19.175 10.2 h 1.825 M 3 13.8 h 4.225 M 14.175 13.8 h 6.825 M 3 17.4 h 18 M 3 21 h 18 ‖ não-path | {"x":"5.5","y":"4.9","w":"4.4","h":"3.4","rx":"1.7","fill":"true"} ‖ não-path | {"x":"13.5","y":"8.5","w":"4.4","h":"3.4","rx":"1.7","fill":"true"} ‖ não-path | {"x":"8.5","y":"12.1","w":"4.4","h":"3.4","rx":"1.7","fill":"true"}
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I11 20 (normal): "tab" normal @20 ≠ folha
+      folha: traco 1.8 | M 3 4.8 h 4.8 M 16.8 4.8 h 4.2 ‖ traco 1.8 | M 3 12 h 4.8 M 16.8 12 h 4.2 ‖ traco 1.8 | M 3 19.2 h 4.8 M 16.8 19.2 h 4.2 ‖ traco 1.8 | M 9.3 7.92 c 0.48 -1.56 1.68 -2.52 3.12 -2.52 1.8 0 3.12 1.32 3.12 3 0 1.08 -0.48 1.92 -1.44 3 l -4.8 5.4 h 6.48
+      mapa:  traco 1.5 | M 3 4.2 h 18 M 3 9.4 h 2.1 M 11.9 9.4 h 9.1 M 3 14.6 h 5.1 M 14.9 14.6 h 6.1 M 3 19.8 h 18 ‖ não-path | {"x":"5.9","y":"7.7","w":"4.2","h":"3.4","rx":"1.7","fill":"true"} ‖ não-path | {"x":"8.9","y":"12.9","w":"4.2","h":"3.4","rx":"1.7","fill":"true"}
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I11 20 (inerte): "tab" normal @20 ≠ folha
+      folha: traco 1.8 | M 3 4.8 h 4.8 M 16.8 4.8 h 4.2 ‖ traco 1.8 | M 3 12 h 4.8 M 16.8 12 h 4.2 ‖ traco 1.8 | M 3 19.2 h 4.8 M 16.8 19.2 h 4.2 ‖ traco 1.8 | M 9.3 7.92 c 0.48 -1.56 1.68 -2.52 3.12 -2.52 1.8 0 3.12 1.32 3.12 3 0 1.08 -0.48 1.92 -1.44 3 l -4.8 5.4 h 6.48
+      mapa:  traco 1.5 | M 3 4.2 h 18 M 3 9.4 h 2.1 M 11.9 9.4 h 9.1 M 3 14.6 h 5.1 M 14.9 14.6 h 6.1 M 3 19.8 h 18 ‖ não-path | {"x":"5.9","y":"7.7","w":"4.2","h":"3.4","rx":"1.7","fill":"true"} ‖ não-path | {"x":"8.9","y":"12.9","w":"4.2","h":"3.4","rx":"1.7","fill":"true"}
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I11 20 (claro): "tab" normal @20 ≠ folha
+      folha: traco 1.8 | M 3 4.8 h 4.8 M 16.8 4.8 h 4.2 ‖ traco 1.8 | M 3 12 h 4.8 M 16.8 12 h 4.2 ‖ traco 1.8 | M 3 19.2 h 4.8 M 16.8 19.2 h 4.2 ‖ traco 1.8 | M 9.3 7.92 c 0.48 -1.56 1.68 -2.52 3.12 -2.52 1.8 0 3.12 1.32 3.12 3 0 1.08 -0.48 1.92 -1.44 3 l -4.8 5.4 h 6.48
+      mapa:  traco 1.5 | M 3 4.2 h 18 M 3 9.4 h 2.1 M 11.9 9.4 h 9.1 M 3 14.6 h 5.1 M 14.9 14.6 h 6.1 M 3 19.8 h 18 ‖ não-path | {"x":"5.9","y":"7.7","w":"4.2","h":"3.4","rx":"1.7","fill":"true"} ‖ não-path | {"x":"8.9","y":"12.9","w":"4.2","h":"3.4","rx":"1.7","fill":"true"}
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I11 20 (claro inerte): "tab" normal @20 ≠ folha
+      folha: traco 1.8 | M 3 4.8 h 4.8 M 16.8 4.8 h 4.2 ‖ traco 1.8 | M 3 12 h 4.8 M 16.8 12 h 4.2 ‖ traco 1.8 | M 3 19.2 h 4.8 M 16.8 19.2 h 4.2 ‖ traco 1.8 | M 9.3 7.92 c 0.48 -1.56 1.68 -2.52 3.12 -2.52 1.8 0 3.12 1.32 3.12 3 0 1.08 -0.48 1.92 -1.44 3 l -4.8 5.4 h 6.48
+      mapa:  traco 1.5 | M 3 4.2 h 18 M 3 9.4 h 2.1 M 11.9 9.4 h 9.1 M 3 14.6 h 5.1 M 14.9 14.6 h 6.1 M 3 19.8 h 18 ‖ não-path | {"x":"5.9","y":"7.7","w":"4.2","h":"3.4","rx":"1.7","fill":"true"} ‖ não-path | {"x":"8.9","y":"12.9","w":"4.2","h":"3.4","rx":"1.7","fill":"true"}
+  ACUSADO ../../packages/identidade/src/icones.ts [troca-N4] "tab:normal" ainda carrega o desenho velho (anexo D do V1 · tab (seis cordas e três trastes) → P-I11, N4-D69 — T1 · linhas com um 2): d M3 3h18M3 6.6h1.225M11.175 6.6h9.825M3 10.2h9.225M19.175 10.2h1.825M3 13.8h4.225M14.175 13.8h6.825M3 17.4h18M3 21h18
+  ACUSADO ../../packages/identidade/src/icones.ts [troca-N4] "tab:normal" ainda carrega o desenho velho (anexo D do V1 · tab (seis cordas e três trastes) → P-I11, N4-D69 — T1 · linhas com um 2): rect 5.5 4.9 4.4 3.4 1.7
+  ACUSADO ../../packages/identidade/src/icones.ts [troca-N4] "tab:normal" ainda carrega o desenho velho (anexo D do V1 · tab (seis cordas e três trastes) → P-I11, N4-D69 — T1 · linhas com um 2): rect 13.5 8.5 4.4 3.4 1.7
+  ACUSADO ../../packages/identidade/src/icones.ts [troca-N4] "tab:normal" ainda carrega o desenho velho (anexo D do V1 · tab (seis cordas e três trastes) → P-I11, N4-D69 — T1 · linhas com um 2): rect 8.5 12.1 4.4 3.4 1.7
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I12 20: "partitura" normal @20 ≠ folha
+      folha: fill | M 6.12 19.92 c -0.72 -1.68 0.6 -3.72 2.88 -4.56 2.28 -0.84 4.68 -0.24 5.28 1.44 0.72 1.68 -0.6 3.72 -2.88 4.56 -2.28 0.84 -4.68 0.24 -5.28 -1.44 z ‖ traco 1.8 | M 14.1 17.1 V 3.6 ‖ traco 1.8 | M 14.1 3.6 c 0.48 3.12 4.32 4.2 5.4 7.8
+      mapa:  traco 1.5 | M 3 5 h 18 M 3 8.5 h 18 M 3 12 h 18 M 3 15.5 h 18 M 3 19 h 18 ‖ não-path | {"cx":"8.8","cy":"15.5","r":"2.4","fill":"true"} ‖ traco 1.5 | M 11.2 15.5 V 6.5
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I12 24: "partitura" normal @24 ≠ folha
+      folha: fill | M 6.12 19.92 c -0.72 -1.68 0.6 -3.72 2.88 -4.56 2.28 -0.84 4.68 -0.24 5.28 1.44 0.72 1.68 -0.6 3.72 -2.88 4.56 -2.28 0.84 -4.68 0.24 -5.28 -1.44 z ‖ traco 1.75 | M 14.1 17.1 V 3.6 ‖ traco 1.75 | M 14.1 3.6 c 0.48 3.12 4.32 4.2 5.4 7.8
+      mapa:  traco 1.75 | M 3 5 h 18 M 3 8.5 h 18 M 3 12 h 18 M 3 15.5 h 18 M 3 19 h 18 ‖ não-path | {"cx":"8.8","cy":"15.5","r":"2.4","fill":"true"} ‖ traco 1.75 | M 11.2 15.5 V 6.5
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I12 28: "partitura" normal @28 ≠ folha
+      folha: fill | M 6.12 19.92 c -0.72 -1.68 0.6 -3.72 2.88 -4.56 2.28 -0.84 4.68 -0.24 5.28 1.44 0.72 1.68 -0.6 3.72 -2.88 4.56 -2.28 0.84 -4.68 0.24 -5.28 -1.44 z ‖ traco 2 | M 14.1 17.1 V 3.6 ‖ traco 2 | M 14.1 3.6 c 0.48 3.12 4.32 4.2 5.4 7.8
+      mapa:  traco 2 | M 3 5 h 18 M 3 8.5 h 18 M 3 12 h 18 M 3 15.5 h 18 M 3 19 h 18 ‖ não-path | {"cx":"8.8","cy":"15.5","r":"2.4","fill":"true"} ‖ traco 2 | M 11.2 15.5 V 6.5
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I12 20 (normal): "partitura" normal @20 ≠ folha
+      folha: fill | M 6.12 19.92 c -0.72 -1.68 0.6 -3.72 2.88 -4.56 2.28 -0.84 4.68 -0.24 5.28 1.44 0.72 1.68 -0.6 3.72 -2.88 4.56 -2.28 0.84 -4.68 0.24 -5.28 -1.44 z ‖ traco 1.8 | M 14.1 17.1 V 3.6 ‖ traco 1.8 | M 14.1 3.6 c 0.48 3.12 4.32 4.2 5.4 7.8
+      mapa:  traco 1.5 | M 3 5 h 18 M 3 8.5 h 18 M 3 12 h 18 M 3 15.5 h 18 M 3 19 h 18 ‖ não-path | {"cx":"8.8","cy":"15.5","r":"2.4","fill":"true"} ‖ traco 1.5 | M 11.2 15.5 V 6.5
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I12 20 (inerte): "partitura" normal @20 ≠ folha
+      folha: fill | M 6.12 19.92 c -0.72 -1.68 0.6 -3.72 2.88 -4.56 2.28 -0.84 4.68 -0.24 5.28 1.44 0.72 1.68 -0.6 3.72 -2.88 4.56 -2.28 0.84 -4.68 0.24 -5.28 -1.44 z ‖ traco 1.8 | M 14.1 17.1 V 3.6 ‖ traco 1.8 | M 14.1 3.6 c 0.48 3.12 4.32 4.2 5.4 7.8
+      mapa:  traco 1.5 | M 3 5 h 18 M 3 8.5 h 18 M 3 12 h 18 M 3 15.5 h 18 M 3 19 h 18 ‖ não-path | {"cx":"8.8","cy":"15.5","r":"2.4","fill":"true"} ‖ traco 1.5 | M 11.2 15.5 V 6.5
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I12 20 (claro): "partitura" normal @20 ≠ folha
+      folha: fill | M 6.12 19.92 c -0.72 -1.68 0.6 -3.72 2.88 -4.56 2.28 -0.84 4.68 -0.24 5.28 1.44 0.72 1.68 -0.6 3.72 -2.88 4.56 -2.28 0.84 -4.68 0.24 -5.28 -1.44 z ‖ traco 1.8 | M 14.1 17.1 V 3.6 ‖ traco 1.8 | M 14.1 3.6 c 0.48 3.12 4.32 4.2 5.4 7.8
+      mapa:  traco 1.5 | M 3 5 h 18 M 3 8.5 h 18 M 3 12 h 18 M 3 15.5 h 18 M 3 19 h 18 ‖ não-path | {"cx":"8.8","cy":"15.5","r":"2.4","fill":"true"} ‖ traco 1.5 | M 11.2 15.5 V 6.5
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I12 20 (claro inerte): "partitura" normal @20 ≠ folha
+      folha: fill | M 6.12 19.92 c -0.72 -1.68 0.6 -3.72 2.88 -4.56 2.28 -0.84 4.68 -0.24 5.28 1.44 0.72 1.68 -0.6 3.72 -2.88 4.56 -2.28 0.84 -4.68 0.24 -5.28 -1.44 z ‖ traco 1.8 | M 14.1 17.1 V 3.6 ‖ traco 1.8 | M 14.1 3.6 c 0.48 3.12 4.32 4.2 5.4 7.8
+      mapa:  traco 1.5 | M 3 5 h 18 M 3 8.5 h 18 M 3 12 h 18 M 3 15.5 h 18 M 3 19 h 18 ‖ não-path | {"cx":"8.8","cy":"15.5","r":"2.4","fill":"true"} ‖ traco 1.5 | M 11.2 15.5 V 6.5
+  ACUSADO ../../packages/identidade/src/icones.ts [troca-N4] "partitura:normal" ainda carrega o desenho velho (anexo D do V1 · partitura (pauta de cinco linhas e nota) → P-I12, N4-D69 — P2 · a nota única): d M3 5h18M3 8.5h18M3 12h18M3 15.5h18M3 19h18
+  ACUSADO ../../packages/identidade/src/icones.ts [troca-N4] "partitura:normal" ainda carrega o desenho velho (anexo D do V1 · partitura (pauta de cinco linhas e nota) → P-I12, N4-D69 — P2 · a nota única): d M11.2 15.5V6.5
+  ACUSADO ../../packages/identidade/src/icones.ts [troca-N4] "partitura:normal" ainda carrega o desenho velho (anexo D do V1 · partitura (pauta de cinco linhas e nota) → P-I12, N4-D69 — P2 · a nota única): circle 8.8 15.5 2.4
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I1a normal: "estrela" não tem o estado 'normal' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I1a pressionado: "estrela" não tem o estado 'normal' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I1a inerte: "estrela" não tem o estado 'inerte' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I1a em andamento: "estrela" não tem o estado 'inerte' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I1a 20: "estrela" não tem o estado 'normal' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I1a 24: "estrela" não tem o estado 'normal' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I1a 28: "estrela" não tem o estado 'normal' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I1b normal: "estrela" não tem o estado 'ativo' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I1b pressionado: "estrela" não tem o estado 'ativo' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I1b inerte: "estrela" não tem o estado 'ativoInerte' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I1b em andamento: "estrela" não tem o estado 'ativoInerte' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I1b 20: "estrela" não tem o estado 'ativo' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I1b 24: "estrela" não tem o estado 'ativo' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I1b 28: "estrela" não tem o estado 'ativo' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I2 normal: "tocar" não tem o estado 'normal' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I2 pressionado: "tocar" não tem o estado 'normal' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I2 inerte: "tocar" não tem o estado 'inerte' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I2 em andamento: "tocar" não tem o estado 'inerte' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I2 20: "tocar" não tem o estado 'normal' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I2 24: "tocar" não tem o estado 'normal' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I2 28: "tocar" não tem o estado 'normal' que a folha desenha
+  §6.4: 34 linhas → 33 nomes distintos, + 4 fora do catálogo + 6 da tela 2 + 2 do N4 = 45 esperados
+  anexo D: 34 registros (V1) + 5 (DESIGN-N2, E17) + 2 (DESIGN-N4, N4-D76) = 41 registros · 68 elementos distintos no do V1
+  DESIGN-N4: 7/7 linhas P-I achadas · 49 células cobradas · trocas em par: 4 (12 elementos velhos cobrados ausentes)
+  pares do N4: em20 4 (DESIGN-V1/telas.html · tab@20 de quatro cordas (§6.3) → P-I11 em 20, traço 1,8) · traço em 24/28: markup da folha: 1,8 em 24 e 28 → TRACO da família (1,75 · 2)
+  tela 2 (E17): 6/6 nomes já no mapa e cobrados · 0 declarados pendentes
+  mapa: 43 nomes · 97 elementos distintos · 43 com 'normal'
+  hex cravado: 0 · tinta por token: 6
+  §6.3 → T1 (N4-D69): tab em20 4 linhas · normal 6 linhas · a tab@20 de quatro cordas do telas.html (o velho do par): achada
+  fora do catálogo: 4/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  acusações: 71 · avisos: 0
+exit=1

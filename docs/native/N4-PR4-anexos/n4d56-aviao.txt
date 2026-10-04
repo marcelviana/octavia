@@ -1,0 +1,20 @@
+antes: airplane=0 wifi=1 data=1
+ligado: airplane=1
+$ ping -c 2 -W 2 8.8.8.8
+connect: Network is unreachable
+adb: device 'RX2N8000F3D' not found
+api: 0
+"android:id/content" "com.google.android.googlequicksearchbox:id/googleapp_search_edit_frame" "com.google.android.googlequicksearchbox:id/googleapp_search_plate" "com.google.android.googlequicksearchbox:id/googleapp_search_widget_background" "com.google.android.googlequicksearchbox:id/googleapp_search_widget_background_protection" "com.google.android.googlequicksearchbox:id/googleapp_search_widget_ghost_google_logo" "com.google.android.googlequicksearchbox:id/googleapp_search_widget_ghost_lens" "com.google.android.googlequicksearchbox:id/googleapp_search_widget_ghost_tap_targets" "com.google.android.googlequicksearchbox:id/googleapp_search_widget_ghost_tap_targets_4dp" "com.google.android.googlequicksearchbox:id/googleapp_search_widget_ghost_text_search" "com.google.android.googlequicksearchbox:id/googleapp_search_widget_ghost_voice_search" "com.google.android.googlequicksearchbox:id/googleapp_search_widget_google_logo" "com.google.android.googlequicksearchbox:id/googleapp_search_widget_lens_btn" "com.google.android.googlequicksearchbox:id/googleapp_search_widget_two_right_icons" "com.google.android.googlequicksearchbox:id/googleapp_search_widget_voice_btn" "com.sec.android.app.launcher:id/active" "com.sec.android.app.launcher:id/capture_blur_view" "com.sec.android.app.launcher:id/defalt_page_icon_layout" "com.sec.android.app.launcher:id/drag_layer" "com.sec.android.app.launcher:id/home_icon" "com.sec.android.app.launcher:id/hotseat" "com.sec.android.app.launcher:id/hotseat_icon" "com.sec.android.app.launcher:id/inactive" "com.sec.android.app.launcher:id/launcher" "com.sec.android.app.launcher:id/page_indicator" "com.sec.android.app.launcher:id/scrim_view" "com.sec.android.app.launcher:id/workspace" "com.sec.android.daemonapp:id/widget_background" "com.sec.android.daemonapp:id/widget_empty_icon" "com.sec.android.daemonapp:id/widget_empty_layout" "com.sec.android.daemonapp:id/widget_empty_text_bg" 
+== repetição (o 1º am start não chegou: o adb perdeu o aparelho)
+airplane=1
+connect: Network is unreachable
+TotalTime: 251
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net offline
+OCTAVIA: auth uid=… src=restored
+OCTAVIA: cache hit kind=setlists n=2
+OCTAVIA: cache hit kind=content n=63
+OCTAVIA: sync skip reason=offline
+OCTAVIA: prefetch plan n=0 reason=7d
+api: 0 · FATAL: 0
+"aviso-motivo" "baixar-772076b4" "buscar" "criar-setlist" "setlist-772076b4" "setlist-e39d57cf" 

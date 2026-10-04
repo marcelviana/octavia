@@ -1,0 +1,147 @@
+# N4-PR4 — os gates sobre 54ce0d1, 2026-10-04 13:20:02
+
+$ cd apps/native && node scripts/icones.mjs ../../packages/identidade/src/icones.ts
+  §6.3 → T1 (N4-D69): tab em20 3 linhas · normal 3 linhas · a tab@20 de quatro cordas do telas.html (o velho do par): achada
+  fora do catálogo: 4/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  acusações: 0 · avisos: 0
+exit=0
+
+$ cd apps/native && node scripts/icones.mjs scripts/__cn__/IconesFalso.ts
+  fora do catálogo: 3/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  acusações: 24 · avisos: 0
+exit=0
+
+$ cd apps/native && node scripts/a20.mjs .
+  literais em posição de texto examinados: 169
+  acusações: 0
+exit=0
+
+$ cd apps/native && node scripts/a20.mjs scripts/__cn__
+  literais em posição de texto examinados: 8
+  acusações: 4
+exit=0
+
+$ node apps/native/scripts/g-inv-par.mjs docs/native/N3-PRECHECK-anexos/B5-baseline docs/native/N4-PR4-anexos/dumps-depois
+  ✓ S2-sem-edicao-S2p-tab-pai: SvgView de tipo podados base 8 · novo 8 · byte a byte iguais — N4-D69 — os quatro ícones de tipo trocam de desenho na mesma caixa (P-I9…P-I12)
+  ✓ S4-resultados-tab-pai: SvgView de tipo podados base 6 · novo 6 · byte a byte iguais — N4-D69 — os quatro ícones de tipo trocam de desenho na mesma caixa (P-I9…P-I12)
+g-inv-par: 8 medidos · todo par provado ✓
+exit=0
+
+$ sh apps/native/scripts/g-inv.sh docs/native/N3-PRECHECK-anexos/B5-baseline docs/native/N4-PR4-anexos/dumps-depois
+G-inv: 34 de 34 idênticos
+G-inv: IDÊNTICO EM DP ✓
+exit=0
+
+$ sh apps/native/scripts/g-inv.sh docs/native/N3-PRECHECK-anexos/B3-referencia-paisagem docs/native/N4-PR4-anexos/dumps-depois
+G-inv: 18 de 18 idênticos
+G-inv: IDÊNTICO EM DP ✓
+exit=0
+
+$ GATES_DECL=<scratch>/decl sh apps/native/scripts/g1.sh bf678e389120aa1e56fb8ad675be5cd120601456 WORKTREE
+        apps/native/src/screens/FolhaDeCriar.tsx
+        apps/native/src/screens/ModoDeReordenar.tsx
+        apps/native/src/theme.ts
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+      PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+        (nenhum — nenhuma asserção do core pode mudar nesta PR)
+  G1b: só adição ✓
+exit=0
+
+$ GATES_DECL=<scratch>/decl sh apps/native/scripts/g2g3.sh bf678e389120aa1e56fb8ad675be5cd120601456 WORKTREE
+G2 — testIDs  antes=80  depois=80
+  G2: antes ⊆ depois ✓
+G3 — declarações: do corpo da PR (GATES_DECL=<scratch>/decl)
+G3 — linhas log( antes=68  depois=68
+      ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+        (nenhuma)
+      REMOÇÕES DECLARADAS (linha → REMOVIDA: razão; N2-D34):
+        (nenhuma)
+      — nenhuma linha de log pode sumir nesta PR
+  G3: nenhuma linha sumiu ✓
+exit=0
+
+$ cd docs/native/DESIGN-V1 && shasum -a 256 -c SHA256SUMS
+telas.html: OK
+icones.html: OK
+telas.pdf: OK
+exit=0
+
+$ cd docs/native/DESIGN-N2 && shasum -a 256 -c SHA256SUMS
+telas.html: OK
+telas.pdf: OK
+exit=0
+
+$ cd docs/native/DESIGN-N3 && shasum -a 256 -c SHA256SUMS
+telas.html: OK
+telas.pdf: OK
+exit=0
+
+$ cd docs/native/DESIGN-N4 && shasum -a 256 -c SHA256SUMS
+telas.html: OK
+icones.html: OK
+exit=0
+
+$ cd docs/ux/DESIGN-I1 && shasum -a 256 -c SHA256SUMS | grep -c ': OK'
+14
+exit=0
+
+$ cd docs/native/N3-PRECHECK-anexos && shasum -a 256 -c SHA256SUMS.txt | grep -c ': OK'
+355
+exit=0
+
+$ cd docs/native/N4-PR4-anexos/dumps-depois && shasum -a 256 -c SHA256SUMS.txt | grep -c ': OK'
+52
+exit=0
+
+$ GATES_WEB_DECL=<scratch>/declw sh scripts/gates-web/g-back.sh bf678e389120aa1e56fb8ad675be5cd120601456 WORKTREE
+## (ii) arquivo novo no alcance (derivação do HEAD fora do congelado)
+  ✓ nenhum
+## (iii) declaração órfã (gback: de arquivo que não mudou)
+  ✓ nenhuma
+
+G-back: PASSA
+exit=0
+
+$ sh scripts/gates-web/g-palco.sh
+
+G-palco: PASSA — 0 ocorrências
+exit=0
+
+$ node scripts/gates-web/g-tok.mjs
+## (ii) arquivos redesenhados — scripts/gates-web/g-tok-arquivos.txt
+  arquivos: 133 · literais de identidade acusados: 0 · toasts: 0 · imports de ui: 0 · textos examinados: 33 · isentos de inglês (scripts/gates-web/g-tok-sem-ingles.txt): 1 · vocabulário: 133 · isenções: 9 · strings de .ts examinadas (div. 828): 456 · frases isentas (scripts/gates-web/g-tok-frases-isentas.txt): 5 de 5 entradas
+
+G-tok: PASSA
+exit=0
+
+$ node scripts/gates-web/g-tok-cobertura.mjs
+
+G-tok (cobertura): PASSA
+exit=0
+
+$ node scripts/gates-web/g-faixa-veredito.mjs tests/gates-web/medicoes
+
+G-faixa: PASSA
+exit=0
+
+$ pnpm exec vitest run --project web tests/gates/n4-g-par.test.tsx tests/gates/n4-favoritar-put.test.tsx tests/gates-web/frases-n4.test.ts
+[2m      Tests [22m [1m[32m185 passed[39m[22m[2m | [22m[33m1 skipped[39m[90m (186)[39m
+[2m   Start at [22m 13:20:23
+[2m   Duration [22m 4.04s[2m (transform 514ms, setup 2.33s, import 616ms, tests 373ms, environment 7.31s)[22m
+
+exit=0
+
+$ pnpm exec vitest run --project native apps/native/test/frases-n4.test.ts
+[2m   Start at [22m 13:20:27
+[2m   Duration [22m 245ms[2m (transform 97ms, setup 0ms, import 147ms, tests 8ms, environment 0ms)[22m
+
+exit=0
+# os exits reais (sem pipe): o 'exit=' de cima é o do tail
+node scripts/icones.mjs ../../packages/identidade/src/icones.ts → exit 0
+node scripts/icones.mjs scripts/__cn__/IconesFalso.ts → exit 1
+node scripts/a20.mjs . → exit 0
+node scripts/a20.mjs scripts/__cn__ → exit 1
+node apps/native/scripts/g-inv-par.mjs docs/native/N3-PRECHECK-anexos/B5-baseline docs/native/N4-PR4-anexos/dumps-depois → exit 0
+sh apps/native/scripts/g-inv.sh docs/native/N3-PRECHECK-anexos/B5-baseline docs/native/N4-PR4-anexos/dumps-depois → exit 0
+sh apps/native/scripts/g-inv.sh docs/native/N3-PRECHECK-anexos/B3-referencia-paisagem docs/native/N4-PR4-anexos/dumps-depois → exit 0

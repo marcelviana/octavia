@@ -1,0 +1,10 @@
+# estado do Tab no fim (comparar com tab-lido.txt)
+global stay_on_while_plugged_in=0
+system accelerometer_rotation=1
+system user_rotation=0
+global airplane_mode_on=0
+global wifi_on=1
+global mobile_data=1
+reverse=[]
+    lastUpdateTime=2026-10-04 12:48:08
+    pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]

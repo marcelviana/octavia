@@ -1,0 +1,31 @@
+11:38:20 toque 'criar-setlist' @ 1878,188 (emulator-5554)
+N4P4A-folha-criar-avd-pai mCurrentRotation=ROTATION_0 png=207743 xml=11723 2b058ced40b6
+11:38:32 toque 'form-cancelar' @ 681,1040 (emulator-5554)
+11:38:36 toque canto de setlist-00000001 @ 96,420
+11:38:43 toque 'setlist-editar' @ 1877,323 (emulator-5554)
+11:38:48 toque 'form-nome' @ 1280,552 (emulator-5554)
+N4P4A-folha-validacao-avd-pai mCurrentRotation=ROTATION_0 png=238324 xml=11730 1016ab28bc1a
+11:39:08 toque 'form-cancelar' @ 681,1040 (emulator-5554)
+11:39:11 mock modo=escrita-500 vazio=False
+11:39:22 toque 'criar-setlist' @ 1878,188 (emulator-5554)
+11:39:26 toque 'form-nome' @ 1280,552 (emulator-5554)
+11:39:32 toque 'form-salvar' @ 1875,973 (emulator-5554)
+N4P4A-folha-falhou-avd-pai mCurrentRotation=ROTATION_0 png=202319 xml=12051 d32c9b6f2efc
+11:39:47 toque 'form-cancelar' @ 662,1224 (emulator-5554)
+11:39:50 mock modo=normal vazio=False
+11:40:01 toque canto de setlist-00000001 @ 96,420
+11:40:07 toque 'setlist-apagar' @ 2318,323 (emulator-5554)
+N4P4A-dialogo-apagar-avd-pai mCurrentRotation=ROTATION_0 png=265137 xml=8486 159dc723400f
+11:40:21 toque 'apagar-manter' @ 853,998 (emulator-5554)
+11:40:40 toque 'buscar' @ 2295,188 (emulator-5554)
+N4P4A-S4-vazio-avd-pai mCurrentRotation=ROTATION_0 png=87254 xml=13968 e8ea9f2531aa
+11:40:54 toque 'campo-busca' @ 1397,152 (emulator-5554)
+N4P4A-S4-resultados-avd-pai mCurrentRotation=ROTATION_0 png=170878 xml=26535 89de89e4efe4
+11:41:09 toque 'fechar-busca' @ 108,152 (emulator-5554)
+11:41:29 toque canto de setlist-00000001 @ 96,420
+11:41:36 toque 'picker-abrir' @ 266,323 (emulator-5554)
+N4P4A-picker-vazio-avd-pai mCurrentRotation=ROTATION_0 png=116026 xml=16381 69957ef14d48
+11:41:50 toque 'picker-campo' @ 1397,152 (emulator-5554)
+N4P4A-picker-resultados-avd-pai mCurrentRotation=ROTATION_0 png=238372 xml=43605 c0e59ab2467c
+11:42:06 toque 'fechar-busca' @ 108,152 (emulator-5554)
+capturas=8 falhas=0

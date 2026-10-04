@@ -1,0 +1,34 @@
+### docs/native/DESIGN-V1/telas.html 
+   letra → 4 locais: S2 indice / S2×2 | S3 palco / S3×1 | S3 palco / S3-letra×1 | S3 palco / S3d×1
+   cifra → 4 locais: S2 indice / S2×2 | S3 palco / S3-claro×1 | S3 palco / S3-nobody×1 | S4 busca / S4a-vazio×1
+   tab@20 → 1 locais: S2 indice / S2×2
+   partitura → 2 locais: S2 indice / S2×2 | S3 palco / S3-avulsa×1
+### docs/native/DESIGN-V1/icones.html 
+   letra → 2 locais: Catalogo escuro×1 | Catalogo claro×1
+   cifra → 2 locais: Catalogo escuro×1 | Catalogo claro×1
+   tab → 3 locais: Tamanhos×1 | Catalogo escuro×1 | Catalogo claro×1
+   partitura → 2 locais: Catalogo escuro×1 | Catalogo claro×1
+### docs/native/DESIGN-N2/telas.html — nenhum
+### docs/native/DESIGN-N3/telas.html 
+   letra → 4 locais: 2 S2 indice / N3-B-S2p×1 | 2 S2 indice / N3-A-S2p×1 | 7 palco / N3-B-S3×1 | 7 palco / N3-A-S3×1
+### docs/ux/DESIGN-I1/0-linha-de-aviso/telas.html — nenhum
+### docs/ux/DESIGN-I1/1-auth/telas.html — nenhum
+### docs/ux/DESIGN-I1/2-landing/telas.html — nenhum
+### docs/ux/DESIGN-I1/3-privacy-policy/telas.html — nenhum
+### docs/ux/DESIGN-I1/4-content-lista/telas.html 
+   letra → 8 locais: DASH×8 | DASH-vazio-favoritas×4 | SESSAO-nao-renovada×8 | LIB×4 | LIB-filtros×6 | LIB-mais×4 | LIB-salvo×4 | LIB-apagar×4
+   cifra → 8 locais: DASH×4 | DASH-vazio-favoritas×2 | SESSAO-nao-renovada×4 | LIB×4 | LIB-filtros×6 | LIB-mais×4 | LIB-salvo×4 | LIB-apagar×4
+   tab@20-I1 → 8 locais: DASH×2 | DASH-vazio-favoritas×2 | SESSAO-nao-renovada×2 | LIB×2 | LIB-filtros×4 | LIB-mais×2 | LIB-salvo×2 | LIB-apagar×2
+   partitura → 8 locais: DASH×2 | DASH-vazio-favoritas×2 | SESSAO-nao-renovada×2 | LIB×2 | LIB-filtros×4 | LIB-mais×2 | LIB-salvo×2 | LIB-apagar×2
+### docs/ux/DESIGN-I1/5-content-visualizacao/telas.html 
+   letra → 2 locais: VIEW-letra×2 | VIEW-vazio-letra×2
+   cifra → 3 locais: VIEW-cifra×2 | VIEW-vazio-cifra×2 | VIEW-erro-render×2
+   tab@20-I1 → 2 locais: VIEW-tab×2 | VIEW-vazio-tab×2
+   partitura → 7 locais: VIEW-partitura×2 | VIEW-carregando-arquivo×2 | VIEW-carregando-pdf×2 | VIEW-vazio-partitura×2 | VIEW-erro-cache×2 | VIEW-erro-formato×2 | VIEW-erro-pdf×2
+### docs/ux/DESIGN-I1/6-content-editor/telas.html — nenhum
+### docs/ux/DESIGN-I1/7-upload/telas.html 
+   letra → 2 locais: UP-como×2 | UP-lote-sucesso×2
+   cifra → 2 locais: UP-como×2 | UP-lote-sucesso×2
+   tab@20-I1 → 2 locais: UP-como×2 | UP-lote-sucesso×2
+   partitura → 8 locais: UP-como×2 | UP-detalhes×2 | UP-detalhes-inativo×2 | UP-salvando×2 | UP-salvar-erro×2 | UP-criar×2 | UP-criar-validacao×2 | UP-lote-sucesso×2
+### docs/ux/DESIGN-I1/8-setlists/telas.html — nenhum

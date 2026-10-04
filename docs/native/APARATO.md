@@ -270,6 +270,20 @@ fosse layout. Para dar idêntico à base, cada aparelho segue o caminho **dela**
   derrubam a sessão do AVD — o S0 vai por último, e o AVD sobe de novo (do snapshot, com a de
   audit) se ainda houver o que capturar.
 
+**O cartão da setlist 2 depende do relógio** (N4-PR4, div. 1050): a fixture põe a setlist 2 em `hoje + 3`
+= **2026-09-26** (com *hoje* = 2026-09-23, o da base), e a base foi tirada com o relógio a 2026-09-24 — dentro da janela de 7
+dias do prefetch, que baixou a `partitura-1p.pdf` e deixou o cartão *garantida offline*. Com o relógio fora da janela, o S1
+sai *parcial · 0 de 1* e com 1 nó a mais, **com o código da `main`**. O remédio, sem mexer no relógio: abrir a "Partitura
+de uma página" (setlist 2, `song-3`) no palco uma vez antes das capturas — o download sob demanda a traz, e o S1 conta só
+presença (`N4-PR4-anexos/instrumentos/estado-1p.py`). Regenerar a fixture com outro *hoje* não adianta: o sync guarda a
+setlist do cache quando o `updated_at` não muda.
+
+**A comparação por imagem no tablet** (N4-PR4, div. 1053; `N4-PR4-anexos/instrumentos/tab-diff.mjs`): o `screencap` traz
+as barras do sistema — 24 dp em cima (o relógio muda entre capturas); embaixo **60 dp no AVD** e **48 dp no Tab**, nas
+duas orientações (a barra de tarefas da Samsung, cujos ícones mudam de lugar entre rodadas). O cursor pisca dentro de todo
+`EditText` (campo da S4, do picker, da folha): o "antes × antes" com o mesmo código já difere ali. Uma janela modal
+(folha, diálogo) não traz a tela de trás no dump. Tudo isso se conta **à parte**, nunca se esconde.
+
 **Retrato de S1 sem rede** (N3-PR2, div. 415): o app **abre já sem rede** nos dois
 aparelhos — só assim o chip empilhado da moldura aparece.
 

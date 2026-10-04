@@ -1,0 +1,11 @@
+add-content-B.png	711×1138	pixels diferentes: 778	fora das caixas dos ícones de tipo: 0	(caixas: 4)
+add-content-C.png	1138×711	pixels diferentes: 778	fora das caixas dos ícones de tipo: 0	(caixas: 4)
+content-B.png	711×1138	pixels diferentes: 180	fora das caixas dos ícones de tipo: 0	(caixas: 1)
+content-C.png	1138×711	pixels diferentes: 180	fora das caixas dos ícones de tipo: 0	(caixas: 1)
+dashboard-B.png	711×1145	pixels diferentes: 1420	fora das caixas dos ícones de tipo: 0	(caixas: 8)
+dashboard-C.png	1138×734	pixels diferentes: 1420	fora das caixas dos ícones de tipo: 0	(caixas: 8)
+library-B.png	711×1138	pixels diferentes: 1126	fora das caixas dos ícones de tipo: 0	(caixas: 6)
+library-C.png	1138×763	pixels diferentes: 1137	fora das caixas dos ícones de tipo: 0	(caixas: 6)
+library-filtros-B.png	711×1138	pixels diferentes: 1962	fora das caixas dos ícones de tipo: 55	(caixas: 10)
+library-filtros-C.png	1138×763	pixels diferentes: 1918	fora das caixas dos ícones de tipo: 0	(caixas: 10)
+capturas com diferença fora das caixas: 1

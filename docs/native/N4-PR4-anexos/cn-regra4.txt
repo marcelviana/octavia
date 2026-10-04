@@ -1,0 +1,47 @@
+### CN-1: um ponto do desenho — letra normal 'M3 19.8L7.5 5.4' → 'M3 19.8L7.5 5.5'
+ packages/identidade/src/icones.ts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I9 24: "letra" normal @24 ≠ folha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I9 28: "letra" normal @28 ≠ folha
+  acusações: 2 · avisos: 0
+exit=1
+
+### CN-2: um ícone de tipo de volta ao desenho velho — partitura normal e em20 = a do anexo D do V1
+ packages/identidade/src/icones.ts | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+  ACUSADO ../../packages/identidade/src/icones.ts [em20-N4] "partitura" não tem 'em20' — o par sem em20 → P-I12 em 20, traço 1,8 (N4-D86)
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I12 20: "partitura" normal @20 ≠ folha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I12 24: "partitura" normal @24 ≠ folha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I12 28: "partitura" normal @28 ≠ folha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I12 20 (normal): "partitura" normal @20 ≠ folha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I12 20 (inerte): "partitura" normal @20 ≠ folha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I12 20 (claro): "partitura" normal @20 ≠ folha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I12 20 (claro inerte): "partitura" normal @20 ≠ folha
+  ACUSADO ../../packages/identidade/src/icones.ts [troca-N4] "partitura:normal" ainda carrega o desenho velho (anexo D do V1 · partitura (pauta de cinco linhas
+  ACUSADO ../../packages/identidade/src/icones.ts [troca-N4] "partitura:normal" ainda carrega o desenho velho (anexo D do V1 · partitura (pauta de cinco linhas
+  ACUSADO ../../packages/identidade/src/icones.ts [troca-N4] "partitura:normal" ainda carrega o desenho velho (anexo D do V1 · partitura (pauta de cinco linhas
+  acusações: 11 · avisos: 0
+exit=1
+
+### CN-3: a estrela tirada do catálogo
+ packages/identidade/src/icones.ts | 6 ------
+ 1 file changed, 6 deletions(-)
+  ACUSADO ../../packages/identidade/src/icones.ts [nome] falta no mapa: "estrela" (§6.4)
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I1a normal: "estrela" não tem o estado 'normal' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I1a pressionado: "estrela" não tem o estado 'normal' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I1a inerte: "estrela" não tem o estado 'inerte' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I1a em andamento: "estrela" não tem o estado 'inerte' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I1a 20: "estrela" não tem o estado 'normal' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I1a 24: "estrela" não tem o estado 'normal' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I1a 28: "estrela" não tem o estado 'normal' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I1b normal: "estrela" não tem o estado 'ativo' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I1b pressionado: "estrela" não tem o estado 'ativo' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I1b inerte: "estrela" não tem o estado 'ativoInerte' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I1b em andamento: "estrela" não tem o estado 'ativoInerte' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I1b 20: "estrela" não tem o estado 'ativo' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I1b 24: "estrela" não tem o estado 'ativo' que a folha desenha
+  ACUSADO ../../packages/identidade/src/icones.ts [N4] P-I1b 28: "estrela" não tem o estado 'ativo' que a folha desenha
+  acusações: 15 · avisos: 0
+exit=1
+status depois:
+(vazio = limpo)

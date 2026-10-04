@@ -1,0 +1,243 @@
+G-inv — invariante C (T3-R2): bounds em dp, nó a nó
+  base:  <scratch>/base-avd/B5
+  novos: <scratch>/tab/dumps/depois
+  ✓ S0-erro-avd-pai: idêntico (44 nós)
+  ✓ S0-login-avd-pai: idêntico (38 nós)
+  ✓ S1-S1e-falha-com-cache-avd-pai: idêntico (127 nós)
+  ✓ S1-S1f-vazia-avd-pai: idêntico (48 nós)
+  ✓ S1-aviso-sem-rede-avd-pai: idêntico (122 nós)
+  ✓ S1-setlists-avd-pai: idêntico (115 nós)
+  ✗ S2-com-edicao-avd-pai: DIFERENTE — base 174 nós, novo 188 (N4P4D-S2-com-edicao-avd-pai.xml)
+      base: com.horcrux.svg.GroupView - [391.1,252.0][404.4,263.6]
+      base: com.horcrux.svg.PathView - [391.1,252.0][404.4,263.6]
+      novo: com.horcrux.svg.GroupView - [390.2,252.4][405.3,264.4]
+      novo: com.horcrux.svg.PathView - [390.2,252.4][397.8,264.4]
+      novo: com.horcrux.svg.PathView - [391.6,260.4][396.4,260.4]
+      novo: com.horcrux.svg.PathView - [399.6,258.7][405.3,264.4]
+      novo: com.horcrux.svg.PathView - [404.9,258.2][404.9,264.4]
+      novo: com.horcrux.svg.GroupView - [944.4,250.2][957.3,265.8]
+      novo: com.horcrux.svg.PathView - [944.4,250.2][957.3,265.8]
+      base: com.horcrux.svg.GroupView - [390.2,375.1][405.3,388.4]
+      base: com.horcrux.svg.PathView - [390.2,375.1][405.3,388.4]
+      base: com.horcrux.svg.RectView - [392.9,378.2][396.4,381.3]
+      base: com.horcrux.svg.RectView - [395.1,382.7][398.7,385.8]
+      novo: com.horcrux.svg.GroupView - [395.6,376.4][401.3,386.2]
+      novo: com.horcrux.svg.PathView - [390.2,376.0][405.3,376.0]
+      novo: com.horcrux.svg.PathView - [390.2,381.8][405.3,381.8]
+      novo: com.horcrux.svg.PathView - [395.6,376.4][401.3,386.2]
+      novo: com.horcrux.svg.PathView - [390.2,388.0][405.3,388.0]
+      base: com.horcrux.svg.GroupView - [943.1,376.0][958.2,388.0]
+      base: com.horcrux.svg.PathView - [943.1,376.0][958.2,388.0]
+      base: com.horcrux.svg.CircleView - [945.8,382.7][949.8,386.7]
+      base: com.horcrux.svg.PathView - [949.8,377.3][949.8,384.9]
+      novo: com.horcrux.svg.GroupView - [945.3,374.7][957.3,390.2]
+      novo: com.horcrux.svg.PathView - [945.3,384.0][953.8,390.7]
+      novo: com.horcrux.svg.PathView - [952.4,374.7][952.4,386.2]
+      novo: com.horcrux.svg.PathView - [952.4,374.7][957.3,381.3]
+      base: com.horcrux.svg.GroupView - [390.2,500.0][405.3,512.0]
+      base: com.horcrux.svg.PathView - [390.2,500.0][405.3,512.0]
+      base: com.horcrux.svg.CircleView - [392.9,506.7][396.9,510.7]
+      base: com.horcrux.svg.PathView - [396.9,501.3][396.9,508.9]
+      novo: com.horcrux.svg.GroupView - [392.4,498.7][404.4,514.2]
+      novo: com.horcrux.svg.PathView - [392.4,508.0][400.9,514.7]
+      novo: com.horcrux.svg.PathView - [399.6,498.7][399.6,510.2]
+      novo: com.horcrux.svg.PathView - [399.6,498.7][404.4,505.3]
+      base: com.horcrux.svg.GroupView - [944.0,500.0][957.3,511.6]
+      base: com.horcrux.svg.PathView - [944.0,500.0][957.3,511.6]
+      novo: com.horcrux.svg.GroupView - [943.1,500.4][958.2,512.4]
+      novo: com.horcrux.svg.PathView - [943.1,500.4][950.7,512.4]
+      novo: com.horcrux.svg.PathView - [944.4,508.4][949.3,508.4]
+      novo: com.horcrux.svg.PathView - [952.4,506.7][958.2,512.4]
+  ✗ S2-com-edicao-aviso-sem-rede-avd-pai: DIFERENTE — base 157 nós, novo 166 (N4P4D-S2-com-edicao-aviso-sem-rede-avd-pai.xml)
+      base: com.horcrux.svg.GroupView - [391.1,300.0][404.4,311.6]
+      base: com.horcrux.svg.PathView - [391.1,300.0][404.4,311.6]
+      novo: com.horcrux.svg.GroupView - [390.2,300.4][405.3,312.4]
+      novo: com.horcrux.svg.PathView - [390.2,300.4][397.8,312.4]
+      novo: com.horcrux.svg.PathView - [391.6,308.4][396.4,308.4]
+      novo: com.horcrux.svg.PathView - [399.6,306.7][405.3,312.4]
+      novo: com.horcrux.svg.PathView - [404.9,306.2][404.9,312.4]
+      novo: com.horcrux.svg.GroupView - [944.4,298.2][957.3,313.8]
+      novo: com.horcrux.svg.PathView - [944.4,298.2][957.3,313.8]
+      base: com.horcrux.svg.GroupView - [390.2,423.1][405.3,436.4]
+      base: com.horcrux.svg.PathView - [390.2,423.1][405.3,436.4]
+      base: com.horcrux.svg.RectView - [392.9,426.2][396.4,429.3]
+      base: com.horcrux.svg.RectView - [395.1,430.7][398.7,433.8]
+      novo: com.horcrux.svg.GroupView - [395.6,424.4][401.3,434.2]
+      novo: com.horcrux.svg.PathView - [390.2,424.0][405.3,424.0]
+      novo: com.horcrux.svg.PathView - [390.2,429.8][405.3,429.8]
+      novo: com.horcrux.svg.PathView - [395.6,424.4][401.3,434.2]
+      novo: com.horcrux.svg.PathView - [390.2,436.0][405.3,436.0]
+      base: com.horcrux.svg.GroupView - [943.1,424.0][958.2,436.0]
+      base: com.horcrux.svg.PathView - [943.1,424.0][958.2,436.0]
+      base: com.horcrux.svg.CircleView - [945.8,430.7][949.8,434.7]
+      base: com.horcrux.svg.PathView - [949.8,425.3][949.8,432.9]
+      novo: com.horcrux.svg.GroupView - [945.3,422.7][957.3,438.2]
+      novo: com.horcrux.svg.PathView - [945.3,432.0][953.8,438.7]
+      novo: com.horcrux.svg.PathView - [952.4,422.7][952.4,434.2]
+      novo: com.horcrux.svg.PathView - [952.4,422.7][957.3,429.3]
+      base: com.horcrux.svg.GroupView - [390.2,548.0][405.3,560.0]
+      base: com.horcrux.svg.PathView - [390.2,548.0][405.3,560.0]
+      base: com.horcrux.svg.CircleView - [392.9,554.7][396.9,558.7]
+      base: com.horcrux.svg.PathView - [396.9,549.3][396.9,556.9]
+      novo: com.horcrux.svg.GroupView - [392.4,546.7][404.4,562.2]
+      novo: com.horcrux.svg.PathView - [392.4,556.0][400.9,562.7]
+      novo: com.horcrux.svg.PathView - [399.6,546.7][399.6,558.2]
+      novo: com.horcrux.svg.PathView - [399.6,546.7][404.4,553.3]
+      base: com.horcrux.svg.GroupView - [944.0,548.0][957.3,559.6]
+      base: com.horcrux.svg.PathView - [944.0,548.0][957.3,559.6]
+      novo: com.horcrux.svg.GroupView - [943.1,548.4][958.2,560.4]
+      novo: com.horcrux.svg.PathView - [943.1,548.4][950.7,560.4]
+      novo: com.horcrux.svg.PathView - [944.4,556.4][949.3,556.4]
+      novo: com.horcrux.svg.PathView - [952.4,554.7][958.2,560.4]
+  ✗ S2-sem-edicao-S2p-avd-pai: DIFERENTE — base 105 nós, novo 119 (N4P4D-S2-sem-edicao-S2p-avd-pai.xml)
+      base: com.horcrux.svg.GroupView - [455.1,188.0][468.4,199.6]
+      base: com.horcrux.svg.PathView - [455.1,188.0][468.4,199.6]
+      novo: com.horcrux.svg.GroupView - [454.2,188.4][469.3,200.4]
+      novo: com.horcrux.svg.PathView - [454.2,188.4][461.8,200.4]
+      novo: com.horcrux.svg.PathView - [455.6,196.4][460.4,196.4]
+      novo: com.horcrux.svg.PathView - [463.6,194.7][469.3,200.4]
+      novo: com.horcrux.svg.PathView - [468.9,194.2][468.9,200.4]
+      novo: com.horcrux.svg.GroupView - [1008.4,186.2][1021.3,201.8]
+      novo: com.horcrux.svg.PathView - [1008.4,186.2][1021.3,201.8]
+      base: com.horcrux.svg.GroupView - [454.2,311.1][469.3,324.4]
+      base: com.horcrux.svg.PathView - [454.2,311.1][469.3,324.4]
+      base: com.horcrux.svg.RectView - [456.9,314.2][460.4,317.3]
+      base: com.horcrux.svg.RectView - [459.1,318.7][462.7,321.8]
+      novo: com.horcrux.svg.GroupView - [459.6,312.4][465.3,322.2]
+      novo: com.horcrux.svg.PathView - [454.2,312.0][469.3,312.0]
+      novo: com.horcrux.svg.PathView - [454.2,317.8][469.3,317.8]
+      novo: com.horcrux.svg.PathView - [459.6,312.4][465.3,322.2]
+      novo: com.horcrux.svg.PathView - [454.2,324.0][469.3,324.0]
+      base: com.horcrux.svg.GroupView - [1007.1,312.0][1022.2,324.0]
+      base: com.horcrux.svg.PathView - [1007.1,312.0][1022.2,324.0]
+      base: com.horcrux.svg.CircleView - [1009.8,318.7][1013.8,322.7]
+      base: com.horcrux.svg.PathView - [1013.8,313.3][1013.8,320.9]
+      novo: com.horcrux.svg.GroupView - [1009.3,310.7][1021.3,326.2]
+      novo: com.horcrux.svg.PathView - [1009.3,320.0][1017.8,326.7]
+      novo: com.horcrux.svg.PathView - [1016.4,310.7][1016.4,322.2]
+      novo: com.horcrux.svg.PathView - [1016.4,310.7][1021.3,317.3]
+      base: com.horcrux.svg.GroupView - [454.2,436.0][469.3,448.0]
+      base: com.horcrux.svg.PathView - [454.2,436.0][469.3,448.0]
+      base: com.horcrux.svg.CircleView - [456.9,442.7][460.9,446.7]
+      base: com.horcrux.svg.PathView - [460.9,437.3][460.9,444.9]
+      novo: com.horcrux.svg.GroupView - [456.4,434.7][468.4,450.2]
+      novo: com.horcrux.svg.PathView - [456.4,444.0][464.9,450.7]
+      novo: com.horcrux.svg.PathView - [463.6,434.7][463.6,446.2]
+      novo: com.horcrux.svg.PathView - [463.6,434.7][468.4,441.3]
+      base: com.horcrux.svg.GroupView - [1008.0,436.0][1021.3,447.6]
+      base: com.horcrux.svg.PathView - [1008.0,436.0][1021.3,447.6]
+      novo: com.horcrux.svg.GroupView - [1007.1,436.4][1022.2,448.4]
+      novo: com.horcrux.svg.PathView - [1007.1,436.4][1014.7,448.4]
+      novo: com.horcrux.svg.PathView - [1008.4,444.4][1013.3,444.4]
+      novo: com.horcrux.svg.PathView - [1016.4,442.7][1022.2,448.4]
+  ✗ S4-resultados-avd-pai: DIFERENTE — base 73 nós, novo 84 (N4P4D-S4-resultados-avd-pai.xml)
+      base: com.horcrux.svg.GroupView - [1008.0,204.4][1021.3,216.0]
+      base: com.horcrux.svg.PathView - [1008.0,204.4][1021.3,216.0]
+      novo: com.horcrux.svg.GroupView - [1007.1,204.9][1022.2,216.9]
+      novo: com.horcrux.svg.PathView - [1007.1,204.9][1014.7,216.9]
+      novo: com.horcrux.svg.PathView - [1008.4,212.9][1013.3,212.9]
+      novo: com.horcrux.svg.PathView - [1016.4,211.1][1022.2,216.9]
+      novo: com.horcrux.svg.PathView - [1021.8,210.7][1021.8,216.9]
+      novo: com.horcrux.svg.GroupView - [1008.4,294.7][1021.3,310.2]
+      novo: com.horcrux.svg.PathView - [1008.4,294.7][1021.3,310.2]
+      base: com.horcrux.svg.GroupView - [1007.1,387.6][1022.2,400.9]
+      base: com.horcrux.svg.PathView - [1007.1,387.6][1022.2,400.9]
+      base: com.horcrux.svg.RectView - [1009.8,390.7][1013.3,393.8]
+      base: com.horcrux.svg.RectView - [1012.0,395.1][1015.6,398.2]
+      novo: com.horcrux.svg.GroupView - [1012.4,388.9][1018.2,398.7]
+      novo: com.horcrux.svg.PathView - [1007.1,388.4][1022.2,388.4]
+      novo: com.horcrux.svg.PathView - [1007.1,394.2][1022.2,394.2]
+      novo: com.horcrux.svg.PathView - [1012.4,388.9][1018.2,398.7]
+      novo: com.horcrux.svg.PathView - [1007.1,400.4][1022.2,400.4]
+      novo: com.horcrux.svg.GroupView - [1008.4,478.7][1021.3,494.2]
+      novo: com.horcrux.svg.PathView - [1008.4,478.7][1021.3,494.2]
+      base: com.horcrux.svg.GroupView - [1008.0,572.4][1021.3,584.0]
+      base: com.horcrux.svg.PathView - [1008.0,572.4][1021.3,584.0]
+      novo: com.horcrux.svg.GroupView - [1007.1,572.9][1022.2,584.9]
+      novo: com.horcrux.svg.PathView - [1007.1,572.9][1014.7,584.9]
+      novo: com.horcrux.svg.PathView - [1008.4,580.9][1013.3,580.9]
+      novo: com.horcrux.svg.PathView - [1016.4,579.1][1022.2,584.9]
+      novo: com.horcrux.svg.PathView - [1021.8,578.7][1021.8,584.9]
+  ✓ S4-vazio-avd-pai: idêntico (36 nós)
+  ✓ dialogo-apagar-avd-pai: idêntico (25 nós)
+  ✓ folha-criar-avd-pai: idêntico (35 nós)
+  ✓ folha-falhou-avd-pai: idêntico (36 nós)
+  ✓ folha-validacao-avd-pai: idêntico (35 nós)
+  ✓ picker-resultados-avd-pai: idêntico (125 nós)
+  ✓ picker-vazio-avd-pai: idêntico (43 nós)
+  ✓ reordenar-aberto-avd-pai: idêntico (120 nós)
+  · N4P4D-S2-com-edicao-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-S2-com-edicao-aviso-sem-rede-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-S2-sem-edicao-S2p-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-S3-S3a-letra-1a-avd-pai: sem chave na base (fora da conta)
+  · N4P4D-S3-S3a-letra-1a-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-S3-S3b-cifra-claro-avd-pai: sem chave na base (fora da conta)
+  · N4P4D-S3-S3b-cifra-claro-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-S3-S3b-cifra-escuro-avd-pai: sem chave na base (fora da conta)
+  · N4P4D-S3-S3b-cifra-escuro-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-S3-S3c-tab-autoscroll-avd-pai: sem chave na base (fora da conta)
+  · N4P4D-S3-S3c-tab-autoscroll-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-S3-S3d-pdf-12p-avd-pai: sem chave na base (fora da conta)
+  · N4P4D-S3-S3d-pdf-12p-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-S3-S3e-nao-baixado-avd-pai: sem chave na base (fora da conta)
+  · N4P4D-S3-S3e-nao-baixado-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-S3-titulo-longo-avd-pai: sem chave na base (fora da conta)
+  · N4P4D-S3-titulo-longo-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-S3-ultima-avd-pai: sem chave na base (fora da conta)
+  · N4P4D-S3-ultima-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-S4-resultados-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-S4-vazio-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-S5-fim-avd-pai: sem chave na base (fora da conta)
+  · N4P4D-S5-fim-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-picker-resultados-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-picker-vazio-avd-ret: sem chave na base (fora da conta)
+G-inv: 14 de 18 idênticos
+G-inv: REPROVA ✗
+G-inv — invariante C (T3-R2): bounds em dp, nó a nó
+  base:  <scratch>/base-avd/B3
+  novos: <scratch>/tab/dumps/depois
+  ✓ S3-S3a-letra-1a-avd-pai: idêntico (65 nós)
+  ✓ S3-S3b-cifra-claro-avd-pai: idêntico (64 nós)
+  ✓ S3-S3b-cifra-escuro-avd-pai: idêntico (65 nós)
+  ✓ S3-S3c-tab-autoscroll-avd-pai: idêntico (66 nós)
+  ✓ S3-S3d-pdf-12p-avd-pai: idêntico (65 nós)
+  ✓ S3-S3e-nao-baixado-avd-pai: idêntico (66 nós)
+  ✓ S3-titulo-longo-avd-pai: idêntico (65 nós)
+  ✓ S3-ultima-avd-pai: idêntico (65 nós)
+  ✓ S5-fim-avd-pai: idêntico (48 nós)
+  · N4P4D-S0-erro-avd-pai: sem chave na base (fora da conta)
+  · N4P4D-S0-login-avd-pai: sem chave na base (fora da conta)
+  · N4P4D-S1-S1e-falha-com-cache-avd-pai: sem chave na base (fora da conta)
+  · N4P4D-S1-S1f-vazia-avd-pai: sem chave na base (fora da conta)
+  · N4P4D-S1-aviso-sem-rede-avd-pai: sem chave na base (fora da conta)
+  · N4P4D-S1-setlists-avd-pai: sem chave na base (fora da conta)
+  · N4P4D-S2-com-edicao-avd-pai: sem chave na base (fora da conta)
+  · N4P4D-S2-com-edicao-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-S2-com-edicao-aviso-sem-rede-avd-pai: sem chave na base (fora da conta)
+  · N4P4D-S2-com-edicao-aviso-sem-rede-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-S2-sem-edicao-S2p-avd-pai: sem chave na base (fora da conta)
+  · N4P4D-S2-sem-edicao-S2p-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-S3-S3a-letra-1a-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-S3-S3b-cifra-claro-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-S3-S3b-cifra-escuro-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-S3-S3c-tab-autoscroll-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-S3-S3d-pdf-12p-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-S3-S3e-nao-baixado-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-S3-titulo-longo-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-S3-ultima-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-S4-resultados-avd-pai: sem chave na base (fora da conta)
+  · N4P4D-S4-resultados-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-S4-vazio-avd-pai: sem chave na base (fora da conta)
+  · N4P4D-S4-vazio-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-S5-fim-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-dialogo-apagar-avd-pai: sem chave na base (fora da conta)
+  · N4P4D-folha-criar-avd-pai: sem chave na base (fora da conta)
+  · N4P4D-folha-falhou-avd-pai: sem chave na base (fora da conta)
+  · N4P4D-folha-validacao-avd-pai: sem chave na base (fora da conta)
+  · N4P4D-picker-resultados-avd-pai: sem chave na base (fora da conta)
+  · N4P4D-picker-resultados-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-picker-vazio-avd-pai: sem chave na base (fora da conta)
+  · N4P4D-picker-vazio-avd-ret: sem chave na base (fora da conta)
+  · N4P4D-reordenar-aberto-avd-pai: sem chave na base (fora da conta)
+G-inv: 9 de 9 idênticos
+G-inv: IDÊNTICO EM DP ✓

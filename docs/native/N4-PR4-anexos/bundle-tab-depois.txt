@@ -1,0 +1,5 @@
+localhost:8788: 1
+octavia.rocks: 0
+M4 5.25h13M4 9.75h16: 0
+M3 19.8L7.5 5.4: 2
+ativoInerte: 3

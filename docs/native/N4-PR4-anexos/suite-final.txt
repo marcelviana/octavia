@@ -1,0 +1,7 @@
+$ pnpm exec vitest run
+[2m Test Files [22m [1m[32m125 passed[39m[22m[2m | [22m[33m3 skipped[39m[90m (128)[39m
+[2m      Tests [22m [1m[32m1427 passed[39m[22m[2m | [22m[33m59 skipped[39m[90m (1486)[39m
+$ pnpm exec tsc --noEmit -p . ; (cd apps/native && pnpm exec tsc --noEmit)
+tsc: limpo (raiz e nativo)
+$ pnpm lint
+✔ No ESLint warnings or errors

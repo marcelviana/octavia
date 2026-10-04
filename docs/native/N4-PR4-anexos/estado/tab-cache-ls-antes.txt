@@ -1,0 +1,23 @@
+cache/octavia-<uid>/files:    cache/octavia-<uid>/files:
+total    6
+drwx------ 3488 2026-10-02 09:14 .
+drwx------ 3488 2026-09-11 09:59 ..
+    
+files/octavia-<uid>:    files/octavia-<uid>:
+total    145
+drwx------ 3488 2026-10-02 09:16 .
+drwxrwx--x 3488 2026-10-02 09:16 ..
+-rw------- 163 2026-09-23 19:14 ._content.json
+-rwx------ 163 2026-09-24 18:01 ._files
+-rw------- 163 2026-09-14 11:49 ._files-index.json
+-rw------- 163 2026-09-23 19:14 ._setlists.json
+-rw------- 111580 2026-10-02 09:16 content.json
+drwx------ 3488 2026-10-02 09:14 files
+-rw------- 200 2026-10-02 09:14 files-index.json
+-rw------- 2752 2026-10-02 09:16 setlists.json
+    
+files/octavia-<uid>/files:    files/octavia-<uid>/files:
+total    142
+drwx------ 3488 2026-10-02 09:14 .
+drwx------ 3488 2026-10-02 09:16 ..
+-rw------- 138916 2026-09-25 16:17 <arquivo do Marcel>.pdf
