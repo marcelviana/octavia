@@ -20,7 +20,7 @@ import { presentUrls, sanearArquivos, setFilesUser } from './src/files'
 import { log } from './src/log'
 import { Navigation } from './src/navigation'
 import { useOnline } from './src/net'
-import { aplicarLru, baixarSetlist, prefetch7Dias } from './src/prefetch'
+import { aplicarLru, baixarSetlist, prefetchDaBiblioteca } from './src/prefetch'
 import type { SyncState } from './src/screens/SetlistsScreen'
 import { onAuth, signedInThisRun, type User } from './src/session'
 import { load } from './src/store'
@@ -111,7 +111,8 @@ export default function App(): React.JSX.Element {
   }, [dados])
 
   /**
-   * Passo 3 do T1-R13 — prefetch de 7 dias (T1-R15) e retenção (T1-R14).
+   * Passo 3 do T1-R13 — prefetch da biblioteca inteira (N4-R26; até a N4-PR5,
+   * o de 7 dias, T1-R15) e retenção (T1-R14).
    *
    * Roda sobre o conjunto que a tela está mostrando AGORA, e não só depois
    * de um sync bem-sucedido: numa abertura em que o sync falha, o cache
@@ -122,7 +123,7 @@ export default function App(): React.JSX.Element {
    */
   const prefetchEArrumar = useCallback(
     async (setlists: SetlistDTO[], contentById: Map<string, ContentDTO>): Promise<void> => {
-      await prefetch7Dias(setlists, contentById, atualizarPresentes)
+      await prefetchDaBiblioteca(setlists, contentById, atualizarPresentes)
       recarregarArquivos()
     },
     [recarregarArquivos, atualizarPresentes],

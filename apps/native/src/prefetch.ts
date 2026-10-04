@@ -15,9 +15,10 @@
 import {
   isValidContent,
   lruEvict,
+  planoDaBiblioteca,
   prefetchOrder,
   promoteList,
-  selectPrefetch,
+  urlsDaBiblioteca,
   type ContentDTO,
   type SetlistDTO,
 } from '@octavia/core'
@@ -53,18 +54,20 @@ function urlDe(contentId: string, contentById: Map<string, ContentDTO>): string 
 }
 
 /**
- * Conjunto **garantido** (T1-R14): todos os arquivos das setlists dos
- * próximos 7 dias, presentes ou não. É o mesmo `selectPrefetch` do plano,
- * chamado com "nada no disco" — assim a janela de 7 dias tem uma definição
- * só, no core, e não duas que podem divergir.
+ * Conjunto **garantido** (T1-R14), presentes ou não: **todo arquivo da
+ * biblioteca** (N4-R26, N4-D42) — `urlsDaBiblioteca` do core, todo `file_url`
+ * com `body === 'file'`. Até a N4-PR5 era a janela de 7 dias (o
+ * `selectPrefetch` com "nada no disco"); a janela continua com uma definição
+ * só, no core, e decide a PRIORIDADE do plano (N4-D88), não mais a proteção.
+ *
+ * As `setlists` ficam na assinatura: quem chama (o LRU, a promoção, os testes
+ * do W4-b3) não muda, e a garantia não depende delas.
  */
 export function urlsGarantidas(
-  setlists: SetlistDTO[],
+  _setlists: SetlistDTO[],
   contentById: Map<string, ContentDTO>,
 ): Set<string> {
-  return new Set(
-    selectPrefetch(setlists, contentById, new Set<string>(), hoje()).map((item) => item.url),
-  )
+  return urlsDaBiblioteca(contentById.values())
 }
 
 /**
@@ -95,14 +98,23 @@ async function baixar(
   urls: string[],
   guaranteed: boolean,
   aoArquivo?: () => void,
+  /**
+   * N4-D88 — chamado quando um trabalhador PEGA a próxima URL, antes de começar: `false` pula a URL. É por aqui que o
+   * plano da biblioteca para quando o total passa do teto (o tamanho só se conhece depois do download, div. 112).
+   */
+  podeComecar?: (url: string) => boolean,
+  /** N4-D88 — os bytes de cada download que assentou, para o total do teto. */
+  aoAssentar?: (bytes: number) => void,
 ): Promise<void> {
   const fila = [...urls]
   const trabalhador = async (): Promise<void> => {
     for (;;) {
       const url = fila.shift()
       if (url === undefined) return
+      if (podeComecar !== undefined && !podeComecar(url)) continue
       try {
-        await ensureFile(url, { guaranteed })
+        const pronto = await ensureFile(url, { guaranteed })
+        aoAssentar?.(pronto.bytes)
       } catch (erro: unknown) {
         log(`download-error ${mensagemDe(erro)}`)
         continue
@@ -146,27 +158,55 @@ function mensagemDe(erro: unknown): string {
 }
 
 /**
- * T1-R15 — plano de 7 dias, na abertura. As 3 setlists da conta de audit têm
- * `performance_date: null` (medido no pre-check A3), então aqui o plano real
- * é `n=0`: o caminho é o mesmo, o conjunto é que está vazio.
+ * **N4-R26 — o plano da biblioteca inteira**, na abertura (depois do sync,
+ * T1-R13 passo 3) e depois da releitura de uma escrita (T2-R17). Até a N4-PR5
+ * era o plano de 7 dias (`prefetch7Dias`, `reason=7d`); a linha passa a
+ * `reason=library` — errata em par do G3 e do `LOGS-OCTAVIA.md`.
+ *
+ * **N4-D88** (`[Marcel, 2026-10-04]`): o plano é o do core — a janela de 7
+ * dias primeiro, depois o resto da biblioteca em ordem alfabética. A janela
+ * baixa SEMPRE (como baixava); a biblioteca baixa enquanto o total no
+ * aparelho não passa do teto (`capBytes`). Quando passa, o trabalhador que
+ * pega a próxima URL da biblioteca a pula: o que não coube fica *não
+ * baixado*, e o sinal é o `lru over` que o `aplicarLru` já emite — os
+ * garantidos não se despejam. O tamanho só se conhece depois do download
+ * (div. 112), então o estouro é de no máximo os `CONCORRENCIA` arquivos que
+ * já estavam em voo quando o total passou.
+ *
+ * `capBytes` é parâmetro para o teste medir a parada sem 200 MB de bytes;
+ * nenhuma chamada do app o passa.
  */
-export async function prefetch7Dias(
+export async function prefetchDaBiblioteca(
   setlists: SetlistDTO[],
   contentById: Map<string, ContentDTO>,
   aoArquivo?: () => void,
+  capBytes: number = CAP_BYTES,
 ): Promise<void> {
   const noDisco = listFiles()
   const presentes = new Set(noDisco.map((f) => f.url))
-  const plano = selectPrefetch(setlists, contentById, presentes, hoje())
-  log(`prefetch plan n=${plano.length} reason=7d`)
-  if (plano.length > 0) await baixar(plano.map((item) => item.url), true, aoArquivo)
+  const plano = planoDaBiblioteca(setlists, contentById, presentes, hoje())
+  log(`prefetch plan n=${plano.length} reason=library`)
+  if (plano.length > 0) {
+    const prioridade = new Map(plano.map((item) => [item.url, item.prioridade]))
+    let total = noDisco.reduce((soma, f) => soma + f.bytes, 0)
+    await baixar(
+      plano.map((item) => item.url),
+      true,
+      aoArquivo,
+      (url) => prioridade.get(url) === '7d' || total <= capBytes,
+      (bytes) => {
+        total += bytes
+      },
+    )
+  }
 
   /**
    * **Promoção** (defeito medido no aceite, N1-PR7 §3.1, Tab S6).
    *
    * O plano acima só cobre o que FALTA baixar. Um arquivo que veio sob
    * demanda (T1-R16 grava no `Paths.cache`, purgável) e que depois entrou na
-   * janela de 7 dias ficava lá para sempre: o LRU do app o protegia, mas o
+   * janela de 7 dias — desde a N4-PR5, todo arquivo da biblioteca — ficava lá
+   * para sempre: o LRU do app o protegia, mas o
    * Android não sabe dessa proteção e pode apagá-lo — inclusive na véspera do
    * show, que é o caso que o prefetch de 7 dias existe para cobrir
    * (N0-H16 §4).
@@ -239,6 +279,13 @@ export async function prefetchDemanda(
  * despejável por desuso —, e a pergunta grande ("como se solta o que foi
  * fixado", com UI de soltar) fica aberta e honesta, para quando houver
  * repertório que a justifique. Decisão do Marcel, 2026-09-14 (Q1).
+ *
+ * **N4-PR5**: com a garantia da biblioteca inteira (N4-R26), todo arquivo de
+ * música da biblioteca passou a ser protegido — inclusive o que este botão
+ * baixa. "Fica de fora do `protectedUrls`" vale agora só para o arquivo de
+ * uma música que saiu da biblioteca (o órfão). E o plano da biblioteca já
+ * traz o arquivo de toda setlist sem data: o botão continua existindo (S1 não
+ * muda no N4, N4-D59), e no repouso ele acha tudo no disco (`n=0`).
  */
 export async function baixarSetlist(
   setlist: SetlistDTO,
@@ -270,7 +317,15 @@ export async function baixarSetlist(
  * O que o app faz com isso, além de dizer, é decisão de produto, não desta
  * função: o teto é 200 MB e o repertório medido é 265.002 B.
  */
-export function aplicarLru(setlists: SetlistDTO[], contentById: Map<string, ContentDTO>): void {
+export function aplicarLru(
+  setlists: SetlistDTO[],
+  contentById: Map<string, ContentDTO>,
+  /** N4-PR5 — o teto, parâmetro só para o teste da N4-D88 (o `lru over` com teto pequeno); o app usa o padrão. */
+  teto: number = CAP_BYTES,
+): void {
+  // O nome sombreia a constante do módulo DE PROPÓSITO (o molde do `store.ts`, N2-PR2): as linhas `lru` abaixo ficam
+  // byte a byte as mesmas de antes, e o G3 não precisa de errata para um parâmetro de teste.
+  const CAP_BYTES = teto
   const protegidos = urlsGarantidas(setlists, contentById)
   const { evict, bytesAfter } = lruEvict(listFiles(), CAP_BYTES, protegidos)
   if (evict.length > 0) {
