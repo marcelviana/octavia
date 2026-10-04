@@ -120,7 +120,7 @@ describe('gate:icones — o mapa contra as fontes congeladas', () => {
     expect(acusacoes(s.texto), comSaida(s)).toBe(0)
   })
 
-  it('CONTROLE NEGATIVO: o `IconesFalso` REPROVA — exit 1, 23 acusações', () => {
+  it('CONTROLE NEGATIVO: o `IconesFalso` REPROVA — exit 1, 24 acusações', () => {
     const s = rodar('scripts/icones.mjs', 'scripts/__cn__/IconesFalso.ts')
     expect(s.status, comSaida(s)).toBe(1)
     // 18 do V1 + a (8) da N2-PR2 (um pendente que JÁ está no mapa e não casa
@@ -140,7 +140,16 @@ describe('gate:icones — o mapa contra as fontes congeladas', () => {
     // dele no `IconesFalso` deixa de ser anistiada — o CN, intocado outra vez,
     // passa de 22 a 23 pelo efeito da poda. (A `alca`, podada na N2-PR5, não
     // somou nada: o `IconesFalso` a tem, e certa — ver o controle positivo.)
-    expect(acusacoes(s.texto), comSaida(s)).toBe(23)
+    //
+    // **E a vigésima quarta, da N4-PR4** (N4-D69, N4-D86): o CN acompanha o
+    // catálogo em par (os seis do DESIGN-N4 corretos) e o defeito (6) passa a
+    // ser DEVOLVER a tab de quatro cordas ao `em20` — o par desfeito. Antes
+    // ele acusava oito (três somem, quatro entram, a contagem); agora acusa
+    // nove: o velho no `em20` (três elementos) e a contagem de linhas pela
+    // regra 4, e as cinco células de 20 dp da P-I11 pela regra 7.
+    expect(acusacoes(s.texto), comSaida(s)).toBe(24)
+    expect(s.texto).toContain('[em20-N4] o \'em20\' de "tab" ainda carrega a tab de quatro cordas')
+    expect(s.texto).toContain('[N4] P-I11 20: "tab" normal @20 ≠ folha')
     expect(s.texto).toContain('falta no mapa: "adicionar"')
     expect(s.texto).toContain('[anexo-D-N2]')
     expect(s.texto).toContain('falta no mapa: "nova-setlist"')
@@ -153,9 +162,16 @@ describe('gate:icones — o mapa contra as fontes congeladas', () => {
    * ainda não foi desenhado tem de GRITAR sem reprovar. Estas três asserções
    * são o que impede a lista `PENDENTES` de virar anistia silenciosa.
    */
-  it('o catálogo é 39 registros, e os cinco do DESIGN-N2 entram nessa conta', () => {
+  /**
+   * N4-PR4 (N4-D76, errata da N4-D68): **41 registros** — a estrela (um
+   * registro, dois estados) e o tocar entram; os quatro de tipo trocam de
+   * desenho no mesmo registro. Era "39, e os cinco do DESIGN-N2 entram nessa
+   * conta" — o par: `= 39 registros` → `+ 2 (DESIGN-N4, N4-D76) = 41 registros`.
+   */
+  it('o catálogo é 41 registros: os cinco do DESIGN-N2 e os dois novos do DESIGN-N4 entram nessa conta', () => {
     const s = rodar('scripts/icones.mjs', MAPA_ICONES)
-    expect(s.texto, comSaida(s)).toContain('34 registros (V1) + 5 (DESIGN-N2, E17) = 39 registros')
+    expect(s.texto, comSaida(s)).toContain('34 registros (V1) + 5 (DESIGN-N2, E17) + 2 (DESIGN-N4, N4-D76) = 41 registros')
+    expect(s.texto, comSaida(s)).toContain('DESIGN-N4: 7/7 linhas P-I achadas · 49 células cobradas · trocas em par: 4 (12 elementos velhos cobrados ausentes)')
   })
 
   /**

@@ -44,6 +44,7 @@ function reviver(v: unknown): unknown {
 const base = reviver(JSON.parse(readFileSync(join(__dirname, 'linha-de-base.json'), 'utf8'))) as {
   tokens: Record<string, unknown> & { faixas: Record<string, unknown>; font: unknown }
   icones: unknown
+  paresIconesN4: { pares: Record<string, { velho: unknown; novo: unknown; razao: string }> }
 }
 
 /** Os tokens que migram SEM mudar de forma (I1-D3). */
@@ -95,9 +96,23 @@ describe('pacote ≡ linha de base (em dp)', () => {
     expect([699, 699.9, 700, 960, 960.1, 961].map(identidade.faixaDe)).toEqual(['A', 'A', 'B', 'B', 'C', 'C'])
   })
 
-  it('ícones: os 43 da linha de base, desenho a desenho — e nenhum visto (div. 588, decisão (b))', () => {
-    expect(identidade.desenhos).toStrictEqual(base.icones)
-    expect(identidade.nomesIcones).toHaveLength(43)
+  /**
+   * N4-PR4 — a linha de base NÃO se regrava: a troca dos quatro de tipo e os
+   * dois novos (N4-D68, N4-D69, N4-D76) entram como PAR (regra 14 do
+   * `LOGS-OCTAVIA.md`) em `paresIconesN4` — o velho tem de ser exatamente o da
+   * linha de base (ou `null`, nome novo), e o pacote tem de ter o novo. Os
+   * outros 39 nomes continuam cobrados contra a linha de base, intocados.
+   */
+  it('ícones: os 43 da linha de base com os seis pares do N4 aplicados — 45 nomes, e nenhum visto (div. 588, decisão (b))', () => {
+    const esperado: Record<string, unknown> = { ...(base.icones as Record<string, unknown>) }
+    for (const [nome, par] of Object.entries(base.paresIconesN4.pares)) {
+      expect(par.velho ?? undefined, `o velho do par "${nome}" é o da linha de base`).toStrictEqual(esperado[nome])
+      expect(par.razao, `o par "${nome}" tem razão`).toMatch(/N4-D\d+/)
+      esperado[nome] = par.novo
+    }
+    expect(Object.keys(base.paresIconesN4.pares)).toStrictEqual(['letra', 'cifra', 'tab', 'partitura', 'estrela', 'tocar'])
+    expect(identidade.desenhos).toStrictEqual(esperado)
+    expect(identidade.nomesIcones).toHaveLength(45)
     expect(identidade.nomesIcones).not.toContain('visto')
   })
 

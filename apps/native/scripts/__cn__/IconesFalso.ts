@@ -31,6 +31,17 @@
  *       também seria verdade numa regra que acusasse todo nome da tela 2.
  *       Acusa ZERO vezes, e some da lista de avisos (está no mapa).
  *
+ * **N4-PR4 (N4-D69, N4-D76): o CN acompanha o catálogo em par.** Os quatro de
+ * tipo entram com o desenho NOVO (P-I9…P-I12, convertido da folha do N4) e a
+ * `estrela` e o `tocar` entram CORRETOS — sem isso o CN acusaria "desenho
+ * velho" em toda linha de tipo e os defeitos de verdade ficariam escondidos no
+ * meio, como o `email` e o `senha` da (7). O defeito (6) muda de forma pela
+ * mesma razão por que existia: era *"esquecer a exceção"*; com a T1 a exceção
+ * de quatro cordas é o VELHO, e o defeito passa a ser **devolvê-lo**: o `em20`
+ * da tab é a tab de quatro cordas do `DESIGN-V1/telas.html` — o par desfeito.
+ * Acusa pela regra 4 (o velho no `em20`; a contagem de linhas, 4 contra 3) e
+ * pela regra 7 (o `em20` não é a folha em 20); o `gates.test.ts` diz o total.
+ *
  * Esperado: **19** acusações (18 do V1 + a (8)), exit 1, e **quatro** avisos
  * de pendente — `nova-setlist`, `apagar-setlist`, `adicionar` e `remover`, os
  * que (8) e (9) não puseram no mapa. Auto-contido (sem os tipos do
@@ -69,17 +80,20 @@ export const desenhosFalsos = {
     normal: [{ d: 'M10 6l-6 6 6 6M4 12h15' }],
   },
   'letra': {
-    normal: [{ d: 'M4 5.25h13M4 9.75h16M4 14.25h10M4 18.75h14' }],
+    normal: [{ d: 'M3 19.8L7.5 5.4l4.5 14.4' }, { d: 'M4.68 15h5.64' }, { d: 'M17.4 13.2a3.3 3.3 0 1 0 0 6.6a3.3 3.3 0 1 0 0-6.6' }, { d: 'M20.7 12.6v7.2' }],
+    em20: [{ d: 'M3 19.8L7.5 5.4l4.5 14.4', traco: 1.8 }, { d: 'M4.68 15h5.64', traco: 1.8 }, { d: 'M17.4 13.2a3.3 3.3 0 1 0 0 6.6a3.3 3.3 0 1 0 0-6.6', traco: 1.8 }, { d: 'M20.7 12.6v7.2', traco: 1.8 }],
   },
   'cifra': {
-    normal: [{ d: 'M4 5h3M11 5h3M18 5h2' }, { d: 'M4 9.5h16' }, { d: 'M4 14.5h3M12 14.5h4' }, { d: 'M4 19h13' }],
+    normal: [{ d: 'M12 21.3c-3.84-4.32-7.5-9.12-7.5-13.08C4.5 4.92 7.92 3 12 3s7.5 1.92 7.5 5.22c0 3.96-3.66 8.76-7.5 13.08z' }],
+    em20: [{ d: 'M12 21.3c-3.84-4.32-7.5-9.12-7.5-13.08C4.5 4.92 7.92 3 12 3s7.5 1.92 7.5 5.22c0 3.96-3.66 8.76-7.5 13.08z', traco: 1.8 }],
   },
   'tab': {
-    normal: [{ d: 'M3 3h18M3 6.6h1.225M11.175 6.6h9.825M3 10.2h9.225M19.175 10.2h1.825M3 13.8h4.225M14.175 13.8h6.825M3 17.4h18M3 21h18' }, { x: 5.5, y: 4.9, w: 4.4, h: 3.4, rx: 1.7, fill: true }, { x: 13.5, y: 8.5, w: 4.4, h: 3.4, rx: 1.7, fill: true }, { x: 8.5, y: 12.1, w: 4.4, h: 3.4, rx: 1.7, fill: true }],
-    em20: [{ d: 'M3 3h18M3 6.6h1.225M11.175 6.6h9.825M3 10.2h9.225M19.175 10.2h1.825M3 13.8h4.225M14.175 13.8h6.825M3 17.4h18M3 21h18' }, { x: 5.5, y: 4.9, w: 4.4, h: 3.4, rx: 1.7, fill: true }, { x: 13.5, y: 8.5, w: 4.4, h: 3.4, rx: 1.7, fill: true }, { x: 8.5, y: 12.1, w: 4.4, h: 3.4, rx: 1.7, fill: true }],
+    normal: [{ d: 'M3 4.8h4.8M16.8 4.8h4.2' }, { d: 'M3 12h4.8M16.8 12h4.2' }, { d: 'M3 19.2h4.8M16.8 19.2h4.2' }, { d: 'M9.3 7.92c0.48-1.56 1.68-2.52 3.12-2.52 1.8 0 3.12 1.32 3.12 3 0 1.08-0.48 1.92-1.44 3l-4.8 5.4h6.48' }],
+    em20: [{ d: 'M3 4.2h18M3 9.4h2.1M11.9 9.4h9.1M3 14.6h5.1M14.9 14.6h6.1M3 19.8h18' }, { x: 5.9, y: 7.7, w: 4.2, h: 3.4, rx: 1.7, fill: true }, { x: 8.9, y: 12.9, w: 4.2, h: 3.4, rx: 1.7, fill: true }],
   },
   'partitura': {
-    normal: [{ d: 'M3 5h18M3 8.5h18M3 12h18M3 15.5h18M3 19h18' }, { cx: 8.8, cy: 15.5, r: 2.4, fill: true }, { d: 'M11.2 15.5V6.5' }],
+    normal: [{ d: 'M6.12 19.92c-0.72-1.68 0.6-3.72 2.88-4.56 2.28-0.84 4.68-0.24 5.28 1.44 0.72 1.68-0.6 3.72-2.88 4.56-2.28 0.84-4.68 0.24-5.28-1.44z', fill: true }, { d: 'M14.1 17.1V3.6' }, { d: 'M14.1 3.6c0.48 3.12 4.32 4.2 5.4 7.8' }],
+    em20: [{ d: 'M6.12 19.92c-0.72-1.68 0.6-3.72 2.88-4.56 2.28-0.84 4.68-0.24 5.28 1.44 0.72 1.68-0.6 3.72-2.88 4.56-2.28 0.84-4.68 0.24-5.28-1.44z', fill: true }, { d: 'M14.1 17.1V3.6', traco: 1.8 }, { d: 'M14.1 3.6c0.48 3.12 4.32 4.2 5.4 7.8', traco: 1.8 }],
   },
   'garantida': {
     normal: [{ cx: 12, cy: 12, r: 9 }, { d: 'M8 12.2l2.8 2.8L16.2 9.4' }],
@@ -169,5 +183,15 @@ export const desenhosFalsos = {
   'alca': {
     normal: [{ cx: 9, cy: 6.5, r: 1.5, fill: true }, { cx: 15, cy: 6.5, r: 1.5, fill: true }, { cx: 9, cy: 12, r: 1.5, fill: true }, { cx: 15, cy: 12, r: 1.5, fill: true }, { cx: 9, cy: 17.5, r: 1.5, fill: true }, { cx: 15, cy: 17.5, r: 1.5, fill: true }],
     inerte: [{ cx: 9, cy: 6.5, r: 1.5, fill: true }, { cx: 15, cy: 6.5, r: 1.5, fill: true }, { cx: 9, cy: 12, r: 1.5, fill: true }, { cx: 9, cy: 17.5, r: 1.5, fill: true }],
+  },
+  'estrela': {
+    normal: [{ d: 'M12 3.3l2.68 5.43 5.99.87-4.33 4.23 1.02 5.97L12 17l-5.36 2.8 1.02-5.97L3.33 9.6l5.99-.87z' }],
+    ativo: [{ d: 'M12 3.3l2.68 5.43 5.99.87-4.33 4.23 1.02 5.97L12 17l-5.36 2.8 1.02-5.97L3.33 9.6l5.99-.87z', fill: true }, { d: 'M12 3.3l2.68 5.43 5.99.87-4.33 4.23 1.02 5.97L12 17l-5.36 2.8 1.02-5.97L3.33 9.6l5.99-.87z' }],
+    inerte: [{ d: 'M12 3.3l2.68 5.43 5.99.87-4.33 4.23 1.02 5.97L12 17l-5.36 2.8 1.02-5.97L3.33 9.6l5.99-.87z', traco: 1.25 }],
+    ativoInerte: [{ d: 'M12 3.3l2.68 5.43 5.99.87-4.33 4.23 1.02 5.97L12 17l-5.36 2.8 1.02-5.97L3.33 9.6l5.99-.87z', fill: true }, { d: 'M12 3.3l2.68 5.43 5.99.87-4.33 4.23 1.02 5.97L12 17l-5.36 2.8 1.02-5.97L3.33 9.6l5.99-.87z', traco: 1.25 }],
+  },
+  'tocar': {
+    normal: [{ d: 'M8.5 5.3v13.4L19 12z' }],
+    inerte: [{ d: 'M8.5 5.3v13.4L19 12z', traco: 1.25 }],
   },
 } as const
