@@ -154,3 +154,24 @@ describe('(2) o motivo isolado — o core compõe como as telas de hoje', () => 
     },
   )
 })
+
+/**
+ * (3) **N4-PR5 — a P-F8 no core, sob o mesmo gate de igualdade** (`N4-PR3-anexos/README.md` §1.1, linha 10; N4-E5).
+ * A régua de L (*{n} resultado(s)*) é a frase que a S4 já escreve (`SearchScreen.tsx:156`). Ela passa ao core
+ * (`nResultados`) nesta PR, que não muda tela nenhuma: a cópia da S4 FICA, e este teste lê o template literal do
+ * FONTE da S4 e prova que ele e o core dão o mesmo texto, byte a byte. A PR da tela que reusar a frase (a PR-7) troca
+ * a cópia pela importação — e aí este teste muda para "nenhuma cópia na tela", como o molde do site.
+ */
+describe('(3) a P-F8 no core, igual à da S4 (lida do fonte)', () => {
+  const FONTE = ler('apps/native/src/screens/SearchScreen.tsx')
+  const MOLDE = '`${n} ${n === 1 ? \'resultado\' : \'resultados\'}`'
+
+  it('a S4 escreve a régua com o template de sempre (as duas ocorrências: a régua e a régua exportada)', () => {
+    expect(FONTE.split(MOLDE).length - 1).toBe(2)
+  })
+
+  it('o core e o template da S4 dão o mesmo texto para 0, 1, 2 e 57', () => {
+    const daTela = new Function('n', `return ${MOLDE}`) as (n: number) => string
+    for (const n of [0, 1, 2, 57]) expect(conteudo.nResultados(n)).toBe(daTela(n))
+  })
+})
