@@ -14,6 +14,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import type { ContentDTO, SetlistDTO } from '@octavia/core'
 import { ligarPrefetchAposEscrita } from './src/apos-escrita'
 import type { EstadoLocal } from './src/escrita'
+import { ligarCacheDoFavoritar } from './src/favoritar'
 import { useLinhaDaFaixa } from './src/useFaixa'
 import { presentUrls, sanearArquivos, setFilesUser } from './src/files'
 import { log } from './src/log'
@@ -149,6 +150,26 @@ export default function App(): React.JSX.Element {
       recarregarArquivos,
     )
   }, [atualizarPresentes, recarregarArquivos])
+
+  /**
+   * N4-PR5 — o cache do favoritar (N4-D35): a linha que o `PUT` devolve entra no `content.json` (é o `favoritar.ts`
+   * que grava) e aqui, no que a raiz mostra — sem sync. O `dadosRef` é atualizado à mão, como no `rodarSync`, para que
+   * um segundo favoritar que assente logo depois leia o conjunto com o primeiro já aplicado. Uma ligação por sessão;
+   * sair da sessão desliga.
+   */
+  useEffect(() => {
+    if (estado.fase !== 'dentro') return
+    ligarCacheDoFavoritar({
+      uid: estado.user.uid,
+      lerContent: () => dadosRef.current.content,
+      aoGravar: (content) => {
+        const contentById = new Map(content.map((c) => [c.id, c]))
+        dadosRef.current = { ...dadosRef.current, content, contentById }
+        setDados((atual) => ({ ...atual, content, contentById }))
+      },
+    })
+    return () => ligarCacheDoFavoritar(null)
+  }, [estado])
 
   useEffect(() => {
     return onAuth((user) => {

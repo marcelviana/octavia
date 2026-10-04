@@ -381,7 +381,7 @@ async function enviarUm(
   if (!(await estaOnline())) return null
 
   const t0 = Date.now()
-  const resposta = await mutate(pedido.method, pedido.path, pedido.body, prazoMs)
+  const resposta = await mutate(pedido.method, pedido.path, pedido.body, prazoMs, FAMILIA)
   const ms = Date.now() - t0
 
   const preliminar = classificar(pedido.op, resposta, null, contexto)
