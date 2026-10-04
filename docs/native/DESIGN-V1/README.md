@@ -630,6 +630,21 @@ Onde: §5.3, §6.1, §6.2, §6.4, §7, §8 e §8.3. Divs. 221–225 do `DESIGN-N
 
 Onde: §5.3, §7 e §7.1. Divs. 393–399 do `DESIGN-N3/README.md` §9.
 
+**E19 — os quatro ícones de tipo trocam de desenho; vale o catálogo, e é o DESIGN-N4 que o desenha.** *(N4-D69 e N4-D74, decisões do Marcel, 2026-10-02 e 2026-10-03; errata de ponteiro, SEM redesenhar moldura, pelo precedente da E16, da E17 e da E18. Entra no commit da N4-PR4 que troca o desenho.)*
+
+**O desenho novo vive em [`docs/native/DESIGN-N4/`](../DESIGN-N4/)**, seção *"5 · Ícones — decididos"* do `telas.html`: `letra` = **Aa** (P-I9), `cifra` = **a palheta** (P-I10), `tab` = **linhas com um 2** (P-I11), `partitura` = **a nota única** (P-I12) — **os mesmos nomes e a mesma caixa** (20 · 24 · 28), no app inteiro e no site. No pacote: `packages/identidade/src/icones.ts`, cobrado pelo `gate:icones` contra a folha do N4 (regra 7) e, em par, contra o anexo D deste bloco (`TROCAS_N4`). O `tipo-desconhecido` não muda.
+
+| onde | o que o V1 diz | o que passa a valer |
+| --- | --- | --- |
+| §6.3 · a tab por tamanho | quatro cordas em 20 dp, seis nos outros | **a exceção sai** (par `EM20_N4` do `gate:icones`): a T1 tem as mesmas três linhas em todo tamanho. O `em20` passa a existir nos **quatro** de tipo, só pelo **traço**: em 20 o da folha do N4 (1,8 no viewBox 24 = 1,5 px), em 24 e 28 o da família (N4-D86) |
+| §6.4 · as linhas `letra`, `cifra`, `tab`, `partitura` | o desenho do anexo D (V1-PR3) | o desenho do DESIGN-N4 pelo nome; uso, tamanho, rótulo e tinta não mudam |
+| `icones.html` · *Catálogo escuro*, *Catálogo claro* e *Tamanhos* | os quatro desenhos de tipo (e a tab nos três tamanhos) | o catálogo pelo nome |
+| `telas.html` · `S2` (o índice: os quatro tipos), `S3`, `S3-letra`, `S3d`, `S3-claro`, `S3-nobody`, `S3-avulsa` (a barra do palco) e `S4a-vazio` | o ícone de tipo no desenho velho | o ícone de tipo do catálogo, **na mesma caixa e no mesmo lugar** — a composição é a da moldura. *(A barra do palco do app de hoje mostra o tipo só como palavra — `StageScreen.tsx:520`; esta errata não muda isso: a barra não ganha ícone.)* |
+
+**O `SHA256SUMS` do V1 não muda com esta errata**: o `telas.html` e o `icones.html` ficam **intactos**; o anexo D (`V1-PR3-PRECHECK-anexos/V1-PR3-D-icones-34.txt`) também, e é como o **velho** do par que o `gate:icones` o lê. O catálogo vai a 41 registros e 45 nomes com a `estrela` e o `tocar` (N4-D76), que o V1 não desenha.
+
+Onde: §6.3, §6.4, o `icones.html` e as molduras acima (lista medida por script na N4-PR4, `docs/native/N4-PR4-anexos/README.md` §1.5).
+
 ---
 
 ## 10 · Proveniência

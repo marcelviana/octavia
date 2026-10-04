@@ -247,6 +247,19 @@ proposta (em B, o nome acessível do *Adicionar* igual ao rótulo de C) foi **re
 2026-09-30]` — a regra é a I1-D7 item 4, rótulo curto **com nome acessível longo**; o defeito era do instrumento, consertado
 no commit 2b da I1-PR-13 (div. 875).
 
+**Do N4 — errata de ponteiro** `[N4-D69, N4-D74 — Marcel, 2026-10-02 e 2026-10-03; entra no commit da N4-PR4 que troca o desenho]` — mesmas colunas:
+
+| id | o que a folha mostra | o que vale | onde se aplica | div. | efeito |
+|---|---|---|---|---|---|
+| **I1-E32** | os ícones de tipo `letra` (quatro linhas), `cifra` (acordes sobre a letra), `tab` (uma tab de **quatro** cordas desenhada nesta folha, `M3 6h18M3 10h18M3 14h18M3 18h18` com dois trastes — não o `em20` do catálogo) e `partitura` (pauta e nota), em 20 px | **o catálogo pelo nome** (`packages/identidade/src/icones.ts`), que desde a N4-PR4 é o desenho da seção 5 do `docs/native/DESIGN-N4/telas.html`: Aa, a palheta, linhas com um 2, a nota única (P-I9…P-I12) — **na mesma caixa e no mesmo lugar**; tamanho, tinta (`lineInfo`) e posição são os da seção. A troca chega ao site pelo catálogo, sem redesenho de folha (*"As folhas do site (I1) não foram redesenhadas"*, seção 9 do `DESIGN-N4/telas.html`) | `4-content-lista`: `DASH`, `DASH-vazio-favoritas`, `SESSAO-nao-renovada`, `LIB`, `LIB-filtros`, `LIB-mais`, `LIB-salvo`, `LIB-apagar` · `5-content-visualizacao`: `VIEW-letra`, `-cifra`, `-tab`, `-partitura`, `-vazio-letra`, `-vazio-cifra`, `-vazio-tab`, `-vazio-partitura`, `-carregando-arquivo`, `-carregando-pdf`, `-erro-cache`, `-erro-formato`, `-erro-render`, `-erro-pdf` · `7-upload`: `UP-como`, `UP-detalhes`, `UP-detalhes-inativo`, `UP-salvando`, `UP-salvar-erro`, `UP-criar`, `UP-criar-validacao`, `UP-lote-sucesso` (medido por script, `docs/native/N4-PR4-anexos/README.md` §1.5) | 1041 (N4-PR4) | forma |
+
+A I1-E32 é de **forma**, como a I1-E3 e a I1-E6: o `conferir.mjs` (c) compara todo `<svg>` das folhas com o catálogo
+e, com o desenho novo, acha as três formas velhas — cifra (42× nas folhas 4, 5 e 7), letra (50×) e partitura (48×) —
+"sem desenho no catálogo". Entra na lista `erratas` do `erratas.json`, que o G-tok (i) cobra (cada achado coberto,
+`n` exato; órfã reprova). A tab de quatro cordas destas folhas já era forma declarada do `conferir.mjs` (*"a
+implementação usa o `d` do catálogo"*) e não vira achado. O G-faixa mede caixa e não vê a troca; a prova no site é **por
+imagem**, antes × depois (N4-D75; `docs/native/N4-PR4-anexos/README.md` §4).
+
 ## 3 · O bloco `web` de tokens — insumo da PR-4 (`packages/identidade`)
 
 Exatamente como o `README-design.md` §2.1:

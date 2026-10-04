@@ -23,7 +23,8 @@ import { desenhos, type Desenho, type NomeIcone, type Primitiva } from './dados'
 // O tamanho e o traço por tamanho moram no pacote desde a I1-PR-4 (o web
 // renderiza a mesma família); reexportados para as telas não mudarem de import.
 export type { TamanhoIcone }
-export type EstadoIcone = 'normal' | 'ativo' | 'inerte'
+// `ativo-inerte` (N4-D87): o inerte do estado ligado — a estrela cheia inerte.
+export type EstadoIcone = 'normal' | 'ativo' | 'inerte' | 'ativo-inerte'
 
 export interface IconeProps {
   nome: NomeIcone
@@ -65,6 +66,7 @@ function elementos(nome: NomeIcone, tamanho: TamanhoIcone, estado: EstadoIcone, 
   if (nome === 'parcial' && fracao !== undefined) return arcoParcial(fracao)
   if (estado === 'ativo' && d.ativo !== undefined) return d.ativo
   if (estado === 'inerte' && d.inerte !== undefined) return d.inerte
+  if (estado === 'ativo-inerte' && d.ativoInerte !== undefined) return d.ativoInerte
   if (tamanho === 20 && d.em20 !== undefined) return d.em20
   return d.normal
 }

@@ -483,3 +483,14 @@ fileira não é linha da tabela de origem.
 | **466** | P | *"O `APARATO.md` ganha a lição da div. 458 se o instrumento do G5/G6 mudou"*. | **Não mudou**: os dumps da S5 não têm rolado, e o G5/G6 rodou como estava (16 de 16). O `APARATO.md` fica como está. |
 
 **Próxima divergência livre: 467.**
+
+### Errata de ponteiro do N4 — N3-E21 (N4-D74)
+
+**N3-E21 — o ícone de tipo das molduras do N3 é o do catálogo, que o DESIGN-N4 redesenhou.** *(N4-D69, N4-D74, decisões do
+Marcel, 2026-10-02 e 2026-10-03; errata de ponteiro, sem redesenhar moldura. Entra no commit da N4-PR4 que troca o desenho.)*
+`N3-B-S2p` e `N3-A-S2p` (a linha do índice) e `N3-B-S3` e `N3-A-S3` (a barra do palco) desenham o ícone `letra` no desenho
+velho (quatro linhas de texto). **Vale o catálogo pelo nome** — `packages/identidade/src/icones.ts`, desde a N4-PR4 o
+desenho da seção 5 do `DESIGN-N4/telas.html` (P-I9…P-I12: Aa, a palheta, linhas com um 2, a nota única), cobrado pelo
+`gate:icones`. **Na mesma caixa e no mesmo lugar**: composição, tamanho (20), traço, tinta e posição são os da moldura; o
+G-inv e o G-N3 não mudam (o ícone trocar de desenho não muda `bounds`, div. 1021). As molduras do N3 que mostram outro tipo
+— nenhuma (medido por script, `docs/native/N4-PR4-anexos/README.md` §1.5). O `SHA256SUMS` desta pasta não muda.
