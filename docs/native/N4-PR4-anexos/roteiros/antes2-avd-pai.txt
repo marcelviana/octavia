@@ -1,0 +1,12 @@
+11:44:19 toque 'buscar' @ 2295,188 (emulator-5554)
+N4P4B-S4-vazio-avd-pai mCurrentRotation=ROTATION_0 png=86713 xml=13968 e8ea9f2531aa
+11:44:34 toque 'campo-busca' @ 1397,152 (emulator-5554)
+N4P4B-S4-resultados-avd-pai mCurrentRotation=ROTATION_0 png=170884 xml=26535 89de89e4efe4
+11:44:50 toque 'fechar-busca' @ 108,152 (emulator-5554)
+11:45:14 toque canto de setlist-00000001 @ 96,420
+11:45:21 toque 'picker-abrir' @ 266,323 (emulator-5554)
+N4P4B-picker-vazio-avd-pai mCurrentRotation=ROTATION_0 png=116735 xml=16381 69957ef14d48
+11:45:36 toque 'picker-campo' @ 1397,152 (emulator-5554)
+N4P4B-picker-resultados-avd-pai mCurrentRotation=ROTATION_0 png=239243 xml=43605 c0e59ab2467c
+11:45:51 toque 'fechar-busca' @ 108,152 (emulator-5554)
+capturas=4 falhas=0

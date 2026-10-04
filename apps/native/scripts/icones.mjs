@@ -94,6 +94,46 @@
  * `remover` em vez de um estado — por isso a cobrança é contra a UNIÃO dos
  * elementos das três células do registro, e não célula a célula.
  */
+/**
+ * N4-PR4 — A FOLHA DO N4 COMO FONTE DE SEIS REGISTROS, EM PAR (N4-D75)
+ *
+ * O `DESIGN-N4/telas.html` (seção "5 · Ícones — decididos") traz duas tabelas:
+ * os quatro de tipo **substituídos** (P-I9 `letra` · P-I10 `cifra` · P-I11 `tab`
+ * · P-I12 `partitura`, N4-D69) e os dois **novos** (P-I1a/P-I1b a `estrela`, um
+ * registro com dois estados, N4-D76; P-I2 o `tocar`). O catálogo vai de 39 a
+ * **41 registros** (43 → 45 nomes). A regra 7, abaixo, cobra os seis contra a
+ * folha, ESTADO A ESTADO e TAMANHO A TAMANHO, pelo que o `Icone.tsx` desenha
+ * (a geometria, o preenchimento e o traço efetivo), e não só pela forma.
+ *
+ * **A troca é PAR declarado** (regra 14 do `LOGS-OCTAVIA.md`): `TROCAS_N4`
+ * diz, para cada um dos quatro, o desenho velho → o novo, com a razão. O
+ * velho é o registro do anexo D do V1, e o gate exige que ele SAIA do mapa
+ * (estado nenhum o carrega) e que o novo ENTRE igual à folha. A regra 2
+ * deixa de cobrar o velho só porque o par o declara — e um par cujo velho
+ * continua no mapa reprova.
+ *
+ * **A conversão da folha para o catálogo** (decisão do Marcel, N4-D86): os
+ * quatro de tipo vêm numa grade de 20 dentro de `<g transform="scale(1.2)"
+ * stroke-width="1.5">` — traço fixo de 1,8 unidades do viewBox 24 em todo
+ * tamanho. A folha diz por escrito *"grade de 20 px com traço de 1,5 px; em 24
+ * e 28 escalam com o traço do catálogo"*. Então: a geometria entra ×1,2 (o
+ * gate faz a conta, não a transcreve); em **20** o desenho é o `em20`, igual à
+ * folha com `traco: 1.8`; em **24 e 28** é o `normal`, com o traço da família
+ * (`TRACO`). O 1,8 do markup em 24/28 → o `TRACO` é o segundo par
+ * (`TRACO_N4D86`), e o gate o imprime.
+ *
+ * **A exceção `em20` da tab sai em par** (`EM20_N4`): a tab de quatro cordas
+ * do `DESIGN-V1/telas.html` (§6.3) dá lugar à T1, que tem as mesmas três
+ * linhas em todo tamanho; o `em20` dos quatro passa a ser só o traço da
+ * N4-D86. A regra 4 cobra as duas metades: o desenho velho fora, o novo
+ * dentro, e as linhas contadas (3 em todo tamanho, não mais 4 contra 6).
+ *
+ * **A estrela inerte tem duas formas** (decisão do Marcel, N4-D87): vazada
+ * (`inerte`) e cheia (`ativoInerte`), as duas com traço 1,25 — o `Desenho`
+ * ganhou o campo, e o coletor o lê. O pressionado é o desenho do normal, e o
+ * "em andamento" é o inerte com o arco de 42 em volta — o arco é da tela, não
+ * do ícone, e o gate o separa pela `viewBox`.
+ */
 import { readFileSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -103,6 +143,7 @@ const README = join(RAIZ, 'docs/native/DESIGN-V1/README.md')
 const ANEXO_D = join(RAIZ, 'docs/native/V1-PR3-PRECHECK-anexos/V1-PR3-D-icones-34.txt')
 const TELAS = join(RAIZ, 'docs/native/DESIGN-V1/telas.html')
 const TELAS_N2 = join(RAIZ, 'docs/native/DESIGN-N2/telas.html')
+const TELAS_N4 = join(RAIZ, 'docs/native/DESIGN-N4/telas.html')
 const MAPA = process.argv[2] ?? join(RAIZ, 'packages/identidade/src/icones.ts')
 
 /**
@@ -160,8 +201,60 @@ const PENDENTES = []
 // das exceções do `g1.sh` e das erratas do `g2g3.sh`: a próxima tela que
 // trouxer desenho novo declara aqui antes de desenhar.
 
-/** §6.3 — cordas da tab por tamanho: quatro em 20 dp, seis nos outros. */
-const CORDAS = { em20: 4, normal: 6 }
+/**
+ * §6.3 — cordas da tab por tamanho. Era *"quatro em 20 dp, seis nos outros"*;
+ * desde a N4-PR4 é a T1 (N4-D69): três linhas em todo tamanho (o par em
+ * `EM20_N4`).
+ */
+const CORDAS = { em20: 3, normal: 3 }
+
+/** §5.5 — o traço da família por tamanho, o mesmo do `TRACO` do pacote. */
+const TRACO_FAMILIA = { 20: 1.5, 24: 1.75, 28: 2 }
+
+/**
+ * DESIGN-N4, seção 5 (N4-D68, N4-D69, N4-D76): a linha `P-I*` da folha → o
+ * nome no mapa e o estado que ela desenha. Lista FECHADA, como a
+ * `REGISTROS_N2`. `novo: true` = registro que não existia (conta para os 41).
+ */
+const REGISTROS_N4 = {
+  'P-I9': { nome: 'letra', tipo: true },
+  'P-I10': { nome: 'cifra', tipo: true },
+  'P-I11': { nome: 'tab', tipo: true },
+  'P-I12': { nome: 'partitura', tipo: true },
+  'P-I1a': { nome: 'estrela', estado: 'normal', inerte: 'inerte', novo: true },
+  'P-I1b': { nome: 'estrela', estado: 'ativo', inerte: 'ativoInerte' },
+  'P-I2': { nome: 'tocar', estado: 'normal', inerte: 'inerte', novo: true },
+}
+
+/**
+ * O PAR da troca (regra 14): desenho velho → novo, com a razão. O velho é o
+ * registro do anexo D do V1 com o mesmo nome; tem de SAIR do mapa.
+ */
+const TROCAS_N4 = {
+  letra: { de: 'anexo D do V1 · letra (quatro linhas de texto)', para: 'P-I9', razao: 'N4-D69 — L1 · Aa' },
+  cifra: { de: 'anexo D do V1 · cifra (acordes sobre a letra)', para: 'P-I10', razao: 'N4-D69 — C2 · a palheta' },
+  tab: { de: 'anexo D do V1 · tab (seis cordas e três trastes)', para: 'P-I11', razao: 'N4-D69 — T1 · linhas com um 2' },
+  partitura: { de: 'anexo D do V1 · partitura (pauta de cinco linhas e nota)', para: 'P-I12', razao: 'N4-D69 — P2 · a nota única' },
+}
+
+/**
+ * O PAR do `em20` (regra 14): a exceção da §6.3 (a tab de quatro cordas do
+ * `DESIGN-V1/telas.html`) → o `em20` dos quatro de tipo, que é o mesmo
+ * desenho do `normal` com o traço da folha em 20 (N4-D86).
+ */
+const EM20_N4 = {
+  tab: { de: 'DESIGN-V1/telas.html · tab@20 de quatro cordas (§6.3)', para: 'P-I11 em 20, traço 1,8', razao: 'N4-D69 + N4-D86' },
+  letra: { de: 'sem em20', para: 'P-I9 em 20, traço 1,8', razao: 'N4-D86' },
+  cifra: { de: 'sem em20', para: 'P-I10 em 20, traço 1,8', razao: 'N4-D86' },
+  partitura: { de: 'sem em20', para: 'P-I12 em 20, traço 1,8', razao: 'N4-D86' },
+}
+
+/**
+ * O PAR do traço em 24 e 28 (N4-D86): o markup da folha desenha 1,8 em todo
+ * tamanho; o texto dela e a decisão dão o traço da família. O gate compara a
+ * geometria contra a folha e o traço contra `TRACO_FAMILIA` nesses tamanhos.
+ */
+const TRACO_N4D86 = { de: 'markup da folha: 1,8 em 24 e 28', para: 'TRACO da família (1,75 · 2)', razao: 'N4-D86 — "em 24 e 28 escalam com o traço do catálogo"' }
 
 /** "última sincronização" → `ultima-sincronizacao`; "zoom −" → `zoom-menos`; "n.º de músicas" → `n-de-musicas`. */
 function chave(nomeDaTabela) {
@@ -256,6 +349,76 @@ function assinaturasMapa(lista) {
   return out
 }
 
+// ---- N4: o desenho EFETIVO (geometria · preenchimento · traço), dos dois lados
+
+/** Números de um `d` em tokens; `k` escala tudo, menos rotação e bandeiras do arco. */
+function tokensD(d, k = 1) {
+  const out = []
+  let cmd = ''
+  let i = 0
+  for (const tk of d.match(/[A-Za-z]|-?(?:\d+\.?\d*|\.\d+)/g) ?? []) {
+    if (/[A-Za-z]/.test(tk)) { cmd = tk; i = 0; out.push(tk); continue }
+    const fixo = cmd.toLowerCase() === 'a' && [2, 3, 4].includes(i % 7)
+    out.push(fixo ? +tk : Math.round(+tk * k * 1000) / 1000)
+    i++
+  }
+  return out.join(' ')
+}
+
+/**
+ * O `<svg>` da folha do N4 em primitivas efetivas. Os quatro de tipo vêm em
+ * `<g transform="scale(k)" stroke-width="s">`: a geometria escala por `k` e o
+ * traço efetivo, no viewBox 24, é `s × k` (N4-D86).
+ */
+function efetivoDaFolha(svg) {
+  const m = /<svg ([^>]*)>([\s\S]*?)<\/svg>/.exec(svg)
+  const largura = +/width="([\d.]+)"/.exec(m[1])[1]
+  const sw = +/stroke-width="([\d.]+)"/.exec(m[1])[1]
+  const g = /<g transform="scale\(([\d.]+)\)" stroke-width="([\d.]+)">/.exec(m[2])
+  const k = g === null ? 1 : +g[1]
+  const traco = g === null ? sw : Math.round(+g[2] * k * 1000) / 1000
+  const prims = [...m[2].matchAll(/<path d="([^"]+)"([^>]*)>/g)].map(([, d, resto]) => {
+    const cheio = /fill="#/.test(resto)
+    return `${cheio ? 'fill' : `traco ${traco}`} | ${tokensD(d, k)}`
+  })
+  return { largura, prims }
+}
+
+/** Uma lista literal do mapa (`[{ d: '…', fill: true }, …]`) em objetos. */
+function primitivasDoMapa(lista) {
+  return [...lista.matchAll(/\{ ([^{}]*) \}/g)].map(([, corpo]) => {
+    const o = {}
+    for (const [, k, v] of corpo.matchAll(/(\w+): ('[^']*'|[\w.]+)/g)) o[k] = v.startsWith("'") ? v.slice(1, -1) : v
+    return o
+  })
+}
+
+/** O que o `Icone.tsx` desenha para `nome` em `tamanho` e `estado` — a escolha do `elementos()`. */
+function efetivoDoMapa(nome, tamanho, estado) {
+  const pega = (e) => listas.get(`${nome}:${e}`)
+  let lista
+  if (estado !== 'normal') lista = pega(estado)
+  else lista = (tamanho === 20 ? pega('em20') : undefined) ?? pega('normal')
+  if (lista === undefined) return null
+  return primitivasDoMapa(lista).map((p) => {
+    if (p.d === undefined) return `não-path | ${JSON.stringify(p)}`
+    return `${p.fill === 'true' ? 'fill' : `traco ${p.traco !== undefined ? +p.traco : TRACO_FAMILIA[tamanho]}`} | ${tokensD(p.d)}`
+  })
+}
+
+/** As linhas `P-I*` da seção 5 do `DESIGN-N4/telas.html`: id → células (cada uma, os `<svg>` dela). */
+function linhasN4() {
+  const t = telas(TELAS_N4)
+  const ini = t.indexOf('data-screen-label="5 Ícones — decididos"')
+  if (ini === -1) throw new Error(`sem a seção "5 · Ícones — decididos" em ${TELAS_N4}`)
+  const secao = t.slice(ini, t.indexOf('data-screen-label="5b', ini))
+  const out = new Map()
+  for (const [, id, corpo] of secao.matchAll(/<tr>(?:(?!<\/tr>)[\s\S])*?>(P-I(?:1a|1b|2|9|10|11|12))<\/td>([\s\S]*?)<\/tr>/g)) {
+    out.set(id, [...corpo.matchAll(/<td[^>]*>([\s\S]*?)<\/td>/g)].map((c) => [...c[1].matchAll(/<svg [\s\S]*?<\/svg>/g)].map((s) => s[0])))
+  }
+  return out
+}
+
 const acusacoes = []
 const acusar = (s) => { acusacoes.push(s); console.log(`  ACUSADO ${s}`) }
 /** O pendente que ainda não existe: grita, não reprova (ver o cabeçalho). */
@@ -265,7 +428,8 @@ const avisar = (s) => { avisos.push(s); console.log(`  AVISO ${s}`) }
 // ---- as duas fontes (três, desde a E17: o anexo D do N2)
 const tabela = nomesDa64()
 const nomesN2 = Object.values(REGISTROS_N2).flat()
-const esperados = new Set([...tabela, ...FORA_DO_CATALOGO, ...nomesN2])
+const nomesN4Novos = [...new Set(Object.values(REGISTROS_N4).filter((r) => !r.tipo).map((r) => r.nome))]
+const esperados = new Set([...tabela, ...FORA_DO_CATALOGO, ...nomesN2, ...nomesN4Novos])
 const anexo = readFileSync(ANEXO_D, 'utf8')
 const registros = [...anexo.matchAll(/^### (\S+)  ·  .+?  ·  \d+ dp\n(<svg[\s\S]*?<\/svg>)/gm)]
 const doAnexo = new Set(registros.flatMap(([, , svg]) => [...assinaturasSvg(svg)]))
@@ -293,7 +457,7 @@ const normalDoMapa = new Map()
 const listas = new Map()
 for (const [, nome, corpo] of blocos) {
   for (const linha of corpo.split('\n')) {
-    const m = /^\s+(normal|ativo|inerte|em20): (\[.*\]),?$/.exec(linha)
+    const m = /^\s+(normal|ativo|inerte|ativoInerte|em20): (\[.*\]),?$/.exec(linha)
     if (m === null) continue
     const ass = assinaturasMapa(m[2])
     listas.set(`${nome}:${m[1]}`, m[2])
@@ -330,12 +494,27 @@ const repetidos = nomes.filter((n, i) => nomes.indexOf(n) !== i)
 for (const n of repetidos) acusar(`${MAPA} [nome] repetido no mapa: "${n}"`)
 
 // ---- 2. desenhos
-for (const a of doAnexo) if (!doMapa.has(a)) acusar(`${MAPA} [desenho] do anexo D ausente do mapa: ${a}`)
+/**
+ * N4-PR4 — o VELHO de cada par de `TROCAS_N4`: os elementos do registro do
+ * anexo D com aquele nome que nenhum outro registro tem. Saem da cobrança
+ * "todo elemento do anexo D está no mapa" e passam a ser cobrados AUSENTES.
+ */
+const velhoN4 = new Map()
+for (const nome of Object.keys(TROCAS_N4)) {
+  const reg = registros.find(([, n]) => n === nome)
+  if (reg === undefined) { acusar(`${ANEXO_D} [troca-N4] o par de "${nome}" aponta para um registro que o anexo D do V1 não tem`); continue }
+  const outros = new Set(registros.filter(([, n]) => n !== nome).flatMap(([, , svg]) => [...assinaturasSvg(svg)]))
+  velhoN4.set(nome, new Set([...assinaturasSvg(reg[2])].filter((a) => !outros.has(a))))
+}
+const doVelhoN4 = new Set([...velhoN4.values()].flatMap((s) => [...s]))
+for (const a of doAnexo) if (!doMapa.has(a) && !doVelhoN4.has(a)) acusar(`${MAPA} [desenho] do anexo D ausente do mapa: ${a}`)
 for (const [nome, ass] of normalDoMapa) {
   // Fora do catálogo não tem o que estar no anexo D — quem o cobra é a regra 5.
   if (FORA_DO_CATALOGO.includes(nome)) continue
   // Os da tela 2 têm anexo PRÓPRIO (E17) e são cobrados na regra 6.
   if (anexoPorNome.has(nome)) continue
+  // Os seis do DESIGN-N4 (os quatro trocados e os dois novos) são cobrados na regra 7.
+  if (nome in TROCAS_N4 || nomesN4Novos.includes(nome)) continue
   for (const a of ass) {
     if (!doAnexo.has(a)) acusar(`${MAPA} [desenho] 'normal' de "${nome}" não está no anexo D: ${a}`)
   }
@@ -352,36 +531,42 @@ for (const m of src.matchAll(/tinta: '([^']*)'/g)) {
   acusar(`${MAPA}:${ln} [tinta] token desconhecido: '${m[1]}' (esperado: ${TINTAS.join(' | ')})`)
 }
 
-// ---- 4. em20: a exceção da §6.3, contra o telas.html e contada
+// ---- 4. em20: a exceção da §6.3 em PAR (N4-PR4, `EM20_N4`) — o velho fora, o novo dentro, contados
+/**
+ * O VELHO: o único `<svg width="20">` do `DESIGN-V1/telas.html` com DOIS rects
+ * de rx 1.7 é a tab de quatro cordas (os trastes). Ele tem de continuar
+ * achável — o par aponta para algo que existe — e nenhum elemento dele pode
+ * estar no `em20` da tab. O NOVO: o `em20` de cada um dos quatro é cobrado
+ * contra a folha do N4 na regra 7 (o mesmo desenho do `normal`, traço 1,8).
+ */
 const tabEm20 = listas.get('tab:em20')
 const tabNormal = listas.get('tab:normal')
 let svgTab20 = null
 let n20 = 0
 let n6 = 0
-if (tabEm20 === undefined) {
-  acusar(`${MAPA} [em20] "tab" não tem 'em20' — a §6.3 exige a de QUATRO cordas em 20 dp`)
-} else {
-  // O markup congelado: o único <svg width="20"> do telas.html com DOIS rects
-  // de rx 1.7 é a tab (os trastes) — os outros 20 dp são letra, cifra,
-  // partitura, data, local, n-de-musicas, sem-conexao e ultima-sincronizacao.
+{
   const candidatos = [...telas().matchAll(/<svg width="20"[\s\S]*?<\/svg>/g)]
     .map((m) => m[0])
     .filter((svg) => (svg.match(/rx="1\.7"/g) ?? []).length === 2)
   const distintos = new Set(candidatos)
   if (distintos.size !== 1) {
-    acusar(`${MAPA} [em20] o telas.html tem ${distintos.size} desenhos distintos de tab@20 (esperado 1)`)
+    acusar(`${TELAS} [em20-N4] o par aponta para a tab@20 de quatro cordas, e o telas.html tem ${distintos.size} desenhos distintos dela (esperado 1)`)
   } else {
     svgTab20 = [...distintos][0]
-    const doFrame = assinaturasSvg(svgTab20)
-    const doMapaEm20 = assinaturasMapa(tabEm20)
-    for (const a of doFrame) if (!doMapaEm20.has(a)) acusar(`${MAPA} [em20] do telas.html ausente do 'em20' da tab: ${a}`)
-    for (const a of doMapaEm20) if (!doFrame.has(a)) acusar(`${MAPA} [em20] no 'em20' da tab e não no telas.html: ${a}`)
+    const velho = assinaturasSvg(svgTab20)
+    for (const nome of Object.keys(EM20_N4)) {
+      const lista = listas.get(`${nome}:em20`)
+      if (lista === undefined) { acusar(`${MAPA} [em20-N4] "${nome}" não tem 'em20' — o par ${EM20_N4[nome].de} → ${EM20_N4[nome].para} (${EM20_N4[nome].razao})`); continue }
+      for (const a of assinaturasMapa(lista)) if (velho.has(a)) acusar(`${MAPA} [em20-N4] o 'em20' de "${nome}" ainda carrega a tab de quatro cordas: ${a}`)
+    }
   }
-  // A contagem de cordas — o que a §6.3 declara, medido nos dois desenhos.
-  n20 = [...tabEm20.matchAll(/d: '([^']+)'/g)].reduce((a, m) => a + cordas(m[1]), 0)
-  n6 = [...(tabNormal ?? '').matchAll(/d: '([^']+)'/g)].reduce((a, m) => a + cordas(m[1]), 0)
-  if (n20 !== CORDAS.em20) acusar(`${MAPA} [em20] a tab de 20 dp tem ${n20} cordas, e a §6.3 declara ${CORDAS.em20}`)
-  if (n6 !== CORDAS.normal) acusar(`${MAPA} [em20] a tab de 24/28 dp tem ${n6} cordas, e a §6.3 declara ${CORDAS.normal}`)
+  // As linhas da tab — o que a §6.3 declarava (4 × 6), contado agora na T1:
+  // só os `d` feitos de M e h (as linhas), não o "2".
+  const linhas = (lista) => [...(lista ?? '').matchAll(/d: '([^']+)'/g)].filter((m) => /^[Mh\d.\s-]+$/.test(m[1])).reduce((a, m) => a + cordas(m[1]), 0)
+  n20 = linhas(tabEm20)
+  n6 = linhas(tabNormal)
+  if (n20 !== CORDAS.em20) acusar(`${MAPA} [em20-N4] a tab de 20 dp tem ${n20} linhas, e a T1 (N4-D69) tem ${CORDAS.em20}`)
+  if (n6 !== CORDAS.normal) acusar(`${MAPA} [em20-N4] a tab de 24/28 dp tem ${n6} linhas, e a T1 (N4-D69) tem ${CORDAS.normal}`)
 }
 
 // ---- 5. fora do catálogo: cada um verbatim de UM <svg> do telas.html, por forma
@@ -420,14 +605,75 @@ for (const [nome, doRegistro] of anexoPorNome) {
   }
 }
 
-const totalRegistros = registros.length + registrosN2.size
-console.log(`  §6.4: ${tabela.length} linhas → ${new Set(tabela).size} nomes distintos, + ${FORA_DO_CATALOGO.length} fora do catálogo + ${nomesN2.length} da tela 2 = ${esperados.size} esperados`)
-console.log(`  anexo D: ${registros.length} registros (V1) + ${registrosN2.size} (DESIGN-N2, E17) = ${totalRegistros} registros · ${doAnexo.size} elementos distintos no do V1`)
-if (totalRegistros !== 39) acusar(`[E17] o catálogo tem ${totalRegistros} registros e a N2-D33 declara 39`)
+// ---- 7. os seis do DESIGN-N4 (N4-D68, N4-D69, N4-D76, N4-D86, N4-D87): estado a estado, tamanho a tamanho
+/**
+ * Cada célula da linha `P-I*` contra o que o `Icone.tsx` desenha — geometria
+ * (o `d`, já escalado pela folha), preenchimento e traço efetivo, NA ORDEM
+ * (a estrela cheia é o preenchimento por baixo e o contorno por cima).
+ *
+ *  - de tipo (P-I9…P-I12): células 20·24·28 · normal·inerte em 20 · claro em
+ *    20. Em 20 o mapa tem de dar o markup inteiro, traço incluído (o `em20`);
+ *    em 24 e 28, a geometria da folha com o traço da família (`TRACO_N4D86`).
+ *    O inerte da folha desenha igual ao normal (o `<g>` fixa o traço) e o
+ *    catálogo não tem inerte de tipo: a célula se cobra contra o de 20.
+ *  - de ação (P-I1a, P-I1b, P-I2): normal · pressionado · inerte · em
+ *    andamento · 20·24·28. O pressionado é o desenho do estado; o em
+ *    andamento é o inerte mais o arco de 42, que é da tela (viewBox 42) e
+ *    fica fora da comparação.
+ */
+const n4 = linhasN4()
+let n4Cobradas = 0
+const comparar = (rotulo, nome, tamanho, estado, svg, trocaTraco) => {
+  n4Cobradas++
+  const folha = efetivoDaFolha(svg)
+  if (folha.largura !== tamanho) acusar(`${TELAS_N4} [N4] ${rotulo}: a célula desenha ${folha.largura} dp, esperado ${tamanho}`)
+  let esperado = folha.prims
+  if (trocaTraco) esperado = esperado.map((p) => p.replace(/^traco [\d.]+/, `traco ${TRACO_FAMILIA[tamanho]}`))
+  const mapa = efetivoDoMapa(nome, tamanho, estado)
+  if (mapa === null) { acusar(`${MAPA} [N4] ${rotulo}: "${nome}" não tem o estado '${estado}' que a folha desenha`); return }
+  const igual = mapa.length === esperado.length && mapa.every((p, i) => p === esperado[i])
+  if (!igual) acusar(`${MAPA} [N4] ${rotulo}: "${nome}" ${estado} @${tamanho} ≠ folha\n      folha: ${esperado.join(' ‖ ')}\n      mapa:  ${mapa.join(' ‖ ')}`)
+}
+for (const [id, reg] of Object.entries(REGISTROS_N4)) {
+  const cel = n4.get(id)
+  if (cel === undefined) { acusar(`${TELAS_N4} [N4] linha ausente na folha congelada: ${id}`); continue }
+  const so24 = (svgs) => svgs.filter((x) => /viewBox="0 0 24 24"/.test(x))
+  if (reg.tipo) {
+    const [t20, t24, t28] = so24(cel[2])
+    comparar(`${id} 20`, reg.nome, 20, 'normal', t20, false)
+    comparar(`${id} 24`, reg.nome, 24, 'normal', t24, true)
+    comparar(`${id} 28`, reg.nome, 28, 'normal', t28, true)
+    for (const [i, svg] of [...so24(cel[3]), ...so24(cel[4])].entries()) comparar(`${id} 20 (${['normal', 'inerte', 'claro', 'claro inerte'][i]})`, reg.nome, 20, 'normal', svg, false)
+    // O par: o velho fora do mapa, em estado nenhum.
+    const velho = velhoN4.get(reg.nome) ?? new Set()
+    for (const [k, lista] of listas) {
+      if (!k.startsWith(`${reg.nome}:`)) continue
+      for (const a of assinaturasMapa(lista)) if (velho.has(a)) acusar(`${MAPA} [troca-N4] "${k}" ainda carrega o desenho velho (${TROCAS_N4[reg.nome].de} → ${TROCAS_N4[reg.nome].para}, ${TROCAS_N4[reg.nome].razao}): ${a}`)
+    }
+  } else {
+    const [normal] = so24(cel[1]); const [press] = so24(cel[2]); const [inerte] = so24(cel[3]); const [andamento] = so24(cel[4])
+    comparar(`${id} normal`, reg.nome, 24, reg.estado, normal, false)
+    comparar(`${id} pressionado`, reg.nome, 24, reg.estado, press, false)
+    comparar(`${id} inerte`, reg.nome, 24, reg.inerte, inerte, false)
+    comparar(`${id} em andamento`, reg.nome, 24, reg.inerte, andamento, false)
+    const [t20, t24, t28] = so24(cel[5])
+    comparar(`${id} 20`, reg.nome, 20, reg.estado, t20, false)
+    comparar(`${id} 24`, reg.nome, 24, reg.estado, t24, false)
+    comparar(`${id} 28`, reg.nome, 28, reg.estado, t28, false)
+  }
+}
+
+const novosN4 = Object.values(REGISTROS_N4).filter((r) => r.novo).length
+const totalRegistros = registros.length + registrosN2.size + novosN4
+console.log(`  §6.4: ${tabela.length} linhas → ${new Set(tabela).size} nomes distintos, + ${FORA_DO_CATALOGO.length} fora do catálogo + ${nomesN2.length} da tela 2 + ${nomesN4Novos.length} do N4 = ${esperados.size} esperados`)
+console.log(`  anexo D: ${registros.length} registros (V1) + ${registrosN2.size} (DESIGN-N2, E17) + ${novosN4} (DESIGN-N4, N4-D76) = ${totalRegistros} registros · ${doAnexo.size} elementos distintos no do V1`)
+if (totalRegistros !== 41) acusar(`[N4-D76] o catálogo tem ${totalRegistros} registros e a N4-D76 declara 41`)
+console.log(`  DESIGN-N4: ${n4.size}/${Object.keys(REGISTROS_N4).length} linhas P-I achadas · ${n4Cobradas} células cobradas · trocas em par: ${Object.keys(TROCAS_N4).length} (${[...velhoN4.values()].reduce((a, s) => a + s.size, 0)} elementos velhos cobrados ausentes)`)
+console.log(`  pares do N4: em20 ${Object.keys(EM20_N4).length} (${EM20_N4.tab.de} → ${EM20_N4.tab.para}) · traço em 24/28: ${TRACO_N4D86.de} → ${TRACO_N4D86.para}`)
 console.log(`  tela 2 (E17): ${n2Cobrados}/${anexoPorNome.size} nomes já no mapa e cobrados · ${PENDENTES.length} declarados pendentes`)
 console.log(`  mapa: ${nomes.length} nomes · ${doMapa.size} elementos distintos · ${normalDoMapa.size} com 'normal'`)
 console.log(`  hex cravado: ${(src.match(/#[0-9A-Fa-f]{6}\b/g) ?? []).length} · tinta por token: ${(src.match(/tinta: '/g) ?? []).length}`)
-console.log(`  §6.3 tab: em20 ${n20} cordas · normal ${n6} cordas · markup de 20 dp no telas.html: ${svgTab20 === null ? 'NÃO ACHADO' : 'idêntico'}`)
+console.log(`  §6.3 → T1 (N4-D69): tab em20 ${n20} linhas · normal ${n6} linhas · a tab@20 de quatro cordas do telas.html (o velho do par): ${svgTab20 === null ? 'NÃO ACHADA' : 'achada'}`)
 console.log(`  fora do catálogo: ${foraOk}/${FORA_DO_CATALOGO.length} idênticos a um <svg> do telas.html (${porAssinatura.size} assinaturas distintas no arquivo)`)
 if (avisos.length > 0) {
   console.log(`  PENDENTES DECLARADOS E AUSENTES — poda a lista quando desenhar (N2-D33): ${avisos.length}`)

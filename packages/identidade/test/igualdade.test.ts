@@ -44,6 +44,29 @@ function reviver(v: unknown): unknown {
 const base = reviver(JSON.parse(readFileSync(join(__dirname, 'linha-de-base.json'), 'utf8'))) as {
   tokens: Record<string, unknown> & { faixas: Record<string, unknown>; font: unknown }
   icones: unknown
+  paresIconesN4: { pares: Record<string, { velho: unknown; novo: unknown; razao: string }> }
+  paresTokensN4: { pares: { caminho: string; velho: unknown; novo: unknown; razao: string }[] }
+}
+
+/**
+ * N4-PR4 (N4-D64) — as faixas da linha de base com os pares de `paresTokensN4`
+ * aplicados: cada medida inexistente por desenho era uma chave PRESENTE com
+ * `undefined` (o `$indefinido`) e passa a ser a palavra do tipo do pacote.
+ * O velho é conferido (chave presente, valor `undefined`); o resto das faixas,
+ * intocado. A linha de base não se regrava (regra 14).
+ */
+function faixasEsperadas(): Record<string, Record<string, unknown>> {
+  const faixas = structuredClone(base.tokens.faixas) as Record<string, Record<string, unknown>>
+  for (const par of base.paresTokensN4.pares) {
+    const [raiz, f, grupo, chave] = par.caminho.split('.')
+    expect(raiz).toBe('faixas')
+    const alvo = faixas[f][grupo] as Record<string, unknown>
+    expect(chave in alvo, `o velho de ${par.caminho} é uma chave presente`).toBe(true)
+    expect(alvo[chave], `o velho de ${par.caminho} é o da linha de base`).toStrictEqual(par.velho ?? undefined)
+    expect(par.razao).toMatch(/N4-D64/)
+    alvo[chave] = par.novo
+  }
+  return faixas
 }
 
 /** Os tokens que migram SEM mudar de forma (I1-D3). */
@@ -60,10 +83,23 @@ describe('pacote ≡ linha de base (em dp)', () => {
     it(k, () => expect((identidade as Record<string, unknown>)[k]).toStrictEqual(base.tokens[k]))
   }
 
-  it('faixas A, B e C, fora o bloco web', () => {
+  it('faixas A, B e C, fora o bloco web — com as três medidas inexistentes por desenho (N4-D64, em par)', () => {
+    const esperadas = faixasEsperadas()
     for (const f of ['A', 'B', 'C'] as const) {
-      expect(semWeb(identidade.faixas[f] as unknown as Record<string, unknown>)).toStrictEqual(base.tokens.faixas[f])
+      expect(semWeb(identidade.faixas[f] as unknown as Record<string, unknown>)).toStrictEqual(esperadas[f])
     }
+    expect(base.paresTokensN4.pares.map((p) => p.caminho)).toStrictEqual([
+      'faixas.B.folha.alturaMin', 'faixas.A.folha.alturaMin', 'faixas.C.reordenar.artistaMin',
+    ])
+  })
+
+  it('N4-D64: a medida que a faixa não tem é a palavra do tipo, e nenhuma faixa tem `undefined` (só o web tem `null`)', () => {
+    expect(identidade.INEXISTENTE).toBe('inexistente')
+    const indefinidas = (o: unknown, caminho: string): string[] =>
+      o !== null && typeof o === 'object'
+        ? Object.entries(o).flatMap(([k, v]) => (v === undefined ? [`${caminho}.${k}`] : indefinidas(v, `${caminho}.${k}`)))
+        : []
+    expect(['A', 'B', 'C'].flatMap((f) => indefinidas(identidade.faixas[f as 'A'], f))).toStrictEqual([])
   })
 
   it('font é família + peso (I1-D31) — nenhum nome de .ttf no pacote', () => {
@@ -95,9 +131,23 @@ describe('pacote ≡ linha de base (em dp)', () => {
     expect([699, 699.9, 700, 960, 960.1, 961].map(identidade.faixaDe)).toEqual(['A', 'A', 'B', 'B', 'C', 'C'])
   })
 
-  it('ícones: os 43 da linha de base, desenho a desenho — e nenhum visto (div. 588, decisão (b))', () => {
-    expect(identidade.desenhos).toStrictEqual(base.icones)
-    expect(identidade.nomesIcones).toHaveLength(43)
+  /**
+   * N4-PR4 — a linha de base NÃO se regrava: a troca dos quatro de tipo e os
+   * dois novos (N4-D68, N4-D69, N4-D76) entram como PAR (regra 14 do
+   * `LOGS-OCTAVIA.md`) em `paresIconesN4` — o velho tem de ser exatamente o da
+   * linha de base (ou `null`, nome novo), e o pacote tem de ter o novo. Os
+   * outros 39 nomes continuam cobrados contra a linha de base, intocados.
+   */
+  it('ícones: os 43 da linha de base com os seis pares do N4 aplicados — 45 nomes, e nenhum visto (div. 588, decisão (b))', () => {
+    const esperado: Record<string, unknown> = { ...(base.icones as Record<string, unknown>) }
+    for (const [nome, par] of Object.entries(base.paresIconesN4.pares)) {
+      expect(par.velho ?? undefined, `o velho do par "${nome}" é o da linha de base`).toStrictEqual(esperado[nome])
+      expect(par.razao, `o par "${nome}" tem razão`).toMatch(/N4-D\d+/)
+      esperado[nome] = par.novo
+    }
+    expect(Object.keys(base.paresIconesN4.pares)).toStrictEqual(['letra', 'cifra', 'tab', 'partitura', 'estrela', 'tocar'])
+    expect(identidade.desenhos).toStrictEqual(esperado)
+    expect(identidade.nomesIcones).toHaveLength(45)
     expect(identidade.nomesIcones).not.toContain('visto')
   })
 
@@ -115,9 +165,10 @@ describe('nativo ≡ linha de base (nada mudou em dp)', () => {
     it(`theme.${k}`, () => expect((tema as Record<string, unknown>)[k]).toStrictEqual(base.tokens[k]))
   }
 
-  it('theme.faixas — sem o bloco web, A continua sendo B', () => {
+  it('theme.faixas — sem o bloco web, A continua sendo B (com os pares da N4-D64)', () => {
+    const esperadas = faixasEsperadas()
     for (const f of ['A', 'B', 'C'] as const) {
-      expect(semWeb(tema.faixas[f] as unknown as Record<string, unknown>)).toStrictEqual(base.tokens.faixas[f])
+      expect(semWeb(tema.faixas[f] as unknown as Record<string, unknown>)).toStrictEqual(esperadas[f])
     }
     expect(tema.faixas.A).toBe(tema.faixas.B)
   })

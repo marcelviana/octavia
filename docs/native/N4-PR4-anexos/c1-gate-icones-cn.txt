@@ -1,0 +1,45 @@
+  ACUSADO scripts/__cn__/IconesFalso.ts [nome] falta no mapa: "apagar" (§6.4)
+  ACUSADO scripts/__cn__/IconesFalso.ts [nome] falta no mapa: "nova-setlist" (§6.4)
+  ACUSADO scripts/__cn__/IconesFalso.ts [nome] falta no mapa: "apagar-setlist" (§6.4)
+  ACUSADO scripts/__cn__/IconesFalso.ts [nome] falta no mapa: "adicionar" (§6.4)
+  ACUSADO scripts/__cn__/IconesFalso.ts [nome] falta no mapa: "remover" (§6.4)
+  ACUSADO scripts/__cn__/IconesFalso.ts [nome] sobra no mapa: "lixeira" (não está na §6.4)
+  ACUSADO scripts/__cn__/IconesFalso.ts [desenho] do anexo D ausente do mapa: d M6 6l12 12M18 6L6 18
+  ACUSADO scripts/__cn__/IconesFalso.ts [desenho] do anexo D ausente do mapa: d M9.2 9.2l5.6 5.6M14.8 9.2l-5.6 5.6
+  ACUSADO scripts/__cn__/IconesFalso.ts [desenho] do anexo D ausente do mapa: circle 12 12 8
+  ACUSADO scripts/__cn__/IconesFalso.ts [desenho] 'normal' de "fechar" não está no anexo D: d M6 6l12 12M18 6L6 18z
+  ACUSADO scripts/__cn__/IconesFalso.ts [desenho] 'normal' de "lixeira" não está no anexo D: d M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13
+  ACUSADO scripts/__cn__/IconesFalso.ts:126 [tinta] hex cravado: #6E6A80
+  ACUSADO scripts/__cn__/IconesFalso.ts:108 [tinta] token desconhecido: 'accent' (esperado: lineInfo | offlineInk | accentInk)
+  ACUSADO scripts/__cn__/IconesFalso.ts [em20-N4] o 'em20' de "tab" ainda carrega a tab de quatro cordas: d M3 4.2h18M3 9.4h2.1M11.9 9.4h9.1M3 14.6h5.1M14.9 14.6h6.1M3 19.8h18
+  ACUSADO scripts/__cn__/IconesFalso.ts [em20-N4] o 'em20' de "tab" ainda carrega a tab de quatro cordas: rect 5.9 7.7 4.2 3.4 1.7
+  ACUSADO scripts/__cn__/IconesFalso.ts [em20-N4] o 'em20' de "tab" ainda carrega a tab de quatro cordas: rect 8.9 12.9 4.2 3.4 1.7
+  ACUSADO scripts/__cn__/IconesFalso.ts [em20-N4] a tab de 20 dp tem 4 linhas, e a T1 (N4-D69) tem 3
+  ACUSADO scripts/__cn__/IconesFalso.ts [fora-do-catálogo] o 'normal' de "nada-encontrado" não é, elemento a elemento, nenhum <svg> do telas.html
+  ACUSADO scripts/__cn__/IconesFalso.ts [anexo-D-N2] 'normal' de "renomear" não está no registro do anexo D do DESIGN-N2: d M4.5 19.5h4L20 8l-4-4L4.5 15.6z
+  ACUSADO scripts/__cn__/IconesFalso.ts [N4] P-I11 20: "tab" normal @20 ≠ folha
+      folha: traco 1.8 | M 3 4.8 h 4.8 M 16.8 4.8 h 4.2 ‖ traco 1.8 | M 3 12 h 4.8 M 16.8 12 h 4.2 ‖ traco 1.8 | M 3 19.2 h 4.8 M 16.8 19.2 h 4.2 ‖ traco 1.8 | M 9.3 7.92 c 0.48 -1.56 1.68 -2.52 3.12 -2.52 1.8 0 3.12 1.32 3.12 3 0 1.08 -0.48 1.92 -1.44 3 l -4.8 5.4 h 6.48
+      mapa:  traco 1.5 | M 3 4.2 h 18 M 3 9.4 h 2.1 M 11.9 9.4 h 9.1 M 3 14.6 h 5.1 M 14.9 14.6 h 6.1 M 3 19.8 h 18 ‖ não-path | {"x":"5.9","y":"7.7","w":"4.2","h":"3.4","rx":"1.7","fill":"true"} ‖ não-path | {"x":"8.9","y":"12.9","w":"4.2","h":"3.4","rx":"1.7","fill":"true"}
+  ACUSADO scripts/__cn__/IconesFalso.ts [N4] P-I11 20 (normal): "tab" normal @20 ≠ folha
+      folha: traco 1.8 | M 3 4.8 h 4.8 M 16.8 4.8 h 4.2 ‖ traco 1.8 | M 3 12 h 4.8 M 16.8 12 h 4.2 ‖ traco 1.8 | M 3 19.2 h 4.8 M 16.8 19.2 h 4.2 ‖ traco 1.8 | M 9.3 7.92 c 0.48 -1.56 1.68 -2.52 3.12 -2.52 1.8 0 3.12 1.32 3.12 3 0 1.08 -0.48 1.92 -1.44 3 l -4.8 5.4 h 6.48
+      mapa:  traco 1.5 | M 3 4.2 h 18 M 3 9.4 h 2.1 M 11.9 9.4 h 9.1 M 3 14.6 h 5.1 M 14.9 14.6 h 6.1 M 3 19.8 h 18 ‖ não-path | {"x":"5.9","y":"7.7","w":"4.2","h":"3.4","rx":"1.7","fill":"true"} ‖ não-path | {"x":"8.9","y":"12.9","w":"4.2","h":"3.4","rx":"1.7","fill":"true"}
+  ACUSADO scripts/__cn__/IconesFalso.ts [N4] P-I11 20 (inerte): "tab" normal @20 ≠ folha
+      folha: traco 1.8 | M 3 4.8 h 4.8 M 16.8 4.8 h 4.2 ‖ traco 1.8 | M 3 12 h 4.8 M 16.8 12 h 4.2 ‖ traco 1.8 | M 3 19.2 h 4.8 M 16.8 19.2 h 4.2 ‖ traco 1.8 | M 9.3 7.92 c 0.48 -1.56 1.68 -2.52 3.12 -2.52 1.8 0 3.12 1.32 3.12 3 0 1.08 -0.48 1.92 -1.44 3 l -4.8 5.4 h 6.48
+      mapa:  traco 1.5 | M 3 4.2 h 18 M 3 9.4 h 2.1 M 11.9 9.4 h 9.1 M 3 14.6 h 5.1 M 14.9 14.6 h 6.1 M 3 19.8 h 18 ‖ não-path | {"x":"5.9","y":"7.7","w":"4.2","h":"3.4","rx":"1.7","fill":"true"} ‖ não-path | {"x":"8.9","y":"12.9","w":"4.2","h":"3.4","rx":"1.7","fill":"true"}
+  ACUSADO scripts/__cn__/IconesFalso.ts [N4] P-I11 20 (claro): "tab" normal @20 ≠ folha
+      folha: traco 1.8 | M 3 4.8 h 4.8 M 16.8 4.8 h 4.2 ‖ traco 1.8 | M 3 12 h 4.8 M 16.8 12 h 4.2 ‖ traco 1.8 | M 3 19.2 h 4.8 M 16.8 19.2 h 4.2 ‖ traco 1.8 | M 9.3 7.92 c 0.48 -1.56 1.68 -2.52 3.12 -2.52 1.8 0 3.12 1.32 3.12 3 0 1.08 -0.48 1.92 -1.44 3 l -4.8 5.4 h 6.48
+      mapa:  traco 1.5 | M 3 4.2 h 18 M 3 9.4 h 2.1 M 11.9 9.4 h 9.1 M 3 14.6 h 5.1 M 14.9 14.6 h 6.1 M 3 19.8 h 18 ‖ não-path | {"x":"5.9","y":"7.7","w":"4.2","h":"3.4","rx":"1.7","fill":"true"} ‖ não-path | {"x":"8.9","y":"12.9","w":"4.2","h":"3.4","rx":"1.7","fill":"true"}
+  ACUSADO scripts/__cn__/IconesFalso.ts [N4] P-I11 20 (claro inerte): "tab" normal @20 ≠ folha
+      folha: traco 1.8 | M 3 4.8 h 4.8 M 16.8 4.8 h 4.2 ‖ traco 1.8 | M 3 12 h 4.8 M 16.8 12 h 4.2 ‖ traco 1.8 | M 3 19.2 h 4.8 M 16.8 19.2 h 4.2 ‖ traco 1.8 | M 9.3 7.92 c 0.48 -1.56 1.68 -2.52 3.12 -2.52 1.8 0 3.12 1.32 3.12 3 0 1.08 -0.48 1.92 -1.44 3 l -4.8 5.4 h 6.48
+      mapa:  traco 1.5 | M 3 4.2 h 18 M 3 9.4 h 2.1 M 11.9 9.4 h 9.1 M 3 14.6 h 5.1 M 14.9 14.6 h 6.1 M 3 19.8 h 18 ‖ não-path | {"x":"5.9","y":"7.7","w":"4.2","h":"3.4","rx":"1.7","fill":"true"} ‖ não-path | {"x":"8.9","y":"12.9","w":"4.2","h":"3.4","rx":"1.7","fill":"true"}
+  §6.4: 34 linhas → 33 nomes distintos, + 4 fora do catálogo + 6 da tela 2 + 2 do N4 = 45 esperados
+  anexo D: 34 registros (V1) + 5 (DESIGN-N2, E17) + 2 (DESIGN-N4, N4-D76) = 41 registros · 68 elementos distintos no do V1
+  DESIGN-N4: 7/7 linhas P-I achadas · 49 células cobradas · trocas em par: 4 (12 elementos velhos cobrados ausentes)
+  pares do N4: em20 4 (DESIGN-V1/telas.html · tab@20 de quatro cordas (§6.3) → P-I11 em 20, traço 1,8) · traço em 24/28: markup da folha: 1,8 em 24 e 28 → TRACO da família (1,75 · 2)
+  tela 2 (E17): 2/6 nomes já no mapa e cobrados · 0 declarados pendentes
+  mapa: 41 nomes · 90 elementos distintos · 41 com 'normal'
+  hex cravado: 1 · tinta por token: 6
+  §6.3 → T1 (N4-D69): tab em20 4 linhas · normal 3 linhas · a tab@20 de quatro cordas do telas.html (o velho do par): achada
+  fora do catálogo: 3/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  acusações: 24 · avisos: 0
+exit=1

@@ -24,6 +24,7 @@ export {
   lineHeight,
   tracking,
   faixas,
+  INEXISTENTE,
   type ThemeColors,
   type ThemeName,
   type TokensDaFaixa,

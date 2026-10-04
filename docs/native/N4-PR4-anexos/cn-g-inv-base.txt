@@ -1,0 +1,18 @@
+### CN-1 — um ícone que não é de tipo (o remover da linha 1) perde uma primitiva
+    alvo: N4P4D-S2-com-edicao-avd-pai.xml
+    $ sh apps/native/scripts/g-inv.sh → exit 1
+        ✗ S2-com-edicao-avd-pai: DIFERENTE — base 188 nós, novo 187 (N4P4D-S2-com-edicao-avd-pai.xml)
+      G-inv: 33 de 34 idênticos
+      G-inv: REPROVA ✗
+    $ node apps/native/scripts/g-inv-par.mjs → exit 1
+        ✗ S2-com-edicao-avd-pai: SvgView de tipo podados base 8 · novo 8 · DIFERENTES fora dos ícones de tipo — N4-D69 — os quatro ícones de tipo trocam de desenho na mesma caixa (P-I9…P-I12)
+      g-inv-par: 8 medidos · 1 sem dump novo ou NÃO fecha ✗
+### CN-2 — um ícone de tipo que muda de caixa (desce 9 px = 4 dp)
+    alvo: N4P4D-S4-resultados-tab-pai.xml
+    $ sh apps/native/scripts/g-inv.sh → exit 1
+        ✗ S4-resultados-tab-pai: DIFERENTE — base 87 nós, novo 87 (N4P4D-S4-resultados-tab-pai.xml)
+      G-inv: 33 de 34 idênticos
+      G-inv: REPROVA ✗
+    $ node apps/native/scripts/g-inv-par.mjs → exit 1
+        ✗ S4-resultados-tab-pai: SvgView de tipo podados base 6 · novo 5 · DIFERENTES fora dos ícones de tipo — N4-D69 — os quatro ícones de tipo trocam de desenho na mesma caixa (P-I9…P-I12)
+      g-inv-par: 8 medidos · 1 sem dump novo ou NÃO fecha ✗

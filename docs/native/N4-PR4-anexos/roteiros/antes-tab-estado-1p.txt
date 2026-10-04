@@ -1,0 +1,3 @@
+12:01:34 toque 'song-3' @ 658,859 (RX2N8000F3D)
+palco aberto na song-3 da setlist 2
+garantidas no S1: 0

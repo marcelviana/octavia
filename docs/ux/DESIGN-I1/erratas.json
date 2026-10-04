@@ -73,6 +73,17 @@
       "div": [589],
       "o_que_vale": "uma forma só de garantida, a do catálogo (é a I1-E3)",
       "casa": [{ "achado": "^\\(c\\) forma sem desenho no dados\\.ts \\(10× nas folhas 0,1,4,7\\): <circle cx=\"12\" cy=\"12\" r=\"8\\.5\"></circle>", "n": 1 }]
+    },
+    {
+      "id": "I1-E32",
+      "tipo": "forma",
+      "div": [1041],
+      "o_que_vale": "os ícones de tipo das folhas 4, 5 e 7 são o catálogo pelo nome, que desde a N4-PR4 é o desenho do DESIGN-N4 (P-I9…P-I12; N4-D69, N4-D74): as formas velhas de cifra, letra e partitura saem do catálogo — na mesma caixa e no mesmo lugar",
+      "casa": [
+        { "achado": "^\\(c\\) forma sem desenho no dados\\.ts \\(42× nas folhas 4,5,7\\): <path d=\"M4 5h3M11 5h3M18 5h2\"></path><path d=\"M4 9\\.5h16\"></path>", "n": 1 },
+        { "achado": "^\\(c\\) forma sem desenho no dados\\.ts \\(50× nas folhas 4,5,7\\): <path d=\"M4 5\\.25h13M4 9\\.75h16M4 14\\.25h10M4 18\\.75h14\"></path>$", "n": 1 },
+        { "achado": "^\\(c\\) forma sem desenho no dados\\.ts \\(48× nas folhas 4,5,7\\): <path d=\"M3 5h18M3 8\\.5h18M3 12h18M3 15\\.5h18M3 19h18\"></path><circle cx=\"8\\.8\" cy=\"15\\.5\" r=\"2\\.4\"></circle>", "n": 1 }
+      ]
     }
   ],
   "_leia_faixa": "I1-PR6 (commit 5; div. 681): as erratas da folha que o G-FAIXA acha (|Δ| > 4 px contra a moldura), não o conferir.mjs — por isso numa lista à parte, que o G-tok (i) não lê (ele casa só `erratas` com os achados do conferir; uma errata daqui lá seria órfã). Cada uma cobre, pelo estado, as erratas candidatas do veredito do aceite de auth (`n` = quantas, em C e B). Fonte: DESIGN-I1/README.md §2.2. I1-PR7: a I1-E11 cobre as 8 do aceite da landing. I1-PR8: a I1-E12 cobre as 45 do aceite da política (22 em C, 23 em B). I1-PR9: a I1-E14 cobre as do LIB-filtros (os 10 nós do menu × C e B — n da pré-verificação sem sessão; o aceite confirma). I1-PR10: E16 (2: o título da barra da tela cheia encolhe, C e B), E17 (13: a linha sem o botão é mais baixa e o que vem abaixo sobe, 2 em C e 11 em B), E18 (0 com as fixtures da folha; conta só se o content do aceite tiver acordes na letra ou na tab) — n da pré-verificação sem sessão; o aceite confirma.",

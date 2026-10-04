@@ -188,6 +188,12 @@ com dois estados ou dois nomes) é a pergunta 5 do `DESIGN-N4/README.md` §10.
 > **Errata do N4-R18 (N4-D76, errata da N4-D68, `[Marcel, 2026-10-03]`).** A estrela é **um registro com dois estados** —
 > vazada (favoritar) e cheia (favorita) — e o tocar é **outro registro**: o catálogo vai de **39 a 41 registros**.
 
+> **Errata da N4-PR4 ao N4-R18 (N4-D87, `[Marcel, 2026-10-04]`).** A folha desenha a estrela inerte nas **duas** formas
+> (vazada e cheia, traço 1,25); o `Desenho` do pacote ganha o campo `ativoInerte` (o inerte do estado `ativo`) e o
+> `Icone.tsx` do nativo o estado `'ativo-inerte'` — os quatro estados no catálogo, cobrados pelo `gate:icones`
+> (`N4-PR4-anexos/README.md` §0). **O julgamento do traço da estrela e do tocar em 20 dp** (A-N4-18, coluna *Marcel*)
+> **passa para a PR-7**, a primeira que os põe em tela: na PR-4 eles existem só no catálogo. Nada se renumera.
+
 *Aceite*: A-N4-18.
 
 **N4-R19 — os quatro ícones de tipo trocam de desenho, no app inteiro e no site** `[N4-D69; P-I9…P-I12; div. 1021]`.
@@ -195,6 +201,12 @@ com dois estados ou dois nomes) é a pergunta 5 do `DESIGN-N4/README.md` §10.
 — **mesmos nomes, mesma caixa** (20 / 24 / 28), no catálogo de `packages/identidade`; tudo que mostra tipo, no tablet e no
 site, passa a mostrar o desenho novo sem mudar composição. `tipo-desconhecido` não muda. Na linha de L o tipo fica em 20.
 Exceção declarada à N4-D4, **só no desenho desses quatro**.
+
+> **Errata da N4-PR4 ao N4-R19 (N4-D86, `[Marcel, 2026-10-04]`).** A folha desenha os quatro numa grade de 20 com traço
+> fixo (1,8 no viewBox 24, em todo tamanho) e escreve *"em 24 e 28 escalam com o traço do catálogo"*. Vale: a geometria
+> da folha × 1,2; em **20** o traço da folha (`em20` com `traco: 1.8`), em **24 e 28** o da família (`TRACO`). A
+> exceção `em20` de quatro cordas da tab (§6.3 do V1) sai em par. O traço em 20 foi julgado no Tab S6 pelo Marcel:
+> **os quatro "bom", o *a* primeiro** — nenhuma N4-E9 (`N4-PR4-anexos/README.md` §5).
 *Aceite*: A-N4-19.
 
 **N4-R20 — os tokens, no pacote** `[N4-D3; N4-D64; N4-D67; P-T1, P-T2, P-T3; regra 21; div. 1020]`. `faixas.*.lib.filtros`
@@ -202,6 +214,12 @@ Exceção declarada à N4-D4, **só no desenho desses quatro**.
 `packages/identidade`, por faixa. As três medidas da N4-D17 (`folha.alturaMin` em B e A, `reordenar.artistaMin` em C) ficam
 **inexistentes por desenho**; a forma disso no tipo — e a da P-T3, que só existe em C — se decide na PR que tocar o pacote
 (N4-D64). Nenhum token fora do pacote; nenhuma conta de largura em tela.
+
+> **Errata da N4-PR4 ao N4-R20 (a forma da N4-D64).** As três medidas são a palavra **`INEXISTENTE`** (`'inexistente'`,
+> tipo `Inexistente`) de `packages/identidade/src/tokens.ts`, no molde do `'empilha'` do bloco `web`:
+> `reordenar.artistaMin` e `folha.alturaMin` são `number | Inexistente`, os leitores comparam com `INEXISTENTE`, e o
+> gerador de CSS não emite propriedade para ela — **o CSS do site byte a byte igual** (`N4-PR4-anexos/README.md` §3).
+> A P-T3 (só C) usa a mesma forma na PR-8.
 *Aceite*: A-N4-20.
 
 **N4-R21 — as frases** `[N4-D14; N4-D29; N4-D67; div. 977; N4-E5]`. As frases novas — P-F1, P-F3, P-F4, P-F5, P-F6, P-F7,
@@ -225,6 +243,14 @@ que já existem são **idênticos em dp** à base do mock: `N3-PRECHECK-anexos/B
 alcançados pelo palco avulso sem setlist (div. 1019), e têm de dar o mesmo 4 de 4 — errata de **caminho**, declarada na
 PR-7 (N4-D73). O ícone de tipo trocar de desenho **não muda
 `bounds`** (div. 1021) e não é diferença de G-inv.
+
+> **Errata da N4-PR4 ao N4-R23 (div. 1049, errata da div. 1021; decisão do Marcel, `[2026-10-04]`).** A frase acima é
+> falsa: **o G-inv vê o desenho** — o `react-native-svg` dá um nó `PathView` por primitiva, e a troca dos quatro ícones
+> de tipo mudou a contagem de nós em 8 dumps da base (S2 ×3 e S4-resultados, AVD e Tab). O instrumento **não se
+> enfraquece**: troca de desenho **decidida** se paga com **errata em par na base** — o `g-inv-par.mjs` prova que a única
+> diferença está dentro dos `SvgView` dos ícones de tipo (byte a byte iguais fora deles), a base desses dumps muda só
+> nesses nós com a razão, e o `SHA256SUMS.txt` em par; um ícone que não é de tipo com o desenho trocado, ou um de tipo
+> que muda de caixa, continua reprovando (`N4-PR4-anexos/README.md` §4.5). Com a base em par: **34/34 e 18/18**.
 *Aceite*: A-N4-23.
 
 **N4-R24 — B implementada por superfície; A não quebra** `[N4-D12; errata do T3-R3]`. B se implementa contra as molduras
@@ -425,4 +451,5 @@ O `N4-ENCERRAMENTO.md`, com a herança da §4 e as corridas do bloco no `CI-FAIX
 
 ---
 
-**A próxima PR desta lista** (N4-D72): depois do merge do congelamento, a **PR-3 — core das frases**.
+**A próxima PR desta lista** (N4-D72): depois do merge do congelamento, a **PR-3 — core das frases**. *(Depois da N4-PR4: a
+**PR-5 — core da biblioteca**.)*

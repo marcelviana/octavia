@@ -1,0 +1,5 @@
+[31m     [31m×[31m faixas A, B e C, fora o bloco web — com as três medidas inexistentes por desenho (N4-D64, em par)[39m[32m 5[2mms[22m[39m
+[31m     [31m×[31m N4-D64: a medida que a faixa não tem é a palavra do tipo, e nenhuma faixa tem `undefined` (só o web tem `null`)[39m[32m 0[2mms[22m[39m
+[31m     [31m×[31m theme.faixas — sem o bloco web, A continua sendo B (com os pares da N4-D64)[39m[32m 2[2mms[22m[39m
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 3 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+[2m      Tests [22m [1m[31m3 failed[39m[22m[2m | [22m[1m[32m37 passed[39m[22m[90m (40)[39m

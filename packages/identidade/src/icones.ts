@@ -19,7 +19,9 @@
  * nenhuma tabela do README nomeia — `email`, `senha` (moldura `S0`) e
  * `nada-encontrado` (moldura `S4b`). São 37 nomes, dos quais 4 estão "fora do
  * catálogo" (§6.4): estes três mais o `log-in`. O DESIGN-N2 acrescenta seis
- * nomes (cinco registros) — 43 no total.
+ * nomes (cinco registros) — 43 no total. O DESIGN-N4 (N4-PR4) troca o desenho
+ * dos quatro de tipo e acrescenta a `estrela` e o `tocar` — 45 nomes, 41
+ * registros.
  *
  * O `garantida` tem UMA forma, a do catálogo (div. 589, I1-E3), e é também o
  * "salvo/confirmado" do web: o visto das folhas do I1 não entra (div. 588,
@@ -59,8 +61,14 @@ export interface Desenho {
   readonly ativo?: readonly Primitiva[]
   /** §6.2 — desabilitado: desenho amputado (auto-scroll) ou sinal afinado (zoom). */
   readonly inerte?: readonly Primitiva[]
-  /** §6.3 — a tab tem quatro cordas em 20 dp e seis nos outros tamanhos. */
+  /**
+   * O desenho em 20 dp, quando difere dos outros tamanhos. Era a exceção da
+   * §6.3 (a tab de quatro cordas); desde a N4-PR4 são os quatro de tipo, com o
+   * traço da folha em 20 (N4-D86).
+   */
   readonly em20?: readonly Primitiva[]
+  /** N4-D87 — o inerte do `ativo`, quando ele tem forma própria (a estrela cheia). */
+  readonly ativoInerte?: readonly Primitiva[]
 }
 
 export const desenhos = {
@@ -95,18 +103,32 @@ export const desenhos = {
   'voltar': {
     normal: [{ d: 'M10 6l-6 6 6 6M4 12h15' }],
   },
+  // N4-PR4 — os QUATRO de tipo trocam de desenho no mesmo nome e na mesma
+  // caixa (N4-D69, P-I9…P-I12 do `DESIGN-N4/telas.html`), no app inteiro e no
+  // site. A folha os desenha numa grade de 20 dentro de `scale(1.2)` com o
+  // traço fixo de 1,5 (1,8 no viewBox 24): a geometria aqui é a da folha × 1,2,
+  // escrita por script e cobrada pelo `gate:icones` (regra 7). O traço é a
+  // N4-D86: em 20 o da folha (`em20`, `traco: 1.8`); em 24 e 28 o da família.
+  // L1 · Aa — a maiúscula de pico e a minúscula de um andar (anel + haste).
   'letra': {
-    normal: [{ d: 'M4 5.25h13M4 9.75h16M4 14.25h10M4 18.75h14' }],
+    normal: [{ d: 'M3 19.8L7.5 5.4l4.5 14.4' }, { d: 'M4.68 15h5.64' }, { d: 'M17.4 13.2a3.3 3.3 0 1 0 0 6.6a3.3 3.3 0 1 0 0-6.6' }, { d: 'M20.7 12.6v7.2' }],
+    em20: [{ d: 'M3 19.8L7.5 5.4l4.5 14.4', traco: 1.8 }, { d: 'M4.68 15h5.64', traco: 1.8 }, { d: 'M17.4 13.2a3.3 3.3 0 1 0 0 6.6a3.3 3.3 0 1 0 0-6.6', traco: 1.8 }, { d: 'M20.7 12.6v7.2', traco: 1.8 }],
   },
+  // C2 · a palheta — uma forma só, fechada, de ponta para baixo (P-I10).
   'cifra': {
-    normal: [{ d: 'M4 5h3M11 5h3M18 5h2' }, { d: 'M4 9.5h16' }, { d: 'M4 14.5h3M12 14.5h4' }, { d: 'M4 19h13' }],
+    normal: [{ d: 'M12 21.3c-3.84-4.32-7.5-9.12-7.5-13.08C4.5 4.92 7.92 3 12 3s7.5 1.92 7.5 5.22c0 3.96-3.66 8.76-7.5 13.08z' }],
+    em20: [{ d: 'M12 21.3c-3.84-4.32-7.5-9.12-7.5-13.08C4.5 4.92 7.92 3 12 3s7.5 1.92 7.5 5.22c0 3.96-3.66 8.76-7.5 13.08z', traco: 1.8 }],
   },
+  // T1 · linhas com um 2 (P-I11): três linhas em todo tamanho — a exceção de
+  // quatro cordas em 20 dp (§6.3 do V1) sai em par (`EM20_N4` do gate).
   'tab': {
-    normal: [{ d: 'M3 3h18M3 6.6h1.225M11.175 6.6h9.825M3 10.2h9.225M19.175 10.2h1.825M3 13.8h4.225M14.175 13.8h6.825M3 17.4h18M3 21h18' }, { x: 5.5, y: 4.9, w: 4.4, h: 3.4, rx: 1.7, fill: true }, { x: 13.5, y: 8.5, w: 4.4, h: 3.4, rx: 1.7, fill: true }, { x: 8.5, y: 12.1, w: 4.4, h: 3.4, rx: 1.7, fill: true }],
-    em20: [{ d: 'M3 4.2h18M3 9.4h2.1M11.9 9.4h9.1M3 14.6h5.1M14.9 14.6h6.1M3 19.8h18' }, { x: 5.9, y: 7.7, w: 4.2, h: 3.4, rx: 1.7, fill: true }, { x: 8.9, y: 12.9, w: 4.2, h: 3.4, rx: 1.7, fill: true }],
+    normal: [{ d: 'M3 4.8h4.8M16.8 4.8h4.2' }, { d: 'M3 12h4.8M16.8 12h4.2' }, { d: 'M3 19.2h4.8M16.8 19.2h4.2' }, { d: 'M9.3 7.92c0.48-1.56 1.68-2.52 3.12-2.52 1.8 0 3.12 1.32 3.12 3 0 1.08-0.48 1.92-1.44 3l-4.8 5.4h6.48' }],
+    em20: [{ d: 'M3 4.8h4.8M16.8 4.8h4.2', traco: 1.8 }, { d: 'M3 12h4.8M16.8 12h4.2', traco: 1.8 }, { d: 'M3 19.2h4.8M16.8 19.2h4.2', traco: 1.8 }, { d: 'M9.3 7.92c0.48-1.56 1.68-2.52 3.12-2.52 1.8 0 3.12 1.32 3.12 3 0 1.08-0.48 1.92-1.44 3l-4.8 5.4h6.48', traco: 1.8 }],
   },
+  // P2 · a nota única (P-I12): colcheia, cabeça cheia, haste e bandeirola.
   'partitura': {
-    normal: [{ d: 'M3 5h18M3 8.5h18M3 12h18M3 15.5h18M3 19h18' }, { cx: 8.8, cy: 15.5, r: 2.4, fill: true }, { d: 'M11.2 15.5V6.5' }],
+    normal: [{ d: 'M6.12 19.92c-0.72-1.68 0.6-3.72 2.88-4.56 2.28-0.84 4.68-0.24 5.28 1.44 0.72 1.68-0.6 3.72-2.88 4.56-2.28 0.84-4.68 0.24-5.28-1.44z', fill: true }, { d: 'M14.1 17.1V3.6' }, { d: 'M14.1 3.6c0.48 3.12 4.32 4.2 5.4 7.8' }],
+    em20: [{ d: 'M6.12 19.92c-0.72-1.68 0.6-3.72 2.88-4.56 2.28-0.84 4.68-0.24 5.28 1.44 0.72 1.68-0.6 3.72-2.88 4.56-2.28 0.84-4.68 0.24-5.28-1.44z', fill: true }, { d: 'M14.1 17.1V3.6', traco: 1.8 }, { d: 'M14.1 3.6c0.48 3.12 4.32 4.2 5.4 7.8', traco: 1.8 }],
   },
   'garantida': {
     normal: [{ cx: 12, cy: 12, r: 9 }, { d: 'M8 12.2l2.8 2.8L16.2 9.4' }],
@@ -262,6 +284,28 @@ export const desenhos = {
   'adicionar': {
     normal: [{ cx: 12, cy: 12, r: 8.5 }, { d: 'M12 8v8M8 12h8' }],
     inerte: [{ cx: 12, cy: 12, r: 8.5, traco: 1.25 }, { d: 'M8 12h4', traco: 1.25 }],
+  },
+  /**
+   * N4-PR4 — os DOIS novos do `DESIGN-N4` (N4-D68; N4-D76: catálogo de 39 a
+   * 41 registros), na grade de 24 da família, com o traço do catálogo.
+   *
+   * A `estrela` é UM registro com dois estados (P-I1a, P-I1b): `normal` é a
+   * vazada (favoritar), `ativo` a cheia (favorita: o preenchimento por baixo e
+   * o contorno por cima, como a folha). Inerte, cada uma tem a sua forma, com
+   * traço 1,25 — `inerte` a vazada e `ativoInerte` a cheia (N4-D87). O
+   * pressionado é o desenho do estado; o "em andamento" é o inerte com o arco
+   * da tela em volta. Sem tela até a PR-7.
+   */
+  'estrela': {
+    normal: [{ d: 'M12 3.3l2.68 5.43 5.99.87-4.33 4.23 1.02 5.97L12 17l-5.36 2.8 1.02-5.97L3.33 9.6l5.99-.87z' }],
+    ativo: [{ d: 'M12 3.3l2.68 5.43 5.99.87-4.33 4.23 1.02 5.97L12 17l-5.36 2.8 1.02-5.97L3.33 9.6l5.99-.87z', fill: true }, { d: 'M12 3.3l2.68 5.43 5.99.87-4.33 4.23 1.02 5.97L12 17l-5.36 2.8 1.02-5.97L3.33 9.6l5.99-.87z' }],
+    inerte: [{ d: 'M12 3.3l2.68 5.43 5.99.87-4.33 4.23 1.02 5.97L12 17l-5.36 2.8 1.02-5.97L3.33 9.6l5.99-.87z', traco: 1.25 }],
+    ativoInerte: [{ d: 'M12 3.3l2.68 5.43 5.99.87-4.33 4.23 1.02 5.97L12 17l-5.36 2.8 1.02-5.97L3.33 9.6l5.99-.87z', fill: true }, { d: 'M12 3.3l2.68 5.43 5.99.87-4.33 4.23 1.02 5.97L12 17l-5.36 2.8 1.02-5.97L3.33 9.6l5.99-.87z', traco: 1.25 }],
+  },
+  /** O `tocar` (P-I2): só ícone, com borda, 48, na linha e em V. Sem tela até a PR-7. */
+  'tocar': {
+    normal: [{ d: 'M8.5 5.3v13.4L19 12z' }],
+    inerte: [{ d: 'M8.5 5.3v13.4L19 12z', traco: 1.25 }],
   },
 } as const satisfies Record<string, Desenho>
 

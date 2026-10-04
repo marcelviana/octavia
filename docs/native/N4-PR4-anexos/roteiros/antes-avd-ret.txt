@@ -1,0 +1,44 @@
+10:57:05 toque canto de setlist-00000001 @ 96,474
+10:57:13 toque 'song-1' @ 800,580 (emulator-5554)
+N4P4A-S3-S3a-letra-1a-avd-ret mCurrentRotation=ROTATION_90 png=387890 xml=26380 76b8201e1687
+10:57:28 toque 'indice' @ 1103,2318 (emulator-5554)
+N4P4A-S2-sem-edicao-S2p-avd-ret mCurrentRotation=ROTATION_90 png=253846 xml=37399 7ae35c935baa
+10:57:44 toque 'borda-avancar' @ 1480,1230 (emulator-5554)
+N4P4A-S3-S3b-cifra-escuro-avd-ret mCurrentRotation=ROTATION_90 png=471190 xml=25410 395df0c23676
+10:57:58 toque 'tema' @ 682,2318 (emulator-5554)
+N4P4A-S3-S3b-cifra-claro-avd-ret mCurrentRotation=ROTATION_90 png=474494 xml=25084 3352c0a05ac1
+10:58:12 toque 'tema' @ 682,2318 (emulator-5554)
+10:58:15 toque 'borda-avancar' @ 1480,1230 (emulator-5554)
+10:58:21 toque 'auto-scroll' @ 128,2318 (emulator-5554)
+N4P4A-S3-S3c-tab-autoscroll-avd-ret mCurrentRotation=ROTATION_90 png=148787 xml=26960 fc524823eec6
+10:58:39 toque 'auto-scroll' @ 128,2318 (emulator-5554)
+10:58:42 toque 'borda-avancar' @ 1480,1230 (emulator-5554)
+N4P4A-S3-S3d-pdf-12p-avd-ret mCurrentRotation=ROTATION_90 png=180555 xml=23839 95a4d979932d
+10:59:02 avião=1 (emulator-5554)
+10:59:05 toque 'borda-avancar' @ 1480,1230 (emulator-5554)
+N4P4A-S3-S3e-nao-baixado-avd-ret mCurrentRotation=ROTATION_90 png=143529 xml=24215 46a878edf60e
+10:59:25 avião=0 (emulator-5554)
+10:59:28 toque 'borda-avancar' @ 1480,1230 (emulator-5554)
+N4P4A-S3-titulo-longo-avd-ret mCurrentRotation=ROTATION_90 png=392300 xml=26490 e370a4d8743a
+10:59:44 toque 'borda-avancar' @ 1480,1230 (emulator-5554)
+10:59:49 toque 'borda-avancar' @ 1480,1230 (emulator-5554)
+N4P4A-S3-ultima-avd-ret mCurrentRotation=ROTATION_90 png=388491 xml=26380 5b9a0f47b13e
+11:00:04 toque 'borda-avancar' @ 1480,1230 (emulator-5554)
+N4P4A-S5-fim-avd-ret mCurrentRotation=ROTATION_90 png=99290 xml=17859 3731785cad08
+11:00:40 toque canto de setlist-00000001 @ 96,474
+N4P4A-S2-com-edicao-avd-ret mCurrentRotation=ROTATION_90 png=270160 xml=56370 1958c1c43fe7
+11:00:59 avião=1 (emulator-5554)
+N4P4A-S2-com-edicao-aviso-sem-rede-avd-ret mCurrentRotation=ROTATION_90 png=288802 xml=56757 f4790da304c5
+11:01:19 avião=0 (emulator-5554)
+11:01:39 toque canto de setlist-00000001 @ 96,474
+11:01:46 toque 'picker-abrir' @ 207,323 (emulator-5554)
+N4P4A-picker-vazio-avd-ret mCurrentRotation=ROTATION_90 png=116393 xml=16385 a1e8fa8fa988
+11:02:01 toque 'picker-campo' @ 917,152 (emulator-5554)
+N4P4A-picker-resultados-avd-ret mCurrentRotation=ROTATION_90 png=355334 xml=59739 afaeed4618b6
+11:02:19 toque 'fechar-busca' @ 108,152 (emulator-5554)
+11:02:41 toque 'buscar' @ 1335,281 (emulator-5554)
+N4P4A-S4-vazio-avd-ret mCurrentRotation=ROTATION_90 png=88198 xml=13970 03d24a726be1
+11:02:56 toque 'campo-busca' @ 917,152 (emulator-5554)
+N4P4A-S4-resultados-avd-ret mCurrentRotation=ROTATION_90 png=255411 xml=34884 f65a57c2a66a
+11:03:12 toque 'fechar-busca' @ 108,152 (emulator-5554)
+capturas=16 falhas=0

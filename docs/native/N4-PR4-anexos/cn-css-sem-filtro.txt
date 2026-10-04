@@ -1,0 +1,5 @@
+[31m     [31m×[31m o commitado é o gerado, byte a byte[39m[32m 5[2mms[22m[39m
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+[32m-     --faixa-folha-altura-min: inexistentepx;[39m
+[32m-     --faixa-folha-altura-min: inexistentepx;[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m3 passed[39m[22m[90m (4)[39m

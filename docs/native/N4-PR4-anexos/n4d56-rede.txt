@@ -1,0 +1,19 @@
+depois: airplane=0 wifi=1 data=1
+2 packets transmitted, 2 received, 0% packet loss, time 1003ms
+rtt min/avg/max/mdev = 22.430/22.727/23.024/0.297 ms
+TotalTime: 244
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=… src=restored
+OCTAVIA: cache hit kind=setlists n=2
+OCTAVIA: cache hit kind=content n=63
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=2918
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=350
+OCTAVIA: cache write kind=setlists n=2 invalidated=0
+OCTAVIA: cache write kind=content n=63 invalidated=0
+OCTAVIA: sync ok setlists=2 content=63 pages=1 t=3365
+OCTAVIA: prefetch plan n=0 reason=7d
+api: 2 · FATAL: 0

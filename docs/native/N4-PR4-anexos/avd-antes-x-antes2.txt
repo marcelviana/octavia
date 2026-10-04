@@ -1,0 +1,9 @@
+S4-resultados-avd-pai	2560×1600	pixels diferentes: 243 (fora da janela do app: 243; no campo de texto, o cursor: 0)	fora das caixas dos ícones de tipo: 0	(caixas de tipo: 5)
+S4-vazio-avd-pai	2560×1600	pixels diferentes: 486 (fora da janela do app: 281; no campo de texto, o cursor: 205)	fora das caixas dos ícones de tipo: 0	(caixas de tipo: 0)
+dialogo-apagar-avd-pai.png	SEM PAR no depois
+folha-criar-avd-pai.png	SEM PAR no depois
+folha-falhou-avd-pai.png	SEM PAR no depois
+folha-validacao-avd-pai.png	SEM PAR no depois
+picker-resultados-avd-pai	2560×1600	pixels diferentes: 691 (fora da janela do app: 401; no campo de texto, o cursor: 290)	fora das caixas dos ícones de tipo: 0	(caixas de tipo: 0)
+picker-vazio-avd-pai	2560×1600	pixels diferentes: 242 (fora da janela do app: 242; no campo de texto, o cursor: 0)	fora das caixas dos ícones de tipo: 0	(caixas de tipo: 0)
+capturas: 4 · com diferença fora das caixas: 0
