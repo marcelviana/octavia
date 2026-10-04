@@ -9,12 +9,14 @@
  */
 import {
   mergePages,
+  naoRegredir,
   planSync,
   reconcileByUpdatedAt,
   type ContentDTO,
   type SetlistDTO,
 } from '@octavia/core'
 import { getContentPage, getSetlists, type ApiResult } from './api'
+import { linhasConfirmadas } from './favoritar'
 import { log } from './log'
 import { estaOnline } from './net'
 import { save, type CacheSnapshot } from './store'
@@ -99,7 +101,10 @@ export async function sincronizar(
   // é novo. Quando nada mudou, o conjunto devolvido é o MESMO do anterior —
   // os derivados memoizados por referência não se recriam.
   const setlists = reconcileByUpdatedAt(anterior?.setlists ?? [], plano.setlists)
-  const content = reconcileByUpdatedAt(anterior?.content ?? [], plano.content)
+  const reconciliado = reconcileByUpdatedAt(anterior?.content ?? [], plano.content)
+  // N4-D91: a linha que um favoritar confirmou depois de este sync ler o servidor é mais nova que a lida — fica. A
+  // contagem `invalidated` é a do reconcile, de antes (o critério e o porquê: `naoRegredir`, no core).
+  const content = { ...reconciliado, items: naoRegredir(reconciliado.items, linhasConfirmadas()) }
 
   const syncedAtMs = Date.now()
   const snapshot: CacheSnapshot = {

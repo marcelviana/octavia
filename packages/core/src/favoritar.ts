@@ -171,3 +171,41 @@ export function avisoDoFavoritar(titulo: string, valor: boolean, resultado: Resu
   if (resultado.frase === null) return null
   return compor([valor ? nomeFavoritar(titulo) : nomeTirar(titulo), resultado.frase])
 }
+
+/**
+ * **N4-D91 — o cache não regride depois do favoritar** (div. 1065).
+ *
+ * A corrida: um sync cujo `GET /api/content` leu o servidor ANTES de um `PUT` do favoritar e grava DEPOIS da resposta
+ * dele. O sync substitui o conjunto inteiro pelo que leu (T1-R9), e a linha que o `PUT` devolveu sumiria do cache.
+ *
+ * **O critério é o `updated_at` da linha**: o `PUT` sempre grava `updated_at` (`app/api/content/route.ts:282-284`), e
+ * a linha que ele devolve traz o valor gravado. Para cada música que o favoritar confirmou nesta sessão, a linha
+ * confirmada fica no lugar da que o sync trouxe **só se for estritamente mais nova** que ela. Por que não a ordem
+ * das respostas: a ordem de chegada não é a de leitura no servidor (a div. 232 do N2), e o que importa é o que o
+ * servidor gravou por último — que é o que o `updated_at` diz.
+ *
+ * **O caso normal fica igual**: se o site mudou a música depois do favoritar, o servidor tem um `updated_at` maior, e
+ * a linha do sync vence; se o sync leu depois do `PUT`, os dois `updated_at` são iguais, e a do sync vence (é a
+ * mesma). Música que o sync não trouxe (apagada no site) não volta. `updated_at` que não parseia: vence o sync.
+ *
+ * Não muda o conjunto por referência quando nada é mantido — o `reconcileByUpdatedAt` continua decidindo a
+ * identidade — nem a contagem `invalidated` do sync, que é calculada antes, contra o que o app tinha.
+ */
+export function naoRegredir<T extends { id: string; updated_at: string }>(
+  doSync: T[],
+  confirmadas: ReadonlyMap<string, T>,
+): T[] {
+  if (confirmadas.size === 0) return doSync
+  let trocou = false
+  const out = doSync.map((item) => {
+    const local = confirmadas.get(item.id)
+    if (local === undefined) return item
+    const tLocal = Date.parse(local.updated_at)
+    const tSync = Date.parse(item.updated_at)
+    if (Number.isNaN(tLocal) || Number.isNaN(tSync) || tLocal <= tSync) return item
+    trocou = true
+    return local
+  })
+  return trocou ? out : doSync
+}
+

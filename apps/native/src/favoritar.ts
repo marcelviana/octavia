@@ -67,6 +67,18 @@ export type EstadoDoFavoritar = 'favoritando' | 'tirando'
 
 /** `id` → o valor PEDIDO. Estado de módulo, de propósito: sobrevive à tela que o disparou. */
 const emVoo = new Map<string, boolean>()
+
+/**
+ * N4-D91 — `id` → a última linha que o servidor devolveu a um favoritar nesta sessão. O sync a consulta antes de gravar
+ * (`naoRegredir` do core): um sync que leu antes do `PUT` não desfaz a estrela. Não se poda: uma entrada velha nunca
+ * vence (o servidor já tem `updated_at` igual ou maior), e o mapa tem no máximo uma linha por música favoritada.
+ */
+const confirmadas = new Map<string, ContentDTO>()
+
+/** As linhas confirmadas pelo favoritar nesta sessão (cópia). Quem lê é o `sync.ts`. */
+export function linhasConfirmadas(): ReadonlyMap<string, ContentDTO> {
+  return new Map(confirmadas)
+}
 const ouvintes = new Set<() => void>()
 let gate = rateLimitGate()
 
@@ -92,6 +104,7 @@ export function assinarFavoritar(f: () => void): () => void {
 export function limparFavoritar(): void {
   emVoo.clear()
   ouvintes.clear()
+  confirmadas.clear()
   gate = rateLimitGate()
 }
 
@@ -153,8 +166,9 @@ export async function favoritar(
     // 5. a linha devolvida vai ao cache — e só ela (N4-D35). A música que um sync tirou do cache enquanto o pedido
     //    voava não volta por aqui: o conjunto é o do servidor, e o próximo sync o confirma.
     if (resultado.especie === 'ok' && resultado.linha !== null && cache !== null) {
-      const atual = cache.lerContent()
       const linha = resultado.linha
+      confirmadas.set(id, linha)
+      const atual = cache.lerContent()
       let trocou = 0
       const novo = atual.map((c) => {
         if (c.id !== id) return c
