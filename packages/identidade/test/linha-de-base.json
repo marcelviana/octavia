@@ -1214,5 +1214,34 @@
         "razao": "N4-D68 — P-I2"
       }
     }
+  },
+  "paresTokensN4": {
+    "origem": "N4-PR4, commit 3 — as três medidas da N4-D17 ficam INEXISTENTES POR DESENHO (N4-D64): o `undefined` da linha de base → a palavra 'inexistente' do tipo do pacote (`INEXISTENTE`), como o 'empilha' do bloco web. Regra 14 do LOGS-OCTAVIA.md; a linha de base não se regrava.",
+    "pares": [
+      {
+        "caminho": "faixas.B.folha.alturaMin",
+        "velho": {
+          "$indefinido": true
+        },
+        "novo": "inexistente",
+        "razao": "N4-D64 — a folha criar/editar em B tem altura de conteúdo"
+      },
+      {
+        "caminho": "faixas.A.folha.alturaMin",
+        "velho": {
+          "$indefinido": true
+        },
+        "novo": "inexistente",
+        "razao": "N4-D64 — A usa os tokens de B (N3-D0)"
+      },
+      {
+        "caminho": "faixas.C.reordenar.artistaMin",
+        "velho": {
+          "$indefinido": true
+        },
+        "novo": "inexistente",
+        "razao": "N4-D64 — em C título e artista encolhem por igual, sem mínimo"
+      }
+    ]
   }
 }

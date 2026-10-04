@@ -158,6 +158,18 @@ export function faixaDe(largura: number): Faixa {
  *  - **A** usa os valores de B — declarado, por referência (N3-D0; no web,
  *    I1-D11 e DESIGN-I1 §1).
  */
+/**
+ * **N4-D64 — a medida que a faixa NÃO TEM, por desenho.** Onde a folha decide que
+ * uma medida não existe numa faixa (não é "sem valor ainda", é "não há"), o
+ * token é esta palavra, e o tipo a diz — como o `'empilha'` do bloco `web`. Era
+ * um `undefined` solto (`number | undefined`), que o tipo não distinguia de um
+ * valor esquecido. As três de hoje são as da N4-D17: a altura mínima da folha
+ * criar/editar em B e A e o mínimo do artista no reordenar em C. Quem lê
+ * compara com `INEXISTENTE`; o gerador de CSS não emite propriedade para ela.
+ */
+export const INEXISTENTE = 'inexistente' as const
+export type Inexistente = typeof INEXISTENTE
+
 export interface TokensDaFaixa {
   s1: {
     /** Altura da barra superior: 120 em C (§5.3 do V1); 144 em B (N3-B-S1: 20 + título 36 + 16 + botões 58 + 14). */
@@ -222,7 +234,8 @@ export interface TokensDaFaixa {
      * em B o artista encolhe com peso maior até os 60, e só então o título.
      */
     artistaCede: number
-    artistaMin: number | undefined
+    /** 60 em B; em C **inexistente por desenho** (N4-D64): os dois encolhem por igual. */
+    artistaMin: number | Inexistente
   }
   folha: {
     /**
@@ -233,7 +246,8 @@ export interface TokensDaFaixa {
      */
     largura: number
     topo: number
-    alturaMin: number | undefined
+    /** 420 em C; em B e A **inexistente por desenho** (N4-D64): a altura é a do conteúdo. */
+    alturaMin: number | Inexistente
   }
   picker: {
     /**
@@ -347,7 +361,7 @@ const faixaC: TokensDaFaixa = {
   s2: { colunas: 2, rotulosCurtos: false },
   reordenar: {
     barra: bar.top + space.xl, empilha: false, barraTopo: 0, barraBase: 0, vaoDoTitulo: space.sm, vaoDasAcoes: 0,
-    artistaCede: 1, artistaMin: undefined,
+    artistaCede: 1, artistaMin: INEXISTENTE,
   },
   folha: { largura: 720, topo: 100, alturaMin: 420 },
   picker: { empilhaFalha: false, linhaFalha: 80 },
@@ -369,7 +383,7 @@ const faixaB: TokensDaFaixa = {
     barra: 144, empilha: true, barraTopo: 20, barraBase: 6, vaoDoTitulo: 0, vaoDasAcoes: 14,
     artistaCede: 100, artistaMin: 60,
   },
-  folha: { largura: 663, topo: 96, alturaMin: undefined },
+  folha: { largura: 663, topo: 96, alturaMin: INEXISTENTE },
   picker: { empilhaFalha: true, linhaFalha: 138.7 },
   palco: { barra: bar.top + space.xl, empilha: true },
   s5: { fileira: 663 },

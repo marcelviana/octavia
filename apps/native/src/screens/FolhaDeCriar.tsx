@@ -75,7 +75,7 @@ import {
 import { escrever, prepararCriacao, prepararEdicao, relerAoAbrir, type EstadoLocal } from '../escrita'
 import { Icone } from '../icones/Icone'
 import type { NomeIcone } from '../icones/dados'
-import { bar, dark, faixas, font, radius, size, space, touch, tracking } from '../theme'
+import { bar, dark, faixas, font, INEXISTENTE, radius, size, space, touch, tracking } from '../theme'
 import { useFaixa } from '../useFaixa'
 
 /**
@@ -308,7 +308,7 @@ export function FolhaDeSetlist({
       }}
     >
       <View style={styles.cortina}>
-        <View style={[styles.folha, { width: f.largura, marginTop: f.topo, minHeight: f.alturaMin }]}>
+        <View style={[styles.folha, { width: f.largura, marginTop: f.topo }, f.alturaMin !== INEXISTENTE && { minHeight: f.alturaMin }]}>
           <View style={styles.cabeca}>
             <Icone nome={iconeDoTitulo} tamanho={24} cor={dark.accentInk} />
             {/* `telas.html`, molduras `N2-F-criar` e `N2-F-editar-igual`. */}

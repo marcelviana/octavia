@@ -23,7 +23,7 @@ import { writeFileSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import {
-  bar, dark, faixas, font, light, limiares, lineHeight, radius, size, space, touch, tracking, zoomDefault,
+  bar, dark, faixas, font, INEXISTENTE, light, limiares, lineHeight, radius, size, space, touch, tracking, zoomDefault,
 } from '../src/index.ts'
 
 const RAIZ = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..')
@@ -55,7 +55,7 @@ function globais() {
   ]
 }
 
-/** `web.*` e `folha.*` de uma faixa; `'empilha'` e `undefined` não geram propriedade. */
+/** `web.*` e `folha.*` de uma faixa; `'empilha'` e `INEXISTENTE` (N4-D64) não geram propriedade. */
 function daFaixa(t) {
   const out = []
   const w = t.web
@@ -81,7 +81,7 @@ function daFaixa(t) {
   out.push(`  --faixa-cor-marcado: color-mix(in srgb, var(--cor-accent) ${Math.round(w.alfaMarcado * 100)}%, transparent);`)
   out.push(`  --faixa-cor-dialogo: color-mix(in srgb, var(--cor-bg) ${Math.round(w.alfaDialogo * 100)}%, transparent);`)
   for (const [k, v] of Object.entries(t.folha)) {
-    if (v !== undefined) out.push(`  --faixa-folha-${kebab(k)}: ${px(v)};`)
+    if (v !== INEXISTENTE) out.push(`  --faixa-folha-${kebab(k)}: ${px(v)};`)
   }
   return out
 }

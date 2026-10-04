@@ -65,7 +65,7 @@ import {
 import { escrever, prepararReordenacao, relerPelaOrdem, type EstadoLocal } from '../escrita'
 import { Icone } from '../icones/Icone'
 import type { NomeIcone } from '../icones/dados'
-import { bar, dark, faixas, font, radius, size, space, touch, tracking, type TokensDaFaixa } from '../theme'
+import { bar, dark, faixas, font, INEXISTENTE, radius, size, space, touch, tracking, type TokensDaFaixa } from '../theme'
 import { useFaixa } from '../useFaixa'
 import { LinhaDeAviso } from './LinhaDeAviso'
 
@@ -226,7 +226,7 @@ function Texto({
           style={[
             styles.artista,
             // B: o artista cede primeiro, até o mínimo; em C, o de sempre.
-            faixa.artistaMin !== undefined ? { flexShrink: faixa.artistaCede, minWidth: faixa.artistaMin } : null,
+            faixa.artistaMin !== INEXISTENTE ? { flexShrink: faixa.artistaCede, minWidth: faixa.artistaMin } : null,
           ]}
           numberOfLines={1}
         >
