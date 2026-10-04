@@ -1,0 +1,14 @@
+G-back — base 0a37342 · head 5d96a70
+núcleo: congelado 39 · derivação BASE 39 · HEAD 39 · união 40
+declarações gback: 2 caminho(s)
+
+## (i) arquivo do núcleo que mudou
+  ✓ nenhum — diff vazio no núcleo
+## (ii) arquivo novo no alcance (derivação do HEAD fora do congelado)
+  ✓ nenhum
+## (iii) declaração órfã (gback: de arquivo que não mudou)
+  · package.json — mudou, fora do núcleo: registro (não reprova)
+  · pnpm-lock.yaml — mudou, fora do núcleo: registro (não reprova)
+  ✓ nenhuma
+
+G-back: PASSA

@@ -1,0 +1,107 @@
+# Commit 1 (f7803d0) sobre a árvore da main — os gates reprovando
+
+## web — tests/gates-web/frases-n4.test.ts
+$ pnpm exec vitest run --project web tests/gates-web/frases-n4.test.ts
+      Tests  27 failed | 152 passed (179)
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (2) as que mudaram de casa estão no core — 27 linhas > DIFICULDADES › Advanced (components/library/frases-lista.ts) = core ROTULO_DA_DIFICULDADE › Advanced
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (2) as que mudaram de casa estão no core — 27 linhas > DIFICULDADES › Beginner (components/library/frases-lista.ts) = core ROTULO_DA_DIFICULDADE › Beginner
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (2) as que mudaram de casa estão no core — 27 linhas > DIFICULDADES › Intermediate (components/library/frases-lista.ts) = core ROTULO_DA_DIFICULDADE › Intermediate
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (2) as que mudaram de casa estão no core — 27 linhas > FRASES_LISTA › dash.abas.favoritas (components/library/frases-lista.ts) = core VOCABULARIO_DE_CONTENT › favoritas
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (2) as que mudaram de casa estão no core — 27 linhas > FRASES_LISTA › dash.favoritas (components/library/frases-lista.ts) = core VOCABULARIO_DE_CONTENT › favoritas
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (2) as que mudaram de casa estão no core — 27 linhas > FRASES_LISTA › dash.vazio.favoritas (components/library/frases-lista.ts) = core VOCABULARIO_DE_CONTENT › vazio-favoritas
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (2) as que mudaram de casa estão no core — 27 linhas > FRASES_LISTA › lib.favorita.nome (components/library/frases-lista.ts) = core VOCABULARIO_DE_CONTENT › tirar-nome
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (2) as que mudaram de casa estão no core — 27 linhas > FRASES_LISTA › lib.favoritar.nome (components/library/frases-lista.ts) = core VOCABULARIO_DE_CONTENT › favoritar-nome
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (2) as que mudaram de casa estão no core — 27 linhas > FRASES_LISTA › lib.vazio (components/library/frases-lista.ts) = core VOCABULARIO_DE_CONTENT › vazio-biblioteca
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (2) as que mudaram de casa estão no core — 27 linhas > FRASES_LISTA › lib.vazio.busca (components/library/frases-lista.ts) = core VOCABULARIO_DE_CONTENT › vazio-filtro
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (2) as que mudaram de casa estão no core — 27 linhas > FRASES_LISTA › lib.vazio.busca.apoio (components/library/frases-lista.ts) = core VOCABULARIO_DE_CONTENT › vazio-filtro-apoio
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (2) as que mudaram de casa estão no core — 27 linhas > FRASES_VIEW › campo.album (components/content/frases-visualizacao.ts) = core VOCABULARIO_DE_CONTENT › campo-album
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (2) as que mudaram de casa estão no core — 27 linhas > FRASES_VIEW › campo.alterado (components/content/frases-visualizacao.ts) = core VOCABULARIO_DE_CONTENT › campo-alterado
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (2) as que mudaram de casa estão no core — 27 linhas > FRASES_VIEW › campo.andamento (components/content/frases-visualizacao.ts) = core VOCABULARIO_DE_CONTENT › campo-andamento
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (2) as que mudaram de casa estão no core — 27 linhas > FRASES_VIEW › campo.andamento.bpm (components/content/frases-visualizacao.ts) = core VOCABULARIO_DE_CONTENT › campo-andamento-bpm
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (2) as que mudaram de casa estão no core — 27 linhas > FRASES_VIEW › campo.criado (components/content/frases-visualizacao.ts) = core VOCABULARIO_DE_CONTENT › campo-criado
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (2) as que mudaram de casa estão no core — 27 linhas > FRASES_VIEW › campo.dificuldade (components/content/frases-visualizacao.ts) = core VOCABULARIO_DE_CONTENT › campo-dificuldade
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (2) as que mudaram de casa estão no core — 27 linhas > FRASES_VIEW › campo.etiquetas (components/content/frases-visualizacao.ts) = core VOCABULARIO_DE_CONTENT › campo-etiquetas
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (2) as que mudaram de casa estão no core — 27 linhas > FRASES_VIEW › campo.genero (components/content/frases-visualizacao.ts) = core VOCABULARIO_DE_CONTENT › campo-genero
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (2) as que mudaram de casa estão no core — 27 linhas > FRASES_VIEW › campo.tom (components/content/frases-visualizacao.ts) = core VOCABULARIO_DE_CONTENT › campo-tom
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (2) as que mudaram de casa estão no core — 27 linhas > FRASES_VIEW › view.detalhes (components/content/frases-visualizacao.ts) = core VOCABULARIO_DE_CONTENT › detalhes
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (2) as que mudaram de casa estão no core — 27 linhas > FRASES_VIEW › view.erro.formato (components/content/frases-visualizacao.ts) = core VOCABULARIO_DE_CONTENT › erro-formato
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (2) as que mudaram de casa estão no core — 27 linhas > FRASES_VIEW › view.voltar (components/content/frases-visualizacao.ts) = core VOCABULARIO_DE_CONTENT › voltar-biblioteca
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (2) as que mudaram de casa estão no core — 27 linhas > TIPOS › Chords (components/library/frases-lista.ts) = core ROTULO_DO_TIPO › Chords
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (2) as que mudaram de casa estão no core — 27 linhas > TIPOS › Lyrics (components/library/frases-lista.ts) = core ROTULO_DO_TIPO › Lyrics
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (2) as que mudaram de casa estão no core — 27 linhas > TIPOS › Sheet (components/library/frases-lista.ts) = core ROTULO_DO_TIPO › Sheet
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (2) as que mudaram de casa estão no core — 27 linhas > TIPOS › Tab (components/library/frases-lista.ts) = core ROTULO_DO_TIPO › Tab
+ Test Files  1 failed (1)
+Error: Cannot find package '@octavia/core/src/frases-content' imported from '<raiz>/tests/gates-web/frases-n4.test.ts'
+
+## native — apps/native/test/frases-n4.test.ts
+$ pnpm exec vitest run --project native apps/native/test/frases-n4.test.ts
+   2 TypeError: __vite_ssr_import_5__.nomeTocar is not a function
+   1 TypeError: __vite_ssr_import_5__.nomeVer is not a function
+   1 TypeError: __vite_ssr_import_5__.nomeTirar is not a function
+   1 TypeError: __vite_ssr_import_5__.nomeFavoritar is not a function
+   1 TypeError: __vite_ssr_import_5__.nomeFavoritando is not a function
+   1 TypeError: __vite_ssr_import_5__.nomeDoFiltro is not a function
+   1 TypeError: __vite_ssr_import_5__.compor is not a function
+   1 TypeError: Cannot read properties of undefined (reading 'voltar-visualizacao')
+   1 TypeError: Cannot read properties of undefined (reading 'sem-rede-favoritar')
+   1 TypeError: Cannot read properties of undefined (reading 'notas-da-musica')
+   1 TypeError: Cannot read properties of undefined (reading 'biblioteca-vazia')
+   1 TypeError: Cannot read properties of undefined (reading 'biblioteca-sem-cache')
+   1 TypeError: Cannot convert undefined or null to object
+   1  Test Files  1 failed (1)
+   1  FAIL   native  apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > o favoritar com falha, sessão: o nome do controle · o motivo (a tabela da folha)
+   1  FAIL   native  apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > o favoritar com falha, servidor: o nome do controle · o motivo (a tabela da folha)
+   1  FAIL   native  apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > o favoritar com falha, sem resposta: o nome do controle · o motivo (a tabela da folha)
+   1  FAIL   native  apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > o favoritar com falha, sem rede: o nome do controle · o motivo (a tabela da folha)
+   1  FAIL   native  apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > o favoritar com falha, limite: o nome do controle · o motivo (a tabela da folha)
+   1  FAIL   native  apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > o favoritar com falha, genérica: o nome do controle · o motivo (a tabela da folha)
+   1  FAIL   native  apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > as 4 junções com "·" das telas usam o separador do core
+   1  FAIL   native  apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > S2 e o reordenar: com o motivo servidor, o core monta byte a byte a frase da tela
+   1  FAIL   native  apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > S2 e o reordenar: com o motivo sem-resposta, o core monta byte a byte a frase da tela
+   1  FAIL   native  apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > S2 e o reordenar: com o motivo rede, o core monta byte a byte a frase da tela
+   1  FAIL   native  apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > S2 e o reordenar: com o motivo limite-com-prazo, o core monta byte a byte a frase da tela
+   1  FAIL   native  apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > S2 e o reordenar: com o motivo generica, o core monta byte a byte a frase da tela
+   1  FAIL   native  apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > S2 e o reordenar: com o motivo auth, o core monta byte a byte a frase da tela
+   1  FAIL   native  apps/native/test/frases-n4.test.ts > (1) as P-F aceitas — contra a lista extraída da folha > as cinco constantes P-F do core são estas, e só estas
+   1  FAIL   native  apps/native/test/frases-n4.test.ts > (1) as P-F aceitas — contra a lista extraída da folha > as aspas são as tipográficas da folha (“ ”), nunca a reta
+   1  FAIL   native  apps/native/test/frases-n4.test.ts > (1) as P-F aceitas — contra a lista extraída da folha > P-F9
+   1  FAIL   native  apps/native/test/frases-n4.test.ts > (1) as P-F aceitas — contra a lista extraída da folha > P-F7
+   1  FAIL   native  apps/native/test/frases-n4.test.ts > (1) as P-F aceitas — contra a lista extraída da folha > P-F6
+   1  FAIL   native  apps/native/test/frases-n4.test.ts > (1) as P-F aceitas — contra a lista extraída da folha > P-F5
+   1  FAIL   native  apps/native/test/frases-n4.test.ts > (1) as P-F aceitas — contra a lista extraída da folha > P-F4
+   1  FAIL   native  apps/native/test/frases-n4.test.ts > (1) as P-F aceitas — contra a lista extraída da folha > P-F3
+   1  FAIL   native  apps/native/test/frases-n4.test.ts > (1) as P-F aceitas — contra a lista extraída da folha > P-F11
+   1  FAIL   native  apps/native/test/frases-n4.test.ts > (1) as P-F aceitas — contra a lista extraída da folha > P-F10
+   1  FAIL   native  apps/native/test/frases-n4.test.ts > (1) as P-F aceitas — contra a lista extraída da folha > P-F1
+   1       Tests  24 failed | 8 passed (32)
+(os 24 que reprovam, um por linha, e o resumo:)
+⎯⎯⎯⎯⎯⎯ Failed Tests 24 ⎯⎯⎯⎯⎯⎯⎯
+  ✗ (1) as P-F aceitas — contra a lista extraída da folha > P-F1
+  ✗ (1) as P-F aceitas — contra a lista extraída da folha > P-F3
+  ✗ (1) as P-F aceitas — contra a lista extraída da folha > P-F4
+  ✗ (1) as P-F aceitas — contra a lista extraída da folha > P-F5
+  ✗ (1) as P-F aceitas — contra a lista extraída da folha > P-F6
+  ✗ (1) as P-F aceitas — contra a lista extraída da folha > P-F7
+  ✗ (1) as P-F aceitas — contra a lista extraída da folha > P-F9
+  ✗ (1) as P-F aceitas — contra a lista extraída da folha > P-F10
+  ✗ (1) as P-F aceitas — contra a lista extraída da folha > P-F11
+  ✗ (1) as P-F aceitas — contra a lista extraída da folha > as aspas são as tipográficas da folha (“ ”), nunca a reta
+  ✗ (1) as P-F aceitas — contra a lista extraída da folha > as cinco constantes P-F do core são estas, e só estas
+  ✗ (2) o motivo isolado — o core compõe como as telas de hoje > as 4 junções com "·" das telas usam o separador do core
+  ✗ (2) o motivo isolado — o core compõe como as telas de hoje > S2 e o reordenar: com o motivo rede, o core monta byte a byte a frase da tela
+  ✗ (2) o motivo isolado — o core compõe como as telas de hoje > S2 e o reordenar: com o motivo sem-resposta, o core monta byte a byte a frase da tela
+  ✗ (2) o motivo isolado — o core compõe como as telas de hoje > S2 e o reordenar: com o motivo auth, o core monta byte a byte a frase da tela
+  ✗ (2) o motivo isolado — o core compõe como as telas de hoje > S2 e o reordenar: com o motivo limite-com-prazo, o core monta byte a byte a frase da tela
+  ✗ (2) o motivo isolado — o core compõe como as telas de hoje > S2 e o reordenar: com o motivo servidor, o core monta byte a byte a frase da tela
+  ✗ (2) o motivo isolado — o core compõe como as telas de hoje > S2 e o reordenar: com o motivo generica, o core monta byte a byte a frase da tela
+  ✗ (2) o motivo isolado — o core compõe como as telas de hoje > o favoritar com falha, sem rede: o nome do controle · o motivo (a tabela da folha)
+  ✗ (2) o motivo isolado — o core compõe como as telas de hoje > o favoritar com falha, sem resposta: o nome do controle · o motivo (a tabela da folha)
+  ✗ (2) o motivo isolado — o core compõe como as telas de hoje > o favoritar com falha, sessão: o nome do controle · o motivo (a tabela da folha)
+  ✗ (2) o motivo isolado — o core compõe como as telas de hoje > o favoritar com falha, limite: o nome do controle · o motivo (a tabela da folha)
+  ✗ (2) o motivo isolado — o core compõe como as telas de hoje > o favoritar com falha, genérica: o nome do controle · o motivo (a tabela da folha)
+  ✗ (2) o motivo isolado — o core compõe como as telas de hoje > o favoritar com falha, servidor: o nome do controle · o motivo (a tabela da folha)
+ Test Files  1 failed (1)
+      Tests  24 failed | 8 passed (32)
+
+## G-tok
+ver g-tok-antes-depois.txt, "commit 1 f7803d0": REPROVA — packages/core/src/frases-content.ts está na lista e não existe
