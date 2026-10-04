@@ -1,0 +1,45 @@
+$ (apps/native) node scripts/a20.mjs
+  vocabulário: 45 termos · isenções do produto: 9
+  literais em posição de texto examinados: 169
+  acusações: 0
+exit=0
+$ (apps/native) node scripts/icones.mjs
+  §6.3 → T1 (N4-D69): tab em20 3 linhas · normal 3 linhas · a tab@20 de quatro cordas do telas.html (o velho do par): achada
+  fora do catálogo: 4/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  acusações: 0 · avisos: 0
+exit=0
+$ shasum -c dos congelados (o laço do gates.yml + DESIGN-I1)
+docs/native/DESIGN-V1: telas.html: OK
+docs/native/DESIGN-V1: icones.html: OK
+docs/native/DESIGN-V1: telas.pdf: OK
+docs/native/DESIGN-N2: telas.html: OK
+docs/native/DESIGN-N2: telas.pdf: OK
+docs/native/DESIGN-N3: telas.html: OK
+docs/native/DESIGN-N3: telas.pdf: OK
+docs/native/DESIGN-N4: telas.html: OK
+docs/native/DESIGN-N4: icones.html: OK
+docs/ux/DESIGN-I1: 0-linha-de-aviso/telas.html: OK
+docs/ux/DESIGN-I1: 1-auth/telas.html: OK
+docs/ux/DESIGN-I1: 2-landing/telas.html: OK
+docs/ux/DESIGN-I1: 3-privacy-policy/telas.html: OK
+docs/ux/DESIGN-I1: 4-content-lista/telas.html: OK
+docs/ux/DESIGN-I1: 5-content-visualizacao/telas.html: OK
+docs/ux/DESIGN-I1: 6-content-editor/telas.html: OK
+docs/ux/DESIGN-I1: 7-upload/telas.html: OK
+docs/ux/DESIGN-I1: 8-setlists/telas.html: OK
+docs/ux/DESIGN-I1: README-design.md: OK
+docs/ux/DESIGN-I1: README.md: OK
+docs/ux/DESIGN-I1: conferencia/conferir.mjs: OK
+docs/ux/DESIGN-I1: conferencia/matriz-x-estados.tsv: OK
+docs/ux/DESIGN-I1: conferencia/saida.txt: OK
+exit=0
+$ shasum -c N3-PRECHECK-anexos/SHA256SUMS.txt
+355
+$ G-par, favoritar-put, frases-n4 (web e nativo)
+stdout | tests/gates/n4-g-par.test.tsx > G-par (N4-PR1) — o mesmo content, o mesmo texto no web e no nativo > reprova exatamente a lista de g-par-reprovados.txt
+G-par — itens 16 · pares comparados 9 · iguais 9 · diferentes 0 · fora do par 7
+fora do par (7) — impressos e contados, não reprovam:
+reprovados     (0): (nenhum)
+G-par: zero reprovações, lista vazia (N4-D50) ✓
+ Test Files  4 passed (4)
+      Tests  220 passed | 1 skipped (221)

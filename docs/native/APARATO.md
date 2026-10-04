@@ -278,6 +278,12 @@ de uma página" (setlist 2, `song-3`) no palco uma vez antes das capturas — o 
 presença (`N4-PR4-anexos/instrumentos/estado-1p.py`). Regenerar a fixture com outro *hoje* não adianta: o sync guarda a
 setlist do cache quando o `updated_at` não muda.
 
+**Desde a N4-PR5 os dois remédios acima deixam de ser precisos** (N4-R26, a garantia de todos os arquivos): o primeiro
+sync com rede baixa a 12p e a 1p, com setlist datada ou não, e o S1 da base (*parcial · 1 de 2* na setlist 1, *garantida
+offline* na 2) sai assim sem o palco antes e sem o `estado-1p.py` — medido no AVD, B5 18 de 18 e B3 9 de 9
+(`N4-PR5-anexos/README.md` §4.3). O que continua produzindo o *1 de 2* e o S3e é o `nao-existe.pdf`: o servidor de
+arquivos dá 404 em todo plano, e ele nunca chega ao disco.
+
 **A comparação por imagem no tablet** (N4-PR4, div. 1053; `N4-PR4-anexos/instrumentos/tab-diff.mjs`): o `screencap` traz
 as barras do sistema — 24 dp em cima (o relógio muda entre capturas); embaixo **60 dp no AVD** e **48 dp no Tab**, nas
 duas orientações (a barra de tarefas da Samsung, cujos ícones mudam de lugar entre rodadas). O cursor pisca dentro de todo

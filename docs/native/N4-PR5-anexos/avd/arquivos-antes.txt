@@ -1,0 +1,21 @@
+# antes do sync (app parado)
+cache/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files:
+total 44
+drwx--S--- 2 u0_a149 u0_a149_cache  4096 2026-09-14 11:13 .
+drwx--S--- 3 u0_a149 u0_a149_cache  4096 2026-09-10 20:30 ..
+-rw------- 1 u0_a149 u0_a149_cache 20821 2026-09-14 11:13 1786218427769-ux-audit-partitura-1p.pdf
+
+files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83:
+total 112
+drwx------ 3 u0_a149 u0_a149  4096 2026-09-14 11:13 .
+drwxrwx--x 3 u0_a149 u0_a149  4096 2026-09-14 11:13 ..
+-rw-rw-rw- 1 u0_a149 u0_a149 53738 2026-09-14 09:33 content.json
+drwx------ 2 u0_a149 u0_a149  4096 2026-09-14 11:13 files
+-rw------- 1 u0_a149 u0_a149   861 2026-09-14 11:13 files-index.json
+-rw-rw-rw- 1 u0_a149 u0_a149 15247 2026-09-14 09:33 setlists.json
+
+files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files:
+total 260
+drwx------ 2 u0_a149 u0_a149   4096 2026-09-14 11:13 .
+drwx------ 3 u0_a149 u0_a149   4096 2026-09-14 11:13 ..
+-rw------- 1 u0_a149 u0_a149 242176 2026-09-14 11:13 1786218429715-ux-audit-partitura-12p.pdf

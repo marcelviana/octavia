@@ -1,0 +1,14 @@
+# fim 2026-10-04 18:43:08
+FATAL na sessão inteira do logcat atual: 0
+reverse: []
+stay_on=1 accel=1 user_rot=0 airplane=1 wifi=0 data=0
+connect: Network is unreachable
+OK: killing emulator, bye bye
+OK
+0
+parado :8081
+parado :8788
+parado :8790
+ls: /Users/marcelviana/projects/octavia-n4-pr5/apps/native/.env: No such file or directory
+?? docs/native/N4-PR5-anexos/
+Sep 24 14:00

@@ -1,0 +1,21 @@
+27c27,28
+< ARVORE = os.path.abspath(os.path.join(AQUI, "../../../.."))
+---
+> ARVORE = os.environ["ARVORE"]  # N4-PR4: a árvore do Metro (antes / depois)
+> PORTA = os.environ.get("PORTA", "8788")
+33c34
+<     p = subprocess.run(["lsof", "-tiTCP:8788", "-sTCP:LISTEN"], capture_output=True, text=True).stdout.split()
+---
+>     p = subprocess.run(["lsof", f"-tiTCP:{PORTA}", "-sTCP:LISTEN"], capture_output=True, text=True).stdout.split()
+41c42
+<     subprocess.Popen(["python3", os.path.join(ARVORE, "apps/native/src/fixtures/aceite.py"), "servidor", "8788",
+---
+>     subprocess.Popen(["python3", os.path.join(ARVORE, "apps/native/src/fixtures/aceite.py"), "servidor", PORTA,
+3c3
+< import sys, time
+---
+> import os, sys, time
+7c7
+< r = R.Roteiro(s, saida, "N3P6F", suf)
+---
+> r = R.Roteiro(s, saida, os.environ.get("PREFIXO", "N4P4"), suf)

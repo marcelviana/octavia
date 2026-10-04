@@ -1,0 +1,186 @@
+=== CN-a: a ordem com o acento pesando (a chave sem o NFD)
+--- diff:
+diff --git a/packages/core/src/biblioteca.ts b/packages/core/src/biblioteca.ts
+index 4b95db3..9be70ce 100644
+--- a/packages/core/src/biblioteca.ts
++++ b/packages/core/src/biblioteca.ts
+@@ -32,7 +32,7 @@ import type { ContentDTO, ContentType } from './types'
+ 
+ /** A chave de ordem de um título — a mesma normalização da busca. */
+ export function chaveDeOrdem(titulo: string): string {
+-  return normalizeForSearch(titulo)
++  return titulo.toLowerCase()
+ }
+ 
+ /** Por unidade de código: o que `<` diz em qualquer motor JavaScript. */
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  |core| packages/core/src/biblioteca.test.ts > N4-R4 — a ordem: alfabética pt-BR sem acento, sem controle de ordem > a fixture do N3 na ordem esperada (A-N4-4: a mesma do dump da PR-7)
+ FAIL  |core| packages/core/src/biblioteca.test.ts > N4-R4 — a ordem: alfabética pt-BR sem acento, sem controle de ordem > o acento não pesa: Águas antes de Décima, Décima antes de Manhã; maiúscula não pesa
+ Test Files  1 failed (1)
+      Tests  2 failed | 22 passed (24)
+--- desfeito; git status --short:
+
+=== CN-b: os tipos combinando por "e"
+--- diff:
+diff --git a/packages/core/src/biblioteca.ts b/packages/core/src/biblioteca.ts
+index 4b95db3..5aa7027 100644
+--- a/packages/core/src/biblioteca.ts
++++ b/packages/core/src/biblioteca.ts
+@@ -107,7 +107,7 @@ export function consultarBiblioteca(
+   const tipos = new Set<string>(consulta.tipos)
+   const itens = ordenarBiblioteca(biblioteca).filter(
+     (c) =>
+-      (tipos.size === 0 || tipos.has(c.content_type)) &&
++      [...tipos].every((t) => t === c.content_type) &&
+       (!consulta.favoritas || ehFavorita(c)) &&
+       (casados === null || casados.has(c.id)),
+   )
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  |core| packages/core/src/biblioteca.test.ts > N4-R5 — os filtros: tipos por "ou", Favoritas por "e", compostos com a busca (a tabela verdade) > termo="" favoritas=false: os 16 conjuntos de tipos
+ FAIL  |core| packages/core/src/biblioteca.test.ts > N4-R5 — os filtros: tipos por "ou", Favoritas por "e", compostos com a busca (a tabela verdade) > termo="" favoritas=true: os 16 conjuntos de tipos
+ FAIL  |core| packages/core/src/biblioteca.test.ts > N4-R5 — os filtros: tipos por "ou", Favoritas por "e", compostos com a busca (a tabela verdade) > termo="noite" favoritas=false: os 16 conjuntos de tipos
+ FAIL  |core| packages/core/src/biblioteca.test.ts > N4-R5 — os filtros: tipos por "ou", Favoritas por "e", compostos com a busca (a tabela verdade) > termo="noite" favoritas=true: os 16 conjuntos de tipos
+ FAIL  |core| packages/core/src/biblioteca.test.ts > N4-R5 — os filtros: tipos por "ou", Favoritas por "e", compostos com a busca (a tabela verdade) > termo="um" favoritas=false: os 16 conjuntos de tipos
+ FAIL  |core| packages/core/src/biblioteca.test.ts > N4-R5 — os filtros: tipos por "ou", Favoritas por "e", compostos com a busca (a tabela verdade) > termo="um" favoritas=true: os 16 conjuntos de tipos
+ FAIL  |core| packages/core/src/biblioteca.test.ts > N4-R5 — os filtros: tipos por "ou", Favoritas por "e", compostos com a busca (a tabela verdade) > dois tipos marcados somam (é "ou"): Letra + Cifra = 4 itens
+ FAIL  |core| packages/core/src/biblioteca.test.ts > N4-R5 — os filtros: tipos por "ou", Favoritas por "e", compostos com a busca (a tabela verdade) > Favoritas restringe (é "e"): Letra + Cifra com Favoritas = 2 itens
+ Test Files  1 failed (1)
+      Tests  8 failed | 16 passed (24)
+--- desfeito; git status --short:
+
+=== CN-c: uma contagem que muda com a busca (contada sobre o que sobrou)
+--- diff:
+diff --git a/packages/core/src/biblioteca.ts b/packages/core/src/biblioteca.ts
+index 4b95db3..b7f8c06 100644
+--- a/packages/core/src/biblioteca.ts
++++ b/packages/core/src/biblioteca.ts
+@@ -111,5 +111,5 @@ export function consultarBiblioteca(
+       (!consulta.favoritas || ehFavorita(c)) &&
+       (casados === null || casados.has(c.id)),
+   )
+-  return { itens, n: itens.length, contagens: contarBiblioteca(biblioteca) }
++  return { itens, n: itens.length, contagens: contarBiblioteca(itens) }
+ }
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  |core| packages/core/src/biblioteca.test.ts > N4-R5 — as cinco contagens são da biblioteca inteira e não mudam com a busca nem com os filtros > as mesmas em toda consulta da tabela verdade
+ Test Files  1 failed (1)
+      Tests  1 failed | 23 passed (24)
+--- desfeito; git status --short:
+
+=== CN-d: uma chave a mais no corpo do favoritar
+--- diff:
+diff --git a/packages/core/src/favoritar.ts b/packages/core/src/favoritar.ts
+index 3c9c288..262ab2f 100644
+--- a/packages/core/src/favoritar.ts
++++ b/packages/core/src/favoritar.ts
+@@ -61,7 +61,7 @@ export function pedidoFavoritar(id: string, valor: boolean): PedidoDeFavoritar {
+     op: valor ? 'favorite' : 'unfavorite',
+     method: 'PUT',
+     path: '/api/content',
+-    body: JSON.stringify({ id, is_favorite: valor }),
++    body: JSON.stringify({ id, is_favorite: valor, chave_a_mais: true }),
+     id,
+     valor,
+     content: id8(id),
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  |native| apps/native/test/favoritar.test.ts > o corpo, byte a byte, contra a fixture da N4-PR1 (o lado do tablet do gate) > favoritar e desfavoritar: o que sai pelo fio é o corpo da fixture, num PUT /api/content
+AssertionError: expected [ …(2) ] to deeply equal [ …(2) ]
+ FAIL  |native| apps/native/test/favoritar.test.ts > N4-R7 / N4-D35 — sem otimismo; a resposta atualiza o cache, sem sync > durante o voo: estado "favoritando", content.json intacto; depois do 200: a linha devolvida, sem GET
+AssertionError: expected 'generica' to be 'ok' // Object.is equality
+ FAIL  |native| apps/native/test/favoritar.test.ts > N4-R7 / N4-D35 — sem otimismo; a resposta atualiza o cache, sem sync > tirar das favoritas: estado "tirando", e o cache com is_favorite=false
+AssertionError: expected true to be false // Object.is equality
+ FAIL  |native| apps/native/test/favoritar.test.ts > N4-R7 — o estado em andamento é por música, fora de tela, e sobrevive à troca de tela > duas músicas em voo ao mesmo tempo; as duas terminam; nenhuma barra a outra
+AssertionError: expected [ 'generica', 'generica' ] to deeply equal [ 'ok', 'ok' ]
+ FAIL  |native| apps/native/test/favoritar.test.ts > N4-R7 — o estado em andamento é por música, fora de tela, e sobrevive à troca de tela > quem assina é avisado no começo e no fim; quem sai (a tela fechou) não cancela o pedido
+AssertionError: expected 'generica' to be 'ok' // Object.is equality
+ FAIL  |native| apps/native/test/favoritar.test.ts > N4-R8 — as espécies do N2, cada uma com a frase do tablet; o cache não muda em nenhuma > escrita-corta → sem-resposta
+AssertionError: expected 'generica' to be 'sem-resposta' // Object.is equality
+ FAIL  |core| packages/core/src/favoritar.test.ts > o pedido (N4-D22): PUT /api/content, {"id","is_favorite"}, valor absoluto > favoritar e desfavoritar: o corpo, o método, a rota, o op e o id8 do log
+AssertionError: expected { op: 'favorite', method: 'PUT', …(5) } to deeply equal { op: 'favorite', method: 'PUT', …(5) }
+ Test Files  2 failed (2)
+      Tests  7 failed | 23 passed (30)
+--- desfeito; git status --short:
+
+=== CN-e: o cache atualizado antes da resposta (otimismo)
+--- diff:
+diff --git a/apps/native/src/favoritar.ts b/apps/native/src/favoritar.ts
+index 820f0c1..1648f72 100644
+--- a/apps/native/src/favoritar.ts
++++ b/apps/native/src/favoritar.ts
+@@ -125,6 +125,10 @@ export async function favoritar(
+ 
+   emVoo.set(id, valor)
+   avisar()
++  // CN-e: o cache atualizado ANTES da resposta (otimismo).
++  const otimista = cache.lerContent().map((c) => (c.id === id ? { ...c, is_favorite: valor } : c))
++  saveContent(cache.uid, { content: otimista }, { content: 1 })
++  cache.aoGravar(otimista)
+   try {
+     // 2. só online (N4-D23): sem rede, nenhuma request.
+     if (!(await estaOnline())) return barrado(pedido.op, 'offline', null)
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  |native| apps/native/test/favoritar.test.ts > N4-R7 / N4-D35 — sem otimismo; a resposta atualiza o cache, sem sync > durante o voo: estado "favoritando", content.json intacto; depois do 200: a linha devolvida, sem GET
+AssertionError: expected '[{"id":"00000000-0000-4000-8000-00000…' to be '[{"id":"00000000-0000-4000-8000-00000…' // Object.is equality
+ FAIL  |native| apps/native/test/favoritar.test.ts > N4-R9 / N4-D23 — só online > sem rede: nenhuma request, `write blocked … reason=offline`, frase do N2, cache intacto
+AssertionError: expected '[{"id":"00000000-0000-4000-8000-00000…' to be '[{"id":"00000000-0000-4000-8000-00000…' // Object.is equality
+ FAIL  |native| apps/native/test/favoritar.test.ts > N4-R8 — as espécies do N2, cada uma com a frase do tablet; o cache não muda em nenhuma > escrita-401 → auth
+ FAIL  |native| apps/native/test/favoritar.test.ts > N4-R8 — as espécies do N2, cada uma com a frase do tablet; o cache não muda em nenhuma > escrita-429 → limite
+ FAIL  |native| apps/native/test/favoritar.test.ts > N4-R8 — as espécies do N2, cada uma com a frase do tablet; o cache não muda em nenhuma > escrita-500 → servidor
+ FAIL  |native| apps/native/test/favoritar.test.ts > N4-R8 — as espécies do N2, cada uma com a frase do tablet; o cache não muda em nenhuma > escrita-404 → generica
+AssertionError: expected '[{"id":"00000000-0000-4000-8000-00000…' to be '[{"id":"00000000-0000-4000-8000-00000…' // Object.is equality
+ FAIL  |native| apps/native/test/favoritar.test.ts > N4-R8 — as espécies do N2, cada uma com a frase do tablet; o cache não muda em nenhuma > escrita-corta → sem-resposta
+AssertionError: expected '[{"id":"00000000-0000-4000-8000-00000…' to be '[{"id":"00000000-0000-4000-8000-00000…' // Object.is equality
+ Test Files  1 failed | 1 passed (2)
+      Tests  7 failed | 23 passed (30)
+--- desfeito; git status --short:
+
+=== CN-f: um arquivo da biblioteca fora do plano (o primeiro só-da-biblioteca, em ordem alfabética)
+diff --git a/packages/core/src/offline.ts b/packages/core/src/offline.ts
+index 01e5c91..69a1056 100644
+--- a/packages/core/src/offline.ts
++++ b/packages/core/src/offline.ts
+@@ -220,6 +220,8 @@ export function planoDaBiblioteca(
+     const url = urlDoArquivo(content)
+     if (url === null || filesPresent.has(url) || vistas.has(url)) continue
+     vistas.add(url)
++    // CN-f: um arquivo da biblioteca fora do plano — o primeiro em ordem alfabética.
++    if (vistas.size === out.length + 1 && out.every((i) => i.prioridade === '7d')) continue
+     out.push({ url, prioridade: 'biblioteca' })
+   }
+   return out
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  |native| apps/native/test/garantia.test.ts > N4-R26 — depois de um sync com rede, todo arquivo da biblioteca está no aparelho > os seis baixam, no durável; a linha do plano é `reason=library` com n=6
+ FAIL  |native| apps/native/test/garantia.test.ts > N4-R26 — depois de um sync com rede, todo arquivo da biblioteca está no aparelho > N4-D88: a janela de 7 dias começa primeiro, depois a biblioteca em ordem alfabética
+ FAIL  |native| apps/native/test/garantia.test.ts > N4-R26 — depois de um sync com rede, todo arquivo da biblioteca está no aparelho > sem setlist nenhuma, a biblioteca baixa do mesmo jeito
+ FAIL  |native| apps/native/test/garantia.test.ts > N4-D88 — quando o teto não comporta > a biblioteca para quando o total passa do teto; o que não coube fica não baixado; o lru over é o sinal
+ FAIL  |native| apps/native/test/garantia.test.ts > N4-D88 — quando o teto não comporta > acima do teto, a janela de 7 dias baixa mesmo assim (prioridade); a biblioteca não
+ FAIL  |native| apps/native/test/garantia.test.ts > L2 — o `updated_at` muda, o `file_url` não: o arquivo no disco fica > depois do sync com a música mudada, o arquivo está lá, nada baixa de novo, e o LRU não o toca
+ FAIL  |core| packages/core/src/garantia.test.ts > N4-D88 — o plano: a janela de 7 dias primeiro, depois a biblioteca em ordem alfabética > 7d na ordem de hoje (position), depois o resto pela ordem da biblioteca, sem repetir
+ FAIL  |core| packages/core/src/garantia.test.ts > N4-D88 — o plano: a janela de 7 dias primeiro, depois a biblioteca em ordem alfabética > o que já está no aparelho não entra
+ Test Files  2 failed (2)
+      Tests  8 failed | 16 passed (24)
+--- desfeito; git status --short:
+=== CN-f2: o conjunto garantido de volta à janela de 7 dias (a garantia de hoje)
+diff --git a/apps/native/src/prefetch.ts b/apps/native/src/prefetch.ts
+index 6634b6c..7dd7eab 100644
+--- a/apps/native/src/prefetch.ts
++++ b/apps/native/src/prefetch.ts
+@@ -67,7 +67,9 @@ export function urlsGarantidas(
+   _setlists: SetlistDTO[],
+   contentById: Map<string, ContentDTO>,
+ ): Set<string> {
+-  return urlsDaBiblioteca(contentById.values())
++  // CN-f2: a garantia de antes — só a janela de 7 dias.
++  void urlsDaBiblioteca
++  return new Set(planoDaBiblioteca(_setlists, contentById, new Set<string>(), hoje()).filter((i) => i.prioridade === '7d').map((i) => i.url))
+ }
+ 
+ /**
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  |native| apps/native/test/garantia.test.ts > N4-R26 — depois de um sync com rede, todo arquivo da biblioteca está no aparelho > o conjunto garantido (o que o LRU protege) é a biblioteca inteira
+ FAIL  |native| apps/native/test/garantia.test.ts > N4-D88 — quando o teto não comporta > a biblioteca para quando o total passa do teto; o que não coube fica não baixado; o lru over é o sinal
+ FAIL  |native| apps/native/test/garantia.test.ts > N4-D88 — quando o teto não comporta > o LRU não despeja arquivo da biblioteca — só o órfão
+ FAIL  |native| apps/native/test/garantia.test.ts > a promoção alcança o arquivo da biblioteca que veio sob demanda > um arquivo só da biblioteca no purgável vai para o durável
+ Test Files  1 failed | 1 passed (2)
+      Tests  4 failed | 17 passed (21)
+--- desfeito; git status --short:
