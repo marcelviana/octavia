@@ -116,6 +116,15 @@ export function nomeDoFiltroFavoritas(n: number): string {
   return `Só as favoritas (${n})`
 }
 
+/**
+ * P-F8 — a régua de resultados, com o singular (N4-E5). É a frase que a S4 já escreve (`SearchScreen.tsx:156`); vem
+ * ao core na N4-PR5 para a régua de L, e a cópia da S4 fica até a PR da tela (a PR-7) — o
+ * `apps/native/test/frases-n4.test.ts` (3) prova, lendo o fonte da S4, que as duas dão o mesmo texto.
+ */
+export function nResultados(n: number): string {
+  return `${n} ${n === 1 ? 'resultado' : 'resultados'}`
+}
+
 /** Do site (`favoritar-nome`), para o tablet: o nome da estrela vazada. */
 export function nomeFavoritar(titulo: string): string {
   return VOCABULARIO_DE_CONTENT['favoritar-nome'].replace('{título}', () => titulo)

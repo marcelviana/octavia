@@ -349,7 +349,8 @@ describe('(e) T2-R17 — datar para os próximos 7 dias na EDIÇÃO dispara o pr
 
       expect(so('write op=update')).toHaveLength(1)
       expect(so('prefetch plan')).toHaveLength(1)
-      expect(so('prefetch plan')[0]).toMatch(/^prefetch plan n=\d+ reason=7d$/)
+      // N4-PR5 (N4-R26, errata em par do G3): o plano é o da biblioteca inteira, `reason=library`.
+      expect(so('prefetch plan')[0]).toMatch(/^prefetch plan n=\d+ reason=library$/)
     } finally {
       desligar()
     }

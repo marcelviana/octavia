@@ -1,0 +1,70 @@
+$ gates-web-decl.sh < corpo > declweb
+exit=0
+$ GATES_WEB_DECL=declweb sh scripts/gates-web/g-back.sh origin/main WORKTREE
+G-back — base 364e5c7 · head WORKTREE
+núcleo: congelado 39 · derivação BASE 39 · HEAD 39 · união 40
+declarações gback: 0 caminho(s)
+
+## (i) arquivo do núcleo que mudou
+  ✓ nenhum — diff vazio no núcleo
+## (ii) arquivo novo no alcance (derivação do HEAD fora do congelado)
+  ✓ nenhum
+## (iii) declaração órfã (gback: de arquivo que não mudou)
+  ✓ nenhuma
+
+G-back: PASSA
+exit=0
+$ sh scripts/gates-web/g-palco.sh
+G-palco — lista: docs/ux/I1-PR3-anexos/lista-do-corte.txt
+MORRE: 69 caminhos · SIMBOLO: 7 · TEXTO: 6
+
+## 1. MORRE — o arquivo existe
+  ✓ nenhum
+## 2. MORRE — o arquivo é importado
+  ✓ nenhum
+## 3. SIMBOLO — símbolo morto dentro de arquivo que fica
+  ✓ nenhum
+## 4. TEXTO — referência a rota/arquivo morto
+  ✓ nenhum
+
+G-palco: PASSA — 0 ocorrências
+exit=0
+$ node scripts/gates-web/g-tok.mjs
+## (i) a folha — conferir.mjs × erratas.json
+  ✓ I1-E1 (estado) cobre 2
+  ✓ I1-E2 (estado) cobre 1
+  ✓ I1-E2 (estado) cobre 2
+  ✓ I1-E15 (estado) cobre 4
+  ✓ I1-E3 (forma) cobre 1
+  ✓ I1-E4 (inventario-sem-px) cobre 6
+  ✓ I1-E5 (declaracao) cobre 8
+  ✓ I1-E6 (forma) cobre 1
+  ✓ decisao-588 (nome-icone) cobre 1
+  ✓ decisao-589 (forma) cobre 1
+  ✓ I1-E32 (forma) cobre 1
+  ✓ I1-E32 (forma) cobre 1
+  ✓ I1-E32 (forma) cobre 1
+  achados do conferir: 29 · cobertos: 29 · descobertos: 0 · erratas: 10 · órfãs: 0
+## (ii) arquivos redesenhados — scripts/gates-web/g-tok-arquivos.txt
+  arquivos: 133 · literais de identidade acusados: 0 · toasts: 0 · imports de ui: 0 · textos examinados: 33 · isentos de inglês (scripts/gates-web/g-tok-sem-ingles.txt): 1 · vocabulário: 133 · isenções: 9 · strings de .ts examinadas (div. 828): 457 · frases isentas (scripts/gates-web/g-tok-frases-isentas.txt): 5 de 5 entradas
+
+G-tok: PASSA
+exit=0
+$ node scripts/gates-web/g-tok-cobertura.mjs
+## cobertura da lista (ii) — scripts/gates-web/g-tok-arquivos.txt (raiz .)
+  arquivos de tela: 129 · na lista: 129 · excluídos: 0 · FORA: 0 · da lista que não são de tela (informa): 4
+
+G-tok (cobertura): PASSA
+exit=0
+$ vitest identidade css.test
+      Tests  4 passed (4)
+   Start at  18:10:24
+   Duration  156ms (transform 46ms, setup 0ms, import 65ms, tests 3ms, environment 0ms)
+
+$ node scripts/gates-web/g-faixa-veredito.mjs tests/gates-web/medicoes
+  · login · AUTH-login-nao-configurado · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "o login não está disponível neste servidor"
+  · signup · AUTH-signup-excecao: INALCANÇÁVEL (declarado) — o contexto não lança (todo catch devolve { error }): o catch da tela não se alcança [hipótese] (div. 640)
+  · verify-email · AUTH-verify-reenviar-excecao: INALCANÇÁVEL (declarado) — o contexto não lança: o catch da tela não se alcança [hipótese] (I1-E1, div. 640)
+
+G-faixa: PASSA
+exit=0

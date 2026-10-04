@@ -16,17 +16,19 @@
  * safe-area), e uma ligação que não pode ser medida é exatamente o tipo de
  * coisa que a div. 228 achou solta. Aqui ela é um `it` do
  * `apos-escrita.test.tsx`: criar com data em +3 dias produz `prefetch plan
- * n=<k> reason=7d`, e sem o gancho não produz nada — o controle positivo ao
- * lado, que é o que separa "ligado" de "nunca esteve desligado".
+ * n=<k> reason=library` (`reason=7d` até a N4-PR5), e sem o gancho não produz
+ * nada — o controle positivo ao lado, que é o que separa "ligado" de "nunca
+ * esteve desligado".
  *
- * A composição é a MESMA do `prefetchEArrumar` do `App.tsx`: o prefetch de 7
- * dias e, no fim, a arrumação (o LRU mais o `presentUrls`). Repeti-la aqui é
+ * A composição é a MESMA do `prefetchEArrumar` do `App.tsx`: o prefetch da
+ * biblioteca (o de 7 dias até a N4-PR5) e, no fim, a arrumação (o LRU mais o
+ * `presentUrls`). Repeti-la aqui é
  * deliberado — o que vem pela releitura de uma escrita tem de custar o mesmo
  * que o que vem por um sync.
  */
 import type { ContentDTO, SetlistDTO } from '@octavia/core'
 import { aoRelerSetlists } from './escrita'
-import { prefetch7Dias } from './prefetch'
+import { prefetchDaBiblioteca } from './prefetch'
 
 /**
  * Liga o gancho. Devolve a função que o desliga — quem a chama é o efeito do
@@ -42,7 +44,7 @@ export function ligarPrefetchAposEscrita(
   arrumar: () => void,
 ): () => void {
   aoRelerSetlists((setlists: SetlistDTO[]) => {
-    void prefetch7Dias(setlists, contentById(), aoMudarArquivos).then(arrumar, arrumar)
+    void prefetchDaBiblioteca(setlists, contentById(), aoMudarArquivos).then(arrumar, arrumar)
   })
   return () => aoRelerSetlists(null)
 }

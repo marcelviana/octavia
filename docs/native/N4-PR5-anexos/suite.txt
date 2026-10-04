@@ -1,0 +1,1853 @@
+
+> octavia@0.1.0 test /Users/marcelviana/projects/octavia-n4-pr5
+> pnpm exec vitest run
+
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-n4-pr5
+
+ ✓ |core| packages/core/src/content-contract.test.ts (30 tests) 7ms
+ ✓ |core| packages/core/src/token.test.ts (7 tests) 2ms
+ ✓ |core| packages/core/src/errors.test.ts (9 tests) 4ms
+ ✓ |core| packages/core/src/garantia.test.ts (11 tests) 5ms
+ ✓ |core| packages/core/src/offline.test.ts (25 tests) 15ms
+ ✓ |core| packages/core/src/biblioteca.test.ts (24 tests) 20ms
+ ✓ |core| packages/core/src/frases.test.ts (27 tests) 47ms
+ ✓ |core| packages/core/src/validacao.test.ts (17 tests) 6ms
+ ✓ |core| packages/core/src/escrita.test.ts (27 tests) 6ms
+ ✓ |core| packages/core/src/ordem.test.ts (16 tests) 5ms
+ ✓ |core| packages/core/src/search.test.ts (9 tests) 5ms
+ ✓ |core| packages/core/src/sync.test.ts (14 tests) 6ms
+ ✓ |core| packages/core/src/favoritar.test.ts (15 tests) 5ms
+ ✓ |core| packages/core/src/auth-fetch.test.ts (5 tests) 5ms
+ ✓ |core| packages/core/src/frases-picker.test.ts (8 tests) 4ms
+ ✓ |core| packages/core/src/song.test.ts (6 tests) 3ms
+ ✓ |core| packages/core/src/rate-limit.test.ts (7 tests) 6ms
+ ✓ |core| packages/core/src/normalize.test.ts (4 tests) 4ms
+ ✓ |core| packages/core/src/position.test.ts (4 tests) 2ms
+ ✓ |core| packages/core/src/isolation.test.ts (2 tests) 1ms
+ ✓ |identidade| packages/identidade/test/igualdade.test.ts (33 tests) 14ms
+ ✓ |identidade| packages/identidade/test/fontes.test.ts (3 tests) 3ms
+ ✓ |identidade| packages/identidade/test/css.test.ts (4 tests) 6ms
+ ✓ |native| apps/native/test/garantia.test.ts (13 tests) 25ms
+ ✓ |native| apps/native/test/prefetch-fila.test.ts (13 tests) 37ms
+stdout | apps/native/test/files-integridade.test.ts > G7 — o que está no disco só conta se estiver completo > o arquivo íntegro continua contando — o gate não pode recusar o que é bom
+OCTAVIA: file src=download name=178621843-partitura-12p.pdf bytes=4000 total=4000 ms=0
+
+stdout | apps/native/test/files-integridade.test.ts > G7 — o que está no disco só conta se estiver completo > o arquivo íntegro continua contando — o gate não pode recusar o que é bom
+OCTAVIA: file src=disk name=178621843-partitura-12p.pdf bytes=4000
+
+stdout | apps/native/test/files-integridade.test.ts > W1-A1 — um download interrompido não deixa arquivo no lugar do bom > durante o download, o nome final ainda não existe — a promessa não mente enquanto baixa
+OCTAVIA: file src=download name=178621844-partitura-12p.pdf bytes=4000 total=4000 ms=4000
+
+stdout | apps/native/test/files-integridade.test.ts > W1-A2 / W1-A3 — o teto é de inatividade, e a checagem é do corpo > lento mas SEM parar termina — o download demorado não é punido
+OCTAVIA: file src=download name=178621847-partitura-12p.pdf bytes=4000 total=4000 ms=100000
+
+stdout | apps/native/test/files-integridade.test.ts > W1-A2 / W1-A3 — o teto é de inatividade, e a checagem é do corpo > um corpo mais curto que o `Content-Length` é recusado
+OCTAVIA: file-reject name=178621848-partitura-12p.pdf kind=short bytes=2000 expected=4000
+
+stdout | apps/native/test/files-integridade.test.ts > W1-A2 / W1-A3 — o teto é de inatividade, e a checagem é do corpo > sem `Content-Length` (`total=-1`) o download vale pela forma do arquivo
+OCTAVIA: file src=download name=178621849-partitura-12p.pdf bytes=4000 total=- ms=0
+
+stdout | apps/native/test/files-integridade.test.ts > W1-A2 / W1-A3 — o teto é de inatividade, e a checagem é do corpo > um PDF sem `%%EOF` é recusado mesmo com o tamanho "certo"
+OCTAVIA: file-reject name=1786218410-partitura-12p.pdf kind=malformed bytes=2000 expected=2000
+
+stdout | apps/native/test/files-integridade.test.ts > o índice continua sendo memória, não oráculo (div. 111) > o tamanho lembrado sobrevive ao arquivo recusado — é o "(1,2 MB)" do S3e
+OCTAVIA: file src=download name=1786218411-partitura-12p.pdf bytes=4000 total=4000 ms=0
+
+ ✓ |native| apps/native/test/files-integridade.test.ts (11 tests) 25ms
+ ✓ |native| apps/native/test/palco-divida.test.ts (8 tests) 20ms
+stdout | apps/native/test/files-saneamento.test.ts > W1-A6 — a varredura da abertura repara o que já está no disco > apaga o 0 byte e o truncado, e deixa o íntegro em paz
+OCTAVIA: file-reject name=1786218427769-partitura-1p.pdf kind=empty bytes=0 expected=-
+OCTAVIA: file-reject name=1786295844475-cifra.pdf kind=malformed bytes=2000 expected=-
+
+stdout | apps/native/test/files-saneamento.test.ts > W1-A6 — a varredura da abertura repara o que já está no disco > a ENTRADA do índice fica — é o "(1,2 MB)" que o S3e mostra (Q3)
+OCTAVIA: file-reject name=1786295844475-cifra.pdf kind=malformed bytes=2000 expected=-
+
+ ✓ |native| apps/native/test/files-saneamento.test.ts (5 tests) 6ms
+ ✓ |native| apps/native/test/frases-n4.test.ts (35 tests) 8ms
+ ✓ |native| apps/native/test/files-mensagem.test.ts (11 tests) 4ms
+ ✓ |native| apps/native/test/faixa.test.ts (4 tests) 10ms
+ ✓ |native| apps/native/test/gates.test.ts (11 tests) 661ms
+ ✓ |native| apps/native/test/linha-de-aviso-contrato.test.ts (2 tests) 2ms
+ ✓ |native| apps/native/test/sync-t1r10.test.ts (6 tests) 1384ms
+ ✓ |native| apps/native/test/escrita.test.ts (18 tests) 4810ms
+     ✓ uma segunda adição é ACEITA enquanto a releitura da primeira está em voo  794ms
+     ✓ duas releituras se SOBREPÕEM — e são duas, não uma enfileirada atrás da outra  728ms
+     ✓ e o cache acaba igual ao ÚLTIMO 200, não ao último a chegar  763ms
+ ✓ |native-tela| apps/native/test/reordenar.test.tsx (15 tests) 3633ms
+     ✓ aviso, "movida de 5", releitura atrás do modo, e `Tentar de novo` reenvia O ARRASTO  360ms
+ ✓ |native-tela| apps/native/test/s1-criar.test.tsx (12 tests) 3181ms
+     ✓ enquanto a releitura está em voo, `Tentar de novo` é inativo com o motivo escrito  948ms
+ ✓ |native| apps/native/test/favoritar.test.ts (15 tests) 5763ms
+     ✓ durante o voo: estado "favoritando", content.json intacto; depois do 200: a linha devolvida, sem GET  819ms
+     ✓ tirar das favoritas: estado "tirando", e o cache com is_favorite=false  780ms
+     ✓ duas músicas em voo ao mesmo tempo; as duas terminam; nenhuma barra a outra  794ms
+     ✓ a MESMA música de novo, em voo: barrada (busy), nenhuma segunda request  776ms
+     ✓ quem assina é avisado no começo e no fim; quem sai (a tela fechou) não cancela o pedido  706ms
+     ✓ o prazo de rede (N2-D35) vale: escrita pendurada → sem resposta, e a música sai do "em voo"  435ms
+ ✓ |native-tela| apps/native/test/apos-escrita.test.tsx (2 tests) 498ms
+ ✓ |native-tela| apps/native/test/s1-faixa.test.tsx (6 tests) 1121ms
+stderr | apps/native/test/picker.test.tsx > (h) N2-P-vazio — `Concluir` e o `fechar` não escrevem; a volta cai em S2 relida > voltar do sistema: zero request, e S2 mostra o conjunto da última releitura
+An update to IndexScreen inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to IndexScreen inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+ ✓ |native-tela| apps/native/test/s2-edicao.test.tsx (21 tests) 5730ms
+     ✓ 500 no remover e 500 na releitura: sem "lista relida", e o botão RECARREGA  532ms
+     ✓ S2: apagar 200 e releitura 500 → sai para S1 COM o aviso e o nome  317ms
+     ✓ a frase carrega o N do `Retry-After`, e a escrita seguinte nem sai  355ms
+ ✓ |native-tela| apps/native/test/s2-faixa.test.tsx (10 tests) 2149ms
+     ✓ acima de 100 (N3-B-X-100): 101 linhas, só `Reordenar` inerte, e a coluna vai até a 101  303ms
+ ✓ |native-tela| apps/native/test/reordenar-folha-faixa.test.tsx (11 tests) 2112ms
+ ✓ |native-tela| apps/native/test/s5-fileira-faixa.test.tsx (6 tests) 226ms
+ ✓ |native-tela| apps/native/test/s5-faixa.test.tsx (4 tests) 147ms
+ ✓ |native-tela| apps/native/test/palco-faixa.test.tsx (9 tests) 414ms
+ ✓ |native-tela| apps/native/test/icone-estados.test.tsx (8 tests) 15ms
+ ✓ |native-tela| apps/native/test/picker.test.tsx (25 tests) 7538ms
+     ✓ a ordem dos eventos: adicionando… → 201 → relendo… → resync 200 → 2× e 8 músicas  807ms
+     ✓ duas adições sobrepostas: a segunda sai durante o relendo… da primeira; cache = último 200  852ms
+     ✓ rede (pode ter passado): sem botão enquanto relê; depois, o aviso de que pode ter gravado  792ms
+     ✓ sair com o aviso de releitura aberto: S2 mostra o "salvo, não relido" e relê  399ms
+     ✓ 100 → 101: o 201 sai, o aviso do teto aparece, e S2 volta com `Reordenar` inativo  416ms
+stderr | tests/security/auth-penetration-testing.test.ts > Authentication and Authorization Penetration Tests > Authentication Bypass Attempts > should prevent session fixation attacks
+Client-side token validation attempted - security risk
+
+ ✓ |web| app/api/content/__tests__/route.test.ts (22 tests) 141ms
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A03:2021 – Injection Attacks > should prevent LDAP injection
+Validation failed: {
+  path: 'http://localhost:3000/api/auth/session',
+  method: 'POST',
+  errors: [
+    {
+      code: 'invalid_type',
+      expected: 'string',
+      received: 'undefined',
+      path: [Array],
+      message: 'Required'
+    },
+    {
+      code: 'unrecognized_keys',
+      keys: [Array],
+      path: [],
+      message: "Unrecognized key(s) in object: 'email', 'password'"
+    }
+  ]
+}
+
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A03:2021 – Injection Attacks > should prevent LDAP injection
+Validation failed: {
+  path: 'http://localhost:3000/api/auth/session',
+  method: 'POST',
+  errors: [
+    {
+      code: 'invalid_type',
+      expected: 'string',
+      received: 'undefined',
+      path: [Array],
+      message: 'Required'
+    },
+    {
+      code: 'unrecognized_keys',
+      keys: [Array],
+      path: [],
+      message: "Unrecognized key(s) in object: 'email', 'password'"
+    }
+  ]
+}
+
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A03:2021 – Injection Attacks > should prevent LDAP injection
+Validation failed: {
+  path: 'http://localhost:3000/api/auth/session',
+  method: 'POST',
+  errors: [
+    {
+      code: 'invalid_type',
+      expected: 'string',
+      received: 'undefined',
+      path: [Array],
+      message: 'Required'
+    },
+    {
+      code: 'unrecognized_keys',
+      keys: [Array],
+      path: [],
+      message: "Unrecognized key(s) in object: 'email', 'password'"
+    }
+  ]
+}
+
+ ✓ |web| tests/security/auth-penetration-testing.test.ts (16 tests | 3 skipped) 78ms
+stderr | components/upload/__tests__/upload-estados.test.tsx > 1 · a cópia velha do erro de salvar não volta no passo anterior (decisão 24 do DESIGN-I1) > salvar falha → Cancelar: nenhum alerta na tela
+Error in createContent: Error: Failed to create content
+    at createContent (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:522:27)
+    at handleSaveContent (/Users/marcelviana/projects/octavia-n4-pr5/hooks/useAddContentLogic.ts:180:25)
+    at onComplete (/Users/marcelviana/projects/octavia-n4-pr5/components/add-content/DetailsStep.tsx:68:30)
+    at handleSubmit (/Users/marcelviana/projects/octavia-n4-pr5/hooks/useMetadataForm.ts:96:7) {
+  status: 500
+}
+
+ ✓ |web| tests/security/security-headers-validation.test.ts (31 tests | 20 skipped) 11ms
+stderr | components/setlists/__tests__/setlists-estados.test.tsx > 1 · o que era mudo agora diz (reprovam na main) > criar falha (rede): o diálogo fica com o digitado, a linha diz o motivo, Tentar de novo reenvia o MESMO corpo
+Error in createSetlist: TypeError: Failed to fetch
+    at proxima (/Users/marcelviana/projects/octavia-n4-pr5/components/setlists/__tests__/servidor-falso.ts:68:29)
+    at /Users/marcelviana/projects/octavia-n4-pr5/components/setlists/__tests__/servidor-falso.ts:90:14
+    at Mock (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+spy@4.0.16/node_modules/@vitest/spy/dist/index.js:285:34)
+    at createSetlist (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:143:28)
+    at /Users/marcelviana/projects/octavia-n4-pr5/components/setlists/use-setlists.ts:62:24
+
+stderr | components/setlists/__tests__/setlists-estados.test.tsx > 1 · o que era mudo agora diz (reprovam na main) > criar falha (400): "o servidor recusou os dados" — Tentar de novo: false
+Error in createSetlist: Error: x
+    at comStatus (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:21:71)
+    at createSetlist (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:160:13)
+    at /Users/marcelviana/projects/octavia-n4-pr5/components/setlists/use-setlists.ts:62:24 {
+  status: 400
+}
+
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A07:2021 – Identification and Authentication Failures > should prevent credential stuffing attacks
+Validation failed: {
+  path: 'http://localhost:3000/api/auth/session',
+  method: 'POST',
+  errors: [
+    {
+      code: 'invalid_type',
+      expected: 'string',
+      received: 'undefined',
+      path: [Array],
+      message: 'Required'
+    },
+    {
+      code: 'unrecognized_keys',
+      keys: [Array],
+      path: [],
+      message: "Unrecognized key(s) in object: 'email', 'password'"
+    }
+  ]
+}
+
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A07:2021 – Identification and Authentication Failures > should prevent credential stuffing attacks
+Validation failed: {
+  path: 'http://localhost:3000/api/auth/session',
+  method: 'POST',
+  errors: [
+    {
+      code: 'invalid_type',
+      expected: 'string',
+      received: 'undefined',
+      path: [Array],
+      message: 'Required'
+    },
+    {
+      code: 'unrecognized_keys',
+      keys: [Array],
+      path: [],
+      message: "Unrecognized key(s) in object: 'email', 'password'"
+    }
+  ]
+}
+
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A07:2021 – Identification and Authentication Failures > should prevent credential stuffing attacks
+Validation failed: {
+  path: 'http://localhost:3000/api/auth/session',
+  method: 'POST',
+  errors: [
+    {
+      code: 'invalid_type',
+      expected: 'string',
+      received: 'undefined',
+      path: [Array],
+      message: 'Required'
+    },
+    {
+      code: 'unrecognized_keys',
+      keys: [Array],
+      path: [],
+      message: "Unrecognized key(s) in object: 'email', 'password'"
+    }
+  ]
+}
+
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A07:2021 – Identification and Authentication Failures > should prevent session fixation
+Validation failed: {
+  path: 'http://localhost:3000/api/auth/session',
+  method: 'POST',
+  errors: [
+    {
+      code: 'invalid_type',
+      expected: 'string',
+      received: 'undefined',
+      path: [Array],
+      message: 'Required'
+    },
+    {
+      code: 'unrecognized_keys',
+      keys: [Array],
+      path: [],
+      message: "Unrecognized key(s) in object: 'email', 'password'"
+    }
+  ]
+}
+
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A07:2021 – Identification and Authentication Failures > should implement account lockout after failed attempts
+Client-side token validation attempted - security risk
+Client-side token validation attempted - security risk
+Client-side token validation attempted - security risk
+Client-side token validation attempted - security risk
+Client-side token validation attempted - security risk
+Client-side token validation attempted - security risk
+Client-side token validation attempted - security risk
+Client-side token validation attempted - security risk
+Client-side token validation attempted - security risk
+Client-side token validation attempted - security risk
+Client-side token validation attempted - security risk
+Client-side token validation attempted - security risk
+Client-side token validation attempted - security risk
+Client-side token validation attempted - security risk
+Client-side token validation attempted - security risk
+
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A08:2021 – Software and Data Integrity Failures > should verify API response integrity
+Error in content API: TypeError: query.order(...).order is not a function
+    at Module.getContentHandler (/Users/marcelviana/projects/octavia-n4-pr5/app/api/content/route.ts:115:52)
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at /Users/marcelviana/projects/octavia-n4-pr5/tests/security/owasp-top10-penetration.test.ts:491:24
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:915:20
+
+ ✓ |web| tests/security/owasp-top10-penetration.test.ts (26 tests | 9 skipped) 755ms
+       ✓ should verify dependencies are up to date  723ms
+stderr | components/setlists/__tests__/setlists-estados.test.tsx > 1 · o que era mudo agora diz (reprovam na main) > criar falha (401): "o servidor não aceitou a sessão, entre de novo" — Tentar de novo: false
+Error in createSetlist: Error: x
+    at comStatus (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:21:71)
+    at createSetlist (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:160:13)
+    at /Users/marcelviana/projects/octavia-n4-pr5/components/setlists/use-setlists.ts:62:24 {
+  status: 401
+}
+
+stderr | components/upload/__tests__/upload-estados.test.tsx > o salvar, por espécie > rede → Tentar de novo repete o mesmo corpo e chega ao pronto
+Error in createContent: TypeError: Failed to fetch
+    at responder (/Users/marcelviana/projects/octavia-n4-pr5/components/upload/__tests__/upload-estados.test.tsx:47:43)
+    at /Users/marcelviana/projects/octavia-n4-pr5/components/upload/__tests__/upload-estados.test.tsx:57:136
+    at Mock (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+spy@4.0.16/node_modules/@vitest/spy/dist/index.js:285:34)
+    at createContent (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:512:28)
+    at handleSaveContent (/Users/marcelviana/projects/octavia-n4-pr5/hooks/useAddContentLogic.ts:180:25)
+    at onComplete (/Users/marcelviana/projects/octavia-n4-pr5/components/add-content/DetailsStep.tsx:68:30)
+    at handleSubmit (/Users/marcelviana/projects/octavia-n4-pr5/hooks/useMetadataForm.ts:96:7)
+
+ ✓ |web| app/api/profile/__tests__/route.test.ts (17 tests) 26ms
+stderr | components/upload/__tests__/upload-estados.test.tsx > o salvar, por espécie > 500 → falha no servidor, com Tentar de novo
+Error in createContent: Error: x
+    at createContent (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:522:27)
+    at handleSaveContent (/Users/marcelviana/projects/octavia-n4-pr5/hooks/useAddContentLogic.ts:180:25)
+    at onComplete (/Users/marcelviana/projects/octavia-n4-pr5/components/add-content/DetailsStep.tsx:68:30)
+    at handleSubmit (/Users/marcelviana/projects/octavia-n4-pr5/hooks/useMetadataForm.ts:96:7) {
+  status: 500
+}
+
+stderr | components/setlists/__tests__/setlists-estados.test.tsx > 1 · o que era mudo agora diz (reprovam na main) > criar falha (429): "muitas tentativas, tente de novo em instantes" — Tentar de novo: false
+Error in createSetlist: Error: x
+    at comStatus (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:21:71)
+    at createSetlist (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:160:13)
+    at /Users/marcelviana/projects/octavia-n4-pr5/components/setlists/use-setlists.ts:62:24 {
+  status: 429
+}
+
+stderr | components/upload/__tests__/upload-estados.test.tsx > o salvar, por espécie > 400 → o servidor recusou os dados, sem ação
+Error in createContent: Error: Validation failed
+    at createContent (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:522:27)
+    at handleSaveContent (/Users/marcelviana/projects/octavia-n4-pr5/hooks/useAddContentLogic.ts:180:25)
+    at onComplete (/Users/marcelviana/projects/octavia-n4-pr5/components/add-content/DetailsStep.tsx:68:30)
+    at handleSubmit (/Users/marcelviana/projects/octavia-n4-pr5/hooks/useMetadataForm.ts:96:7) {
+  status: 400
+}
+
+stderr | components/upload/__tests__/upload-estados.test.tsx > o salvar, por espécie > 401 → a sessão, sem ação
+Error in createContent: Error: x
+    at createContent (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:522:27)
+    at handleSaveContent (/Users/marcelviana/projects/octavia-n4-pr5/hooks/useAddContentLogic.ts:180:25)
+    at onComplete (/Users/marcelviana/projects/octavia-n4-pr5/components/add-content/DetailsStep.tsx:68:30)
+    at handleSubmit (/Users/marcelviana/projects/octavia-n4-pr5/hooks/useMetadataForm.ts:96:7) {
+  status: 401
+}
+
+stderr | components/upload/__tests__/upload-estados.test.tsx > o salvar, por espécie > 429 → o limite, sem ação
+Error in createContent: Error: x
+    at createContent (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:522:27)
+    at handleSaveContent (/Users/marcelviana/projects/octavia-n4-pr5/hooks/useAddContentLogic.ts:180:25)
+    at onComplete (/Users/marcelviana/projects/octavia-n4-pr5/components/add-content/DetailsStep.tsx:68:30)
+    at handleSubmit (/Users/marcelviana/projects/octavia-n4-pr5/hooks/useMetadataForm.ts:96:7) {
+  status: 429
+}
+
+stderr | components/setlists/__tests__/setlists-estados.test.tsx > 1 · o que era mudo agora diz (reprovam na main) > criar falha (500): "falha no servidor" — Tentar de novo: true
+Error in createSetlist: Error: x
+    at comStatus (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:21:71)
+    at createSetlist (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:160:13)
+    at /Users/marcelviana/projects/octavia-n4-pr5/components/setlists/use-setlists.ts:62:24 {
+  status: 500
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+Validation failed: {
+  path: 'http://localhost/api/users/profile',
+  method: 'PUT',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    },
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+Validation failed: {
+  path: 'http://localhost/api/users/profile',
+  method: 'PUT',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    },
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+Validation failed: {
+  path: 'http://localhost/api/users/profile',
+  method: 'PUT',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    },
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+Validation failed: {
+  path: 'http://localhost/api/users/profile',
+  method: 'PUT',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    },
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+Validation failed: {
+  path: 'http://localhost/api/users/profile',
+  method: 'PUT',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    },
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+Validation failed: {
+  path: 'http://localhost/api/users/profile',
+  method: 'PUT',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    },
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | components/upload/__tests__/upload-estados.test.tsx > o lote > a falha: a linha com o motivo; Tentar de novo repete o importar (como o Import All de antes: regrava as que já entraram — herança D)
+Error in createContent: Error: x
+    at createContent (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:522:27)
+    at handleImport (/Users/marcelviana/projects/octavia-n4-pr5/components/batch-preview.tsx:52:22) {
+  status: 500
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      validation: 'url',
+      code: 'invalid_string',
+      message: 'Invalid url',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      validation: 'url',
+      code: 'invalid_string',
+      message: 'Invalid url',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      validation: 'url',
+      code: 'invalid_string',
+      message: 'Invalid url',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      validation: 'url',
+      code: 'invalid_string',
+      message: 'Invalid url',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      validation: 'url',
+      code: 'invalid_string',
+      message: 'Invalid url',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      validation: 'url',
+      code: 'invalid_string',
+      message: 'Invalid url',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Prototype Pollution Prevention > should prevent prototype pollution in content data
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      code: 'custom',
+      path: [Array],
+      message: 'obrigatória para Lyrics'
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Prototype Pollution Prevention > should prevent prototype pollution in content data
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      code: 'custom',
+      path: [Array],
+      message: 'obrigatória para Lyrics'
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Prototype Pollution Prevention > should prevent prototype pollution in content data
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      code: 'custom',
+      path: [Array],
+      message: 'obrigatória para Lyrics'
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Prototype Pollution Prevention > should prevent prototype pollution in content data
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      code: 'custom',
+      path: [Array],
+      message: 'obrigatória para Lyrics'
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Large Payload Protection > should reject oversized payloads
+Failed to parse request body: Error: Request body too large
+    at parseRequestBody (/Users/marcelviana/projects/octavia-n4-pr5/lib/api-validation-middleware.ts:38:15)
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at /Users/marcelviana/projects/octavia-n4-pr5/lib/api-validation-middleware.ts:145:25
+    at /Users/marcelviana/projects/octavia-n4-pr5/tests/security/api-validation.security.test.ts:336:24
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:915:20
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Unicode and Encoding Attacks > should handle Unicode-encoded attacks
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Unicode and Encoding Attacks > should handle Unicode-encoded attacks
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Unicode and Encoding Attacks > should handle Unicode-encoded attacks
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Unicode and Encoding Attacks > should handle Unicode-encoded attacks
+Validation failed: {
+  path: 'http://localhost/api/content',
+  method: 'POST',
+  errors: [
+    {
+      code: 'custom',
+      message: 'Potentially unsafe content detected',
+      path: [Array]
+    }
+  ]
+}
+
+stderr | components/setlists/__tests__/setlists-estados.test.tsx > 1 · o que era mudo agora diz (reprovam na main) > salvar falha (500): o diálogo de editar fica e diz "não foi possível salvar a setlist"
+Error in updateSetlist: Error: Failed to update setlist: 500
+    at comStatus (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:21:71)
+    at updateSetlist (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:201:13)
+    at /Users/marcelviana/projects/octavia-n4-pr5/components/setlists/use-setlists.ts:59:28 {
+  status: 500
+}
+
+ ✓ |web| tests/security/api-validation.security.test.ts (12 tests) 59ms
+ ✓ |web| components/upload/__tests__/upload-estados.test.tsx (30 tests) 1370ms
+     ✓ salvar falha → Cancelar: nenhum alerta na tela  395ms
+stderr | components/setlists/__tests__/setlists-estados.test.tsx > 1 · o que era mudo agora diz (reprovam na main) > apagar falha (500): a linha DENTRO do diálogo, sem Tentar de novo; o Apagar repete
+Error in deleteSetlist: Error: Failed to delete setlist: 500
+    at comStatus (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:21:71)
+    at deleteSetlist (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:237:13)
+    at /Users/marcelviana/projects/octavia-n4-pr5/components/setlists/use-setlists.ts:77:7 {
+  status: 500
+}
+
+ ✓ |web| app/api/setlists/[id]/__tests__/route.test.ts (23 tests | 1 skipped) 23ms
+stderr | components/setlists/__tests__/setlists-estados.test.tsx > 1 · o que era mudo agora diz (reprovam na main) > adicionar falha (500 na 1ª): o picker fica com a seleção e a linha; nada entra
+Error in addSongToSetlist: Error: x
+    at comStatus (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:21:71)
+    at addSongToSetlist (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:284:13)
+    at /Users/marcelviana/projects/octavia-n4-pr5/components/setlists/use-setlists.ts:102:25 {
+  status: 500
+}
+
+stderr | components/setlists/__tests__/setlists-estados.test.tsx > 1 · o que era mudo agora diz (reprovam na main) > adicionar falha A MEIO (201, 500): a que entrou aparece na lista e sai da seleção; Tentar de novo manda só as que faltam
+Error in addSongToSetlist: Error: x
+    at comStatus (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:21:71)
+    at addSongToSetlist (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:284:13)
+    at /Users/marcelviana/projects/octavia-n4-pr5/components/setlists/use-setlists.ts:102:25 {
+  status: 500
+}
+
+stdout | tests/security/token-blacklist-concurrency.test.ts > Token Blacklisting Concurrency Tests > Database Consistency Under Load > should handle database failures gracefully
+Database failures encountered: 10
+Successful blacklists: 20/20
+
+ ✓ |web| tests/security/token-blacklist-concurrency.test.ts (11 tests | 10 skipped) 1024ms
+       ✓ should handle database failures gracefully  1023ms
+stderr | components/setlists/__tests__/setlists-estados.test.tsx > 1 · o que era mudo agora diz (reprovam na main) > remover falha (rede): a linha abaixo do cabeçalho da setlist, com o título; Tentar de novo repete o mesmo DELETE
+Error in removeSongFromSetlist: TypeError: Failed to fetch
+    at proxima (/Users/marcelviana/projects/octavia-n4-pr5/components/setlists/__tests__/servidor-falso.ts:68:29)
+    at /Users/marcelviana/projects/octavia-n4-pr5/components/setlists/__tests__/servidor-falso.ts:99:88
+    at Mock (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+spy@4.0.16/node_modules/@vitest/spy/dist/index.js:285:34)
+    at removeSongFromSetlist (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:317:28)
+    at /Users/marcelviana/projects/octavia-n4-pr5/components/setlists/use-setlists.ts:122:7
+
+ ✓ |web| tests/gates-web/g-faixa-classificar.test.ts (19 tests) 9ms
+stderr | lib/__tests__/contract-errors.test.ts > shape semente contra o middleware (camada 2 — byte-identidade) > 400 de validação: literal do pre-check §2.2 (campo faltando)
+Validation failed: {
+  path: 'http://test.local/api/b3-contract',
+  method: 'POST',
+  errors: [
+    {
+      code: 'invalid_type',
+      expected: 'string',
+      received: 'undefined',
+      path: [Array],
+      message: 'Required'
+    }
+  ]
+}
+
+stderr | lib/__tests__/contract-errors.test.ts > shape semente contra o middleware (camada 2 — byte-identidade) > 400 unrecognized_keys de UMA chave: shape D7 (MUDANÇA DECLARADA do PR-3b — o literal field:"" do pre-check §2.2 era o comportamento até o flip)
+Validation failed: {
+  path: 'http://test.local/api/b3-contract',
+  method: 'POST',
+  errors: [
+    {
+      code: 'unrecognized_keys',
+      keys: [Array],
+      path: [],
+      message: "Unrecognized key(s) in object: '__b3_unknown__'"
+    }
+  ]
+}
+
+stderr | lib/__tests__/contract-errors.test.ts > shape semente contra o middleware (camada 2 — byte-identidade) > 500 do catch do middleware: literal (código-confirmado no pre-check §2.9)
+Validation middleware error: Error: boom interno
+    at /Users/marcelviana/projects/octavia-n4-pr5/lib/__tests__/contract-errors.test.ts:210:13
+    at /Users/marcelviana/projects/octavia-n4-pr5/lib/api-validation-middleware.ts:167:22
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at /Users/marcelviana/projects/octavia-n4-pr5/lib/__tests__/contract-errors.test.ts:212:17
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:915:20
+
+stderr | lib/__tests__/contract-errors.test.ts > shape semente contra o middleware (camada 2 — byte-identidade) > G-flip: UMA chave desconhecida via middleware → field:"<chave>" (D7 default)
+Validation failed: {
+  path: 'http://test.local/api/b3-contract',
+  method: 'POST',
+  errors: [
+    {
+      code: 'unrecognized_keys',
+      keys: [Array],
+      path: [],
+      message: "Unrecognized key(s) in object: '__b3_unknown__'"
+    }
+  ]
+}
+
+stderr | lib/__tests__/contract-errors.test.ts > shape semente contra o middleware (camada 2 — byte-identidade) > G-flip: DUAS chaves desconhecidas via middleware → dois details nomeados (D7 pleno)
+Validation failed: {
+  path: 'http://test.local/api/b3-contract',
+  method: 'POST',
+  errors: [
+    {
+      code: 'unrecognized_keys',
+      keys: [Array],
+      path: [],
+      message: "Unrecognized key(s) in object: '__b3_x__', '__b3_y__'"
+    }
+  ]
+}
+
+stderr | lib/__tests__/contract-errors.test.ts > shape semente contra o middleware (camada 2 — byte-identidade) > 400 sintético (JSON inválido): shape novo via mapper único
+Failed to parse request body: SyntaxError: Unexpected token 'ã', "não é json {{{" is not valid JSON
+    at JSON.parse (<anonymous>)
+    at parseRequestBody (/Users/marcelviana/projects/octavia-n4-pr5/lib/api-validation-middleware.ts:42:27)
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at /Users/marcelviana/projects/octavia-n4-pr5/lib/api-validation-middleware.ts:145:25
+    at /Users/marcelviana/projects/octavia-n4-pr5/lib/__tests__/contract-errors.test.ts:249:17
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:915:20
+
+ ✓ |web| lib/__tests__/contract-errors.test.ts (17 tests) 19ms
+stderr | components/setlists/__tests__/setlists-estados.test.tsx > 1 · o que era mudo agora diz (reprovam na main) > editar uma setlist que sumiu (404): o diálogo fecha, a lista é relida, "esta setlist já foi apagada"
+Error in updateSetlist: Error: Failed to update setlist: 404
+    at comStatus (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:21:71)
+    at updateSetlist (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:201:13)
+    at /Users/marcelviana/projects/octavia-n4-pr5/components/setlists/use-setlists.ts:59:28 {
+  status: 404
+}
+
+stderr | components/setlists/__tests__/setlists-estados.test.tsx > 1 · o que era mudo agora diz (reprovam na main) > remover uma linha que sumiu (404), a setlist ainda existe: relê e mostra a lista relida, sem frase
+Error in removeSongFromSetlist: Error: Song not found
+    at comStatus (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:21:71)
+    at removeSongFromSetlist (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:326:13)
+    at /Users/marcelviana/projects/octavia-n4-pr5/components/setlists/use-setlists.ts:122:7 {
+  status: 404
+}
+
+ ✓ |web| app/api/setlists/__tests__/route.test.ts (15 tests | 4 skipped) 17ms
+ ✓ |web| app/api/auth/__tests__/session.test.ts (11 tests) 94ms
+ ✓ |web| lib/__tests__/contract-content.test.ts (39 tests) 13ms
+stderr | components/setlists/__tests__/setlists-estados.test.tsx > 2 · os estados da folha e as decisões do aval > SET-erro ("rede"): o motivo pela espécie; Tentar de novo (sem conexão) repete a CARGA, não a página (decisão 16)
+Error in getUserSetlists: TypeError: Failed to fetch
+    at /Users/marcelviana/projects/octavia-n4-pr5/components/setlists/__tests__/servidor-falso.ts:78:31
+    at Mock (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+spy@4.0.16/node_modules/@vitest/spy/dist/index.js:285:34)
+    at getUserSetlists (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:56:28)
+    at async Promise.allSettled (index 0)
+    at /Users/marcelviana/projects/octavia-n4-pr5/hooks/use-setlist-data.ts:68:43
+
+stderr | components/setlists/__tests__/setlists-estados.test.tsx > 2 · os estados da folha e as decisões do aval > SET-erro ("rede"): o motivo pela espécie; Tentar de novo (sem conexão) repete a CARGA, não a página (decisão 16)
+useSetlistData: Sets loading failed: TypeError: Failed to fetch
+    at /Users/marcelviana/projects/octavia-n4-pr5/components/setlists/__tests__/servidor-falso.ts:78:31
+    at Mock (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+spy@4.0.16/node_modules/@vitest/spy/dist/index.js:285:34)
+    at getUserSetlists (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:56:28)
+    at async Promise.allSettled (index 0)
+    at /Users/marcelviana/projects/octavia-n4-pr5/hooks/use-setlist-data.ts:68:43
+
+ ✓ |web| tests/hooks/useAddContentLogic.test.ts (20 tests) 73ms
+stderr | components/setlists/__tests__/setlists-estados.test.tsx > 2 · os estados da folha e as decisões do aval > SET-erro ({"status":401,"corpo":{"error":"x","code":"X"}}): o motivo pela espécie; Tentar de novo (o servidor não aceitou a sessão, entre de novo) repete a CARGA, não a página (decisão 16)
+Error fetching setlists: { error: 'x', code: 'X' }
+Error in getUserSetlists: Error: Failed to load setlists
+    at comStatus (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:21:71)
+    at getUserSetlists (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:68:13)
+    at async Promise.allSettled (index 0)
+    at /Users/marcelviana/projects/octavia-n4-pr5/hooks/use-setlist-data.ts:68:43 {
+  status: 401
+}
+
+stderr | components/setlists/__tests__/setlists-estados.test.tsx > 2 · os estados da folha e as decisões do aval > SET-erro ({"status":401,"corpo":{"error":"x","code":"X"}}): o motivo pela espécie; Tentar de novo (o servidor não aceitou a sessão, entre de novo) repete a CARGA, não a página (decisão 16)
+useSetlistData: Sets loading failed: Error: Failed to load setlists
+    at comStatus (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:21:71)
+    at getUserSetlists (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:68:13)
+    at async Promise.allSettled (index 0)
+    at /Users/marcelviana/projects/octavia-n4-pr5/hooks/use-setlist-data.ts:68:43 {
+  status: 401
+}
+
+stderr | components/setlists/__tests__/setlists-estados.test.tsx > 2 · os estados da folha e as decisões do aval > SET-erro ({"status":429,"corpo":{"error":"x","code":"X"}}): o motivo pela espécie; Tentar de novo (muitas tentativas, tente de novo em instantes) repete a CARGA, não a página (decisão 16)
+Error fetching setlists: { error: 'x', code: 'X' }
+Error in getUserSetlists: Error: Failed to load setlists
+    at comStatus (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:21:71)
+    at getUserSetlists (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:68:13)
+    at async Promise.allSettled (index 0)
+    at /Users/marcelviana/projects/octavia-n4-pr5/hooks/use-setlist-data.ts:68:43 {
+  status: 429
+}
+
+stderr | components/setlists/__tests__/setlists-estados.test.tsx > 2 · os estados da folha e as decisões do aval > SET-erro ({"status":429,"corpo":{"error":"x","code":"X"}}): o motivo pela espécie; Tentar de novo (muitas tentativas, tente de novo em instantes) repete a CARGA, não a página (decisão 16)
+useSetlistData: Sets loading failed: Error: Failed to load setlists
+    at comStatus (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:21:71)
+    at getUserSetlists (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:68:13)
+    at async Promise.allSettled (index 0)
+    at /Users/marcelviana/projects/octavia-n4-pr5/hooks/use-setlist-data.ts:68:43 {
+  status: 429
+}
+
+ ✓ |web| app/api/content/[id]/__tests__/route.test.ts (12 tests | 5 skipped) 42ms
+stderr | components/setlists/__tests__/setlists-estados.test.tsx > 2 · os estados da folha e as decisões do aval > SET-erro ({"status":500,"corpo":{"error":"x","code":"X"}}): o motivo pela espécie; Tentar de novo (falha no servidor) repete a CARGA, não a página (decisão 16)
+Error fetching setlists: { error: 'x', code: 'X' }
+Error in getUserSetlists: Error: Failed to load setlists
+    at comStatus (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:21:71)
+    at getUserSetlists (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:68:13)
+    at async Promise.allSettled (index 0)
+    at /Users/marcelviana/projects/octavia-n4-pr5/hooks/use-setlist-data.ts:68:43 {
+  status: 500
+}
+
+stderr | components/setlists/__tests__/setlists-estados.test.tsx > 2 · os estados da folha e as decisões do aval > SET-erro ({"status":500,"corpo":{"error":"x","code":"X"}}): o motivo pela espécie; Tentar de novo (falha no servidor) repete a CARGA, não a página (decisão 16)
+useSetlistData: Sets loading failed: Error: Failed to load setlists
+    at comStatus (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:21:71)
+    at getUserSetlists (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:68:13)
+    at async Promise.allSettled (index 0)
+    at /Users/marcelviana/projects/octavia-n4-pr5/hooks/use-setlist-data.ts:68:43 {
+  status: 500
+}
+
+ ✓ |web| tests/typescript-ide-improvements.test.ts (10 tests) 5ms
+stderr | hooks/__tests__/use-setlist-data.test.tsx > useSetlistData > shows error state (never first-use empty state) when setlists and content both fail
+useSetlistData: Sets loading failed: Error: Network failure
+    at /Users/marcelviana/projects/octavia-n4-pr5/hooks/__tests__/use-setlist-data.test.tsx:261:19
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:145:11
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:915:26
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1243:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1209:10)
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1653:37
+    at Traces.$ (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_f5fce2d6ec618dfdb20135702f5d0c55/node_modules/vitest/dist/chunks/traces.U4xDYhzZ.js:115:27)
+    at trace (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_f5fce2d6ec618dfdb20135702f5d0c55/node_modules/vitest/dist/chunks/test.B8ej_ZHS.js:239:21)
+    at runTest (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1653:12)
+useSetlistData: Content loading failed: Error: Network failure
+    at /Users/marcelviana/projects/octavia-n4-pr5/hooks/__tests__/use-setlist-data.test.tsx:261:19
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:145:11
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:915:26
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1243:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1209:10)
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1653:37
+    at Traces.$ (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_f5fce2d6ec618dfdb20135702f5d0c55/node_modules/vitest/dist/chunks/traces.U4xDYhzZ.js:115:27)
+    at trace (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_f5fce2d6ec618dfdb20135702f5d0c55/node_modules/vitest/dist/chunks/test.B8ej_ZHS.js:239:21)
+    at runTest (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1653:12)
+
+ ✓ |web| tests/gates/i1-upload-post.test.tsx (5 tests | 1 skipped) 334ms
+ ✓ |web| components/auth/__tests__/login-sessao-cn.test.tsx (15 tests) 1977ms
+     ✓ (v) renovação que falha fora do /login: linha de aviso no topo, 0 navegações, e nada repete sozinho  305ms
+stderr | components/setlists/__tests__/setlists-estados.test.tsx > 2 · os estados da folha e as decisões do aval > o picker sem músicas: a biblioteca vazia; o teto (decisão 4); a leitura que falhou (decisão 5)
+Error in getUserContentPage: Error: x
+    at getUserContentPage (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:275:9)
+    at async Promise.allSettled (index 1)
+    at /Users/marcelviana/projects/octavia-n4-pr5/hooks/use-setlist-data.ts:68:43 {
+  status: 500
+}
+
+stderr | components/setlists/__tests__/setlists-estados.test.tsx > 2 · os estados da folha e as decisões do aval > o picker sem músicas: a biblioteca vazia; o teto (decisão 4); a leitura que falhou (decisão 5)
+useSetlistData: Content loading failed: Error: x
+    at getUserContentPage (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:275:9)
+    at async Promise.allSettled (index 1)
+    at /Users/marcelviana/projects/octavia-n4-pr5/hooks/use-setlist-data.ts:68:43 {
+  status: 500
+}
+
+stderr | hooks/__tests__/use-setlist-data.test.tsx > useSetlistData > shows error state when the network fails
+useSetlistData: Sets loading failed: TypeError: Failed to fetch
+    at /Users/marcelviana/projects/octavia-n4-pr5/hooks/__tests__/use-setlist-data.test.tsx:303:43
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:145:11
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:915:26
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1243:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1209:10)
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1653:37
+    at Traces.$ (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_f5fce2d6ec618dfdb20135702f5d0c55/node_modules/vitest/dist/chunks/traces.U4xDYhzZ.js:115:27)
+    at trace (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_f5fce2d6ec618dfdb20135702f5d0c55/node_modules/vitest/dist/chunks/test.B8ej_ZHS.js:239:21)
+    at runTest (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1653:12)
+useSetlistData: Content loading failed: TypeError: Failed to fetch
+    at /Users/marcelviana/projects/octavia-n4-pr5/hooks/__tests__/use-setlist-data.test.tsx:304:46
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:145:11
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:915:26
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1243:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1209:10)
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1653:37
+    at Traces.$ (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_f5fce2d6ec618dfdb20135702f5d0c55/node_modules/vitest/dist/chunks/traces.U4xDYhzZ.js:115:27)
+    at trace (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_f5fce2d6ec618dfdb20135702f5d0c55/node_modules/vitest/dist/chunks/test.B8ej_ZHS.js:239:21)
+    at runTest (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1653:12)
+
+ ✓ |web| lib/__tests__/content-service.test.ts (10 tests) 508ms
+       ✓ returns empty array when user not authenticated  482ms
+stdout | tests/gates/n4-g-par.test.tsx > G-par (N4-PR1) — o mesmo content, o mesmo texto no web e no nativo > reprova exatamente a lista de g-par-reprovados.txt
+G-par — itens 16 · pares comparados 9 · iguais 9 · diferentes 0 · fora do par 7
+  IGUAL     letra                        web=texto(108)       nativo=texto(108)             [painel-letra]
+  IGUAL     cifra-texto                  web=texto(48)        nativo=texto(48)              [painel-cifra]
+  IGUAL     tab-texto                    web=texto(92)        nativo=texto(92)              [painel-tab]
+  IGUAL     partitura-pdf                web=arquivo(79)      nativo=arquivo(79)            [painel-partitura]
+  IGUAL     letra-poluida-editor         web=texto(44)        nativo=texto(44)              [painel-letra]
+  IGUAL     cifra-secoes-acordes-vazios  web=texto(123)       nativo=texto(123)             [painel-cifra]
+  IGUAL     cifra-secoes-completas       web=texto(39)        nativo=texto(39)              [painel-cifra]
+  IGUAL     cifra-duas-secoes            web=texto(97)        nativo=texto(97)              [painel-cifra]
+  IGUAL     so-aninhado                  web=sem-corpo        nativo=sem-corpo:no-key       [painel-letra]
+
+fora do par (7) — impressos e contados, não reprovam:
+  diferente cifra-em-lista               web=texto(15)        nativo=sem-corpo:not-string   — chords como lista de {name, diagram, fingering} — só o web lê; a B2 não achou no dado real (0 de 63) → Bloco D
+  diferente cifra-com-progression        web=texto(19)        nativo=texto(4)               — progression ({seção: acordes}) ao lado do chords — só o web a mostra; a B2 não achou no dado real → Bloco D
+  diferente tab-em-lista                 web=texto(21)        nativo=sem-corpo:not-string   — tablature como lista de linhas — só o web lê; a B2 achou as 2 Tabs com tablature string → Bloco D
+  diferente partitura-com-notation       web=texto(31)        nativo=sem-corpo:no-body      — Partitura sem arquivo com notation em texto — só o web a mostra; a B2 achou a única Partitura com arquivo (.pdf) → Bloco D
+  diferente tipo-legado                  web=texto(10)        nativo=sem-corpo:unknown-type — content_type legado ('Guitar Tab') que o normalizeContentType do web aceita — o core não; a B2 achou os 63 nos quatro tipos do enum → Bloco D
+  diferente tipo-fora-do-enum            web=texto(38)        nativo=sem-corpo:unknown-type — tipo fora do enum (nem dos quatro, nem apelido legado — a forma do pre-check, A12): o web o mostra como Letra (normalizeContentType cai em LYRICS), o core declara unknown-type; o que vale é o do core (N4-D47); a B2 achou os 63 no contrato → Bloco D
+  diferente cifra-escaneada              web=sem-corpo        nativo=arquivo(77)            — Cifra escaneada (content_data nulo com file_url): o web mostra o vazio do painel ('nenhuma cifra' — o ChordDisplay não mostra arquivo), o core a trata como arquivo e o palco mostra o PDF; vale o comportamento do core (N4-D49); nenhum item da conta principal está nesse caso (B2: as 3 Cifras com content_data) → Bloco D
+
+lista esperada (0): (vazia)
+reprovados     (0): (nenhum)
+G-par: zero reprovações, lista vazia (N4-D50) ✓
+
+ ✓ |web| tests/gates/n4-g-par.test.tsx (1 test) 58ms
+ ✓ |web| lib/__tests__/firebase-server-utils.test.ts (17 tests) 13ms
+stdout | app/api/storage/__tests__/delete.test.ts > /api/storage/delete > POST /api/storage/delete > deletes file when user owns it
+File deleted successfully: 1234567890-test-file.pdf
+
+stderr | app/api/storage/__tests__/delete.test.ts > /api/storage/delete > POST /api/storage/delete > G1/D6: erro do storage vira 500 genérico — a mensagem interna do Supabase NÃO vaza
+Supabase delete error: { message: 'SENTINELA-interna-do-supabase' }
+
+ ✓ |web| app/api/storage/__tests__/delete.test.ts (10 tests) 48ms
+ ✓ |web| hooks/__tests__/use-setlist-data.test.tsx (9 tests) 1302ms
+     ✓ shows error state (no fetch, never first-use empty state) when offline  305ms
+     ✓ shows error state when the network fails  304ms
+ ✓ |web| components/setlists/__tests__/setlists-estados.test.tsx (29 tests) 4640ms
+     ✓ criar falha (rede): o diálogo fica com o digitado, a linha diz o motivo, Tentar de novo reenvia o MESMO corpo  485ms
+     ✓ o picker sem músicas: a biblioteca vazia; o teto (decisão 4); a leitura que falhou (decisão 5)  385ms
+ ✓ |web| lib/__tests__/auth-mock-example.test.ts (10 tests) 35ms
+Error: Uncaught [Error: CN: render]
+    at reportException (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: CN: render
+    at textoDaCifra (/Users/marcelviana/projects/octavia-n4-pr5/components/content/__tests__/visualizacao-estados.test.tsx:34:111)
+    at ChordDisplay (/Users/marcelviana/projects/octavia-n4-pr5/components/content-viewer/ChordDisplay.tsx:14:17)
+    at renderWithHooks (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+stderr | hooks/__tests__/use-library-data.test.tsx > useLibraryData > provides reload function
+Warning: An update to TestComponent inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at TestComponent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@testing-library+react@16.3.0_@testing-library+dom@10.4.1_@types+react-dom@19.1.9_@type_f08ce16ecb6cfeef4afb75809dcb933a/node_modules/@testing-library/react/dist/pure.js:329:5)
+Warning: An update to TestComponent inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at TestComponent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@testing-library+react@16.3.0_@testing-library+dom@10.4.1_@types+react-dom@19.1.9_@type_f08ce16ecb6cfeef4afb75809dcb933a/node_modules/@testing-library/react/dist/pure.js:329:5)
+Warning: An update to TestComponent inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at TestComponent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@testing-library+react@16.3.0_@testing-library+dom@10.4.1_@types+react-dom@19.1.9_@type_f08ce16ecb6cfeef4afb75809dcb933a/node_modules/@testing-library/react/dist/pure.js:329:5)
+Warning: An update to TestComponent inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at TestComponent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@testing-library+react@16.3.0_@testing-library+dom@10.4.1_@types+react-dom@19.1.9_@type_f08ce16ecb6cfeef4afb75809dcb933a/node_modules/@testing-library/react/dist/pure.js:329:5)
+
+Error: Uncaught [Error: CN: render]
+    at reportException (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: CN: render
+    at textoDaCifra (/Users/marcelviana/projects/octavia-n4-pr5/components/content/__tests__/visualizacao-estados.test.tsx:34:111)
+    at ChordDisplay (/Users/marcelviana/projects/octavia-n4-pr5/components/content-viewer/ChordDisplay.tsx:14:17)
+    at renderWithHooks (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+stderr | hooks/__tests__/use-library-data.test.tsx > useLibraryData > I1-PR-9 — vazio ≠ erro > sem lista na tela, a falha com status vira erro (e não o vazio de primeira vez)
+useLibraryData.load: Error loading library data: Error: boom
+    at /Users/marcelviana/projects/octavia-n4-pr5/hooks/__tests__/use-library-data.test.tsx:237:62
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:145:11
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:915:26
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1243:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1209:10)
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1653:37
+    at Traces.$ (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_f5fce2d6ec618dfdb20135702f5d0c55/node_modules/vitest/dist/chunks/traces.U4xDYhzZ.js:115:27)
+    at trace (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_f5fce2d6ec618dfdb20135702f5d0c55/node_modules/vitest/dist/chunks/test.B8ej_ZHS.js:239:21)
+    at runTest (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1653:12) {
+  status: 500
+}
+
+ ✓ |web| lib/__tests__/contract-setlist.test.ts (18 tests) 13ms
+stderr | hooks/__tests__/use-library-data.test.tsx > useLibraryData > I1-PR-9 — vazio ≠ erro > sem lista na tela, o TypeError do fetch é rede
+useLibraryData.load: Error loading library data: TypeError: Failed to fetch
+    at /Users/marcelviana/projects/octavia-n4-pr5/hooks/__tests__/use-library-data.test.tsx:244:48
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:145:11
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:915:26
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1243:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1209:10)
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1653:37
+    at Traces.$ (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_f5fce2d6ec618dfdb20135702f5d0c55/node_modules/vitest/dist/chunks/traces.U4xDYhzZ.js:115:27)
+    at trace (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_f5fce2d6ec618dfdb20135702f5d0c55/node_modules/vitest/dist/chunks/test.B8ej_ZHS.js:239:21)
+    at runTest (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1653:12)
+
+ ✓ |web| components/content/__tests__/visualizacao-estados.test.tsx (16 tests) 207ms
+stderr | hooks/__tests__/use-library-data.test.tsx > useLibraryData > I1-PR-9 — vazio ≠ erro > o timeout que o serviço devolvia como lista vazia com `error` é rede
+useLibraryData.load: Error loading library data: Error: Request timed out - please try again
+    at /Users/marcelviana/projects/octavia-n4-pr5/hooks/use-library-data.ts:126:29 {
+  rede: true
+}
+
+stderr | hooks/__tests__/use-library-data.test.tsx > useLibraryData > I1-PR-9 — vazio ≠ erro > com lista na tela, a falha segue muda: a lista fica e não há erro
+useLibraryData.load: Error loading library data: Error: boom
+    at /Users/marcelviana/projects/octavia-n4-pr5/hooks/__tests__/use-library-data.test.tsx:265:62
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:145:11
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:915:26
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1243:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1209:10)
+    at file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1653:37
+    at Traces.$ (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_f5fce2d6ec618dfdb20135702f5d0c55/node_modules/vitest/dist/chunks/traces.U4xDYhzZ.js:115:27)
+    at trace (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/vitest@4.0.16_@opentelemetry+api@1.9.0_@types+node@22.18.3_@vitest+ui@4.0.16_happy-dom@_f5fce2d6ec618dfdb20135702f5d0c55/node_modules/vitest/dist/chunks/test.B8ej_ZHS.js:239:21)
+    at runTest (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+runner@4.0.16/node_modules/@vitest/runner/dist/index.js:1653:12) {
+  status: 500
+}
+
+ ✓ |web| hooks/__tests__/use-library-data.test.tsx (13 tests) 415ms
+ ✓ |web| app/api/setlists/__tests__/create-compensating.test.ts (3 tests) 18ms
+ ✓ |web| app/api/storage/__tests__/upload-paridade.test.ts (12 tests) 51ms
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > rede: "não foi possível carregar o conteúdo — sem conexão" + Tentar de novo
+Error in getContentById: TypeError: Failed to fetch
+    at responder (/Users/marcelviana/projects/octavia-n4-pr5/components/editors/__tests__/editor-estados.test.tsx:42:67)
+    at /Users/marcelviana/projects/octavia-n4-pr5/components/editors/__tests__/editor-estados.test.tsx:49:12
+    at Mock (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+spy@4.0.16/node_modules/@vitest/spy/dist/index.js:285:34)
+    at getContentById (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:480:28)
+    at loadContent (/Users/marcelviana/projects/octavia-n4-pr5/app/content/[id]/edit/page.tsx:44:22)
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > rede: "não foi possível carregar o conteúdo — sem conexão" + Tentar de novo
+Editor: falha ao carregar o conteúdo TypeError: Failed to fetch
+    at responder (/Users/marcelviana/projects/octavia-n4-pr5/components/editors/__tests__/editor-estados.test.tsx:42:67)
+    at /Users/marcelviana/projects/octavia-n4-pr5/components/editors/__tests__/editor-estados.test.tsx:49:12
+    at Mock (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+spy@4.0.16/node_modules/@vitest/spy/dist/index.js:285:34)
+    at getContentById (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:480:28)
+    at loadContent (/Users/marcelviana/projects/octavia-n4-pr5/app/content/[id]/edit/page.tsx:44:22)
+
+ ✓ |web| tests/gates/i1-editor-put.test.tsx (6 tests | 1 skipped) 718ms
+     ✓ cifra em texto (a forma de hoje da cifra)  336ms
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 401: "não foi possível carregar o conteúdo — o servidor não aceitou a sessão, entre de novo", sem ação
+Error in getContentById: Error: x
+    at getContentById (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:491:27)
+    at loadContent (/Users/marcelviana/projects/octavia-n4-pr5/app/content/[id]/edit/page.tsx:44:22) {
+  status: 401
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 401: "não foi possível carregar o conteúdo — o servidor não aceitou a sessão, entre de novo", sem ação
+Editor: falha ao carregar o conteúdo Error: x
+    at getContentById (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:491:27)
+    at loadContent (/Users/marcelviana/projects/octavia-n4-pr5/app/content/[id]/edit/page.tsx:44:22) {
+  status: 401
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 429: "não foi possível carregar o conteúdo — muitas tentativas, tente de novo em instantes", sem ação
+Error in getContentById: Error: x
+    at getContentById (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:491:27)
+    at loadContent (/Users/marcelviana/projects/octavia-n4-pr5/app/content/[id]/edit/page.tsx:44:22) {
+  status: 429
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 429: "não foi possível carregar o conteúdo — muitas tentativas, tente de novo em instantes", sem ação
+Editor: falha ao carregar o conteúdo Error: x
+    at getContentById (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:491:27)
+    at loadContent (/Users/marcelviana/projects/octavia-n4-pr5/app/content/[id]/edit/page.tsx:44:22) {
+  status: 429
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 500: "não foi possível carregar o conteúdo — falha no servidor" + Tentar de novo
+Error in getContentById: Error: x
+    at getContentById (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:491:27)
+    at loadContent (/Users/marcelviana/projects/octavia-n4-pr5/app/content/[id]/edit/page.tsx:44:22) {
+  status: 500
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 500: "não foi possível carregar o conteúdo — falha no servidor" + Tentar de novo
+Editor: falha ao carregar o conteúdo Error: x
+    at getContentById (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:491:27)
+    at loadContent (/Users/marcelviana/projects/octavia-n4-pr5/app/content/[id]/edit/page.tsx:44:22) {
+  status: 500
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 404 e 400: "este conteúdo não existe", sem linha
+Error in getContentById: Error: Content not found
+    at getContentById (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:488:29)
+    at loadContent (/Users/marcelviana/projects/octavia-n4-pr5/app/content/[id]/edit/page.tsx:44:22) {
+  status: 404
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 404 e 400: "este conteúdo não existe", sem linha
+Editor: falha ao carregar o conteúdo Error: Content not found
+    at getContentById (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:488:29)
+    at loadContent (/Users/marcelviana/projects/octavia-n4-pr5/app/content/[id]/edit/page.tsx:44:22) {
+  status: 404
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 404 e 400: "este conteúdo não existe", sem linha
+Error in getContentById: Error: x
+    at getContentById (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:491:27)
+    at loadContent (/Users/marcelviana/projects/octavia-n4-pr5/app/content/[id]/edit/page.tsx:44:22) {
+  status: 400
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha da carga por espécie (decisão 3) > 404 e 400: "este conteúdo não existe", sem linha
+Editor: falha ao carregar o conteúdo Error: x
+    at getContentById (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:491:27)
+    at loadContent (/Users/marcelviana/projects/octavia-n4-pr5/app/content/[id]/edit/page.tsx:44:22) {
+  status: 400
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > rede: "não foi possível salvar — sem conexão" + "o que você escreveu continua aqui" + Tentar de novo (o mesmo PUT)
+Error in updateContent: TypeError: Failed to fetch
+    at responder (/Users/marcelviana/projects/octavia-n4-pr5/components/editors/__tests__/editor-estados.test.tsx:42:67)
+    at /Users/marcelviana/projects/octavia-n4-pr5/components/editors/__tests__/editor-estados.test.tsx:48:61
+    at Mock (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+spy@4.0.16/node_modules/@vitest/spy/dist/index.js:285:34)
+    at updateContent (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:540:28)
+    at handleSave (/Users/marcelviana/projects/octavia-n4-pr5/components/content-edit-page-client.tsx:35:7)
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > rede: "não foi possível salvar — sem conexão" + "o que você escreveu continua aqui" + Tentar de novo (o mesmo PUT)
+Editor: falha ao salvar TypeError: Failed to fetch
+    at responder (/Users/marcelviana/projects/octavia-n4-pr5/components/editors/__tests__/editor-estados.test.tsx:42:67)
+    at /Users/marcelviana/projects/octavia-n4-pr5/components/editors/__tests__/editor-estados.test.tsx:48:61
+    at Mock (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+spy@4.0.16/node_modules/@vitest/spy/dist/index.js:285:34)
+    at updateContent (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:540:28)
+    at handleSave (/Users/marcelviana/projects/octavia-n4-pr5/components/content-edit-page-client.tsx:35:7)
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > rede: "não foi possível salvar — sem conexão" + "o que você escreveu continua aqui" + Tentar de novo (o mesmo PUT)
+Error in updateContent: TypeError: Failed to fetch
+    at responder (/Users/marcelviana/projects/octavia-n4-pr5/components/editors/__tests__/editor-estados.test.tsx:42:67)
+    at /Users/marcelviana/projects/octavia-n4-pr5/components/editors/__tests__/editor-estados.test.tsx:48:61
+    at Mock (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+spy@4.0.16/node_modules/@vitest/spy/dist/index.js:285:34)
+    at updateContent (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:540:28)
+    at handleSave (/Users/marcelviana/projects/octavia-n4-pr5/components/content-edit-page-client.tsx:35:7)
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > rede: "não foi possível salvar — sem conexão" + "o que você escreveu continua aqui" + Tentar de novo (o mesmo PUT)
+Editor: falha ao salvar TypeError: Failed to fetch
+    at responder (/Users/marcelviana/projects/octavia-n4-pr5/components/editors/__tests__/editor-estados.test.tsx:42:67)
+    at /Users/marcelviana/projects/octavia-n4-pr5/components/editors/__tests__/editor-estados.test.tsx:48:61
+    at Mock (file:///Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/@vitest+spy@4.0.16/node_modules/@vitest/spy/dist/index.js:285:34)
+    at updateContent (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:540:28)
+    at handleSave (/Users/marcelviana/projects/octavia-n4-pr5/components/content-edit-page-client.tsx:35:7)
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > 400: "não foi possível salvar — o servidor recusou os dados" + "o que você escreveu continua aqui"
+Error in updateContent: Error: x
+    at updateContent (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:554:27)
+    at handleSave (/Users/marcelviana/projects/octavia-n4-pr5/components/content-edit-page-client.tsx:35:7) {
+  status: 400
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > 400: "não foi possível salvar — o servidor recusou os dados" + "o que você escreveu continua aqui"
+Editor: falha ao salvar Error: x
+    at updateContent (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:554:27)
+    at handleSave (/Users/marcelviana/projects/octavia-n4-pr5/components/content-edit-page-client.tsx:35:7) {
+  status: 400
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > 404: "não foi possível salvar — este conteúdo não existe mais" + "o que você escreveu continua aqui"
+Error in updateContent: Error: Content not found
+    at updateContent (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:551:29)
+    at handleSave (/Users/marcelviana/projects/octavia-n4-pr5/components/content-edit-page-client.tsx:35:7) {
+  status: 404
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > 404: "não foi possível salvar — este conteúdo não existe mais" + "o que você escreveu continua aqui"
+Editor: falha ao salvar Error: Content not found
+    at updateContent (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:551:29)
+    at handleSave (/Users/marcelviana/projects/octavia-n4-pr5/components/content-edit-page-client.tsx:35:7) {
+  status: 404
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > 500: "não foi possível salvar — falha no servidor" + "o que você escreveu continua aqui" + Tentar de novo (o mesmo PUT)
+Error in updateContent: Error: x
+    at updateContent (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:554:27)
+    at handleSave (/Users/marcelviana/projects/octavia-n4-pr5/components/content-edit-page-client.tsx:35:7) {
+  status: 500
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > 500: "não foi possível salvar — falha no servidor" + "o que você escreveu continua aqui" + Tentar de novo (o mesmo PUT)
+Editor: falha ao salvar Error: x
+    at updateContent (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:554:27)
+    at handleSave (/Users/marcelviana/projects/octavia-n4-pr5/components/content-edit-page-client.tsx:35:7) {
+  status: 500
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > 500: "não foi possível salvar — falha no servidor" + "o que você escreveu continua aqui" + Tentar de novo (o mesmo PUT)
+Error in updateContent: Error: Update failed: 500
+    at updateContent (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:554:27)
+    at handleSave (/Users/marcelviana/projects/octavia-n4-pr5/components/content-edit-page-client.tsx:35:7) {
+  status: 500
+}
+
+stderr | components/editors/__tests__/editor-estados.test.tsx > I1-PR11 — a falha de salvar por espécie (decisão 3; N2) > 500: "não foi possível salvar — falha no servidor" + "o que você escreveu continua aqui" + Tentar de novo (o mesmo PUT)
+Editor: falha ao salvar Error: Update failed: 500
+    at updateContent (/Users/marcelviana/projects/octavia-n4-pr5/lib/content-service.ts:554:27)
+    at handleSave (/Users/marcelviana/projects/octavia-n4-pr5/components/content-edit-page-client.tsx:35:7) {
+  status: 500
+}
+
+ ✓ |web| components/editors/__tests__/editor-estados.test.tsx (11 tests) 1021ms
+     ✓ com o PUT em curso: Salvando…, inativo, e o clique duplo manda UM PUT  460ms
+stdout | tests/gates/n4-favoritar-put.test.tsx > N4-PR1 — o corpo do PUT do favoritar da lista, byte a byte > favoritar (a linha com is_favorite=false)
+favoritar-put — favoritar: enviado 64 B · fixture 64 B
+
+stdout | tests/gates/n4-favoritar-put.test.tsx > N4-PR1 — o corpo do PUT do favoritar da lista, byte a byte > desfavoritar (a linha com is_favorite=true)
+favoritar-put — desfavoritar: enviado 65 B · fixture 65 B
+
+ ✓ |web| tests/gates/n4-favoritar-put.test.tsx (6 tests | 1 skipped) 464ms
+     ✓ favoritar (a linha com is_favorite=false)  435ms
+ ✓ |web| tests/typescript-strict-mode.test.ts (11 tests) 5ms
+ ✓ |web| tests/gates-web/frases-n4.test.ts (179 tests) 42ms
+stdout | lib/__tests__/firebase-admin.test.ts > Firebase Admin > initializeFirebaseAdmin > should initialize Firebase admin when called explicitly
+Firebase Admin initialized successfully
+
+stderr | lib/__tests__/firebase-admin.test.ts > Firebase Admin > verifyFirebaseToken > should handle token verification errors
+Firebase token verification failed: Invalid token
+
+stderr | lib/__tests__/firebase-admin.test.ts > Firebase Admin > verifyFirebaseToken > should throw error when Firebase Admin not initialized and missing env vars
+Firebase token verification failed: Missing Firebase Admin environment variables: FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, FIREBASE_PRIVATE_KEY
+
+ ✓ |web| lib/__tests__/firebase-admin.test.ts (8 tests) 20ms
+ ✓ |web| tests/gates/i1-setlists-escritas.test.tsx (7 tests | 1 skipped) 1143ms
+     ✓ criar (os cinco campos)  364ms
+ ✓ |web| app/api/content/[id]/__tests__/route-rpc.test.ts (7 tests) 13ms
+ ✓ |web| lib/__tests__/contract-sanitize.test.ts (13 tests) 7ms
+ ✓ |web| tests/gates/i1-visualizador.test.tsx (6 tests) 95ms
+ ✓ |web| app/api/storage/__tests__/upload.test.ts (5 tests) 46ms
+stderr | components/setlists/__tests__/setlists-defeitos.test.tsx > I1-PR13 — os três defeitos de tela das setlists (N2 §10.3.5/.6) > (c) apagar a setlist já apagada (404): o diálogo fecha, a lista é relida e a tela diz por quê
+Error in deleteSetlist: Error: Failed to delete setlist: 404
+    at comStatus (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:21:71)
+    at deleteSetlist (/Users/marcelviana/projects/octavia-n4-pr5/lib/setlist-service.ts:237:13)
+    at /Users/marcelviana/projects/octavia-n4-pr5/components/setlists/use-setlists.ts:77:7 {
+  status: 404
+}
+
+ ✓ |web| components/setlists/__tests__/setlists-defeitos.test.tsx (3 tests) 627ms
+ ✓ |web| app/api/setlists/[id]/songs/order/__tests__/route.test.ts (8 tests) 19ms
+ ✓ |web| lib/__tests__/file-signatures.test.ts (12 tests) 5ms
+ ✓ |web| app/api/setlists/[id]/songs/__tests__/route-rpc.test.ts (6 tests) 13ms
+ ✓ |web| scripts/storage/__tests__/reconcile-core.test.ts (16 tests) 6ms
+ ✓ |web| lib/__tests__/user-rate-limit.test.ts (9 tests) 11ms
+ ✓ |web| contexts/__tests__/firebase-auth-context.test.tsx (3 tests) 19ms
+ ✓ |web| lib/__tests__/contract-profile.test.ts (10 tests) 7ms
+ ✓ |web| components/painel/__tests__/painel-estados.test.tsx (4 tests) 126ms
+ ✓ |web| hooks/__tests__/useAddContentLogic.test.ts (5 tests) 25ms
+ ✓ |web| app/api/setlists/songs/[songId]/__tests__/route-rpc.test.ts (5 tests) 11ms
+ ✓ |web| lib/__tests__/contract-storage.test.ts (10 tests) 7ms
+Error: Uncaught [Error: Cannot read properties of undefined (reading "x")]
+    at reportException (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Cannot read properties of undefined (reading "x")
+    at Lanca (/Users/marcelviana/projects/octavia-n4-pr5/tests/gates/i1-erro-global.test.tsx:20:9)
+    at renderWithHooks (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+ ✓ |web| lib/__tests__/rpc-errors.test.ts (7 tests) 11ms
+Error: Uncaught [Error: Cannot read properties of undefined (reading "x")]
+    at reportException (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Cannot read properties of undefined (reading "x")
+    at Lanca (/Users/marcelviana/projects/octavia-n4-pr5/tests/gates/i1-erro-global.test.tsx:20:9)
+    at renderWithHooks (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+Error: Uncaught [Error: Cannot read properties of undefined (reading "x")]
+    at reportException (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Cannot read properties of undefined (reading "x")
+    at Lanca (/Users/marcelviana/projects/octavia-n4-pr5/tests/gates/i1-erro-global.test.tsx:20:9)
+    at renderWithHooks (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+Error: Uncaught [Error: Cannot read properties of undefined (reading "x")]
+    at reportException (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Cannot read properties of undefined (reading "x")
+    at Lanca (/Users/marcelviana/projects/octavia-n4-pr5/tests/gates/i1-erro-global.test.tsx:20:9)
+    at renderWithHooks (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+Error: Uncaught [Error: Cannot read properties of undefined (reading "x")]
+    at reportException (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Cannot read properties of undefined (reading "x")
+    at Lanca (/Users/marcelviana/projects/octavia-n4-pr5/tests/gates/i1-erro-global.test.tsx:20:9)
+    at renderWithHooks (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+Error: Uncaught [Error: Cannot read properties of undefined (reading "x")]
+    at reportException (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Cannot read properties of undefined (reading "x")
+    at Lanca (/Users/marcelviana/projects/octavia-n4-pr5/tests/gates/i1-erro-global.test.tsx:20:9)
+    at renderWithHooks (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+Error: Uncaught [Error: Cannot read properties of undefined (reading "x")]
+    at reportException (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Cannot read properties of undefined (reading "x")
+    at Lanca (/Users/marcelviana/projects/octavia-n4-pr5/tests/gates/i1-erro-global.test.tsx:20:9)
+    at renderWithHooks (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+Error: Uncaught [Error: Cannot read properties of undefined (reading "x")]
+    at reportException (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Cannot read properties of undefined (reading "x")
+    at Lanca (/Users/marcelviana/projects/octavia-n4-pr5/tests/gates/i1-erro-global.test.tsx:20:9)
+    at renderWithHooks (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+Error: Uncaught [Error: Cannot read properties of undefined (reading "x")]
+    at reportException (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Cannot read properties of undefined (reading "x")
+    at Lanca (/Users/marcelviana/projects/octavia-n4-pr5/tests/gates/i1-erro-global.test.tsx:20:9)
+    at renderWithHooks (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+Error: Uncaught [Error: Cannot read properties of undefined (reading "x")]
+    at reportException (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Cannot read properties of undefined (reading "x")
+    at Lanca (/Users/marcelviana/projects/octavia-n4-pr5/tests/gates/i1-erro-global.test.tsx:20:9)
+    at renderWithHooks (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+Error: Uncaught [Error: Cannot read properties of undefined (reading "x")]
+    at reportException (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Cannot read properties of undefined (reading "x")
+    at Lanca (/Users/marcelviana/projects/octavia-n4-pr5/tests/gates/i1-erro-global.test.tsx:20:9)
+    at renderWithHooks (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+Error: Uncaught [Error: Cannot read properties of undefined (reading "x")]
+    at reportException (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Cannot read properties of undefined (reading "x")
+    at Lanca (/Users/marcelviana/projects/octavia-n4-pr5/tests/gates/i1-erro-global.test.tsx:20:9)
+    at renderWithHooks (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+Error: Uncaught [Error: Cannot read properties of undefined (reading "x")]
+    at reportException (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Cannot read properties of undefined (reading "x")
+    at Lanca (/Users/marcelviana/projects/octavia-n4-pr5/tests/gates/i1-erro-global.test.tsx:20:9)
+    at renderWithHooks (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+Error: Uncaught [Error: Cannot read properties of undefined (reading "x")]
+    at reportException (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/helpers/runtime-script-errors.js:66:24)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:353:9)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+    at HTMLUnknownElement.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:241:34)
+    at Object.invokeGuardedCallbackDev (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4213:16)
+    at invokeGuardedCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4277:31)
+    at beginWork$1 (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:27490:7)
+    at performUnitOfWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:26599:12) Error: Cannot read properties of undefined (reading "x")
+    at Lanca (/Users/marcelviana/projects/octavia-n4-pr5/tests/gates/i1-erro-global.test.tsx:20:9)
+    at renderWithHooks (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:15486:18)
+    at mountIndeterminateComponent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:20103:13)
+    at beginWork (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:21626:16)
+    at HTMLUnknownElement.callCallback (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.development.js:4164:14)
+    at HTMLUnknownElement.callTheUserObjectsOperation (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/generated/EventListener.js:26:30)
+    at innerInvokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:350:25)
+    at invokeEventListeners (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:286:3)
+    at HTMLUnknownElementImpl._dispatch (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:233:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/Users/marcelviana/projects/octavia-n4-pr5/node_modules/.pnpm/jsdom@26.1.0_canvas@3.2.0/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:104:17)
+ ✓ |web| tests/gates/i1-erro-global.test.tsx (8 tests) 114ms
+ ✓ |web| app/api/storage/__tests__/list.test.ts (5 tests) 36ms
+ ✓ |web| lib/__tests__/security-headers-csp.test.ts (6 tests) 42ms
+ ✓ |web| app/api/setlists/songs/[songId]/__tests__/route.test.ts (4 tests) 11ms
+ ✓ |web| lib/__tests__/setlist-service.test.ts (4 tests) 147ms
+stdout | lib/__tests__/g1-no-self-fetch.test.ts > G1 — zero self-fetch na verificação de token (lambdas Node) > cadeia B: validateFirebaseTokenSecure verifica por chamada direta, zero fetch
+Token validated successfully for user: g1-uid
+
+ ✓ |web| lib/__tests__/g1-no-self-fetch.test.ts (3 tests) 3ms
+ ✓ |web| components/editors/__tests__/lib-salvo.test.tsx (3 tests) 656ms
+     ✓ o editor: PUT 200 → a /library de antes e o sinal marcado (lido e apagado uma vez)  633ms
+ ✓ |web| app/api/setlists/[id]/songs/__tests__/route.test.ts (3 tests) 13ms
+ ✓ |web| tests/components/monospace-rendering.test.tsx (5 tests) 38ms
+ ✓ |web| tests/gates/g-rotas-protegidas.test.ts (11 tests) 239ms
+ ✓ |web| app/api/setlists/__tests__/get-shape.test.ts (1 test) 7ms
+ ✓ |web| app/api/setlists/[id]/__tests__/delete-owner.test.ts (3 tests) 9ms
+ ✓ |web| hooks/__tests__/useMetadataForm.test.ts (3 tests) 21ms
+stdout | lib/__tests__/secure-auth-utils.test.ts > requireAuthServerSecure (real implementation) > returns the user when the email is verified
+Token validated successfully for user: user-verified
+
+stdout | lib/__tests__/secure-auth-utils.test.ts > requireAuthServerSecure (real implementation) > returns the user when the email is verified
+Authentication successful for user: user-verified
+
+stdout | lib/__tests__/secure-auth-utils.test.ts > requireAuthServerSecure (real implementation) > rejects users with unverified email by default
+Token validated successfully for user: user-unverified-default
+
+stderr | lib/__tests__/secure-auth-utils.test.ts > requireAuthServerSecure (real implementation) > rejects users with unverified email by default
+Unverified user attempted access: user-unverified-default
+
+stdout | lib/__tests__/secure-auth-utils.test.ts > requireAuthServerSecure (real implementation) > BUG(profile-create): allows a freshly signed-up (unverified) user when allowUnverifiedEmail is set
+Token validated successfully for user: user-unverified-signup
+
+stdout | lib/__tests__/secure-auth-utils.test.ts > requireAuthServerSecure (real implementation) > BUG(profile-create): allows a freshly signed-up (unverified) user when allowUnverifiedEmail is set
+Authentication successful for user: user-unverified-signup
+
+ ✓ |web| lib/__tests__/secure-auth-utils.test.ts (3 tests) 5ms
+ ✓ |web| tests/config/next-headers.test.ts (4 tests) 4ms
+ ✓ |web| lib/__tests__/contract-d1-gate.test.ts (12 tests) 10ms
+ ✓ |web| lib/__tests__/setlist-schemas.test.ts (8 tests) 6ms
+ ✓ |web| lib/__tests__/contract-drift.test.ts (13 tests) 6ms
+ ✓ |web| tests/gates-web/privacy-texto.test.ts (4 tests) 40ms
+ ✓ |web| components/upload/__tests__/limite.test.ts (3 tests) 6ms
+stdout | scripts/ux-audit/fase-d-dirs.test.ts > resolveFaseDDir (guard do registro histórico) > default: path efêmero fora de docs/ux/fase-d, com escrita funcionando
+[ux-audit] guard do histórico ativo: escrevendo em /var/folders/y9/tw0zmy8x5rs4ybgyt8lys8vw0000gn/T/ux-audit-SLMJiK (docs/ux/fase-d permanece intacto; opt-in UX_AUDIT_FASE_D_HISTORICO=1)
+
+stdout | scripts/ux-audit/fase-d-dirs.test.ts > resolveFaseDDir (guard do registro histórico) > data e evidence compartilham a mesma raiz efêmera da rodada
+[ux-audit] guard do histórico ativo: escrevendo em /var/folders/y9/tw0zmy8x5rs4ybgyt8lys8vw0000gn/T/ux-audit-60C9EC (docs/ux/fase-d permanece intacto; opt-in UX_AUDIT_FASE_D_HISTORICO=1)
+
+ ✓ |web| scripts/ux-audit/fase-d-dirs.test.ts (3 tests) 14ms
+ ✓ |web| tests/gates/i1-tab-acordes.test.tsx (1 test) 32ms
+ ✓ |web| lib/__tests__/api-schemas-inventory.test.ts (1 test) 2ms
+ ✓ |web| lib/__tests__/utils.test.ts (2 tests) 7ms
+ ✓ |web| hooks/__tests__/use-debounce.test.tsx (1 test) 17ms
+ ↓ |web| tests/security/security-headers.test.ts (1 test | 1 skipped)
+ ↓ |web| tests/security/auth-security.test.ts (1 test | 1 skipped)
+ ↓ |web| tests/security/cors-security.test.ts (1 test | 1 skipped)
+ ✓ |web| tests/gates-web/linha-de-aviso-contrato.test.ts (1 test) 1202ms
+     ✓ o tsc compila a igualdade de tipos (espécies, ação, motivo)  1199ms
+ ✓ |native| apps/native/test/prazo-de-rede.test.ts (4 tests) 60992ms
+     ✓ servidor mudo: a escrita desiste em ≤ 20 s, com espécie `rede` e `status=net`  20144ms
+     ✓ a RELEITURA tem o mesmo prazo: 2xx com o `GET` mudo vira `ok-nao-relido`  570ms
+     ✓ o prazo da releitura é o do CORE (20 s), e vale também no `reopen`  40205ms
+
+ Test Files  130 passed | 3 skipped (133)
+      Tests  1507 passed | 59 skipped (1566)
+   Start at  18:08:28
+   Duration  61.98s (transform 4.84s, setup 19.07s, import 9.10s, tests 121.22s, environment 42.05s)
+
+exit=0

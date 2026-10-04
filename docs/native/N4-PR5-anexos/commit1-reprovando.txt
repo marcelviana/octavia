@@ -1,0 +1,709 @@
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-n4-pr5
+
+ × |core| packages/core/src/garantia.test.ts > o conjunto garantido = todo file_url com body === "file" (A-N4-26, core) > a biblioteca inteira, não a janela de 7 dias 4ms
+   → (0 , __vite_ssr_import_1__.urlsDaBiblioteca) is not a function or its return value is not iterable
+ × |core| packages/core/src/garantia.test.ts > o conjunto garantido = todo file_url com body === "file" (A-N4-26, core) > sem setlist nenhuma, o conjunto é o mesmo (a garantia não depende de setlist) 0ms
+   → (0 , __vite_ssr_import_1__.urlsDaBiblioteca) is not a function
+ × |core| packages/core/src/garantia.test.ts > N4-D88 — o plano: a janela de 7 dias primeiro, depois a biblioteca em ordem alfabética > 7d na ordem de hoje (position), depois o resto pela ordem da biblioteca, sem repetir 0ms
+   → (0 , __vite_ssr_import_1__.planoDaBiblioteca) is not a function
+ × |core| packages/core/src/garantia.test.ts > N4-D88 — o plano: a janela de 7 dias primeiro, depois a biblioteca em ordem alfabética > o que já está no aparelho não entra 0ms
+   → (0 , __vite_ssr_import_1__.planoDaBiblioteca) is not a function
+ × |core| packages/core/src/garantia.test.ts > N4-D88 — o plano: a janela de 7 dias primeiro, depois a biblioteca em ordem alfabética > fora da janela, a setlist datada não tem prioridade: tudo é biblioteca 0ms
+   → (0 , __vite_ssr_import_1__.planoDaBiblioteca) is not a function
+ × |core| packages/core/src/garantia.test.ts > N4-D88 — o plano: a janela de 7 dias primeiro, depois a biblioteca em ordem alfabética > a janela de 7 dias continua UMA definição: os 7d do plano são o selectPrefetch 1ms
+   → (0 , __vite_ssr_import_1__.planoDaBiblioteca) is not a function
+ × |core| packages/core/src/garantia.test.ts > o LRU não despeja garantido; só o órfão sai > acima do teto, com todo arquivo da biblioteca protegido, o órfão é a única vítima 0ms
+   → (0 , __vite_ssr_import_1__.urlsDaBiblioteca) is not a function
+ × |core| packages/core/src/garantia.test.ts > o estado do arquivo por música > sem arquivo: texto, inválido 0ms
+   → (0 , __vite_ssr_import_1__.estadoDoArquivo) is not a function
+ × |core| packages/core/src/garantia.test.ts > o estado do arquivo por música > formato que o app ainda não mostra, pela extensão (N4-D43) — antes de qualquer estado de disco 1ms
+   → (0 , __vite_ssr_import_1__.estadoDoArquivo) is not a function
+ × |core| packages/core/src/garantia.test.ts > o estado do arquivo por música > baixado · baixando · falhou com o motivo · não baixado 1ms
+   → (0 , __vite_ssr_import_1__.estadoDoArquivo) is not a function
+ × |core| packages/core/src/garantia.test.ts > o estado do arquivo por música > a precedência: baixado vence baixando e falhou; baixando (a nova tentativa) vence a falha anterior 0ms
+   → (0 , __vite_ssr_import_1__.estadoDoArquivo) is not a function
+ ↓ |native| apps/native/test/favoritar.test.ts > o corpo, byte a byte, contra a fixture da N4-PR1 (o lado do tablet do gate) > favoritar e desfavoritar: o que sai pelo fio é o corpo da fixture, num PUT /api/content
+ ↓ |native| apps/native/test/favoritar.test.ts > N4-R7 / N4-D35 — sem otimismo; a resposta atualiza o cache, sem sync > durante o voo: estado "favoritando", content.json intacto; depois do 200: a linha devolvida, sem GET
+ ↓ |native| apps/native/test/favoritar.test.ts > N4-R7 / N4-D35 — sem otimismo; a resposta atualiza o cache, sem sync > tirar das favoritas: estado "tirando", e o cache com is_favorite=false
+ ↓ |native| apps/native/test/favoritar.test.ts > N4-R7 — o estado em andamento é por música, fora de tela, e sobrevive à troca de tela > duas músicas em voo ao mesmo tempo; as duas terminam; nenhuma barra a outra
+ ↓ |native| apps/native/test/favoritar.test.ts > N4-R7 — o estado em andamento é por música, fora de tela, e sobrevive à troca de tela > a MESMA música de novo, em voo: barrada (busy), nenhuma segunda request
+ ↓ |native| apps/native/test/favoritar.test.ts > N4-R7 — o estado em andamento é por música, fora de tela, e sobrevive à troca de tela > quem assina é avisado no começo e no fim; quem sai (a tela fechou) não cancela o pedido
+ ↓ |native| apps/native/test/favoritar.test.ts > N4-R9 / N4-D23 — só online > sem rede: nenhuma request, `write blocked … reason=offline`, frase do N2, cache intacto
+ ↓ |native| apps/native/test/favoritar.test.ts > N4-R8 — as espécies do N2, cada uma com a frase do tablet; o cache não muda em nenhuma > escrita-401 → auth
+ ↓ |native| apps/native/test/favoritar.test.ts > N4-R8 — as espécies do N2, cada uma com a frase do tablet; o cache não muda em nenhuma > escrita-429 → limite
+ ↓ |native| apps/native/test/favoritar.test.ts > N4-R8 — as espécies do N2, cada uma com a frase do tablet; o cache não muda em nenhuma > escrita-500 → servidor
+ ↓ |native| apps/native/test/favoritar.test.ts > N4-R8 — as espécies do N2, cada uma com a frase do tablet; o cache não muda em nenhuma > escrita-404 → generica
+ ↓ |native| apps/native/test/favoritar.test.ts > N4-R8 — as espécies do N2, cada uma com a frase do tablet; o cache não muda em nenhuma > escrita-corta → sem-resposta
+ ↓ |native| apps/native/test/favoritar.test.ts > N4-R8 — as espécies do N2, cada uma com a frase do tablet; o cache não muda em nenhuma > o 401 de uma escrita NÃO desloga (N2-D9)
+ ↓ |native| apps/native/test/favoritar.test.ts > N4-R8 — as espécies do N2, cada uma com a frase do tablet; o cache não muda em nenhuma > o 429 fecha a família `content-mutate`: a linha do limite diz a família certa, e o próximo é barrado
+ ↓ |native| apps/native/test/favoritar.test.ts > N4-R8 — as espécies do N2, cada uma com a frase do tablet; o cache não muda em nenhuma > o prazo de rede (N2-D35) vale: escrita pendurada → sem resposta, e a música sai do "em voo"
+ ✓ |native| apps/native/test/frases-n4.test.ts > (1) as P-F aceitas — contra a lista extraída da folha > a lista saiu do telas.html da árvore (sha256 dba757dd569d…) 3ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (1) as P-F aceitas — contra a lista extraída da folha > são 9 P-F, as da N4-D67 menos a P-F8 1ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (1) as P-F aceitas — contra a lista extraída da folha > P-F1 0ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (1) as P-F aceitas — contra a lista extraída da folha > P-F3 0ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (1) as P-F aceitas — contra a lista extraída da folha > P-F4 0ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (1) as P-F aceitas — contra a lista extraída da folha > P-F5 0ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (1) as P-F aceitas — contra a lista extraída da folha > P-F6 0ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (1) as P-F aceitas — contra a lista extraída da folha > P-F7 0ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (1) as P-F aceitas — contra a lista extraída da folha > P-F9 0ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (1) as P-F aceitas — contra a lista extraída da folha > P-F10 0ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (1) as P-F aceitas — contra a lista extraída da folha > P-F11 0ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (1) as P-F aceitas — contra a lista extraída da folha > as aspas são as tipográficas da folha (“ ”), nunca a reta 0ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (1) as P-F aceitas — contra a lista extraída da folha > o título entra como dado: "$&" e "$1" no título não viram padrão de substituição 0ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (1) as P-F aceitas — contra a lista extraída da folha > as cinco constantes P-F do core são estas, e só estas 0ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > as 4 junções com "·" das telas usam o separador do core 0ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > o motivo rede é isolado (sem separador de oração dentro) 0ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > o motivo sem-resposta é isolado (sem separador de oração dentro) 0ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > o motivo auth é isolado (sem separador de oração dentro) 0ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > o motivo limite-com-prazo é isolado (sem separador de oração dentro) 0ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > o motivo servidor é isolado (sem separador de oração dentro) 0ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > o motivo generica é isolado (sem separador de oração dentro) 0ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > S2 e o reordenar: com o motivo rede, o core monta byte a byte a frase da tela 0ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > S2 e o reordenar: com o motivo sem-resposta, o core monta byte a byte a frase da tela 0ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > S2 e o reordenar: com o motivo auth, o core monta byte a byte a frase da tela 0ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > S2 e o reordenar: com o motivo limite-com-prazo, o core monta byte a byte a frase da tela 0ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > S2 e o reordenar: com o motivo servidor, o core monta byte a byte a frase da tela 0ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > S2 e o reordenar: com o motivo generica, o core monta byte a byte a frase da tela 0ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > o favoritar com falha, sem rede: o nome do controle · o motivo (a tabela da folha) 0ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > o favoritar com falha, sem resposta: o nome do controle · o motivo (a tabela da folha) 0ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > o favoritar com falha, sessão: o nome do controle · o motivo (a tabela da folha) 0ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > o favoritar com falha, limite: o nome do controle · o motivo (a tabela da folha) 0ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > o favoritar com falha, servidor: o nome do controle · o motivo (a tabela da folha) 0ms
+ ✓ |native| apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > o favoritar com falha, genérica: o nome do controle · o motivo (a tabela da folha) 0ms
+ × |native| apps/native/test/frases-n4.test.ts > (3) a P-F8 no core, igual à da S4 (lida do fonte) > a S4 escreve a régua com o template de sempre (as duas ocorrências: a régua e a régua exportada) 4ms
+   → expected 1 to be 2 // Object.is equality
+ × |native| apps/native/test/frases-n4.test.ts > (3) a P-F8 no core, igual à da S4 (lida do fonte) > o core e o template da S4 dão o mesmo texto para 0, 1, 2 e 57 1ms
+   → __vite_ssr_import_5__.nResultados is not a function
+ × |native| apps/native/test/prefetch-fila.test.ts > div. 122 — um download lento não pode parar a fila > o quarto arquivo COMEÇA enquanto o primeiro ainda baixa 6ms
+   → (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ × |native| apps/native/test/prefetch-fila.test.ts > div. 122 — um download lento não pode parar a fila > nunca mais de três downloads ao mesmo tempo (T1-R13 passo 3) 1ms
+   → (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ × |native| apps/native/test/prefetch-fila.test.ts > div. 122 — um download lento não pode parar a fila > a ordem de INÍCIO continua sendo a do core — o que muda é a de término 1ms
+   → (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ × |native| apps/native/test/prefetch-fila.test.ts > W1-A7 — o indicador anda DURANTE o download, não só no fim > o callback por arquivo corre antes de o plano terminar 0ms
+   → (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ × |native| apps/native/test/prefetch-fila.test.ts > div. 114 — nenhuma falha de download é engolida (T1-R37) > três falhas, três linhas, e as outras continuam 0ms
+   → (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ × |native| apps/native/test/prefetch-fila.test.ts > div. 114 — nenhuma falha de download é engolida (T1-R37) > a linha de falha não carrega a URL inteira (regra 2 do catálogo) 0ms
+   → (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ ✓ |native| apps/native/test/prefetch-fila.test.ts > div. 114 — nenhuma falha de download é engolida (T1-R37) > "Baixar esta setlist" também reporta a falha 3ms
+ × |native| apps/native/test/prefetch-fila.test.ts > div. 115 — a promoção não pode derrubar o sync > uma promoção que falha vira linha, não rejeição sem dono 1ms
+   → (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ ✓ |native| apps/native/test/prefetch-fila.test.ts > div. 102 — "Baixar esta setlist" grava no DURÁVEL > o arquivo cai em `files/`, não em `cache/` 1ms
+ × |native| apps/native/test/prefetch-fila.test.ts > div. 137 — o que não passa pelo `falha()` também é higienizado > o HOST NU entre aspas não chega ao log — era o buraco da higienização antiga 1ms
+   → (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ × |native| apps/native/test/prefetch-fila.test.ts > div. 137 — o que não passa pelo `falha()` também é higienizado > a URI `file://` continua coberta — unificar não podia custar cobertura 2ms
+   → (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ × |native| apps/native/test/prefetch-fila.test.ts > div. 137 — o que não passa pelo `falha()` também é higienizado > a URL completa continua coberta 1ms
+   → (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ × |native| apps/native/test/prefetch-fila.test.ts > div. 137 — o que não passa pelo `falha()` também é higienizado > CONTROLE NEGATIVO: o que NÃO é segredo sobrevive inteiro 0ms
+   → (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ × |native| apps/native/test/garantia.test.ts > N4-R26 — depois de um sync com rede, todo arquivo da biblioteca está no aparelho > os seis baixam, no durável; a linha do plano é `reason=library` com n=6 7ms
+   → (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ × |native| apps/native/test/garantia.test.ts > N4-R26 — depois de um sync com rede, todo arquivo da biblioteca está no aparelho > N4-D88: a janela de 7 dias começa primeiro, depois a biblioteca em ordem alfabética 2ms
+   → (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ × |native| apps/native/test/garantia.test.ts > N4-R26 — depois de um sync com rede, todo arquivo da biblioteca está no aparelho > sem setlist nenhuma, a biblioteca baixa do mesmo jeito 1ms
+   → (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ × |native| apps/native/test/garantia.test.ts > N4-R26 — depois de um sync com rede, todo arquivo da biblioteca está no aparelho > o conjunto garantido (o que o LRU protege) é a biblioteca inteira 4ms
+   → expected [ …(2) ] to deeply equal [ …(6) ]
+ × |native| apps/native/test/garantia.test.ts > N4-D88 — quando o teto não comporta > a biblioteca para quando o total passa do teto; o que não coube fica não baixado; o lru over é o sinal 1ms
+   → (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ × |native| apps/native/test/garantia.test.ts > N4-D88 — quando o teto não comporta > acima do teto, a janela de 7 dias baixa mesmo assim (prioridade); a biblioteca não 1ms
+   → (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ × |native| apps/native/test/garantia.test.ts > N4-D88 — quando o teto não comporta > o LRU não despeja arquivo da biblioteca — só o órfão 3ms
+   → expected [] to deeply equal [ 'OCTAVIA: lru evict n=1 bytes=1000' ]
+ ✓ |native| apps/native/test/garantia.test.ts > N4-D88 — quando o teto não comporta > o teto de verdade continua 200 MB 1ms
+ × |native| apps/native/test/garantia.test.ts > a promoção alcança o arquivo da biblioteca que veio sob demanda > um arquivo só da biblioteca no purgável vai para o durável 1ms
+   → (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ × |native| apps/native/test/garantia.test.ts > L2 — o `updated_at` muda, o `file_url` não: o arquivo no disco fica > depois do sync com a música mudada, o arquivo está lá, nada baixa de novo, e o LRU não o toca 1ms
+   → (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ × |native| apps/native/test/garantia.test.ts > o estado de download por URL (o que a linha de L e V vão ler na PR-7/PR-8) > baixando enquanto o voo existe; ao assentar, sai do conjunto; quem assina é avisado 1ms
+   → (0 , __vite_ssr_import_3__.assinarDownloads) is not a function
+ × |native| apps/native/test/garantia.test.ts > o estado de download por URL (o que a linha de L e V vão ler na PR-7/PR-8) > falhou: o 404 fica com a frase do conjunto fechado; o próximo download bem-sucedido apaga a falha 1ms
+   → (0 , __vite_ssr_import_3__.estadoDosDownloads) is not a function
+ × |native| apps/native/test/garantia.test.ts > o estado de download por URL (o que a linha de L e V vão ler na PR-7/PR-8) > a falha do plano de prefetch também fica registrada (é o mesmo `ensureFile`) 0ms
+   → (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ ✓ |native-tela| apps/native/test/s2-edicao.test.tsx > (a) T2-R19 / N2-D26 — a faixa de 64 dp distingue as duas S2 > vinda de S1: a faixa tem os DOIS controles desta PR, e cada linha tem o seu `remover` 144ms
+ × |native-tela| apps/native/test/apos-escrita.test.tsx > (i) T2-R17 / div. 228 — criar com data nos próximos 7 dias dispara o prefetch > com o gancho ligado, criar datado produz `prefetch plan … reason=library` sem abrir a setlist 217ms
+   → expected 'prefetch plan n=0 reason=7d' to match /^prefetch plan n=\d+ reason=library$/
+ ✓ |native-tela| apps/native/test/s2-edicao.test.tsx > (a) T2-R19 / N2-D26 — a faixa de 64 dp distingue as duas S2 > vinda do palco: ZERO controle de escrita — nem faixa, nem `remover` 138ms
+ ✓ |native-tela| apps/native/test/apos-escrita.test.tsx > (i) T2-R17 / div. 228 — criar com data nos próximos 7 dias dispara o prefetch > desligado, a MESMA criação não produz nenhuma linha de prefetch 202ms
+ ✓ |native-tela| apps/native/test/s2-edicao.test.tsx > (b) T2-R3 (iii) / N2-D21 — "nada mudou" não envia, e a linha de log é `blocked` > a folha de editar abre com os valores do servidor e `Salvar` inativo com o motivo 213ms
+ ✓ |native-tela| apps/native/test/s2-edicao.test.tsx > (c) T2-R4 — renomear envia SÓ o campo que mudou, e o `venue` sobrevive > um PUT com `name`, a releitura, e a tela com o nome novo 252ms
+ ✓ |native-tela| apps/native/test/s2-edicao.test.tsx > (d) T2-R4 / C4 — limpar a data conta como mudança e envia `null` > o `Limpar` ativa o `Salvar`, e o servidor fica sem data 211ms
+ ✓ |native-tela| apps/native/test/s2-edicao.test.tsx > (d) T2-R4 / C4 — limpar a data conta como mudança e envia `null` > N2-PR7 (c) — setlist sem data: o `Limpar` não existe, e sem frase nova 143ms
+ × |native-tela| apps/native/test/s2-edicao.test.tsx > (e) T2-R17 — datar para os próximos 7 dias na EDIÇÃO dispara o prefetch > a releitura da edição corre o mesmo plano de 7 dias do sync 247ms
+   → expected 'prefetch plan n=0 reason=7d' to match /^prefetch plan n=\d+ reason=library$/
+ ✓ |native-tela| apps/native/test/s2-edicao.test.tsx > (f) T2-R7 / N2-D28 — remover é escrita imediata, por `setlist_songs.id` > o bis da posição 4 sai e a posição 1 fica; sem diálogo, com releitura 213ms
+ ✓ |native-tela| apps/native/test/s2-edicao.test.tsx > (g) T2-R11 / N2-X-falhou — remover que falha: aviso, e `Tentar de novo` só depois da releitura > a linha de aviso de S2 traz as três orações do congelado e a ação 257ms
+ ✓ |native-tela| apps/native/test/s2-edicao.test.tsx > (h) N2-D22 — remover com 2xx e releitura em 500: "salvo; não foi possível recarregar" > o aviso é o da regra 4, e o único botão RECARREGA 296ms
+ ✓ |native-tela| apps/native/test/s2-edicao.test.tsx > (i) T2-R5 / N2-D14 — apagar tem diálogo, com os quatro itens da regra 5 > `Manter a setlist` não escreve nada; `Apagar` escreve e sai para S1 306ms
+ ✓ |native-tela| apps/native/test/s2-edicao.test.tsx > (j) T2-R10 — 404 em qualquer escrita: S2 é abandonada e S1 já vem relida > a folha fecha, a tela sai com `sumiu`, e S1 mostra a frase sem botão 307ms
+ ✓ |native-tela| apps/native/test/s2-edicao.test.tsx > (n) N2-D32 / N2-E21 — a escrita falhou E a releitura também > 500 no remover e 500 na releitura: sem "lista relida", e o botão RECARREGA 478ms
+ ✓ |native-tela| apps/native/test/s2-edicao.test.tsx > (n) N2-D32 / N2-E21 — a escrita falhou E a releitura também > 404 no remover e 500 na releitura: sai para S1 com `sumiu-nao-relido`, sem a lista 356ms
+ ✓ |native-tela| apps/native/test/s2-edicao.test.tsx > (n) N2-D32 / N2-E21 — a escrita falhou E a releitura também > extra X5 — o mesmo vale para o 404 do editar (e dos outros caminhos de saída) 346ms
+ ✓ |native-tela| apps/native/test/s2-edicao.test.tsx > (n) N2-D32 / N2-E21 — a escrita falhou E a releitura também > S1 com `sumiu-nao-relido`: as duas orações, `Tentar recarregar`, e depois do 200 a frase do 404 228ms
+ ✓ |native-tela| apps/native/test/s2-edicao.test.tsx > (o) div. 333 / N2-E23 — apagada, não relida > S2: apagar 200 e releitura 500 → sai para S1 COM o aviso e o nome 273ms
+ ✓ |native-tela| apps/native/test/s2-edicao.test.tsx > (o) div. 333 / N2-E23 — apagada, não relida > S1: a linha de aviso diz que foi apagada e não relida; `Tentar recarregar` tira a setlist da lista 285ms
+ ✓ |native-tela| apps/native/test/s2-edicao.test.tsx > (k) T2-R13 / N2-D9 — 401 numa escrita de S2 não desloga > o aviso traz a frase do conjunto, e a sessão fica 239ms
+ ✓ |native-tela| apps/native/test/s2-edicao.test.tsx > (l) T2-R12 / N2-X-sem-rede — sem rede, os controles de escrita inativam > faixa e `remover` inativos com o desenho amputado, o motivo escrito uma vez, zero request 172ms
+ ✓ |native-tela| apps/native/test/s2-edicao.test.tsx > (m) T2-R14 / N2-X-limite — 429 fecha a família e o aviso diz o prazo > a frase carrega o N do `Retry-After`, e a escrita seguinte nem sai 367ms
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |native| apps/native/test/favoritar.test.ts [ apps/native/test/favoritar.test.ts ]
+Error: Cannot find module '/apps/native/src/favoritar' imported from '/Users/marcelviana/projects/octavia-n4-pr5/apps/native/test/favoritar.test.ts'
+ ❯ apps/native/test/favoritar.test.ts:106:9
+    104|   process.env.EXPO_PUBLIC_API_BASE_URL = `http://127.0.0.1:${mock.port…
+    105|   ;(globalThis as { __DEV__?: boolean }).__DEV__ = false
+    106|   mod = await import('../src/favoritar')
+       |         ^
+    107|   store = await import('../src/store')
+    108| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/41]⎯
+
+ FAIL  |core| packages/core/src/biblioteca.test.ts [ packages/core/src/biblioteca.test.ts ]
+Error: Cannot find module './biblioteca' imported from '/Users/marcelviana/projects/octavia-n4-pr5/packages/core/src/biblioteca.test.ts'
+ ❯ packages/core/src/biblioteca.test.ts:15:1
+     13|  */
+     14| import { describe, expect, it } from 'vitest'
+     15| import {
+       | ^
+     16|   consultarBiblioteca,
+     17|   ordenarBiblioteca,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/41]⎯
+
+ FAIL  |core| packages/core/src/favoritar.test.ts [ packages/core/src/favoritar.test.ts ]
+Error: Cannot find module './favoritar' imported from '/Users/marcelviana/projects/octavia-n4-pr5/packages/core/src/favoritar.test.ts'
+ ❯ packages/core/src/favoritar.test.ts:14:1
+     12|  */
+     13| import { describe, expect, it } from 'vitest'
+     14| import {
+       | ^
+     15|   FAMILIA_DO_FAVORITAR,
+     16|   avisoDoFavoritar,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/41]⎯
+
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 38 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |native| apps/native/test/frases-n4.test.ts > (3) a P-F8 no core, igual à da S4 (lida do fonte) > a S4 escreve a régua com o template de sempre (as duas ocorrências: a régua e a régua exportada)
+AssertionError: expected 1 to be 2 // Object.is equality
+
+- Expected
++ Received
+
+- 2
++ 1
+
+ ❯ apps/native/test/frases-n4.test.ts:170:43
+    168| 
+    169|   it('a S4 escreve a régua com o template de sempre (as duas ocorrênci…
+    170|     expect(FONTE.split(MOLDE).length - 1).toBe(2)
+       |                                           ^
+    171|   })
+    172| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/41]⎯
+
+ FAIL  |native| apps/native/test/frases-n4.test.ts > (3) a P-F8 no core, igual à da S4 (lida do fonte) > o core e o template da S4 dão o mesmo texto para 0, 1, 2 e 57
+TypeError: __vite_ssr_import_5__.nResultados is not a function
+ ❯ apps/native/test/frases-n4.test.ts:175:52
+    173|   it('o core e o template da S4 dão o mesmo texto para 0, 1, 2 e 57', …
+    174|     const daTela = new Function('n', `return ${MOLDE}`) as (n: number)…
+    175|     for (const n of [0, 1, 2, 57]) expect(conteudo.nResultados(n)).toB…
+       |                                                    ^
+    176|   })
+    177| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/41]⎯
+
+ FAIL  |native| apps/native/test/garantia.test.ts > N4-R26 — depois de um sync com rede, todo arquivo da biblioteca está no aparelho > os seis baixam, no durável; a linha do plano é `reason=library` com n=6
+TypeError: (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ ❯ apps/native/test/garantia.test.ts:94:11
+     92|     const { contentById, setlists } = biblioteca()
+     93|     responderTodos()
+     94|     await prefetchDaBiblioteca(setlists, contentById)
+       |           ^
+     95|     for (const s of ['d1', 'd2', 'b1', 'b2', 'b3', 'b4']) {
+     96|       expect(__existe(`${filesDirs().guaranteed}/${nome(s)}`)).toBe(tr…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/41]⎯
+
+ FAIL  |native| apps/native/test/garantia.test.ts > N4-R26 — depois de um sync com rede, todo arquivo da biblioteca está no aparelho > N4-D88: a janela de 7 dias começa primeiro, depois a biblioteca em ordem alfabética
+TypeError: (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ ❯ apps/native/test/garantia.test.ts:105:11
+    103|     const { contentById, setlists } = biblioteca()
+    104|     responderTodos()
+    105|     await prefetchDaBiblioteca(setlists, contentById)
+       |           ^
+    106|     expect(__iniciados()).toEqual([nome('d1'), nome('d2'), nome('b1'),…
+    107|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/41]⎯
+
+ FAIL  |native| apps/native/test/garantia.test.ts > N4-R26 — depois de um sync com rede, todo arquivo da biblioteca está no aparelho > sem setlist nenhuma, a biblioteca baixa do mesmo jeito
+TypeError: (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ ❯ apps/native/test/garantia.test.ts:112:11
+    110|     const { contentById } = biblioteca()
+    111|     responderTodos()
+    112|     await prefetchDaBiblioteca([], contentById)
+       |           ^
+    113|     expect(presentUrls().size).toBe(6)
+    114|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/41]⎯
+
+ FAIL  |native| apps/native/test/garantia.test.ts > N4-R26 — depois de um sync com rede, todo arquivo da biblioteca está no aparelho > o conjunto garantido (o que o LRU protege) é a biblioteca inteira
+AssertionError: expected [ …(2) ] to deeply equal [ …(6) ]
+
+- Expected
++ Received
+
+  [
+-   "https://host/storage/v1/object/public/content-files/17862204-b1.pdf",
+-   "https://host/storage/v1/object/public/content-files/17862204-b2.pdf",
+-   "https://host/storage/v1/object/public/content-files/17862204-b3.pdf",
+-   "https://host/storage/v1/object/public/content-files/17862204-b4.pdf",
+    "https://host/storage/v1/object/public/content-files/17862204-d1.pdf",
+    "https://host/storage/v1/object/public/content-files/17862204-d2.pdf",
+  ]
+
+ ❯ apps/native/test/garantia.test.ts:118:63
+    116|   it('o conjunto garantido (o que o LRU protege) é a biblioteca inteir…
+    117|     const { contentById, setlists } = biblioteca()
+    118|     expect([...urlsGarantidas(setlists, contentById)].sort()).toEqual(
+       |                                                               ^
+    119|       ['d1', 'd2', 'b1', 'b2', 'b3', 'b4'].map(url).sort(),
+    120|     )
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/41]⎯
+
+ FAIL  |native| apps/native/test/garantia.test.ts > N4-D88 — quando o teto não comporta > a biblioteca para quando o total passa do teto; o que não coube fica não baixado; o lru over é o sinal
+TypeError: (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ ❯ apps/native/test/garantia.test.ts:132:11
+    130|     // se conhece depois do download, div. 112); o primeiro que assent…
+    131|     // começa. O estouro é de no máximo os três que já estavam em voo …
+    132|     await prefetchDaBiblioteca(setlists, contentById, undefined, 2500)
+       |           ^
+    133|     expect(__iniciados()).toEqual([nome('d1'), nome('d2'), nome('b1')])
+    134|     expect(hasFile(url('b2'))).toBe(false)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/41]⎯
+
+ FAIL  |native| apps/native/test/garantia.test.ts > N4-D88 — quando o teto não comporta > acima do teto, a janela de 7 dias baixa mesmo assim (prioridade); a biblioteca não
+TypeError: (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ ❯ apps/native/test/garantia.test.ts:151:11
+    149|     touch(url('b1'))
+    150|     touch(url('b2'))
+    151|     await prefetchDaBiblioteca(setlists, contentById, undefined, 2500)
+       |           ^
+    152|     expect(__iniciados()).toEqual([nome('d1'), nome('d2')])
+    153|     expect(octavia('prefetch plan')).toEqual(['OCTAVIA: prefetch plan …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/41]⎯
+
+ FAIL  |native| apps/native/test/garantia.test.ts > N4-D88 — quando o teto não comporta > o LRU não despeja arquivo da biblioteca — só o órfão
+AssertionError: expected [] to deeply equal [ 'OCTAVIA: lru evict n=1 bytes=1000' ]
+
+- Expected
++ Received
+
+- [
+-   "OCTAVIA: lru evict n=1 bytes=1000",
+- ]
++ []
+
+ ❯ apps/native/test/garantia.test.ts:165:34
+    163|     touch(orfao)
+    164|     aplicarLru(setlists, contentById, 2500)
+    165|     expect(octavia('lru evict')).toEqual(['OCTAVIA: lru evict n=1 byte…
+       |                                  ^
+    166|     expect(hasFile(url('b1'))).toBe(true)
+    167|     expect(hasFile(orfao)).toBe(false)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/41]⎯
+
+ FAIL  |native| apps/native/test/garantia.test.ts > a promoção alcança o arquivo da biblioteca que veio sob demanda > um arquivo só da biblioteca no purgável vai para o durável
+TypeError: (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ ❯ apps/native/test/garantia.test.ts:181:11
+    179|     __plantar(`${filesDirs().demand}/${nome('b3')}`, pdfBom(1000))
+    180|     touch(url('b3'))
+    181|     await prefetchDaBiblioteca([], contentById)
+       |           ^
+    182|     expect(octavia('prefetch promote')).toEqual(['OCTAVIA: prefetch pr…
+    183|     expect(__existe(`${filesDirs().guaranteed}/${nome('b3')}`)).toBe(t…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/41]⎯
+
+ FAIL  |native| apps/native/test/garantia.test.ts > L2 — o `updated_at` muda, o `file_url` não: o arquivo no disco fica > depois do sync com a música mudada, o arquivo está lá, nada baixa de novo, e o LRU não o toca
+TypeError: (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ ❯ apps/native/test/garantia.test.ts:192:11
+    190|     const { contentById, setlists } = biblioteca()
+    191|     responderTodos()
+    192|     await prefetchDaBiblioteca(setlists, contentById)
+       |           ^
+    193|     const antes = __iniciados().length
+    194|     expect(antes).toBe(6)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/41]⎯
+
+ FAIL  |native| apps/native/test/garantia.test.ts > o estado de download por URL (o que a linha de L e V vão ler na PR-7/PR-8) > baixando enquanto o voo existe; ao assentar, sai do conjunto; quem assina é avisado
+TypeError: (0 , __vite_ssr_import_3__.assinarDownloads) is not a function
+ ❯ apps/native/test/garantia.test.ts:217:18
+    215|     __responder(u, { corpo: pdfBom(1000), pedacos: 2, atrasoMs: 1_000 …
+    216|     let avisos = 0
+    217|     const sair = assinarDownloads(() => {
+       |                  ^
+    218|       avisos++
+    219|     })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/41]⎯
+
+ FAIL  |native| apps/native/test/garantia.test.ts > o estado de download por URL (o que a linha de L e V vão ler na PR-7/PR-8) > falhou: o 404 fica com a frase do conjunto fechado; o próximo download bem-sucedido apaga a falha
+TypeError: (0 , __vite_ssr_import_3__.estadoDosDownloads) is not a function
+ ❯ apps/native/test/garantia.test.ts:234:12
+    232|     __responder(u, { corpo: '', status: 404 })
+    233|     await expect(ensureFile(u, { guaranteed: true })).rejects.toThrow()
+    234|     expect(estadoDosDownloads().falhas.get(u)).toBe('o servidor respon…
+       |            ^
+    235|     __responder(u, { corpo: pdfBom(500) })
+    236|     await ensureFile(u, { guaranteed: true })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/41]⎯
+
+ FAIL  |native| apps/native/test/garantia.test.ts > o estado de download por URL (o que a linha de L e V vão ler na PR-7/PR-8) > a falha do plano de prefetch também fica registrada (é o mesmo `ensureFile`)
+TypeError: (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ ❯ apps/native/test/garantia.test.ts:244:11
+    242|     responderTodos()
+    243|     __responder(url('b4'), { corpo: '', status: 404 })
+    244|     await prefetchDaBiblioteca([], contentById)
+       |           ^
+    245|     expect(estadoDosDownloads().falhas.get(url('b4'))).toBe('o servido…
+    246|     expect(octavia('download-error')).toHaveLength(1)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/41]⎯
+
+ FAIL  |native| apps/native/test/prefetch-fila.test.ts > div. 122 — um download lento não pode parar a fila > o quarto arquivo COMEÇA enquanto o primeiro ainda baixa
+TypeError: (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ ❯ apps/native/test/prefetch-fila.test.ts:67:17
+     65|     for (const url of urls.slice(1)) __responder(url, { corpo: pdfBom(…
+     66| 
+     67|     const voo = prefetchDaBiblioteca(setlists, contentById)
+       |                 ^
+     68|     await vi.advanceTimersByTimeAsync(1_000)
+     69| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/41]⎯
+
+ FAIL  |native| apps/native/test/prefetch-fila.test.ts > div. 122 — um download lento não pode parar a fila > nunca mais de três downloads ao mesmo tempo (T1-R13 passo 3)
+TypeError: (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ ❯ apps/native/test/prefetch-fila.test.ts:84:17
+     82|     for (const url of urls) __responder(url, { corpo: pdfBom(1000), pe…
+     83| 
+     84|     const voo = prefetchDaBiblioteca(setlists, contentById)
+       |                 ^
+     85|     await vi.advanceTimersByTimeAsync(60_000)
+     86|     await voo
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/41]⎯
+
+ FAIL  |native| apps/native/test/prefetch-fila.test.ts > div. 122 — um download lento não pode parar a fila > a ordem de INÍCIO continua sendo a do core — o que muda é a de término
+TypeError: (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ ❯ apps/native/test/prefetch-fila.test.ts:97:17
+     95|     for (const url of urls.slice(1)) __responder(url, { corpo: pdfBom(…
+     96| 
+     97|     const voo = prefetchDaBiblioteca(setlists, contentById)
+       |                 ^
+     98|     await vi.advanceTimersByTimeAsync(60_000)
+     99|     await voo
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/41]⎯
+
+ FAIL  |native| apps/native/test/prefetch-fila.test.ts > W1-A7 — o indicador anda DURANTE o download, não só no fim > o callback por arquivo corre antes de o plano terminar
+TypeError: (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ ❯ apps/native/test/prefetch-fila.test.ts:112:17
+    110| 
+    111|     const passos: number[] = []
+    112|     const voo = prefetchDaBiblioteca(setlists, contentById, () => {
+       |                 ^
+    113|       passos.push(urls.filter((u) => hasFile(u)).length)
+    114|     })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/41]⎯
+
+ FAIL  |native| apps/native/test/prefetch-fila.test.ts > div. 114 — nenhuma falha de download é engolida (T1-R37) > três falhas, três linhas, e as outras continuam
+TypeError: (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ ❯ apps/native/test/prefetch-fila.test.ts:134:17
+    132|     for (const url of urls.slice(3)) __responder(url, { corpo: pdfBom(…
+    133| 
+    134|     const voo = prefetchDaBiblioteca(setlists, contentById)
+       |                 ^
+    135|     await vi.advanceTimersByTimeAsync(10_000)
+    136|     await voo
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/41]⎯
+
+ FAIL  |native| apps/native/test/prefetch-fila.test.ts > div. 114 — nenhuma falha de download é engolida (T1-R37) > a linha de falha não carrega a URL inteira (regra 2 do catálogo)
+TypeError: (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ ❯ apps/native/test/prefetch-fila.test.ts:147:17
+    145|     __responder(urls[0] as string, { corpo: '', status: 404 })
+    146| 
+    147|     const voo = prefetchDaBiblioteca(setlists, contentById)
+       |                 ^
+    148|     await vi.advanceTimersByTimeAsync(10_000)
+    149|     await voo
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/41]⎯
+
+ FAIL  |native| apps/native/test/prefetch-fila.test.ts > div. 115 — a promoção não pode derrubar o sync > uma promoção que falha vira linha, não rejeição sem dono
+TypeError: (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ ❯ apps/native/test/prefetch-fila.test.ts:181:17
+    179|     __responder(url, { corpo: pdfBom(1000) })
+    180| 
+    181|     const voo = prefetchDaBiblioteca(setlists, contentById)
+       |                 ^
+    182|     await vi.advanceTimersByTimeAsync(10_000)
+    183|     await expect(voo).resolves.toBeUndefined()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/41]⎯
+
+ FAIL  |native| apps/native/test/prefetch-fila.test.ts > div. 137 — o que não passa pelo `falha()` também é higienizado > o HOST NU entre aspas não chega ao log — era o buraco da higienização antiga
+TypeError: (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ ❯ linhaDeErro apps/native/test/prefetch-fila.test.ts:233:17
+    231|     __responder(url, { corpo: pdfBom(1000) })
+    232| 
+    233|     const voo = prefetchDaBiblioteca(setlists, contentById)
+       |                 ^
+    234|     await vi.advanceTimersByTimeAsync(10_000)
+    235|     await expect(voo).resolves.toBeUndefined()
+ ❯ apps/native/test/prefetch-fila.test.ts:243:25
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/41]⎯
+
+ FAIL  |native| apps/native/test/prefetch-fila.test.ts > div. 137 — o que não passa pelo `falha()` também é higienizado > a URI `file://` continua coberta — unificar não podia custar cobertura
+TypeError: (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ ❯ linhaDeErro apps/native/test/prefetch-fila.test.ts:233:17
+    231|     __responder(url, { corpo: pdfBom(1000) })
+    232| 
+    233|     const voo = prefetchDaBiblioteca(setlists, contentById)
+       |                 ^
+    234|     await vi.advanceTimersByTimeAsync(10_000)
+    235|     await expect(voo).resolves.toBeUndefined()
+ ❯ apps/native/test/prefetch-fila.test.ts:252:25
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/41]⎯
+
+ FAIL  |native| apps/native/test/prefetch-fila.test.ts > div. 137 — o que não passa pelo `falha()` também é higienizado > a URL completa continua coberta
+TypeError: (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ ❯ linhaDeErro apps/native/test/prefetch-fila.test.ts:233:17
+    231|     __responder(url, { corpo: pdfBom(1000) })
+    232| 
+    233|     const voo = prefetchDaBiblioteca(setlists, contentById)
+       |                 ^
+    234|     await vi.advanceTimersByTimeAsync(10_000)
+    235|     await expect(voo).resolves.toBeUndefined()
+ ❯ apps/native/test/prefetch-fila.test.ts:260:25
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/41]⎯
+
+ FAIL  |native| apps/native/test/prefetch-fila.test.ts > div. 137 — o que não passa pelo `falha()` também é higienizado > CONTROLE NEGATIVO: o que NÃO é segredo sobrevive inteiro
+TypeError: (0 , __vite_ssr_import_4__.prefetchDaBiblioteca) is not a function
+ ❯ linhaDeErro apps/native/test/prefetch-fila.test.ts:233:17
+    231|     __responder(url, { corpo: pdfBom(1000) })
+    232| 
+    233|     const voo = prefetchDaBiblioteca(setlists, contentById)
+       |                 ^
+    234|     await vi.advanceTimersByTimeAsync(10_000)
+    235|     await expect(voo).resolves.toBeUndefined()
+ ❯ apps/native/test/prefetch-fila.test.ts:266:25
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[28/41]⎯
+
+ FAIL  |native-tela| apps/native/test/apos-escrita.test.tsx > (i) T2-R17 / div. 228 — criar com data nos próximos 7 dias dispara o prefetch > com o gancho ligado, criar datado produz `prefetch plan … reason=library` sem abrir a setlist
+AssertionError: expected 'prefetch plan n=0 reason=7d' to match /^prefetch plan n=\d+ reason=library$/
+
+- Expected: 
+/^prefetch plan n=\d+ reason=library$/
+
++ Received: 
+"prefetch plan n=0 reason=7d"
+
+ ❯ apps/native/test/apos-escrita.test.tsx:156:38
+    154|       expect(so('prefetch plan')).toHaveLength(1)
+    155|       // N4-PR5 (N4-R26, errata em par do G3): o plano é o da bibliote…
+    156|       expect(so('prefetch plan')[0]).toMatch(/^prefetch plan n=\d+ rea…
+       |                                      ^
+    157|     } finally {
+    158|       desligar()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[29/41]⎯
+
+ FAIL  |native-tela| apps/native/test/s2-edicao.test.tsx > (e) T2-R17 — datar para os próximos 7 dias na EDIÇÃO dispara o prefetch > a releitura da edição corre o mesmo plano de 7 dias do sync
+AssertionError: expected 'prefetch plan n=0 reason=7d' to match /^prefetch plan n=\d+ reason=library$/
+
+- Expected: 
+/^prefetch plan n=\d+ reason=library$/
+
++ Received: 
+"prefetch plan n=0 reason=7d"
+
+ ❯ apps/native/test/s2-edicao.test.tsx:353:38
+    351|       expect(so('prefetch plan')).toHaveLength(1)
+    352|       // N4-PR5 (N4-R26, errata em par do G3): o plano é o da bibliote…
+    353|       expect(so('prefetch plan')[0]).toMatch(/^prefetch plan n=\d+ rea…
+       |                                      ^
+    354|     } finally {
+    355|       desligar()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[30/41]⎯
+
+ FAIL  |core| packages/core/src/garantia.test.ts > o conjunto garantido = todo file_url com body === "file" (A-N4-26, core) > a biblioteca inteira, não a janela de 7 dias
+TypeError: (0 , __vite_ssr_import_1__.urlsDaBiblioteca) is not a function or its return value is not iterable
+ ❯ packages/core/src/garantia.test.ts:77:16
+     75| describe('o conjunto garantido = todo file_url com body === "file" (A-…
+     76|   it('a biblioteca inteira, não a janela de 7 dias', () => {
+     77|     expect([...urlsDaBiblioteca(BIBLIOTECA)].sort()).toEqual(
+       |                ^
+     78|       [`${H}/a.pdf`, `${H}/cifra.pdf`, `${H}/foto.JPG`, `${H}/m.pdf`, …
+     79|     )
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[31/41]⎯
+
+ FAIL  |core| packages/core/src/garantia.test.ts > o conjunto garantido = todo file_url com body === "file" (A-N4-26, core) > sem setlist nenhuma, o conjunto é o mesmo (a garantia não depende de setlist)
+TypeError: (0 , __vite_ssr_import_1__.urlsDaBiblioteca) is not a function
+ ❯ packages/core/src/garantia.test.ts:83:12
+     81| 
+     82|   it('sem setlist nenhuma, o conjunto é o mesmo (a garantia não depend…
+     83|     expect(urlsDaBiblioteca(BIBLIOTECA).size).toBe(5)
+       |            ^
+     84|     expect(selectPrefetch([], POR_ID, new Set(), HOJE)).toEqual([])
+     85|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[32/41]⎯
+
+ FAIL  |core| packages/core/src/garantia.test.ts > N4-D88 — o plano: a janela de 7 dias primeiro, depois a biblioteca em ordem alfabética > 7d na ordem de hoje (position), depois o resto pela ordem da biblioteca, sem repetir
+TypeError: (0 , __vite_ssr_import_1__.planoDaBiblioteca) is not a function
+ ❯ packages/core/src/garantia.test.ts:93:19
+     91| 
+     92|   it('7d na ordem de hoje (position), depois o resto pela ordem da bib…
+     93|     const plano = planoDaBiblioteca([S7, SV], POR_ID, new Set(), HOJE)
+       |                   ^
+     94|     expect(plano).toEqual([
+     95|       { url: `${H}/m.pdf`, prioridade: '7d' },
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[33/41]⎯
+
+ FAIL  |core| packages/core/src/garantia.test.ts > N4-D88 — o plano: a janela de 7 dias primeiro, depois a biblioteca em ordem alfabética > o que já está no aparelho não entra
+TypeError: (0 , __vite_ssr_import_1__.planoDaBiblioteca) is not a function
+ ❯ packages/core/src/garantia.test.ts:104:19
+    102| 
+    103|   it('o que já está no aparelho não entra', () => {
+    104|     const plano = planoDaBiblioteca([S7], POR_ID, new Set([`${H}/m.pdf…
+       |                   ^
+    105|     expect(plano.map((p) => p.url)).toEqual([`${H}/cifra.pdf`, `${H}/f…
+    106|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[34/41]⎯
+
+ FAIL  |core| packages/core/src/garantia.test.ts > N4-D88 — o plano: a janela de 7 dias primeiro, depois a biblioteca em ordem alfabética > fora da janela, a setlist datada não tem prioridade: tudo é biblioteca
+TypeError: (0 , __vite_ssr_import_1__.planoDaBiblioteca) is not a function
+ ❯ packages/core/src/garantia.test.ts:110:12
+    108|   it('fora da janela, a setlist datada não tem prioridade: tudo é bibl…
+    109|     const passada = setlist('sp', '2026-01-01', ['z'])
+    110|     expect(planoDaBiblioteca([passada], POR_ID, new Set(), HOJE).every…
+       |            ^
+    111|   })
+    112| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[35/41]⎯
+
+ FAIL  |core| packages/core/src/garantia.test.ts > N4-D88 — o plano: a janela de 7 dias primeiro, depois a biblioteca em ordem alfabética > a janela de 7 dias continua UMA definição: os 7d do plano são o selectPrefetch
+TypeError: (0 , __vite_ssr_import_1__.planoDaBiblioteca) is not a function
+ ❯ packages/core/src/garantia.test.ts:114:19
+    112| 
+    113|   it('a janela de 7 dias continua UMA definição: os 7d do plano são o …
+    114|     const plano = planoDaBiblioteca([S7, SV], POR_ID, new Set(), HOJE)
+       |                   ^
+    115|     expect(plano.filter((p) => p.prioridade === '7d').map((p) => p.url…
+    116|       selectPrefetch([S7, SV], POR_ID, new Set(), HOJE).map((i) => i.u…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[36/41]⎯
+
+ FAIL  |core| packages/core/src/garantia.test.ts > o LRU não despeja garantido; só o órfão sai > acima do teto, com todo arquivo da biblioteca protegido, o órfão é a única vítima
+TypeError: (0 , __vite_ssr_import_1__.urlsDaBiblioteca) is not a function
+ ❯ packages/core/src/garantia.test.ts:123:24
+    121| describe('o LRU não despeja garantido; só o órfão sai', () => {
+    122|   it('acima do teto, com todo arquivo da biblioteca protegido, o órfão…
+    123|     const garantidas = urlsDaBiblioteca(BIBLIOTECA)
+       |                        ^
+    124|     const files = [
+    125|       { url: `${H}/a.pdf`, bytes: 60, lastUsedMs: 1 },
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[37/41]⎯
+
+ FAIL  |core| packages/core/src/garantia.test.ts > o estado do arquivo por música > sem arquivo: texto, inválido
+TypeError: (0 , __vite_ssr_import_1__.estadoDoArquivo) is not a function
+ ❯ packages/core/src/garantia.test.ts:137:12
+    135| 
+    136|   it('sem arquivo: texto, inválido', () => {
+    137|     expect(estadoDoArquivo(POR_ID.get('l')!, new Set(), vazio)).toEqua…
+       |            ^
+    138|     expect(estadoDoArquivo(POR_ID.get('lf')!, new Set(), vazio)).toEqu…
+    139|     expect(estadoDoArquivo(POR_ID.get('inv')!, new Set(), vazio)).toEq…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[38/41]⎯
+
+ FAIL  |core| packages/core/src/garantia.test.ts > o estado do arquivo por música > formato que o app ainda não mostra, pela extensão (N4-D43) — antes de qualquer estado de disco
+TypeError: (0 , __vite_ssr_import_1__.estadoDoArquivo) is not a function
+ ❯ packages/core/src/garantia.test.ts:144:12
+    142|   it('formato que o app ainda não mostra, pela extensão (N4-D43) — ant…
+    143|     const img = POR_ID.get('img')!
+    144|     expect(estadoDoArquivo(img, new Set([`${H}/foto.JPG`]), vazio)).to…
+       |            ^
+    145|     expect(ehFormatoQueOAppMostra(`${H}/a.pdf`)).toBe(true)
+    146|     expect(ehFormatoQueOAppMostra(`${H}/A.PDF?token=1`)).toBe(true)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[39/41]⎯
+
+ FAIL  |core| packages/core/src/garantia.test.ts > o estado do arquivo por música > baixado · baixando · falhou com o motivo · não baixado
+TypeError: (0 , __vite_ssr_import_1__.estadoDoArquivo) is not a function
+ ❯ packages/core/src/garantia.test.ts:155:12
+    153|     const p = POR_ID.get('p-a')!
+    154|     const url = `${H}/a.pdf`
+    155|     expect(estadoDoArquivo(p, new Set([url]), vazio)).toEqual({ tipo: …
+       |            ^
+    156|     expect(estadoDoArquivo(p, new Set(), { ...vazio, baixando: new Set…
+    157|     expect(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[40/41]⎯
+
+ FAIL  |core| packages/core/src/garantia.test.ts > o estado do arquivo por música > a precedência: baixado vence baixando e falhou; baixando (a nova tentativa) vence a falha anterior
+TypeError: (0 , __vite_ssr_import_1__.estadoDoArquivo) is not a function
+ ❯ packages/core/src/garantia.test.ts:167:12
+    165|     const url = `${H}/a.pdf`
+    166|     const tudo = { baixando: new Set([url]), falhas: new Map([[url, 'n…
+    167|     expect(estadoDoArquivo(p, new Set([url]), tudo)).toEqual({ tipo: '…
+       |            ^
+    168|     expect(estadoDoArquivo(p, new Set(), tudo)).toEqual({ tipo: 'baixa…
+    169|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[41/41]⎯
+
+
+ Test Files  9 failed (9)
+      Tests  38 failed | 57 passed | 15 skipped (110)
+   Start at  17:59:41
+   Duration  6.68s (transform 1.37s, setup 0ms, import 1.55s, tests 6.39s, environment 706ms)
+
+exit=1

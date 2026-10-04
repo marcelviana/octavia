@@ -3,6 +3,7 @@
  * T1-R16, T1-R17; aceites A9, A10). Puro: o "hoje" e o conjunto de arquivos
  * já baixados entram por parâmetro; nada aqui toca disco, rede ou relógio.
  */
+import { ordenarBiblioteca } from './biblioteca'
 import { isValidContent } from './content-contract'
 import type { ContentDTO, SetlistDTO, SetlistSongDTO } from './types'
 
@@ -160,6 +161,126 @@ export function promoteList(
   files: { url: string; guaranteed: boolean }[],
 ): string[] {
   return files.filter((file) => !file.guaranteed && guaranteedUrls.has(file.url)).map((f) => f.url)
+}
+
+// ------------------------------------------- a biblioteca inteira (N4-PR5)
+
+/** A URL do arquivo desta música, ou `null` — só quem tem `body === 'file'` tem arquivo a baixar. */
+function urlDoArquivo(content: ContentDTO): string | null {
+  const validade = isValidContent(content.content_type, content.content_data, content.file_url)
+  if (!validade.ok || validade.body !== 'file') return null
+  return content.file_url
+}
+
+/**
+ * **N4-R26 — o conjunto garantido é a biblioteca inteira** (N4-D42, N4-D82): todo `file_url` com `body === 'file'`
+ * (Partitura e Cifra escaneada), esteja a música numa setlist ou não. É o que o LRU protege (`protectedUrls` do
+ * `lruEvict`): com ele, só o arquivo de uma música que saiu da biblioteca (o órfão) é despejável.
+ *
+ * Até a N4-PR5 o conjunto garantido era a janela de 7 dias (`selectPrefetch` com "nada no disco"); a janela continua
+ * existindo, com uma definição só (o `selectPrefetch`), mas agora decide só a PRIORIDADE do plano (N4-D88).
+ */
+export function urlsDaBiblioteca(contents: Iterable<ContentDTO>): Set<string> {
+  const out = new Set<string>()
+  for (const c of contents) {
+    const url = urlDoArquivo(c)
+    if (url !== null) out.add(url)
+  }
+  return out
+}
+
+/** Um item do plano da biblioteca: a URL e por que ela vem nesta posição (N4-D88). */
+export interface ItemDoPlano {
+  url: string
+  /** `7d`: de uma setlist dos próximos 7 dias — baixa sempre. `biblioteca`: o resto — baixa enquanto couber. */
+  prioridade: '7d' | 'biblioteca'
+}
+
+/**
+ * **N4-D88 — o plano de prefetch da biblioteca** (`[Marcel, 2026-10-04]`). Primeiro os arquivos da janela de 7 dias,
+ * na ordem de hoje (o `selectPrefetch`: data mais próxima, depois `position`); depois todo o resto da biblioteca, na
+ * ordem da biblioteca (alfabética, N4-R4). O que já está no aparelho não entra; URL repetida, uma vez.
+ *
+ * O teto não é decidido aqui: o tamanho de um arquivo só se conhece depois do download (div. 112), e por isso quem
+ * para de baixar o resto da biblioteca quando o total no aparelho passa do teto é quem baixa (`prefetch.ts`). A
+ * prioridade é o que o plano carrega para isso.
+ */
+export function planoDaBiblioteca(
+  setlists: SetlistDTO[],
+  contentById: Map<string, ContentDTO>,
+  filesPresent: Set<string>,
+  today: string,
+): ItemDoPlano[] {
+  const out: ItemDoPlano[] = selectPrefetch(setlists, contentById, filesPresent, today).map((item) => ({
+    url: item.url,
+    prioridade: '7d',
+  }))
+  const vistas = new Set(out.map((item) => item.url))
+  for (const content of ordenarBiblioteca([...contentById.values()])) {
+    const url = urlDoArquivo(content)
+    if (url === null || filesPresent.has(url) || vistas.has(url)) continue
+    vistas.add(url)
+    out.push({ url, prioridade: 'biblioteca' })
+  }
+  return out
+}
+
+/** O último segmento da URL, sem consulta nem âncora — o nome do arquivo que o placeholder de formato mostra. */
+function nomeDoArquivo(url: string): string {
+  const semConsulta = url.split(/[?#]/)[0] ?? url
+  const seg = semConsulta.split('/').pop()
+  return seg === undefined || seg.length === 0 ? semConsulta : seg
+}
+
+/**
+ * **N4-D43 — o formato que o app mostra se decide pela extensão.** O app mostra arquivo pelo leitor de PDF do palco
+ * (`react-native-pdf`), e só: `.pdf`, sem diferença de caixa. Imagem, `.docx`, `.txt` e o nome sem extensão são
+ * "formato que o app ainda não mostra" — sem ramo de imagem no N4.
+ */
+export function ehFormatoQueOAppMostra(url: string): boolean {
+  return nomeDoArquivo(url).toLowerCase().endsWith('.pdf')
+}
+
+/**
+ * O estado do arquivo de uma música (N4-R6 na linha de L, N4-R15 em V). Nenhuma tela o lê nesta PR (a PR-7 e a PR-8
+ * leem). A ordem é a precedência:
+ *
+ * 1. **sem arquivo** — texto, ou item inválido (o corpo é do placeholder do contrato, não do disco);
+ * 2. **formato** — a extensão não é a que o app mostra (N4-D43), com o nome do arquivo; vem antes do disco: baixado
+ *    ou não, o app não o abre;
+ * 3. **baixado** — no aparelho (o `presentUrls` do `files.ts`, que só conta arquivo completo);
+ * 4. **baixando** — um download em voo (também o de uma nova tentativa depois de uma falha);
+ * 5. **falhou** — o último download falhou, com o motivo: a frase do conjunto fechado do `files.ts`
+ *    (`fraseDaFalha`: *o servidor respondeu 404*, *o arquivo chegou vazio*… ou *não consegui baixar*);
+ * 6. **não baixado** — o intervalo entre o sync que trouxe a música e o arquivo no disco, ou o que não coube no teto.
+ */
+export type EstadoDoArquivo =
+  | { tipo: 'sem-arquivo' }
+  | { tipo: 'formato'; nome: string }
+  | { tipo: 'baixado' }
+  | { tipo: 'baixando' }
+  | { tipo: 'falhou'; motivo: string }
+  | { tipo: 'nao-baixado' }
+
+/** O estado dos downloads em voo e das falhas, por URL (o que o `files.ts` sabe). */
+export interface EstadoDosDownloads {
+  baixando: ReadonlySet<string>
+  falhas: ReadonlyMap<string, string>
+}
+
+export function estadoDoArquivo(
+  content: ContentDTO,
+  presentes: ReadonlySet<string>,
+  downloads: EstadoDosDownloads,
+): EstadoDoArquivo {
+  const url = urlDoArquivo(content)
+  if (url === null) return { tipo: 'sem-arquivo' }
+  if (!ehFormatoQueOAppMostra(url)) return { tipo: 'formato', nome: nomeDoArquivo(url) }
+  if (presentes.has(url)) return { tipo: 'baixado' }
+  if (downloads.baixando.has(url)) return { tipo: 'baixando' }
+  const motivo = downloads.falhas.get(url)
+  if (motivo !== undefined) return { tipo: 'falhou', motivo }
+  return { tipo: 'nao-baixado' }
 }
 
 export interface CachedFile {

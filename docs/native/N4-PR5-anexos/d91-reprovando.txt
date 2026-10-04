@@ -1,0 +1,57 @@
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-n4-pr5
+
+ × |native| apps/native/test/favoritar-sync.test.ts > N4-D91 — o sync que leu antes do favoritar não desfaz a estrela > favoritar no meio do sync: o cache (disco e o que o sync devolve à raiz) fica com is_favorite=true 108ms
+   → expected false to be true // Object.is equality
+ × |native| apps/native/test/favoritar-sync.test.ts > N4-D91 — o sync que leu antes do favoritar não desfaz a estrela > desfavoritar no meio do sync: o cache fica com is_favorite=false 185ms
+   → expected true to be false // Object.is equality
+ ✓ |native| apps/native/test/favoritar-sync.test.ts > N4-D91 — o sync que leu antes do favoritar não desfaz a estrela > o PUT falha no meio do sync: o cache fica com o que o sync trouxe 113ms
+ ✓ |native| apps/native/test/favoritar-sync.test.ts > N4-D91 — o sync que leu antes do favoritar não desfaz a estrela > o caso normal: o site mudou a música DEPOIS do favoritar — o sync traz a linha mais nova, e ela vence 128ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |native| apps/native/test/favoritar-sync.test.ts > N4-D91 — o sync que leu antes do favoritar não desfaz a estrela > favoritar no meio do sync: o cache (disco e o que o sync devolve à raiz) fica com is_favorite=true
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ apps/native/test/favoritar-sync.test.ts:150:61
+    148|     expect(s.kind).toBe('ok')
+    149|     if (s.kind !== 'ok') return
+    150|     expect(s.content.find((c) => c.id === ID)?.is_favorite).toBe(true)
+       |                                                             ^
+    151|     expect(s.content.find((c) => c.id === ID)).toEqual(r.linha)
+    152|     expect(doDisco().find((c) => c.id === ID)).toEqual(r.linha)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  |native| apps/native/test/favoritar-sync.test.ts > N4-D91 — o sync que leu antes do favoritar não desfaz a estrela > desfavoritar no meio do sync: o cache fica com is_favorite=false
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ apps/native/test/favoritar-sync.test.ts:169:64
+    167|     const s = await voo
+    168|     if (s.kind !== 'ok') throw new Error(s.kind)
+    169|     expect(s.content.find((c) => c.id === OUTRO)?.is_favorite).toBe(fa…
+       |                                                                ^
+    170|     expect(doDisco().find((c) => c.id === OUTRO)?.is_favorite).toBe(fa…
+    171|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 2 passed (4)
+   Start at  19:49:22
+   Duration  874ms (transform 156ms, setup 0ms, import 71ms, tests 710ms, environment 0ms)
+
+exit=1

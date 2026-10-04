@@ -1,0 +1,12 @@
+# fim 2026-10-04 20:07:27
+FATAL (logcat desde o sync com rede): 0
+reverse: []
+stay_on=1 accel=1 user_rot=0 airplane=1 wifi=0 data=0
+connect: Network is unreachable
+OK: killing emulator, bye bye
+OK
+parado :8081
+parado :8788
+parado :8790
+ls: /Users/marcelviana/projects/octavia-n4-pr5/apps/native/.env: No such file or directory
+ram.bin Sep 24 14:00

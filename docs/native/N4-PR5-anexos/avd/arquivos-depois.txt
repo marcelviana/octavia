@@ -1,0 +1,16 @@
+# depois do sync com rede
+cache/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files:
+total 44
+drwx--S--- 2 u0_a149 u0_a149_cache  4096 2026-09-14 11:13 .
+drwx--S--- 3 u0_a149 u0_a149_cache  4096 2026-09-10 20:30 ..
+-rw------- 1 u0_a149 u0_a149_cache 20821 2026-09-14 11:13 1786218427769-ux-audit-partitura-1p.pdf
+
+files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files:
+total 280
+drwx------ 2 u0_a149 u0_a149   4096 2026-10-04 18:28 .
+drwx------ 3 u0_a149 u0_a149   4096 2026-10-04 18:28 ..
+-rw------- 1 u0_a149 u0_a149 242176 2026-09-14 11:13 1786218429715-ux-audit-partitura-12p.pdf
+-rw------- 1 u0_a149 u0_a149   4198 2026-10-04 18:28 partitura-12p.pdf
+-rw------- 1 u0_a149 u0_a149    643 2026-10-04 18:28 partitura-1p.pdf
+# files-index.json
+{"https://<host>/storage/v1/object/public/content-files/1786218429715-ux-audit-partitura-12p.pdf":{"name":"1786218429715-ux-audit-partitura-12p.pdf","bytes":242176,"lastUsedMs":1789395229435},"https://<host>/storage/v1/object/public/content-files/1786295844475-ux-audit-fase-d-cifra.pdf":{"name":"1786295844475-ux-audit-fase-d-cifra.pdf","bytes":1117,"lastUsedMs":1789071627197},"https://<host>/storage/v1/object/public/content-files/1786295884124-ux-audit-fase-d-offline.pdf":{"name":"1786295884124-ux-audit-fase-d-offline.pdf","bytes":888,"lastUsedMs":1789071628930},"https://<host>/storage/v1/object/public/content-files/1786218427769-ux-audit-partitura-1p.pdf":{"name":"1786218427769-ux-audit-partitura-1p.pdf","bytes":20821,"lastUsedMs":1789389245541},"http://localhost:8790/partitura-12p.pdf":{"name":"partitura-12p.pdf","bytes":4198,"lastUsedMs":1791149308788},"http://localhost:8790/partitura-1p.pdf":{"name":"partitura-1p.pdf","bytes":643,"lastUsedMs":1791149308819}}

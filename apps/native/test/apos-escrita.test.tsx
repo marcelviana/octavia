@@ -117,7 +117,7 @@ afterEach(async () => {
 })
 
 describe('(i) T2-R17 / div. 228 — criar com data nos próximos 7 dias dispara o prefetch', () => {
-  it('com o gancho ligado, criar datado produz `prefetch plan … reason=7d` sem abrir a setlist', async () => {
+  it('com o gancho ligado, criar datado produz `prefetch plan … reason=library` sem abrir a setlist', async () => {
     await mock.servir('escrita', [setlist(SL, 'Show')], BIBLIOTECA)
     const contentById = new Map(BIBLIOTECA.map((c) => [c.id, c]))
     const desligar = ligarPrefetchAposEscrita(() => contentById, () => undefined, () => undefined)
@@ -152,7 +152,8 @@ describe('(i) T2-R17 / div. 228 — criar com data nos próximos 7 dias dispara 
       expect(so('resync kind=setlists')).toHaveLength(1)
       // A prova da div. 228: a releitura da ESCRITA disparou o prefetch.
       expect(so('prefetch plan')).toHaveLength(1)
-      expect(so('prefetch plan')[0]).toMatch(/^prefetch plan n=\d+ reason=7d$/)
+      // N4-PR5 (N4-R26, errata em par do G3): o plano é o da biblioteca inteira, `reason=library`.
+      expect(so('prefetch plan')[0]).toMatch(/^prefetch plan n=\d+ reason=library$/)
     } finally {
       desligar()
     }

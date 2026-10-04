@@ -167,6 +167,33 @@ export interface EnsuredFile {
 const emVoo = new Map<string, { voo: Promise<EnsuredFile>; guaranteed: boolean }>()
 
 /**
+ * **N4-PR5 — o estado de download por URL**, para o estado do arquivo por música (`estadoDoArquivo` do core; a linha
+ * de L e V o leem na PR-7 e na PR-8). *Baixando* é o próprio `emVoo` acima — todo download do app passa por ele: o
+ * prefetch, o palco e o "baixar esta setlist". *Falhou* guarda a frase de tela do último download que rejeitou
+ * (`fraseDaFalha`, o conjunto fechado da W2); um download que assenta apaga a falha. Estado de módulo, como o `emVoo`:
+ * nenhuma tela o guarda, e quem quer redesenhar assina.
+ */
+const falhas = new Map<string, string>()
+const ouvintesDeDownload = new Set<() => void>()
+
+function avisarDownloads(): void {
+  for (const f of [...ouvintesDeDownload]) f()
+}
+
+/** O que está baixando e o que falhou, agora. Cópias: quem lê não muda o estado do módulo. */
+export function estadoDosDownloads(): { baixando: ReadonlySet<string>; falhas: ReadonlyMap<string, string> } {
+  return { baixando: new Set(emVoo.keys()), falhas: new Map(falhas) }
+}
+
+/** A tela assina para redesenhar quando um download começa, assenta ou falha; devolve a função que desassina. */
+export function assinarDownloads(f: () => void): () => void {
+  ouvintesDeDownload.add(f)
+  return () => {
+    ouvintesDeDownload.delete(f)
+  }
+}
+
+/**
  * Garante o arquivo no disco e devolve por onde ele veio (A9: a 2ª abertura
  * é `src=disk`, sem request). `guaranteed` decide a pasta; um arquivo que já
  * está no cache e vira garantido é **movido**, nunca rebaixado de novo.
@@ -193,10 +220,25 @@ export function ensureFile(
       : jaVoando.voo.then(() => ensureFileUma(url, opcoes))
   // Só apaga a entrada que é SUA: o voo de baixo assenta antes da carona
   // que o substituiu na tabela, e não pode levá-la junto.
-  const voo: Promise<EnsuredFile> = base.finally(() => {
-    if (emVoo.get(url)?.voo === voo) emVoo.delete(url)
-  })
+  // N4-PR5: e o resultado vai ao estado de download — a falha com a frase de tela, o sucesso apagando-a. A rejeição
+  // segue para quem chamou, inteira: registrar não é engolir (T1-R37).
+  const voo: Promise<EnsuredFile> = base
+    .then(
+      (pronto) => {
+        falhas.delete(url)
+        return pronto
+      },
+      (erro: unknown) => {
+        falhas.set(url, fraseDaFalha(erro))
+        throw erro
+      },
+    )
+    .finally(() => {
+      if (emVoo.get(url)?.voo === voo) emVoo.delete(url)
+      avisarDownloads()
+    })
   emVoo.set(url, { voo, guaranteed: opcoes.guaranteed })
+  avisarDownloads()
   return voo
 }
 

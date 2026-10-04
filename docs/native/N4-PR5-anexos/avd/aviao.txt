@@ -1,0 +1,26 @@
+# avião (regra 11): lido airplane=0 wifi=1 data=1 → avião ligado
+airplane=1
+connect: Network is unreachable
+# logcat
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net offline
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=12
+OCTAVIA: sync skip reason=offline
+OCTAVIA: prefetch plan n=1 reason=library
+OCTAVIA: download-error nao-existe.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+FATAL: 0
+# arquivos
+total 280
+drwx------ 2 u0_a149 u0_a149   4096 2026-10-04 18:28 .
+drwx------ 3 u0_a149 u0_a149   4096 2026-10-04 18:28 ..
+-rw------- 1 u0_a149 u0_a149 242176 2026-09-14 11:13 1786218429715-ux-audit-partitura-12p.pdf
+-rw------- 1 u0_a149 u0_a149   4198 2026-10-04 18:28 partitura-12p.pdf
+-rw------- 1 u0_a149 u0_a149    643 2026-10-04 18:28 partitura-1p.pdf
+ad81bb819e797cc5c3feee5d2968027b  files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files/partitura-12p.pdf
+2437b35e67b98508f61d9214ad87494d  files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files/partitura-1p.pdf
+ad81bb819e797cc5c3feee5d2968027b
+2437b35e67b98508f61d9214ad87494d
+2 packets transmitted, 2 received, 0% packet loss, time 1006ms
+rtt min/avg/max/mdev = 16.590/18.808/21.026/2.218 ms

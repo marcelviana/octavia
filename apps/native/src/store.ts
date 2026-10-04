@@ -140,12 +140,40 @@ function gravarSetlists(dir: Directory, snapshot: CacheSnapshot, invalidated: In
   log(`cache write kind=setlists n=${snapshot.setlists.length} invalidated=${invalidated.setlists}`)
 }
 
+/**
+ * A metade `content.json` da gravação — uma implementação só, usada pelo `save()` e pelo `saveContent()` (N4-PR5).
+ * Mesmo molde do `gravarSetlists`: a linha de log é **byte a byte a mesma** de antes (mesmos nomes de parâmetro,
+ * mesmo template) — mudou de função, não de texto, e o G3 não precisa de errata.
+ */
+function gravarContent(
+  dir: Directory,
+  snapshot: Pick<CacheSnapshot, 'content'>,
+  invalidated: Pick<Invalidated, 'content'>,
+): void {
+  gravarAtomico(dir, 'content.json', JSON.stringify(snapshot.content))
+  log(`cache write kind=content n=${snapshot.content.length} invalidated=${invalidated.content}`)
+}
+
 export function save(uid: string, snapshot: CacheSnapshot, invalidated: Invalidated): void {
   const dir = dirDe(uid)
   if (!dir.exists) dir.create({ intermediates: true })
   gravarSetlists(dir, snapshot, invalidated)
-  gravarAtomico(dir, 'content.json', JSON.stringify(snapshot.content))
-  log(`cache write kind=content n=${snapshot.content.length} invalidated=${invalidated.content}`)
+  gravarContent(dir, snapshot, invalidated)
+}
+
+/**
+ * N4-PR5 — o favoritar grava **só o `content.json`** (N4-D35): a linha que o `PUT` devolveu, no lugar da antiga, sem
+ * sync e sem tocar o `setlists.json` — o espelho do `saveSetlists` da escrita de setlist (N2-D13). A linha de log é a
+ * mesma `cache write kind=content`, com o `invalidated` que o favoritar conta (1: o item trocado).
+ */
+export function saveContent(
+  uid: string,
+  snapshot: Pick<CacheSnapshot, 'content'>,
+  invalidated: Pick<Invalidated, 'content'>,
+): void {
+  const dir = dirDe(uid)
+  if (!dir.exists) dir.create({ intermediates: true })
+  gravarContent(dir, snapshot, invalidated)
 }
 
 /**

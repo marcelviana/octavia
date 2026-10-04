@@ -30,7 +30,7 @@
 | renovação de token | `auth refresh=forced\|cached` | antes de cada request (T1-R2) | A1 |
 | sessão inválida | `auth-failure` | 2º 401 ou refresh sem token novo (T1-R3) | A2 |
 | request à API | `api status=<s> path=<path> n=<1\|2> ms=<ms>` | toda resposta de `/api/*`, **também nas escritas** (N2-PR2). Nas rotas de escrita o `path` traz cada uuid pelos seus **8 primeiros caracteres** (regra 3): `/api/setlists/<id8>`, `/api/setlists/<id8>/songs/order`, `/api/setlists/songs/<id8>`. Até a N2-PR1 esta linha só conheceu paths sem id, e `split('?')[0]` bastava | A1, A2, A4, A22, A-N2-8 |
-| 429 | `ratelimit retry-after=<s> family=<f>` | resposta 429 (T1-R4). `family` é `content-read`, `setlist-read` ou, desde a N2-PR2, `setlist-mutate` — **compartilhada pelas seis escritas**, então um 429 numa adição fecha o botão de criar também (T2-R14). A linha só sai quando o prazo VEIO: medido na N2-PR2, o servidor manda `Retry-After` nos dois funis e também no corpo (`N2-PR2-anexos/retry-after.txt`) | A3, A-N2-16 |
+| 429 | `ratelimit retry-after=<s> family=<f>` | resposta 429 (T1-R4). `family` é `content-read`, `setlist-read`, desde a N2-PR2 `setlist-mutate` — **compartilhada pelas seis escritas** — e, desde a N4-PR5, `content-mutate` (o favoritar; ver a **errata N4-PR5**: a família da escrita deixou de ser literal no `mutate()`), então um 429 numa adição fecha o botão de criar também (T2-R14). A linha só sai quando o prazo VEIO: medido na N2-PR2, o servidor manda `Retry-After` nos dois funis e também no corpo (`N2-PR2-anexos/retry-after.txt`) | A3, A-N2-16 |
 | início do sync | `sync start` | T1-R13 passo 2 | A4 |
 | sync ok | `sync ok setlists=<n> content=<n> pages=<p> t=<ms>` | as duas listas aplicadas (E3: `t=` do `sync start` ao cache gravado) | A4, A7 |
 | sync falhou | `sync fail stage=setlists\|content page=<p> code=<code\|network\|net> status=<s\|->` — **E8(3)** | qualquer não-2xx/rede; cache anterior mantido (T1-R9) | A19, A21 |
@@ -38,13 +38,14 @@
 | cache | `cache hit kind=setlists\|content\|file n=<n>` · `cache write kind=… n=<n> invalidated=<n>` — **E8(2): `cache miss` nunca foi implementado** | leitura/gravação do cache local. `invalidated` é o **contador real** do T1-R10 desde a N2-PR1 (antes, `0` literal — caso 21): itens do conjunto alterados (`updated_at` diferente) + novos + removidos em relação ao cache anterior; `0` em sync sem mudança, `n` no primeiro sync | A4, A5, A7, A21 |
 | **escrita** | `write op=create\|update\|delete\|add\|remove\|reorder setlist=<id8\|-> items=<n\|-> status=<s\|net> code=<CODE\|net\|-> ms=<ms>` — **N2-PR2** | fim de TODA escrita de setlist, 2xx ou não. `op` é a operação, não a rota. `setlist=-` só no `create`, antes do 201 (o id ainda não existe). `items` é o tamanho do `order` no reorder e `-` nas outras cinco. `status=net` e `code=net` quando a request não teve resposta — e isso inclui a resposta cujo CORPO não chegou (N2-D18: o servidor pode ter gravado). `code=-` num 2xx | A-N2-1, A-N2-8, A-N2-12, A-N2-13, A-N2-15 |
 | **ressincronização** | `resync kind=setlists reason=write\|404\|order\|reopen op=<op\|-> status=<s\|net> setlists=<n\|-> ms=<ms>` — **N2-PR2** | fim da releitura do T2-R9/R10 (`GET /api/setlists`, N2-D13). `kind` é sempre `setlists` e fica para o formato não mudar quando houver outro. Um não-2xx aqui **não** é falha da escrita: é o estado próprio da N2-D22, e `setlists=-` porque nada foi aplicado. `reason=reopen` é o `GET` refeito na próxima abertura da tela, com `op=-` | A-N2-10, A-N2-11, A-N2-25 |
-| **escrita barrada** | `write blocked op=<op> reason=offline\|ratelimit\|ceiling\|busy\|nada-mudou` — **N2-PR2** | toque num controle de escrita que **não gera request**. `offline` (T2-R12), `ratelimit` (a família `setlist-mutate` fechada por um 429 anterior, T2-R14), `ceiling` (acima de 100 músicas o reordenar não sai, N2-D17), `busy` (outra escrita em voo, T2-R11) e `nada-mudou` (o formulário abriu e nada mudou, T2-R3 (iii)) — ver a **errata N2-PR2** abaixo | A-N2-9, A-N2-14, A-N2-24 |
-| prefetch | `prefetch plan n=<n> reason=7d\|manual\|demand` | T1-R15/R16 | A10 |
-| promoção | `prefetch promote n=<n>` | arquivos já no disco que entraram na janela de 7 dias e foram movidos para o armazenamento não-purgável (T1-R14 + N0-H16 §4) — **E7** | A10 |
+| **favoritar** | `write op=favorite\|unfavorite content=<id8> status=<s\|net> code=<CODE\|net\|-> ms=<ms>` — **N4-PR5** (N4-D89) | fim de todo favoritar que SAIU, 2xx ou não (N4-R7). `favorite` põe, `unfavorite` tira — o valor é absoluto (N4-D22). `content=` é o `<id8>` da música. Sem releitura: o 2xx é seguido da `cache write kind=content n=<n> invalidated=1` (a linha devolvida no cache, N4-D35), e de nenhum `GET` | A-N4-7, A-N4-8 |
+| **escrita barrada** | `write blocked op=<op> reason=offline\|ratelimit\|ceiling\|busy\|nada-mudou` — **N2-PR2**; `op=favorite\|unfavorite` com `reason=offline\|ratelimit\|busy` — **N4-PR5** | toque num controle de escrita que **não gera request**. `offline` (T2-R12), `ratelimit` (a família `setlist-mutate` fechada por um 429 anterior, T2-R14), `ceiling` (acima de 100 músicas o reordenar não sai, N2-D17), `busy` (outra escrita em voo, T2-R11) e `nada-mudou` (o formulário abriu e nada mudou, T2-R3 (iii)) — ver a **errata N2-PR2** abaixo | A-N2-9, A-N2-14, A-N2-24 |
+| prefetch | `prefetch plan n=<n> reason=library\|manual\|demand` — **errata N4-PR5**: `reason=7d` → `reason=library` | T1-R15/R16; **N4-R26**: o plano da biblioteca inteira (a janela de 7 dias primeiro, depois o resto em ordem alfabética, N4-D88) | A10, A-N4-26 |
+| promoção | `prefetch promote n=<n>` | arquivos já no disco que entraram no conjunto garantido (a janela de 7 dias; desde a N4-PR5, a biblioteca inteira) e foram movidos para o armazenamento não-purgável (T1-R14 + N0-H16 §4) — **E7** | A10 |
 | arquivo | `file src=disk name=<seg> bytes=<n>` · `file src=download name=<seg> bytes=<n> total=<n\|-> ms=<n>` — **errata W1** | T1-R14 (herdado do N0). O `total` (`Content-Length`, `-` se ausente) e o `ms` (início do download → rename) **só no `src=download`**: não houve download, não há total nem duração | A9, A13, **W1-A2/A3/A7** |
 | arquivo recusado | `file-reject name=<seg> kind=empty\|short\|malformed bytes=<n> expected=<n\|->` — **W1** | a checagem de integridade recusa um arquivo, no download ou no saneamento da abertura | W1-A1, W1-A3, W1-A6 |
 | LRU | `lru evict n=<n> bytes=<n>` | T1-R14 | A10 |
-| estouro do teto | `lru over bytes=<n> cap=<n> protected=<n>` — **W4-b3** | T1-R14: depois do despejo o total no disco segue acima do teto porque os protegidos (a janela de 7 dias) sozinhos passam dele. `bytes` é o `bytesAfter` do `lruEvict`, `cap` o `CAP_BYTES` e `protected` o tamanho do conjunto garantido (presentes ou não). Sai a cada `aplicarLru` enquanto o estouro durar. Antes o `bytesAfter` era descartado (`W1-PRECHECK.md:469`) | W4-b3 (CN no `palco-divida.test.ts`) |
+| estouro do teto | `lru over bytes=<n> cap=<n> protected=<n>` — **W4-b3** | T1-R14: depois do despejo o total no disco segue acima do teto porque os protegidos (a janela de 7 dias) sozinhos passam dele. `bytes` é o `bytesAfter` do `lruEvict`, `cap` o `CAP_BYTES` e `protected` o tamanho do conjunto garantido (presentes ou não) — desde a N4-PR5, **todo arquivo da biblioteca** (N4-R26), e esta linha é o sinal de que a biblioteca não coube no teto (N4-D88). Sai a cada `aplicarLru` enquanto o estouro durar. Antes o `bytesAfter` era descartado (`W1-PRECHECK.md:469`) | W4-b3 (CN no `palco-divida.test.ts`) |
 | navegação no palco | `nav n=<i>/<N> setlist=<id8> t=<ms>` | após avançar/voltar/salto (T1-R27/R28/R34) | A12, A14, A17 |
 | fim da setlist | `end-of-setlist n=<N>` | T1-R29 | A14 |
 | índice | `index open` · `index jump n=<i>` | T1-R28 | A14 |
@@ -1058,3 +1059,27 @@ O veredito diz as três contagens — `G-N3: (e)=0 · nome-acessível=28 · rola
 ## Errata N3-PR6c (2026-09-26) — o G-N3 volta a medir corte
 
 A errata N3-PR1 acima dizia que o G-N3 *não mede* sobreposição, corte e alvo < 48 (*"o (a)/(b)/(c) do pre-check — o G5/G6 da T3-R5 são outro gate"*). Para o **alvo** é verdade; para o **corte**, não: o G5/G6 só olha nó tocável, e um corte de conteúdo que não é alvo nem texto — a fileira de marcas da S5 com 60 músicas em B — passava pelos dois gates (caso 28, div. 461). O G-N3 passa a medir **(b)**, o do `inventario.mjs` na parte de `bounds`: nó que sai da janela útil (sob a barra) ou encosta na borda lateral sem ocupar a largura inteira, **novo contra a paisagem** pela assinatura do nó. **Reprova**, com contagem própria: `G-N3: (e)=0 · (b)=0 · nome-acessível=28 · rolagem=18 ✓`. O bloco sai **por último** (o CT-N3 lê o (e) até o cabeçalho do (d′)). *Não mede*: o nó que o uiautomator omitiu por estar inteiro fora da tela — de uma fileira que transborda, o (b) vê as **pontas cortadas**, não as que sumiram (div. 462); e o "ausente" do pre-check, que o (e) e o G6 cobrem (div. 463). Controles: `apps/native/scripts/__cn__/cn-n3pr6c.sh` (saída em `N3-PR6c-anexos/cn-n3pr6c-commit1.txt`) — o CT-B5 é o (b) igual ao do `B3-inventario.jsonl` em 105 de 105 dumps.
+
+---
+
+## Errata N4-PR5 (2026-10-04) — o plano da biblioteca e o favoritar
+
+**Uma linha muda de razão, em par.** O `prefetch plan n=<n> reason=7d` (`prefetch.ts`) vira `prefetch plan n=<n>
+reason=library`: o plano deixou de ser a janela de 7 dias e passou a ser a biblioteca inteira (N4-R26, N4-D42,
+N4-D82), com a janela à frente (N4-D88). A errata do G3 é o par `velha → nova` no bloco ```` ```gates ```` da N4-PR5,
+e esta é a metade do catálogo (regra 14). As razões `manual` e `demand` não mudam.
+
+**E a família do limite deixa de ser literal.** O `mutate()` do `api.ts` escrevia `family=setlist-mutate` porque só
+as seis escritas de setlist passavam por ele; o favoritar passa (`PUT /api/content`, família `content-mutate`), e a
+linha passaria a mentir num 429 dele. A família vem do chamador — segundo par do G3 da PR, declarado no mesmo bloco.
+
+**Duas linhas novas** (adição no G3, N4-D89): `write op=favorite|unfavorite content=<id8> status=… code=… ms=…` e
+`write blocked op=favorite|unfavorite reason=offline|ratelimit|busy`, no catálogo acima. O `write blocked` do
+favoritar tem o MESMO formato do N2 e outro conjunto de `op` — um `grep 'write blocked op=favorite'` separa os dois.
+A linha `cache write kind=content` não é nova: o `store.ts` a emite de um lugar só (`gravarContent`, o molde do
+`gravarSetlists` da N2-PR2), agora também quando o favoritar grava a linha devolvida.
+
+**O que fica de fora, declarado**: o plano não diz quantos arquivos ficaram de fora do teto — o sinal de que a
+biblioteca não coube é o `lru over` (a N4-R26 o nomeia); o que ficou de fora continua contado no `n` de todo plano
+seguinte, até caber.
+

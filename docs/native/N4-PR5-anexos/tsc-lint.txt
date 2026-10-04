@@ -1,0 +1,18 @@
+$ pnpm exec tsc --noEmit (raiz)
+exit=0
+$ tsc -p tsconfig.test.json --noEmit (informativo no CI)
+tests/ux-audit/harvest-populated.spec.ts(286,26): error TS2532: Object is possibly 'undefined'.
+tests/ux-audit/harvest-populated.spec.ts(287,17): error TS2532: Object is possibly 'undefined'.
+tests/ux-audit/harvest-populated.spec.ts(441,26): error TS2532: Object is possibly 'undefined'.
+exit=0
+$ tsc -p packages/core
+exit=0
+$ tsc -p packages/identidade
+exit=0
+$ (apps/native) tsc --noEmit
+exit=0
+$ pnpm lint
+> pnpm exec next lint
+
+✔ No ESLint warnings or errors
+exit=0

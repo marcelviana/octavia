@@ -17,6 +17,10 @@ os dois de HOST —
      todo 2xx) só prova alguma coisa se o `GET` seguinte mostrar o que a
      escrita fez — um mock que responde 201 e não muda nada faria o
      `cmp` do cache passar por acaso.
+     **N4-PR5**: ganha o `PUT /api/content` do favoritar (N4-D22), com a
+     linha inteira na resposta (B5 do `N4-PRECHECK.md`) e o mesmo objeto
+     servido no `GET` seguinte; e o modo `escrita-lenta`, a janela do "em
+     voo" (N4-R7).
 
 Python e não TypeScript de propósito: é script de host, e um `.mts` dentro de
 `apps/native/src/` entraria no `tsc --noEmit` do app (que não tem tipos de
@@ -62,6 +66,24 @@ ATRASO_S = 45
 #: (`PRAZO_DE_REDE_MS`, 20 s): quem tem de desistir é o cliente, e é isso que
 #: o CN mede. O servidor nunca responde — a conexão morre com o processo.
 PENDURADO_S = 90
+
+#: Segundos que o modo `escrita-lenta` (N4-PR5) segura a escrita ANTES de
+#: responder normalmente. É a janela do "em voo" do favoritar (N4-R7): o teste
+#: lê o estado por música e o `content.json` enquanto o `PUT` ainda não voltou
+#: — o cache tem de estar intacto ali, e só mudar com a resposta.
+LENTA_S = 0.6
+
+#: N4-PR5 — as chaves que o `contentSchemas.update` aceita
+#: (`lib/api-schemas.ts:190-199`, `.strict()`) e as três que a rota descarta
+#: antes dele (`CONTENT_IGNORED_KEYS`, `:161`). Fora destas, o servidor real
+#: responde 400 `VALIDATION_ERROR` (`unrecognized_keys`) — e o mock também,
+#: senão uma chave a mais no corpo do favoritar passaria pelo aparelho.
+CHAVES_DO_PUT_CONTENT = {
+    "id", "title", "artist", "album", "genre", "content_type", "content_data", "file_url",
+    "key", "bpm", "time_signature", "difficulty", "capo", "tuning", "tags", "notes",
+    "is_favorite", "is_public",
+}
+CHAVES_IGNORADAS_DO_PUT_CONTENT = {"user_id", "created_at", "updated_at"}
 
 # --------------------------------------------------------------- fixtures
 
@@ -489,6 +511,11 @@ def servidor(porta: int, modo: str, setlists_path: str, content_path: str) -> No
             if modo == "escrita-500":
                 self._json(500, _envelope("INTERNAL_ERROR", "Internal server error"))
                 return True
+            if modo == "escrita-lenta":
+                # N4-PR5 — responde, mas depois de `LENTA_S`: a escrita
+                # passa pelo resto do handler como no modo normal.
+                time.sleep(LENTA_S)
+                return False
             if modo == "escrita-pendurada":
                 # N2-PR4 — a escrita que NUNCA responde. Nada é gravado: o que
                 # este modo mede é o PRAZO do cliente, e gravar embaralharia as
@@ -654,6 +681,34 @@ def servidor(porta: int, modo: str, setlists_path: str, content_path: str) -> No
             self._log_escrita("PUT")
             corpo = self._corpo()
             if self._falha_de_escrita():
+                return
+
+            if u.path == "/api/content":
+                # N4-PR5 — o favoritar (N4-D22): `PUT /api/content` com
+                # `{"id","is_favorite"}`, a semântica da rota real
+                # (`app/api/content/route.ts:225-326`): update por campo
+                # (ausente = não mexe; `is_favorite: null` não grava, `:300`),
+                # `updated_at` sempre (`:282-284`), 404 sem a linha (`:312-316`)
+                # e 200 com **a linha inteira** (`:321`) — as mesmas chaves do
+                # `GET`, que é o que a B5 mediu em prod (22 de 22; aqui, as do
+                # modelo). O `GET /api/content` seguinte mostra a mudança: o
+                # item é o MESMO objeto das páginas.
+                desconhecidas = set(corpo) - CHAVES_DO_PUT_CONTENT - CHAVES_IGNORADAS_DO_PUT_CONTENT
+                valor = corpo.get("is_favorite")
+                if (not isinstance(corpo.get("id"), str) or desconhecidas
+                        or (valor is not None and not isinstance(valor, bool))):
+                    self._json(400, _envelope("VALIDATION_ERROR", "Validation failed", {
+                        "details": [{"field": k, "message": "Unrecognized key", "code": "unrecognized_keys"}
+                                    for k in sorted(desconhecidas)]}))
+                    return
+                item = next((c for c in content if c["id"] == corpo["id"]), None)
+                if item is None:
+                    self._json(404, _envelope("NOT_FOUND", "Content not found"))
+                    return
+                if valor is not None:
+                    item["is_favorite"] = valor
+                item["updated_at"] = _agora()
+                self._escreveu(200, item)
                 return
 
             partes = u.path.strip("/").split("/")

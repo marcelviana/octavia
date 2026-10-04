@@ -25,7 +25,7 @@ import {
 } from './fake-expo-file-system'
 import { pdfBom, repertorio } from './ajuda'
 import { PARCIAL, filesDirs, hasFile, setFilesUser, touch } from '../src/files'
-import { baixarSetlist, prefetch7Dias } from '../src/prefetch'
+import { baixarSetlist, prefetchDaBiblioteca } from '../src/prefetch'
 
 let n = 0
 let linhas: string[] = []
@@ -64,7 +64,7 @@ describe('div. 122 — um download lento não pode parar a fila', () => {
     __responder(urls[0] as string, { corpo: pdfBom(4000), pedacos: 10, atrasoMs: 10_000 })
     for (const url of urls.slice(1)) __responder(url, { corpo: pdfBom(1000) })
 
-    const voo = prefetch7Dias(setlists, contentById)
+    const voo = prefetchDaBiblioteca(setlists, contentById)
     await vi.advanceTimersByTimeAsync(1_000)
 
     // Com a BARREIRA DE LOTE de hoje, aqui só três teriam começado.
@@ -81,7 +81,7 @@ describe('div. 122 — um download lento não pode parar a fila', () => {
     const { urls, contentById, setlists } = repertorio(7, marca())
     for (const url of urls) __responder(url, { corpo: pdfBom(1000), pedacos: 3, atrasoMs: 500 })
 
-    const voo = prefetch7Dias(setlists, contentById)
+    const voo = prefetchDaBiblioteca(setlists, contentById)
     await vi.advanceTimersByTimeAsync(60_000)
     await voo
 
@@ -94,7 +94,7 @@ describe('div. 122 — um download lento não pode parar a fila', () => {
     __responder(urls[0] as string, { corpo: pdfBom(1000), pedacos: 4, atrasoMs: 5_000 })
     for (const url of urls.slice(1)) __responder(url, { corpo: pdfBom(1000) })
 
-    const voo = prefetch7Dias(setlists, contentById)
+    const voo = prefetchDaBiblioteca(setlists, contentById)
     await vi.advanceTimersByTimeAsync(60_000)
     await voo
 
@@ -109,13 +109,13 @@ describe('W1-A7 — o indicador anda DURANTE o download, não só no fim', () =>
     for (const url of urls.slice(1)) __responder(url, { corpo: pdfBom(1000) })
 
     const passos: number[] = []
-    const voo = prefetch7Dias(setlists, contentById, () => {
+    const voo = prefetchDaBiblioteca(setlists, contentById, () => {
       passos.push(urls.filter((u) => hasFile(u)).length)
     })
     await vi.advanceTimersByTimeAsync(1_000)
 
     // Com a barreira de lote, aqui `passos` estaria VAZIO: o único ponto de
-    // atualização era o fim de `prefetch7Dias`.
+    // atualização era o fim de `prefetchDaBiblioteca`.
     expect(passos.length).toBeGreaterThanOrEqual(4)
     expect(passos).toEqual([...passos].sort((a, b) => a - b))
 
@@ -131,7 +131,7 @@ describe('div. 114 — nenhuma falha de download é engolida (T1-R37)', () => {
     for (const url of urls.slice(0, 3)) __responder(url, { corpo: '', status: 404 })
     for (const url of urls.slice(3)) __responder(url, { corpo: pdfBom(1000) })
 
-    const voo = prefetch7Dias(setlists, contentById)
+    const voo = prefetchDaBiblioteca(setlists, contentById)
     await vi.advanceTimersByTimeAsync(10_000)
     await voo
 
@@ -144,7 +144,7 @@ describe('div. 114 — nenhuma falha de download é engolida (T1-R37)', () => {
     const { urls, nomes, contentById, setlists } = repertorio(1, marca())
     __responder(urls[0] as string, { corpo: '', status: 404 })
 
-    const voo = prefetch7Dias(setlists, contentById)
+    const voo = prefetchDaBiblioteca(setlists, contentById)
     await vi.advanceTimersByTimeAsync(10_000)
     await voo
 
@@ -178,7 +178,7 @@ describe('div. 115 — a promoção não pode derrubar o sync', () => {
     __quebrarMove(nome)
     __responder(url, { corpo: pdfBom(1000) })
 
-    const voo = prefetch7Dias(setlists, contentById)
+    const voo = prefetchDaBiblioteca(setlists, contentById)
     await vi.advanceTimersByTimeAsync(10_000)
     await expect(voo).resolves.toBeUndefined()
 
@@ -230,7 +230,7 @@ describe('div. 137 — o que não passa pelo `falha()` também é higienizado', 
     __quebrarDelete(`${nome}${PARCIAL}`, bruta)
     __responder(url, { corpo: pdfBom(1000) })
 
-    const voo = prefetch7Dias(setlists, contentById)
+    const voo = prefetchDaBiblioteca(setlists, contentById)
     await vi.advanceTimersByTimeAsync(10_000)
     await expect(voo).resolves.toBeUndefined()
 

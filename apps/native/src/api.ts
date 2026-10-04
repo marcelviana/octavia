@@ -4,8 +4,9 @@
  * `errorFrom`); aqui entram o `fetch` do RN e o SDK do Firebase.
  *
  * Rotas consumidas: as duas leituras da tela 1 — `GET /api/setlists` e
- * `GET /api/content` (PRD §2) — e, desde a N2-PR2, as **seis escritas de
- * setlist** do `docs/api/SETLISTS.md`. Nunca `/api/auth/session`,
+ * `GET /api/content` (PRD §2) —, desde a N2-PR2, as **seis escritas de
+ * setlist** do `docs/api/SETLISTS.md`, e desde a N4-PR5 o **favoritar**
+ * (`PUT /api/content` com `{"id","is_favorite"}`, N4-D22). Nunca `/api/auth/session`,
  * `/api/proxy` ou `/api/profile`.
  *
  * O transporte de escrita mora AQUI, e não no `escrita.ts`, porque a primeira
@@ -277,7 +278,14 @@ export async function mutate(
   method: 'POST' | 'PUT' | 'DELETE',
   path: string,
   body: string | null,
-  prazoMs?: number,
+  prazoMs: number | undefined,
+  /**
+   * N4-PR5 (N4-D89) — a família do limite de taxa, para a linha `ratelimit … family=`. Até aqui ela era o literal
+   * `setlist-mutate`, porque só as seis escritas de setlist passavam por esta função; o favoritar é `content-mutate`
+   * (`app/api/content/route.ts:233`), e um 429 dele sairia no log com a família errada. Obrigatória, e não com valor
+   * padrão: um chamador novo que esquecesse dela herdaria a família de outra rota em silêncio. Errata em par do G3.
+   */
+  familia: string,
 ): Promise<RespostaDeEscrita> {
   const t0 = Date.now()
   const prazo = prazoDe(prazoMs)
@@ -296,7 +304,7 @@ export async function mutate(
     })
     if (response.status === 429) {
       const prazo = errorFrom({ status: 429, bodyText: corpo, headers }).retryAfter
-      if (prazo !== null) log(`ratelimit retry-after=${prazo} family=setlist-mutate`)
+      if (prazo !== null) log(`ratelimit retry-after=${prazo} family=${familia}`)
     }
     return { status: response.status, bodyText: corpo, networkError: null, headers }
   } catch (e: unknown) {
