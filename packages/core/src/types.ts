@@ -34,6 +34,13 @@ export interface ContentDTO {
   content_data: Record<string, unknown> | null
   file_url: string | null
   updated_at: string
+  /**
+   * N4-PR5 — o favorito (N4-R5, N4-R7). O servidor manda a coluna em todo item (`select('*')`; B1 do
+   * `N4-PRECHECK.md`: 63 de 63 no `content.json` do Tab), e o sync a grava sem mapear — o campo já estava no cache, só
+   * não estava no tipo. Opcional porque a fixture do mock do N3 não a traz; ausente ou `null` = não favorita
+   * (`ehFavorita`). Muda só pelo `PUT /api/content` do favoritar, e o cache recebe a linha que ele devolve (N4-D35).
+   */
+  is_favorite?: boolean | null
 }
 
 /**

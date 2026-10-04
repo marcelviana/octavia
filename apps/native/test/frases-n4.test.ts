@@ -166,8 +166,10 @@ describe('(3) a P-F8 no core, igual à da S4 (lida do fonte)', () => {
   const FONTE = ler('apps/native/src/screens/SearchScreen.tsx')
   const MOLDE = '`${n} ${n === 1 ? \'resultado\' : \'resultados\'}`'
 
-  it('a S4 escreve a régua com o template de sempre (as duas ocorrências: a régua e a régua exportada)', () => {
-    expect(FONTE.split(MOLDE).length - 1).toBe(2)
+  // Uma ocorrência: a `Regua` exportada (`SearchScreen.tsx:156`), que a S4 e o picker usam. (O commit 1 contava
+  // duas — defeito do instrumento, consertado aqui no commit 2: div. 1057.)
+  it('a S4 escreve a régua com o template de sempre (uma ocorrência: a `Regua` exportada)', () => {
+    expect(FONTE.split(MOLDE).length - 1).toBe(1)
   })
 
   it('o core e o template da S4 dão o mesmo texto para 0, 1, 2 e 57', () => {
