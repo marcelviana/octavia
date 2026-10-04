@@ -1,0 +1,26 @@
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 14.524/15.501/16.478/0.977 ms
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=67
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=99
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=13
+OCTAVIA: cache write kind=setlists n=3 invalidated=6
+OCTAVIA: cache write kind=content n=12 invalidated=79
+OCTAVIA: sync ok setlists=3 content=12 pages=1 t=134
+OCTAVIA: prefetch plan n=3 reason=library
+OCTAVIA: file src=download name=partitura-1p.pdf bytes=643 total=643 ms=90
+OCTAVIA: file src=download name=partitura-12p.pdf bytes=4198 total=4198 ms=126
+OCTAVIA: download-error nao-existe.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+FATAL: 0
+total 280
+drwx------ 2 u0_a149 u0_a149   4096 2026-10-04 19:54 .
+drwx------ 3 u0_a149 u0_a149   4096 2026-10-04 19:54 ..
+-rw------- 1 u0_a149 u0_a149 242176 2026-09-14 11:13 1786218429715-ux-audit-partitura-12p.pdf
+-rw------- 1 u0_a149 u0_a149   4198 2026-10-04 19:54 partitura-12p.pdf
+-rw------- 1 u0_a149 u0_a149    643 2026-10-04 19:54 partitura-1p.pdf

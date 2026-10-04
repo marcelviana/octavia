@@ -5,7 +5,9 @@
 > `pnpm install --frozen-lockfile --offline`.
 > Commits: `d9a8a98` `test(n4): PR-5 — o core da biblioteca, reprovando` · `dead391` `feat(core): a lista, os filtros e a
 > busca da biblioteca` · `e2f2e58` `feat(native): o favoritar — escrita, estado por música e cache` · `f5fb36d`
-> `feat(native): todos os arquivos da biblioteca garantidos (N4-R26)` · o de docs (este README e os anexos).
+> `feat(native): todos os arquivos da biblioteca garantidos (N4-R26)` · `e33801e` docs · **o conserto antes do merge
+> (N4-D91)**: `2d27ad3` `test(n4): o sync que atravessa um favoritar, reprovando` · `5e3bcdd` `fix(native): o cache não
+> regride depois do favoritar (N4-D91)` · o de docs atualizado (§10).
 > `[medido]` = comando + saída literal nesta sessão, nos arquivos desta pasta.
 > Requisitos: N4-R4, N4-R5, N4-R7, N4-R11, N4-R26 (o core). Aceites: A-N4-4, A-N4-5, A-N4-7, A-N4-11, A-N4-26 na parte do
 > core (§7).
@@ -33,6 +35,10 @@ verbatim da escolha (as três foram a opção recomendada):
   S4 quando os acertos são ≤ 50 e declara o corte da S4 como a única diferença. (div. 1062)
 
 E uma autorização, no §4: **o `cp -p` do `apps/native/.env` para o Metro do AVD**, como na N4-PR4 (div. 1059).
+
+**Do prompt do conserto antes do merge** `[Marcel, 2026-10-04]`: **N4-D91** — a div. 1065 se conserta nesta PR (§10);
+**N4-D92** — a div. 1066 muda de destino para a **PR-7** (§10.4); a div. 1063 fica na PR-9; uma herança nova para o
+encerramento (§10.5); a div. 1060 com a origem P e a PR-6 medindo o G-inv nos dois aparelhos.
 
 ---
 
@@ -363,7 +369,7 @@ request), sem tela — os dumps são da PR-7/PR-8/PR-9.
 
 ---
 
-## 8. Divergências — 1057 a 1066
+## 8. Divergências — 1057 a 1068
 
 A última usada era a **1056** (`N4-PR4-anexos/README.md` §8) `[medido: git grep -h -o -E '^\| \*\*1[0-9]{3}\*\*' -- docs
 | sort -u | tail -4` → `1054 · 1055 · 1056 · 1138`, o último uma linha de medida]. Origem: **P** premissa do prompt ·
@@ -374,15 +380,20 @@ A última usada era a **1056** (`N4-PR4-anexos/README.md` §8) `[medido: git gre
 | **1057** | T | o teste (3) do `frases-n4` contava **duas** ocorrências do template da P-F8 na S4; há **uma** (a `Regua` exportada, que a S4 e o picker usam). No commit 1 ele reprovava também por isso — por uma razão errada | consertado no instrumento, no commit 2 (`dead391`), com o comentário no próprio teste (regra 32) |
 | **1058** | D | o N4-R26 não define o mecanismo de "o que não coube" (o tamanho só existe depois do download, div. 112) nem a prioridade entre arquivo de setlist garantida e arquivo só da biblioteca; e, lido ao pé da letra, "o que não coube fica não baixado" + "o sinal é `lru over`" se contradizem (`lru over` só sai com o disco ACIMA do teto) | **N4-D88** (§0): 7d primeiro, a biblioteca para quando o total passa do teto; o estouro de até 3 arquivos é o que faz o `lru over` sair |
 | **1059** | P | *"nenhum `.env*` real"* × *"No AVD, com o mock"*: o Metro do dev client precisa do `apps/native/.env` (as chaves públicas do Firebase em `firebase.ts`) para restaurar a sessão de audit do AVD | autorizado pelo Marcel nesta sessão: `cp -p`, sha256 no anexo, nenhum valor lido, **apagado no fim** (§4.4) |
-| **1060** | P | *"G-inv 34 de 34 e 18 de 18"* × *"aparelho, nesta PR, é só o AVD"*: metade da base é do Tab (B5: 18 AVD + 16 Tab; B3: 9 + 9) | o G-inv mediu a metade do AVD (§4.3); a do Tab fica para a próxima PR que for ao Tab |
+| **1060** | P | o prompt da PR-5 excluiu o Tab (*"aparelho, nesta PR, é só o AVD"*) e pediu *"G-inv 34 de 34 e 18 de 18"*: metade da base é do Tab (B5: 18 AVD + 16 Tab; B3: 9 + 9) | o G-inv mediu a metade do AVD (§4.3, e de novo sobre o conserto, §10.3); **a PR-6 mede o G-inv nos dois aparelhos** |
 | **1061** | D | o N4-R7 não diz que linha de log o favoritar emite (o `write op=` do catálogo é de setlist, com `setlist=` e `items=`), e o `mutate()` escrevia `family=setlist-mutate` literal — um 429 do favoritar sairia com a família errada | **N4-D89** (§0): duas linhas novas e o segundo par do G3 (`family=${familia}`); catálogo com a errata N4-PR5 |
 | **1062** | D | *"a busca local de hoje (N4-R11)"* e o A-N4-11 (*"o mesmo conjunto de resultados da S4"*) × o `searchIndex` da S4 cortar em 50 (`search.ts:58`), o que, composto com filtros e ordem alfabética, esconderia músicas | **N4-D90** (§0): sem o corte; mesmo conjunto quando a S4 não corta |
 | **1063** | A | no aparelho, o 404 do download chega como `Call to function 'FileSystemDownloadTask.start' has been rejected.` — sem o status; o `falha()` do `files.ts` não o reconhece, e a frase de tela é a genérica *não consegui baixar*. No teste (duplo) o mesmo 404 dá *o servidor respondeu 404*. O estado *falhou* tem motivo, mas no aparelho o motivo de um 404 é o genérico | **PR-9** (o aceite de *falhou* com mock de 404, A-N4-26): medir a mensagem inteira (`→ Caused by`) e decidir se o motivo do 404 se recupera; registro aqui |
 | **1064** | P | o molde da N4-PR3 para a frase que vai ao core é *"nenhuma cópia na tela"* (a tela importa) × *"nenhum arquivo de tela muda"* | a P-F8 entra no core e a cópia da S4 fica, sob o gate de igualdade que lê o fonte da S4; a **PR-7** troca a cópia pela importação (§1.7) |
-| **1065** | A | um sync cujo `GET /api/content` leu ANTES de um `PUT` do favoritar e termina DEPOIS dele aplica a foto velha: o `reconcileByUpdatedAt` substitui o que difere, não o que é mais novo, e a estrela volta ao estado de antes até o próximo sync (que traz o certo). Lido no código; não medido | registro; **PR-9** mede (o favoritar com o sync em voo), e o remédio — se for preciso — é do core (reconciliar por recência) |
-| **1066** | D | o plano roda também sem rede (o `prefetchEArrumar` corre depois do sync pulado — já era assim com o `prefetch7Dias`): em avião, cada arquivo que falta vira um `download-error` por abertura. Com a biblioteca inteira no plano, o número de linhas cresce com a biblioteca | registro; **PR-9** (os estados transversais) decide se o plano pula quando `estaOnline()` é falso |
+| **1065** | A | um sync cujo `GET /api/content` leu ANTES de um `PUT` do favoritar e termina DEPOIS dele aplica a foto velha: o `reconcileByUpdatedAt` substitui o que difere, não o que é mais novo, e a estrela volta ao estado de antes até o próximo sync (que traz o certo) | **fechada nesta PR pela N4-D91** (§10): medida reprovando (`2d27ad3`) e consertada (`5e3bcdd`) |
+| **1066** | D | o plano roda também sem rede (o `prefetchEArrumar` corre depois do sync pulado — já era assim com o `prefetch7Dias`): em avião, cada arquivo que falta vira um `download-error` por abertura, e o estado do arquivo dessas músicas vira *falhou* com o motivo genérico (§10.4). Com a biblioteca inteira no plano, o número de linhas cresce com a biblioteca | **PR-7** (**N4-D92**): é na tela de L que isso apareceria como *não consegui baixar* quando o certo, sem rede, é *arquivo não baixado*. Nesta PR, só o registro (§10.4) |
 
-**Contagem**: 10 — D 4 · P 3 · A 2 · T 1 · X 0. **Próxima divergência livre: 1067.**
+| **1067** | T | o teste da N4-D91, na primeira corrida, esperava 5 s e estourava: o `syncSegurado` era `async` e devolvia a promise do sync, que a função adotava — o teste esperava o sync que ele mesmo segurava | consertado no instrumento antes do commit 1 do conserto (o voo devolvido dentro de um objeto, com o comentário no teste) |
+
+| **1068** | T | o `gates` do corpo editado reprovou sobre o `e33801e` (run `37241700320`): editei o corpo da PR — o `sync.ts` como exceção do G1a — **antes** do push do `5e3bcdd`, e o evento `edited` rodou o gate contra o head velho, que ainda não tocava o `sync.ts` (exceção declarada e não usada reprova, div. 339). Classificação (regra 16): **(a) árvore** — a ordem do meu gesto, não o runner nem defeito; nenhum rerun | sobre o `5e3bcdd` o mesmo gate passa (run `37241704838`). A ordem certa é **push primeiro, corpo depois** quando a exceção nova é do commit novo |
+
+**Contagem**: 12 — D 4 · P 3 · A 2 · T 3 · X 0. **Fechada nesta PR**: a 1065 (N4-D91). **Destino mudado**: a 1066
+(N4-D92, PR-7). **Próxima divergência livre: 1069.**
 
 ---
 
@@ -406,5 +417,117 @@ N4-PR4 deu (e) = 6 na S2 em retrato (a linha 8 abaixo da dobra), o mesmo com o c
 os rolados. Com a PR-6 mudando o palco avulso (a barra sem o índice), um (e) que já está lá esconderia um que nasça.
 E: com a garantia desta PR, o `estado-1p.py` da div. 1050 deixa de ser preciso — a 1p e a 12p baixam no primeiro sync
 (§1.5, §4.1).
+
+---
+
+## 10. O conserto antes do merge — N4-D91 `[Marcel, 2026-10-04]`
+
+*"A div. 1065 se conserta nesta PR, não na PR-9: o favoritar e o cache dele nasceram aqui."*
+
+### 10.1 O teste, primeiro `[medido: d91-reprovando.txt]`
+
+`apps/native/test/favoritar-sync.test.ts`, contra o mock de verdade. O instrumento: o `fetch` do teste segura a resposta
+do `GET /api/content` **já lida** do mock — a foto é de antes do `PUT` — até o favoritar terminar, como uma rede lenta
+faz com a resposta de um servidor que leu na hora. Quatro casos:
+
+| caso | sobre o `e33801e` (`2d27ad3`) | depois (`5e3bcdd`) |
+| --- | --- | --- |
+| favoritar no meio do sync: o disco e o que o sync devolve à raiz com `is_favorite=true`; as linhas `cache write kind=content` (a do favoritar `invalidated=1`, a do sync `invalidated=0`) | **✗** `expected false to be true` | ✓ |
+| desfavoritar no meio do sync: `is_favorite=false` | **✗** `expected true to be false` | ✓ |
+| o `PUT` falha no meio do sync (`escrita-500`): o cache fica com o que o sync trouxe | ✓ (controle) | ✓ |
+| o caso normal: o site muda a música **depois** do favoritar (desfavorita e renomeia, `updated_at` maior) — a linha do sync vence | ✓ (controle) | ✓ |
+
+### 10.2 O conserto, e o critério
+
+**O critério é o `updated_at` da linha** (`naoRegredir`, `packages/core/src/favoritar.ts`). O favoritar guarda, por música,
+a última linha que o servidor devolveu (`linhasConfirmadas`, `apps/native/src/favoritar.ts`); o sync, depois do
+`reconcileByUpdatedAt` e antes de gravar, põe essa linha no lugar da que ele leu **só se o `updated_at` dela for
+estritamente maior** (`apps/native/src/sync.ts`). O `PUT` sempre grava `updated_at` (`app/api/content/route.ts:282-284`)
+e devolve o valor gravado; a linha que ele devolve é a última escrita do servidor *até ali*.
+
+- **Por que não a ordem das respostas**: a ordem de chegada não é a ordem em que o servidor leu ou gravou (a div. 232 do
+  N2 mediu isso com as releituras); o que conta é o que o servidor gravou por último — e é isso que o `updated_at` diz.
+- **Por que não quebra o caso normal**: se o site mudou a música depois do favoritar, o servidor tem um `updated_at`
+  **maior** que o da linha confirmada, e o sync vence (o 4º caso do teste); se o sync leu **depois** do `PUT`, os dois
+  são **iguais**, e o sync vence (é a mesma linha). Música que o sync não trouxe (apagada no site) não volta: só se
+  troca o que o sync trouxe. `updated_at` que não parseia: vence o sync.
+- **O menor que fecha o teste**: nada se poda — uma linha confirmada velha nunca vence (o servidor já tem `updated_at`
+  igual ou maior), e o mapa tem no máximo uma linha por música favoritada na sessão.
+- **A contagem e o log**: o `invalidated` é o do `reconcileByUpdatedAt`, calculado **antes**, contra o conjunto que o app
+  tinha ao começar o sync — o conserto não o toca (o 1º caso do teste fixa `invalidated=0` na linha do sync; no AVD o
+  sync deu `invalidated=79` nas duas rodadas, §10.3). **Nenhuma linha de log mudou**: G3 `log( 68 → 70`, os mesmos dois
+  pares e as mesmas duas linhas novas de antes; nenhuma errata a mais.
+
+**Controle negativo** `[medido: cn-d91.txt]`: o conserto desfeito no `sync.ts` (o sync volta a gravar o que leu) →
+`Tests 2 failed | 554 passed` no nativo e no core — **só os dois testes novos da corrida**; desfeito, `git status` limpo.
+
+### 10.3 Sobre a ponta `[medido: suite-d91.txt, g1g2g3-d91.txt, tsc-lint-d91.txt, avd2/]`
+
+- **Suíte inteira**: 131 arquivos ✓ · 3 pulados; **1511 testes ✓** · 59 pulados; 0 ✗.
+- **G1a/G1b** com o bloco do corpo **atualizado** (o `sync.ts` entra como a 15ª exceção): `G1a: DIFF VAZIO ✓ (e nenhum
+  arquivo novo no escopo)` · `G1b: só adição ✓`. **G2/G3**: `testIDs 80 = 80` ✓ · `log( 68 → 70`, os dois pares ✓.
+- **O gate do corpo do favoritar** (site e tablet): 20 ✓. **`tsc`**: raiz 0 · core 0 · identidade 0 · nativo 0. **lint**:
+  limpo.
+- **No AVD, com o mock** (o mesmo aparato do §4, de novo do zero: estado lido igual, `.env` por `cp -p` com o mesmo
+  sha256 e apagado no fim; bundle servido com `naoRegredir` 5 · `linhasConfirmadas` 3 · `localhost:8788` 1 ·
+  `octavia.rocks` **0**): o sync com rede deu as **mesmas linhas** da primeira rodada — `cache write kind=content n=12
+  invalidated=79`, `prefetch plan n=3 reason=library`, os dois PDFs no durável, o 404 do `nao-existe.pdf`, `FATAL` 0.
+  **G-inv do AVD**: **B5 18 de 18** e **B3 9 de 9** idênticos, `g-inv-par` **4 de 4** (27 capturas, prefixo `N4P5B`; o Tab de novo fora, div. 1060) `[medido: avd2/g-inv.txt]`; fim: estado igual ao lido, `FATAL` 0, AVD desligado sem salvar, `.env` apagado `[medido: avd2/fim.txt]`.
+
+### 10.4 A div. 1066 → PR-7 (N4-D92): o que o estado do arquivo devolve depois de um plano rodado sem rede
+
+Lido no código, **sem conserto** nesta PR. Sem rede, o `prefetchEArrumar` roda depois do sync pulado
+(`apps/native/App.tsx:239`, `await prefetchEArrumar(anterior.setlists, anterior.contentById)`), o plano tenta cada arquivo
+que falta, e o download rejeita. No `ensureFile` a rejeição entra no estado de download com a frase de tela do
+`files.ts`: `falhas.set(url, fraseDaFalha(erro))` (`apps/native/src/files.ts:232`). A mensagem do Android sem rede não
+traz status — no AVD: `Call to function 'FileSystemDownloadTask.start' has been rejected.` (§4.2) —, então o `falha()`
+(`files.ts:583-586`) não acha `status: NNN`, e o `fraseDaFalha` (`:509`) devolve a genérica `FALHA_GENERICA` = *não
+consegui baixar* (`:477`). O `estadoDoArquivo` do core (`packages/core/src/offline.ts:271-283`) devolve então
+**`{ tipo: 'falhou', motivo: 'não consegui baixar' }`** — e não `{ tipo: 'nao-baixado' }`, que é o certo sem rede.
+**Teste que cobre hoje**: só o caminho do 404 (`apps/native/test/garantia.test.ts:240`, *"a falha do plano de prefetch
+também fica registrada"*); nenhum cobre o plano sem rede. Destino: **PR-7**, a primeira tela que lê o estado.
+
+### 10.5 Herança nova, para o encerramento carregar
+
+| item | origem | destino |
+| --- | --- | --- |
+| **a busca que continua dentro do palco (S4) corta em 50 resultados** — a N4-D90 tirou o corte só da biblioteca (`consultarBiblioteca`); a S4 e o picker seguem com o `searchIndex(indice, termo)` no padrão de 50 (`apps/native/src/screens/SearchScreen.tsx:189`, `Picker.tsx:174`; `packages/core/src/search.ts:58`) | N4-D90, N4-PR5 | **a nomear no encerramento do N4** |
+
+### 10.6 O bloco ```` ```gates ```` como ficou (a cópia da regra do W4-b2)
+
+O ```` ```gates-web ```` não mudou (§6). O ```` ```gates ```` ganha o `sync.ts`:
+
+```gates
+# N4-PR5 — core da biblioteca, sem tela (N4-R4, R5, R7, R11, R26; N4-D88, N4-D89, N4-D90).
+# Core: a lista/filtros/busca (biblioteca.ts, novo), o favoritar (favoritar.ts, novo), a garantia e o estado do arquivo (offline.ts), is_favorite no tipo (types.ts), a P-F8 (frases-content.ts), as exportações (index.ts).
+# Tablet: o favoritar (favoritar.ts, novo), saveContent (store.ts), a família no mutate (api.ts, escrita.ts), o plano da biblioteca e o teto (prefetch.ts), o estado de download (files.ts), o novo nome do plano (apos-escrita.ts, App.tsx) e a ligação do cache do favoritar (App.tsx); o sync não regride a linha do favoritar (sync.ts, N4-D91). Nenhum arquivo de tela.
+g1a: apps/native/App.tsx
+g1a: apps/native/src/api.ts
+g1a: apps/native/src/apos-escrita.ts
+g1a: apps/native/src/escrita.ts
+g1a: apps/native/src/favoritar.ts
+g1a: apps/native/src/files.ts
+g1a: apps/native/src/prefetch.ts
+g1a: apps/native/src/store.ts
+g1a: apps/native/src/sync.ts
+g1a: packages/core/src/biblioteca.ts
+g1a: packages/core/src/favoritar.ts
+g1a: packages/core/src/frases-content.ts
+g1a: packages/core/src/index.ts
+g1a: packages/core/src/offline.ts
+g1a: packages/core/src/types.ts
+g3-velha: log(`prefetch plan n=${plano.length} reason=7d`)
+g3-nova: log(`prefetch plan n=${plano.length} reason=library`)
+g3-velha: if (prazo !== null) log(`ratelimit retry-after=${prazo} family=setlist-mutate`)
+g3-nova: if (prazo !== null) log(`ratelimit retry-after=${prazo} family=${familia}`)
+```
+
+### 10.7 CI
+
+Sobre o `5e3bcdd`, **10 de 10 verdes** `[medido: gh pr checks 361]`: `android-debug-apk` **10m48s** (job; run `37241704858`) ·
+`build` 4m04s · `gates-nativos` 10s · `g-back` 23s · `g-tok` 26s · `g-faixa` 12s · `g-palco` 10s · `mudou-nativo` 8s · Vercel.
+Uma corrida vermelha no meio, classificada (regra 16): o `gates` `37241700320`, sobre o `e33801e` — div. 1068.
+
+---
 
 **A próxima PR desta lista** (N4-D72): **PR-6 — o palco avulso sem hospedeira**.

@@ -1,0 +1,5 @@
+raiz=0
+core=0
+identidade=0
+nativo=0
+✔ No ESLint warnings or errors

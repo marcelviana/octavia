@@ -1,0 +1,4 @@
+# AVD lido 2026-10-04 19:53:27
+stay_on=1 accel=1 user_rot=0 airplane=1 wifi=0 data=0
+reverse: []
+    lastUpdateTime=2026-09-24 14:00:01

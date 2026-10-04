@@ -1,0 +1,20 @@
+=== CN-g: o conserto desfeito (o sync volta a gravar o que leu)
+diff --git a/apps/native/src/sync.ts b/apps/native/src/sync.ts
+index abf8d14..b77c14d 100644
+--- a/apps/native/src/sync.ts
++++ b/apps/native/src/sync.ts
+@@ -104,7 +104,7 @@ export async function sincronizar(
+   const reconciliado = reconcileByUpdatedAt(anterior?.content ?? [], plano.content)
+   // N4-D91: a linha que um favoritar confirmou depois de este sync ler o servidor é mais nova que a lida — fica. A
+   // contagem `invalidated` é a do reconcile, de antes (o critério e o porquê: `naoRegredir`, no core).
+-  const content = { ...reconciliado, items: naoRegredir(reconciliado.items, linhasConfirmadas()) }
++  const content = reconciliado; void naoRegredir; void linhasConfirmadas
+ 
+   const syncedAtMs = Date.now()
+   const snapshot: CacheSnapshot = {
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  |native| apps/native/test/favoritar-sync.test.ts > N4-D91 — o sync que leu antes do favoritar não desfaz a estrela > favoritar no meio do sync: o cache (disco e o que o sync devolve à raiz) fica com is_favorite=true
+ FAIL  |native| apps/native/test/favoritar-sync.test.ts > N4-D91 — o sync que leu antes do favoritar não desfaz a estrela > desfavoritar no meio do sync: o cache fica com is_favorite=false
+ Test Files  1 failed | 46 passed (47)
+      Tests  2 failed | 554 passed (556)
+--- desfeito; git status --short:

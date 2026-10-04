@@ -1,0 +1,1 @@
+naoRegredir: 5 · linhasConfirmadas: 3 · reason=library: 3 · localhost:8788: 1 · octavia.rocks: 0

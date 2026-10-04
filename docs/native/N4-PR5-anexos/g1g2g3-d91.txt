@@ -1,0 +1,48 @@
+declarações: do corpo da PR (GATES_DECL=<scratchpad>/decl)
+base=origin/main head=WORKTREE
+G1a — diff vazio em 40 arquivos DERIVADOS de apps/native + packages/core/src
+      escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+      EXCEÇÕES DECLARADAS (o escopo desta PR):
+        apps/native/App.tsx
+        apps/native/src/api.ts
+        apps/native/src/apos-escrita.ts
+        apps/native/src/escrita.ts
+        apps/native/src/favoritar.ts
+        apps/native/src/files.ts
+        apps/native/src/prefetch.ts
+        apps/native/src/store.ts
+        apps/native/src/sync.ts
+        packages/core/src/biblioteca.ts
+        packages/core/src/favoritar.ts
+        packages/core/src/frases-content.ts
+        packages/core/src/index.ts
+        packages/core/src/offline.ts
+        packages/core/src/types.ts
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+      PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+        (nenhum — nenhuma asserção do core pode mudar nesta PR)
+  G1b: só adição ✓
+g1 exit=0
+G2 — testIDs  antes=80  depois=80
+  G2: antes ⊆ depois ✓
+G3 — declarações: do corpo da PR (GATES_DECL=<scratchpad>/decl)
+G3 — linhas log( antes=68  depois=70
+      ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+        log(`prefetch plan n=${plano.length} reason=7d`)
+        log(`prefetch plan n=${plano.length} reason=library`)
+        if (prazo !== null) log(`ratelimit retry-after=${prazo} family=setlist-mutate`)
+        if (prazo !== null) log(`ratelimit retry-after=${prazo} family=${familia}`)
+      REMOÇÕES DECLARADAS (linha → REMOVIDA: razão; N2-D34):
+        (nenhuma)
+  linhas que SUMIRAM (cada uma precisa de um PAR de errata com a substituta, ou de uma REMOÇÃO declarada):
+      apps/native/src/api.ts	if (prazo !== null) log(`ratelimit retry-after=${prazo} family=setlist-mutate`)
+      apps/native/src/prefetch.ts	log(`prefetch plan n=${plano.length} reason=7d`)
+  G3: cada linha que sumiu tem par de errata com a substituta, ou remoção declarada ✓
+  linhas NOVAS (declarar no commit e no catálogo):
+      apps/native/src/api.ts	if (prazo !== null) log(`ratelimit retry-after=${prazo} family=${familia}`)
+      apps/native/src/favoritar.ts	log(`write blocked op=${op} reason=${motivo}`)
+      apps/native/src/favoritar.ts	log(`write op=${pedido.op} content=${pedido.content} status=${status} code=${code} ms=${ms}`)
+      apps/native/src/prefetch.ts	log(`prefetch plan n=${plano.length} reason=library`)
+g2g3 exit=0
