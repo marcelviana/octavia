@@ -1,0 +1,149 @@
+# pnpm build — antes e depois (sem .env*; o build não lê nada de rede)
+
+## main 0a37342
+$ pnpm build
+Route (app)                                 Size  First Load JS
+┌ ƒ /                                      512 B         111 kB
+├ ƒ /_not-found                            988 B         103 kB
+├ ƒ /add-content                         3.93 kB         277 kB
+├ ƒ /api/auth/session                      183 B         102 kB
+├ ƒ /api/content                           183 B         102 kB
+├ ƒ /api/content/[id]                      183 B         102 kB
+├ ƒ /api/health                            183 B         102 kB
+├ ƒ /api/profile                           183 B         102 kB
+├ ƒ /api/setlists                          183 B         102 kB
+├ ƒ /api/setlists/[id]                     183 B         102 kB
+├ ƒ /api/setlists/[id]/songs               183 B         102 kB
+├ ƒ /api/setlists/[id]/songs/order         183 B         102 kB
+├ ƒ /api/setlists/songs/[songId]           183 B         102 kB
+├ ƒ /api/storage/delete                    183 B         102 kB
+├ ƒ /api/storage/list                      183 B         102 kB
+├ ƒ /api/storage/upload                    183 B         102 kB
+├ ƒ /content/[id]                         118 kB         393 kB
+├ ƒ /content/[id]/edit                   6.01 kB         279 kB
+├ ƒ /dashboard                           3.78 kB         274 kB
+├ ƒ /forgot-password                       995 B         259 kB
+├ ƒ /library                               418 B         274 kB
+├ ƒ /login                               2.23 kB         265 kB
+├ ƒ /privacy-policy                        183 B         102 kB
+├ ƒ /setlists                            1.89 kB         275 kB
+├ ƒ /signup                              1.84 kB         265 kB
+├ ƒ /signup/confirm-email                  819 B         264 kB
+└ ƒ /verify-email                        1.06 kB         261 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/4509c6e4-bdb2941da3d607e5.js  53.3 kB
+  ├ chunks/5586-b5ab0bde052739d7.js        46 kB
+  └ other shared chunks (total)          2.91 kB
+exit 0
+
+## commit 2 4ccfe9b (o site importa do core)
+$ pnpm build
+Route (app)                                 Size  First Load JS
+┌ ƒ /                                      512 B         111 kB
+├ ƒ /_not-found                            988 B         103 kB
+├ ƒ /add-content                         4.92 kB         278 kB
+├ ƒ /api/auth/session                      183 B         102 kB
+├ ƒ /api/content                           183 B         102 kB
+├ ƒ /api/content/[id]                      183 B         102 kB
+├ ƒ /api/health                            183 B         102 kB
+├ ƒ /api/profile                           183 B         102 kB
+├ ƒ /api/setlists                          183 B         102 kB
+├ ƒ /api/setlists/[id]                     183 B         102 kB
+├ ƒ /api/setlists/[id]/songs               183 B         102 kB
+├ ƒ /api/setlists/[id]/songs/order         183 B         102 kB
+├ ƒ /api/setlists/songs/[songId]           183 B         102 kB
+├ ƒ /api/storage/delete                    183 B         102 kB
+├ ƒ /api/storage/list                      183 B         102 kB
+├ ƒ /api/storage/upload                    183 B         102 kB
+├ ƒ /content/[id]                         116 kB         394 kB
+├ ƒ /content/[id]/edit                   6.96 kB         280 kB
+├ ƒ /dashboard                           1.63 kB         274 kB
+├ ƒ /forgot-password                       995 B         259 kB
+├ ƒ /library                             1.44 kB         274 kB
+├ ƒ /login                               2.23 kB         265 kB
+├ ƒ /privacy-policy                        183 B         102 kB
+├ ƒ /setlists                             2.9 kB         276 kB
+├ ƒ /signup                              1.84 kB         265 kB
+├ ƒ /signup/confirm-email                  819 B         264 kB
+└ ƒ /verify-email                        1.06 kB         261 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/4509c6e4-bdb2941da3d607e5.js  53.3 kB
+  ├ chunks/5586-b5ab0bde052739d7.js        46 kB
+  └ other shared chunks (total)          2.91 kB
+exit 0
+
+## diferença main → commit 2 (só as linhas que mudaram)
+4c4
+< ├ ƒ /add-content                         3.93 kB         277 kB
+---
+> ├ ƒ /add-content                         4.92 kB         278 kB
+18,20c18,20
+< ├ ƒ /content/[id]                         118 kB         393 kB
+< ├ ƒ /content/[id]/edit                   6.01 kB         279 kB
+< ├ ƒ /dashboard                           3.78 kB         274 kB
+---
+> ├ ƒ /content/[id]                         116 kB         394 kB
+> ├ ƒ /content/[id]/edit                   6.96 kB         280 kB
+> ├ ƒ /dashboard                           1.63 kB         274 kB
+22c22
+< ├ ƒ /library                               418 B         274 kB
+---
+> ├ ƒ /library                             1.44 kB         274 kB
+25c25
+< ├ ƒ /setlists                            1.89 kB         275 kB
+---
+> ├ ƒ /setlists                             2.9 kB         276 kB
+
+## commit 3 — com e sem a adoção do tipo do core no components/identidade/linha-de-aviso.tsx
+Os 61 arquivos de .next/static/chunks, sha256 de cada um (find . -type f | sort | xargs shasum -a 256):
+
+$ diff chunks-commit2.txt chunks-commit3-COM-adocao.txt
+16c16
+< 76759e9aeedc8c407a0ebe479a6d6e6972bb0e025687e49572399f0a7494d2b4  ./6370-bc0228c6bbd6d29b.js
+---
+> 76759e9aeedc8c407a0ebe479a6d6e6972bb0e025687e49572399f0a7494d2b4  ./6370-18be06e6605b9796.js
+exit 1
+
+(o conteúdo é o mesmo — sha 76759e9a… dos dois lados —, o NOME muda; e o nome está no manifest:)
+$ grep -l "6370-" .next/*.json .next/server/*.json
+.next/app-build-manifest.json
+
+$ diff chunks-commit2.txt chunks-commit3-SEM-adocao.txt   # o commit 3 como foi commitado
+exit 0 — idênticos (nome e conteúdo)
+
+## commit 3 5d96a70, como commitado (sem a adoção)
+Route (app)                                 Size  First Load JS
+┌ ƒ /                                      512 B         111 kB
+├ ƒ /_not-found                            988 B         103 kB
+├ ƒ /add-content                         4.92 kB         278 kB
+├ ƒ /api/auth/session                      183 B         102 kB
+├ ƒ /api/content                           183 B         102 kB
+├ ƒ /api/content/[id]                      183 B         102 kB
+├ ƒ /api/health                            183 B         102 kB
+├ ƒ /api/profile                           183 B         102 kB
+├ ƒ /api/setlists                          183 B         102 kB
+├ ƒ /api/setlists/[id]                     183 B         102 kB
+├ ƒ /api/setlists/[id]/songs               183 B         102 kB
+├ ƒ /api/setlists/[id]/songs/order         183 B         102 kB
+├ ƒ /api/setlists/songs/[songId]           183 B         102 kB
+├ ƒ /api/storage/delete                    183 B         102 kB
+├ ƒ /api/storage/list                      183 B         102 kB
+├ ƒ /api/storage/upload                    183 B         102 kB
+├ ƒ /content/[id]                         116 kB         394 kB
+├ ƒ /content/[id]/edit                   6.96 kB         280 kB
+├ ƒ /dashboard                           1.63 kB         274 kB
+├ ƒ /forgot-password                       995 B         259 kB
+├ ƒ /library                             1.44 kB         274 kB
+├ ƒ /login                               2.23 kB         265 kB
+├ ƒ /privacy-policy                        183 B         102 kB
+├ ƒ /setlists                             2.9 kB         276 kB
+├ ƒ /signup                              1.84 kB         265 kB
+├ ƒ /signup/confirm-email                  819 B         264 kB
+└ ƒ /verify-email                        1.06 kB         261 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/4509c6e4-bdb2941da3d607e5.js  53.3 kB
+  ├ chunks/5586-b5ab0bde052739d7.js        46 kB
+  └ other shared chunks (total)          2.91 kB
+
+$ diff (tabela do commit 2) (tabela do commit 3)
+exit 0 — iguais

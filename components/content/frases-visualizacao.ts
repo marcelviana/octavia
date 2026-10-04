@@ -3,13 +3,16 @@
  * declarada da I1-D10, tabela chave · texto · origem em `docs/ux/I1-PR10-anexos/README.md`). Frases novas aprovadas
  * no aval do commit 1 (item 13): o zoom, os valores de reserva da tab, o capo com número e os rótulos de campo.
  * `view.erro.cache` não existe (I1-E15: a cópia no navegador morreu na I1-PR-3).
+ * N4-PR3 (N4-D14): o voltar, *Detalhes*, o erro de formato e os rótulos dos campos que o tablet também mostra moram
+ * no core (`packages/core/src/frases-content.ts`) e vêm de lá, byte a byte (gate: `tests/gates-web/frases-n4.test.ts`).
  */
+import { VOCABULARIO_DE_CONTENT as VC } from "@octavia/core/src/frases-content"
 import { DIFICULDADES, FRASES_LISTA, dataCurta, tipoDe } from "@/components/library/frases-lista"
 
 export const FRASES_VIEW = {
-  "view.voltar": "Voltar para a biblioteca",
+  "view.voltar": VC["voltar-biblioteca"],
   "view.editar": "Editar",
-  "view.detalhes": "Detalhes",
+  "view.detalhes": VC["detalhes"],
   "view.notas": "Notas de palco",
   "view.notas.vazio": "nenhuma nota de palco — use Editar para escrever",
   "view.tab.capo": "capo: {x}",
@@ -35,7 +38,7 @@ export const FRASES_VIEW = {
   "view.vazio.letra.apoio": "escreva a letra para ter no palco",
   "view.vazio.tab": "nenhuma tablatura",
   "view.vazio.cifra": "nenhuma cifra",
-  "view.erro.formato": "não foi possível abrir o arquivo — confira o formato",
+  "view.erro.formato": VC["erro-formato"],
   "view.erro.pdf": "não foi possível abrir o PDF — {motivo}",
   "view.erro.pdf.inacessivel": "o arquivo está corrompido ou inacessível",
   "view.erro.pdf.formato": "formato de PDF inválido",
@@ -45,16 +48,16 @@ export const FRASES_VIEW = {
   // na forma composta (`não foi possível … — {motivo}`) o genérico é o curto, como `forgot.erro` e `lib.erro`
   "motivo.generico": FRASES_LISTA["motivo.generico"],
   "acao.tentar": FRASES_LISTA["acao.tentar"],
-  "campo.album": "álbum",
-  "campo.dificuldade": "dificuldade",
-  "campo.genero": "gênero",
-  "campo.tom": "tom",
+  "campo.album": VC["campo-album"],
+  "campo.dificuldade": VC["campo-dificuldade"],
+  "campo.genero": VC["campo-genero"],
+  "campo.tom": VC["campo-tom"],
   "campo.compasso": "compasso",
-  "campo.andamento": "andamento",
-  "campo.andamento.bpm": "{x} BPM",
-  "campo.etiquetas": "etiquetas",
-  "campo.criado": "criado",
-  "campo.alterado": "alterado",
+  "campo.andamento": VC["campo-andamento"],
+  "campo.andamento.bpm": VC["campo-andamento-bpm"],
+  "campo.etiquetas": VC["campo-etiquetas"],
+  "campo.criado": VC["campo-criado"],
+  "campo.alterado": VC["campo-alterado"],
 } as const
 
 export type ChaveView = keyof typeof FRASES_VIEW

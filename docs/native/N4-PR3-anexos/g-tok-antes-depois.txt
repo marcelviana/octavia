@@ -1,0 +1,37 @@
+# G-tok (ii) antes e depois — a contagem de strings de .ts examinadas (div. 828)
+
+## main 0a37342
+$ node scripts/gates-web/g-tok.mjs --so-arquivos
+  arquivos: 132 · literais de identidade acusados: 0 · toasts: 0 · imports de ui: 0 · textos examinados: 33 · isentos de inglês (scripts/gates-web/g-tok-sem-ingles.txt): 1 · vocabulário: 133 · isenções: 9 · strings de .ts examinadas (div. 828): 446 · frases isentas (scripts/gates-web/g-tok-frases-isentas.txt): 5 de 5 entradas
+G-tok: PASSA
+exit 0
+
+## commit 1 f7803d0
+$ node scripts/gates-web/g-tok.mjs --so-arquivos
+  ✗ packages/core/src/frases-content.ts: está na lista e não existe
+  arquivos: 133 · literais de identidade acusados: 0 · toasts: 0 · imports de ui: 0 · textos examinados: 33 · isentos de inglês (scripts/gates-web/g-tok-sem-ingles.txt): 1 · vocabulário: 133 · isenções: 9 · strings de .ts examinadas (div. 828): 446 · frases isentas (scripts/gates-web/g-tok-frases-isentas.txt): 5 de 5 entradas
+G-tok: REPROVA — 1 ocorrência(s)
+exit 1
+
+## HEAD 5d96a70
+$ node scripts/gates-web/g-tok.mjs --so-arquivos
+  arquivos: 133 · literais de identidade acusados: 0 · toasts: 0 · imports de ui: 0 · textos examinados: 33 · isentos de inglês (scripts/gates-web/g-tok-sem-ingles.txt): 1 · vocabulário: 133 · isenções: 9 · strings de .ts examinadas (div. 828): 455 · frases isentas (scripts/gates-web/g-tok-frases-isentas.txt): 5 de 5 entradas
+G-tok: PASSA
+exit 0
+
+
+## A decomposição (o g-tok.mjs com uma linha de impressão por string examinada; cópia no scratch, sem arquivo novo)
+strings de .ts examinadas, por arquivo — só os que mudaram:
+  components/content/frases-visualizacao.ts     main  44 → HEAD  32  (-12)
+  components/library/frases-lista.ts            main  69 → HEAD  54  (-15)
+  packages/core/src/frases-content.ts           main   0 → HEAD  36  (+36)
+  total                                         main 446 → HEAD 455
+
+As 27 que saem do site são as 27 entradas que mudaram de casa (o "Favoritas" conta duas vezes: duas chaves); as 36 do core são as 26 frases do site (textos distintos) + as 5 constantes P-F + os 5 literais de template das funções P-F.
+
+## d0012e7 (N4-D85)
+$ node scripts/gates-web/g-tok.mjs --so-arquivos
+  arquivos: 133 · literais de identidade acusados: 0 · toasts: 0 · imports de ui: 0 · textos examinados: 33 · isentos de inglês (scripts/gates-web/g-tok-sem-ingles.txt): 1 · vocabulário: 133 · isenções: 9 · strings de .ts examinadas (div. 828): 456 · frases isentas (scripts/gates-web/g-tok-frases-isentas.txt): 5 de 5 entradas
+G-tok: PASSA
+exit 0
+(+1: o literal de template de nomeDoFiltroFavoritas, "Só as favoritas ( )", no packages/core/src/frases-content.ts)

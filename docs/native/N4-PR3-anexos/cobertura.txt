@@ -1,0 +1,8 @@
+$ pnpm test:ci   (vitest run --coverage --reporter=verbose) — o resumo
+ Test Files  124 passed | 3 skipped (127)
+      Tests  1418 passed | 59 skipped (1477)
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   73.82 |    68.62 |   76.19 |   75.41 |                   
+exit 0

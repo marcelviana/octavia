@@ -1,0 +1,107 @@
+{
+  "origem": "docs/native/DESIGN-N4/telas.html",
+  "sha256": "dba757dd569dc26ee05406aa025f5f6c3e1ba26ec8df3e7f5daec754bf94cc41",
+  "secao": "7 · propostas — decididas na rodada 2, tabela Frases",
+  "aceitas": "N4-D67 (P-F1, P-F3…P-F7, P-F9…P-F11); P-F8 existe (N4-E5)",
+  "pf": [
+    {
+      "id": "P-F1",
+      "celula": "nome acessível Tocar “{título}” (linha da L e V) · sem rótulo visível",
+      "frases": [
+        "Tocar “{título}”"
+      ]
+    },
+    {
+      "id": "P-F3",
+      "celula": "notas da música",
+      "frases": [
+        "notas da música"
+      ]
+    },
+    {
+      "id": "P-F4",
+      "celula": "Sem conexão: dá para ler e tocar, não para favoritar. O favoritar volta quando a rede voltar.",
+      "frases": [
+        "Sem conexão: dá para ler e tocar, não para favoritar. O favoritar volta quando a rede voltar."
+      ]
+    },
+    {
+      "id": "P-F5",
+      "celula": "favoritando “{título}”… · tirando “{título}” das favoritas…",
+      "frases": [
+        "favoritando “{título}”…",
+        "tirando “{título}” das favoritas…"
+      ]
+    },
+    {
+      "id": "P-F6",
+      "celula": "Voltar para a visualização",
+      "frases": [
+        "Voltar para a visualização"
+      ]
+    },
+    {
+      "id": "P-F7",
+      "celula": "Ver “{título}”",
+      "frases": [
+        "Ver “{título}”"
+      ]
+    },
+    {
+      "id": "P-F9",
+      "celula": "Só {tipo} ({n})",
+      "frases": [
+        "Só {tipo} ({n})"
+      ]
+    },
+    {
+      "id": "P-F10",
+      "celula": "Sua conta não tem músicas. Crie na versão web — elas aparecem aqui na próxima sincronização.",
+      "frases": [
+        "Sua conta não tem músicas. Crie na versão web — elas aparecem aqui na próxima sincronização."
+      ]
+    },
+    {
+      "id": "P-F11",
+      "celula": "Nenhuma música foi salva neste aparelho ainda. Conecte-se à internet uma vez para baixar tudo — depois funciona offline.",
+      "frases": [
+        "Nenhuma música foi salva neste aparelho ainda. Conecte-se à internet uma vez para baixar tudo — depois funciona offline."
+      ]
+    }
+  ],
+  "especies": {
+    "secao": "legenda de N4-*-L-favoritar-falhou, tabela das espécies",
+    "linhas": [
+      {
+        "especie": "sem rede",
+        "linha": "Favoritar “Manhã de ensaio” · sem conexão — nada foi salvo",
+        "origem": "tablet (escrita de setlist)"
+      },
+      {
+        "especie": "sem resposta",
+        "linha": "Favoritar “Manhã de ensaio” · sem resposta do servidor",
+        "origem": "tablet"
+      },
+      {
+        "especie": "sessão",
+        "linha": "Favoritar “{título}” · não foi possível salvar — confira sua conta no site",
+        "origem": "tablet"
+      },
+      {
+        "especie": "limite",
+        "linha": "Favoritar “Manhã de ensaio” · muitas alterações seguidas — tente de novo em 12 s",
+        "origem": "tablet"
+      },
+      {
+        "especie": "servidor",
+        "linha": "Tirar “Manhã de ensaio” das favoritas · falha no servidor — nada foi alterado aqui",
+        "origem": "tablet"
+      },
+      {
+        "especie": "genérica",
+        "linha": "Favoritar “Manhã de ensaio” · não foi possível salvar",
+        "origem": "tablet"
+      }
+    ]
+  }
+}

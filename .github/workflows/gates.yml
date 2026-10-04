@@ -74,10 +74,13 @@ jobs:
     # N3-PR1 (div. 398): o DESIGN-N3 entrou na `main` (#325) sem gate que o
     # cobrisse; o laço passa a conferi-lo. O `medidas.json` da pasta é derivado
     # e fica fora do SHA256SUMS, como o README.
-    - name: Congelados — shasum -c dos SHA256SUMS do DESIGN-V1, do DESIGN-N2 e do DESIGN-N3
+    # N4-PR3 (N4-D81, div. 1022): o DESIGN-N4 entrou na `main` (#358) fora do
+    # laço; entra no commit 1 da primeira PR de código do bloco. O SHA256SUMS
+    # dele cobre o `telas.html` e o `icones.html` (o README fica fora).
+    - name: Congelados — shasum -c dos SHA256SUMS do DESIGN-V1, do DESIGN-N2, do DESIGN-N3 e do DESIGN-N4
       run: |
         F=0
-        for d in docs/native/DESIGN-V1 docs/native/DESIGN-N2 docs/native/DESIGN-N3; do
+        for d in docs/native/DESIGN-V1 docs/native/DESIGN-N2 docs/native/DESIGN-N3 docs/native/DESIGN-N4; do
           echo "== $d"
           (cd "$d" && shasum -a 256 -c SHA256SUMS) || F=1
         done

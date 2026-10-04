@@ -1,0 +1,34 @@
+$ pnpm exec vitest run --project web tests/gates/n4-g-par.test.tsx tests/gates/n4-favoritar-put.test.tsx
+ RUN  v4.0.16 <raiz>
+stdout | tests/gates/n4-g-par.test.tsx > G-par (N4-PR1) — o mesmo content, o mesmo texto no web e no nativo > reprova exatamente a lista de g-par-reprovados.txt
+G-par — itens 16 · pares comparados 9 · iguais 9 · diferentes 0 · fora do par 7
+  IGUAL     letra                        web=texto(108)       nativo=texto(108)             [painel-letra]
+  IGUAL     cifra-texto                  web=texto(48)        nativo=texto(48)              [painel-cifra]
+  IGUAL     tab-texto                    web=texto(92)        nativo=texto(92)              [painel-tab]
+  IGUAL     partitura-pdf                web=arquivo(79)      nativo=arquivo(79)            [painel-partitura]
+  IGUAL     letra-poluida-editor         web=texto(44)        nativo=texto(44)              [painel-letra]
+  IGUAL     cifra-secoes-acordes-vazios  web=texto(123)       nativo=texto(123)             [painel-cifra]
+  IGUAL     cifra-secoes-completas       web=texto(39)        nativo=texto(39)              [painel-cifra]
+  IGUAL     cifra-duas-secoes            web=texto(97)        nativo=texto(97)              [painel-cifra]
+  IGUAL     so-aninhado                  web=sem-corpo        nativo=sem-corpo:no-key       [painel-letra]
+fora do par (7) — impressos e contados, não reprovam:
+  diferente cifra-em-lista               web=texto(15)        nativo=sem-corpo:not-string   — chords como lista de {name, diagram, fingering} — só o web lê; a B2 não achou no dado real (0 de 63) → Bloco D
+  diferente cifra-com-progression        web=texto(19)        nativo=texto(4)               — progression ({seção: acordes}) ao lado do chords — só o web a mostra; a B2 não achou no dado real → Bloco D
+  diferente tab-em-lista                 web=texto(21)        nativo=sem-corpo:not-string   — tablature como lista de linhas — só o web lê; a B2 achou as 2 Tabs com tablature string → Bloco D
+  diferente partitura-com-notation       web=texto(31)        nativo=sem-corpo:no-body      — Partitura sem arquivo com notation em texto — só o web a mostra; a B2 achou a única Partitura com arquivo (.pdf) → Bloco D
+  diferente tipo-legado                  web=texto(10)        nativo=sem-corpo:unknown-type — content_type legado ('Guitar Tab') que o normalizeContentType do web aceita — o core não; a B2 achou os 63 nos quatro tipos do enum → Bloco D
+  diferente tipo-fora-do-enum            web=texto(38)        nativo=sem-corpo:unknown-type — tipo fora do enum (nem dos quatro, nem apelido legado — a forma do pre-check, A12): o web o mostra como Letra (normalizeContentType cai em LYRICS), o core declara unknown-type; o que vale é o do core (N4-D47); a B2 achou os 63 no contrato → Bloco D
+  diferente cifra-escaneada              web=sem-corpo        nativo=arquivo(77)            — Cifra escaneada (content_data nulo com file_url): o web mostra o vazio do painel ('nenhuma cifra' — o ChordDisplay não mostra arquivo), o core a trata como arquivo e o palco mostra o PDF; vale o comportamento do core (N4-D49); nenhum item da conta principal está nesse caso (B2: as 3 Cifras com content_data) → Bloco D
+lista esperada (0): (vazia)
+reprovados     (0): (nenhum)
+G-par: zero reprovações, lista vazia (N4-D50) ✓
+ ✓  web  tests/gates/n4-g-par.test.tsx (1 test) 41ms
+stdout | tests/gates/n4-favoritar-put.test.tsx > N4-PR1 — o corpo do PUT do favoritar da lista, byte a byte > favoritar (a linha com is_favorite=false)
+favoritar-put — favoritar: enviado 64 B · fixture 64 B
+stdout | tests/gates/n4-favoritar-put.test.tsx > N4-PR1 — o corpo do PUT do favoritar da lista, byte a byte > desfavoritar (a linha com is_favorite=true)
+favoritar-put — desfavoritar: enviado 65 B · fixture 65 B
+ ✓  web  tests/gates/n4-favoritar-put.test.tsx (6 tests | 1 skipped) 217ms
+ Test Files  2 passed (2)
+      Tests  6 passed | 1 skipped (7)
+   Start at  13:17:21
+   Duration  1.06s (transform 367ms, setup 385ms, import 443ms, tests 259ms, environment 621ms)

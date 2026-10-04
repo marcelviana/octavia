@@ -1,0 +1,10 @@
+$ pnpm exec tsc --noEmit -p tsconfig.json
+exit 0
+$ pnpm exec tsc -p packages/core/tsconfig.json --noEmit
+exit 0
+$ pnpm exec tsc -p packages/identidade/tsconfig.json --noEmit
+exit 0
+$ (cd apps/native && pnpm exec tsc --noEmit)
+exit 0
+$ pnpm lint
+✔ No ESLint warnings or errors

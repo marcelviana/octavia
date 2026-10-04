@@ -1,0 +1,136 @@
+# Controles negativos do §3 — sobre o HEAD 5d96a70, cada um desfeito com git checkout; git status no fim
+
+## CN1 — tirar uma frase do core (a linha 'vazio-biblioteca' de packages/core/src/frases-content.ts)
+$ sed -i "" "/'vazio-biblioteca': /d" packages/core/src/frases-content.ts && git diff --stat
+ packages/core/src/frases-content.ts | 1 -
+ 1 file changed, 1 deletion(-)
+$ pnpm exec vitest run --project web tests/gates-web/frases-n4.test.ts
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (1) o site mostra o que mostrava — 151 folhas da base > FRASES_LISTA › lib.vazio
+AssertionError: expected undefined to be 'nenhum conteúdo ainda' // Object.is equality
+- Expected: 
++ Received: 
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (2) as que mudaram de casa estão no core — 27 linhas > FRASES_LISTA › lib.vazio (components/library/frases-lista.ts) = core VOCABULARIO_DE_CONTENT › vazio-biblioteca
+AssertionError: expected undefined to be 'nenhum conteúdo ainda' // Object.is equality
+- Expected: 
++ Received: 
+ Test Files  1 failed (1)
+      Tests  2 failed | 177 passed (179)
+$ pnpm exec tsc --noEmit -p tsconfig.json > t.txt; echo "tsc exit $?"; head -3 t.txt   (o site deixa de compilar, também)
+tsc exit 1
+components/library/frases-lista.ts(60,16): error TS7053: Element implicitly has an 'any' type because expression of type '"vazio-biblioteca"' can't be used to index type '{ readonly favoritas: "Favoritas"; readonly 'vazio-favoritas': "nenhuma favorita"; readonly 'vazio-filtro': "nada encontrado"; readonly 'vazio-filtro-apoio': "mude a busca ou os filtros"; ... 13 more ...; readonly 'campo-alterado': "alterado"; }'.
+  Property 'vazio-biblioteca' does not exist on type '{ readonly favoritas: "Favoritas"; readonly 'vazio-favoritas': "nenhuma favorita"; readonly 'vazio-filtro': "nada encontrado"; readonly 'vazio-filtro-apoio': "mude a busca ou os filtros"; ... 13 more ...; readonly 'campo-alterado': "alterado"; }'.
+
+## CN2a — trocar um caractere de uma frase que mudou de casa (core: 'nenhum conteúdo ainda' → 'nenhum conteudo ainda')
+ packages/core/src/frases-content.ts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+$ pnpm exec vitest run --project web tests/gates-web/frases-n4.test.ts
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (1) o site mostra o que mostrava — 151 folhas da base > FRASES_LISTA › lib.vazio
+AssertionError: expected 'nenhum conteudo ainda' to be 'nenhum conteúdo ainda' // Object.is equality
+Expected: "nenhum conteúdo ainda"
+Received: "nenhum conteudo ainda"
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (2) as que mudaram de casa estão no core — 27 linhas > FRASES_LISTA › lib.vazio (components/library/frases-lista.ts) = core VOCABULARIO_DE_CONTENT › vazio-biblioteca
+AssertionError: expected 'nenhum conteudo ainda' to be 'nenhum conteúdo ainda' // Object.is equality
+Expected: "nenhum conteúdo ainda"
+Received: "nenhum conteudo ainda"
+ Test Files  1 failed (1)
+      Tests  2 failed | 177 passed (179)
+
+## CN2b — trocar um caractere de uma P-F (core: 'notas da música' → 'notas da musica')
+ packages/core/src/frases-content.ts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+$ pnpm exec vitest run --project native apps/native/test/frases-n4.test.ts
+ FAIL   native  apps/native/test/frases-n4.test.ts > (1) as P-F aceitas — contra a lista extraída da folha > P-F3
+AssertionError: expected 'notas da musica' to be 'notas da música' // Object.is equality
+Expected: "notas da música"
+Received: "notas da musica"
+ Test Files  1 failed (1)
+      Tests  1 failed | 32 passed (33)
+
+## CN2c — tirar uma P-F do core (a função nomeVer, P-F7)
+ packages/core/src/frases-content.ts | 5 -----
+ 1 file changed, 5 deletions(-)
+$ pnpm exec vitest run --project native apps/native/test/frases-n4.test.ts
+ FAIL   native  apps/native/test/frases-n4.test.ts > (1) as P-F aceitas — contra a lista extraída da folha > P-F7
+ FAIL   native  apps/native/test/frases-n4.test.ts > (1) as P-F aceitas — contra a lista extraída da folha > as aspas são as tipográficas da folha (“ ”), nunca a reta
+ Test Files  1 failed (1)
+      Tests  2 failed | 31 passed (33)
+
+## CN3a — uma frase nova no site, fora do core, em inglês (frases-lista.ts ganha "lib.cn": "loading")
+ components/library/frases-lista.ts | 1 +
+ 1 file changed, 1 insertion(+)
+$ node scripts/gates-web/g-tok.mjs --so-arquivos
+  ✗ components/library/frases-lista.ts:40 [inglês, frases: valor de chave] "loading" ← termo "loading" (div. 828)
+  arquivos: 133 · literais de identidade acusados: 0 · toasts: 0 · imports de ui: 0 · textos examinados: 33 · isentos de inglês (scripts/gates-web/g-tok-sem-ingles.txt): 1 · vocabulário: 133 · isenções: 9 · strings de .ts examinadas (div. 828): 456
+G-tok: REPROVA — 1 ocorrência(s)
+exit 1
+
+## CN3b — a mesma frase nova, em pt-BR ("lib.cn": "frase nova do site"): o G-tok a CONTA (455 → 456) e passa
+ components/library/frases-lista.ts | 1 +
+ 1 file changed, 1 insertion(+)
+$ node scripts/gates-web/g-tok.mjs --so-arquivos
+strings de .ts examinadas (div. 828): 456
+G-tok: PASSA
+exit 0
+  (e o gate de igualdade a acusa como chave a mais do site:)
+ FAIL   web  tests/gates-web/frases-n4.test.ts > (1) o site mostra o que mostrava — 151 folhas da base > o mesmo conjunto de caminhos (nenhuma chave a mais, nenhuma a menos)
+ Test Files  1 failed (1)
+      Tests  1 failed | 178 passed (179)
+
+## CN4 — o shasum do DESIGN-N4 (o passo do gates.yml): um byte trocado no fim do telas.html
+ docs/native/DESIGN-N4/telas.html | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+$ (cd docs/native/DESIGN-N4 && shasum -a 256 -c SHA256SUMS)
+telas.html: FAILED
+icones.html: OK
+shasum: WARNING: 1 computed checksum did NOT match
+exit 1
+  (e o teste das P-F, que confere o sha da folha de onde a lista saiu:)
+ FAIL   native  apps/native/test/frases-n4.test.ts > (1) as P-F aceitas — contra a lista extraída da folha > a lista saiu do telas.html da árvore (sha256 dba757dd569d…)
+ Test Files  1 failed (1)
+      Tests  1 failed | 32 passed (33)
+
+## CN5 — o separador de uma tela de hoje muda (IndexScreen.tsx:587, '  ·  ' → ' · ')
+ apps/native/src/screens/IndexScreen.tsx | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+$ pnpm exec vitest run --project native apps/native/test/frases-n4.test.ts
+ FAIL   native  apps/native/test/frases-n4.test.ts > (2) o motivo isolado — o core compõe como as telas de hoje > as 4 junções com "·" das telas usam o separador do core
+AssertionError: apps/native/src/screens/IndexScreen.tsx: expected ' · ' to be '  ·  ' // Object.is equality
+ Test Files  1 failed (1)
+      Tests  1 failed | 32 passed (33)
+
+## CN6 — a ação do tablet deixa de ser a do contrato (LinhaDeAviso.tsx sem o motivoInativo)
+ apps/native/src/screens/LinhaDeAviso.tsx | 1 -
+ 1 file changed, 1 deletion(-)
+$ (cd apps/native && pnpm exec tsc --noEmit)
+test/linha-de-aviso-contrato.test.ts(16,7): error TS2322: Type 'true' is not assignable to type 'false'.
+test/linha-de-aviso-contrato.test.ts(18,7): error TS2322: Type 'true' is not assignable to type 'false'.
+(4 erros no total) exit 2
+
+## CN7 — a ação do site deixa de ser a do contrato (já rodado no commit 3; repetido aqui)
+ components/identidade/linha-de-aviso.tsx | 1 +
+ 1 file changed, 1 insertion(+)
+AssertionError: tests/gates-web/contrato/linha-de-aviso.tipos.ts(18,14): error TS2322: Type 'true' is not assignable to type 'false'.
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+
+## desfeitos
+$ git status --short && git log --oneline -1
+5d96a70 feat(core): o contrato da linha de aviso
+
+## CN8 — sobre o d0012e7 (N4-D85)
+### CN da N4-D85 — trocar um caractere da P-F9 das favoritas (core: `Só as favoritas` → `So as favoritas`)
+$ sed -i "" "s/\`Só as favoritas (/\`So as favoritas (/" packages/core/src/frases-content.ts
+116c116
+<   return `Só as favoritas (${n})`
+---
+>   return `So as favoritas (${n})`
+$ pnpm exec vitest run --project native apps/native/test/frases-n4.test.ts
+ FAIL   native  apps/native/test/frases-n4.test.ts > (1) as P-F aceitas — contra a lista extraída da folha > P-F9
+AssertionError: expected 'So as favoritas (0)' to be 'Só as favoritas (0)' // Object.is equality
+ Test Files  1 failed (1)
+      Tests  1 failed | 32 passed (33)
+
+## desfeito
+$ pnpm exec vitest run --project native apps/native/test/frases-n4.test.ts
+ Test Files  1 passed (1)
+      Tests  33 passed (33)

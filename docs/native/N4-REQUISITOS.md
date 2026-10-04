@@ -53,6 +53,11 @@ a busca nem com os outros chips). Os tipos combinam por **"ou"**; *Favoritas* co
 chip: *Só {tipo} ({n})* (P-F9). Filtro sem resultado: *nada encontrado* / *mude a busca ou os filtros* (site), com os chips
 marcados à vista; *Favoritas* com 0: *nenhuma favorita* e a estrela vazada de 28 em `lineInfo`; o chip marcado com 0
 continua tocável para desmarcar. Régua no singular, *1 resultado* — frase **existente** (N4-E5).
+
+> **Errata do N4-R5 (N4-D85, `[Marcel, 2026-10-03]`; div. 1032).** O nome acessível do chip *Favoritas* é **Só as
+> favoritas ({n})**; a P-F9 fica com duas formas — *Só {tipo} ({n})* para os quatro tipos e esta para as favoritas. No
+> core desde a N4-PR3 (`nomeDoFiltroFavoritas`, `N4-PR3-anexos/README.md` §2.4).
+
 *Aceite*: A-N4-5.
 
 **N4-R6 — a linha** `[N4-D61; N4-D62; P-F1; P-F7; molduras *-L-base, *-L-linhas]`. O toque na linha **visualiza**
@@ -286,6 +291,8 @@ fim de todo aceite com mock (N4-D55).
 | A-N4-24 | B contra as molduras; A sem `FATAL` e a lista de inalcançáveis por superfície | dumps; logcat; toque em cada controle | — | N4-R24 |
 | A-N4-25 | a tabela das estimadas medidas na ordem, com as erratas abertas (a partir da N4-E9) | régua; tabela no formato do `MEDIDAS.md` | — | N4-R25 |
 | A-N4-26 | **core** (PR-5): teste do conjunto garantido = todo `file_url` com `body === 'file'`; o LRU não despeja garantido; a linha `prefetch plan … reason=<nova>` no G3 em par e no catálogo. **Aparelho** (PR-9): depois de um sync com rede, o `files-index` tem todo arquivo da fixture com `body === 'file'` (lista e bytes contra a fixture), a linha do plano no logcat, *baixando* e *falhou* (mock de 404) vistos na linha e em V; com o teto reduzido no mock, `lru over` e o *arquivo não baixado* no que não coube | testes do core; G3; logcat; `run-as` do índice de arquivos; dumps | **o tempo até tudo baixar num sync real** (o olho: a biblioteca usável enquanto baixa) | N4-R26 |
+| A-N4-27 | **o favoritar em prod pelo app** — o aceite (i) da PR-9, como o §3 o escreve (N4-D84; N4-R7; regra 12) | ver §3, PR-9, aceite (i) | ver §3 | N4-R7 |
+| A-N4-28 | **o release do N4 no Tab** — o aceite (ii) da PR-9, como o §3 o escreve (N4-D84, N4-D55) | ver §3, PR-9, aceite (ii) | ver §3 | N4-D55, N4-D84 |
 
 ---
 
@@ -388,6 +395,11 @@ executor (N4-D54); o Tab repousa com o release e volta a ele no fim de todo acei
     `install -r`, com o sha256; a prova **sem Metro e sem `adb reverse`** (`lsof` das portas vazio, `reverse` vazio): o app
     abre em S1 sem login, `Buscar música` abre a L, a L lista a biblioteca do cache, V e o palco avulso abrem; `FATAL` 0; o
     Tab fica com o release.
+
+> **Errata da N4-PR3** `[N4-PR3, 2026-10-03; div. 1026]`: os dois aceites acima, escritos sem número, passam a ser
+> **A-N4-27** (o aceite (i), o favoritar em prod pelo app) e **A-N4-28** (o aceite (ii), o release do N4 no Tab), como a
+> div. 1026 propôs. **Nada se renumera**: A-N4-1…A-N4-26 ficam como estão, e as duas linhas novas da tabela do §2 apontam
+> para o texto deste item.
 
 ### Encerramento
 
