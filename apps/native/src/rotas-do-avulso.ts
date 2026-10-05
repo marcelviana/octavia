@@ -51,3 +51,12 @@ export function destinoDoResultado(
     params: { setlistId: setlist.id, position: posicaoDaBusca ?? 1, avulsa: contentId },
   }
 }
+
+/**
+ * O toque na busca do palco. Sem setlist (o avulso sem hospedeira, N4-R17): uma S4 NOVA, sem setlist — portanto sem
+ * a seção *Nesta setlist* —, empilhada sobre o palco. Com setlist: a de hoje.
+ */
+export function destinoDaBuscaDoPalco(setlistId: string | null, posicao: number): Destino {
+  if (setlistId === null) return { acao: 'push', rota: 'Search', params: {} }
+  return { acao: 'navigate', rota: 'Search', params: { setlistId, posicao } }
+}

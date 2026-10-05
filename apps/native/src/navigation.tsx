@@ -19,6 +19,7 @@ import { SearchScreen } from './screens/SearchScreen'
 import { SetlistsScreen, type SetlistsScreenProps } from './screens/SetlistsScreen'
 import { StageScreen } from './screens/StageScreen'
 import {
+  destinoDaBuscaDoPalco,
   destinoDoResultado,
   type Destino,
   type ParamsDaBusca,
@@ -218,7 +219,7 @@ export function Navigation({ signedIn, setlists, dados }: NavigationProps): Reac
                       onPosicao={() => undefined}
                       onFim={() => undefined}
                       onIndice={() => undefined}
-                      onBusca={() => navigation.push('Search', {})}
+                      onBusca={() => ir(navigation, destinoDaBuscaDoPalco(null, 1))}
                       onSair={() => navigation.goBack()}
                       onArquivosMudaram={dados.onArquivosMudaram}
                     />
@@ -244,12 +245,7 @@ export function Navigation({ signedIn, setlists, dados }: NavigationProps): Reac
                         posicaoAtual: p.position,
                       })
                     }
-                    onBusca={() =>
-                      navigation.navigate('Search', {
-                        setlistId: setlist.id,
-                        posicao: p.position,
-                      })
-                    }
+                    onBusca={() => ir(navigation, destinoDaBuscaDoPalco(setlist.id, p.position))}
                     // No avulso "Sair" é "Voltar": desempilha e o palco de
                     // baixo reaparece na posição em que ficou (T1-R22).
                     onSair={() =>
