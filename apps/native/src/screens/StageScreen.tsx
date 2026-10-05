@@ -43,6 +43,7 @@ import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake'
 import Pdf from 'react-native-pdf'
 import {
   bodyOf,
+  ehFormatoQueOAppMostra,
   endOfSetlist,
   FRASES_DO_PALCO,
   isValidContent,
@@ -51,6 +52,7 @@ import {
   paginaDe,
   prevPosition,
   resolveSong,
+  VOCABULARIO_DE_CONTENT,
   type ContentDTO,
   type OrigemDoAvulso,
   type SetlistDTO,
@@ -343,6 +345,14 @@ export function StageScreen({
   const urlArquivo =
     validade !== null && validade.ok && validade.body === 'file' ? content?.file_url ?? null : null
 
+  /**
+   * N4-D43, N4-D83 — o arquivo é de um **formato que o app ainda não mostra**? Decide a extensão (o core: só `.pdf`
+   * se mostra), antes do disco: baixado ou não, o leitor de PDF não o abre — o palco nem tenta (nenhum `ensureFile`)
+   * e mostra o placeholder de formato. Vale no palco com setlist e no avulso: é o mesmo componente. A base do G-inv
+   * não tem esse caso (a fixture do pre-check do N3 só tem `.pdf`, div. 1028).
+   */
+  const formato = urlArquivo !== null && !ehFormatoQueOAppMostra(urlArquivo)
+
   useEffect(() => {
     pararScroll()
     setRodando(false)
@@ -394,12 +404,12 @@ export function StageScreen({
 
   useEffect(() => {
     setPagina({ n: 0, total: 0 })
-    if (urlArquivo === null) {
+    if (urlArquivo === null || formato) {
       setArquivo({ fase: 'buscando' })
       return
     }
     void buscarArquivo(urlArquivo, false)
-  }, [urlArquivo, buscarArquivo])
+  }, [urlArquivo, formato, buscarArquivo])
 
   /**
    * T1-R16 — prefetch sob demanda a partir desta posição (atual, +1, +2, +3,
@@ -597,7 +607,14 @@ export function StageScreen({
       )}
 
       <View style={styles.meio} onLayout={medirMeio}>
-        {urlArquivo !== null ? (
+        {formato && urlArquivo !== null ? (
+          <Formato
+            nome={fileNameFromUrl(urlArquivo)}
+            tipo={TIPO[content?.content_type ?? ''] ?? 'arquivo'}
+            bytes={knownBytes(urlArquivo)}
+            cor={cor}
+          />
+        ) : urlArquivo !== null ? (
           <Arquivo
             estado={arquivo}
             titulo={content?.title ?? ''}
@@ -867,6 +884,38 @@ function Arquivo({
 }
 
 /**
+ * N4-D43, N4-D83 — o arquivo de um formato que o app ainda não mostra (pela extensão; o core decide). A moldura é a
+ * `N4-*-S3-avulso-formato`: o `tipo-desconhecido` de 28 em `offlineInk`, a frase do site (*"não foi possível abrir o
+ * arquivo — confira o formato"*, `view.erro.formato`) e, em mono, o nome do arquivo · o tipo (o tamanho quando o
+ * aparelho o conhece). Sem *Baixar*: baixar não o faria abrir. O mesmo componente no palco com setlist e no avulso.
+ * O lugar é o dos outros placeholders do palco (o S3e: no topo do corpo, `placeholder`), e os tamanhos são os do
+ * pacote: a frase em `size.button` (17, o da folha) e o nome em mono `size.label` (o da página do S3d, que a folha
+ * desenha em 13 nos dois lugares).
+ */
+function Formato({
+  nome,
+  tipo,
+  bytes,
+  cor,
+}: {
+  nome: string
+  tipo: string
+  bytes: number | null
+  cor: (typeof colors)[ThemeName]
+}): React.JSX.Element {
+  const tamanho = bytes === null ? '' : ` (${tamanhoLegivel(bytes)})`
+  return (
+    <View style={styles.placeholder} testID="s3-formato">
+      <Icone nome="tipo-desconhecido" tamanho={28} cor={cor.offlineInk} />
+      <View style={styles.formatoTexto}>
+        <Text style={[styles.formatoFrase, { color: cor.text }]}>{VOCABULARIO_DE_CONTENT['erro-formato']}</Text>
+        <Text style={[styles.formatoArquivo, { color: cor.muted }]}>{`${nome} · ${tipo}${tamanho}`}</Text>
+      </View>
+    </View>
+  )
+}
+
+/**
  * Um dos sete controles do palco — só ícone (V1-PR3, DESIGN-V1 §6.2).
  *
  * O `Pressable` É o alvo: 64 × 64 (66 com a moldura de 1 dp), e o `<Svg>` de
@@ -1012,6 +1061,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     maxWidth: 560,
   },
+  formatoTexto: { alignItems: 'center', gap: space.xs },
+  formatoFrase: { fontFamily: font.ui, fontSize: size.button, textAlign: 'center', maxWidth: 560 },
+  formatoArquivo: { fontFamily: font.mono, fontSize: size.label, textAlign: 'center' },
   // A geometria das seis molduras de S3 do design: caixa 66 × 66 (64 + a
   // moldura de 1 de cada lado), gap 16, fileira de 558 dp, os mesmos sete x
   // nas seis variantes (V1-PR3-PRECHECK §8.5, div. 36).
