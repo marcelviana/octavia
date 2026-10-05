@@ -239,23 +239,35 @@ export async function prefetchDaBiblioteca(
  * T1-R16 — sob demanda a partir da posição no palco: atual, +1, +2, +3, −1 e
  * o resto por `position` (a ordem é do core). Já baixados não entram no `n=`:
  * o número no log é o que este disparo vai realmente buscar.
+ *
+ * **N4-PR6 (div. 964)** — o palco avulso SEM hospedeira (`setlist === null`)
+ * não tem posição de onde partir: o plano é o arquivo da música avulsa, e só
+ * ele. Antes ele herdava a primeira setlist da lista, e abrir uma letra pela
+ * busca de S1 tentava baixar o arquivo de outra música. A linha do log é a de
+ * sempre (`reason=demand`): nenhuma linha nova.
  */
 export async function prefetchDemanda(
-  setlist: SetlistDTO,
+  setlist: SetlistDTO | null,
   contentById: Map<string, ContentDTO>,
   posicao: number,
+  avulsaContentId: string | null = null,
 ): Promise<void> {
-  const porId = new Map(setlist.setlist_songs.map((s) => [s.id, s]))
-  const ordem = prefetchOrder(posicao, setlist.setlist_songs)
   const urls: string[] = []
   const vistas = new Set<string>()
-  for (const songId of ordem) {
-    const song = porId.get(songId)
-    if (song === undefined) continue
-    const url = urlDe(song.content_id, contentById)
-    if (url === null || vistas.has(url) || hasFile(url)) continue
+  const incluir = (contentId: string): void => {
+    const url = urlDe(contentId, contentById)
+    if (url === null || vistas.has(url) || hasFile(url)) return
     vistas.add(url)
     urls.push(url)
+  }
+  if (setlist === null) {
+    if (avulsaContentId !== null) incluir(avulsaContentId)
+  } else {
+    const porId = new Map(setlist.setlist_songs.map((s) => [s.id, s]))
+    for (const songId of prefetchOrder(posicao, setlist.setlist_songs)) {
+      const song = porId.get(songId)
+      if (song !== undefined) incluir(song.content_id)
+    }
   }
   log(`prefetch plan n=${urls.length} reason=demand`)
   if (urls.length > 0) await baixar(urls, false)
