@@ -11,7 +11,7 @@
  * `B5-baseline/`. Uma mudança aqui muda os dois, e o G-inv a vê (o controle negativo do `N4-PR8-anexos/README.md`).
  *
  * O que NÃO mora aqui: os controles de tocar (rolagem automática, zoom, tema, as bordas de virar página) e a máquina
- * do arquivo do palco (o `buscarArquivo` e as linhas de log dele) — a visualização não toca, e as linhas `log(` do
+ * do arquivo do palco (o `buscarArquivo` e as linhas de log dele) — a visualização não toca, e as linhas de log do
  * palco não mudam de arquivo (G3). Os `testID` também ficam com quem desenha: cada tela passa o seu (o G2 coleta por
  * arquivo).
  */
