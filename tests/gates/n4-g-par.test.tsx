@@ -149,4 +149,33 @@ describe('G-par (N4-PR1) — o mesmo content, o mesmo texto no web e no nativo',
     expect(orfas, 'declaração órfã').toEqual([])
     expect(esperados, 'lista não vazia: desde a PR-2 (N4-D40) reprovação declarada não é mais aceita (N4-D50)').toEqual([])
   })
+
+  /**
+   * N4-PR8 — O RETRATO DO SITE, o lado web do G-par DA VISUALIZAÇÃO (`N4-PRECHECK.md` A12: *"(web) o texto do painel do
+   * tipo × (nativo) o texto do nó `corpo` da tela de visualização"*). O web e o nativo rodam em projetos diferentes do
+   * Vitest (o `react-native` do duplo não monta aqui, o `ContentDisplay` do site não monta lá), então o par se fecha por
+   * um ARQUIVO no meio, cobrado dos DOIS lados: este teste exige que `g-par-site.json` seja byte a byte o que o site
+   * mostra agora (item a item do par: a classe e o texto, ou a URL), e o `apps/native/test/g-par-visualizacao.test.tsx`
+   * exige que o nó `corpo` de V mostre o mesmo. Mudou o site → este reprova até o retrato ser refeito
+   * (`G_PAR_SITE_GRAVAR=1`), e aí o do nativo reprova se V não acompanhar. Nenhum dos dois lados se cala sozinho.
+   */
+  it('o retrato do site (N4-PR8): g-par-site.json é o que o site mostra, item a item do par', () => {
+    const fx = JSON.parse(fs.readFileSync(path.join(FIXTURES, 'g-par.json'), 'utf8')) as Fixture
+    const site: Record<string, Lado> = {}
+    for (const it of fx.par) {
+      const { painel: _painel, ...lado } = web(it)
+      site[it.id] = lado as Lado
+    }
+    const arq = path.join(FIXTURES, 'g-par-site.json')
+    if (process.env.G_PAR_SITE_GRAVAR === '1') {
+      const cabeca = 'G-par (N4-PR8): o que o SITE mostra para cada item do par de g-par.json — gerado pelo tests/gates/n4-g-par.test.tsx com G_PAR_SITE_GRAVAR=1; cobrado pelos dois lados (o site, ali; o nó corpo da visualização, no apps/native/test/g-par-visualizacao.test.tsx). Não se edita à mão.'
+      fs.writeFileSync(arq, `${JSON.stringify({ cabeca, itens: site }, null, 2)}\n`)
+    }
+    const gravado = JSON.parse(fs.readFileSync(arq, 'utf8')) as { itens: Record<string, Lado> }
+    const n = Object.keys(site).length
+    const textos = Object.values(site).filter((l) => l.classe === 'texto').length
+    console.log(`G-par (o retrato do site) — itens do par ${n} · texto ${textos} · arquivo ${Object.values(site).filter((l) => l.classe === 'arquivo').length} · sem-corpo ${n - textos - Object.values(site).filter((l) => l.classe === 'arquivo').length} · no arquivo ${Object.keys(gravado.itens).length}`)
+    expect(n, 'retrato sem itens: não mediu nada (regra 4)').toBeGreaterThan(0)
+    expect(gravado.itens, 'g-par-site.json não é o que o site mostra agora (refazer com G_PAR_SITE_GRAVAR=1 e conferir o nativo)').toStrictEqual(site)
+  })
 })

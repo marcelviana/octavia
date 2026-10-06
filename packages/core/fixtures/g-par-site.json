@@ -1,0 +1,40 @@
+{
+  "cabeca": "G-par (N4-PR8): o que o SITE mostra para cada item do par de g-par.json — gerado pelo tests/gates/n4-g-par.test.tsx com G_PAR_SITE_GRAVAR=1; cobrado pelos dois lados (o site, ali; o nó corpo da visualização, no apps/native/test/g-par-visualizacao.test.tsx). Não se edita à mão.",
+  "itens": {
+    "letra": {
+      "classe": "texto",
+      "texto": "Primeira linha do texto de teste do G-par\nSegunda linha do texto de teste\n\n[Refrão]\nLinha do refrão de teste"
+    },
+    "cifra-texto": {
+      "classe": "texto",
+      "texto": "[Intro] C Am F G\n\nC7M      G7\nLa la la, la la lá"
+    },
+    "tab-texto": {
+      "classe": "texto",
+      "texto": "e|-------0-----------0-------|\nB|-----1---1-------1---1-----|\nG|---2-------2---2-------2---|"
+    },
+    "partitura-pdf": {
+      "classe": "arquivo",
+      "url": "https://exemplo.test/storage/v1/object/public/content-files/g-par-partitura.pdf"
+    },
+    "letra-poluida-editor": {
+      "classe": "texto",
+      "texto": "Primeira estrofe do teste do G-par\n\n[Refrão]"
+    },
+    "cifra-secoes-acordes-vazios": {
+      "classe": "texto",
+      "texto": "Content\nTexto de teste da cifra, primeira linha\nTexto de teste da cifra, segunda linha\nLinha acrescentada no editor (G-par)"
+    },
+    "cifra-secoes-completas": {
+      "classe": "texto",
+      "texto": "Verso 1\nG D Em\nTexto fabricado da seção"
+    },
+    "cifra-duas-secoes": {
+      "classe": "texto",
+      "texto": "Verso 1\nG D Em\nTexto fabricado do verso\n\nRefrão\nTexto fabricado do refrão\nSegunda linha do refrão"
+    },
+    "so-aninhado": {
+      "classe": "sem-corpo"
+    }
+  }
+}

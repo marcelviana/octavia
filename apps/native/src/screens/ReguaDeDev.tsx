@@ -29,7 +29,7 @@
 import { useEffect, useState } from 'react'
 import { Linking, ScrollView, StyleSheet, Text, View, type LayoutChangeEvent, type TextStyle } from 'react-native'
 import { log } from '../log'
-import { dark, font, size, tracking } from '../theme'
+import { dark, font, lineHeight, size, tracking, zoomDefault } from '../theme'
 
 /** Token de estilo → o estilo de texto do app, com a origem ao lado. */
 const ESTILOS: Record<string, TextStyle> = {
@@ -74,6 +74,20 @@ const ESTILOS: Record<string, TextStyle> = {
   'lib-contagem': { fontFamily: font.mono, fontSize: 13 },
   'lib-titulo': { fontFamily: font.uiBold, fontSize: 20 },
   'lib-segunda': { fontFamily: font.ui, fontSize: size.bodySmall },
+  /**
+   * N4-PR8 — a visualização (V), medida ANTES de a tela existir (N4-R25; regra 19), com os estilos que a tela vai usar
+   * (a folha, `N4-*-V-letra`): o título do cabeçalho em Manrope 600 de 22 (`size.title`), a meta (artista · tipo) e o
+   * valor de cada campo em Manrope 17 (`size.button`), o rótulo do campo e a linha das datas em Manrope 13 (o literal
+   * 13 da N4-D100, como a N4-D79), as notas em Manrope 16 (`size.body`) — e o LEITOR, o texto do palco em mono 22 com a
+   * entrelinha do texto (`zoomDefault` × `lineHeight.text`, o `estiloTexto` do `StageScreen`), de onde saem as colunas
+   * visíveis (m14). A tela nasce no commit 4; daí em diante, mudou o estilo dela, muda o token aqui no mesmo commit.
+   */
+  'view-titulo': { fontFamily: font.uiBold, fontSize: size.title },
+  'view-meta': { fontFamily: font.ui, fontSize: size.button },
+  'view-rotulo': { fontFamily: font.ui, fontSize: 13 },
+  'view-valor': { fontFamily: font.ui, fontSize: size.button },
+  'view-notas': { fontFamily: font.ui, fontSize: size.body, lineHeight: size.body * lineHeight.text },
+  leitor: { fontFamily: font.mono, fontSize: zoomDefault, lineHeight: zoomDefault * lineHeight.text },
 }
 
 interface Pedido {
