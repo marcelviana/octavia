@@ -1,0 +1,18 @@
+21:36:24 toque 'buscar' @ 1335,281 (emulator-5554)
+21:36:31 toque 'campo-busca' @ 917,152 (emulator-5554)
+21:36:39 toque 'Partitura escaneada de fixture' @ 741,447 (emulator-5554)
+21:36:45 log depois de abrir avulso-formato: 5 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: file src=disk name=partitura-escaneada.jpg bytes=2048
+    OCTAVIA: prefetch plan n=1 reason=demand
+    OCTAVIA: download-error nao-existe.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+    OCTAVIA: pdf-error cannot create document: File not in PDF format or corrupted.
+N4P6M-S3-avulso-formato-avd-ret mCurrentRotation=ROTATION_90 png=112229 xml=23504 ac1b793f175f
+21:37:18 toque 'song-3' @ 800,1138 (emulator-5554)
+    OCTAVIA: index jump n=3
+    OCTAVIA: keepawake on
+    OCTAVIA: file src=disk name=partitura-escaneada.jpg bytes=2048
+    OCTAVIA: prefetch plan n=0 reason=demand
+    OCTAVIA: pdf-error cannot create document: File not in PDF format or corrupted.
+N4P6M-S3-setlist-formato-avd-ret mCurrentRotation=ROTATION_90 png=120432 xml=23571 993d90153a54
+capturas=2 falhas=0

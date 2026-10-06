@@ -1,0 +1,46 @@
+G-inv — invariante C (T3-R2): bounds em dp, nó a nó
+  base:  docs/native/N3-PRECHECK-anexos/B3-referencia-paisagem
+  novos: /private/tmp/claude-501/-Users-marcelviana-projects-octavia/1d9d4ea0-36a9-472c-b2bc-50b21d1bbe60/scratchpad/run/dumps/cn4
+  ✗ S3-S3a-letra-1a-avd-pai: DIFERENTE — base 65 nós, novo 65 (N4P6CN-S3-S3a-letra-1a-avd-pai.xml)
+      base: android.widget.TextView - [122.7,45.8][266.2,64.9]
+      base: android.widget.TextView - [282.2,40.9][1114.2,69.3]
+      novo: android.widget.TextView - [122.7,45.3][274.7,65.3]
+      novo: android.widget.TextView - [290.7,40.9][1114.2,69.3]
+  ✗ S3-S3b-cifra-claro-avd-pai: DIFERENTE — base 64 nós, novo 64 (N4P6CN-S3-S3b-cifra-claro-avd-pai.xml)
+      base: android.widget.TextView - [124.4,45.8][268.0,64.9]
+      base: android.widget.TextView - [284.0,40.9][1114.2,69.3]
+      novo: android.widget.TextView - [124.4,45.3][276.4,65.3]
+      novo: android.widget.TextView - [292.4,40.9][1113.8,69.3]
+  ✗ S3-S3b-cifra-escuro-avd-pai: DIFERENTE — base 65 nós, novo 65 (N4P6CN-S3-S3b-cifra-escuro-avd-pai.xml)
+      base: android.widget.TextView - [124.4,45.8][268.0,64.9]
+      base: android.widget.TextView - [284.0,40.9][1114.2,69.3]
+      novo: android.widget.TextView - [124.4,45.3][276.4,65.3]
+      novo: android.widget.TextView - [292.4,40.9][1113.8,69.3]
+  ✗ S3-S3c-tab-autoscroll-avd-pai: DIFERENTE — base 66 nós, novo 66 (N4P6CN-S3-S3c-tab-autoscroll-avd-pai.xml)
+      base: android.widget.TextView - [124.4,45.8][268.0,64.9]
+      base: android.widget.TextView - [284.0,40.9][1114.2,69.3]
+      novo: android.widget.TextView - [124.4,45.3][276.4,65.3]
+      novo: android.widget.TextView - [292.4,40.9][1113.8,69.3]
+  ✗ S3-S3d-pdf-12p-avd-pai: DIFERENTE — base 65 nós, novo 65 (N4P6CN-S3-S3d-pdf-12p-avd-pai.xml)
+      base: android.widget.TextView - [124.9,45.8][268.4,64.9]
+      base: android.widget.TextView - [284.4,40.9][978.7,69.3]
+      novo: android.widget.TextView - [124.9,45.3][276.9,65.3]
+      novo: android.widget.TextView - [292.9,40.9][978.2,69.3]
+  ✗ S3-S3e-nao-baixado-avd-pai: DIFERENTE — base 66 nós, novo 66 (N4P6CN-S3-S3e-nao-baixado-avd-pai.xml)
+      base: android.widget.TextView - [124.4,45.8][268.0,64.9]
+      base: android.widget.TextView - [284.0,40.9][1090.2,69.3]
+      novo: android.widget.TextView - [124.4,45.3][276.4,65.3]
+      novo: android.widget.TextView - [292.4,40.9][1089.8,69.3]
+  ✗ S3-titulo-longo-avd-pai: DIFERENTE — base 65 nós, novo 65 (N4P6CN-S3-titulo-longo-avd-pai.xml)
+      base: android.widget.TextView - [125.8,45.8][269.3,64.9]
+      base: android.widget.TextView - [285.3,40.9][1113.8,69.3]
+      novo: android.widget.TextView - [125.8,45.3][277.8,65.3]
+      novo: android.widget.TextView - [293.8,40.9][1114.2,69.3]
+  ✗ S3-ultima-avd-pai: DIFERENTE — base 65 nós, novo 65 (N4P6CN-S3-ultima-avd-pai.xml)
+      base: android.widget.TextView - [125.8,45.8][269.3,64.9]
+      base: android.widget.TextView - [285.3,40.9][1113.8,69.3]
+      novo: android.widget.TextView - [125.8,45.3][277.8,65.3]
+      novo: android.widget.TextView - [293.8,40.9][1114.2,69.3]
+  ✓ S5-fim-avd-pai: idêntico (48 nós)
+G-inv: 1 de 18 idênticos
+G-inv: REPROVA ✗

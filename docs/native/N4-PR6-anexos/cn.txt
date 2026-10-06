@@ -1,0 +1,18 @@
+### CN1 o nome da setlist de volta na barra do avulso
+     × C: `AVULSA` e o título no nó de 64; nenhum nome de setlist em lugar nenhum da tela 50ms
+     × B: `AVULSA` na linha 1, sem nome de setlist; o título na linha 2 29ms
+     × os dois temas: no claro a tinta da barra é `light.text` (N4-E3) 34ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  3 failed | 31 passed (34)
+git status: []
+### CN2 o índice de volta na barra de baixo do avulso
+     × os quatro de leitura · busca · voltar — sem `indice` 34ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  1 failed | 33 passed (34)
+git status: []
+### CN3 o prefetch de outra música no avulso
+     × com arquivo: o plano é UM arquivo, o desta música — nenhum da setlist alheia 5ms
+     × letra (sem arquivo): plano vazio, nenhum download 1ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  2 failed | 32 passed (34)
+git status: []

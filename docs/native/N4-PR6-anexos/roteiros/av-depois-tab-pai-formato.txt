@@ -1,0 +1,15 @@
+10:34:49 mock modo=normal vazio=False
+10:35:02 toque 'buscar' @ 2295,188 (RX2N8000F3D)
+10:35:09 toque 'campo-busca' @ 1397,152 (RX2N8000F3D)
+10:35:20 toque 'Partitura escaneada de fixture' @ 1221,447 (RX2N8000F3D)
+10:35:31 log depois de abrir avulso-formato: 2 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: prefetch plan n=0 reason=demand
+N4P6D-S3-avulso-formato-tab-pai mCurrentRotation=ROTATION_90 png=130859 xml=22498 89204ac357e7
+10:35:41 mock modo=normal vazio=False
+10:36:07 toque 'song-3' @ 1280,859 (RX2N8000F3D)
+    OCTAVIA: index jump n=3
+    OCTAVIA: keepawake on
+    OCTAVIA: prefetch plan n=0 reason=demand
+N4P6D-S3-setlist-formato-tab-pai mCurrentRotation=ROTATION_90 png=132695 xml=25245 c8624346021c
+capturas=2 falhas=0

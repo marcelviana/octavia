@@ -1,0 +1,66 @@
+     × com arquivo: o plano é UM arquivo, o desta música — nenhum da setlist alheia 3ms
+     × letra (sem arquivo): plano vazio, nenhum download 0ms
+     ✓ o controle: com a setlist, o plano é o dela a partir da posição — como hoje 2ms
+     ✓ a lista saiu do telas.html da árvore (sha256 dba757dd569d…) 35ms
+     ✓ são 9 P-F, as da N4-D67 menos a P-F8 1ms
+     ✓ P-F1 0ms
+     ✓ P-F3 0ms
+     ✓ P-F4 0ms
+     ✓ P-F5 0ms
+     ✓ P-F6 0ms
+     ✓ P-F7 0ms
+     ✓ P-F9 0ms
+     ✓ P-F10 0ms
+     ✓ P-F11 0ms
+     ✓ as aspas são as tipográficas da folha (“ ”), nunca a reta 0ms
+     ✓ o título entra como dado: "$&" e "$1" no título não viram padrão de substituição 0ms
+     ✓ as cinco constantes P-F do core são estas, e só estas 0ms
+     ✓ as 4 junções com "·" das telas usam o separador do core 0ms
+     ✓ o motivo rede é isolado (sem separador de oração dentro) 0ms
+     ✓ o motivo sem-resposta é isolado (sem separador de oração dentro) 0ms
+     ✓ o motivo auth é isolado (sem separador de oração dentro) 0ms
+     ✓ o motivo limite-com-prazo é isolado (sem separador de oração dentro) 0ms
+     ✓ o motivo servidor é isolado (sem separador de oração dentro) 0ms
+     ✓ o motivo generica é isolado (sem separador de oração dentro) 0ms
+     ✓ S2 e o reordenar: com o motivo rede, o core monta byte a byte a frase da tela 0ms
+     ✓ S2 e o reordenar: com o motivo sem-resposta, o core monta byte a byte a frase da tela 0ms
+     ✓ S2 e o reordenar: com o motivo auth, o core monta byte a byte a frase da tela 0ms
+     ✓ S2 e o reordenar: com o motivo limite-com-prazo, o core monta byte a byte a frase da tela 0ms
+     ✓ S2 e o reordenar: com o motivo servidor, o core monta byte a byte a frase da tela 0ms
+     ✓ S2 e o reordenar: com o motivo generica, o core monta byte a byte a frase da tela 0ms
+     ✓ o favoritar com falha, sem rede: o nome do controle · o motivo (a tabela da folha) 0ms
+     ✓ o favoritar com falha, sem resposta: o nome do controle · o motivo (a tabela da folha) 0ms
+     ✓ o favoritar com falha, sessão: o nome do controle · o motivo (a tabela da folha) 0ms
+     ✓ o favoritar com falha, limite: o nome do controle · o motivo (a tabela da folha) 0ms
+     ✓ o favoritar com falha, servidor: o nome do controle · o motivo (a tabela da folha) 0ms
+     ✓ o favoritar com falha, genérica: o nome do controle · o motivo (a tabela da folha) 0ms
+     ✓ a S4 escreve a régua com o template de sempre (uma ocorrência: a `Regua` exportada) 0ms
+     ✓ o core e o template da S4 dão o mesmo texto para 0, 1, 2 e 57 0ms
+     × o core dá o texto que o palco escrevia 2ms
+     × o voltar do avulso pela origem (N4-R16): busca · biblioteca · visualização 0ms
+     × nenhuma cópia no palco: as três frases saem do core 3ms
+     × C: `AVULSA` e o título no nó de 64; nenhum nome de setlist em lugar nenhum da tela 35ms
+     × B: `AVULSA` na linha 1, sem nome de setlist; o título na linha 2 24ms
+     × os dois temas: no claro a tinta da barra é `light.text` (N4-E3) 24ms
+     × os quatro de leitura · busca · voltar — sem `indice` 24ms
+     × origem busca: o voltar se chama "Voltar para a busca" e chama o onSair 26ms
+     × origem biblioteca: o voltar se chama "Voltar para a biblioteca" e chama o onSair 23ms
+     × origem visualizacao: o voltar se chama "Voltar para a visualização" e chama o onSair 23ms
+     × a busca do avulso chama o onBusca (a raiz abre a S4 sem setlist — `rotas-do-avulso.ts`) 24ms
+     × sem hospedeira: o palco pede o prefetch sem setlist, com o id desta música 25ms
+     ✓ com setlist (o controle): o prefetch é o da setlist, da posição — como hoje 79ms
+     × sem rede: `s3e` com o título da música e o `baixar` com o texto "Baixar" 24ms
+     × avulso sem hospedeira com `.jpg`: o placeholder de formato com o nome do arquivo; nem S3d nem S3e 22ms
+     × palco COM setlist na posição do `.jpg`: o mesmo placeholder (é o mesmo componente) 70ms
+     ✓ o controle: o `.pdf` não é formato (o palco segue para o S3d/S3e de hoje) 54ms
+     ✓ a base do G-inv não tem esse caso: todo arquivo da fixture do pre-check do N3 é `.pdf` (div. 1028) 25ms
+     ✓ C: `AVULSA`, o nome da setlist e o índice continuam 46ms
+     × div. 1001 — da S4 sem setlist (aberta de S1, ou do avulso): EMPILHA o avulso sem hospedeira, origem busca 23ms
+     × da S4 de uma setlist, música dela: o SALTO de hoje (controle) 22ms
+     × da S4 de uma setlist, música de fora: o avulso COM hospedeira de hoje, no lugar da busca (controle) 22ms
+     × N4-R17 — a busca do avulso sem hospedeira abre a S4 SEM setlist (sem *Nesta setlist*) 22ms
+     × a busca do palco com setlist: a de hoje (controle) 21ms
+     ✓ o termo que acha uma música não traz a régua *Nesta setlist* 59ms
+⎯⎯⎯⎯⎯⎯ Failed Tests 22 ⎯⎯⎯⎯⎯⎯⎯
+ Test Files  3 failed (3)
+      Tests  22 failed | 41 passed (63)

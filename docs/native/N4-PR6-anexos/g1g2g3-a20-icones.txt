@@ -1,0 +1,35 @@
+$ gates-decl.sh < corpo > decl; GATES_DECL=decl sh apps/native/scripts/g1.sh origin/main HEAD
+declarações: do corpo da PR (GATES_DECL=/private/tmp/claude-501/-Users-marcelviana-projects-octavia/1d9d4ea0-36a9-472c-b2bc-50b21d1bbe60/scratchpad/run/decl)
+base=origin/main head=HEAD
+G1a — diff vazio em 51 arquivos DERIVADOS de apps/native + packages/core/src
+      escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+      EXCEÇÕES DECLARADAS (o escopo desta PR):
+        apps/native/src/navigation.tsx
+        apps/native/src/prefetch.ts
+        apps/native/src/rotas-do-avulso.ts
+        apps/native/src/screens/StageScreen.tsx
+        packages/core/src/frases-content.ts
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+      PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+        (nenhum — nenhuma asserção do core pode mudar nesta PR)
+  G1b: só adição ✓
+$ GATES_DECL=decl sh apps/native/scripts/g2g3.sh origin/main HEAD
+G2 — testIDs  antes=80  depois=81
+  G2: antes ⊆ depois ✓
+  testID NOVOS:
+      apps/native/src/screens/StageScreen.tsx	testID="s3-formato"
+G3 — declarações: do corpo da PR (GATES_DECL=/private/tmp/claude-501/-Users-marcelviana-projects-octavia/1d9d4ea0-36a9-472c-b2bc-50b21d1bbe60/scratchpad/run/decl)
+G3 — linhas log( antes=70  depois=70
+      ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+        (nenhuma)
+      REMOÇÕES DECLARADAS (linha → REMOVIDA: razão; N2-D34):
+        (nenhuma)
+      — nenhuma linha de log pode sumir nesta PR
+  G3: nenhuma linha sumiu ✓
+$ (apps/native) gate:a20 · gate:icones
+  literais em posição de texto examinados: 169
+  acusações: 0
+  fora do catálogo: 4/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  acusações: 0 · avisos: 0

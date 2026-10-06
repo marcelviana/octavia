@@ -307,6 +307,18 @@ dobra **no mesmo estado**. O gate pareia pelo nome; que é o mesmo estado, prova
 roteiro e o próprio dump (por exemplo, `enabled=false` nos alvos durante uma escrita
 em voo). Com `ROLAR=1`, o `n3pr3.py` tira o rolado de cada estado de S2.
 
+**O `octavia_phone` repousa com a conta de audit desde a N4-PR6** (N4-D94, `[Marcel, 2026-10-06]`): o Marcel fez o
+login no emulador, e o snapshot `default_boot` foi salvo com ela (app parado, `reverse` vazio, os settings lidos). A
+coluna "estado de repouso" da tabela dos aparelhos, que diz *"sem conta: o S0 é o repouso"*, vale até a N4-PR5. O
+login é sempre do Marcel; o executor não digita credencial. O cache do app no celular tem a fixture do mock sob a conta
+de audit (o primeiro sync foi contra o mock); o próximo sync com o mock ou com prod o troca.
+
+**O `adb` perde o `reverse` do Tab no meio da rodada** (N4-PR6, div. 1077): o aparelho não some do `adb devices`, mas a
+lista de túneis volta vazia, e o dev client para na tela de erro do lançador — 30 min de rodada com 0 capturas antes
+de se ver. As cadeias da N4-PR6 (`N4-PR6-anexos/instrumentos/cadeia-*.sh`) reaplicam os três túneis (8081, 8788,
+8790) antes de cada passo; `adb reverse` é idempotente. Rodada longa no Tab: conferir `adb reverse --list` se uma
+espera esgotar.
+
 **Celular (faixa A) com os tokens de B**: o chip de S1 encolhe até sobrar o ícone
 (div. 416), então "sincronizado agora" não chega ao dump — o arnês espera o cartão
 da fixture.

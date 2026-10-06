@@ -164,6 +164,10 @@ O avulso tem **os dois temas** (no claro, a tinta é `light.text`, N4-E3). Arqui
 da música; o *Baixar* sem ícone, como hoje (N4-E6). Formato: o placeholder de V. **O palco com setlist não muda**, nem o
 avulso aberto pela busca dentro de uma setlist.
 
+> **Errata da N4-PR6 ao N4-R16 (N4-D95, `[Marcel, 2026-10-06]`).** Em B a página do PDF fica na linha 1, como no palco
+> com setlist, e não na linha 2 das molduras `N4-B-S3-avulso-*` — é a **N4-E9** (`DESIGN-N4/README.md` §6). As erratas
+> de medida da folha começam na **N4-E10**.
+
 > **Errata do N4-R16 (N4-D83, N4-D78, `[Marcel, 2026-10-03]`).** (i) O estado **"formato que o app ainda não mostra"**
 > (N4-D43) vale **também no palco com setlist** — é o mesmo componente. As telas da base do G-inv não mudam porque a
 > fixture da base não tem esse caso (só `.pdf`, `N3-PRECHECK-anexos/instrumentos/fixture.py:13-16`, `:136-144`); esta PR

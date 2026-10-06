@@ -1,0 +1,1 @@
+AVD lido 2026-10-04 20:49:42: stay_on=1 accel=1 user_rot=0 airplane=1 wifi=0 data=0; reverse vazio; dev client lastUpdateTime=2026-09-24 14:00:01 DEBUGGABLE; ram.bin 2026-09-24 14:00

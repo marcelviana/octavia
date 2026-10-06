@@ -1,0 +1,7 @@
+21:35:42 toque 'buscar' @ 2295,188 (emulator-5554)
+21:35:48 toque 'campo-busca' @ 1397,152 (emulator-5554)
+FALHA formato: TOQUE FALHOU: sem 'Partitura escaneada de fixture' (n=1)
+21:36:03 avião=0 (emulator-5554)
+21:36:05 mock modo=normal vazio=False
+capturas=0 falhas=1
+  formato: TOQUE FALHOU: sem 'Partitura escaneada de fixture' (n=1)

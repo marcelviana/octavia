@@ -1,0 +1,65 @@
+10:20:57 toque 'buscar' @ 2295,188 (RX2N8000F3D)
+10:21:04 toque 'campo-busca' @ 1397,152 (RX2N8000F3D)
+10:21:14 toque 'Manhã de ensaio' @ 1221,447 (RX2N8000F3D)
+10:21:23 log depois de abrir avulso-letra: 2 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: prefetch plan n=0 reason=demand
+N4P6D-S3-avulso-letra-tab-pai mCurrentRotation=ROTATION_90 png=241159 xml=24050 21e1a6008517
+10:21:34 toque 'tema' @ 682,1385 (RX2N8000F3D)
+N4P6D-S3-avulso-claro-tab-pai mCurrentRotation=ROTATION_90 png=240912 xml=23724 63bd70d71d88
+10:21:48 toque 'tema' @ 682,1385 (RX2N8000F3D)
+10:21:51 toque 'busca' @ 2247,1385 (RX2N8000F3D)
+N4P6D-S4-avulso-busca-vazio-tab-pai mCurrentRotation=ROTATION_90 png=99525 xml=14310 8457a69379ee
+10:22:08 toque 'campo-busca' @ 1397,152 (RX2N8000F3D)
+N4P6D-S4-avulso-busca-resultados-tab-pai mCurrentRotation=ROTATION_90 png=193774 xml=31141 68f54a5d10e9
+10:22:26 toque 'Segunda do ensaio' @ 1221,654 (RX2N8000F3D)
+    OCTAVIA: keepawake on
+    OCTAVIA: prefetch plan n=0 reason=demand
+N4P6D-S3-avulso-da-busca-do-avulso-tab-pai mCurrentRotation=ROTATION_90 png=267395 xml=23080 9c38756d55d0
+10:22:47 toque 'sair' @ 2432,1385 (RX2N8000F3D)
+N4P6D-S4-avulso-voltou-tab-pai mCurrentRotation=ROTATION_90 png=194571 xml=31142 b9c3bae26b7d
+10:23:03 toque 'fechar-busca' @ 108,152 (RX2N8000F3D)
+N4P6D-S3-avulso-letra-de-novo-tab-pai mCurrentRotation=ROTATION_90 png=241716 xml=24050 21e1a6008517
+10:23:27 toque 'buscar' @ 2295,188 (RX2N8000F3D)
+10:23:34 toque 'campo-busca' @ 1397,152 (RX2N8000F3D)
+10:23:44 toque 'Partitura de doze páginas' @ 1221,447 (RX2N8000F3D)
+10:23:55 log depois de abrir avulso-partitura: 5 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: file src=disk name=partitura-12p.pdf bytes=4198
+    OCTAVIA: prefetch plan n=0 reason=demand
+    OCTAVIA: pdf-render pages=12 src=disk
+    OCTAVIA: pdf-page n=1/12
+N4P6D-S3-avulso-partitura-tab-pai mCurrentRotation=ROTATION_90 png=209324 xml=21510 ab196dd3457c
+10:24:19 toque 'buscar' @ 2295,188 (RX2N8000F3D)
+10:24:28 avião=1 (RX2N8000F3D)
+10:24:31 toque 'campo-busca' @ 1162,152 (RX2N8000F3D)
+10:24:40 toque 'Partitura que nunca baixou' @ 1221,447 (RX2N8000F3D)
+10:24:50 log depois de abrir avulso-nao-baixado: 2 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: placeholder kind=file-missing name=nao-existe.pdf
+N4P6D-S3-avulso-nao-baixado-tab-pai mCurrentRotation=ROTATION_90 png=148498 xml=21889 57c74ac37f47
+10:25:08 avião=0 (RX2N8000F3D)
+10:25:22 toque 'buscar' @ 2295,188 (RX2N8000F3D)
+10:25:29 toque 'campo-busca' @ 1397,152 (RX2N8000F3D)
+10:25:39 toque 'Uma música de título bem comprido, para medir o corte do título em retrato e no celular' @ 1221,447 (RX2N8000F3D)
+10:25:48 log depois de abrir avulso-titulo-longo: 2 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: prefetch plan n=0 reason=demand
+N4P6D-S3-avulso-titulo-longo-tab-pai mCurrentRotation=ROTATION_90 png=253938 xml=24160 d54dc5d49800
+10:26:10 toque 'buscar' @ 2295,188 (RX2N8000F3D)
+10:26:17 toque 'campo-busca' @ 1397,152 (RX2N8000F3D)
+10:26:26 toque 'Décima do ensaio' @ 1221,447 (RX2N8000F3D)
+10:26:36 log depois de abrir avulso-sem-artista: 2 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: prefetch plan n=0 reason=demand
+N4P6D-S3-avulso-sem-artista-tab-pai mCurrentRotation=ROTATION_90 png=259373 xml=23065 378befecdad7
+10:26:46 mock modo=normal vazio=True
+10:27:02 toque 'buscar' @ 2295,188 (RX2N8000F3D)
+10:27:09 toque 'campo-busca' @ 1397,152 (RX2N8000F3D)
+10:27:19 toque 'Manhã de ensaio' @ 1221,447 (RX2N8000F3D)
+10:27:29 log depois de abrir avulso-zero-setlists: 2 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: prefetch plan n=0 reason=demand
+N4P6D-S3-avulso-zero-setlists-tab-pai mCurrentRotation=ROTATION_90 png=241481 xml=24050 21e1a6008517
+10:27:39 mock modo=normal vazio=False
+capturas=12 falhas=0

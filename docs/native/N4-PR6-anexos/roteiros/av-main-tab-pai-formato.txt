@@ -1,0 +1,20 @@
+09:10:34 mock modo=normal vazio=False
+09:10:48 toque 'buscar' @ 2295,188 (RX2N8000F3D)
+09:10:55 toque 'campo-busca' @ 1397,152 (RX2N8000F3D)
+09:11:06 toque 'Partitura escaneada de fixture' @ 1221,447 (RX2N8000F3D)
+09:11:17 log depois de abrir avulso-formato: 5 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: file src=disk name=partitura-escaneada.jpg bytes=2048
+    OCTAVIA: prefetch plan n=1 reason=demand
+    OCTAVIA: download-error nao-existe.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+    OCTAVIA: pdf-error cannot create document: File not in PDF format or corrupted.
+N4P6M-S3-avulso-formato-tab-pai mCurrentRotation=ROTATION_90 png=123015 xml=23846 0e8e937e93dc
+09:11:28 mock modo=normal vazio=False
+09:11:53 toque 'song-3' @ 1280,859 (RX2N8000F3D)
+    OCTAVIA: index jump n=3
+    OCTAVIA: keepawake on
+    OCTAVIA: file src=disk name=partitura-escaneada.jpg bytes=2048
+    OCTAVIA: prefetch plan n=0 reason=demand
+    OCTAVIA: pdf-error cannot create document: File not in PDF format or corrupted.
+N4P6M-S3-setlist-formato-tab-pai mCurrentRotation=ROTATION_90 png=119413 xml=23915 0b5e93a87d49
+capturas=2 falhas=0

@@ -1,0 +1,65 @@
+22:11:04 toque 'buscar' @ 2295,188 (emulator-5554)
+22:11:11 toque 'campo-busca' @ 1397,152 (emulator-5554)
+22:11:19 toque 'Manhã de ensaio' @ 1221,447 (emulator-5554)
+22:11:26 log depois de abrir avulso-letra: 2 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: prefetch plan n=0 reason=demand
+N4P6D-S3-avulso-letra-avd-pai mCurrentRotation=ROTATION_0 png=225254 xml=23708 b8dbc8efe9ca
+22:11:38 toque 'tema' @ 682,1358 (emulator-5554)
+N4P6D-S3-avulso-claro-avd-pai mCurrentRotation=ROTATION_0 png=225265 xml=23382 d34f354da48a
+22:11:53 toque 'tema' @ 682,1358 (emulator-5554)
+22:11:56 toque 'busca' @ 2247,1358 (emulator-5554)
+N4P6D-S4-avulso-busca-vazio-avd-pai mCurrentRotation=ROTATION_0 png=87405 xml=13968 e8ea9f2531aa
+22:12:14 toque 'campo-busca' @ 1397,152 (emulator-5554)
+N4P6D-S4-avulso-busca-resultados-avd-pai mCurrentRotation=ROTATION_0 png=175201 xml=30142 a7a5fa5f7748
+22:12:32 toque 'Segunda do ensaio' @ 1221,654 (emulator-5554)
+    OCTAVIA: keepawake on
+    OCTAVIA: prefetch plan n=0 reason=demand
+N4P6D-S3-avulso-da-busca-do-avulso-avd-pai mCurrentRotation=ROTATION_0 png=251440 xml=22738 d6279146c9a4
+22:12:52 toque 'sair' @ 2432,1358 (emulator-5554)
+N4P6D-S4-avulso-voltou-avd-pai mCurrentRotation=ROTATION_0 png=175363 xml=30143 cc6fa82400e9
+22:13:09 toque 'fechar-busca' @ 108,152 (emulator-5554)
+N4P6D-S3-avulso-letra-de-novo-avd-pai mCurrentRotation=ROTATION_0 png=226340 xml=23708 b8dbc8efe9ca
+22:13:43 toque 'buscar' @ 2295,188 (emulator-5554)
+22:13:50 toque 'campo-busca' @ 1397,152 (emulator-5554)
+22:13:58 toque 'Partitura de doze páginas' @ 1221,447 (emulator-5554)
+22:14:07 log depois de abrir avulso-partitura: 5 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: file src=disk name=partitura-12p.pdf bytes=4198
+    OCTAVIA: prefetch plan n=0 reason=demand
+    OCTAVIA: pdf-render pages=12 src=disk
+    OCTAVIA: pdf-page n=1/12
+N4P6D-S3-avulso-partitura-avd-pai mCurrentRotation=ROTATION_0 png=196825 xml=21168 8f284299519f
+22:14:42 toque 'buscar' @ 2295,188 (emulator-5554)
+22:14:50 avião=1 (emulator-5554)
+22:14:55 toque 'campo-busca' @ 1162,152 (emulator-5554)
+22:15:03 toque 'Partitura que nunca baixou' @ 1221,447 (emulator-5554)
+22:15:10 log depois de abrir avulso-nao-baixado: 2 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: placeholder kind=file-missing name=nao-existe.pdf
+N4P6D-S3-avulso-nao-baixado-avd-pai mCurrentRotation=ROTATION_0 png=137222 xml=21547 e846c0a5124e
+22:15:30 avião=0 (emulator-5554)
+22:15:55 toque 'buscar' @ 2295,188 (emulator-5554)
+22:16:03 toque 'campo-busca' @ 1397,152 (emulator-5554)
+22:16:11 toque 'Uma música de título bem comprido, para medir o corte do título em retrato e no celular' @ 1221,447 (emulator-5554)
+22:16:18 log depois de abrir avulso-titulo-longo: 2 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: prefetch plan n=0 reason=demand
+N4P6D-S3-avulso-titulo-longo-avd-pai mCurrentRotation=ROTATION_0 png=236932 xml=23818 21437d13ab54
+22:16:51 toque 'buscar' @ 2295,188 (emulator-5554)
+22:16:59 toque 'campo-busca' @ 1397,152 (emulator-5554)
+22:17:06 toque 'Décima do ensaio' @ 1221,447 (emulator-5554)
+22:17:13 log depois de abrir avulso-sem-artista: 2 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: prefetch plan n=0 reason=demand
+N4P6D-S3-avulso-sem-artista-avd-pai mCurrentRotation=ROTATION_0 png=243882 xml=22723 72e9bc4b908a
+22:17:25 mock modo=normal vazio=True
+22:17:50 toque 'buscar' @ 2295,188 (emulator-5554)
+22:17:57 toque 'campo-busca' @ 1397,152 (emulator-5554)
+22:18:05 toque 'Manhã de ensaio' @ 1221,447 (emulator-5554)
+22:18:12 log depois de abrir avulso-zero-setlists: 2 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: prefetch plan n=0 reason=demand
+N4P6D-S3-avulso-zero-setlists-avd-pai mCurrentRotation=ROTATION_0 png=226341 xml=23708 b8dbc8efe9ca
+22:18:23 mock modo=normal vazio=False
+capturas=12 falhas=0

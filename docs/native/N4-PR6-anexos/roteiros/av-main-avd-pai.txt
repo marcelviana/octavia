@@ -1,0 +1,69 @@
+21:19:51 toque 'buscar' @ 2295,188 (emulator-5554)
+21:19:58 toque 'campo-busca' @ 1397,152 (emulator-5554)
+21:20:06 toque 'Manhã de ensaio' @ 1221,447 (emulator-5554)
+21:20:12 log depois de abrir avulso-letra: 3 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: prefetch plan n=1 reason=demand
+    OCTAVIA: download-error nao-existe.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+N4P6M-S3-avulso-letra-avd-pai mCurrentRotation=ROTATION_0 png=233365 xml=26386 ded7f1611f7f
+21:20:23 toque 'tema' @ 682,1358 (emulator-5554)
+N4P6M-S3-avulso-claro-avd-pai mCurrentRotation=ROTATION_0 png=233671 xml=26060 784cd74ac9b0
+21:20:37 toque 'tema' @ 682,1358 (emulator-5554)
+21:20:40 toque 'busca' @ 2247,1358 (emulator-5554)
+N4P6M-S4-avulso-busca-vazio-avd-pai mCurrentRotation=ROTATION_0 png=87912 xml=13968 e8ea9f2531aa
+21:20:57 toque 'campo-busca' @ 1397,152 (emulator-5554)
+N4P6M-S4-avulso-busca-resultados-avd-pai mCurrentRotation=ROTATION_0 png=180317 xml=31981 6a5fca068f54
+21:21:13 toque 'Segunda do ensaio' @ 1221,654 (emulator-5554)
+    OCTAVIA: keepawake on
+    OCTAVIA: prefetch plan n=1 reason=demand
+    OCTAVIA: download-error nao-existe.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+N4P6M-S3-avulso-da-busca-do-avulso-avd-pai mCurrentRotation=ROTATION_0 png=256867 xml=25410 3a0b6700b09d
+21:21:33 toque 'sair' @ 2432,1358 (emulator-5554)
+FALHA letra: ESPERA ESGOTADA: 'campo-busca'
+21:22:13 avião=0 (emulator-5554)
+21:22:15 mock modo=normal vazio=False
+21:22:32 toque 'buscar' @ 2295,188 (emulator-5554)
+21:22:39 toque 'campo-busca' @ 1397,152 (emulator-5554)
+21:22:46 toque 'Partitura de doze páginas' @ 1221,447 (emulator-5554)
+21:22:55 log depois de abrir avulso-partitura: 6 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: file src=disk name=partitura-12p.pdf bytes=4198
+    OCTAVIA: prefetch plan n=1 reason=demand
+    OCTAVIA: download-error nao-existe.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+    OCTAVIA: pdf-render pages=12 src=disk
+    OCTAVIA: pdf-page n=1/12
+N4P6M-S3-avulso-partitura-avd-pai mCurrentRotation=ROTATION_0 png=204844 xml=23846 57c9fee05920
+21:23:23 toque 'buscar' @ 2295,188 (emulator-5554)
+21:23:31 avião=1 (emulator-5554)
+21:23:35 toque 'campo-busca' @ 1162,152 (emulator-5554)
+21:23:43 toque 'Partitura que nunca baixou' @ 1221,447 (emulator-5554)
+21:23:49 log depois de abrir avulso-nao-baixado: 2 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: placeholder kind=file-missing name=nao-existe.pdf
+N4P6M-S3-avulso-nao-baixado-avd-pai mCurrentRotation=ROTATION_0 png=145205 xml=24225 92484d1caa4b
+21:24:08 avião=0 (emulator-5554)
+21:24:26 toque 'buscar' @ 2295,188 (emulator-5554)
+21:24:33 toque 'campo-busca' @ 1397,152 (emulator-5554)
+21:24:41 toque 'Uma música de título bem comprido, para medir o corte do título em retrato e no celular' @ 1221,447 (emulator-5554)
+21:24:47 log depois de abrir avulso-titulo-longo: 3 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: prefetch plan n=1 reason=demand
+    OCTAVIA: download-error nao-existe.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+N4P6M-S3-avulso-titulo-longo-avd-pai mCurrentRotation=ROTATION_0 png=238161 xml=26496 569fac85a4c2
+21:25:14 toque 'buscar' @ 2295,188 (emulator-5554)
+21:25:20 toque 'campo-busca' @ 1397,152 (emulator-5554)
+21:25:27 toque 'Décima do ensaio' @ 1221,447 (emulator-5554)
+21:25:34 log depois de abrir avulso-sem-artista: 3 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: prefetch plan n=1 reason=demand
+    OCTAVIA: download-error nao-existe.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+N4P6M-S3-avulso-sem-artista-avd-pai mCurrentRotation=ROTATION_0 png=252446 xml=25401 fc17da62106a
+21:25:45 mock modo=normal vazio=True
+21:26:04 toque 'buscar' @ 2295,188 (emulator-5554)
+21:26:10 toque 'campo-busca' @ 1397,152 (emulator-5554)
+21:26:18 toque 'Manhã de ensaio' @ 1221,447 (emulator-5554)
+21:26:53 sem `sair` no palco: ESPERA ESGOTADA: 'sair'
+N4P6M-S3-avulso-zero-setlists-avd-pai mCurrentRotation=ROTATION_0 png=61076 xml=8309 e878783c0018
+21:27:05 mock modo=normal vazio=False
+capturas=10 falhas=1
+  letra: ESPERA ESGOTADA: 'campo-busca'
