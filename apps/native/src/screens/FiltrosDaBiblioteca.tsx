@@ -39,7 +39,7 @@ const TIPOS: readonly { tipo: ContentType; icone: NomeIcone; id: string }[] = [
  * `alfaMarcado` do bloco `web` (*"accent a 12 % — navegação ativa, aba ativa, Favorita, página atual"*): a mesma marca
  * nos dois lados, nenhum valor fora do pacote.
  */
-function comAlfa(hex: string, alfa: number): string {
+export function comAlfa(hex: string, alfa: number): string {
   return `${hex}${Math.round(alfa * 255).toString(16).padStart(2, '0').toUpperCase()}`
 }
 

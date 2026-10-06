@@ -81,6 +81,9 @@ vi.mock('../src/files', () => ({
     new Promise((res, rej) => {
       arq.pedidos.push({ url, resolver: (uri) => res({ uri, src: 'download', bytes: 1 }), rejeitar: rej })
     }),
+  // a L (o bloco do N4-R6, no fim) lê o estado dos downloads para a segunda linha
+  estadoDosDownloads: () => ({ baixando: new Set<string>(), falhas: new Map<string, string>() }),
+  assinarDownloads: () => () => undefined,
 }))
 
 const { VisualizacaoScreen } = await import('../src/screens/VisualizacaoScreen')

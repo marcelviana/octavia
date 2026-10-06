@@ -12,22 +12,24 @@
  * Baixar na linha** (N4-D62). Item inválido: a frase do índice (*tipo não reconhecido…*, *nada para mostrar…*) e o
  * ▶ INERTE; a estrela continua.
  *
- * **O toque na linha ainda não faz nada** (estado intermediário DECLARADO desta PR): a visualização (V) nasce na
- * PR-8, e a linha só passa a ser tocável ali — com o *Ver “{título}”* (P-F7) e o pressionado da N4-R6. Até lá a
- * linha é um `View`, e os únicos alvos dela são os dois controles (errata do A-N4-6 no aceite desta PR).
+ * **O toque na linha VISUALIZA** (N4-R6, N4-D61; N4-PR8 — o estado intermediário da N4-PR7 se fecha): a linha inteira
+ * é o alvo, com o nome acessível *Ver “{título}”* (P-F7). Pressionada: o contorno em `accentInk` e o fundo do acento a
+ * 6 % (N4-D101, `[Marcel, 2026-10-06]`: o literal da folha, medido no DOM — herança do bloco de identidade, como a
+ * N4-D96). A estrela e o ▶ continuam controles próprios: o toque neles é deles (no RN, o Pressable mais fundo).
  *
  * **A estrela** (N4-R7, N4-R9): vazada = favoritar (*Favoritar “{título}”*), cheia = favorita (*Tirar “{título}” das
  * favoritas*). EM VOO: inerte (traço 1,25), com o arco em volta, e o nome acessível da P-F5 — e só muda quando o
  * servidor responde (o estado mora no `favoritar.ts`, não aqui). SEM REDE: inerte em `lineInfo`, sem arco; o motivo
  * NÃO vai na linha (vai uma vez, na linha de aviso da tela).
  */
-import { StyleSheet, Text, View } from 'react-native'
-import { FRASES_DO_TABLET, ROTULO_DO_TIPO, isValidContent, type ContentDTO, type EstadoDoArquivo } from '@octavia/core'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { FRASES_DO_TABLET, ROTULO_DO_TIPO, isValidContent, nomeVer, type ContentDTO, type EstadoDoArquivo } from '@octavia/core'
 import type { EstadoDoFavoritar } from '../favoritar'
 import { Icone } from '../icones/Icone'
 import type { NomeIcone } from '../icones/dados'
 import { bar, dark, font, radius, size, space, type TokensDaFaixa } from '../theme'
 import { BotaoTocar, EstrelaDoFavoritar } from './ControlesDaMusica'
+import { comAlfa } from './FiltrosDaBiblioteca'
 
 /** O ícone de cada tipo do enum (o mesmo mapa do S2 e da S4); fora do enum, nenhum. */
 const ICONE_DO_TIPO: { readonly [k: string]: NomeIcone } = { Lyrics: 'letra', Chords: 'cifra', Tab: 'tab', Sheet: 'partitura' }
@@ -55,6 +57,8 @@ export interface LinhaDaBibliotecaProps {
   tokens: TokensDaFaixa
   onFavoritar: (valor: boolean) => void
   onTocar: () => void
+  /** N4-PR8 — o toque na linha: a visualização (N4-R6). */
+  onVer: () => void
 }
 
 export function LinhaDaBiblioteca({
@@ -65,6 +69,7 @@ export function LinhaDaBiblioteca({
   tokens,
   onFavoritar,
   onTocar,
+  onVer,
 }: LinhaDaBibliotecaProps): React.JSX.Element {
   const id8 = content.id.slice(0, 8)
   const validade = isValidContent(content.content_type, content.content_data, content.file_url)
@@ -78,7 +83,13 @@ export function LinhaDaBiblioteca({
   const tocarInerte = invalido !== null
 
   return (
-    <View style={[styles.linha, { minHeight: tokens.lib.linha }]} testID={`lib-linha-${id8}`}>
+    <Pressable
+      style={({ pressed }) => [styles.linha, { minHeight: tokens.lib.linha }, pressed ? styles.pressionada : null]}
+      onPress={onVer}
+      accessibilityRole="button"
+      accessibilityLabel={nomeVer(content.title)}
+      testID={`lib-linha-${id8}`}
+    >
       <View style={styles.texto}>
         <Text style={styles.titulo} numberOfLines={1}>
           {content.title}
@@ -136,7 +147,7 @@ export function LinhaDaBiblioteca({
         />
         <BotaoTocar titulo={content.title} inerte={tocarInerte} onTocar={onTocar} testID={`lib-tocar-${id8}`} />
       </View>
-    </View>
+    </Pressable>
   )
 }
 
@@ -169,4 +180,6 @@ const styles = StyleSheet.create({
   ponto: { color: dark.lineInfo, fontFamily: font.ui, fontSize: size.bodySmall },
   estado: { flexDirection: 'row', alignItems: 'center', gap: space.sm, flexShrink: 1 },
   controles: { flexDirection: 'row', alignItems: 'center', gap: space.xs },
+  // N4-D101: pressionada — o contorno do acento e o fundo a 6 % (o literal da folha).
+  pressionada: { borderColor: dark.accentInk, backgroundColor: comAlfa(dark.accentInk, 0.06) },
 })

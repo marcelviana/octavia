@@ -104,7 +104,10 @@ export function __voltarDoSistema(): boolean {
  * e o que o `uiautomator` grava como `enabled="false"`.
  */
 function atributos(p: PropsComuns): Record<string, unknown> {
-  const est = achatar(p.style)
+  // N4-PR8 (regra 32): o `style` de um Pressable pode ser uma FUNÇÃO do estado (`({ pressed }) => …`, a linha da L
+  // tocável); o RN a chama, e o duplo também — sem o dedo encostado (`pressed: false`). Antes ela não era achatada e o
+  // `data-style` sumia do nó.
+  const est = achatar(typeof p.style === 'function' ? (p.style as (e: { pressed: boolean }) => unknown)({ pressed: false }) : p.style)
   const fora: Record<string, unknown> = {
     'data-testid': p.testID,
     'data-style': Object.keys(est).length > 0 ? JSON.stringify(est) : undefined,

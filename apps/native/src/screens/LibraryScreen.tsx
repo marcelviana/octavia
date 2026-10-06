@@ -30,7 +30,8 @@
  *
  * **O ▶** abre o palco avulso desta música com a origem `biblioteca` (N4-R16): o palco EMPILHA sobre a L, e o voltar
  * dele (*Voltar para a biblioteca*) devolve esta tela na mesma posição — rolagem, filtros e termo —, porque o
- * native-stack não desmonta a tela de baixo.
+ * native-stack não desmonta a tela de baixo. **O toque na linha** (N4-PR8, N4-R6) abre a visualização (V) da música,
+ * do mesmo jeito: empilhada, e o voltar de V devolve a L na mesma posição.
  */
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { FlatList, KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
@@ -82,6 +83,8 @@ export interface LibraryScreenProps {
   onVoltar: () => void
   /** O ▶: o palco avulso desta música, com a origem `biblioteca`. */
   onTocar: (contentId: string) => void
+  /** N4-PR8 — o toque na linha: a visualização desta música (N4-R6). */
+  onVisualizar: (contentId: string) => void
 }
 
 /** A falha do último favoritar: a frase composta e a espécie (que escolhe o ícone e a tinta, N4-R8). */
@@ -142,6 +145,7 @@ export function LibraryScreen({
   onTentarNovamente,
   onVoltar,
   onTocar,
+  onVisualizar,
 }: LibraryScreenProps): React.JSX.Element {
   const t = faixas[useFaixa()]
   const insets = useSafeAreaInsets()
@@ -284,6 +288,7 @@ export function LibraryScreen({
             tokens={t}
             onFavoritar={(valor) => aoFavoritar(item, valor)}
             onTocar={() => onTocar(item.id)}
+            onVer={() => onVisualizar(item.id)}
           />
         )}
       />

@@ -27,9 +27,13 @@ export type ParamsDoPalco =
 /** `posicao` é a do palco na abertura; ausente quando a busca vem da S1, da S2 ou do avulso sem hospedeira. */
 export type ParamsDaBusca = { setlistId?: string; posicao?: number }
 
+/** N4-PR8 — os params da visualização (V): a música, pelo id; o resto vem do cache (`contentById`). */
+export type ParamsDaVisualizacao = { contentId: string }
+
 export type Destino =
   | { acao: 'push' | 'navigate' | 'replace'; rota: 'Stage'; params: ParamsDoPalco }
   | { acao: 'push' | 'navigate'; rota: 'Search'; params: ParamsDaBusca }
+  | { acao: 'push'; rota: 'Visualizacao'; params: ParamsDaVisualizacao }
 
 /**
  * O toque num resultado da S4. `setlist` é a da busca (`null` quando ela foi aberta de S1 ou do avulso sem
@@ -79,4 +83,13 @@ export const DESTINO_DE_BUSCAR_MUSICA = 'Biblioteca' as const
  */
 export function destinoDoTocarDaVisualizacao(contentId: string): Destino {
   return { acao: 'push', rota: 'Stage', params: { avulsa: contentId, origem: 'visualizacao' } }
+}
+
+/**
+ * N4-PR8 — o toque na LINHA da biblioteca (N4-R6, N4-D61): a visualização desta música. EMPILHA sobre a L (`push`), e
+ * o voltar de V é o `goBack`: a L volta na mesma posição — rolagem, filtros e termo —, porque o native-stack não
+ * desmonta a tela de baixo (o mesmo do ▶, N4-PR7).
+ */
+export function destinoDoVerDaBiblioteca(contentId: string): Destino {
+  return { acao: 'push', rota: 'Visualizacao', params: { contentId } }
 }
