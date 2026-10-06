@@ -188,7 +188,9 @@ describe('N4-R2 — L abre sem teclado', () => {
   it('o campo não tem autoFocus (o teclado sobe no toque); o placeholder é *Buscar música*', async () => {
     await montar(tela())
     const campo = exige('lib-campo') as HTMLInputElement
-    expect(campo.autofocus).toBe(false)
+    // o `data-autofocus` do duplo (o React consome o `autoFocus` sem escrever o atributo) e o foco do documento
+    expect(campo.getAttribute('data-autofocus')).toBeNull()
+    expect(document.activeElement).not.toBe(campo)
     expect(campo.getAttribute('placeholder')).toBe('Buscar música')
   })
 })
