@@ -23,7 +23,14 @@
  * Sem retry: uma falha aparece (T1-R37), não é reescrita em silêncio.
  */
 import { Directory, File, Paths } from 'expo-file-system'
-import { FRASES_DO_TABLET, fileVerdict, type FileRejectKind } from '@octavia/core'
+import {
+  FRASES_DA_FALHA_DE_ARQUIVO,
+  FRASES_DO_TABLET,
+  arquivoIncompleto,
+  fileVerdict,
+  servidorRespondeu,
+  type FileRejectKind,
+} from '@octavia/core'
 import { log } from './log'
 
 /** Último segmento da URL — o único pedaço que pode entrar em log (N1-D5). */
@@ -484,9 +491,10 @@ function latin1(bytes: Uint8Array): string {
 
 /** A causa da recusa, em pt-BR — vai para a TELA e para o `download-error`. */
 function motivo(kind: FileRejectKind, bytes: number, esperado: number | null): string {
-  if (kind === 'empty') return 'o arquivo chegou vazio'
-  if (kind === 'short') return `arquivo incompleto: ${bytes} de ${esperado ?? '?'} bytes`
-  return 'o arquivo chegou corrompido'
+  // N4-PR8: as frases moram no core (a visualização as mostra embaixo de *não consegui baixar*), o texto byte a byte
+  if (kind === 'empty') return FRASES_DA_FALHA_DE_ARQUIVO.vazio
+  if (kind === 'short') return arquivoIncompleto(bytes, esperado)
+  return FRASES_DA_FALHA_DE_ARQUIVO.corrompido
 }
 
 /**
@@ -604,7 +612,7 @@ export function falha(erro: unknown, name: string): Error {
   const bruta = erro instanceof Error ? erro.message : String(erro)
   const status = /status:?\s*(\d{3})/i.exec(bruta)?.[1]
   if (status !== undefined) {
-    return comFrase(`${name}: o servidor respondeu ${status}`, `o servidor respondeu ${status}`)
+    return comFrase(`${name}: ${servidorRespondeu(status)}`, servidorRespondeu(status))
   }
   return new Error(`${name}: ${higienizar(bruta)}`)
 }

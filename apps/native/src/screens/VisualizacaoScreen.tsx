@@ -20,28 +20,53 @@
  * **Os campos** (N4-R14): os salvos de verdade, na ordem da folha, com o nome do site (o core, `visualizacao.ts`);
  * as notas da música (P-F3) — só em V; as duas datas numa linha, no fim. Campo vazio não aparece. Compasso, capo e
  * afinação, nunca.
+ *
+ * **O corpo por tipo e os arquivos** (N4-R15): o texto pelo leitor (a Cifra com seções com o nome de cada seção, como o
+ * editor gravou — o core, `bodyOf`; a Tab como foi importada); a Partitura pelo PDF do leitor, a página na largura da
+ * coluna; o item sem corpo (*este item não tem conteúdo*, os quatro tipos) e o tipo desconhecido; *baixando o
+ * arquivo…* com o arco (o `baixando` do catálogo, N4-E6); o arquivo não baixado — o S3e do palco com o **Baixar como
+ * ÍCONE** (N4-D78, N4-E8: o `baixar-setlist`, com borda e alvo de 48, nome *Baixar*; o controle é a única diferença
+ * entre os dois); a falha — *não consegui baixar* e a espécie embaixo, com o mesmo ícone; o formato que o app ainda não
+ * mostra (o do palco, pela extensão). O ▶ segue ativo no arquivo não baixado.
+ *
+ * **O arquivo** segue a decisão do palco (T1-R26): disco primeiro, rede se preciso, e sem arquivo nem rede o S3e — sem
+ * retry automático (o Baixar é a nova tentativa, T1-R37). **Nenhuma linha de log nova**: o palco loga o
+ * `placeholder kind=file-missing` e o `download-error` dele; V não toca e não loga (o `file-reject` e o `file src=…` do
+ * `files.ts` continuam saindo de lá) — declarado no anexo (G3 igual).
  */
-import { useRef } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import {
   FRASES_DO_LEITOR,
+  FRASES_DO_TABLET,
   FRASES_N4,
   ROTULO_DO_TIPO,
   VOCABULARIO_DE_CONTENT,
   bodyOf,
   camposDaVisualizacao,
+  ehFormatoQueOAppMostra,
   isValidContent,
   linhaDasDatas,
   notasDaVisualizacao,
   type CampoDaVisualizacao,
   type ContentDTO,
 } from '@octavia/core'
+import { ensureFile, fileNameFromUrl, fraseDaFalha, hasFile, knownBytes } from '../files'
 import { Icone } from '../icones/Icone'
 import type { NomeIcone } from '../icones/dados'
 import { INEXISTENTE, bar, colors, dark, faixas, font, lineHeight, radius, size, space, touch, tracking, zoomDefault } from '../theme'
 import { useFaixa } from '../useFaixa'
 import { BotaoTocar, EstrelaDoFavoritar } from './ControlesDaMusica'
-import { CorpoDoLeitor, estiloDoLeitor, leitor } from './Leitor'
+import {
+  CorpoDoLeitor,
+  FormatoDoLeitor,
+  PdfDoLeitor,
+  PlaceholderDoLeitor,
+  S3eDoLeitor,
+  estiloDoLeitor,
+  leitor,
+  type EstadoDoArquivoDoLeitor,
+} from './Leitor'
 
 export interface VisualizacaoScreenProps {
   /** A música, do cache (`contentById`); `null` se sumiu dele com a tela aberta — V segue com a última que viu. */
@@ -124,12 +149,81 @@ function Detalhes({ content, colunas }: { content: ContentDTO; colunas: number }
   )
 }
 
-export function VisualizacaoScreen({ content: atual, online, onVoltar }: VisualizacaoScreenProps): React.JSX.Element {
+/**
+ * O arquivo do corpo de V, pela decisão do palco (`StageScreen.tsx`, `buscarArquivo`): disco primeiro; sem o arquivo e
+ * sem rede, o S3e (e nenhum pedido); senão o `ensureFile` (que baixa e guarda). O *Baixar* pede de novo, com ou sem
+ * rede (a rejeição é a falha). Sem log (ver o cabeçalho).
+ */
+function useArquivoDaVisualizacao(
+  url: string | null,
+  online: boolean,
+  onArquivosMudaram: () => void,
+): { arquivo: EstadoDoArquivoDoLeitor; baixar: () => void } {
+  const [arquivo, setArquivo] = useState<EstadoDoArquivoDoLeitor>({ fase: 'buscando' })
+  const montada = useRef(true)
+  useEffect(
+    () => () => {
+      montada.current = false
+    },
+    [],
+  )
+  const buscar = useCallback(
+    async (u: string, pedidoPeloUsuario: boolean): Promise<void> => {
+      if (!hasFile(u) && !online && !pedidoPeloUsuario) {
+        setArquivo({ fase: 'ausente', bytes: knownBytes(u) })
+        return
+      }
+      setArquivo({ fase: 'buscando' })
+      try {
+        const r = await ensureFile(u)
+        if (montada.current) setArquivo({ fase: 'pronto', uri: r.uri })
+        if (r.src === 'download') onArquivosMudaram()
+      } catch (e: unknown) {
+        if (montada.current) setArquivo({ fase: 'erro', mensagem: fraseDaFalha(e), bytes: knownBytes(u) })
+      }
+    },
+    [online, onArquivosMudaram],
+  )
+  useEffect(() => {
+    if (url === null) return
+    void buscar(url, false)
+  }, [url, buscar])
+  return { arquivo, baixar: () => (url === null ? undefined : void buscar(url, true)) }
+}
+
+/** O *Baixar* de V — ÍCONE (N4-D78, N4-E8): o `baixar-setlist` do catálogo (div. 1025), 48 com borda, nome *Baixar*. */
+function BaixarComoIcone({ onBaixar }: { onBaixar: () => void }): React.JSX.Element {
+  return (
+    <Pressable
+      style={styles.botaoIcone}
+      onPress={onBaixar}
+      accessibilityRole="button"
+      accessibilityLabel={FRASES_DO_LEITOR.baixar}
+      testID="view-baixar"
+    >
+      <Icone nome="baixar-setlist" tamanho={24} cor={dark.text} />
+    </Pressable>
+  )
+}
+
+export function VisualizacaoScreen({
+  content: atual,
+  online,
+  onVoltar,
+  onArquivosMudaram,
+}: VisualizacaoScreenProps): React.JSX.Element {
   const t = faixas[useFaixa()]
   // A música que sumiu do cache com V aberta (um sync que a apagou): V segue com a última que viu.
   const ultimo = useRef<ContentDTO | null>(atual)
   if (atual !== null) ultimo.current = atual
   const content = atual ?? ultimo.current
+
+  // O corpo é um ARQUIVO? (Sheet, e a Cifra escaneada — o core decide.) De um formato que o app mostra? (N4-D43: só
+  // `.pdf`, pela extensão; o resto vai ao placeholder de formato, sem pedir o arquivo.)
+  const validade = content === null ? null : isValidContent(content.content_type, content.content_data, content.file_url)
+  const urlArquivo = validade !== null && validade.ok && validade.body === 'file' ? (content?.file_url ?? null) : null
+  const formato = urlArquivo !== null && !ehFormatoQueOAppMostra(urlArquivo)
+  const { arquivo, baixar } = useArquivoDaVisualizacao(formato ? null : urlArquivo, online, onArquivosMudaram)
 
   const voltar = (
     <Pressable
@@ -152,8 +246,7 @@ export function VisualizacaoScreen({ content: atual, online, onVoltar }: Visuali
     )
   }
 
-  const validade = isValidContent(content.content_type, content.content_data, content.file_url)
-  const invalido = validade.ok ? null : validade.reason
+  const invalido = validade === null || validade.ok ? null : validade.reason
   const iconeDoTipo = ICONE_DO_TIPO[content.content_type]
   const rotulo = (ROTULO_DO_TIPO as { readonly [k: string]: string })[content.content_type]
   const artista = content.artist !== null && content.artist.length > 0 ? content.artist : null
@@ -201,9 +294,72 @@ export function VisualizacaoScreen({ content: atual, online, onVoltar }: Visuali
     </View>
   )
 
-  const corpo = bodyOf(content.content_type, content.content_data)
-  const texto = <CorpoDoLeitor corpo={corpo} estilo={estiloDoLeitor(content.content_type, zoomDefault, colors.dark)} testID="corpo" />
+  const cor = colors.dark
   const detalhes = <Detalhes content={content} colunas={t.view.grade} />
+  const tipoDoArquivo = (ROTULO_DO_TIPO as { readonly [k: string]: string })[content.content_type] ?? 'arquivo'
+
+  // O que vai no lugar do leitor: o texto (que rola) ou um corpo de altura própria (o PDF, os placeholders).
+  let corpoFixo: React.JSX.Element | null = null
+  let texto: React.JSX.Element | null = null
+  if (invalido !== null) {
+    corpoFixo =
+      invalido === 'unknown-type' ? (
+        <PlaceholderDoLeitor
+          testID="view-placeholder"
+          icone={<Icone nome="tipo-desconhecido" tamanho={28} cor={cor.offlineInk} />}
+          titulo={FRASES_DO_LEITOR['tipo-desconhecido']}
+          cor={cor}
+        />
+      ) : (
+        <PlaceholderDoLeitor testID="view-placeholder" titulo={FRASES_DO_LEITOR['sem-conteudo']} cor={cor} />
+      )
+  } else if (urlArquivo !== null && formato) {
+    corpoFixo = (
+      <FormatoDoLeitor nome={fileNameFromUrl(urlArquivo)} tipo={tipoDoArquivo} bytes={knownBytes(urlArquivo)} cor={cor} testID="view-formato" />
+    )
+  } else if (urlArquivo !== null) {
+    corpoFixo =
+      arquivo.fase === 'pronto' ? (
+        <PdfDoLeitor uri={arquivo.uri} cor={cor} onLoadComplete={() => undefined} onPageChanged={() => undefined} onError={() => undefined} testID="view-pdf" />
+      ) : arquivo.fase === 'buscando' ? (
+        <PlaceholderDoLeitor
+          testID="view-baixando"
+          icone={<Icone nome="baixando" tamanho={28} cor={cor.accentInk} />}
+          apoio={FRASES_DO_TABLET['baixando-o-arquivo']}
+          cor={cor}
+        />
+      ) : arquivo.fase === 'ausente' ? (
+        <S3eDoLeitor
+          testID="view-nao-baixado"
+          titulo={content.title}
+          tipo={tipoDoArquivo.toLowerCase()}
+          bytes={arquivo.bytes}
+          online={online}
+          cor={cor}
+        >
+          <BaixarComoIcone onBaixar={baixar} />
+        </S3eDoLeitor>
+      ) : (
+        // A falha (N4-R15, `N4-*-V-arquivo-falhou`): *não consegui baixar* e a espécie embaixo — a genérica não se repete.
+        <PlaceholderDoLeitor
+          testID="view-falha"
+          icone={<Icone nome="falha" tamanho={28} cor={cor.errorInk} />}
+          titulo={FRASES_DO_TABLET['nao-consegui-baixar']}
+          apoio={arquivo.mensagem === FRASES_DO_TABLET['nao-consegui-baixar'] ? undefined : arquivo.mensagem}
+          cor={cor}
+        >
+          <BaixarComoIcone onBaixar={baixar} />
+        </PlaceholderDoLeitor>
+      )
+  } else {
+    texto = (
+      <CorpoDoLeitor
+        corpo={bodyOf(content.content_type, content.content_data)}
+        estilo={estiloDoLeitor(content.content_type, zoomDefault, cor)}
+        testID="corpo"
+      />
+    )
+  }
 
   if (duasColunas) {
     return (
@@ -218,15 +374,34 @@ export function VisualizacaoScreen({ content: atual, online, onVoltar }: Visuali
             {detalhes}
           </ScrollView>
           <View style={styles.colunaLeitor} testID="view-leitor">
-            <ScrollView style={leitor.conteudo} contentContainerStyle={leitor.conteudoPad}>
-              {texto}
-            </ScrollView>
+            {texto !== null ? (
+              <ScrollView style={leitor.conteudo} contentContainerStyle={leitor.conteudoPad}>
+                {texto}
+              </ScrollView>
+            ) : (
+              corpoFixo
+            )}
           </View>
         </View>
       </View>
     )
   }
 
+  // B (e A): uma coluna. O PDF tem a rolagem DELE (a página, ajustada à largura): os detalhes ficam em cima e ele
+  // ocupa o resto. Fora isso, uma rolagem só — os detalhes e o corpo (texto ou placeholder) juntos.
+  if (urlArquivo !== null && !formato && arquivo.fase === 'pronto') {
+    return (
+      <View style={styles.tela} testID="view-tela">
+        {cabecalho}
+        <View style={styles.detalhesPad} testID="view-detalhes">
+          {detalhes}
+        </View>
+        <View style={[styles.colunaLeitor, styles.leitorEmB]} testID="view-leitor">
+          {corpoFixo}
+        </View>
+      </View>
+    )
+  }
   return (
     <View style={styles.tela} testID="view-tela">
       {cabecalho}
@@ -234,8 +409,8 @@ export function VisualizacaoScreen({ content: atual, online, onVoltar }: Visuali
         <View style={styles.detalhesPad} testID="view-detalhes">
           {detalhes}
         </View>
-        <View style={[styles.leitorEmB, leitor.conteudoPad]} testID="view-leitor">
-          {texto}
+        <View style={[styles.leitorEmB, texto !== null ? leitor.conteudoPad : null]} testID="view-leitor">
+          {texto ?? corpoFixo}
         </View>
       </ScrollView>
     </View>
