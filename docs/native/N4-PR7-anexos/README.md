@@ -32,7 +32,13 @@ escolha (as duas, a opção recomendada):
 - **N4-D97 — a largura máxima do apoio nos estados centrais: "O mesmo 560 de S1/S4".** Cópia declarada do literal das
   duas telas (`LibraryScreen.tsx`, `centroApoio`); herança do bloco de identidade.
 
-E, no aceite, **o julgamento do Marcel** (§6.4): a estrela **bom** · o ▶ **bom** · *a tela se lê?* **sim**.
+E, no aceite, **o julgamento do Marcel** (§7, A-N4-18): a estrela **bom** · o ▶ **bom** · *a tela se lê?* **sim**.
+
+E, depois do relatório dos acertos antes do merge:
+
+- **N4-D98 — a receita do cache no Tab: "aprovada, pode aplicar".** A errata proposta no §5.6 (div. 1097) vale: o arquivo
+  real do Marcel sai do aparelho junto com a guarda do cache, por nome, e volta junto com a regravação, conferido o md5 —
+  durante o mock, a pasta da sessão só tem o que a fixture criou (`APARATO.md`, "O cache do app no Tab").
 
 ---
 
@@ -256,8 +262,8 @@ cópia e deixa o arquivo no lugar**; e a fixture do mock entra na pasta da sess�
 
 **O conserto** (`6d2a605`): `apagar_por_nome` — cada passo apaga uma lista **fechada** de nomes (os da fixture, lidos do
 `arquivos/` do mock; do store, `STORE_DO_TESTE` = `setlists.json`, `content.json`), recusa curinga e barra, e confere pelo
-`ls` antes e depois que **nada fora da lista sumiu** (senão levanta). E a errata da receita do cache, **proposta para o seu
-aval** (`APARATO.md`): o arquivo real sai do aparelho junto com a guarda e volta junto com a regravação.
+`ls` antes e depois que **nada fora da lista sumiu** (senão levanta). E a errata da receita do cache, **aprovada (N4-D98)**
+(`APARATO.md`): o arquivo real sai do aparelho junto com a guarda e volta junto com a regravação.
 
 **A prova, no AVD** (fixture da L, sessão de audit):
 
@@ -381,8 +387,8 @@ E a leitura da tela, pedida pelo prompt: **sim** (Marcel).
 - **No `N4-REQUISITOS.md`**: a do **N4-R2** (o mecanismo do teclado, medido), a do **N4-R6** (a linha não tocável até a PR-8;
   os ícones do estado do arquivo pelo nome; o título em A), e as **N4-D96** e **N4-D97**.
 - **No `APARATO.md`**: o teclado que não encolhe a janela e o flutuante da Samsung; o `rm` do arnês (consertado no
-  instrumento, §5.6); a receita "Store apagado" **por nome**; e a errata da receita do cache no Tab, **proposta para o aval
-  do Marcel** (o arquivo real sai e volta com a guarda).
+  instrumento, §5.6); a receita "Store apagado" **por nome**; e a errata da receita do cache no Tab, **aprovada — N4-D98**
+  (o arquivo real sai e volta com a guarda).
 
 ---
 
@@ -411,7 +417,7 @@ doc anterior · **A** ambiente, dado real ou defeito do produto · **T** toolcha
 | **1095** | A | o *baixando o arquivo…* na linha não se capturou no aparelho: transitório, e o PDF grande baixa no primeiro sync, antes de a L abrir | em teste; **PR-9** (A-N4-26: *baixando* e *falhou* vistos na linha) |
 | **1096** | D | e3 (+3,8) e m6 (−3,8) ficam dentro dos 4 dp; a m6 com tokens é 16 + 18,2 + 12 (o 14 da folha não é token) | registro; sem errata |
 
-| **1097** | T | o arnês da L apagava pastas inteiras do app (`biblioteca.py:223`: `files/…/files/*` e `cache/…/files/*`; `:258`: `*.json` do store) — no Tab, a pasta da sessão do Marcel, e o PDF real dele saiu junto (voltou pela receita). A receita do cache guarda por cópia e deixava o arquivo real no aparelho durante o mock | **consertado no instrumento** (`6d2a605`, `apagar_por_nome`: só o que o teste criou, por nome; provado com sentinelas, §5.6); a receita "Store apagado" por nome (errata do `APARATO.md`); a receita do cache **proposta** para o aval do Marcel (o arquivo real sai e volta com a guarda) |
+| **1097** | T | o arnês da L apagava pastas inteiras do app (`biblioteca.py:223`: `files/…/files/*` e `cache/…/files/*`; `:258`: `*.json` do store) — no Tab, a pasta da sessão do Marcel, e o PDF real dele saiu junto (voltou pela receita). A receita do cache guarda por cópia e deixava o arquivo real no aparelho durante o mock | **consertado no instrumento** (`6d2a605`, `apagar_por_nome`: só o que o teste criou, por nome; provado com sentinelas, §5.6); a receita "Store apagado" por nome (errata do `APARATO.md`); a receita do cache **aprovada — N4-D98** (o arquivo real sai e volta com a guarda) |
 
 **Contagem**: 17 — D 6 · T 5 · A 4 · P 2 · X 0. **Fechada nesta PR**: a **1066** (N4-D92, §2), a **1035** (§1.2), a
 **1002** (§1.3), a **1014** (§1.1) e a **1097** (§5.6). **Próxima divergência livre: 1098.**

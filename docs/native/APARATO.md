@@ -192,10 +192,10 @@ decisão do Marcel** (N3-PR6c): a receita não os apaga nem os repõe. No fim: a
 Em 2026-09-25 ela tinha só a `partitura-12p.pdf` da fixture (4198 B, de 2026-09-24 21:11), de uma
 PR anterior; **a N3-PR6 a apagou no fim** (`N3-PR6-anexos/limpeza-444.txt`), e a pasta ficou vazia. Daí em
 diante, a receita de guardar e regravar vale para ela também: o que a fixture deixar lá sai no fim da rodada.
-*(Errata da N4-PR7, **proposta para o aval do Marcel**, div. 1097: a receita acima **guarda por cópia e deixa o arquivo real
+*(Errata da N4-PR7, **aprovada — N4-D98** `[Marcel, 2026-10-06]`, div. 1097: a receita acima **guardava por cópia e deixava o arquivo real
 no lugar** — durante todo o mock, o PDF do Marcel ficava em `files/octavia-<uid>/files/`, a pasta da sessão dele, que é
 onde o dev client grava a fixture (o mock aceita o token da sessão restaurada). Foi assim que o `rm` da primeira forma do
-arnês da N4-PR7 o levou. A correção proposta: **o arquivo real sai junto com o cache e volta junto** — depois de guardar
+arnês da N4-PR7 o levou. **Daqui em diante: o arquivo real sai junto com o cache e volta junto** — depois de guardar
 e conferir o md5 da cópia, apagá-lo do aparelho **por nome** (`rm -f files/octavia-<uid>/files/<nome>`, o nome lido no
 `ls` da guarda), e regravá-lo no fim junto com os três `.json`, conferindo o md5. Assim, durante o mock, a pasta só tem o
 que a fixture criou. Os quatro `._*` continuam onde estão.)*
