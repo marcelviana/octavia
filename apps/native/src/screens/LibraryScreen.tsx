@@ -32,7 +32,7 @@
  * dele (*Voltar para a biblioteca*) devolve esta tela na mesma posição — rolagem, filtros e termo —, porque o
  * native-stack não desmonta a tela de baixo.
  */
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
 import {
   FRASES_DO_TABLET,
@@ -40,12 +40,15 @@ import {
   buildIndex,
   consultarBiblioteca,
   escopoDaBusca,
+  estadoDoArquivo,
   nadaEncontradoPara,
   nResultados,
   reguaBiblioteca,
   type ContentDTO,
   type ContentType,
 } from '@octavia/core'
+import { favoritar, assinarFavoritar, estadoDoFavoritar } from '../favoritar'
+import { assinarDownloads, estadoDosDownloads } from '../files'
 import { Icone } from '../icones/Icone'
 import type { NomeIcone } from '../icones/dados'
 import { bar, dark, faixas, font, radius, size, space, touch, tracking } from '../theme'
@@ -104,12 +107,27 @@ function Centro({
 
 export function LibraryScreen({
   contents,
+  filesPresent,
+  online,
   onVoltar,
+  onTocar,
 }: LibraryScreenProps): React.JSX.Element {
   const t = faixas[useFaixa()]
   const [termo, setTermo] = useState('')
   const [tipos, setTipos] = useState<ContentType[]>([])
   const [soFavoritas, setSoFavoritas] = useState(false)
+
+  // O estado em voo do favoritar e o dos downloads moram nos módulos (sobrevivem à tela); a tela assina e redesenha.
+  const [, setVersao] = useState(0)
+  useEffect(() => {
+    const redesenhar = (): void => setVersao((v) => v + 1)
+    const a = assinarFavoritar(redesenhar)
+    const b = assinarDownloads(redesenhar)
+    return () => {
+      a()
+      b()
+    }
+  }, [])
 
   const indice = useMemo(() => buildIndex(contents), [contents])
   const resposta = useMemo(
@@ -121,6 +139,12 @@ export function LibraryScreen({
     setTipos((atual) => (atual.includes(tipo) ? atual.filter((x) => x !== tipo) : [...atual, tipo]))
   }, [])
 
+  const aoFavoritar = useCallback((content: ContentDTO, valor: boolean) => {
+    void favoritar(content.id, valor)
+  }, [])
+
+  const presentes = filesPresent
+  const downloads = estadoDosDownloads()
   const consultou = termo.trim().length > 0
   const filtrou = tipos.length > 0 || soFavoritas
 
@@ -160,7 +184,15 @@ export function LibraryScreen({
         keyboardShouldPersistTaps="handled"
         testID="lib-lista"
         renderItem={({ item }) => (
-          <LinhaDaBiblioteca content={item} tokens={t} />
+          <LinhaDaBiblioteca
+            content={item}
+            arquivo={estadoDoArquivo(item, presentes, downloads)}
+            emVoo={estadoDoFavoritar(item.id)}
+            online={online}
+            tokens={t}
+            onFavoritar={(valor) => aoFavoritar(item, valor)}
+            onTocar={() => onTocar(item.id)}
+          />
         )}
       />
     )
