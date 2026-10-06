@@ -302,6 +302,25 @@ export interface TokensDaFaixa {
      */
     linha: number
   }
+  /**
+   * **A visualização (V) do tablet — N4-PR8** (P-T3; N4-R13, N4-R20, N4-D65, N4-D67; e a grade, N4-D99). A composição
+   * de V é a da folha (`DESIGN-N4/telas.html`, `N4-*-V-*`): o cabeçalho de 88, e o corpo — em C duas colunas (detalhes
+   * à esquerda, o leitor do palco à direita), em B e A uma coluna só (os detalhes sobre o corpo, uma rolagem).
+   */
+  view: {
+    /**
+     * P-T3 — a largura da coluna de detalhes à esquerda do leitor: **340 em C**. Em B e A **inexistente por desenho**
+     * (N4-D64, a forma da N4-PR4; div. 1020): a coluna não existe, os detalhes vão sobre o corpo. A tela lê se a coluna
+     * existe comparando com `INEXISTENTE` — nenhuma conta de largura. O gerador de CSS não leva este bloco.
+     */
+    coluna: number | Inexistente
+    /**
+     * N4-D99 `[Marcel, 2026-10-06]` — as colunas da grade de *Detalhes* (álbum, tom, andamento…): **2 em C** (dentro
+     * dos 340), **3 em B**, **2 em A** (N4-R13: *"grade de 3 em B, de 2 em A"*). A tela monta linhas de N células
+     * iguais (`flex: 1`); nenhuma conta de largura. Extra declarado: não é uma P-T da folha.
+     */
+    grade: number
+  }
   s5: {
     /**
      * A largura da fileira de marcas de música percorrida (a regra de N
@@ -384,6 +403,7 @@ const faixaC: TokensDaFaixa = {
   picker: { empilhaFalha: false, linhaFalha: 80 },
   palco: { barra: bar.top, empilha: false },
   lib: { filtros: space.sm + touch.min + space.sm, linha: 80 },
+  view: { coluna: 340, grade: 2 },
   s5: { fileira: 900 },
   web: {
     conteiner: 1138, margem: space.xxl, colunaLateral: 320, razaoListaDetalhe: [2, 3],
@@ -405,6 +425,7 @@ const faixaB: TokensDaFaixa = {
   picker: { empilhaFalha: true, linhaFalha: 138.7 },
   palco: { barra: bar.top + space.xl, empilha: true },
   lib: { filtros: space.sm + touch.min + space.sm, linha: 80 },
+  view: { coluna: INEXISTENTE, grade: 3 },
   s5: { fileira: 663 },
   web: {
     conteiner: null, margem: space.xl, colunaLateral: 'empilha', razaoListaDetalhe: 'empilha',
@@ -417,8 +438,13 @@ const faixaB: TokensDaFaixa = {
 
 /**
  * A faixa A é a B (N3-D0) **menos a faixa de filtros da biblioteca**, que em A tem duas linhas (P-T1, N4-PR7): é a
- * primeira medida em que A tem valor próprio. O resto é o objeto de B, chave a chave.
+ * primeira medida em que A tem valor próprio. **N4-PR8**: e menos a grade de *Detalhes* de V, que em A tem 2 colunas
+ * (N4-D99). O resto é o objeto de B, chave a chave.
  */
-const faixaA: TokensDaFaixa = { ...faixaB, lib: { filtros: space.sm + touch.min + space.sm + touch.min + space.sm, linha: 80 } }
+const faixaA: TokensDaFaixa = {
+  ...faixaB,
+  lib: { filtros: space.sm + touch.min + space.sm + touch.min + space.sm, linha: 80 },
+  view: { coluna: INEXISTENTE, grade: 2 },
+}
 
 export const faixas: Readonly<Record<Faixa, TokensDaFaixa>> = { A: faixaA, B: faixaB, C: faixaC }

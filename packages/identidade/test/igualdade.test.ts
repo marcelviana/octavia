@@ -78,8 +78,10 @@ const IGUAIS = [
 /**
  * Sem o bloco `web`, a faixa do pacote é a do nativo. **N4-PR7**: e sem o bloco `lib` (P-T1, P-T2), que é ADIÇÃO —
  * nenhuma chave da linha de base muda; ele é cobrado no `it` próprio, contra a folha (`N4-PR7 — o bloco lib`).
+ * **N4-PR8**: e sem o bloco `view` (P-T3, N4-D99), outra ADIÇÃO, cobrada no `it` dela (`N4-PR8 — o bloco view`).
  */
-const semWeb = (f: Record<string, unknown>) => Object.fromEntries(Object.entries(f).filter(([k]) => k !== 'web' && k !== 'lib'))
+const ADICOES_N4 = ['web', 'lib', 'view']
+const semWeb = (f: Record<string, unknown>) => Object.fromEntries(Object.entries(f).filter(([k]) => !ADICOES_N4.includes(k)))
 
 describe('pacote ≡ linha de base (em dp)', () => {
   for (const k of IGUAIS) {
@@ -138,8 +140,22 @@ describe('pacote ≡ linha de base (em dp)', () => {
     expect(identidade.faixas.C.lib).toStrictEqual({ filtros: 64, linha: 80 })
     expect(identidade.faixas.B.lib).toStrictEqual({ filtros: 64, linha: 80 })
     expect(identidade.faixas.A.lib).toStrictEqual({ filtros: 120, linha: 80 })
-    const semLib = (f: object) => Object.fromEntries(Object.entries(f).filter(([k]) => k !== 'lib'))
+    // Em par (N4-PR8): era `semLib(A) == semLib(B)` — com o `view` de A (a grade de 2, N4-D99), A é B fora do `lib` E
+    // do `view`.
+    const semLib = (f: object) => Object.fromEntries(Object.entries(f).filter(([k]) => k !== 'lib' && k !== 'view'))
     expect(semLib(identidade.faixas.A)).toStrictEqual(semLib(identidade.faixas.B))
+  })
+
+  /**
+   * N4-PR8 — P-T3 (N4-D65, N4-D67; `DESIGN-N4/README.md` §3.1, `N4-REQUISITOS.md` N4-R13, N4-R20) e a grade de
+   * *Detalhes* (N4-D99, `[Marcel, 2026-10-06]`), por faixa. A coluna de detalhes à esquerda do leitor existe SÓ em C
+   * (340); em B e A ela é **inexistente por desenho** (uma coluna só: os detalhes sobre o corpo) — a forma da N4-D64,
+   * a palavra `INEXISTENTE`, nunca `undefined` (div. 1020). A grade: 2 colunas em C (dentro dos 340), 3 em B, 2 em A.
+   */
+  it('N4-PR8 — o bloco view (P-T3, N4-D99): a coluna 340 só em C, inexistente em B e A; a grade C 2 · B 3 · A 2', () => {
+    expect(identidade.faixas.C.view).toStrictEqual({ coluna: 340, grade: 2 })
+    expect(identidade.faixas.B.view).toStrictEqual({ coluna: identidade.INEXISTENTE, grade: 3 })
+    expect(identidade.faixas.A.view).toStrictEqual({ coluna: identidade.INEXISTENTE, grade: 2 })
   })
 
   it('faixaDe e os limiares moram no pacote (I1-D30): A < 700 · B 700–960 · C > 960', () => {
@@ -181,7 +197,7 @@ describe('nativo ≡ linha de base (nada mudou em dp)', () => {
     it(`theme.${k}`, () => expect((tema as Record<string, unknown>)[k]).toStrictEqual(base.tokens[k]))
   }
 
-  it('theme.faixas — sem o bloco web, A continua sendo B fora do lib (com os pares da N4-D64)', () => {
+  it('theme.faixas — sem o bloco web, A continua sendo B fora do lib e do view (com os pares da N4-D64)', () => {
     const esperadas = faixasEsperadas()
     for (const f of ['A', 'B', 'C'] as const) {
       expect(semWeb(tema.faixas[f] as unknown as Record<string, unknown>)).toStrictEqual(esperadas[f])
@@ -189,9 +205,11 @@ describe('nativo ≡ linha de base (nada mudou em dp)', () => {
     // Em par (N4-PR7, P-T1): era `expect(tema.faixas.A).toBe(tema.faixas.B)` — A ERA o objeto de B. Com a faixa de
     // filtros de duas linhas em A, A é uma cópia de B com o `lib` próprio: o resto, chave a chave, igual; e o mesmo
     // objeto do pacote (o `theme.ts` reexporta, não copia).
-    const semLib = (f: object) => Object.fromEntries(Object.entries(f).filter(([k]) => k !== 'lib'))
+    // Em par (N4-PR8): A é B fora do `lib` e do `view` (a grade de 2 de A, N4-D99).
+    const semLib = (f: object) => Object.fromEntries(Object.entries(f).filter(([k]) => k !== 'lib' && k !== 'view'))
     expect(semLib(tema.faixas.A)).toStrictEqual(semLib(tema.faixas.B))
     expect(tema.faixas.A.lib.filtros).not.toBe(tema.faixas.B.lib.filtros)
+    expect(tema.faixas.A.view.grade).not.toBe(tema.faixas.B.view.grade)
     expect(tema.faixas).toBe(identidade.faixas)
   })
 
