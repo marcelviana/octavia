@@ -537,6 +537,8 @@ describe('N4-R10 — os estados de sincronização de L', () => {
     const tentou: number[] = []
     await montar(tela({ contents: [], temCache: false, sync: { fase: 'offline', syncedAtMs: null }, onTentarNovamente: () => tentou.push(1) }))
     expect(texto('lib-falha-sem-cache')).toBe(`sem conexão ${core.FRASES_N4['biblioteca-sem-cache']} Tentar novamente`)
+    // a composição do S1d: o botão primário em `text`, como o de S1
+    expect(estilo(exige('lib-tentar')).backgroundColor).toBe(dark.text)
     await tocar('lib-tentar')
     expect(tentou).toEqual([1])
   })

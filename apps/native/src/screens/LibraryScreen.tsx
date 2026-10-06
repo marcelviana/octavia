@@ -465,9 +465,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: space.xl,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: space.sm,
-    backgroundColor: dark.accent,
+    gap: space.md,
+    // a composição do S1d (N4-R10): o botão primário de S1, em `text` — não o acento
     borderRadius: radius.control,
+    backgroundColor: dark.text,
   },
   botaoPrimarioTexto: { color: dark.bg, fontFamily: font.uiBold, fontSize: size.body },
 })
