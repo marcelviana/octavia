@@ -34,18 +34,26 @@
  */
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
+import { useFocusEffect } from '@react-navigation/native'
 import {
   FRASES_DO_TABLET,
+  FRASES_N4,
+  REGUA_SEM_NUMERO,
   VOCABULARIO_DE_CONTENT,
+  avisoDoFavoritar,
   buildIndex,
   consultarBiblioteca,
   escopoDaBusca,
   estadoDoArquivo,
+  haQuantoTempo,
+  mostrandoDadosDe,
   nadaEncontradoPara,
   nResultados,
   reguaBiblioteca,
+  textoDaFalhaDeSync,
   type ContentDTO,
   type ContentType,
+  type EspecieDoFavoritar,
 } from '@octavia/core'
 import { favoritar, assinarFavoritar, estadoDoFavoritar } from '../favoritar'
 import { assinarDownloads, estadoDosDownloads } from '../files'
@@ -55,7 +63,8 @@ import { bar, dark, faixas, font, radius, size, space, touch, tracking } from '.
 import { useFaixa } from '../useFaixa'
 import { FiltrosDaBiblioteca } from './FiltrosDaBiblioteca'
 import { LinhaDaBiblioteca } from './LinhaDaBiblioteca'
-import type { SyncState } from './SetlistsScreen'
+import { LinhaDeAviso, type AcaoDoAviso } from './LinhaDeAviso'
+import { MarcaEmRepouso, type SyncState } from './SetlistsScreen'
 
 export interface LibraryScreenProps {
   /** A biblioteca inteira, do cache (o mesmo conjunto da S4). */
@@ -73,6 +82,19 @@ export interface LibraryScreenProps {
   onTocar: (contentId: string) => void
 }
 
+/** A falha do último favoritar: a frase composta e a espécie (que escolhe o ícone e a tinta, N4-R8). */
+interface AvisoDoFavoritar {
+  motivo: string
+  especie: Exclude<EspecieDoFavoritar, 'ok'>
+}
+
+/** N4-R8 — o ícone e a tinta por espécie: `falha` em `errorInk`; sem rede e limite, em `offlineInk`. */
+function iconeDaEspecie(especie: AvisoDoFavoritar['especie']): { icone: NomeIcone; cor: string } {
+  if (especie === 'rede') return { icone: 'sem-conexao', cor: dark.offlineInk }
+  if (especie === 'limite') return { icone: 'ultima-sincronizacao', cor: dark.offlineInk }
+  return { icone: 'falha', cor: dark.errorInk }
+}
+
 /** A régua de L — a da S4 (rótulo · fio · contagem, mono 12 em `muted`), fixa sobre a lista. */
 function Regua({ esquerda, direita }: { esquerda: string; direita: string }): React.JSX.Element {
   return (
@@ -87,20 +109,31 @@ function Regua({ esquerda, direita }: { esquerda: string; direita: string }): Re
 /** O corpo quando não há lista: ícone de 28, título (opcional), apoio (opcional), ação (opcional). */
 function Centro({
   icone,
+  marca,
   titulo,
   apoio,
+  acao,
   testID,
 }: {
   icone?: { nome: NomeIcone; cor: string; estado?: 'normal' | 'inerte' }
+  marca?: boolean
   titulo?: string
   apoio?: string
+  acao?: { rotulo: string; onPress: () => void }
   testID: string
 }): React.JSX.Element {
   return (
     <View style={styles.centro} testID={testID}>
+      {marca === true ? <MarcaEmRepouso /> : null}
       {icone !== undefined ? <Icone nome={icone.nome} tamanho={28} cor={icone.cor} estado={icone.estado} /> : null}
       {titulo !== undefined ? <Text style={styles.centroTitulo}>{titulo}</Text> : null}
       {apoio !== undefined ? <Text style={styles.centroApoio}>{apoio}</Text> : null}
+      {acao !== undefined ? (
+        <Pressable style={styles.botaoPrimario} onPress={acao.onPress} accessibilityRole="button" testID="lib-tentar">
+          <Icone nome="tentar-novamente" tamanho={24} cor={dark.bg} />
+          <Text style={styles.botaoPrimarioTexto}>{acao.rotulo}</Text>
+        </Pressable>
+      ) : null}
     </View>
   )
 }
@@ -109,6 +142,9 @@ export function LibraryScreen({
   contents,
   filesPresent,
   online,
+  sync,
+  temCache,
+  onTentarNovamente,
   onVoltar,
   onTocar,
 }: LibraryScreenProps): React.JSX.Element {
@@ -116,6 +152,7 @@ export function LibraryScreen({
   const [termo, setTermo] = useState('')
   const [tipos, setTipos] = useState<ContentType[]>([])
   const [soFavoritas, setSoFavoritas] = useState(false)
+  const [aviso, setAviso] = useState<AvisoDoFavoritar | null>(null)
 
   // O estado em voo do favoritar e o dos downloads moram nos módulos (sobrevivem à tela); a tela assina e redesenha.
   const [, setVersao] = useState(0)
@@ -129,19 +166,50 @@ export function LibraryScreen({
     }
   }, [])
 
+  // N4-R8: a linha da falha some ao sair da tela (o palco avulso por cima também é sair).
+  useFocusEffect(
+    useCallback(() => {
+      return () => setAviso(null)
+    }, []),
+  )
+
   const indice = useMemo(() => buildIndex(contents), [contents])
   const resposta = useMemo(
     () => consultarBiblioteca(contents, indice, { termo, tipos, favoritas: soFavoritas }),
     [contents, indice, termo, tipos, soFavoritas],
   )
 
+  const carregando = !temCache && sync.fase === 'sincronizando'
+  const falhaSemCache = !temCache && (sync.fase === 'falha' || sync.fase === 'offline')
+  const vazia = temCache && contents.length === 0
+  const semLista = carregando || falhaSemCache
+
   const alternarTipo = useCallback((tipo: ContentType) => {
     setTipos((atual) => (atual.includes(tipo) ? atual.filter((x) => x !== tipo) : [...atual, tipo]))
   }, [])
 
   const aoFavoritar = useCallback((content: ContentDTO, valor: boolean) => {
-    void favoritar(content.id, valor)
+    setAviso(null) // a linha some no próximo favoritar (N4-R8)
+    void favoritar(content.id, valor).then((r) => {
+      const motivo = avisoDoFavoritar(content.title, valor, r)
+      if (motivo !== null && r.especie !== 'ok') setAviso({ motivo, especie: r.especie })
+    })
   }, [])
+
+  // Uma linha de aviso por vez (N4-R8 > N4-R9 > N4-R10).
+  const avisoDaTela: { icone: NomeIcone; cor: string; motivo: string; acao?: AcaoDoAviso } | null =
+    aviso !== null
+      ? { ...iconeDaEspecie(aviso.especie), motivo: aviso.motivo }
+      : !online
+        ? { icone: 'sem-conexao', cor: dark.offlineInk, motivo: FRASES_N4['sem-rede-favoritar'] }
+        : temCache && sync.fase === 'falha'
+          ? {
+              icone: 'falha',
+              cor: dark.errorInk,
+              motivo: `${textoDaFalhaDeSync(sync.messageKey)}${mostrandoDadosDe(haQuantoTempo(sync.syncedAtMs, Date.now()))}`,
+              acao: { rotulo: FRASES_DO_TABLET['tentar-novamente'], onPress: onTentarNovamente },
+            }
+          : null
 
   const presentes = filesPresent
   const downloads = estadoDosDownloads()
@@ -149,7 +217,35 @@ export function LibraryScreen({
   const filtrou = tipos.length > 0 || soFavoritas
 
   let corpo: React.JSX.Element
-  if (resposta.n === 0 && soFavoritas && tipos.length === 0 && !consultou && resposta.contagens.favoritas === 0) {
+  if (carregando) {
+    corpo = (
+      <Centro
+        testID="lib-carregando"
+        icone={{ nome: 'baixando', cor: dark.accentInk }}
+        apoio={FRASES_DO_TABLET.carregando}
+      />
+    )
+  } else if (falhaSemCache) {
+    const offline = sync.fase === 'offline'
+    corpo = (
+      <Centro
+        testID="lib-falha-sem-cache"
+        icone={{ nome: offline ? 'sem-conexao' : 'falha', cor: offline ? dark.offlineInk : dark.errorInk }}
+        titulo={offline ? FRASES_DO_TABLET['sem-conexao'] : textoDaFalhaDeSync(sync.fase === 'falha' ? sync.messageKey : 'erro.desconhecido')}
+        apoio={FRASES_N4['biblioteca-sem-cache']}
+        acao={{ rotulo: FRASES_DO_TABLET['tentar-novamente'], onPress: onTentarNovamente }}
+      />
+    )
+  } else if (vazia) {
+    corpo = (
+      <Centro
+        testID="lib-vazia"
+        marca
+        titulo={VOCABULARIO_DE_CONTENT['vazio-biblioteca']}
+        apoio={FRASES_N4['biblioteca-vazia']}
+      />
+    )
+  } else if (resposta.n === 0 && soFavoritas && tipos.length === 0 && !consultou && resposta.contagens.favoritas === 0) {
     corpo = (
       <Centro
         testID="lib-favoritas-0"
@@ -236,19 +332,23 @@ export function LibraryScreen({
         </View>
       </View>
 
+      {avisoDaTela !== null ? (
+        <LinhaDeAviso icone={avisoDaTela.icone} cor={avisoDaTela.cor} motivo={avisoDaTela.motivo} acao={avisoDaTela.acao} recuo={space.xl} />
+      ) : null}
+
       <FiltrosDaBiblioteca
-        contagens={resposta.contagens}
+        contagens={semLista ? null : resposta.contagens}
         tipos={tipos}
         favoritas={soFavoritas}
-        inertes={false}
+        inertes={semLista || vazia}
         tokens={t}
         onTipo={alternarTipo}
         onFavoritas={() => setSoFavoritas((v) => !v)}
       />
 
       <Regua
-        esquerda={reguaBiblioteca(contents.length)}
-        direita={nResultados(resposta.n)}
+        esquerda={semLista ? REGUA_SEM_NUMERO.rotulo : reguaBiblioteca(contents.length)}
+        direita={semLista ? REGUA_SEM_NUMERO.contagem : nResultados(resposta.n)}
       />
 
       {corpo}
@@ -346,4 +446,15 @@ const styles = StyleSheet.create({
     // identidade, com os 13 e 20 da N4-D79.
     maxWidth: 560,
   },
+  botaoPrimario: {
+    marginTop: space.sm,
+    height: touch.list,
+    paddingHorizontal: space.xl,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: space.sm,
+    backgroundColor: dark.accent,
+    borderRadius: radius.control,
+  },
+  botaoPrimarioTexto: { color: dark.bg, fontFamily: font.uiBold, fontSize: size.body },
 })

@@ -52,6 +52,7 @@ from __future__ import annotations
 import copy
 import datetime
 import json
+import os
 # `socket` só para o `shutdown` do modo `escrita-corta` (div. 257) — o alias
 # evita colidir com a variável `socket` de qualquer handler.
 import socket as _socket
@@ -71,7 +72,10 @@ PENDURADO_S = 90
 #: responder normalmente. É a janela do "em voo" do favoritar (N4-R7): o teste
 #: lê o estado por música e o `content.json` enquanto o `PUT` ainda não voltou
 #: — o cache tem de estar intacto ali, e só mudar com a resposta.
-LENTA_S = 0.6
+#: N4-PR7: no APARELHO a janela de 0,6 s não cabe um `uiautomator dump` (≈ 2,3 s, `APARATO.md`): o aceite da L
+#: (A-N4-7, "o favoritar com a resposta atrasada") sobe o mock com `OCTAVIA_MOCK_LENTA_S` (8 s), e o resto continua
+#: nos 0,6 s de sempre.
+LENTA_S = float(os.environ.get("OCTAVIA_MOCK_LENTA_S", "0.6"))
 
 #: N4-PR5 — as chaves que o `contentSchemas.update` aceita
 #: (`lib/api-schemas.ts:190-199`, `.strict()`) e as três que a rota descarta

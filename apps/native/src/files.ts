@@ -176,6 +176,24 @@ const emVoo = new Map<string, { voo: Promise<EnsuredFile>; guaranteed: boolean }
 const falhas = new Map<string, string>()
 const ouvintesDeDownload = new Set<() => void>()
 
+/**
+ * **N4-D92 (div. 1066) — sem rede, um download que rejeita NÃO é "não consegui baixar".** O plano da biblioteca roda
+ * também quando o sync foi pulado por falta de rede (`App.tsx`, o `prefetchEArrumar` depois do sync pulado), e cada
+ * arquivo que falta rejeita — com a mesma mensagem do Android que um 404 dá (div. 1063: sem o status). Registrado como
+ * falha, a música aparecia na L como *não consegui baixar* quando o certo, sem rede, é *arquivo não baixado*. Na
+ * rejeição, a rede é consultada: sem rede, nada se registra (e a falha antiga da URL sai — o estado é "não baixado").
+ * O log não muda: o `download-error` continua saindo de quem chamou.
+ *
+ * A sonda é INJETADA (`ligarSondaDeRede`), e não o `estaOnline` importado: o `net.ts` traz o `expo-network`, que os
+ * testes do `files.ts` não carregam. A raiz (`App.tsx`) liga a sonda real; sem ligação, vale "com rede" — o
+ * comportamento de antes.
+ */
+let sondaDeRede: () => Promise<boolean> = async () => true
+
+export function ligarSondaDeRede(sonda: () => Promise<boolean>): void {
+  sondaDeRede = sonda
+}
+
 function avisarDownloads(): void {
   for (const f of [...ouvintesDeDownload]) f()
 }
@@ -228,8 +246,9 @@ export function ensureFile(
         falhas.delete(url)
         return pronto
       },
-      (erro: unknown) => {
-        falhas.set(url, fraseDaFalha(erro))
+      async (erro: unknown) => {
+        if (await sondaDeRede().catch(() => true)) falhas.set(url, fraseDaFalha(erro))
+        else falhas.delete(url)
         throw erro
       },
     )

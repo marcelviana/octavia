@@ -16,16 +16,19 @@ import { ligarPrefetchAposEscrita } from './src/apos-escrita'
 import type { EstadoLocal } from './src/escrita'
 import { ligarCacheDoFavoritar } from './src/favoritar'
 import { useLinhaDaFaixa } from './src/useFaixa'
-import { presentUrls, sanearArquivos, setFilesUser } from './src/files'
+import { ligarSondaDeRede, presentUrls, sanearArquivos, setFilesUser } from './src/files'
 import { log } from './src/log'
 import { Navigation } from './src/navigation'
-import { useOnline } from './src/net'
+import { estaOnline, useOnline } from './src/net'
 import { aplicarLru, baixarSetlist, prefetchDaBiblioteca } from './src/prefetch'
 import type { SyncState } from './src/screens/SetlistsScreen'
 import { onAuth, signedInThisRun, type User } from './src/session'
 import { load } from './src/store'
 import { sincronizar } from './src/sync'
 import { dark } from './src/theme'
+
+// N4-D92 (div. 1066): o `files.ts` consulta a rede quando um download rejeita — sem rede, não é falha do arquivo.
+ligarSondaDeRede(estaOnline)
 
 type Estado = { fase: 'carregando' } | { fase: 'fora' } | { fase: 'dentro'; user: User }
 

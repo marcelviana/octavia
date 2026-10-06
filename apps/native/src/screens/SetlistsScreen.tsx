@@ -77,6 +77,18 @@ import { useFaixa } from '../useFaixa'
 import { FolhaDeSetlist } from './FolhaDeCriar'
 import { LinhaDeAviso } from './LinhaDeAviso'
 
+/**
+ * A marca em repouso (§8.4): só o laço do oito do PNG oficial, recortado a 60 dp, sem wordmark — a do S1f. Exportada
+ * na N4-PR7 para a L vazia (*"a marca em repouso, sem tinta de alerta"*, N4-R10): o MESMO nó, sem cópia.
+ */
+export function MarcaEmRepouso(): React.JSX.Element {
+  return (
+    <View style={styles.marca} accessibilityRole="image" accessibilityLabel="Octavia">
+      <Image source={require('../../assets/logo-octavia-dark.png')} style={styles.marcaImagem} resizeMode="stretch" />
+    </View>
+  )
+}
+
 export type SyncState =
   | { fase: 'sincronizando' }
   | { fase: 'ok'; syncedAtMs: number }
@@ -656,13 +668,7 @@ export function SetlistsScreen({
         // segunda casa da marca (§8.4, a única proposta aplicada): só o laço
         // do oito do PNG oficial, recortado a 60 dp, sem wordmark.
         <View style={styles.centro} testID="s1f">
-          <View style={styles.marca} accessibilityRole="image" accessibilityLabel="Octavia">
-            <Image
-              source={require('../../assets/logo-octavia-dark.png')}
-              style={styles.marcaImagem}
-              resizeMode="stretch"
-            />
-          </View>
+          <MarcaEmRepouso />
           {/* Moldura `N2-S1f-criar`: sai a frase que manda ir ao web, entra o
               mesmo ato, aqui. O título em caixa alta do V1 sai com ela — o
               estado vazio passa a ser duas orações e um botão. */}
