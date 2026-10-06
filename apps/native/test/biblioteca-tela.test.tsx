@@ -38,6 +38,8 @@ vi.mock('expo-network', () => ({
   getNetworkStateAsync: async () => ({ isConnected: true, isInternetReachable: true }),
   addNetworkStateListener: () => ({ remove: () => undefined }),
 }))
+// A raiz do app dá os insets (o `SafeAreaProvider` do `App.tsx`); aqui, os do AVD: a barra de status de 24.
+vi.mock('react-native-safe-area-context', () => ({ useSafeAreaInsets: () => ({ top: 24, bottom: 0, left: 0, right: 0 }) }))
 vi.mock('@react-navigation/native', () => ({
   // O `useFocusEffect` do duplo: roda o efeito na montagem e guarda a limpeza — `foco.sair()` é "a tela perdeu o foco".
   useFocusEffect: (efeito: () => (() => void) | void) => {
@@ -205,6 +207,8 @@ describe('N4-R2 — com o teclado de pé, nada da L fica sob ele', () => {
     await montar(tela())
     const raiz = exige('lib-tela')
     expect(raiz.getAttribute('data-keyboard-behavior')).toBe('padding')
+    // o topo do teclado vem em coordenadas de tela, a moldura da raiz começa abaixo da barra de status
+    expect(raiz.getAttribute('data-keyboard-offset')).toBe('24')
     expect(raiz.contains(exige('lib-lista'))).toBe(true)
   })
 })

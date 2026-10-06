@@ -264,8 +264,13 @@ export const StyleSheet = {
  * N4-PR7 — `KeyboardAvoidingView`: um `View` que escreve o `behavior` em `data-keyboard-behavior`. A altura que ele
  * tira com o teclado de pé é do aparelho (o dump); o duplo só prova QUE a tela o usa, e com que comportamento.
  */
-export const KeyboardAvoidingView = forwardRef<unknown, PropsComuns & { behavior?: string }>((p, ref) =>
-  createElement('div', { ...atributos(p), 'data-keyboard-behavior': p.behavior, ref }, p.children as ReactNode),
+export const KeyboardAvoidingView = forwardRef<unknown, PropsComuns & { behavior?: string; keyboardVerticalOffset?: number }>(
+  (p, ref) =>
+    createElement(
+      'div',
+      { ...atributos(p), 'data-keyboard-behavior': p.behavior, 'data-keyboard-offset': p.keyboardVerticalOffset, ref },
+      p.children as ReactNode,
+    ),
 )
 KeyboardAvoidingView.displayName = 'KeyboardAvoidingView'
 

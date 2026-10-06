@@ -8,8 +8,8 @@
  * depois de um filtro"* (a folha).
  *
  * **Abre sem teclado** (N4-R2, N4-D60): o campo não tem `autoFocus`; o teclado sobe no toque nele. Com o teclado de
- * pé, a janela encolhe (o `adjustResize` do Android, o padrão do Expo) e a lista — o único `flex: 1` da tela — termina
- * acima dele; barra, aviso, filtros e régua não se mexem.
+ * pé, a raiz (um `KeyboardAvoidingView` com `padding`) tira a altura dele, e a lista — o único `flex: 1` da tela —
+ * termina acima; barra, aviso, filtros e régua não se mexem. (O `adjustResize` sozinho NÃO basta: medido no aparelho.)
  *
  * **A busca** (N4-R11) é a da S4 sobre o mesmo índice (`buildIndex`, memoizado por `contents`), sem o corte de 50
  * (N4-D90): `consultarBiblioteca` do core compõe busca, tipos ("ou") e Favoritas ("e") e devolve as cinco contagens
@@ -33,8 +33,9 @@
  * native-stack não desmonta a tela de baixo.
  */
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
+import { FlatList, KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import {
   FRASES_DO_TABLET,
   FRASES_N4,
@@ -149,6 +150,7 @@ export function LibraryScreen({
   onTocar,
 }: LibraryScreenProps): React.JSX.Element {
   const t = faixas[useFaixa()]
+  const insets = useSafeAreaInsets()
   const [termo, setTermo] = useState('')
   const [tipos, setTipos] = useState<ContentType[]>([])
   const [soFavoritas, setSoFavoritas] = useState(false)
@@ -295,7 +297,18 @@ export function LibraryScreen({
   }
 
   return (
-    <View style={styles.tela}>
+    // N4-R2 — a raiz é um KeyboardAvoidingView com `padding`: com o teclado de pé, a lista (o único `flex: 1`) encolhe
+    // acima dele. Medido no aparelho: a janela está em `adjust=resize`, mas com o edge-to-edge do RN a raiz não encolhe
+    // sozinha — sem isto a lista ia até o fim da janela, por baixo do teclado (o mesmo motivo da div. 450 no picker).
+    // O deslocamento é o inset do TOPO (a barra de status): o KeyboardAvoidingView mede a própria moldura relativa à
+    // raiz, que começa abaixo dela, e o topo do teclado vem em coordenadas de tela (o `keyboardVerticalOffset` é
+    // descontado dele) — sem o inset, a lista passava 24 dp sob o teclado (medido: C 396,0 × 372,0; B 776,4 × 752,4).
+    <KeyboardAvoidingView
+      style={styles.tela}
+      behavior="padding"
+      keyboardVerticalOffset={insets.top}
+      testID="lib-tela"
+    >
       <View style={styles.barra}>
         <Pressable
           style={styles.botaoIcone}
@@ -352,7 +365,7 @@ export function LibraryScreen({
       />
 
       {corpo}
-    </View>
+    </KeyboardAvoidingView>
   )
 }
 
