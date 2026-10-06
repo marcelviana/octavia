@@ -1,0 +1,21 @@
+== busca
+13:13:37 toque 'buscar' @ 2295,188 (emulator-5554)
+13:13:46 toque 'lib-campo' @ 1397,152 (emulator-5554)
+N4P7L-L-busca-sem-resultado-avd-pai mCurrentRotation=ROTATION_0 png=126048 xml=29837 3da1f7f608b1
+13:14:00 toque 'lib-campo' @ 1329,152 (emulator-5554)
+N4P7L-L-busca-ensaio-avd-pai mCurrentRotation=ROTATION_0 png=201847 xml=57928 d3044663e239
+== semRede
+13:15:20 sem S1 em 60 s — o deep link de novo
+13:15:37 toque 'buscar' @ 2295,188 (emulator-5554)
+13:15:46 avião=1 (emulator-5554)
+ping: connect: Network is unreachable
+N4P7L-L-sem-rede-avd-pai mCurrentRotation=ROTATION_0 png=220147 xml=50786 ab2a62897b33
+13:16:01 toque 'Favoritar “Águas de fixture”' @ 2306,698 (emulator-5554)
+  o toque na estrela inerte, sem rede: (nenhuma linha)
+arquivos depois do rm: 'cache/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files:\n\nfiles/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files:\n'
+ping antes de abrir: connect: Network is unreachable
+13:16:25 toque 'buscar' @ 2295,188 (emulator-5554)
+N4-D92 os estados de arquivo na L, aberta sem rede: []
+N4P7L-L-sem-rede-arquivos-nao-baixados-avd-pai mCurrentRotation=ROTATION_0 png=220291 xml=50786 ab2a62897b33
+13:16:52 avião=0 (emulator-5554)
+capturas=4 falhas=0

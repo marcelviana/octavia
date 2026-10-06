@@ -1,0 +1,7 @@
+$ e9 no AVD (C, paisagem, user_rotation=0): o teclado do sistema aberto pelo campo `email` do S0 (a sessão caiu no S0 frio da linha de base)
+12:03:07 toque 'email' @ 1857,639 (emulator-5554)
+mInputShown: ['mInputShown=true']
+IME touchable region px: ('0', '837', '2560', '1492')
+raiz do dump px: [0, 0, 2560, 1600]
+topo do teclado: 837 px = 372.0 dp; da tela de 1600 px (711,1 dp): teclado = 339.1 dp
+mInputShown depois do BACK: ['mInputShown=false']

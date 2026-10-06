@@ -34,6 +34,12 @@ moldura `*-S1-absorver-vazia`. A S4 continua existindo, aberta só pela busca do
 **N4-R2 — L abre sem teclado** `[N4-D60; molduras *-L-base, *-L-teclado]`. L abre sem foco no campo e sem teclado; o
 teclado sobe no toque no campo. Com o teclado aberto, a lista termina acima dele (encolhe) e barra, campo, filtros e régua
 continuam acima; nada da L fica sob o teclado (em B o topo do teclado está em 761,3 dp: 317 dp dentro da janela, m23).
+> **Errata da N4-PR7 ao N4-R2 (o mecanismo, medido).** *"A lista termina acima dele (encolhe)"* não acontece sozinho: a
+> janela está em `adjust=resize`, mas com o edge-to-edge do RN a raiz não encolhe, e a lista ia até o fim da janela, por
+> baixo do teclado (div. 1082). A raiz de L é um `KeyboardAvoidingView` com `padding` e o inset do topo como
+> deslocamento: medido, a lista termina no topo do teclado (C 372,0 · B 752,4 no AVD; B 761,3 no Tab). O teclado
+> **flutuante** da Samsung (o Tab deitado) não encolhe nada (div. 1087).
+
 *Aceite*: A-N4-2.
 
 **N4-R3 — a composição de L** `[molduras *-L-base, *-L-rolagem; P-T1, P-T2; m2–m10]`. Fixos no topo: a barra de 88
@@ -69,6 +75,13 @@ artista); nunca *artista desconhecido*. Música com arquivo: o estado do arquivo
 linha**. Inválidos: as frases do índice (*tipo não reconhecido — edite na versão web*, *nada para mostrar — edite na versão
 web*) e o ▶ **inerte**; visualizar e favoritar continuam. Título longo: C e B uma linha com reticência, como a S4; A até
 duas linhas (a linha cresce para 106, e4). Pressionada: contorno `accentInk`, fundo a 6 %.
+> **Errata da N4-PR7 ao N4-R6 (estado intermediário declarado).** Na N4-PR7 **a linha não é tocável**: a visualização
+> (V) nasce na PR-8, e só ali o toque na linha visualiza, com o *Ver “{título}”* (P-F7) e o pressionado (contorno
+> `accentInk`, fundo a 6 %). Até lá os alvos da linha são a estrela e o ▶. A parte do A-N4-6 *"o toque abre V"* e o
+> julgamento de mão do Marcel (o toque na linha × nos dois controles) fecham na **PR-8**. E, medido: o estado *arquivo não
+> baixado* da linha usa o ícone `arquivo-nao-baixado` do catálogo e o *baixando o arquivo…* o `baixando` (N4-E6: vale o
+> catálogo pelo nome; div. 1085); em A o título fica numa linha (as duas linhas são do N5).
+
 *Aceite*: A-N4-6.
 
 **N4-R7 — favoritar: só online, sem otimismo** `[N4-D21; N4-D22; N4-D23; N4-D35; N4-D62; N4-D63; P-F5; molduras *-L-favoritando, *-V-favoritando]`.
@@ -454,6 +467,10 @@ O `N4-ENCERRAMENTO.md`, com a herança da §4 e as corridas do bloco no `CI-FAIX
 | 10 | o rodapé do picker sob o teclado em B (div. 450) — **não** se repete na L, que não tem rodapé (folha, `N4-*-L-teclado`) | N3 | **polimento do nativo, pós-N3** (sem mudança) |
 
 ---
+
+**Decisões do Marcel na N4-PR7** `[Marcel, 2026-10-06]`: **N4-D96** — o arco da estrela em voo entra com os números da
+folha (42 × 42, r 19, traço 2), literal declarado; **N4-D97** — o `maxWidth` 560 dos estados centrais de L é o de S1/S4,
+cópia declarada. Os dois vão à herança do bloco de identidade, com os 13 e 20 da N4-D79 (`N4-PR7-anexos/README.md` §0).
 
 **A próxima PR desta lista** (N4-D72): depois do merge do congelamento, a **PR-3 — core das frases**. *(Depois da N4-PR4: a
 **PR-5 — core da biblioteca**.)*

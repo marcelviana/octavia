@@ -1,0 +1,9 @@
+$ npx tsc --noEmit (raiz)
+exit=0
+$ (packages/core) npx tsc --noEmit -p .
+$ (packages/identidade) npx tsc --noEmit -p .
+$ (apps/native) npx tsc --noEmit -p .
+$ pnpm lint
+> pnpm exec next lint
+
+✔ No ESLint warnings or errors

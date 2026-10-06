@@ -1,0 +1,12 @@
+g-inv-par — a errata em par da base do G-inv: 8 dumps declarados
+  base:  docs/native/N3-PRECHECK-anexos/B5-baseline
+  novos: /private/tmp/claude-501/-Users-marcelviana-projects-octavia/9de05501-9448-45d6-add7-bdd7c04bf582/scratchpad/w/run/dumps/main
+  ✓ S2-com-edicao-avd-pai: SvgView de tipo podados base 8 · novo 8 · byte a byte iguais — N4-D69 — os quatro ícones de tipo trocam de desenho na mesma caixa (P-I9…P-I12)
+  ✓ S2-com-edicao-aviso-sem-rede-avd-pai: SvgView de tipo podados base 6 · novo 6 · byte a byte iguais — N4-D69 — os quatro ícones de tipo trocam de desenho na mesma caixa (P-I9…P-I12)
+  ✓ S2-sem-edicao-S2p-avd-pai: SvgView de tipo podados base 8 · novo 8 · byte a byte iguais — N4-D69 — os quatro ícones de tipo trocam de desenho na mesma caixa (P-I9…P-I12)
+  ✓ S4-resultados-avd-pai: SvgView de tipo podados base 5 · novo 5 · byte a byte iguais — N4-D69 — os quatro ícones de tipo trocam de desenho na mesma caixa (P-I9…P-I12)
+  ✓ S2-com-edicao-tab-pai: SvgView de tipo podados base 8 · novo 8 · byte a byte iguais — N4-D69 — os quatro ícones de tipo trocam de desenho na mesma caixa (P-I9…P-I12)
+  ✓ S2-com-edicao-aviso-sem-rede-tab-pai: SvgView de tipo podados base 6 · novo 6 · byte a byte iguais — N4-D69 — os quatro ícones de tipo trocam de desenho na mesma caixa (P-I9…P-I12)
+  ✓ S2-sem-edicao-S2p-tab-pai: SvgView de tipo podados base 8 · novo 8 · byte a byte iguais — N4-D69 — os quatro ícones de tipo trocam de desenho na mesma caixa (P-I9…P-I12)
+  ✓ S4-resultados-tab-pai: SvgView de tipo podados base 6 · novo 6 · byte a byte iguais — N4-D69 — os quatro ícones de tipo trocam de desenho na mesma caixa (P-I9…P-I12)
+g-inv-par: 8 medidos · todo par provado ✓

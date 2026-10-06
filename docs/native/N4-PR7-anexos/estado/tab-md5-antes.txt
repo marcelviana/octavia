@@ -1,0 +1,6 @@
+# o cache do Marcel no Tab, ANTES (md5 no aparelho · md5 da cópia)
+setlists.json 8533cc5f1b6d19238254229dbf8078bd 8533cc5f1b6d19238254229dbf8078bd
+content.json b62f192a347e0adac05e405f92f9711d b62f192a347e0adac05e405f92f9711d
+files-index.json b21cc49ba038637f55262202b1fe8f9a b21cc49ba038637f55262202b1fe8f9a
+files/1751910900697-Easy_-_Guitar.pdf 05253d4239dadb2696115b934a546bb1 05253d4239dadb2696115b934a546bb1
+demanda: []

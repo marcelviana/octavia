@@ -1,0 +1,36 @@
+## CN 1 · a régua rolando com a lista (dentro da FlatList, como cabeçalho)
+   plantado em apps/native/src/screens/LibraryScreen.tsx; apps/native/test/biblioteca-tela.test.tsx: ['Tests  39 passed (39)']
+## CN 2 · a contagem do chip mudando com a busca (contada sobre o que sobrou)
+   plantado em apps/native/src/screens/LibraryScreen.tsx; apps/native/test/biblioteca-tela.test.tsx: ['Tests  1 failed | 38 passed (39)']
+     × a contagem NÃO muda com a busca nem com os outros chips 28ms
+## CN 3 · a estrela mudando antes da resposta (otimismo: em voo, o desenho do valor pedido)
+   plantado em apps/native/src/screens/LinhaDaBiblioteca.tsx; apps/native/test/biblioteca-tela.test.tsx: ['Tests  1 failed | 38 passed (39)']
+     × a estrela NÃO muda antes da resposta: em voo continua vazada (inerte); só a linha devolvida a enche 17ms
+## CN 4 · o motivo elidido na linha de aviso (numberOfLines={1})
+   plantado em apps/native/src/screens/LinhaDeAviso.tsx; apps/native/test/biblioteca-tela.test.tsx: ['Tests  1 failed | 38 passed (39)']
+     × o motivo nunca elide (sem `numberOfLines`), e a linha some no próximo favoritar e ao sair da tela 18ms
+## CN 5 · o teclado abrindo sozinho (autoFocus no campo de L)
+   plantado em apps/native/src/screens/LibraryScreen.tsx; apps/native/test/biblioteca-tela.test.tsx: ['Tests  39 passed (39)']
+## CN 6 · N4-D92 desfeito (a falha registrada sem consultar a rede)
+   plantado em apps/native/src/files.ts; apps/native/test/arquivo-sem-rede.test.ts: ['Tests  2 failed | 4 passed (6)']
+     × sem rede: o estado é *arquivo não baixado* (`nao-baixado`), não `falhou` 6ms
+     × sem rede, a falha antiga da URL sai (o estado volta a "não baixado") 2ms
+## CN 7 · uma cópia de volta numa tela (o 'Tentar novamente' literal no S1d)
+   plantado em apps/native/src/screens/SetlistsScreen.tsx; apps/native/test/frases-n4.test.ts: ['Tests  1 failed | 45 passed (46)']
+     × nenhuma cópia em apps/native/src/screens/SetlistsScreen.tsx: as frases saem do core 7ms
+## CN 8 · uma frase do core trocada ('carregando…' → 'carregando...')
+   plantado em packages/core/src/frases-content.ts; apps/native/test/frases-n4.test.ts: ['Tests  1 failed | 45 passed (46)']
+     × o core dá o texto que as telas escreviam 5ms
+$ git status --short (depois de desfazer): ''
+## CN 9 · inglês no módulo de frases do core ('loading…'): o gate:a20 (div. 1035)
+     acusações: 1
+     ACUSADO ../../packages/core/src/frases-content.ts:195 [EXTRAS: valor de chave] "loading…" ← termo "loading"
+$ git status --short (fim): ''
+## CN 1 (refeito, com o duplo consertado) · a régua rolando com a lista: MOVIDA para o cabeçalho da FlatList
+    ['Tests  2 failed | 37 passed (39)']
+     × a régua e os filtros ficam FORA da lista (só a lista rola); a lista vem depois da régua 25ms
+     × carregando (a 1ª vez, sem nada no aparelho): *carregando…*; os filtros à vista, INERTES e SEM contagem; a régua *Biblioteca* · *—*; o campo aceita d
+## CN 5 (refeito, com o duplo consertado) · o teclado abrindo sozinho (autoFocus no campo de L)
+    ['Tests  1 failed | 38 passed (39)']
+     × o campo não tem autoFocus (o teclado sobe no toque); o placeholder é *Buscar música* 46ms
+$ git status --short: ' M apps/native/test/biblioteca-tela.test.tsx\n M apps/native/test/fake-react-native.tsx\n'

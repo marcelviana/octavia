@@ -1,0 +1,33 @@
+# N4-PR7 — e1/e2: os chips em B (os textos da folha N4-B-L-base, e os da fixture do mock)
+lib-chip	Letra
+lib-chip	Cifra
+lib-chip	Tab
+lib-chip	Partitura
+lib-chip	Favoritas
+lib-contagem	57
+lib-contagem	3
+lib-contagem	2
+lib-contagem	1
+lib-contagem	0
+lib-contagem	5
+lib-contagem	12
+lib-contagem	999
+# e3: o título da linha (20/600) — a caixa
+lib-titulo	Águas de fixture
+lib-titulo	Uma música de título bem comprido, para medir a quebra
+lib-titulo	Uma música de título bem comprido, para medir o corte do título em retrato e no celular
+# a segunda linha (15)
+lib-segunda	Letra
+lib-segunda	Banda da fixture
+lib-segunda	arquivo não baixado
+lib-segunda	tipo não reconhecido — edite na versão web
+# m6: a régua (a do S4) — a caixa
+regua-picker	Biblioteca · 63 músicas
+regua-picker	63 resultados
+regua-picker	Biblioteca · 12 músicas
+# div. 1014: a linha de aviso com o motivo em 15
+aviso	Sem conexão: dá para ler e tocar, não para favoritar. O favoritar volta quando a rede voltar.
+aviso	Favoritar “Uma música de título bem comprido, para medir a quebra”  ·  não foi possível salvar — confira sua conta no site
+aviso	Favoritar “Uma música de título bem comprido, para medir o corte do título em retrato e no celular”  ·  não foi possível salvar — confira sua conta no site
+aviso	Tirar “Uma música de título bem comprido, para medir o corte do título em retrato e no celular” das favoritas  ·  não foi possível salvar — confira sua conta no site
+aviso	falha no servidor · mostrando dados de há 44 min

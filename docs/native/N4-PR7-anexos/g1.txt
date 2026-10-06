@@ -1,0 +1,24 @@
+declarações: do corpo da PR (GATES_DECL=/private/tmp/claude-501/-Users-marcelviana-projects-octavia/9de05501-9448-45d6-add7-bdd7c04bf582/scratchpad/w/res/decl.txt)
+base=origin/main head=HEAD
+G1a — diff vazio em 46 arquivos DERIVADOS de apps/native + packages/core/src
+      escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+      EXCEÇÕES DECLARADAS (o escopo desta PR):
+        apps/native/App.tsx
+        apps/native/src/files.ts
+        apps/native/src/navigation.tsx
+        apps/native/src/rotas-do-avulso.ts
+        apps/native/src/screens/FiltrosDaBiblioteca.tsx
+        apps/native/src/screens/IndexScreen.tsx
+        apps/native/src/screens/LibraryScreen.tsx
+        apps/native/src/screens/LinhaDaBiblioteca.tsx
+        apps/native/src/screens/ReguaDeDev.tsx
+        apps/native/src/screens/SearchScreen.tsx
+        apps/native/src/screens/SetlistsScreen.tsx
+        apps/native/src/screens/StageScreen.tsx
+        packages/core/src/frases-content.ts
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+      PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+        (nenhum — nenhuma asserção do core pode mudar nesta PR)
+  G1b: só adição ✓

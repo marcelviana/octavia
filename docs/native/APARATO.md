@@ -240,6 +240,16 @@ diante, a receita de guardar e regravar vale para ela também: o que a fixture d
   então o `UP`. Durante o arrasto o `ScrollView` perde o `scrollable="true"`
   (`scrollEnabled={false}`): instrumento que acha a lista por esse atributo tem de
   achá-la também pela classe (div. 429).
+- **O teclado não encolhe a janela do app** (N4-PR7, div. 1082): o `dumpsys window` diz `adjust=resize`, mas com o
+  edge-to-edge do RN a raiz não encolhe — a lista que é o `flex: 1` da tela vai até o fim da janela, por baixo do IME
+  (provavelmente a mesma causa do rodapé do picker sob o teclado, div. 450). A prova é o dump com o teclado de pé: o
+  `bounds` da lista contra o topo do teclado pela região tocável do IME. A L resolve com um `KeyboardAvoidingView`
+  (`padding`, deslocamento = o inset do topo). **No Tab deitado o teclado da Samsung vem FLUTUANTE**, no meio da tela
+  (região tocável x 934–1748 px): ele não encolhe nada, em tela nenhuma (div. 1087).
+- **O `rm` de arquivos do app apaga o do Marcel também** (N4-PR7): o passo do N4-D92 do arnês da L
+  (`N4-PR7-anexos/instrumentos/biblioteca.py`, `semRede`) apaga `files/octavia-<uid>/files/*` — no Tab, o PDF do Marcel
+  saiu junto e voltou pela receita do cache (md5 a md5). Quem apaga arquivo no Tab conta com a receita no fim. E apagar o
+  arquivo não apaga o índice: o `presentUrls` lê o `files-index.json`, e a música continua "baixada" na tela (div. 1086).
 - **IME na folha**: `MS_FOCO_APOS_ANIMACAO = 350` — **10/10 no Tab S6 e 10/10 no
   AVD** (`N2-PR7-anexos/ime-350.txt`); `setTimeout(…, 0)` é 5/10 (div. 260). O
   arnês confirma folha fechada **e** `mInputShown=false` antes de cada toque.

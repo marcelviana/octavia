@@ -1,0 +1,8 @@
+$ o teste do pacote em par, ANTES dos tokens (só o teste mudou):
+[31m     [31m×[31m N4-PR7 — o bloco lib (P-T1, P-T2): C 64 · B 64 · A 120; a linha 80[39m[32m 3[2mms[22m[39m
+[31m     [31m×[31m theme.faixas — sem o bloco web, A continua sendo B fora do lib (com os pares da N4-D64)[39m[32m 1[2mms[22m[39m
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 2 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+[31m[1mAssertionError[22m: expected undefined to strictly equal { filtros: 64, linha: 80 }[39m
+    [90m194| [39m    expect(tema.faixas.A.lib.filtros).not.toBe(tema.faixas.B.lib.filtr…
+    [90m195| [39m    [34mexpect[39m(tema[33m.[39mfaixas)[33m.[39m[34mtoBe[39m(identidade[33m.[39mfaixas)
+[2m      Tests [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m39 passed[39m[22m[90m (41)[39m

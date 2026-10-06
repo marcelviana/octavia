@@ -1,0 +1,5 @@
+Tue Oct  6 15:23:00 -03 2026
+stay_on=0 accel=1 user_rot=0 airplane=0 wifi=1 data=1
+reverse: []
+    lastUpdateTime=2026-10-06 15:21:36
+    pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]

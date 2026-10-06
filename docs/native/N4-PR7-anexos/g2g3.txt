@@ -1,0 +1,28 @@
+G2 — testIDs  antes=81  depois=98
+  G2: antes ⊆ depois ✓
+  testID NOVOS:
+      apps/native/src/screens/FiltrosDaBiblioteca.tsx	testID="lib-filtro-favoritas"
+      apps/native/src/screens/FiltrosDaBiblioteca.tsx	testID={`lib-filtro-${id}`}
+      apps/native/src/screens/LibraryScreen.tsx	testID="lib-apagar"
+      apps/native/src/screens/LibraryScreen.tsx	testID="lib-busca-sem-resultado"
+      apps/native/src/screens/LibraryScreen.tsx	testID="lib-campo"
+      apps/native/src/screens/LibraryScreen.tsx	testID="lib-carregando"
+      apps/native/src/screens/LibraryScreen.tsx	testID="lib-falha-sem-cache"
+      apps/native/src/screens/LibraryScreen.tsx	testID="lib-favoritas-0"
+      apps/native/src/screens/LibraryScreen.tsx	testID="lib-filtro-sem-resultado"
+      apps/native/src/screens/LibraryScreen.tsx	testID="lib-lista"
+      apps/native/src/screens/LibraryScreen.tsx	testID="lib-regua"
+      apps/native/src/screens/LibraryScreen.tsx	testID="lib-tentar"
+      apps/native/src/screens/LibraryScreen.tsx	testID="lib-vazia"
+      apps/native/src/screens/LibraryScreen.tsx	testID="lib-voltar"
+      apps/native/src/screens/LinhaDaBiblioteca.tsx	testID={`lib-favoritar-${id8}`}
+      apps/native/src/screens/LinhaDaBiblioteca.tsx	testID={`lib-linha-${id8}`}
+      apps/native/src/screens/LinhaDaBiblioteca.tsx	testID={`lib-tocar-${id8}`}
+G3 — declarações: do corpo da PR (GATES_DECL=/private/tmp/claude-501/-Users-marcelviana-projects-octavia/9de05501-9448-45d6-add7-bdd7c04bf582/scratchpad/w/res/decl.txt)
+G3 — linhas log( antes=70  depois=70
+      ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+        (nenhuma)
+      REMOÇÕES DECLARADAS (linha → REMOVIDA: razão; N2-D34):
+        (nenhuma)
+      — nenhuma linha de log pode sumir nesta PR
+  G3: nenhuma linha sumiu ✓

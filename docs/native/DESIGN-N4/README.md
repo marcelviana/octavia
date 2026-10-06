@@ -476,6 +476,20 @@ e no avulso um espaçador ocupa o lugar do nome da setlist — para que a única
 (`StageScreen.tsx`, a barra empilhada; `N4-PR6-anexos/README.md` §3). **As erratas de medida começam na N4-E10.**
 *(Este parágrafo e a §4.1 diziam "a partir da N4-E9"; a N4-E9 é esta, de composição.)*
 
+**N4-E10 — os chips de filtro medem menos que a estimativa, e cabem numa linha em B** (div. 1083; N4-PR7, régua de
+desenvolvimento, `N4-PR7-anexos/regua-avd.txt`). A e1 dava *Letra 112 · Cifra 110 · Tab 92 · Partitura 140 · Favoritas
+140*; medidos com o estilo do app (ícone 20 + 8 + rótulo 15 + 8 + contagem 13 + 2 × 12, mais a borda de 1 de cada lado),
+com as contagens da folha (57 · 3 · 2 · 1 · 1): **114,4 · 103,3 · 95,3 · 130,9 · 133,1** — Cifra, Partitura e Favoritas
+6,7 a 9,1 dp abaixo. A e2: **609,0 de 663, folga 54,0** (a folha: 626, folga 37). No dump de B, com as contagens da fixture
+do mock, os cinco numa linha, 601,3 dp do primeiro ao último. **Vale a medida**; a composição não muda (os chips quebram
+sozinhos, P-T1).
+
+**N4-E11 — o teclado em C e em A** (div. 1084; N4-PR7, `N4-PR7-anexos/e9-avd.txt`, `e9-phone.txt`). A e9 dava 300 nas
+duas. Medido pela região tocável do IME: em **C** (AVD deitado) o teclado cobre **279,1 dp** da janela de 627,1 (topo em
+372,0 dp de tela); em **A** (o celular em pé) o teclado tem **288,4 dp** e cobre **320,4 dp** da janela útil (topo em 577,9).
+No Tab deitado o teclado da Samsung é **flutuante**, no meio da tela, e não encolhe nada (div. 1087). **Vale a medida.**
+*(As erratas de medida seguintes começam na N4-E12.)*
+
 ---
 
 ## 7 · Erratas ao brief — o que o desenho decidiu diferente do `N4-BRIEF.md`

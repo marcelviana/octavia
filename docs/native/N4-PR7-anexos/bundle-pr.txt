@@ -1,0 +1,7 @@
+$ bundle servido (PR 2a095a7)
+LibraryScreen 9
+destinoDoTocarDaBiblioteca 3
+DESTINO_DE_BUSCAR_MUSICA 4
+ligarSondaDeRede 4
+localhost:8788 1
+octavia.rocks 0

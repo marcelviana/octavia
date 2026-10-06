@@ -1,0 +1,20 @@
+== arquivos
+13:22:14 toque 'buscar' @ 1335,281 (emulator-5554)
+13:22:22 toque 'lib-filtro-partitura' @ 942,323 (emulator-5554)
+com rede, as partituras: ['não consegui baixar']
+N4P7L-L-partituras-com-rede-avd-ret mCurrentRotation=ROTATION_90 png=200247 xml=51679 22c752224c85
+== semRede
+13:22:51 toque 'buscar' @ 1335,281 (emulator-5554)
+13:23:01 avião=1 (emulator-5554)
+ping: connect: Network is unreachable
+N4P7L-L-sem-rede-avd-ret mCurrentRotation=ROTATION_90 png=335759 xml=81763 85e6d9c3f309
+13:23:16 toque 'Favoritar “Águas de fixture”' @ 1346,698 (emulator-5554)
+  o toque na estrela inerte, sem rede: (nenhuma linha)
+arquivos depois do rm: 'cache/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files:\n\nfiles/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files:\n'
+ping antes de abrir: connect: Network is unreachable
+13:23:40 toque 'buscar' @ 1335,281 (emulator-5554)
+13:23:52 toque 'lib-filtro-partitura' @ 942,431 (emulator-5554)
+N4-D92 os estados de arquivo na L, aberta sem rede: ['arquivo não baixado']
+N4P7L-L-sem-rede-arquivos-nao-baixados-avd-ret mCurrentRotation=ROTATION_90 png=220311 xml=53741 32080946999f
+13:24:10 avião=0 (emulator-5554)
+capturas=3 falhas=0

@@ -1,0 +1,21 @@
+$ gates-web-decl.sh < corpo > declweb
+exit=0
+$ GATES_WEB_DECL=declweb sh scripts/gates-web/g-back.sh origin/main WORKTREE
+## (iii) declaração órfã (gback: de arquivo que não mudou)
+  ✓ nenhuma
+
+G-back: PASSA
+$ sh scripts/gates-web/g-palco.sh
+
+G-palco: PASSA — 0 ocorrências
+$ node scripts/gates-web/g-tok.mjs
+## (ii) arquivos redesenhados — scripts/gates-web/g-tok-arquivos.txt
+  arquivos: 133 · literais de identidade acusados: 0 · toasts: 0 · imports de ui: 0 · textos examinados: 33 · isentos de inglês (scripts/gates-web/g-tok-sem-ingles.txt): 1 · vocabulário: 133 · isenções: 9 · strings de .ts examinadas (div. 828): 485 · frases isentas (scripts/gates-web/g-tok-frases-isentas.txt): 5 de 5 entradas
+
+G-tok: PASSA
+$ node scripts/gates-web/g-tok-cobertura.mjs
+
+G-tok (cobertura): PASSA
+$ node scripts/gates-web/g-faixa-veredito.mjs tests/gates-web/medicoes
+
+G-faixa: PASSA
