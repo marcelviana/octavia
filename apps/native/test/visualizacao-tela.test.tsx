@@ -446,8 +446,10 @@ describe('N4-R7, N4-R8 — o favoritar em V: a estrela com o arco, sem otimismo,
     expect(nome('view-favoritar')).toBe('favoritando “Sétima do ensaio”…')
     expect(exige('view-favoritar').querySelectorAll('circle').length).toBeGreaterThan(0) // o arco (N4-D96)
     expect(inativo('view-tocar')).toBe(false)
-    // sem otimismo: o desenho é o da vazada, inerte
-    const vazadaInerte = paths('view-favoritar')
+    // sem otimismo: em voo o desenho é o da VAZADA (um traço da estrela; a cheia são dois — fundo e contorno). Era um
+    // "o desenho muda depois", que o CN 5 (a estrela cheia em voo) não reprovava: consertado no instrumento (regra 32).
+    const estrela = (): string[] => paths('view-favoritar').filter((d) => d.startsWith('M12 3.3'))
+    expect(estrela()).toHaveLength(1)
     fav.pedidos[0].responder(
       core.classificarFavoritar(CIFRA_SECOES.id, { status: 200, bodyText: JSON.stringify({ ...CIFRA_SECOES, is_favorite: true }) }) satisfies ResultadoDoFavoritar,
     )
@@ -455,7 +457,7 @@ describe('N4-R7, N4-R8 — o favoritar em V: a estrela com o arco, sem otimismo,
     await rerender(tela({ content: { ...CIFRA_SECOES, is_favorite: true } }))
     expect(inativo('view-favoritar')).toBe(false)
     expect(nome('view-favoritar')).toBe('Tirar “Sétima do ensaio” das favoritas')
-    expect(paths('view-favoritar')).not.toEqual(vazadaInerte)
+    expect(estrela()).toHaveLength(2) // cheia: só a linha devolvida a enche
   })
 
   it('a falha: a linha de aviso sob o cabeçalho, com o nome do controle · a frase da espécie; some no próximo favoritar', async () => {
