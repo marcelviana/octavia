@@ -23,7 +23,7 @@
  * Sem retry: uma falha aparece (T1-R37), não é reescrita em silêncio.
  */
 import { Directory, File, Paths } from 'expo-file-system'
-import { fileVerdict, type FileRejectKind } from '@octavia/core'
+import { FRASES_DO_TABLET, fileVerdict, type FileRejectKind } from '@octavia/core'
 import { log } from './log'
 
 /** Último segmento da URL — o único pedaço que pode entrar em log (N1-D5). */
@@ -474,7 +474,7 @@ function motivo(kind: FileRejectKind, bytes: number, esperado: number | null): s
  * A frase que o músico lê quando nada mais se sabe dizer (W2, decisão 2 do
  * aval). O catálogo já traduz `download-error` por "não consegui baixar".
  */
-export const FALHA_GENERICA = 'não consegui baixar'
+export const FALHA_GENERICA = FRASES_DO_TABLET['nao-consegui-baixar'] // N4-PR7: o texto mora no core (a linha de L o reusa)
 
 /** Onde a frase de tela viaja: uma propriedade do próprio `Error`. */
 type ComFrase = Error & { fraseDeTela: string }

@@ -88,6 +88,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native'
 import {
+  FRASES_DO_TABLET,
   frase,
   labelFor,
   reordenavel,
@@ -187,8 +188,8 @@ type MotivoInvalido = Extract<ContentValidity, { ok: false }>['reason']
 
 function invalidoDe(reason: MotivoInvalido): { icone: NomeIcone; rotulo: string; motivo: string } {
   return reason === 'unknown-type'
-    ? { icone: 'tipo-desconhecido', rotulo: '?', motivo: 'tipo não reconhecido — edite na versão web' }
-    : { icone: 'sem-conteudo', rotulo: 'vazia', motivo: 'nada para mostrar — edite na versão web' }
+    ? { icone: 'tipo-desconhecido', rotulo: '?', motivo: FRASES_DO_TABLET['tipo-nao-reconhecido'] }
+    : { icone: 'sem-conteudo', rotulo: 'vazia', motivo: FRASES_DO_TABLET['nada-para-mostrar'] }
 }
 
 /** Segunda linha do item: o que o design mostra sob o título. */
@@ -199,7 +200,7 @@ function sublinha(
   motivo: string | null,
 ): string {
   const partes: string[] = []
-  if (rotulo === 'loading') partes.push('carregando…')
+  if (rotulo === 'loading') partes.push(FRASES_DO_TABLET.carregando)
   if (rotulo === 'unavailable') partes.push('indisponível')
   if (motivo !== null) partes.push(motivo)
   if (titulo.artist !== null && titulo.artist.length > 0) partes.push(titulo.artist)
@@ -690,7 +691,7 @@ export function IndexScreen({
           style={styles.botaoIcone}
           onPress={onVoltar}
           accessibilityRole="button"
-          accessibilityLabel={posicaoAtual === null ? 'Voltar para as setlists' : 'Voltar para o palco'}
+          accessibilityLabel={posicaoAtual === null ? FRASES_DO_TABLET['voltar-setlists'] : 'Voltar para o palco'}
           testID="voltar"
         >
           <Icone nome="voltar" tamanho={24} cor={dark.text} />

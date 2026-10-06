@@ -184,3 +184,79 @@ export function nomeDoVoltarDoAvulso(origem: OrigemDoAvulso): string {
   if (origem === 'visualizacao') return FRASES_N4['voltar-visualizacao']
   return FRASES_DO_PALCO['voltar-busca']
 }
+
+/**
+ * Grupo 5 — **as frases do TABLET que a biblioteca (L) reusa** (N4-PR7; `N4-PR3-anexos/README.md` §1.1, linhas 4–17:
+ * a tabela das que ficaram fora do core). Eram literais das telas e do `files.ts`; vêm com o texto byte a byte
+ * (`apps/native/test/frases-n4.test.ts` (5), contra o texto das telas de antes, a `main` `5c707a3`), e as telas
+ * passam a importar daqui — nenhuma cópia na tela, o molde da N4-PR3. A linha de onde cada uma veio está ao lado.
+ */
+export const FRASES_DO_TABLET = {
+  carregando: 'carregando…', // IndexScreen.tsx:202 — a música da S2 ainda sem dado; L-carregando
+  'tipo-nao-reconhecido': 'tipo não reconhecido — edite na versão web', // IndexScreen.tsx:190 — o item inválido
+  'nada-para-mostrar': 'nada para mostrar — edite na versão web', // IndexScreen.tsx:191 — o item sem corpo
+  'arquivo-nao-baixado': 'arquivo não baixado', // StageScreen.tsx:865 — o S3e; a linha de L
+  'baixando-o-arquivo': 'baixando o arquivo…', // StageScreen.tsx:853 — o S3 baixando; a linha de L
+  'nao-consegui-baixar': 'não consegui baixar', // files.ts:477 (`FALHA_GENERICA`) — a falha sem status; a linha de L
+  'sem-conexao': 'sem conexão', // SearchScreen.tsx:297, SetlistsScreen.tsx:184, :215, :219, :644 — L-falha-sem-cache
+  'buscar-musica': 'Buscar música', // SetlistsScreen.tsx:565 — o botão de S1; o placeholder do campo de L
+  'tentar-novamente': 'Tentar novamente', // SetlistsScreen.tsx:622, :652 — S1e, S1d; L-falha-com-cache e sem cache
+  'voltar-setlists': 'Voltar para as setlists', // IndexScreen.tsx:693 — o voltar da S2 aberta de S1; o voltar de L
+} as const
+
+/**
+ * A régua de L enquanto o número não existe (`L-carregando`, a 1ª vez, sem nada no aparelho): o rótulo sem o número e
+ * o traço no lugar da contagem — o recorte de *Biblioteca · {n} músicas* que a folha desenha (N4-D79; `DESIGN-N4`
+ * §5.4: *"não é frase: a régua sem o número enquanto ele não existe"*). Com número, `reguaBiblioteca` e `nResultados`.
+ */
+export const REGUA_SEM_NUMERO = { rotulo: 'Biblioteca', contagem: '—' } as const
+
+/** S4b e L-busca-sem-resultado: *nada encontrado para “{termo}”* (`SearchScreen.tsx:314`). O termo entra como dado. */
+export function nadaEncontradoPara(termo: string): string {
+  return `nada encontrado para “${termo}”`
+}
+
+/** A frase de escopo da busca (`SearchScreen.tsx:250`) — S4a, S4b e L-busca-sem-resultado. */
+export function escopoDaBusca(n: number): string {
+  return `busca em título, artista, álbum e letra de toda a biblioteca (${n} ${n === 1 ? 'música' : 'músicas'})`
+}
+
+/**
+ * T1-R36 — o texto da falha de sync por `messageKey` (a chave do `errorFrom`), o do S1e/S1d (`SetlistsScreen.tsx:183-191`
+ * na `main` `5c707a3`). A tabela da N4-PR3 nomeia a linha 16, *falha no servidor* — o exemplo da folha em
+ * `L-falha-com-cache`; vem o MAPA inteiro, porque a L mostra a falha que houver, e as sete são o mesmo mecanismo. Uma
+ * chave nova do core cai no genérico.
+ */
+export const TEXTO_DA_FALHA_DE_SYNC = {
+  'erro.sem_conexao': 'sem conexão',
+  'erro.sessao_invalida': 'sua sessão expirou',
+  'erro.servidor_ocupado': 'servidor ocupado · tente em instantes',
+  'erro.nao_encontrado': 'não encontrado no servidor',
+  'erro.requisicao_invalida': 'o servidor recusou o pedido',
+  'erro.falha_do_servidor': 'falha no servidor',
+  'erro.desconhecido': 'falha ao sincronizar',
+} as const
+
+export function textoDaFalhaDeSync(messageKey: string): string {
+  const mapa: { readonly [k: string]: string } = TEXTO_DA_FALHA_DE_SYNC
+  return mapa[messageKey] ?? TEXTO_DA_FALHA_DE_SYNC['erro.desconhecido']
+}
+
+/**
+ * *"há 2 h"*, *"há 15 min"*, *"agora"*, *"nunca"* — a idade do dado, como S1 a escreve (`SetlistsScreen.tsx:128-137` na
+ * `main` `5c707a3`, `haQuantoTempo`). O relógio entra como DADO (`agoraMs`): o core não lê o relógio.
+ */
+export function haQuantoTempo(ms: number | null, agoraMs: number): string {
+  if (ms === null) return 'nunca'
+  const min = Math.floor((agoraMs - ms) / 60_000)
+  if (min < 1) return 'agora'
+  if (min < 60) return `há ${min} min`
+  const h = Math.floor(min / 60)
+  if (h < 24) return `há ${h} h`
+  return `há ${Math.floor(h / 24)} d`
+}
+
+/** S1e e L-falha-com-cache: a idade depois da causa — *" · mostrando dados de há 44 min"* (`SetlistsScreen.tsx:612`). */
+export function mostrandoDadosDe(haQuanto: string): string {
+  return ` · mostrando dados de ${haQuanto}`
+}

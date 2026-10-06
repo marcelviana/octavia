@@ -46,8 +46,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
 import {
+  FRASES_DO_TABLET,
   buildIndex,
+  escopoDaBusca,
   groupResults,
+  nadaEncontradoPara,
+  nResultados,
   searchIndex,
   type ContentDTO,
   type SearchHit,
@@ -153,7 +157,7 @@ export function Regua({ texto, n }: { texto: string; n: number }): React.JSX.Ele
     <View style={styles.regua}>
       <Text style={styles.reguaTexto}>{texto}</Text>
       <View style={styles.reguaFio} />
-      <Text style={styles.reguaTexto}>{`${n} ${n === 1 ? 'resultado' : 'resultados'}`}</Text>
+      <Text style={styles.reguaTexto}>{nResultados(n)}</Text>
     </View>
   )
 }
@@ -247,9 +251,7 @@ export function SearchScreen({
   }, [consultou, setlist, grupos, posicaoDe, contents.length])
 
   /** A frase de escopo — a mesma nos dois vazios, `S4a-vazio` e `S4b`. */
-  const escopo = `busca em título, artista, álbum e letra de toda a biblioteca (${contents.length} ${
-    contents.length === 1 ? 'música' : 'músicas'
-  })`
+  const escopo = escopoDaBusca(contents.length)
 
   return (
     <View style={styles.tela}>
@@ -294,7 +296,7 @@ export function SearchScreen({
         {!online ? (
           <View style={styles.chipOffline} testID="chip-offline">
             <Icone nome="sem-conexao" tamanho={20} cor={dark.offlineInk} />
-            <Text style={styles.chipOfflineTexto}>sem conexão</Text>
+            <Text style={styles.chipOfflineTexto}>{FRASES_DO_TABLET['sem-conexao']}</Text>
             <Text style={styles.chipOfflineApoio}>· busca local</Text>
           </View>
         ) : null}
@@ -311,7 +313,7 @@ export function SearchScreen({
         // S4b — "nada encontrado", nunca tela vazia (J5 critério 3)
         <View style={styles.centro} testID="s4b">
           <Icone nome="nada-encontrado" tamanho={28} cor={dark.muted} />
-          <Text style={styles.centroTitulo}>{`nada encontrado para “${termo.trim()}”`}</Text>
+          <Text style={styles.centroTitulo}>{nadaEncontradoPara(termo.trim())}</Text>
           <Text style={styles.centroApoio}>{escopo}</Text>
         </View>
       ) : (
