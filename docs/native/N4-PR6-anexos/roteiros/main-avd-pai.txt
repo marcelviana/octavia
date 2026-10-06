@@ -1,0 +1,70 @@
+20:50:51 toque canto de setlist-00000001 @ 96,420
+20:51:00 toque 'song-1' @ 658,580 (emulator-5554)
+N4P6M-S3-S3a-letra-1a-avd-pai mCurrentRotation=ROTATION_0 png=231159 xml=26380 f8e18747289d
+20:51:17 toque 'indice' @ 2063,1358 (emulator-5554)
+N4P6M-S2-sem-edicao-S2p-avd-pai mCurrentRotation=ROTATION_0 png=233514 xml=41949 bd6c1b684305
+20:51:34 toque 'borda-avancar' @ 2368,723 (emulator-5554)
+N4P6M-S3-S3b-cifra-escuro-avd-pai mCurrentRotation=ROTATION_0 png=256958 xml=25410 3a0b6700b09d
+20:51:50 toque 'tema' @ 682,1358 (emulator-5554)
+N4P6M-S3-S3b-cifra-claro-avd-pai mCurrentRotation=ROTATION_0 png=257951 xml=25084 fee0ff3c423a
+20:52:05 toque 'tema' @ 682,1358 (emulator-5554)
+20:52:08 toque 'borda-avancar' @ 2368,723 (emulator-5554)
+20:52:14 toque 'auto-scroll' @ 128,1358 (emulator-5554)
+N4P6M-S3-S3c-tab-autoscroll-avd-pai mCurrentRotation=ROTATION_0 png=120411 xml=26960 fab9dbd07986
+20:52:39 toque 'auto-scroll' @ 128,1358 (emulator-5554)
+20:52:43 toque 'borda-avancar' @ 2368,723 (emulator-5554)
+N4P6M-S3-S3d-pdf-12p-avd-pai mCurrentRotation=ROTATION_0 png=204152 xml=23840 29ab9b3dd74f
+20:53:03 avião=1 (emulator-5554)
+20:53:08 toque 'borda-avancar' @ 2368,723 (emulator-5554)
+N4P6M-S3-S3e-nao-baixado-avd-pai mCurrentRotation=ROTATION_0 png=144861 xml=24219 ddb7c7fe47dc
+20:53:29 avião=0 (emulator-5554)
+20:53:37 toque 'borda-avancar' @ 2368,723 (emulator-5554)
+N4P6M-S3-titulo-longo-avd-pai mCurrentRotation=ROTATION_0 png=238243 xml=26490 7d807b075071
+20:53:57 toque 'borda-avancar' @ 2368,723 (emulator-5554)
+20:54:03 toque 'borda-avancar' @ 2368,723 (emulator-5554)
+N4P6M-S3-ultima-avd-pai mCurrentRotation=ROTATION_0 png=233351 xml=26380 d0efa7d96cac
+20:54:18 toque 'borda-avancar' @ 2368,723 (emulator-5554)
+N4P6M-S5-fim-avd-pai mCurrentRotation=ROTATION_0 png=100269 xml=17850 572893035237
+20:54:33 mock modo=normal vazio=True
+N4P6M-S1-S1f-vazia-avd-pai mCurrentRotation=ROTATION_0 png=116223 xml=17992 cb426b582744
+20:55:06 mock modo=normal vazio=False
+20:55:43 toque canto de setlist-00000001 @ 96,420
+N4P6M-S2-com-edicao-avd-pai mCurrentRotation=ROTATION_0 png=254934 xml=64880 dbd68a3b1789
+20:56:02 avião=1 (emulator-5554)
+N4P6M-S2-com-edicao-aviso-sem-rede-avd-pai mCurrentRotation=ROTATION_0 png=244621 xml=57732 8c33af5fd7bf
+20:56:23 avião=0 (emulator-5554)
+20:56:50 toque canto de setlist-00000001 @ 96,420
+20:56:58 toque 'reordenar' @ 676,323 (emulator-5554)
+N4P6M-reordenar-aberto-avd-pai mCurrentRotation=ROTATION_0 png=242554 xml=41986 3e734b76e8ff
+20:57:13 toque 'reordenar-sair' @ 1326,152 (emulator-5554)
+20:57:37 toque canto de setlist-00000001 @ 96,420
+20:57:44 toque 'picker-abrir' @ 266,323 (emulator-5554)
+N4P6M-picker-vazio-avd-pai mCurrentRotation=ROTATION_0 png=117504 xml=16381 69957ef14d48
+20:58:00 toque 'picker-campo' @ 1397,152 (emulator-5554)
+N4P6M-picker-resultados-avd-pai mCurrentRotation=ROTATION_0 png=239596 xml=43605 c0e59ab2467c
+20:58:17 toque 'fechar-busca' @ 108,152 (emulator-5554)
+20:58:40 toque 'criar-setlist' @ 1878,188 (emulator-5554)
+N4P6M-folha-criar-avd-pai mCurrentRotation=ROTATION_0 png=207585 xml=11723 2b058ced40b6
+20:58:56 toque 'form-cancelar' @ 681,1040 (emulator-5554)
+20:59:00 toque canto de setlist-00000001 @ 96,420
+20:59:08 toque 'setlist-editar' @ 1877,323 (emulator-5554)
+20:59:12 toque 'form-nome' @ 1280,552 (emulator-5554)
+N4P6M-folha-validacao-avd-pai mCurrentRotation=ROTATION_0 png=242598 xml=11730 1016ab28bc1a
+20:59:36 toque 'form-cancelar' @ 681,1040 (emulator-5554)
+20:59:39 mock modo=escrita-500 vazio=False
+21:00:00 toque 'criar-setlist' @ 1878,188 (emulator-5554)
+21:00:05 toque 'form-nome' @ 1280,552 (emulator-5554)
+21:00:13 toque 'form-salvar' @ 1875,973 (emulator-5554)
+N4P6M-folha-falhou-avd-pai mCurrentRotation=ROTATION_0 png=202024 xml=12051 d32c9b6f2efc
+21:00:31 toque 'form-cancelar' @ 662,1224 (emulator-5554)
+21:00:34 mock modo=normal vazio=False
+21:00:56 toque canto de setlist-00000001 @ 96,420
+21:01:04 toque 'setlist-apagar' @ 2318,323 (emulator-5554)
+N4P6M-dialogo-apagar-avd-pai mCurrentRotation=ROTATION_0 png=269077 xml=8486 159dc723400f
+21:01:18 toque 'apagar-manter' @ 853,998 (emulator-5554)
+21:01:41 toque 'buscar' @ 2295,188 (emulator-5554)
+N4P6M-S4-vazio-avd-pai mCurrentRotation=ROTATION_0 png=87516 xml=13968 e8ea9f2531aa
+21:01:56 toque 'campo-busca' @ 1397,152 (emulator-5554)
+N4P6M-S4-resultados-avd-pai mCurrentRotation=ROTATION_0 png=175779 xml=30142 a7a5fa5f7748
+21:02:13 toque 'fechar-busca' @ 108,152 (emulator-5554)
+capturas=22 falhas=0

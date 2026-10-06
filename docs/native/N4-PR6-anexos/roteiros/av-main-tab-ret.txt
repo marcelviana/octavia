@@ -1,0 +1,69 @@
+09:02:54 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+09:03:01 toque 'campo-busca' @ 917,152 (RX2N8000F3D)
+09:03:11 toque 'Manhã de ensaio' @ 741,447 (RX2N8000F3D)
+09:03:21 log depois de abrir avulso-letra: 3 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: prefetch plan n=1 reason=demand
+    OCTAVIA: download-error nao-existe.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+N4P6M-S3-avulso-letra-tab-ret mCurrentRotation=ROTATION_0 png=411700 xml=26728 f8c532dcef4b
+09:03:33 toque 'tema' @ 682,2345 (RX2N8000F3D)
+N4P6M-S3-avulso-claro-tab-ret mCurrentRotation=ROTATION_0 png=411449 xml=26402 5bfb27c886bf
+09:03:47 toque 'tema' @ 682,2345 (RX2N8000F3D)
+09:03:50 toque 'busca' @ 1287,2345 (RX2N8000F3D)
+N4P6M-S4-avulso-busca-vazio-tab-ret mCurrentRotation=ROTATION_0 png=97009 xml=14312 2f530b57f132
+09:04:07 toque 'campo-busca' @ 917,152 (RX2N8000F3D)
+N4P6M-S4-avulso-busca-resultados-tab-ret mCurrentRotation=ROTATION_0 png=290037 xml=45425 20fd6a4f7952
+09:04:26 toque 'Segunda do ensaio' @ 741,654 (RX2N8000F3D)
+    OCTAVIA: keepawake on
+    OCTAVIA: prefetch plan n=1 reason=demand
+    OCTAVIA: download-error nao-existe.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+N4P6M-S3-avulso-da-busca-do-avulso-tab-ret mCurrentRotation=ROTATION_0 png=498238 xml=25752 fdc1f9c00032
+09:04:48 toque 'sair' @ 1472,2345 (RX2N8000F3D)
+FALHA letra: ESPERA ESGOTADA: 'campo-busca'
+09:05:30 avião=0 (RX2N8000F3D)
+09:05:32 mock modo=normal vazio=False
+09:05:45 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+09:05:52 toque 'campo-busca' @ 917,152 (RX2N8000F3D)
+09:06:03 toque 'Partitura de doze páginas' @ 741,447 (RX2N8000F3D)
+09:06:14 log depois de abrir avulso-partitura: 6 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: file src=disk name=partitura-12p.pdf bytes=4198
+    OCTAVIA: prefetch plan n=1 reason=demand
+    OCTAVIA: download-error nao-existe.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+    OCTAVIA: pdf-render pages=12 src=disk
+    OCTAVIA: pdf-page n=1/12
+N4P6M-S3-avulso-partitura-tab-ret mCurrentRotation=ROTATION_0 png=191658 xml=24187 d79dc49f4465
+09:06:39 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+09:06:48 avião=1 (RX2N8000F3D)
+09:06:51 toque 'campo-busca' @ 682,152 (RX2N8000F3D)
+09:07:01 toque 'Partitura que nunca baixou' @ 741,447 (RX2N8000F3D)
+09:07:12 log depois de abrir avulso-nao-baixado: 2 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: placeholder kind=file-missing name=nao-existe.pdf
+N4P6M-S3-avulso-nao-baixado-tab-ret mCurrentRotation=ROTATION_0 png=152108 xml=24563 f3e3b22d6282
+09:07:31 avião=0 (RX2N8000F3D)
+09:07:44 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+09:07:51 toque 'campo-busca' @ 917,152 (RX2N8000F3D)
+09:08:02 toque 'Uma música de título bem comprido, para medir o corte do título em retrato e no celular' @ 741,447 (RX2N8000F3D)
+09:08:12 log depois de abrir avulso-titulo-longo: 3 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: prefetch plan n=1 reason=demand
+    OCTAVIA: download-error nao-existe.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+N4P6M-S3-avulso-titulo-longo-tab-ret mCurrentRotation=ROTATION_0 png=414467 xml=26838 3d008b03faf1
+09:08:34 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+09:08:42 toque 'campo-busca' @ 917,152 (RX2N8000F3D)
+09:08:52 toque 'Décima do ensaio' @ 741,447 (RX2N8000F3D)
+09:09:03 log depois de abrir avulso-sem-artista: 3 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: prefetch plan n=1 reason=demand
+    OCTAVIA: download-error nao-existe.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+N4P6M-S3-avulso-sem-artista-tab-ret mCurrentRotation=ROTATION_0 png=491387 xml=25743 dfffbe2f9277
+09:09:13 mock modo=normal vazio=True
+09:09:29 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+09:09:36 toque 'campo-busca' @ 917,152 (RX2N8000F3D)
+09:09:47 toque 'Manhã de ensaio' @ 741,447 (RX2N8000F3D)
+09:10:22 sem `sair` no palco: ESPERA ESGOTADA: 'sair'
+N4P6M-S3-avulso-zero-setlists-tab-ret mCurrentRotation=ROTATION_0 png=72235 xml=8651 9175c57b946a
+09:10:33 mock modo=normal vazio=False
+capturas=10 falhas=1
+  letra: ESPERA ESGOTADA: 'campo-busca'

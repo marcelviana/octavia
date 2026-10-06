@@ -1,0 +1,44 @@
+11:03:05 toque 'buscar' @ 794,396 (emulator-5554)
+11:03:11 toque 'campo-busca' @ 676,177 (emulator-5554)
+11:03:17 toque 'Manhã de ensaio' @ 472,520 (emulator-5554)
+FALHA letra: ESPERA ESGOTADA: 'sair'
+11:04:01 avião=0 (emulator-5554)
+11:04:02 mock modo=normal vazio=False
+11:04:19 toque 'buscar' @ 794,396 (emulator-5554)
+11:04:26 toque 'campo-busca' @ 676,177 (emulator-5554)
+11:04:34 toque 'Partitura de doze páginas' @ 472,520 (emulator-5554)
+FALHA partitura: ESPERA ESGOTADA: 'sair'
+11:05:17 avião=0 (emulator-5554)
+11:05:19 mock modo=normal vazio=False
+11:05:36 toque 'buscar' @ 794,396 (emulator-5554)
+11:05:44 avião=1 (emulator-5554)
+11:05:48 toque 'campo-busca' @ 403,177 (emulator-5554)
+11:05:57 toque 'Partitura que nunca baixou' @ 472,520 (emulator-5554)
+FALHA naoBaixado: ESPERA ESGOTADA: 'sair'
+11:06:38 avião=0 (emulator-5554)
+11:06:39 mock modo=normal vazio=False
+11:06:58 toque 'buscar' @ 794,396 (emulator-5554)
+11:07:05 toque 'campo-busca' @ 676,177 (emulator-5554)
+11:07:12 toque 'Uma música de título bem comprido, para medir o corte do título em retrato e no celular' @ 472,520 (emulator-5554)
+FALHA tituloLongo: ESPERA ESGOTADA: 'sair'
+11:07:54 avião=0 (emulator-5554)
+11:07:56 mock modo=normal vazio=False
+11:08:14 toque 'buscar' @ 794,396 (emulator-5554)
+11:08:21 toque 'campo-busca' @ 676,177 (emulator-5554)
+11:08:28 toque 'Décima do ensaio' @ 472,520 (emulator-5554)
+FALHA semArtista: ESPERA ESGOTADA: 'sair'
+11:09:12 avião=0 (emulator-5554)
+11:09:13 mock modo=normal vazio=False
+11:09:15 mock modo=normal vazio=True
+11:09:38 toque 'buscar' @ 794,396 (emulator-5554)
+11:09:46 toque 'campo-busca' @ 676,177 (emulator-5554)
+11:09:53 toque 'Manhã de ensaio' @ 472,520 (emulator-5554)
+11:10:30 sem `sair` no palco: ESPERA ESGOTADA: 'sair'
+N4P6D-S3-avulso-zero-setlists-phone-ret mCurrentRotation=ROTATION_0 png=258630 xml=22361 3047c65352e5
+11:10:41 mock modo=normal vazio=False
+capturas=1 falhas=5
+  letra: ESPERA ESGOTADA: 'sair'
+  partitura: ESPERA ESGOTADA: 'sair'
+  naoBaixado: ESPERA ESGOTADA: 'sair'
+  tituloLongo: ESPERA ESGOTADA: 'sair'
+  semArtista: ESPERA ESGOTADA: 'sair'

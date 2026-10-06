@@ -469,6 +469,13 @@ alvo de 48 como o ▶, e o nome acessível *Baixar*. **O *Baixar* do palco não 
 palavra (`StageScreen.tsx:824-829`) —, e entra na herança dos botões de palavra (N4-D71). Se V reaproveitar o componente
 do placeholder do palco, o controle é a única diferença, e o palco sai byte a byte igual no G-inv.
 
+**N4-E9 — a página do PDF no palco avulso em B fica na linha 1** (div. 1073; N4-D95, `[Marcel, 2026-10-06]`). As
+molduras `N4-B-S3-avulso-*` (a `N4-B-S3-avulso-partitura`) põem *página 1 de 12* na **linha 2**, depois do título. **Vale
+a composição do palco com setlist** (`N3-B-S3`): a página, a nota e o ponto de sem rede ficam à direita da **linha 1**,
+e no avulso um espaçador ocupa o lugar do nome da setlist — para que a única diferença entre os dois palcos seja o nome
+(`StageScreen.tsx`, a barra empilhada; `N4-PR6-anexos/README.md` §3). **As erratas de medida começam na N4-E10.**
+*(Este parágrafo e a §4.1 diziam "a partir da N4-E9"; a N4-E9 é esta, de composição.)*
+
 ---
 
 ## 7 · Erratas ao brief — o que o desenho decidiu diferente do `N4-BRIEF.md`

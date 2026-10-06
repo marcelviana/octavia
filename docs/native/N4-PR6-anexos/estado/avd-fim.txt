@@ -1,0 +1,7 @@
+FATAL na sessão do CN: 0
+global stay_on_while_plugged_in=1 system accelerometer_rotation=1 system user_rotation=0 global airplane_mode_on=1 global wifi_on=0 global mobile_data=0 
+reverse: []
+connect: Network is unreachable
+OK: killing emulator, bye bye
+OK
+-rw-r--r--@ 1 marcelviana  staff  881129137 Sep 24 14:00 /Users/marcelviana/.android/avd/octavia_tab32.avd/snapshots/default_boot/ram.bin

@@ -1,0 +1,15 @@
+$ node apps/native/scripts/g-n3.mjs --pai <main, paisagem> --faixa <main, retrato>   # SEM os rolados (o arnês da N4-PR4)
+G-N3 — 32 par(es) (paisagem × faixa); medidas: docs/native/DESIGN-N3/medidas.json (tolerância 4 dp)
+(e) TEXTO QUE SOME — REPROVA: 6
+  N4P6M-S2-com-edicao-avd-ret: 2 — "8" · "Oitava do ensaio"
+  N4P6M-S2-com-edicao-aviso-sem-rede-avd-ret: 1 — "Oitava do ensaio"
+  N4P6M-S2-com-edicao-aviso-sem-rede-tab-ret: 1 — "Oitava do ensaio"
+  N4P6M-S2-com-edicao-tab-ret: 2 — "8" · "Oitava do ensaio"
+(b) CORTE — nó que sai da janela útil ou encosta na borda lateral, NOVO contra a paisagem — REPROVA: 0
+G-N3: REPROVA ✗ — (e)=6 em 4 dump(s) · (b)=0 em 0 dump(s) · nome-acessível=8 · rolagem=0
+
+$ node apps/native/scripts/g-n3.mjs --pai <main, paisagem> --faixa <main, retrato> --rolada <main, rolados>   # COM os rolados (rolada.py)
+G-N3 — 32 par(es) (paisagem × faixa); medidas: docs/native/DESIGN-N3/medidas.json (tolerância 4 dp)
+(e) TEXTO QUE SOME — REPROVA: 0
+(b) CORTE — nó que sai da janela útil ou encosta na borda lateral, NOVO contra a paisagem — REPROVA: 0
+G-N3: (e)=0 · (b)=0 · nome-acessível=8 · rolagem=6 ✓ (d′ e 4 dp não reprovam: triagem e errata)

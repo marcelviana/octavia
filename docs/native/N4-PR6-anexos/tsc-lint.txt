@@ -1,0 +1,9 @@
+$ tsc raiz
+exit=0
+$ tsc core
+$ tsc identidade
+$ (apps/native) tsc
+$ pnpm lint
+> pnpm exec next lint
+
+✔ No ESLint warnings or errors

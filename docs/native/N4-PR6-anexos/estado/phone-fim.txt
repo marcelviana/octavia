@@ -1,0 +1,12 @@
+phone fim 2026-10-06 11:11:29
+global stay_on_while_plugged_in=1
+system accelerometer_rotation=0
+system user_rotation=0
+global airplane_mode_on=0
+global wifi_on=1
+global mobile_data=1
+reverse: []
+octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83
+OK
+OK: killing emulator, bye bye
+OK

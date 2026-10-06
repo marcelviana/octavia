@@ -1,0 +1,69 @@
+21:27:26 toque 'buscar' @ 1335,281 (emulator-5554)
+21:27:33 toque 'campo-busca' @ 917,152 (emulator-5554)
+21:27:40 toque 'Manhã de ensaio' @ 741,447 (emulator-5554)
+21:27:47 log depois de abrir avulso-letra: 3 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: prefetch plan n=1 reason=demand
+    OCTAVIA: download-error nao-existe.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+N4P6M-S3-avulso-letra-avd-ret mCurrentRotation=ROTATION_90 png=389045 xml=26386 c673ae977e06
+21:27:59 toque 'tema' @ 682,2318 (emulator-5554)
+N4P6M-S3-avulso-claro-avd-ret mCurrentRotation=ROTATION_90 png=390289 xml=26060 e5cb8a1a0b77
+21:28:12 toque 'tema' @ 682,2318 (emulator-5554)
+21:28:16 toque 'busca' @ 1287,2318 (emulator-5554)
+N4P6M-S4-avulso-busca-vazio-avd-ret mCurrentRotation=ROTATION_90 png=88863 xml=13970 03d24a726be1
+21:28:32 toque 'campo-busca' @ 917,152 (emulator-5554)
+N4P6M-S4-avulso-busca-resultados-avd-ret mCurrentRotation=ROTATION_90 png=278140 xml=45083 0161fc57f1e8
+21:28:49 toque 'Segunda do ensaio' @ 741,654 (emulator-5554)
+    OCTAVIA: keepawake on
+    OCTAVIA: prefetch plan n=1 reason=demand
+    OCTAVIA: download-error nao-existe.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+N4P6M-S3-avulso-da-busca-do-avulso-avd-ret mCurrentRotation=ROTATION_90 png=470819 xml=25410 395df0c23676
+21:29:08 toque 'sair' @ 1472,2318 (emulator-5554)
+FALHA letra: ESPERA ESGOTADA: 'campo-busca'
+21:29:48 avião=0 (emulator-5554)
+21:29:50 mock modo=normal vazio=False
+21:30:11 toque 'buscar' @ 1335,281 (emulator-5554)
+21:30:18 toque 'campo-busca' @ 917,152 (emulator-5554)
+21:30:25 toque 'Partitura de doze páginas' @ 741,447 (emulator-5554)
+21:30:34 log depois de abrir avulso-partitura: 6 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: file src=disk name=partitura-12p.pdf bytes=4198
+    OCTAVIA: prefetch plan n=1 reason=demand
+    OCTAVIA: download-error nao-existe.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+    OCTAVIA: pdf-render pages=12 src=disk
+    OCTAVIA: pdf-page n=1/12
+N4P6M-S3-avulso-partitura-avd-ret mCurrentRotation=ROTATION_90 png=181417 xml=23845 bf8f8a7ead4b
+21:31:04 toque 'buscar' @ 1335,281 (emulator-5554)
+21:31:12 avião=1 (emulator-5554)
+21:31:15 toque 'campo-busca' @ 682,152 (emulator-5554)
+21:31:24 toque 'Partitura que nunca baixou' @ 741,447 (emulator-5554)
+21:31:30 log depois de abrir avulso-nao-baixado: 2 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: placeholder kind=file-missing name=nao-existe.pdf
+N4P6M-S3-avulso-nao-baixado-avd-ret mCurrentRotation=ROTATION_90 png=143354 xml=24221 ca3055282a98
+21:31:49 avião=0 (emulator-5554)
+21:32:08 toque 'buscar' @ 1335,281 (emulator-5554)
+21:32:15 toque 'campo-busca' @ 917,152 (emulator-5554)
+21:32:23 toque 'Uma música de título bem comprido, para medir o corte do título em retrato e no celular' @ 741,447 (emulator-5554)
+21:32:30 log depois de abrir avulso-titulo-longo: 3 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: prefetch plan n=1 reason=demand
+    OCTAVIA: download-error nao-existe.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+N4P6M-S3-avulso-titulo-longo-avd-ret mCurrentRotation=ROTATION_90 png=392608 xml=26496 ead9b782889c
+21:32:58 toque 'buscar' @ 1335,281 (emulator-5554)
+21:33:05 toque 'campo-busca' @ 917,152 (emulator-5554)
+21:33:13 toque 'Décima do ensaio' @ 741,447 (emulator-5554)
+21:33:19 log depois de abrir avulso-sem-artista: 3 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: prefetch plan n=1 reason=demand
+    OCTAVIA: download-error nao-existe.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+N4P6M-S3-avulso-sem-artista-avd-ret mCurrentRotation=ROTATION_90 png=465467 xml=25401 3c9be66993cb
+21:33:30 mock modo=normal vazio=True
+21:33:50 toque 'buscar' @ 1335,281 (emulator-5554)
+21:33:57 toque 'campo-busca' @ 917,152 (emulator-5554)
+21:34:04 toque 'Manhã de ensaio' @ 741,447 (emulator-5554)
+21:34:41 sem `sair` no palco: ESPERA ESGOTADA: 'sair'
+N4P6M-S3-avulso-zero-setlists-avd-ret mCurrentRotation=ROTATION_90 png=61906 xml=8309 6d031945aa06
+21:34:52 mock modo=normal vazio=False
+capturas=10 falhas=1
+  letra: ESPERA ESGOTADA: 'campo-busca'

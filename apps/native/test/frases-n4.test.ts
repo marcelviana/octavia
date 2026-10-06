@@ -177,3 +177,37 @@ describe('(3) a P-F8 no core, igual à da S4 (lida do fonte)', () => {
     for (const n of [0, 1, 2, 57]) expect(conteudo.nResultados(n)).toBe(daTela(n))
   })
 })
+
+/**
+ * (4) **N4-PR6 — as frases do palco avulso no core, sem cópia na tela** (`N4-PR3-anexos/README.md` §1.1, linhas 1–3;
+ * o molde da N4-PR3: *"a base da tela antes, a frase no core depois, nenhuma cópia na tela"*). A PR-6 muda o palco,
+ * então a tela passa a importar. **A base da tela** é o texto que o `StageScreen.tsx` escrevia na `main` de antes
+ * desta PR (`d78ea89`: `:513` `'AVULSA'`, `:529` o template da página, `:721` `'Voltar para a busca'`), copiado
+ * aqui verbatim — o core tem de dar o MESMO texto, e o fonte do palco não pode ter mais a cópia.
+ * E as duas outras origens do voltar do avulso (N4-R16), que já estão no core: *Voltar para a biblioteca* (do site,
+ * `view.voltar`) e *Voltar para a visualização* (P-F6).
+ */
+describe('(4) as frases do palco avulso no core, sem cópia no palco', () => {
+  const FONTE = ler('apps/native/src/screens/StageScreen.tsx')
+  const BASE = { avulsa: 'AVULSA', voltarBusca: 'Voltar para a busca' }
+  const paginaDaBase = (n: number, total: number): string => `página ${n} de ${total}`
+
+  it('o core dá o texto que o palco escrevia', () => {
+    expect(conteudo.FRASES_DO_PALCO.avulsa).toBe(BASE.avulsa)
+    expect(conteudo.FRASES_DO_PALCO['voltar-busca']).toBe(BASE.voltarBusca)
+    for (const [n, t] of [[1, 12], [12, 12], [1, 1]] as const) expect(conteudo.paginaDe(n, t)).toBe(paginaDaBase(n, t))
+  })
+
+  it('o voltar do avulso pela origem (N4-R16): busca · biblioteca · visualização', () => {
+    expect(conteudo.nomeDoVoltarDoAvulso('busca')).toBe('Voltar para a busca')
+    expect(conteudo.nomeDoVoltarDoAvulso('biblioteca')).toBe(conteudo.VOCABULARIO_DE_CONTENT['voltar-biblioteca'])
+    expect(conteudo.nomeDoVoltarDoAvulso('biblioteca')).toBe('Voltar para a biblioteca')
+    expect(conteudo.nomeDoVoltarDoAvulso('visualizacao')).toBe(conteudo.FRASES_N4['voltar-visualizacao'])
+  })
+
+  it('nenhuma cópia no palco: as três frases saem do core', () => {
+    expect(FONTE).not.toContain(`'${BASE.avulsa}'`)
+    expect(FONTE).not.toContain(`'${BASE.voltarBusca}'`)
+    expect(FONTE).not.toContain('`página ${')
+  })
+})

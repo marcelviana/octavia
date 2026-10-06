@@ -1,0 +1,15 @@
+md5 do Tab (depois):
+6b3ad0ba5b46e9a8b302730404624763  setlists.json
+b62f192a347e0adac05e405f92f9711d  content.json
+b21cc49ba038637f55262202b1fe8f9a  files-index.json
+05253d4239dadb2696115b934a546bb1  files/1751910900697-Easy_-_Guitar.pdf
+cache/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3/files:
+total 6
+drwx------ 2 u0_a292 u0_a292       3488 2026-10-04 12:47 .
+drwx------ 3 u0_a292 u0_a292_cache 3488 2026-09-11 09:59 ..
+
+files/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3/files:
+total 142
+drwx------ 2 u0_a292 u0_a292   3488 2026-10-06 10:39 .
+drwx------ 3 u0_a292 u0_a292   3488 2026-10-06 10:38 ..
+-rw------- 1 u0_a292 u0_a292 138916 2026-09-25 16:17 1751910900697-Easy_-_Guitar.pdf

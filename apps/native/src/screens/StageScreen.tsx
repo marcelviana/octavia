@@ -43,12 +43,18 @@ import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake'
 import Pdf from 'react-native-pdf'
 import {
   bodyOf,
+  ehFormatoQueOAppMostra,
   endOfSetlist,
+  FRASES_DO_PALCO,
   isValidContent,
   nextPosition,
+  nomeDoVoltarDoAvulso,
+  paginaDe,
   prevPosition,
   resolveSong,
+  VOCABULARIO_DE_CONTENT,
   type ContentDTO,
+  type OrigemDoAvulso,
   type SetlistDTO,
 } from '@octavia/core'
 import { ensureFile, fileNameFromUrl, fraseDaFalha, hasFile, knownBytes } from '../files'
@@ -75,7 +81,13 @@ import {
 import { useFaixa } from '../useFaixa'
 
 export interface StageScreenProps {
-  setlist: SetlistDTO
+  /**
+   * A setlist do palco — ou `null`: o **palco avulso sem hospedeira** (N4-R16, N4-D30, N4-D63). Aberto de fora de
+   * uma setlist (a busca de S1; na PR-7 a biblioteca, na PR-8 a visualização), o palco não tem setlist: a barra de
+   * cima diz `AVULSA` **sem nome de setlist**, a de baixo não tem o índice, e o prefetch sob demanda é o desta
+   * música (div. 964). Com `null`, o `avulsaContentId` é obrigatório.
+   */
+  setlist: SetlistDTO | null
   contentById: Map<string, ContentDTO>
   posicao: number
   /**
@@ -85,6 +97,12 @@ export interface StageScreenProps {
    * onde a busca partiu.
    */
   avulsaContentId: string | null
+  /**
+   * De onde o avulso SEM hospedeira veio — o nome acessível do voltar (*Voltar para a busca · para a biblioteca ·
+   * para a visualização*, N4-R16). `null` no palco com setlist; o avulso aberto pela busca de dentro de uma setlist
+   * continua *Voltar para a busca* (N4-D30).
+   */
+  origemDoAvulso?: OrigemDoAvulso | null
   online: boolean
   onPosicao: (p: number) => void
   onFim: () => void
@@ -161,6 +179,7 @@ export function StageScreen({
   contentById,
   posicao,
   avulsaContentId,
+  origemDoAvulso = null,
   online,
   onPosicao,
   onFim,
@@ -277,7 +296,7 @@ export function StageScreen({
   const navegouEm = useRef(0)
 
   const songs = useMemo(
-    () => [...setlist.setlist_songs].sort((a, b) => a.position - b.position),
+    () => (setlist === null ? [] : [...setlist.setlist_songs].sort((a, b) => a.position - b.position)),
     [setlist],
   )
   const n = songs.length
@@ -326,20 +345,28 @@ export function StageScreen({
   const urlArquivo =
     validade !== null && validade.ok && validade.body === 'file' ? content?.file_url ?? null : null
 
+  /**
+   * N4-D43, N4-D83 — o arquivo é de um **formato que o app ainda não mostra**? Decide a extensão (o core: só `.pdf`
+   * se mostra), antes do disco: baixado ou não, o leitor de PDF não o abre — o palco nem tenta (nenhum `ensureFile`)
+   * e mostra o placeholder de formato. Vale no palco com setlist e no avulso: é o mesmo componente. A base do G-inv
+   * não tem esse caso (a fixture do pre-check do N3 só tem `.pdf`, div. 1028).
+   */
+  const formato = urlArquivo !== null && !ehFormatoQueOAppMostra(urlArquivo)
+
   useEffect(() => {
     pararScroll()
     setRodando(false)
     setMotivoVisivel(null)
     y.current = 0
     scroll.current?.scrollTo({ y: 0, animated: false })
-    if (navegouEm.current > 0) {
+    if (navegouEm.current > 0 && setlist !== null) {
       log(
         `nav n=${posicao}/${n} setlist=${setlist.id.slice(0, 8)} t=${Date.now() - navegouEm.current}`,
       )
       navegouEm.current = 0
     }
     if (chavePlaceholder !== null) log(`placeholder kind=${chavePlaceholder}`)
-  }, [posicao, n, setlist.id, chavePlaceholder, pararScroll])
+  }, [posicao, n, setlist, chavePlaceholder, pararScroll])
 
   /**
    * T1-R26 — o arquivo desta posição: **disco primeiro** (A9/A13), rede só
@@ -377,22 +404,27 @@ export function StageScreen({
 
   useEffect(() => {
     setPagina({ n: 0, total: 0 })
-    if (urlArquivo === null) {
+    if (urlArquivo === null || formato) {
       setArquivo({ fase: 'buscando' })
       return
     }
     void buscarArquivo(urlArquivo, false)
-  }, [urlArquivo, buscarArquivo])
+  }, [urlArquivo, formato, buscarArquivo])
 
   /**
    * T1-R16 — prefetch sob demanda a partir desta posição (atual, +1, +2, +3,
    * −1, resto). Roda a cada navegação e só com rede; o `ensureFile` deduplica
    * o download que o efeito de cima já pode ter começado.
+   *
+   * No avulso SEM hospedeira (N4-PR6, div. 964) não há setlist de onde partir:
+   * o plano é o arquivo DESTA música — antes ele era o da primeira setlist da
+   * lista, a partir da posição da busca.
    */
+  const avulsaSemHospedeira = setlist === null ? avulsaContentId : null
   useEffect(() => {
     if (!online) return
-    void prefetchDemanda(setlist, contentById, posicao).then(onArquivosMudaram)
-  }, [setlist, contentById, posicao, online, onArquivosMudaram])
+    void prefetchDemanda(setlist, contentById, posicao, avulsaSemHospedeira).then(onArquivosMudaram)
+  }, [setlist, contentById, posicao, avulsaSemHospedeira, online, onArquivosMudaram])
 
   const irPara = useCallback(
     (destino: number) => {
@@ -510,7 +542,7 @@ export function StageScreen({
   // ficam (N3-D13). Em C a ordem é a de sempre: posição, setlist, título,
   // página, nota, ponto.
   const posicaoEl = (
-    <Text style={[styles.posicao, { color: cor.text }]}>{avulsa ? 'AVULSA' : `${posicao} DE ${n}`}</Text>
+    <Text style={[styles.posicao, { color: cor.text }]}>{avulsa ? FRASES_DO_PALCO.avulsa : `${posicao} DE ${n}`}</Text>
   )
   const tituloEl = (extra: typeof styles.tituloNaLinha | null): React.JSX.Element => (
     <Text style={[styles.titulo, extra, { color: cor.text }]} numberOfLines={1}>
@@ -526,7 +558,7 @@ export function StageScreen({
       {/* S3d: "página n de N" — só no PDF, e só depois de ele carregar. */}
       {pagina.total > 0 ? (
         <Text style={[styles.paginaTexto, { color: cor.muted }]} testID="pagina">
-          {`página ${pagina.n} de ${pagina.total}`}
+          {paginaDe(pagina.n, pagina.total)}
         </Text>
       ) : null}
       {/* T1-R35: a nota da POSIÇÃO, discreta; sem área vazia quando é nula. */}
@@ -541,15 +573,22 @@ export function StageScreen({
     </>
   )
 
+  // N4-R16 — no avulso SEM hospedeira não há nome de setlist: em C o título (`flex: 1`) ganha a largura dele; em B a
+  // linha 1 fica com `AVULSA` e um espaçador no lugar do nome, para a página, a nota e o ponto de sem rede ficarem
+  // à direita, onde estão no palco com setlist (N3-B-S3). Nada mais da barra muda.
   return (
     <View style={[styles.tela, { backgroundColor: cor.bg }]}>
       {t.empilha ? (
         <View style={[styles.barraTopo, styles.barraEmpilhada, { height: t.barra, borderBottomColor: cor.line }]}>
           <View style={styles.linhaDaBarra}>
             {posicaoEl}
-            <Text style={[styles.nomeSetlist, styles.nomeSetlistNaLinha, { color: cor.muted }]} numberOfLines={1}>
-              {setlist.name}
-            </Text>
+            {setlist !== null ? (
+              <Text style={[styles.nomeSetlist, styles.nomeSetlistNaLinha, { color: cor.muted }]} numberOfLines={1}>
+                {setlist.name}
+              </Text>
+            ) : (
+              <View style={styles.nomeSetlistNaLinha} />
+            )}
             {extrasDaBarra}
           </View>
           {tituloEl(styles.tituloNaLinha)}
@@ -557,16 +596,25 @@ export function StageScreen({
       ) : (
         <View style={[styles.barraTopo, { height: t.barra, borderBottomColor: cor.line }]}>
           {posicaoEl}
-          <Text style={[styles.nomeSetlist, { color: cor.muted }]} numberOfLines={1}>
-            {setlist.name}
-          </Text>
+          {setlist !== null ? (
+            <Text style={[styles.nomeSetlist, { color: cor.muted }]} numberOfLines={1}>
+              {setlist.name}
+            </Text>
+          ) : null}
           {tituloEl(null)}
           {extrasDaBarra}
         </View>
       )}
 
       <View style={styles.meio} onLayout={medirMeio}>
-        {urlArquivo !== null ? (
+        {formato && urlArquivo !== null ? (
+          <Formato
+            nome={fileNameFromUrl(urlArquivo)}
+            tipo={TIPO[content?.content_type ?? ''] ?? 'arquivo'}
+            bytes={knownBytes(urlArquivo)}
+            cor={cor}
+          />
+        ) : urlArquivo !== null ? (
           <Arquivo
             estado={arquivo}
             titulo={content?.title ?? ''}
@@ -700,14 +748,17 @@ export function StageScreen({
             distribuição horizontal; as seis molduras do S3 passam a mostrar
             uma barra que o app não desenha mais, e isso é a errata E16. */}
         <View style={styles.espacador} />
-        <Controle
-          icone="indice"
-          accessibilityLabel="Abrir o índice da setlist"
-          cor={cor}
-          onPress={onIndice}
-          onMotivo={revelarMotivo}
-          testID="indice"
-        />
+        {/* N4-R16 — o avulso sem hospedeira não tem índice: não há setlist a abrir. */}
+        {setlist !== null ? (
+          <Controle
+            icone="indice"
+            accessibilityLabel="Abrir o índice da setlist"
+            cor={cor}
+            onPress={onIndice}
+            onMotivo={revelarMotivo}
+            testID="indice"
+          />
+        ) : null}
         <Controle
           icone="busca"
           accessibilityLabel="Buscar na biblioteca"
@@ -718,7 +769,7 @@ export function StageScreen({
         />
         <Controle
           icone={avulsa ? 'voltar' : 'sair'}
-          accessibilityLabel={avulsa ? 'Voltar para a busca' : 'Sair do palco'}
+          accessibilityLabel={avulsa ? nomeDoVoltarDoAvulso(origemDoAvulso ?? 'busca') : 'Sair do palco'}
           cor={cor}
           onPress={onSair}
           onMotivo={revelarMotivo}
@@ -828,6 +879,38 @@ function Arquivo({
       >
         <Text style={[styles.botaoBaixarTexto, { color: cor.text }]}>Baixar</Text>
       </Pressable>
+    </View>
+  )
+}
+
+/**
+ * N4-D43, N4-D83 — o arquivo de um formato que o app ainda não mostra (pela extensão; o core decide). A moldura é a
+ * `N4-*-S3-avulso-formato`: o `tipo-desconhecido` de 28 em `offlineInk`, a frase do site (*"não foi possível abrir o
+ * arquivo — confira o formato"*, `view.erro.formato`) e, em mono, o nome do arquivo · o tipo (o tamanho quando o
+ * aparelho o conhece). Sem *Baixar*: baixar não o faria abrir. O mesmo componente no palco com setlist e no avulso.
+ * O lugar é o dos outros placeholders do palco (o S3e: no topo do corpo, `placeholder`), e os tamanhos são os do
+ * pacote: a frase em `size.button` (17, o da folha) e o nome em mono `size.label` (o da página do S3d, que a folha
+ * desenha em 13 nos dois lugares).
+ */
+function Formato({
+  nome,
+  tipo,
+  bytes,
+  cor,
+}: {
+  nome: string
+  tipo: string
+  bytes: number | null
+  cor: (typeof colors)[ThemeName]
+}): React.JSX.Element {
+  const tamanho = bytes === null ? '' : ` (${tamanhoLegivel(bytes)})`
+  return (
+    <View style={styles.placeholder} testID="s3-formato">
+      <Icone nome="tipo-desconhecido" tamanho={28} cor={cor.offlineInk} />
+      <View style={styles.formatoTexto}>
+        <Text style={[styles.formatoFrase, { color: cor.text }]}>{VOCABULARIO_DE_CONTENT['erro-formato']}</Text>
+        <Text style={[styles.formatoArquivo, { color: cor.muted }]}>{`${nome} · ${tipo}${tamanho}`}</Text>
+      </View>
     </View>
   )
 }
@@ -978,6 +1061,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     maxWidth: 560,
   },
+  formatoTexto: { alignItems: 'center', gap: space.xs },
+  formatoFrase: { fontFamily: font.ui, fontSize: size.button, textAlign: 'center', maxWidth: 560 },
+  formatoArquivo: { fontFamily: font.mono, fontSize: size.label, textAlign: 'center' },
   // A geometria das seis molduras de S3 do design: caixa 66 × 66 (64 + a
   // moldura de 1 de cada lado), gap 16, fileira de 558 dp, os mesmos sete x
   // nas seis variantes (V1-PR3-PRECHECK §8.5, div. 36).

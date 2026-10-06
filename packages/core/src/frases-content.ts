@@ -152,3 +152,35 @@ export const SEPARADOR_DE_ORACOES = '  ·  '
 export function compor(oracoes: readonly string[]): string {
   return oracoes.join(SEPARADOR_DE_ORACOES)
 }
+
+/**
+ * Grupo 4 — **as frases do PALCO que o avulso sem hospedeira reusa** (N4-PR6; `N4-PR3-anexos/README.md` §1.1, linhas
+ * 1–3: a tabela das que ficaram fora do core). Eram literais do `StageScreen.tsx` (`:513`, `:529`, `:721` na `main`
+ * `d78ea89`); vêm com o texto byte a byte (`apps/native/test/frases-n4.test.ts` (4), contra o texto da tela de
+ * antes), e o palco passa a importar daqui — nenhuma cópia na tela, o molde da N4-PR3.
+ */
+export const FRASES_DO_PALCO = {
+  avulsa: 'AVULSA', // a posição do palco avulso, no lugar do "n DE N"
+  'voltar-busca': 'Voltar para a busca', // o nome acessível do voltar do avulso aberto da busca
+} as const
+
+/** A página do PDF na barra do palco (S3d): *página {n} de {N}*. */
+export function paginaDe(n: number, total: number): string {
+  return `página ${n} de ${total}`
+}
+
+/**
+ * De onde o palco avulso SEM hospedeira foi aberto (N4-R16, N4-D63): a busca (de S1, nesta PR), a biblioteca (L, na
+ * PR-7) ou a visualização (V, na PR-8). É o contrato que as duas telas que ainda não existem vão usar.
+ */
+export type OrigemDoAvulso = 'busca' | 'biblioteca' | 'visualizacao'
+
+/**
+ * O nome acessível do voltar do avulso, pela origem (N4-R16): *Voltar para a busca* (a do palco de hoje), *Voltar
+ * para a biblioteca* (do site, `view.voltar`) e *Voltar para a visualização* (P-F6).
+ */
+export function nomeDoVoltarDoAvulso(origem: OrigemDoAvulso): string {
+  if (origem === 'biblioteca') return VOCABULARIO_DE_CONTENT['voltar-biblioteca']
+  if (origem === 'visualizacao') return FRASES_N4['voltar-visualizacao']
+  return FRASES_DO_PALCO['voltar-busca']
+}

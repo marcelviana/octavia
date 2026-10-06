@@ -9,7 +9,7 @@
  */
 import { useCallback, useState } from 'react'
 import { DarkTheme, NavigationContainer, type Theme } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { createNativeStackNavigator, type NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { StyleSheet, Text, View } from 'react-native'
 import type { ContentDTO, SetlistDTO } from '@octavia/core'
 import { EndScreen } from './screens/EndScreen'
@@ -18,6 +18,13 @@ import { LoginScreen } from './screens/LoginScreen'
 import { SearchScreen } from './screens/SearchScreen'
 import { SetlistsScreen, type SetlistsScreenProps } from './screens/SetlistsScreen'
 import { StageScreen } from './screens/StageScreen'
+import {
+  destinoDaBuscaDoPalco,
+  destinoDoResultado,
+  type Destino,
+  type ParamsDaBusca,
+  type ParamsDoPalco,
+} from './rotas-do-avulso'
 import { dark, font, size, space, tracking } from './theme'
 
 export type RootStackParamList = {
@@ -28,10 +35,13 @@ export type RootStackParamList = {
    * `avulsa` (T1-R22): abrir pela busca uma música que NÃO está na setlist
    * empilha uma segunda instância do palco. O `goBack` devolve a primeira,
    * com a `position` intacta — a pilha É a restauração, sem estado global.
+   *
+   * N4-PR6 — ou o avulso SEM hospedeira (`{ avulsa, origem }`, sem setlist,
+   * N4-R16): ver `rotas-do-avulso.ts`.
    */
-  Stage: { setlistId: string; position: number; avulsa?: string }
-  /** `posicao` é a do palco na abertura; ausente quando a busca vem da S1/S2. */
-  Search: { setlistId?: string; posicao?: number }
+  Stage: ParamsDoPalco
+  /** `posicao` é a do palco na abertura; ausente quando a busca vem da S1/S2 ou do avulso sem hospedeira. */
+  Search: ParamsDaBusca
   End: { setlistId: string }
 }
 
@@ -73,6 +83,20 @@ export interface NavigationProps {
     /** O disco de arquivos mudou (N1-PR5) — a raiz recalcula `filesPresent`. */
     onArquivosMudaram: () => void
   }
+}
+
+/**
+ * Executa um `Destino` de `rotas-do-avulso.ts` — o `push` é o que faz o avulso
+ * sem hospedeira e a busca dele EMPILHAREM sobre a origem, que volta no
+ * `goBack` na mesma posição.
+ */
+function ir(navigation: NativeStackNavigationProp<RootStackParamList>, d: Destino): void {
+  if (d.rota === 'Stage') {
+    if (d.acao === 'push') navigation.push('Stage', d.params)
+    else if (d.acao === 'replace') navigation.replace('Stage', d.params)
+    else navigation.navigate('Stage', d.params)
+  } else if (d.acao === 'push') navigation.push('Search', d.params)
+  else navigation.navigate('Search', d.params)
 }
 
 export function Navigation({ signedIn, setlists, dados }: NavigationProps): React.JSX.Element {
@@ -180,7 +204,28 @@ export function Navigation({ signedIn, setlists, dados }: NavigationProps): Reac
 
             <Stack.Screen name="Stage">
               {({ navigation, route }) => {
-                const setlist = acharSetlist(route.params.setlistId)
+                const p = route.params
+                // N4-R16 — o avulso SEM hospedeira: nenhuma setlist é procurada,
+                // então zero setlists abre igual (div. 1001).
+                if ('origem' in p) {
+                  return (
+                    <StageScreen
+                      setlist={null}
+                      contentById={dados.contentById}
+                      posicao={1}
+                      avulsaContentId={p.avulsa}
+                      origemDoAvulso={p.origem}
+                      online={dados.online}
+                      onPosicao={() => undefined}
+                      onFim={() => undefined}
+                      onIndice={() => undefined}
+                      onBusca={() => ir(navigation, destinoDaBuscaDoPalco(null, 1))}
+                      onSair={() => navigation.goBack()}
+                      onArquivosMudaram={dados.onArquivosMudaram}
+                    />
+                  )
+                }
+                const setlist = acharSetlist(p.setlistId)
                 if (setlist === undefined) {
                   return <Placeholder titulo="SETLIST" nota="não está no cache" />
                 }
@@ -188,27 +233,23 @@ export function Navigation({ signedIn, setlists, dados }: NavigationProps): Reac
                   <StageScreen
                     setlist={setlist}
                     contentById={dados.contentById}
-                    posicao={route.params.position}
-                    avulsaContentId={route.params.avulsa ?? null}
+                    posicao={p.position}
+                    avulsaContentId={p.avulsa ?? null}
+                    origemDoAvulso={null}
                     online={dados.online}
                     onPosicao={(position) => navigation.setParams({ position })}
                     onFim={() => navigation.navigate('End', { setlistId: setlist.id })}
                     onIndice={() =>
                       navigation.navigate('Index', {
                         setlistId: setlist.id,
-                        posicaoAtual: route.params.position,
+                        posicaoAtual: p.position,
                       })
                     }
-                    onBusca={() =>
-                      navigation.navigate('Search', {
-                        setlistId: setlist.id,
-                        posicao: route.params.position,
-                      })
-                    }
+                    onBusca={() => ir(navigation, destinoDaBuscaDoPalco(setlist.id, p.position))}
                     // No avulso "Sair" é "Voltar": desempilha e o palco de
                     // baixo reaparece na posição em que ficou (T1-R22).
                     onSair={() =>
-                      route.params.avulsa !== undefined
+                      p.avulsa !== undefined
                         ? navigation.goBack()
                         : navigation.navigate('Setlists')
                     }
@@ -257,23 +298,15 @@ export function Navigation({ signedIn, setlists, dados }: NavigationProps): Reac
                     posicao={route.params.posicao ?? null}
                     online={dados.online}
                     onFechar={() => navigation.goBack()}
-                    onAbrir={(contentId, posicaoNaSetlist) => {
-                      // Na setlist: é um SALTO — o palco existente vai para a
-                      // posição. Fora dela: `replace` põe o palco avulso no
-                      // lugar da busca, e o `goBack` volta ao palco original.
-                      if (setlist !== null && posicaoNaSetlist !== null) {
-                        navigation.navigate('Stage', {
-                          setlistId: setlist.id,
-                          position: posicaoNaSetlist,
-                        })
-                        return
-                      }
-                      navigation.replace('Stage', {
-                        setlistId: setlist?.id ?? dados.lista[0]?.id ?? '',
-                        position: route.params.posicao ?? 1,
-                        avulsa: contentId,
-                      })
-                    }}
+                    // Na setlist: é um SALTO — o palco existente vai para a
+                    // posição. Fora dela: `replace` põe o palco avulso no
+                    // lugar da busca, e o `goBack` volta ao palco original.
+                    // Sem setlist (de S1, ou do avulso): o avulso SEM
+                    // hospedeira empilha, e o voltar devolve esta busca no
+                    // mesmo termo (N4-R16) — `rotas-do-avulso.ts`.
+                    onAbrir={(contentId, posicaoNaSetlist) =>
+                      ir(navigation, destinoDoResultado(setlist, route.params.posicao ?? null, contentId, posicaoNaSetlist))
+                    }
                   />
                 )
               }}

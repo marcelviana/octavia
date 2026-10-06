@@ -1,0 +1,40 @@
+stderr | tests/security/auth-penetration-testing.test.ts > Authentication and Authorization Penetration Tests > Authentication Bypass Attempts > should prevent session fixation attacks
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A03:2021 – Injection Attacks > should prevent LDAP injection
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A03:2021 – Injection Attacks > should prevent LDAP injection
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A03:2021 – Injection Attacks > should prevent LDAP injection
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A07:2021 – Identification and Authentication Failures > should prevent credential stuffing attacks
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A07:2021 – Identification and Authentication Failures > should prevent credential stuffing attacks
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A07:2021 – Identification and Authentication Failures > should prevent credential stuffing attacks
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A07:2021 – Identification and Authentication Failures > should prevent session fixation
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A07:2021 – Identification and Authentication Failures > should implement account lockout after failed attempts
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A08:2021 – Software and Data Integrity Failures > should verify API response integrity
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Prototype Pollution Prevention > should prevent prototype pollution in content data
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Prototype Pollution Prevention > should prevent prototype pollution in content data
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Prototype Pollution Prevention > should prevent prototype pollution in content data
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Prototype Pollution Prevention > should prevent prototype pollution in content data
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Large Payload Protection > should reject oversized payloads
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Unicode and Encoding Attacks > should handle Unicode-encoded attacks
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Unicode and Encoding Attacks > should handle Unicode-encoded attacks
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Unicode and Encoding Attacks > should handle Unicode-encoded attacks
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Unicode and Encoding Attacks > should handle Unicode-encoded attacks
+stdout | tests/security/token-blacklist-concurrency.test.ts > Token Blacklisting Concurrency Tests > Database Consistency Under Load > should handle database failures gracefully
+ Test Files  133 passed | 3 skipped (136)
+      Tests  1539 passed | 59 skipped (1598)

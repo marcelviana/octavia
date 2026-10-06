@@ -1,0 +1,8 @@
+21:16:13 toque 'buscar' @ 1335,281 (emulator-5554)
+N4P6M-S4-vazio-avd-ret mCurrentRotation=ROTATION_90 png=88520 xml=13970 03d24a726be1
+21:16:27 S4-vazio: sem lista rolável — sem rolado
+21:16:30 toque 'campo-busca' @ 917,152 (emulator-5554)
+N4P6M-S4-resultados-avd-ret mCurrentRotation=ROTATION_90 png=262585 xml=42099 457fdf31bf57
+N4P6M-S4-resultados-rolada-avd-ret mCurrentRotation=ROTATION_90 png=262688 xml=42099 457fdf31bf57
+21:17:14 toque 'fechar-busca' @ 108,152 (emulator-5554)
+capturas=3 falhas=0

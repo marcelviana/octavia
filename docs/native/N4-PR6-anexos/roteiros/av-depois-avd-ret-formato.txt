@@ -1,0 +1,15 @@
+22:27:52 mock modo=normal vazio=False
+22:28:15 toque 'buscar' @ 1335,281 (emulator-5554)
+22:28:22 toque 'campo-busca' @ 917,152 (emulator-5554)
+22:28:30 toque 'Partitura escaneada de fixture' @ 741,447 (emulator-5554)
+22:28:37 log depois de abrir avulso-formato: 2 linha(s)
+    OCTAVIA: keepawake on
+    OCTAVIA: prefetch plan n=0 reason=demand
+N4P6D-S3-avulso-formato-avd-ret mCurrentRotation=ROTATION_90 png=117636 xml=22146 626165980f63
+22:28:49 mock modo=normal vazio=False
+22:29:20 toque 'song-3' @ 800,1138 (emulator-5554)
+    OCTAVIA: index jump n=3
+    OCTAVIA: keepawake on
+    OCTAVIA: prefetch plan n=0 reason=demand
+N4P6D-S3-setlist-formato-avd-ret mCurrentRotation=ROTATION_90 png=134522 xml=24891 62225b47ff2c
+capturas=2 falhas=0
