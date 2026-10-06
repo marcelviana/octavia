@@ -155,6 +155,11 @@ confere a raiz antes de gravar e recusa o nome errado.
 files/octavia-<uid>/*.json'"` — **uma string só**: com os argumentos separados, o `adb shell` os junta e o `sh -c`
 recebe só `rm` (apaga nada, sem erro). Conferir com `run-as … ls files/octavia-<uid>` (sobra só `files/`). No Tab,
 antes, a receita de guardar o cache do Marcel (abaixo).
+*(Errata da N4-PR7, div. 1097: o `*.json` apaga também o `files-index.json`, que indexa os arquivos do disco — inclusive
+os que não são da fixture. **Apaga-se por nome, só o que o `load()` do store lê**: `rm -f files/octavia-<uid>/setlists.json
+files/octavia-<uid>/content.json`. Nenhum passo de arnês apaga pasta inteira do app nem por curinga: a lista de nomes é
+fechada, vem do que o teste criou, e o passo confere que nada fora dela sumiu — `apagar_por_nome` em
+`N4-PR7-anexos/instrumentos/biblioteca.py`, provado com sentinelas em `N4-PR7-anexos/prova-sentinela.txt`.)*
 
 **Tab: `stay_on` a 7 logo depois de ler o estado, antes de pedir o destravar** (N3-PR6b): destravado antes, a tela
 de 30 s apaga no intervalo e trava de novo.
@@ -187,6 +192,13 @@ decisão do Marcel** (N3-PR6c): a receita não os apaga nem os repõe. No fim: a
 Em 2026-09-25 ela tinha só a `partitura-12p.pdf` da fixture (4198 B, de 2026-09-24 21:11), de uma
 PR anterior; **a N3-PR6 a apagou no fim** (`N3-PR6-anexos/limpeza-444.txt`), e a pasta ficou vazia. Daí em
 diante, a receita de guardar e regravar vale para ela também: o que a fixture deixar lá sai no fim da rodada.
+*(Errata da N4-PR7, **proposta para o aval do Marcel**, div. 1097: a receita acima **guarda por cópia e deixa o arquivo real
+no lugar** — durante todo o mock, o PDF do Marcel ficava em `files/octavia-<uid>/files/`, a pasta da sessão dele, que é
+onde o dev client grava a fixture (o mock aceita o token da sessão restaurada). Foi assim que o `rm` da primeira forma do
+arnês da N4-PR7 o levou. A correção proposta: **o arquivo real sai junto com o cache e volta junto** — depois de guardar
+e conferir o md5 da cópia, apagá-lo do aparelho **por nome** (`rm -f files/octavia-<uid>/files/<nome>`, o nome lido no
+`ls` da guarda), e regravá-lo no fim junto com os três `.json`, conferindo o md5. Assim, durante o mock, a pasta só tem o
+que a fixture criou. Os quatro `._*` continuam onde estão.)*
 
 ## O dev client e os teclados atrapalham o arnês
 
@@ -246,10 +258,11 @@ diante, a receita de guardar e regravar vale para ela também: o que a fixture d
   `bounds` da lista contra o topo do teclado pela região tocável do IME. A L resolve com um `KeyboardAvoidingView`
   (`padding`, deslocamento = o inset do topo). **No Tab deitado o teclado da Samsung vem FLUTUANTE**, no meio da tela
   (região tocável x 934–1748 px): ele não encolhe nada, em tela nenhuma (div. 1087).
-- **O `rm` de arquivos do app apaga o do Marcel também** (N4-PR7): o passo do N4-D92 do arnês da L
-  (`N4-PR7-anexos/instrumentos/biblioteca.py`, `semRede`) apaga `files/octavia-<uid>/files/*` — no Tab, o PDF do Marcel
-  saiu junto e voltou pela receita do cache (md5 a md5). Quem apaga arquivo no Tab conta com a receita no fim. E apagar o
-  arquivo não apaga o índice: o `presentUrls` lê o `files-index.json`, e a música continua "baixada" na tela (div. 1086).
+- **O `rm` de arquivos do app apagou o do Marcel** (N4-PR7): a primeira forma do passo do N4-D92 do arnês da L
+  (`N4-PR7-anexos/instrumentos/biblioteca.py`, `semRede`) apagava `files/octavia-<uid>/files/*` — no Tab, o PDF do Marcel
+  saiu junto e voltou pela receita do cache (md5 a md5). **Consertado no instrumento** (div. 1097): o passo apaga só os
+  arquivos que a fixture serve, por nome (veja "Store apagado" e a errata da receita do cache, acima). E apagar o arquivo
+  não apaga o índice: o `presentUrls` lê o `files-index.json`, e a música continua "baixada" na tela (div. 1086).
 - **IME na folha**: `MS_FOCO_APOS_ANIMACAO = 350` — **10/10 no Tab S6 e 10/10 no
   AVD** (`N2-PR7-anexos/ime-350.txt`); `setTimeout(…, 0)` é 5/10 (div. 260). O
   arnês confirma folha fechada **e** `mInputShown=false` antes de cada toque.

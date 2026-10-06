@@ -9,7 +9,9 @@
 > `8d14c69` `feat(native): Buscar música abre a biblioteca (N4-R1)` · **e quatro a mais, declarados** (div. 1089):
 > `2a095a7` `test(n4): PR-7 — o duplo do FlatList e do autoFocus` (dois CN que não reprovavam, §4) · `9843b1d` `test(n4):
 > PR-7 — o teclado não encolhe a L, reprovando` · `105b98d` `fix(native): com o teclado de pé, a lista de L termina acima
-> dele (N4-R2)` (§5.2) · `b941a13` `fix(native): o Tentar novamente da L sem cache é o botão do S1d` · o de docs.
+> dele (N4-R2)` (§5.2) · `b941a13` `fix(native): o Tentar novamente da L sem cache é o botão do S1d` · `8aa319c` o de docs ·
+> **e os dois acertos antes do merge**: `6d2a605` `test(n4): o arnês não apaga o que não criou` (§5.6) · o de docs (§5.6,
+> §5.7).
 > `[medido]` = comando + saída literal nesta sessão, nos arquivos desta pasta.
 > Requisitos: N4-R1…N4-R11 (na tela de L), N4-R20 (P-T1, P-T2), N4-R22…N4-R25. Aceites: §7.
 
@@ -237,6 +239,68 @@ vazio, `ping` → *unreachable*, `ram.bin` de 2026-09-24 14:00 (`estado/avd-*.tx
 **`octavia_phone`**: lido `stay_on=1 accel=0 user_rot=0 airplane=0 wifi=1 data=1`, dev client de 2026-09-23 21:10:37, a conta
 de audit; subido sem salvar; app parado, `reverse` vazio, desligado.
 
+### 5.6 O arnês não apaga o que não criou (div. 1097) `[medido: prova-sentinela.txt]`
+
+**O passo que apagou a pasta.** Na primeira forma do arnês da L (`instrumentos/biblioteca.py` no `8aa319c`):
+- `biblioteca.py:223`, o `semRede` (a prova do N4-D92): `rm -f files/octavia-{u}/files/* cache/octavia-{u}/files/*` — as
+  duas pastas de arquivos do app, **inteiras**. O que ele precisava apagar: só os arquivos que **a fixture da L serve**
+  (`partitura-12p.pdf`, `partitura-1p.pdf`, `partitura-grande.pdf` — o `nao-existe.pdf` nunca chega ao disco), para o app
+  abrir sem rede e o plano rejeitar;
+- `biblioteca.py:258`, o `_store_apagado` (os estados sem cache): `rm -f files/octavia-{u}/*.json` — também o
+  `files-index.json`, que indexa os arquivos do disco. O que ele precisava: só o `setlists.json` e o `content.json` (o
+  `load()` do `store.ts` decide "há cache" por esses dois).
+
+**Por que o PDF do Marcel estava ali.** A receita do cache no Tab (`APARATO.md`, "O cache do app no Tab") **guarda por
+cópia e deixa o arquivo no lugar**; e a fixture do mock entra na pasta da sessão restaurada, que é a do Marcel
+(`files/octavia-xVDJ…/files/`): o `ls` da guarda (`estado/tab-md5-antes.txt`) mostra o PDF dele ali durante todo o mock.
+
+**O conserto** (`6d2a605`): `apagar_por_nome` — cada passo apaga uma lista **fechada** de nomes (os da fixture, lidos do
+`arquivos/` do mock; do store, `STORE_DO_TESTE` = `setlists.json`, `content.json`), recusa curinga e barra, e confere pelo
+`ls` antes e depois que **nada fora da lista sumiu** (senão levanta). E a errata da receita do cache, **proposta para o seu
+aval** (`APARATO.md`): o arquivo real sai do aparelho junto com a guarda e volta junto com a regravação.
+
+**A prova, no AVD** (fixture da L, sessão de audit):
+
+| | sentinela PDF (válido) | sentinela `.json` |
+| --- | --- | --- |
+| 1 · o passo novo (`apagar_por_nome`) | `209503b2…` → **`209503b2…`** | `3ed7290b…` → **`3ed7290b…`** |
+| 2 · CN — o passo antigo (`rm -f …/*`, `rm -f …/*.json`) | **ausente** | **ausente** |
+| 3 · os passos inteiros do arnês (`semRede`, `semCache`), app aberto e fechado | `2437b35e…` → **`2437b35e…`** | `3ed7290b…` → **`3ed7290b…`** |
+
+No 3 o N4-D92 continua provado (*arquivo não baixado* sem rede) e os estados sem cache saem iguais (carregando, falha sem
+cache, vazia). A primeira forma do 3 usou um `.pdf` de 20 bytes de texto, e o **saneamento do próprio app** o recusou na
+abertura (`OCTAVIA: file-reject name=sentinela-n4pr7.pdf kind=malformed bytes=20 expected=-`) — o app, não o arnês; refeito
+com um PDF válido, como o do Marcel. O CN (2) levou também o PDF de audit que o AVD guarda; o AVD sobe sem salvar, e o
+snapshot o devolve.
+
+**Os outros `rm` sobre caminho do app** (`grep -rnE "(shell|run-as).*\brm\b"` nos `instrumentos/` de todos os anexos):
+
+| onde | o quê | risco |
+| --- | --- | --- |
+| `N4-PR7-anexos/instrumentos/biblioteca.py` (`:223`, `:258` na forma velha) | as duas acima | **consertados** |
+| `N3-PR6b-anexos/instrumentos/n3pr6b.py:84` (`apagar_store`) | `rm -f {d}/*.json` | **o mesmo** do `_store_apagado` (o `files-index.json` sai junto). É rastro de uma PR mergeada, e não se reescreve; quem o copiar copia a receita corrigida do `APARATO.md` ("Store apagado", por nome) — e a receita é a fonte |
+| `APARATO.md`, "Store apagado" | a receita com `*.json` | **o mesmo** — errata nesta PR (por nome) |
+| `N3-PRECHECK-anexos/instrumentos/cap.sh:7` | `rm -f /sdcard/n3pre.xml` | **nenhum**: o arquivo é o do próprio `cap.sh` (o dump que ele mesmo grava), fora do app |
+
+### 5.7 A sonda de rede do N4-D92 — o que ela é
+
+**Não gera tráfego**: lê o estado de conexão que o Android já mantém, o mesmo que o app inteiro lê, e não faz requisição —
+nem no release.
+
+- **A sonda** é uma função injetada no `files.ts` (`apps/native/src/files.ts:191`, o padrão `async () => true`; `:193`,
+  `ligarSondaDeRede`), consultada **só quando um download rejeita** (`files.ts:250`: com rede, a falha se registra; sem
+  rede, não). A raiz a liga ao `estaOnline`, uma vez, na carga do módulo (`apps/native/App.tsx:31`).
+- **`estaOnline`** (`apps/native/src/net.ts:11-13`) chama `Network.getNetworkStateAsync()` — o mesmo que o `useOnline`
+  (`net.ts:35`) usa para o "sem rede" do app inteiro, e o favoritar da N4-PR5.
+- **O `getNetworkStateAsync` no Android** (`expo-network` 57.0.1): `NetworkModule.kt:136-137` → `fetchNetworkState()`
+  (`:185-197`), que só lê o `ConnectivityManager`; o `isInternetReachable` (`NetworkUtils.kt:23-48`) são as capacidades da
+  rede ativa — `NET_CAPABILITY_INTERNET`, `NET_CAPABILITY_VALIDATED` (a validação que o próprio sistema já faz) e
+  `NOT_SUSPENDED`. A única requisição HTTP do pacote é a do `getIpAddressAsync` da versão **web**
+  (`build/ExpoNetwork.web.js:20`, `api.ipify.org`), que o app não chama.
+- **Frequência**: uma leitura local por download que rejeita — as mesmas ocasiões em que o `download-error` já saía.
+- **No release contra prod**: o mesmo caminho, sem tráfego; nas provas da N4-D56 o release fez as 2 requisições de leitura
+  do sync, e só (`n4d56-rede.txt`).
+
 ---
 
 ## 6. Gates `[medido: g1.txt, g2g3.txt, a20-icones.txt, gates-web.txt, sha.txt, tsc-lint.txt, suite.txt]`
@@ -316,12 +380,13 @@ E a leitura da tela, pedida pelo prompt: **sim** (Marcel).
 - **N4-E10** (os chips) e **N4-E11** (o teclado em C e A) — `DESIGN-N4/README.md` §6. As de medida seguintes: **N4-E12**.
 - **No `N4-REQUISITOS.md`**: a do **N4-R2** (o mecanismo do teclado, medido), a do **N4-R6** (a linha não tocável até a PR-8;
   os ícones do estado do arquivo pelo nome; o título em A), e as **N4-D96** e **N4-D97**.
-- **No `APARATO.md`**: o teclado que não encolhe a janela e o flutuante da Samsung; o `rm` do arnês que apaga o arquivo do
-  Marcel e não o índice.
+- **No `APARATO.md`**: o teclado que não encolhe a janela e o flutuante da Samsung; o `rm` do arnês (consertado no
+  instrumento, §5.6); a receita "Store apagado" **por nome**; e a errata da receita do cache no Tab, **proposta para o aval
+  do Marcel** (o arquivo real sai e volta com a guarda).
 
 ---
 
-## 9. Divergências — 1081 a 1096
+## 9. Divergências — 1081 a 1097
 
 A última usada era a **1080** (`N4-PR6-anexos/README.md` §9) `[medido: git grep -h -o -E '^\| \*\*1[0-9]{3}\*\*' -- docs |
 sort -u | tail -4` → `1078 · 1079 · 1080 · 1138`, o último uma linha de medida]. Origem: **P** premissa do prompt · **D**
@@ -346,8 +411,10 @@ doc anterior · **A** ambiente, dado real ou defeito do produto · **T** toolcha
 | **1095** | A | o *baixando o arquivo…* na linha não se capturou no aparelho: transitório, e o PDF grande baixa no primeiro sync, antes de a L abrir | em teste; **PR-9** (A-N4-26: *baixando* e *falhou* vistos na linha) |
 | **1096** | D | e3 (+3,8) e m6 (−3,8) ficam dentro dos 4 dp; a m6 com tokens é 16 + 18,2 + 12 (o 14 da folha não é token) | registro; sem errata |
 
-**Contagem**: 16 — D 6 · A 4 · T 4 · P 2 · X 0. **Fechada nesta PR**: a **1066** (N4-D92, §2), a **1035** (§1.2), a
-**1002** (§1.3) e a **1014** (§1.1). **Próxima divergência livre: 1097.**
+| **1097** | T | o arnês da L apagava pastas inteiras do app (`biblioteca.py:223`: `files/…/files/*` e `cache/…/files/*`; `:258`: `*.json` do store) — no Tab, a pasta da sessão do Marcel, e o PDF real dele saiu junto (voltou pela receita). A receita do cache guarda por cópia e deixava o arquivo real no aparelho durante o mock | **consertado no instrumento** (`6d2a605`, `apagar_por_nome`: só o que o teste criou, por nome; provado com sentinelas, §5.6); a receita "Store apagado" por nome (errata do `APARATO.md`); a receita do cache **proposta** para o aval do Marcel (o arquivo real sai e volta com a guarda) |
+
+**Contagem**: 17 — D 6 · T 5 · A 4 · P 2 · X 0. **Fechada nesta PR**: a **1066** (N4-D92, §2), a **1035** (§1.2), a
+**1002** (§1.3), a **1014** (§1.1) e a **1097** (§5.6). **Próxima divergência livre: 1098.**
 
 ---
 
@@ -358,7 +425,7 @@ doc anterior · **A** ambiente, dado real ou defeito do produto · **T** toolcha
 | requests a prod / escritas em prod | **2 `GET`** (o sync de leitura da prova da N4-D56 com rede) / **0** |
 | requests a terceiros | as renovações de token das sessões de audit (AVD, celular) e da do Marcel (Tab, `auth refresh=cached`) |
 | mock | `GET /api/setlists` e `GET /api/content` por abertura; `PUT /api/content` do favoritar contra o mock (o lento, o 500) e o desfavoritar que devolve a fixture |
-| aparelho | AVD `octavia_tab32` (quatro subidas, sem salvar); Tab S6 (destravado pelo Marcel; release → dev client → release; estado final igual ao lido; cache md5 a md5); `octavia_phone` (subido sem salvar) |
+| aparelho | AVD `octavia_tab32` (cinco subidas, sem salvar — a quinta para a prova do sentinela, §5.6); Tab S6 (destravado pelo Marcel; release → dev client → release; estado final igual ao lido; cache md5 a md5); `octavia_phone` (subido sem salvar) |
 | `.env*` | `apps/native/.env` por `cp -p` (sha256 `f2bfa179cd8e4b1f…`) na árvore da PR e na árvore temporária da `main`, só para o Metro; **apagado** nas duas; nenhum valor lido |
 | temporários | as árvores `../octavia-n4-pr7-dev` (o rascunho) e `../octavia-n4-pr7-main` (o Metro da `main` do Tab) **removidas**; os PNG, os bundles, os logs do Metro e do mock, as cópias do cache do Marcel: no scratchpad da sessão, fora do commit |
 | perguntas ao Marcel | duas (N4-D96, N4-D97) e o julgamento do Tab |
