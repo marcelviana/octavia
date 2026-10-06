@@ -69,3 +69,6 @@ export function destinoDaBuscaDoPalco(setlistId: string | null, posicao: number)
 export function destinoDoTocarDaBiblioteca(contentId: string): Destino {
   return { acao: 'push', rota: 'Stage', params: { avulsa: contentId, origem: 'biblioteca' } }
 }
+
+/** N4-PR7 — `Buscar música` em S1 (N4-R1, N4-D59): a biblioteca, não mais a S4. */
+export const DESTINO_DE_BUSCAR_MUSICA = 'Biblioteca' as const
