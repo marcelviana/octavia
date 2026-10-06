@@ -1,0 +1,74 @@
+G-N3 — 22 par(es) (paisagem × faixa); medidas: docs/native/DESIGN-N3/medidas.json (tolerância 4 dp)
+
+(e) TEXTO QUE SOME — REPROVA: 0
+
+(d′) MENOS ESPAÇO QUE NA PAISAGEM — TRIAGEM (confirmar no PNG): 59
+  N4P7K-L-base-avd-ret: "Águas de fixture" 948 → 521.3 dp
+  N4P7K-L-base-avd-ret: "Décima do ensaio" 948 → 521.3 dp
+  N4P7K-L-base-avd-ret: "Item sem conteúdo da fixture" 948 → 521.3 dp
+  N4P7K-L-base-avd-ret: "Item sem tipo da fixture" 948 → 521.3 dp
+  N4P7K-L-base-avd-ret: "Manhã de ensaio" 948 → 521.3 dp
+  N4P7K-L-teclado-avd-ret: "Águas de fixture" 948 → 521.3 dp
+  N4P7K-L-teclado-avd-ret: "Décima do ensaio" 948 → 521.3 dp
+  N4P7L-L-antes-do-tocar-avd-ret: "Décima do ensaio" 948 → 521.3 dp
+  N4P7L-L-antes-do-tocar-avd-ret: "Segunda do ensaio" 948 → 521.3 dp
+  N4P7L-L-antes-do-tocar-avd-ret: "Sétima do ensaio" 948 → 521.3 dp
+  N4P7L-L-base-avd-ret: "Águas de fixture" 948 → 521.3 dp
+  N4P7L-L-base-avd-ret: "Décima do ensaio" 948 → 521.3 dp
+  N4P7L-L-base-avd-ret: "Item sem conteúdo da fixture" 948 → 521.3 dp
+  N4P7L-L-base-avd-ret: "Item sem tipo da fixture" 948 → 521.3 dp
+  N4P7L-L-base-avd-ret: "Manhã de ensaio" 948 → 521.3 dp
+  N4P7L-L-busca-ensaio-avd-ret: "Águas de fixture" 948 → 521.3 dp
+  N4P7L-L-busca-ensaio-avd-ret: "Décima do ensaio" 948 → 521.3 dp
+  N4P7L-L-busca-ensaio-avd-ret: "Manhã de ensaio" 948 → 521.3 dp
+  N4P7L-L-busca-ensaio-avd-ret: "Nona do ensaio" 948 → 521.3 dp
+  N4P7L-L-busca-ensaio-avd-ret: "Oitava do ensaio" 948 → 521.3 dp
+  N4P7L-L-depois-do-voltar-avd-ret: "Décima do ensaio" 948 → 521.3 dp
+  N4P7L-L-depois-do-voltar-avd-ret: "Segunda do ensaio" 948 → 521.3 dp
+  N4P7L-L-depois-do-voltar-avd-ret: "Sétima do ensaio" 948 → 521.3 dp
+  N4P7L-L-falha-com-cache-avd-ret: "Águas de fixture" 948 → 521.3 dp
+  N4P7L-L-falha-com-cache-avd-ret: "Décima do ensaio" 948 → 521.3 dp
+  N4P7L-L-falha-com-cache-avd-ret: "Item sem conteúdo da fixture" 948 → 521.3 dp
+  N4P7L-L-falha-com-cache-avd-ret: "Item sem tipo da fixture" 948 → 521.3 dp
+  N4P7L-L-favoritada-avd-ret: "Águas de fixture" 948 → 521.3 dp
+  N4P7L-L-favoritada-avd-ret: "Décima do ensaio" 948 → 521.3 dp
+  N4P7L-L-favoritada-avd-ret: "Item sem conteúdo da fixture" 948 → 521.3 dp
+  N4P7L-L-favoritada-avd-ret: "Item sem tipo da fixture" 948 → 521.3 dp
+  N4P7L-L-favoritada-avd-ret: "Manhã de ensaio" 948 → 521.3 dp
+  N4P7L-L-favoritando-avd-ret: "Águas de fixture" 948 → 521.3 dp
+  N4P7L-L-favoritando-avd-ret: "Décima do ensaio" 948 → 521.3 dp
+  N4P7L-L-favoritando-avd-ret: "Item sem conteúdo da fixture" 948 → 521.3 dp
+  N4P7L-L-favoritando-avd-ret: "Item sem tipo da fixture" 948 → 521.3 dp
+  N4P7L-L-favoritando-avd-ret: "Manhã de ensaio" 948 → 521.3 dp
+  N4P7L-L-favoritar-falhou-servidor-avd-ret: "Águas de fixture" 948 → 521.3 dp
+  N4P7L-L-favoritar-falhou-servidor-avd-ret: "Décima do ensaio" 948 → 521.3 dp
+  N4P7L-L-favoritar-falhou-servidor-avd-ret: "Item sem conteúdo da fixture" 948 → 521.3 dp
+  N4P7L-L-favoritar-falhou-servidor-avd-ret: "Item sem tipo da fixture" 948 → 521.3 dp
+  N4P7L-L-favoritas-1-avd-ret: "Segunda do ensaio" 948 → 521.3 dp
+  N4P7L-L-filtro-tab-avd-ret: "Terceira do ensaio" 948 → 521.3 dp
+  N4P7L-L-partituras-com-rede-avd-ret: "Partitura de doze páginas" 948 → 521.3 dp
+  N4P7L-L-partituras-com-rede-avd-ret: "Partitura de uma página" 948 → 521.3 dp
+  N4P7L-L-partituras-com-rede-avd-ret: "Partitura grande da fixture" 948 → 521.3 dp
+  N4P7L-L-partituras-com-rede-avd-ret: "Partitura que nunca baixou" 948 → 521.3 dp
+  N4P7L-L-sem-rede-arquivos-nao-baixados-avd-ret: "Partitura de doze páginas" 948 → 521.3 dp
+  N4P7L-L-sem-rede-arquivos-nao-baixados-avd-ret: "Partitura de uma página" 948 → 521.3 dp
+  N4P7L-L-sem-rede-arquivos-nao-baixados-avd-ret: "Partitura grande da fixture" 948 → 521.3 dp
+  N4P7L-L-sem-rede-arquivos-nao-baixados-avd-ret: "Partitura que nunca baixou" 948 → 521.3 dp
+  N4P7L-L-sem-rede-avd-ret: "Águas de fixture" 948 → 521.3 dp
+  N4P7L-L-sem-rede-avd-ret: "Décima do ensaio" 948 → 521.3 dp
+  N4P7L-L-sem-rede-avd-ret: "Item sem conteúdo da fixture" 948 → 521.3 dp
+  N4P7L-L-sem-rede-avd-ret: "Item sem tipo da fixture" 948 → 521.3 dp
+  N4P7L-L-teclado-avd-ret: "Águas de fixture" 948 → 521.3 dp
+  N4P7L-L-teclado-avd-ret: "Décima do ensaio" 948 → 521.3 dp
+  N4P7L-S3-avulso-da-biblioteca-avd-ret: "Segunda do ensaio · Duo Manacá · Cifra" 968.9 → 663.1 dp
+  N4P7L-S3-avulso-da-biblioteca-avd-ret: corpo 906.7 → 647.1 dp (altura ×1.9)
+
+4 dp CONTRA A FOLHA — ERRATA CANDIDATA: 0
+
+NOME ACESSÍVEL — o texto está no content-desc do nó de mesmo resource-id (N3-D17); não reprova, não soma ao (e): 0
+
+ROLAGEM — o texto está no dump rolado do mesmo estado; não reprova, não soma ao (e): 0
+
+(b) CORTE — nó que sai da janela útil ou encosta na borda lateral, NOVO contra a paisagem — REPROVA: 0
+
+G-N3: (e)=0 · (b)=0 · nome-acessível=0 · rolagem=0 ✓ (d′ e 4 dp não reprovam: triagem e errata)

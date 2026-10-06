@@ -1,0 +1,2 @@
+    lastUpdateTime=2026-10-06 15:21:36
+    pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]

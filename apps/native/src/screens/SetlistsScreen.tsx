@@ -58,7 +58,17 @@
  */
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { FlatList, Image, Pressable, StyleSheet, Text, View } from 'react-native'
-import { frase, offlineStatus, type ContentDTO, type OfflineStatus, type SetlistDTO } from '@octavia/core'
+import {
+  FRASES_DO_TABLET,
+  frase,
+  haQuantoTempo as idadeDoDado,
+  mostrandoDadosDe,
+  offlineStatus,
+  textoDaFalhaDeSync,
+  type ContentDTO,
+  type OfflineStatus,
+  type SetlistDTO,
+} from '@octavia/core'
 import { relerAoAbrir, type EstadoLocal } from '../escrita'
 import { Icone } from '../icones/Icone'
 import type { NomeIcone } from '../icones/dados'
@@ -66,6 +76,18 @@ import { bar, dark, faixas, font, radius, size, space, touch, tracking, type Tok
 import { useFaixa } from '../useFaixa'
 import { FolhaDeSetlist } from './FolhaDeCriar'
 import { LinhaDeAviso } from './LinhaDeAviso'
+
+/**
+ * A marca em repouso (§8.4): só o laço do oito do PNG oficial, recortado a 60 dp, sem wordmark — a do S1f. Exportada
+ * na N4-PR7 para a L vazia (*"a marca em repouso, sem tinta de alerta"*, N4-R10): o MESMO nó, sem cópia.
+ */
+export function MarcaEmRepouso(): React.JSX.Element {
+  return (
+    <View style={styles.marca} accessibilityRole="image" accessibilityLabel="Octavia">
+      <Image source={require('../../assets/logo-octavia-dark.png')} style={styles.marcaImagem} resizeMode="stretch" />
+    </View>
+  )
+}
 
 export type SyncState =
   | { fase: 'sincronizando' }
@@ -126,15 +148,12 @@ export interface SetlistsScreenProps {
   apagadaNaoRelida?: string | null
 }
 
-/** "há 2 h", "há 15 min", "agora" — o texto do chip de status do design. */
+/**
+ * "há 2 h", "há 15 min", "agora" — o texto do chip de status do design. N4-PR7: as frases moram no core
+ * (`haQuantoTempo`, a L as reusa na linha da falha de sync); aqui só o relógio de agora.
+ */
 function haQuantoTempo(ms: number | null): string {
-  if (ms === null) return 'nunca'
-  const min = Math.floor((Date.now() - ms) / 60_000)
-  if (min < 1) return 'agora'
-  if (min < 60) return `há ${min} min`
-  const h = Math.floor(min / 60)
-  if (h < 24) return `há ${h} h`
-  return `há ${Math.floor(h / 24)} d`
+  return idadeDoDado(ms, Date.now())
 }
 
 const ROTULO: Record<OfflineStatus['kind'], string> = {
@@ -180,18 +199,9 @@ function sublinha(status: OfflineStatus, online: boolean): string {
  * `messageKey` era calculado e descartado (achado do aceite, N1-PR7 §3.2 —
  * o A3 passava no comportamento e falhava no que o músico lê).
  */
-const TEXTO_DE_ERRO: Record<string, string> = {
-  'erro.sem_conexao': 'sem conexão',
-  'erro.sessao_invalida': 'sua sessão expirou',
-  'erro.servidor_ocupado': 'servidor ocupado · tente em instantes',
-  'erro.nao_encontrado': 'não encontrado no servidor',
-  'erro.requisicao_invalida': 'o servidor recusou o pedido',
-  'erro.falha_do_servidor': 'falha no servidor',
-  'erro.desconhecido': 'falha ao sincronizar',
-}
-
+// N4-PR7: o mapa mora no core (`TEXTO_DA_FALHA_DE_SYNC`), byte a byte — a L mostra a mesma falha (L-falha-com-cache).
 function textoDoErro(messageKey: string): string {
-  return TEXTO_DE_ERRO[messageKey] ?? TEXTO_DE_ERRO['erro.desconhecido'] ?? 'falha ao sincronizar'
+  return textoDaFalhaDeSync(messageKey)
 }
 
 /**
@@ -212,11 +222,11 @@ function chipDoStatus(sync: SyncState): { icone: NomeIcone; cor: string; texto: 
       return { icone: 'ultima-sincronizacao', cor: dark.muted, texto: `sincronizado ${haQuantoTempo(sync.syncedAtMs)}` }
     case 'offline':
       return sync.syncedAtMs === null
-        ? { icone: 'sem-conexao', cor: dark.offlineInk, texto: 'sem conexão' }
+        ? { icone: 'sem-conexao', cor: dark.offlineInk, texto: FRASES_DO_TABLET['sem-conexao'] }
         : {
             icone: 'sem-conexao',
             cor: dark.offlineInk,
-            texto: 'sem conexão',
+            texto: FRASES_DO_TABLET['sem-conexao'],
             complemento: `última sincronização ${haQuantoTempo(sync.syncedAtMs)}`,
           }
     case 'falha':
@@ -562,7 +572,7 @@ export function SetlistsScreen({
       <BotaoNovaSetlist rotulo="Nova setlist" inativo={!podeCriar} onPress={() => setFolhaAberta(true)} />
       <Pressable style={styles.botaoSecundario} onPress={onBuscar} testID="buscar">
         <Icone nome="buscar-musica" tamanho={24} cor={dark.text} />
-        <Text style={styles.botaoSecundarioTexto}>Buscar música</Text>
+        <Text style={styles.botaoSecundarioTexto}>{FRASES_DO_TABLET['buscar-musica']}</Text>
       </Pressable>
     </>
   )
@@ -609,7 +619,7 @@ export function SetlistsScreen({
             <Icone nome="falha" tamanho={24} cor={dark.errorInk} />
             <Text style={styles.bannerTexto} numberOfLines={2}>
               {textoDoErro(sync.messageKey)}
-              <Text style={styles.bannerIdade}>{` · mostrando dados de ${haQuantoTempo(sync.syncedAtMs)}`}</Text>
+              <Text style={styles.bannerIdade}>{mostrandoDadosDe(haQuantoTempo(sync.syncedAtMs))}</Text>
             </Text>
           </View>
           <Pressable
@@ -619,7 +629,7 @@ export function SetlistsScreen({
             testID="tentar-banner"
           >
             <Icone nome="tentar-novamente" tamanho={24} cor={dark.text} />
-            <Text style={styles.bannerAcao}>Tentar novamente</Text>
+            <Text style={styles.bannerAcao}>{FRASES_DO_TABLET['tentar-novamente']}</Text>
           </Pressable>
         </View>
       ) : null}
@@ -641,7 +651,7 @@ export function SetlistsScreen({
             cor={offlineSemCache ? dark.offlineInk : dark.errorInk}
           />
           <Text style={styles.centroTitulo}>
-            {offlineSemCache ? 'sem conexão' : textoDoErro(sync.fase === 'falha' ? sync.messageKey : 'erro.desconhecido')}
+            {offlineSemCache ? FRASES_DO_TABLET['sem-conexao'] : textoDoErro(sync.fase === 'falha' ? sync.messageKey : 'erro.desconhecido')}
           </Text>
           <Text style={styles.centroApoio}>
             Nenhuma setlist foi salva neste aparelho ainda. Conecte-se à internet uma vez para
@@ -649,7 +659,7 @@ export function SetlistsScreen({
           </Text>
           <Pressable style={styles.botaoPrimario} onPress={onTentarNovamente} testID="tentar">
             <Icone nome="tentar-novamente" tamanho={24} cor={dark.bg} />
-            <Text style={styles.botaoPrimarioTexto}>Tentar novamente</Text>
+            <Text style={styles.botaoPrimarioTexto}>{FRASES_DO_TABLET['tentar-novamente']}</Text>
           </Pressable>
         </View>
       ) : vaziaAposSync ? (
@@ -658,13 +668,7 @@ export function SetlistsScreen({
         // segunda casa da marca (§8.4, a única proposta aplicada): só o laço
         // do oito do PNG oficial, recortado a 60 dp, sem wordmark.
         <View style={styles.centro} testID="s1f">
-          <View style={styles.marca} accessibilityRole="image" accessibilityLabel="Octavia">
-            <Image
-              source={require('../../assets/logo-octavia-dark.png')}
-              style={styles.marcaImagem}
-              resizeMode="stretch"
-            />
-          </View>
+          <MarcaEmRepouso />
           {/* Moldura `N2-S1f-criar`: sai a frase que manda ir ao web, entra o
               mesmo ato, aqui. O título em caixa alta do V1 sai com ela — o
               estado vazio passa a ser duas orações e um botão. */}

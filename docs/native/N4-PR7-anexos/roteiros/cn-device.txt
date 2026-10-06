@@ -1,0 +1,9 @@
+N4P7C-S1-setlists-avd-pai mCurrentRotation=ROTATION_0 png=228675 xml=40520 d6af6a38d081
+12:49:12 toque 'buscar' @ 2288,188 (emulator-5554)
+12:49:18 toque 'Tocar “Águas de fixture”' @ 2423,590 (emulator-5554)
+12:49:25 toque 'busca' @ 2247,1358 (emulator-5554)
+N4P7C-S4-vazio-avd-pai mCurrentRotation=ROTATION_0 png=88099 xml=13968 6e1d7861a3a4
+12:49:41 toque 'campo-busca' @ 1397,151 (emulator-5554)
+N4P7C-S4-resultados-avd-pai mCurrentRotation=ROTATION_0 png=175632 xml=30142 cae1bc7517bf
+12:49:56 toque 'fechar-busca' @ 108,152 (emulator-5554)
+capturas=3 falhas=0

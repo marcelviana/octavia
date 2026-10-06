@@ -285,6 +285,23 @@ export interface TokensDaFaixa {
      */
     empilha: boolean
   }
+  /**
+   * **A biblioteca (L) do tablet — N4-PR7** (P-T1, P-T2; N4-R3, N4-R20, N4-D67). A composição de L é a da folha
+   * (`DESIGN-N4/telas.html`, `N4-*-L-base`): barra de 88 (a da S4), a faixa de filtros, a régua fixa e a lista.
+   */
+  lib: {
+    /**
+     * P-T1 — a altura da faixa de filtros: os cinco chips de 48 (`touch.min`) numa linha, com 8 acima e abaixo — 64 em
+     * C e B; em A os chips não cabem em 363 dp e vão a **duas linhas** (3 + 2): 8 + 48 + 8 + 48 + 8 = 120. A tela
+     * deixa os chips quebrarem (`flexWrap`) e lê a altura daqui; nenhuma conta de largura.
+     */
+    filtros: number
+    /**
+     * P-T2 — a altura MÍNIMA da linha da lista: 80, a do resultado da S4 (m7), nas três faixas. Em C e B o título
+     * tem uma linha e a linha fica nos 80; em A o título vai a duas linhas e a linha cresce (≈ 106, e4 — N5).
+     */
+    linha: number
+  }
   s5: {
     /**
      * A largura da fileira de marcas de música percorrida (a regra de N
@@ -366,6 +383,7 @@ const faixaC: TokensDaFaixa = {
   folha: { largura: 720, topo: 100, alturaMin: 420 },
   picker: { empilhaFalha: false, linhaFalha: 80 },
   palco: { barra: bar.top, empilha: false },
+  lib: { filtros: space.sm + touch.min + space.sm, linha: 80 },
   s5: { fileira: 900 },
   web: {
     conteiner: 1138, margem: space.xxl, colunaLateral: 320, razaoListaDetalhe: [2, 3],
@@ -386,6 +404,7 @@ const faixaB: TokensDaFaixa = {
   folha: { largura: 663, topo: 96, alturaMin: INEXISTENTE },
   picker: { empilhaFalha: true, linhaFalha: 138.7 },
   palco: { barra: bar.top + space.xl, empilha: true },
+  lib: { filtros: space.sm + touch.min + space.sm, linha: 80 },
   s5: { fileira: 663 },
   web: {
     conteiner: null, margem: space.xl, colunaLateral: 'empilha', razaoListaDetalhe: 'empilha',
@@ -396,4 +415,10 @@ const faixaB: TokensDaFaixa = {
   },
 }
 
-export const faixas: Readonly<Record<Faixa, TokensDaFaixa>> = { A: faixaB, B: faixaB, C: faixaC }
+/**
+ * A faixa A é a B (N3-D0) **menos a faixa de filtros da biblioteca**, que em A tem duas linhas (P-T1, N4-PR7): é a
+ * primeira medida em que A tem valor próprio. O resto é o objeto de B, chave a chave.
+ */
+const faixaA: TokensDaFaixa = { ...faixaB, lib: { filtros: space.sm + touch.min + space.sm + touch.min + space.sm, linha: 80 } }
+
+export const faixas: Readonly<Record<Faixa, TokensDaFaixa>> = { A: faixaA, B: faixaB, C: faixaC }

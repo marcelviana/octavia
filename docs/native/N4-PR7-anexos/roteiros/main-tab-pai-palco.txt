@@ -1,0 +1,28 @@
+14:13:48 toque canto de setlist-00000001 @ 96,420
+14:13:55 toque 'song-1' @ 658,580 (RX2N8000F3D)
+N4P7M-S3-S3a-letra-1a-tab-pai mCurrentRotation=ROTATION_90 png=246885 xml=26722 f1ff4f9990df
+14:14:10 toque 'indice' @ 2063,1385 (RX2N8000F3D)
+N4P7M-S2-sem-edicao-S2p-tab-pai mCurrentRotation=ROTATION_90 png=247087 xml=42291 c07cbae5fb2b
+14:14:26 toque 'borda-avancar' @ 2368,737 (RX2N8000F3D)
+N4P7M-S3-S3b-cifra-escuro-tab-pai mCurrentRotation=ROTATION_90 png=273525 xml=25752 48a84f6fba97
+14:14:41 toque 'tema' @ 682,1385 (RX2N8000F3D)
+N4P7M-S3-S3b-cifra-claro-tab-pai mCurrentRotation=ROTATION_90 png=273952 xml=25426 55a770b51708
+14:14:54 toque 'tema' @ 682,1385 (RX2N8000F3D)
+14:14:58 toque 'borda-avancar' @ 2368,737 (RX2N8000F3D)
+14:15:03 toque 'auto-scroll' @ 128,1385 (RX2N8000F3D)
+N4P7M-S3-S3c-tab-autoscroll-tab-pai mCurrentRotation=ROTATION_90 png=135976 xml=27302 671a30f8162b
+14:15:26 toque 'auto-scroll' @ 128,1385 (RX2N8000F3D)
+14:15:30 toque 'borda-avancar' @ 2368,737 (RX2N8000F3D)
+N4P7M-S3-S3d-pdf-12p-tab-pai mCurrentRotation=ROTATION_90 png=215806 xml=24182 ad1bb239faca
+14:15:49 avião=1 (RX2N8000F3D)
+14:15:52 toque 'borda-avancar' @ 2368,737 (RX2N8000F3D)
+N4P7M-S3-S3e-nao-baixado-tab-pai mCurrentRotation=ROTATION_90 png=154474 xml=24561 8b9b9b13c54b
+14:16:11 avião=0 (RX2N8000F3D)
+14:16:14 toque 'borda-avancar' @ 2368,737 (RX2N8000F3D)
+N4P7M-S3-titulo-longo-tab-pai mCurrentRotation=ROTATION_90 png=253270 xml=26832 7ef79457f780
+14:16:29 toque 'borda-avancar' @ 2368,737 (RX2N8000F3D)
+14:16:34 toque 'borda-avancar' @ 2368,737 (RX2N8000F3D)
+N4P7M-S3-ultima-tab-pai mCurrentRotation=ROTATION_90 png=248369 xml=26722 f8190fa124a6
+14:16:49 toque 'borda-avancar' @ 2368,737 (RX2N8000F3D)
+N4P7M-S5-fim-tab-pai mCurrentRotation=ROTATION_90 png=112194 xml=18192 49d77a7e2a50
+capturas=10 falhas=0

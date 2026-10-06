@@ -1,0 +1,12 @@
+$ (cd docs/native/DESIGN-V1 && shasum -a 256 -c SHA256SUMS | grep -c OK)
+OK: 3
+$ (cd docs/native/DESIGN-N2 && shasum -a 256 -c SHA256SUMS | grep -c OK)
+OK: 2
+$ (cd docs/native/DESIGN-N3 && shasum -a 256 -c SHA256SUMS | grep -c OK)
+OK: 2
+$ (cd docs/native/DESIGN-N4 && shasum -a 256 -c SHA256SUMS | grep -c OK)
+OK: 2
+$ (cd docs/ux/DESIGN-I1 && shasum -a 256 -c SHA256SUMS | grep -c OK)
+OK: 14
+$ (cd docs/native/N3-PRECHECK-anexos && shasum -a 256 -c SHA256SUMS.txt)
+OK: 355

@@ -46,6 +46,7 @@ import {
   ehFormatoQueOAppMostra,
   endOfSetlist,
   FRASES_DO_PALCO,
+  FRASES_DO_TABLET,
   isValidContent,
   nextPosition,
   nomeDoVoltarDoAvulso,
@@ -850,7 +851,7 @@ function Arquivo({
   if (estado.fase === 'buscando') {
     return (
       <View style={styles.placeholder} testID="s3-baixando">
-        <Text style={[styles.placeholderApoio, { color: cor.muted }]}>baixando o arquivo…</Text>
+        <Text style={[styles.placeholderApoio, { color: cor.muted }]}>{FRASES_DO_TABLET['baixando-o-arquivo']}</Text>
       </View>
     )
   }
@@ -862,7 +863,7 @@ function Arquivo({
 
   return (
     <View style={styles.placeholder} testID="s3e">
-      <Text style={[styles.placeholderTitulo, { color: cor.text }]}>arquivo não baixado</Text>
+      <Text style={[styles.placeholderTitulo, { color: cor.text }]}>{FRASES_DO_TABLET['arquivo-nao-baixado']}</Text>
       <Text style={[styles.placeholderApoio, { color: cor.muted }]}>
         {`${titulo} · ${tipo}${tamanho} não está neste aparelho. ${fecho}`}
       </Text>

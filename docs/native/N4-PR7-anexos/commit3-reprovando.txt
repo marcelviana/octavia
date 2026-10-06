@@ -1,0 +1,109 @@
+$ pnpm exec vitest run apps/native/test/biblioteca-tela.test.tsx apps/native/test/arquivo-sem-rede.test.ts apps/native/test/frases-n4.test.ts   # sobre aa766d5 (a main + os commits 1 e 2)
+     ✓ a lista saiu do telas.html da árvore (sha256 dba757dd569d…) 4ms
+     ✓ são 9 P-F, as da N4-D67 menos a P-F8 0ms
+     ✓ P-F1 0ms
+     ✓ P-F3 0ms
+     ✓ P-F4 0ms
+     ✓ P-F5 0ms
+     ✓ P-F6 0ms
+     ✓ P-F7 0ms
+     ✓ P-F9 0ms
+     ✓ P-F10 0ms
+     ✓ P-F11 0ms
+     ✓ as aspas são as tipográficas da folha (“ ”), nunca a reta 0ms
+     ✓ o título entra como dado: "$&" e "$1" no título não viram padrão de substituição 0ms
+     ✓ as cinco constantes P-F do core são estas, e só estas 0ms
+     ✓ as 4 junções com "·" das telas usam o separador do core 0ms
+     ✓ o motivo rede é isolado (sem separador de oração dentro) 0ms
+     ✓ o motivo sem-resposta é isolado (sem separador de oração dentro) 0ms
+     ✓ o motivo auth é isolado (sem separador de oração dentro) 0ms
+     ✓ o motivo limite-com-prazo é isolado (sem separador de oração dentro) 0ms
+     ✓ o motivo servidor é isolado (sem separador de oração dentro) 0ms
+     ✓ o motivo generica é isolado (sem separador de oração dentro) 0ms
+     ✓ S2 e o reordenar: com o motivo rede, o core monta byte a byte a frase da tela 0ms
+     ✓ S2 e o reordenar: com o motivo sem-resposta, o core monta byte a byte a frase da tela 0ms
+     ✓ S2 e o reordenar: com o motivo auth, o core monta byte a byte a frase da tela 0ms
+     ✓ S2 e o reordenar: com o motivo limite-com-prazo, o core monta byte a byte a frase da tela 0ms
+     ✓ S2 e o reordenar: com o motivo servidor, o core monta byte a byte a frase da tela 0ms
+     ✓ S2 e o reordenar: com o motivo generica, o core monta byte a byte a frase da tela 0ms
+     ✓ o favoritar com falha, sem rede: o nome do controle · o motivo (a tabela da folha) 0ms
+     ✓ o favoritar com falha, sem resposta: o nome do controle · o motivo (a tabela da folha) 1ms
+     ✓ o favoritar com falha, sessão: o nome do controle · o motivo (a tabela da folha) 0ms
+     ✓ o favoritar com falha, limite: o nome do controle · o motivo (a tabela da folha) 0ms
+     ✓ o favoritar com falha, servidor: o nome do controle · o motivo (a tabela da folha) 0ms
+     ✓ o favoritar com falha, genérica: o nome do controle · o motivo (a tabela da folha) 0ms
+     × a S4 não tem mais a cópia: a régua importa `nResultados` do core 4ms
+     ✓ o core e o template da S4 de antes dão o mesmo texto para 0, 1, 2 e 57 0ms
+     ✓ o core dá o texto que o palco escrevia 0ms
+     ✓ o voltar do avulso pela origem (N4-R16): busca · biblioteca · visualização 0ms
+     ✓ nenhuma cópia no palco: as três frases saem do core 0ms
+     × o core dá o texto que as telas escreviam 1ms
+     × nenhuma cópia em apps/native/src/screens/IndexScreen.tsx: as frases saem do core 2ms
+     × nenhuma cópia em apps/native/src/screens/StageScreen.tsx: as frases saem do core 3ms
+     × nenhuma cópia em apps/native/src/files.ts: as frases saem do core 2ms
+     × nenhuma cópia em apps/native/src/screens/SearchScreen.tsx: as frases saem do core 6ms
+     × nenhuma cópia em apps/native/src/screens/SetlistsScreen.tsx: as frases saem do core 2ms
+     × nenhuma cópia em apps/native/src/screens/LibraryScreen.tsx: as frases saem do core 1ms
+     × as telas importam do core o que escreviam (o controle do "nenhuma cópia": o texto continua lá, por outro caminho) 1ms
+     × sem rede: o estado é *arquivo não baixado* (`nao-baixado`), não `falhou` 3ms
+     × o log não muda: o `download-error` sai com e sem rede 1ms
+     × sem rede, a falha antiga da URL sai (o estado volta a "não baixado") 3ms
+     × controle — COM rede, o 404 continua sendo `falhou`, com a frase do conjunto fechado 0ms
+     × controle — a sonda que falha conta como "com rede" (o comportamento de antes) 0ms
+     × controle — com rede e o arquivo bom, baixa e o estado é `baixado` (nada mudou no caminho feliz) 2ms
+ FAIL   native-tela  apps/native/test/biblioteca-tela.test.tsx [ apps/native/test/biblioteca-tela.test.tsx ]
+Error: Failed to resolve import "../src/screens/LibraryScreen" from "apps/native/test/biblioteca-tela.test.tsx". Does the file exist?
+⎯⎯⎯⎯⎯⎯ Failed Tests 15 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL   native  apps/native/test/arquivo-sem-rede.test.ts > N4-D92 — sem rede, um plano que rejeita não faz a música aparecer como "não consegui baixar" > sem rede: o estado é *arquivo não baixado* (`nao-baixado`), não `falhou`
+TypeError: (0 , __vite_ssr_import_4__.ligarSondaDeRede) is not a function
+ FAIL   native  apps/native/test/arquivo-sem-rede.test.ts > N4-D92 — sem rede, um plano que rejeita não faz a música aparecer como "não consegui baixar" > sem rede: o estado é *arquivo não baixado* (`nao-baixado`), não `falhou`
+ FAIL   native  apps/native/test/arquivo-sem-rede.test.ts > N4-D92 — sem rede, um plano que rejeita não faz a música aparecer como "não consegui baixar" > o log não muda: o `download-error` sai com e sem rede
+ FAIL   native  apps/native/test/arquivo-sem-rede.test.ts > N4-D92 — sem rede, um plano que rejeita não faz a música aparecer como "não consegui baixar" > sem rede, a falha antiga da URL sai (o estado volta a "não baixado")
+ FAIL   native  apps/native/test/arquivo-sem-rede.test.ts > N4-D92 — sem rede, um plano que rejeita não faz a música aparecer como "não consegui baixar" > controle — COM rede, o 404 continua sendo `falhou`, com a frase do conjunto fechado
+ FAIL   native  apps/native/test/arquivo-sem-rede.test.ts > N4-D92 — sem rede, um plano que rejeita não faz a música aparecer como "não consegui baixar" > controle — a sonda que falha conta como "com rede" (o comportamento de antes)
+ FAIL   native  apps/native/test/arquivo-sem-rede.test.ts > N4-D92 — sem rede, um plano que rejeita não faz a música aparecer como "não consegui baixar" > controle — com rede e o arquivo bom, baixa e o estado é `baixado` (nada mudou no caminho feliz)
+TypeError: (0 , __vite_ssr_import_4__.ligarSondaDeRede) is not a function
+ FAIL   native  apps/native/test/arquivo-sem-rede.test.ts > N4-D92 — sem rede, um plano que rejeita não faz a música aparecer como "não consegui baixar" > o log não muda: o `download-error` sai com e sem rede
+TypeError: (0 , __vite_ssr_import_4__.ligarSondaDeRede) is not a function
+ FAIL   native  apps/native/test/arquivo-sem-rede.test.ts > N4-D92 — sem rede, um plano que rejeita não faz a música aparecer como "não consegui baixar" > sem rede, a falha antiga da URL sai (o estado volta a "não baixado")
+TypeError: (0 , __vite_ssr_import_4__.ligarSondaDeRede) is not a function
+ FAIL   native  apps/native/test/arquivo-sem-rede.test.ts > N4-D92 — sem rede, um plano que rejeita não faz a música aparecer como "não consegui baixar" > controle — COM rede, o 404 continua sendo `falhou`, com a frase do conjunto fechado
+TypeError: (0 , __vite_ssr_import_4__.ligarSondaDeRede) is not a function
+ FAIL   native  apps/native/test/arquivo-sem-rede.test.ts > N4-D92 — sem rede, um plano que rejeita não faz a música aparecer como "não consegui baixar" > controle — a sonda que falha conta como "com rede" (o comportamento de antes)
+TypeError: (0 , __vite_ssr_import_4__.ligarSondaDeRede) is not a function
+ FAIL   native  apps/native/test/frases-n4.test.ts > (3) a P-F8 no core, igual à da S4 — e, desde a N4-PR7, sem cópia na S4 > a S4 não tem mais a cópia: a régua importa `nResultados` do core
+AssertionError: expected 1 to be +0 // Object.is equality
+ FAIL   native  apps/native/test/frases-n4.test.ts > (5) as frases do tablet que a L reusa, no core, sem cópia nas telas > o core dá o texto que as telas escreviam
+AssertionError: expected undefined to strictly equal { carregando: 'carregando…', …(9) }
+ FAIL   native  apps/native/test/frases-n4.test.ts > (5) as frases do tablet que a L reusa, no core, sem cópia nas telas > nenhuma cópia em apps/native/src/screens/IndexScreen.tsx: as frases saem do core
+AssertionError: 'carregando…': expected '/**\n * S2 — Índice da setlist (PRD T…' not to contain '\'carregando…\''
++  * alvo de 48 × 48; o subtítulo ganha `n-de-musicas`, `data` e `local` como o
++   /** Sincronização terminada? Decide "carregando…" × "indisponível" (T1-R11). */
+ FAIL   native  apps/native/test/frases-n4.test.ts > (5) as frases do tablet que a L reusa, no core, sem cópia nas telas > nenhuma cópia em apps/native/src/screens/StageScreen.tsx: as frases saem do core
+AssertionError: >baixando o arquivo…<: expected '/**\n * S3 — Palco (PRD T1-R24, R25, …' not to contain '>baixando o arquivo…<'
++  * O `Pressable` É o alvo: 64 × 64 (66 com a moldura de 1 dp), e o `<Svg>` de
++   // A geometria das seis molduras de S3 do design: caixa 66 × 66 (64 + a
+ FAIL   native  apps/native/test/frases-n4.test.ts > (5) as frases do tablet que a L reusa, no core, sem cópia nas telas > nenhuma cópia em apps/native/src/files.ts: as frases saem do core
+AssertionError: 'não consegui baixar': expected '/**\n * Arquivos do nativo (PRD T1-R1…' not to contain '\'não consegui baixar\''
+ FAIL   native  apps/native/test/frases-n4.test.ts > (5) as frases do tablet que a L reusa, no core, sem cópia nas telas > nenhuma cópia em apps/native/src/screens/SearchScreen.tsx: as frases saem do core
+AssertionError: >sem conexão<: expected '/**\n * S4 — Busca na biblioteca (PRD…' not to contain '>sem conexão<'
++  *    anterior, não um passo atrás. O glifo `◂` num alvo de 48 × 58 vira o
++  *    ícone de 24 num alvo de 48 × 48;
++  *  - o `apagar` era a palavra num alvo de 48,9 × 48; vira o `x-circle` de 24,
++   // O rótulo textual media 48,9 × 21,8 dp antes da V1-PR1; agora é o ícone
+ FAIL   native  apps/native/test/frases-n4.test.ts > (5) as frases do tablet que a L reusa, no core, sem cópia nas telas > nenhuma cópia em apps/native/src/screens/SetlistsScreen.tsx: as frases saem do core
+AssertionError: texto: 'sem conexão': expected '/**\n * S1 — Setlists, nos seis estad…' not to contain 'texto: \'sem conexão\''
++  * `✓ ◔ ✗` viram os ícones `garantida` (neutro), `parcial` (arco proporcional a n/m) e
++   // 130,7 × 22,7 dp no dump da V1-PRECHECK: o "Tentar novamente" do banner era
++   // §8.4: o laço a 60 dp — a moldura recorta o PNG de 952 × 614 a um quarto
++   // (238 × 154) e mostra a janela [88…148] × [6…96]. Medido no arquivo: é o
+ FAIL   native  apps/native/test/frases-n4.test.ts > (5) as frases do tablet que a L reusa, no core, sem cópia nas telas > nenhuma cópia em apps/native/src/screens/LibraryScreen.tsx: as frases saem do core
+Error: ENOENT: no such file or directory, open '/Users/marcelviana/projects/octavia-n4-pr7/apps/native/src/screens/LibraryScreen.tsx'
+ FAIL   native  apps/native/test/frases-n4.test.ts > (5) as frases do tablet que a L reusa, no core, sem cópia nas telas > as telas importam do core o que escreviam (o controle do "nenhuma cópia": o texto continua lá, por outro caminho)
+AssertionError: expected '/**\n * S1 — Setlists, nos seis estad…' to contain '{FRASES_DO_TABLET[\'buscar-musica\']}'
++  * `✓ ◔ ✗` viram os ícones `garantida` (neutro), `parcial` (arco proporcional a n/m) e
++   // 130,7 × 22,7 dp no dump da V1-PRECHECK: o "Tentar novamente" do banner era
++   // §8.4: o laço a 60 dp — a moldura recorta o PNG de 952 × 614 a um quarto
++   // (238 × 154) e mostra a janela [88…148] × [6…96]. Medido no arquivo: é o
+ Test Files  3 failed (3)
+      Tests  15 failed | 37 passed (52)

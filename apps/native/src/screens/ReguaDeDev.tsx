@@ -63,6 +63,17 @@ const ESTILOS: Record<string, TextStyle> = {
   fim: { fontFamily: font.display, fontSize: size.display, letterSpacing: size.display * tracking.displayWide },
   /** O mesmo token em 32 — o degrau de A da N3-D18. Não existe no app: é a conta da folha, `s1`. */
   'fim-32': { fontFamily: font.display, fontSize: 32, letterSpacing: 32 * tracking.displayWide },
+  /**
+   * N4-PR7 — a biblioteca (L), medida ANTES de a tela existir (N4-R25; regra 19). Os quatro são os estilos que a
+   * `LibraryScreen` usa (a folha, `N4-B-L-base`): o rótulo do chip em Manrope 15 (`size.bodySmall`), a contagem do
+   * chip em mono 13 (o literal 13 da S4, N4-D79), o título da linha em Manrope 600 de 20 (o título de resultado da S4,
+   * N4-D79) e a segunda linha em Manrope 15. A tela nasce no commit 4 desta PR; daí em diante, mudou o estilo dela,
+   * muda o token aqui no mesmo commit.
+   */
+  'lib-chip': { fontFamily: font.ui, fontSize: size.bodySmall },
+  'lib-contagem': { fontFamily: font.mono, fontSize: 13 },
+  'lib-titulo': { fontFamily: font.uiBold, fontSize: 20 },
+  'lib-segunda': { fontFamily: font.ui, fontSize: size.bodySmall },
 }
 
 interface Pedido {

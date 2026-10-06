@@ -1,0 +1,5 @@
+     × a raiz da L é um KeyboardAvoidingView com `padding` — a lista termina acima do teclado 23ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+Error: sem nó com testID="lib-tela"
+     64|   if (e === null) throw new Error(`sem nó com testID="${testID}"`)
+      Tests  1 failed | 39 passed (40)

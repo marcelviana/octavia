@@ -1,0 +1,56 @@
+regua t="Letra" s=lib-chip w=36.4
+  caixa=36.4x21.8 dp
+regua t="Cifra" s=lib-chip w=33.3
+  caixa=33.3x21.8 dp
+regua t="Tab" s=lib-chip w=25.3
+  caixa=25.3x21.8 dp
+regua t="Partitura" s=lib-chip w=60.9
+  caixa=60.9x21.8 dp
+regua t="Favoritas" s=lib-chip w=63.1
+  caixa=63.1x21.8 dp
+regua t="57" s=lib-contagem w=16.0
+  caixa=16.0x20.0 dp
+regua t="3" s=lib-contagem w=8.0
+  caixa=8.0x20.0 dp
+regua t="2" s=lib-contagem w=8.0
+  caixa=8.0x20.0 dp
+regua t="1" s=lib-contagem w=8.0
+  caixa=8.0x20.0 dp
+regua t="0" s=lib-contagem w=8.0
+  caixa=8.0x20.0 dp
+regua t="5" s=lib-contagem w=8.0
+  caixa=8.0x20.0 dp
+regua t="12" s=lib-contagem w=16.0
+  caixa=16.0x20.0 dp
+regua t="999" s=lib-contagem w=24.0
+  caixa=24.0x20.0 dp
+regua t="Águas de fixture" s=lib-titulo w=156.0
+  caixa=156.0x29.8 dp
+regua t="Uma música de título bem comprido, para medir a quebra" s=lib-titulo w=537.3
+  caixa=537.3x29.8 dp
+regua t="Uma música de título bem comprido, para medir o corte do título em retrato e no celular" s=lib-titulo w=823.1
+  caixa=823.1x29.8 dp
+regua t="Letra" s=lib-segunda w=36.4
+  caixa=36.4x21.8 dp
+regua t="Banda da fixture" s=lib-segunda w=113.8
+  caixa=113.8x21.8 dp
+regua t="arquivo não baixado" s=lib-segunda w=139.1
+  caixa=139.1x21.8 dp
+regua t="tipo não reconhecido — edite na versão web" s=lib-segunda w=303.6
+  caixa=303.6x21.8 dp
+regua t="Biblioteca · 63 músicas" s=regua-picker w=204.4
+  caixa=204.4x18.2 dp
+regua t="63 resultados" s=regua-picker w=115.6
+  caixa=115.6x18.2 dp
+regua t="Biblioteca · 12 músicas" s=regua-picker w=204.4
+  caixa=204.4x18.2 dp
+regua t="Sem conexão: dá para ler e tocar, não para favoritar. O favoritar volta quando a rede voltar." s=aviso w=615.6
+  caixa=615.6x21.8 dp
+regua t="Favoritar “Uma música de título bem comprido, para medir a quebra”  ·  não foi possível salvar — confira sua conta no site" s=aviso w=820.9
+  caixa=820.9x21.8 dp
+regua t="Favoritar “Uma música de título bem comprido, para medir o corte do título em retrato e no celular”  ·  não foi possível salvar — confira sua conta no site" s=aviso w=1028.9
+  caixa=1028.9x21.8 dp
+regua t="Tirar “Uma música de título bem comprido, para medir o corte do título em retrato e no celular” das favoritas  ·  não foi possível salvar — confira sua conta no site" s=aviso w=1092.0
+  caixa=1092.0x21.8 dp
+regua t="falha no servidor · mostrando dados de há 44 min" s=aviso w=337.3
+  caixa=337.3x21.8 dp

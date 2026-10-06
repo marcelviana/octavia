@@ -1,0 +1,19 @@
+--- inst/roteiro.py	2026-10-06 11:36:49
++++ inst-pr7/roteiro.py	2026-10-06 11:59:06
+@@ -265,8 +265,16 @@
+         self.cap("S3", "S3d-pdf-12p")
+ 
+     def S4(self) -> None:
++        # N4-PR7 — a ERRATA DE CAMINHO do G-inv (N4-D73): `buscar` abre a biblioteca (N4-R1); a S4 da base se alcança
++        # pelo palco avulso SEM setlist → `busca` (a S4 sem *Nesta setlist*, N4-R17). O ▶ da linha se toca pelo nome
++        # acessível (o `{id8}` da fixture da base colide, div. 1002): a primeira da ordem, "Águas de fixture".
+         ir_s1(self.s)
+         n3.tap(self.s, rid="buscar", espera=2)
++        esperar(self.s, rid="lib-campo")
++        n3.tap(self.s, texto="Tocar \u201cÁguas de fixture\u201d", espera=3)
++        esperar(self.s, rid="sair")
++        n3.tap(self.s, rid="busca", espera=2)
++        esperar(self.s, rid="campo-busca")
+         self.cap("S4", "vazio")
+         n3.tap(self.s, rid="campo-busca")
+         self.digitar("ensaio")

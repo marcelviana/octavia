@@ -82,7 +82,9 @@ const RAIZ = process.argv[2] ?? '.'
  * lê. Lista FECHADA: acrescentar um é decisão declarada, como a
  * `ANGLICISMOS_DO_PRODUTO` abaixo. Só valem quando a raiz é a do app.
  */
-const EXTRAS = ['../../packages/core/src/frases.ts']
+// N4-PR7 (div. 1035): o módulo de frases de content do core — a tela L é a primeira do tablet que o lê, e as frases
+// que o tablet mostra a partir dele ficavam só sob o G-tok (o do site). As mesmas duas posições dos EXTRAS.
+const EXTRAS = ['../../packages/core/src/frases.ts', '../../packages/core/src/frases-content.ts']
 const RAIZ_DO_APP = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const extras = resolve(RAIZ) === RAIZ_DO_APP ? EXTRAS.map((f) => join(RAIZ, f)) : []
 /**

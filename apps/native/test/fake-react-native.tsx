@@ -181,6 +181,11 @@ export const TouchableOpacity = Pressable
  * `TextInput` controlado: `value`/`onChangeText`, `editable` (que no RN é o
  * avesso de `disabled`) e `placeholder`. `autoFocus` vai para o DOM, e é ele
  * que o CN do "ao abrir, o nome já está em foco" lê.
+ *
+ * N4-PR7 (o CN 5 que não reprovou): o React CONSOME o `autoFocus` de um
+ * `<input>` — foca na montagem e não escreve o atributo —, então
+ * `el.autofocus` é sempre `false` e um teste que o lê não pode reprovar. O
+ * duplo passa a escrever também `data-autofocus`, que é o que o teste da L lê.
  */
 export const TextInput = forwardRef<
   unknown,
@@ -198,6 +203,7 @@ export const TextInput = forwardRef<
     placeholder: p.placeholder,
     disabled: p.editable === false,
     autoFocus: p.autoFocus,
+    'data-autofocus': p.autoFocus === true ? 'true' : undefined,
     onChange: (e: { target: { value: string } }) => p.onChangeText?.(e.target.value),
     ref,
   }),
@@ -215,6 +221,12 @@ export function Modal(p: PropsComuns & { visible?: boolean }): React.JSX.Element
  * N3-PR3: o `numColumns` vai para `data-numcolumns` — a grade de duas colunas
  * de C e a coluna única de B (moldura `N3-B-S2e`) são a mesma lista com outro
  * número, e o duplo não tem geometria para mostrar a diferença de outro jeito.
+ *
+ * N4-PR7 (o CN 1 que não reprovou): o `ListHeaderComponent` e o
+ * `ListFooterComponent` ROLAM com a lista no RN — eles moram DENTRO dela. O
+ * duplo os ignorava, e "a régua fica fora da lista" passava com a régua
+ * plantada no cabeçalho. Agora o duplo os desenha dentro do contêiner, onde o
+ * RN os põe.
  */
 export function FlatList<T>(p: {
   data: readonly T[]
@@ -223,10 +235,13 @@ export function FlatList<T>(p: {
   contentContainerStyle?: unknown
   numColumns?: number
   testID?: string
+  ListHeaderComponent?: ReactNode
+  ListFooterComponent?: ReactNode
 }): React.JSX.Element {
   return createElement(
     'div',
     { 'data-testid': p.testID, 'data-flatlist': 'true', 'data-numcolumns': p.numColumns ?? 1 },
+    p.ListHeaderComponent ?? null,
     p.data.map((item, index) =>
       createElement(
         'div',
@@ -234,6 +249,7 @@ export function FlatList<T>(p: {
         p.renderItem({ item, index }) as ReactNode,
       ),
     ),
+    p.ListFooterComponent ?? null,
   )
 }
 
@@ -243,6 +259,20 @@ export const StyleSheet = {
   hairlineWidth: 1,
   absoluteFillObject: {},
 }
+
+/**
+ * N4-PR7 — `KeyboardAvoidingView`: um `View` que escreve o `behavior` em `data-keyboard-behavior`. A altura que ele
+ * tira com o teclado de pé é do aparelho (o dump); o duplo só prova QUE a tela o usa, e com que comportamento.
+ */
+export const KeyboardAvoidingView = forwardRef<unknown, PropsComuns & { behavior?: string; keyboardVerticalOffset?: number }>(
+  (p, ref) =>
+    createElement(
+      'div',
+      { ...atributos(p), 'data-keyboard-behavior': p.behavior, 'data-keyboard-offset': p.keyboardVerticalOffset, ref },
+      p.children as ReactNode,
+    ),
+)
+KeyboardAvoidingView.displayName = 'KeyboardAvoidingView'
 
 export const Platform = { OS: 'android' as const, select: (o: Record<string, unknown>) => o.android ?? o.default }
 export const Keyboard = { dismiss: (): void => undefined }

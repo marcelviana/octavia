@@ -1,0 +1,10 @@
+== base
+13:36:03 toque 'buscar' @ 1335,281 (emulator-5554)
+N4-R2 ao abrir: ['mInputShown=false'] · nós com foco: []
+N4P7K-L-base-avd-ret mCurrentRotation=ROTATION_90 png=319051 xml=81165 293fa1356d30
+== teclado
+13:36:37 toque 'buscar' @ 1335,281 (emulator-5554)
+13:36:45 toque 'lib-campo' @ 917,152 (emulator-5554)
+N4-R2 teclado: ['mInputShown=true'] · região tocável do IME (px): ('0', '1693', '1600', '2452')
+N4P7K-L-teclado-avd-ret mCurrentRotation=ROTATION_90 png=287496 xml=61138 5c4deb9239a6
+capturas=2 falhas=0

@@ -1,0 +1,101 @@
+== base
+14:51:50 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+N4-R2 ao abrir: ['mInputShown=false'] · nós com foco: []
+N4P7L-L-base-tab-ret mCurrentRotation=ROTATION_0 png=341504 xml=83499 c19fb852c746
+== rolagem
+14:52:22 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+N4-R3 rolagem lib-regua: antes [0, 396, 1600, 500] depois [0, 396, 1600, 500] IGUAL
+N4-R3 rolagem lib-filtro-letra: antes [54, 269, 294, 377] depois [54, 269, 294, 377] IGUAL
+N4-R3 rolagem lib-filtro-favoritas: antes [1107, 269, 1407, 377] depois [1107, 269, 1407, 377] IGUAL
+N4-R3 rolagem lib-campo: antes [317, 98, 1517, 206] depois [317, 98, 1517, 206] IGUAL
+N4-R3 rolagem lib-lista: antes [0, 500, 1600, 2452] depois [0, 500, 1600, 2452] IGUAL
+N4P7L-L-rolagem-rolada-tab-ret mCurrentRotation=ROTATION_0 png=349563 xml=85876 79e247968f39
+== filtros
+14:53:08 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+14:53:18 toque 'lib-filtro-tab' @ 669,323 (RX2N8000F3D)
+N4P7L-L-filtro-tab-tab-ret mCurrentRotation=ROTATION_0 png=128507 xml=32771 d6c95c6cdce0
+14:53:31 toque 'lib-filtro-tab' @ 669,323 (RX2N8000F3D)
+14:53:35 toque 'lib-filtro-favoritas' @ 1257,323 (RX2N8000F3D)
+N4P7L-L-favoritas-1-tab-ret mCurrentRotation=ROTATION_0 png=129780 xml=32459 f1f650a30fef
+14:53:48 toque 'lib-filtro-favoritas' @ 1257,323 (RX2N8000F3D)
+14:53:52 toque 'lib-filtro-tab' @ 669,323 (RX2N8000F3D)
+14:53:56 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+N4P7L-L-filtro-sem-resultado-tab-ret mCurrentRotation=ROTATION_0 png=124210 xml=28473 1a5eac69ffa7
+== busca
+14:54:22 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+14:54:32 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+N4P7L-L-busca-sem-resultado-tab-ret mCurrentRotation=ROTATION_0 png=138227 xml=30188 47281437b9b9
+14:54:47 toque 'lib-campo' @ 849,152 (RX2N8000F3D)
+N4P7L-L-busca-ensaio-tab-ret mCurrentRotation=ROTATION_0 png=329039 xml=82452 d7e21e035da7
+== teclado
+14:55:16 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+14:55:25 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+N4-R2 teclado: ['mInputShown=true'] · região tocável do IME (px): ('0', '1713', '1600', '2452')
+N4P7L-L-teclado-tab-ret mCurrentRotation=ROTATION_0 png=308142 xml=61480 af326627046c
+== tocar
+14:55:46 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+14:55:55 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+14:56:02 toque 'lib-filtro-cifra' @ 428,323 (RX2N8000F3D)
+N4P7L-L-antes-do-tocar-tab-ret mCurrentRotation=ROTATION_0 png=173481 xml=43910 898dcb189376
+14:56:31 toque 'Tocar “Segunda do ensaio”' @ 1463,797 (RX2N8000F3D)
+o voltar do avulso: content-desc='Voltar para a biblioteca'
+  log: keepawake on | prefetch plan n=0 reason=demand
+N4P7L-S3-avulso-da-biblioteca-tab-ret mCurrentRotation=ROTATION_0 png=494058 xml=23085 a7df904a5788
+14:56:53 toque 'sair' @ 1472,2345 (RX2N8000F3D)
+N4P7L-L-depois-do-voltar-tab-ret mCurrentRotation=ROTATION_0 png=173784 xml=43911 0728eea497f5
+N4-R16 a mesma posição (termo, filtros, rolagem, nó a nó): IGUAL (42 nós)
+== favoritando
+14:57:12 mock modo=escrita-lenta content=content.json env={'OCTAVIA_MOCK_LENTA_S': '8'}
+14:57:26 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+14:57:40 toque 'Favoritar “Manhã de ensaio”' @ 1346,1418 (RX2N8000F3D)
+N4P7L-L-favoritando-tab-ret mCurrentRotation=ROTATION_0 png=341423 xml=84834 42e9e6f228b6
+N4P7L-L-favoritada-tab-ret mCurrentRotation=ROTATION_0 png=341974 xml=83836 37ba0ae274fa
+  log: auth refresh=cached | api status=200 path=/api/content n=1 ms=8043 | write op=favorite content=b1b10001 status=200 code=- ms=8049 | cache write kind=content n=15 invalidated=1
+14:58:16 mock modo=normal vazio=False
+14:58:24 toque 'Tirar “Manhã de ensaio” das favoritas' @ 1346,1418 (RX2N8000F3D)
+  desfavoritar (devolve o estado da fixture): auth refresh=cached | api status=200 path=/api/content n=1 ms=28 | write op=unfavorite content=b1b10001 status=200 code=- ms=32 | cache write kind=content n=15 invalidated=1
+== falhou
+14:58:46 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+14:58:54 mock modo=escrita-500 content=content.json env=None
+14:59:02 toque 'Favoritar “Manhã de ensaio”' @ 1346,1418 (RX2N8000F3D)
+  log: auth refresh=cached | api status=500 path=/api/content n=1 ms=30 | write op=favorite content=b1b10001 status=500 code=INTERNAL_ERROR ms=36
+N4P7L-L-favoritar-falhou-servidor-tab-ret mCurrentRotation=ROTATION_0 png=344672 xml=82090 72e8fd0f7193
+14:59:25 mock modo=normal vazio=False
+== falhaCache
+14:59:27 mock modo=500-pagina-1 vazio=False
+14:59:40 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+N4P7L-L-falha-com-cache-tab-ret mCurrentRotation=ROTATION_0 png=352158 xml=83733 f7e15537e138
+15:00:01 mock modo=normal vazio=False
+== arquivos
+15:00:14 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+15:00:24 toque 'lib-filtro-partitura' @ 942,323 (RX2N8000F3D)
+com rede, as partituras: ['não consegui baixar']
+N4P7L-L-partituras-com-rede-tab-ret mCurrentRotation=ROTATION_0 png=213199 xml=52029 50ea726b289d
+== semRede
+15:00:51 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+15:01:01 avião=1 (RX2N8000F3D)
+ping: connect: Network is unreachable
+N4P7L-L-sem-rede-tab-ret mCurrentRotation=ROTATION_0 png=348091 xml=82113 e28326eb6556
+15:01:23 toque 'Favoritar “Águas de fixture”' @ 1346,698 (RX2N8000F3D)
+  o toque na estrela inerte, sem rede: (nenhuma linha)
+arquivos depois do rm: 'cache/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3/files:\n\nfiles/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3/files:\n'
+ping antes de abrir: connect: Network is unreachable
+15:02:00 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+15:02:13 toque 'lib-filtro-partitura' @ 942,431 (RX2N8000F3D)
+N4-D92 os estados de arquivo na L, aberta sem rede: ['arquivo não baixado']
+N4P7L-L-sem-rede-arquivos-nao-baixados-tab-ret mCurrentRotation=ROTATION_0 png=231376 xml=54091 35195b0a90f2
+15:02:33 avião=0 (RX2N8000F3D)
+== semCache
+store: files
+15:02:47 mock modo=atraso vazio=False
+15:03:07 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+N4P7L-L-carregando-tab-ret mCurrentRotation=ROTATION_0 png=101420 xml=26449 59b8c45177c0
+store: files
+15:03:35 mock modo=500-pagina-1 vazio=False
+15:03:55 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+N4P7L-L-falha-sem-cache-tab-ret mCurrentRotation=ROTATION_0 png=144470 xml=28587 fafcf7e06c12
+15:04:10 mock modo=normal content=content-vazio.json env=None
+15:04:24 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+N4P7L-L-vazia-tab-ret mCurrentRotation=ROTATION_0 png=150259 xml=27553 f45fefd3fcb8
+15:04:43 mock modo=normal vazio=False
+capturas=21 falhas=0

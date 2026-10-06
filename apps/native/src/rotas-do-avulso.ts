@@ -10,8 +10,8 @@
  * (div. 1001). Agora o avulso EMPILHA (`push`) sobre a origem: o voltar é o `goBack`, e a origem volta na mesma
  * posição — a busca com o mesmo termo e a mesma rolagem, porque o native-stack não desmonta a tela de baixo.
  *
- * **A origem** dá o nome ao voltar (`nomeDoVoltarDoAvulso`, no core): `busca` nesta PR; `biblioteca` e
- * `visualizacao` são o contrato que a PR-7 (L) e a PR-8 (V) usam — as duas telas ainda não existem.
+ * **A origem** dá o nome ao voltar (`nomeDoVoltarDoAvulso`, no core): `busca` (N4-PR6), `biblioteca` (a L, N4-PR7) e
+ * `visualizacao` (V, a PR-8).
  *
  * **O que fica como está** (N4-D30): o avulso aberto pela busca DE DENTRO de uma setlist — a música de fora entra no
  * lugar da busca (`replace`) com a setlist de onde a busca partiu, e o `goBack` devolve o palco dela na posição; e o
@@ -60,3 +60,15 @@ export function destinoDaBuscaDoPalco(setlistId: string | null, posicao: number)
   if (setlistId === null) return { acao: 'push', rota: 'Search', params: {} }
   return { acao: 'navigate', rota: 'Search', params: { setlistId, posicao } }
 }
+
+/**
+ * N4-PR7 — o ▶ da linha da biblioteca (N4-R6, N4-R16): o avulso SEM hospedeira desta música, com a origem
+ * `biblioteca`. EMPILHA sobre a L (`push`), e o voltar do palco (*Voltar para a biblioteca*) é o `goBack`: a L volta na
+ * mesma posição — rolagem, filtros e termo —, porque o native-stack não desmonta a tela de baixo.
+ */
+export function destinoDoTocarDaBiblioteca(contentId: string): Destino {
+  return { acao: 'push', rota: 'Stage', params: { avulsa: contentId, origem: 'biblioteca' } }
+}
+
+/** N4-PR7 — `Buscar música` em S1 (N4-R1, N4-D59): a biblioteca, não mais a S4. */
+export const DESTINO_DE_BUSCAR_MUSICA = 'Biblioteca' as const

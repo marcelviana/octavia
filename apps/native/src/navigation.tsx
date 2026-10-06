@@ -1,6 +1,7 @@
 /**
  * Navegação da tela 1 (N1-D1: `@react-navigation/native` + native-stack).
- * Seis rotas: S0 Login, S1 Setlists, S2 Index, S3 Stage, S4 Search, S5 End.
+ * Seis rotas: S0 Login, S1 Setlists, S2 Index, S3 Stage, S4 Search, S5 End — e, desde a N4-PR7, a sétima: L, a
+ * Biblioteca, que `Buscar música` em S1 abre (N4-R1).
  * Sem header — as barras são do design (T1-R27/R28).
  *
  * A **posição no palco vive nos params da rota** (`Stage.position`): assim
@@ -14,13 +15,16 @@ import { StyleSheet, Text, View } from 'react-native'
 import type { ContentDTO, SetlistDTO } from '@octavia/core'
 import { EndScreen } from './screens/EndScreen'
 import { IndexScreen, type AvisoDeSaida } from './screens/IndexScreen'
+import { LibraryScreen } from './screens/LibraryScreen'
 import { LoginScreen } from './screens/LoginScreen'
 import { SearchScreen } from './screens/SearchScreen'
 import { SetlistsScreen, type SetlistsScreenProps } from './screens/SetlistsScreen'
 import { StageScreen } from './screens/StageScreen'
 import {
+  DESTINO_DE_BUSCAR_MUSICA,
   destinoDaBuscaDoPalco,
   destinoDoResultado,
+  destinoDoTocarDaBiblioteca,
   type Destino,
   type ParamsDaBusca,
   type ParamsDoPalco,
@@ -43,6 +47,8 @@ export type RootStackParamList = {
   /** `posicao` é a do palco na abertura; ausente quando a busca vem da S1/S2 ou do avulso sem hospedeira. */
   Search: ParamsDaBusca
   End: { setlistId: string }
+  /** N4-PR7 — L, a biblioteca (N4-R1…N4-R11). Sem params: abre sempre do topo, sem termo e sem filtro. */
+  Biblioteca: undefined
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
@@ -154,7 +160,10 @@ export function Navigation({ signedIn, setlists, dados }: NavigationProps): Reac
                     setSumiu(null)
                     navigation.navigate('Index', { setlistId })
                   }}
-                  onBuscar={() => navigation.navigate('Search', {})}
+                  // N4-R1 (N4-D59): `Buscar música` abre a BIBLIOTECA. A S4 continua existindo, aberta só pela
+                  // busca do palco (o avulso sem setlist chega a ela pela `busca` dele — a errata de CAMINHO do G-inv,
+                  // N4-D73).
+                  onBuscar={() => navigation.navigate(DESTINO_DE_BUSCAR_MUSICA)}
                 />
               )}
             </Stack.Screen>
@@ -283,6 +292,21 @@ export function Navigation({ signedIn, setlists, dados }: NavigationProps): Reac
                   />
                 )
               }}
+            </Stack.Screen>
+
+            <Stack.Screen name="Biblioteca">
+              {({ navigation }) => (
+                <LibraryScreen
+                  contents={dados.contents}
+                  filesPresent={setlists.filesPresent}
+                  online={dados.online}
+                  sync={setlists.sync}
+                  temCache={setlists.temCache}
+                  onTentarNovamente={setlists.onTentarNovamente}
+                  onVoltar={() => navigation.goBack()}
+                  onTocar={(contentId) => ir(navigation, destinoDoTocarDaBiblioteca(contentId))}
+                />
+              )}
             </Stack.Screen>
 
             <Stack.Screen name="Search">

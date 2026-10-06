@@ -75,8 +75,11 @@ const IGUAIS = [
   'zoomSteps', 'zoomDefault', 'lineHeight', 'tracking',
 ] as const
 
-/** Sem o bloco `web`, a faixa do pacote é a do nativo. */
-const semWeb = (f: Record<string, unknown>) => Object.fromEntries(Object.entries(f).filter(([k]) => k !== 'web'))
+/**
+ * Sem o bloco `web`, a faixa do pacote é a do nativo. **N4-PR7**: e sem o bloco `lib` (P-T1, P-T2), que é ADIÇÃO —
+ * nenhuma chave da linha de base muda; ele é cobrado no `it` próprio, contra a folha (`N4-PR7 — o bloco lib`).
+ */
+const semWeb = (f: Record<string, unknown>) => Object.fromEntries(Object.entries(f).filter(([k]) => k !== 'web' && k !== 'lib'))
 
 describe('pacote ≡ linha de base (em dp)', () => {
   for (const k of IGUAIS) {
@@ -126,6 +129,19 @@ describe('pacote ≡ linha de base (em dp)', () => {
     expect(identidade.faixas.A.web).toStrictEqual(B)
   })
 
+  /**
+   * N4-PR7 — P-T1 e P-T2 (N4-D67; `DESIGN-N4/README.md` §3.1, `N4-REQUISITOS.md` N4-R20), por faixa: a faixa de
+   * filtros 64 em C e B, 120 em A (duas linhas, 3 + 2); a linha 80 nas três (em A, o mínimo — ela cresce). A é a
+   * primeira faixa com valor próprio: o único `lib.filtros`, e o resto de A continua sendo B.
+   */
+  it('N4-PR7 — o bloco lib (P-T1, P-T2): C 64 · B 64 · A 120; a linha 80', () => {
+    expect(identidade.faixas.C.lib).toStrictEqual({ filtros: 64, linha: 80 })
+    expect(identidade.faixas.B.lib).toStrictEqual({ filtros: 64, linha: 80 })
+    expect(identidade.faixas.A.lib).toStrictEqual({ filtros: 120, linha: 80 })
+    const semLib = (f: object) => Object.fromEntries(Object.entries(f).filter(([k]) => k !== 'lib'))
+    expect(semLib(identidade.faixas.A)).toStrictEqual(semLib(identidade.faixas.B))
+  })
+
   it('faixaDe e os limiares moram no pacote (I1-D30): A < 700 · B 700–960 · C > 960', () => {
     expect(identidade.limiares).toStrictEqual({ ab: 700, bc: 960 })
     expect([699, 699.9, 700, 960, 960.1, 961].map(identidade.faixaDe)).toEqual(['A', 'A', 'B', 'B', 'C', 'C'])
@@ -165,12 +181,18 @@ describe('nativo ≡ linha de base (nada mudou em dp)', () => {
     it(`theme.${k}`, () => expect((tema as Record<string, unknown>)[k]).toStrictEqual(base.tokens[k]))
   }
 
-  it('theme.faixas — sem o bloco web, A continua sendo B (com os pares da N4-D64)', () => {
+  it('theme.faixas — sem o bloco web, A continua sendo B fora do lib (com os pares da N4-D64)', () => {
     const esperadas = faixasEsperadas()
     for (const f of ['A', 'B', 'C'] as const) {
       expect(semWeb(tema.faixas[f] as unknown as Record<string, unknown>)).toStrictEqual(esperadas[f])
     }
-    expect(tema.faixas.A).toBe(tema.faixas.B)
+    // Em par (N4-PR7, P-T1): era `expect(tema.faixas.A).toBe(tema.faixas.B)` — A ERA o objeto de B. Com a faixa de
+    // filtros de duas linhas em A, A é uma cópia de B com o `lib` próprio: o resto, chave a chave, igual; e o mesmo
+    // objeto do pacote (o `theme.ts` reexporta, não copia).
+    const semLib = (f: object) => Object.fromEntries(Object.entries(f).filter(([k]) => k !== 'lib'))
+    expect(semLib(tema.faixas.A)).toStrictEqual(semLib(tema.faixas.B))
+    expect(tema.faixas.A.lib.filtros).not.toBe(tema.faixas.B.lib.filtros)
+    expect(tema.faixas).toBe(identidade.faixas)
   })
 
   it('theme.font continua com os nomes de .ttf do expo-font (o mapa de fontes.ts)', () => {

@@ -1,0 +1,11 @@
+== busca
+FALHA busca: adb shell settings put system user_rotation : Bad arguments
+13:13:01 avião=0 (emulator-5554)
+13:13:03 mock modo=normal vazio=False
+== semRede
+FALHA semRede: adb shell settings put system user_rotation : Bad arguments
+13:13:11 avião=0 (emulator-5554)
+13:13:13 mock modo=normal vazio=False
+capturas=0 falhas=2
+  busca: adb shell settings put system user_rotation : Bad arguments
+  semRede: adb shell settings put system user_rotation : Bad arguments

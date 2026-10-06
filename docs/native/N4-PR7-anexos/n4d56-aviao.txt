@@ -1,0 +1,13 @@
+$ N4-D56 — em avião, pelo cache (release 15:21:44)
+airplane=1
+connect: Network is unreachable
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net offline
+OCTAVIA: auth uid=xVDJRBh1WpPOatbfWahOLttYn1E3 src=restored
+OCTAVIA: cache hit kind=setlists n=2
+OCTAVIA: cache hit kind=content n=63
+OCTAVIA: sync skip reason=offline
+OCTAVIA: prefetch plan n=0 reason=7d
+resource-id="aviso-motivo" resource-id="buscar" 
+FATAL: 0
+resource-id="aviso-motivo" resource-id="buscar" resource-id="setlist-772076b4" resource-id="setlist-e39d57cf" 

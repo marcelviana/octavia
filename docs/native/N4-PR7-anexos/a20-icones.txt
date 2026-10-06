@@ -1,0 +1,12 @@
+$ pnpm --filter native gate:a20
+  arquivos varridos: 40 (inclui 2 de fora da raiz: ../../packages/core/src/frases.ts, ../../packages/core/src/frases-content.ts — N2-PR3, div. 229)
+  vocabulário: 45 termos · isenções do produto: 9
+  literais em posição de texto examinados: 223
+  acusações: 0
+$ gate:a20:cn
+  literais em posição de texto examinados: 8
+  acusações: 4
+$ pnpm --filter native gate:icones
+  §6.3 → T1 (N4-D69): tab em20 3 linhas · normal 3 linhas · a tab@20 de quatro cordas do telas.html (o velho do par): achada
+  fora do catálogo: 4/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  acusações: 0 · avisos: 0

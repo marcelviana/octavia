@@ -1,0 +1,53 @@
+14:29:19 toque canto de setlist-00000001 @ 96,474
+14:29:27 toque 'song-1' @ 800,580 (RX2N8000F3D)
+N4P7D-S3-S3a-letra-1a-tab-ret mCurrentRotation=ROTATION_0 png=411311 xml=26722 6a36d133f29a
+14:29:41 toque 'indice' @ 1103,2345 (RX2N8000F3D)
+N4P7D-S2-sem-edicao-S2p-tab-ret mCurrentRotation=ROTATION_0 png=276380 xml=42326 35cfa08d5931
+N4P7D-S2-sem-edicao-S2p-rolada-tab-ret mCurrentRotation=ROTATION_0 png=276586 xml=42317 4087987e087c
+14:30:28 toque 'borda-avancar' @ 1480,1244 (RX2N8000F3D)
+N4P7D-S3-S3b-cifra-escuro-tab-ret mCurrentRotation=ROTATION_0 png=498861 xml=25752 fdc1f9c00032
+14:30:42 toque 'tema' @ 682,2345 (RX2N8000F3D)
+N4P7D-S3-S3b-cifra-claro-tab-ret mCurrentRotation=ROTATION_0 png=499221 xml=25426 d173eca5d148
+14:30:56 toque 'tema' @ 682,2345 (RX2N8000F3D)
+14:30:59 toque 'borda-avancar' @ 1480,1244 (RX2N8000F3D)
+14:31:05 toque 'auto-scroll' @ 128,2345 (RX2N8000F3D)
+N4P7D-S3-S3c-tab-autoscroll-tab-ret mCurrentRotation=ROTATION_0 png=159958 xml=27302 34fbd880896f
+14:31:22 toque 'auto-scroll' @ 128,2345 (RX2N8000F3D)
+14:31:26 toque 'borda-avancar' @ 1480,1244 (RX2N8000F3D)
+N4P7D-S3-S3d-pdf-12p-tab-ret mCurrentRotation=ROTATION_0 png=191826 xml=24181 f36c7bfbf2d8
+14:31:45 avião=1 (RX2N8000F3D)
+14:31:47 toque 'borda-avancar' @ 1480,1244 (RX2N8000F3D)
+N4P7D-S3-S3e-nao-baixado-tab-ret mCurrentRotation=ROTATION_0 png=154162 xml=24557 e000242e0351
+14:32:07 avião=0 (RX2N8000F3D)
+14:32:10 toque 'borda-avancar' @ 1480,1244 (RX2N8000F3D)
+N4P7D-S3-titulo-longo-tab-ret mCurrentRotation=ROTATION_0 png=415339 xml=26832 ed24b0079dda
+14:32:25 toque 'borda-avancar' @ 1480,1244 (RX2N8000F3D)
+14:32:30 toque 'borda-avancar' @ 1480,1244 (RX2N8000F3D)
+N4P7D-S3-ultima-tab-ret mCurrentRotation=ROTATION_0 png=412541 xml=26722 158863cf1eb8
+14:32:45 toque 'borda-avancar' @ 1480,1244 (RX2N8000F3D)
+N4P7D-S5-fim-tab-ret mCurrentRotation=ROTATION_0 png=112094 xml=18201 a26b4fbd40ee
+14:33:10 toque canto de setlist-00000001 @ 96,474
+N4P7D-S2-com-edicao-tab-ret mCurrentRotation=ROTATION_0 png=287642 xml=60317 e353a831dc9c
+N4P7D-S2-com-edicao-rolada-tab-ret mCurrentRotation=ROTATION_0 png=288496 xml=65255 6275d3fd071f
+14:33:59 avião=1 (RX2N8000F3D)
+N4P7D-S2-com-edicao-aviso-sem-rede-tab-ret mCurrentRotation=ROTATION_0 png=307486 xml=61047 b136ec2694a4
+N4P7D-S2-com-edicao-aviso-sem-rede-rolada-tab-ret mCurrentRotation=ROTATION_0 png=310370 xml=61033 42ef684f9134
+14:34:49 avião=0 (RX2N8000F3D)
+14:35:03 toque canto de setlist-00000001 @ 96,474
+14:35:10 toque 'picker-abrir' @ 207,323 (RX2N8000F3D)
+N4P7D-picker-vazio-tab-ret mCurrentRotation=ROTATION_0 png=127406 xml=16727 5105bc487454
+14:35:24 picker-vazio: sem lista rolável — sem rolado
+14:35:27 toque 'picker-campo' @ 917,152 (RX2N8000F3D)
+N4P7D-picker-resultados-tab-ret mCurrentRotation=ROTATION_0 png=373981 xml=60081 c946e1917fd4
+N4P7D-picker-resultados-rolada-tab-ret mCurrentRotation=ROTATION_0 png=364386 xml=59747 a7c2740e19f5
+14:36:14 toque 'fechar-busca' @ 108,152 (RX2N8000F3D)
+14:36:29 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+14:36:37 toque 'Tocar “Águas de fixture”' @ 1463,590 (RX2N8000F3D)
+14:36:45 toque 'busca' @ 1287,2345 (RX2N8000F3D)
+N4P7D-S4-vazio-tab-ret mCurrentRotation=ROTATION_0 png=98407 xml=14312 2f530b57f132
+14:37:02 S4-vazio: sem lista rolável — sem rolado
+14:37:05 toque 'campo-busca' @ 917,152 (RX2N8000F3D)
+N4P7D-S4-resultados-tab-ret mCurrentRotation=ROTATION_0 png=275891 xml=42441 e54e1992b584
+N4P7D-S4-resultados-rolada-tab-ret mCurrentRotation=ROTATION_0 png=275891 xml=42441 e54e1992b584
+14:37:51 toque 'fechar-busca' @ 108,152 (RX2N8000F3D)
+capturas=21 falhas=0

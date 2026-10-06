@@ -1,0 +1,6 @@
+Tue Oct  6 11:37:26 -03 2026
+stay_on=1 accel=1 user_rot=0 airplane=1 wifi=0 data=0
+reverse: (vazio)
+    lastUpdateTime=2026-09-24 14:00:01
+    pkgFlags=[ DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+-rw-r--r--@ 1 marcelviana  staff  881129137 Sep 24 14:00 /Users/marcelviana/.android/avd/octavia_tab32.avd/snapshots/default_boot/ram.bin

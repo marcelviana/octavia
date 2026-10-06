@@ -1,0 +1,6 @@
+13:25:55 toque 'lib-campo' @ 676,177 (emulator-5556)
+$ e9 no octavia_phone (A, em pé): o campo de L tocado
+mInputShown: ['mInputShown=true']
+IME touchable region px: ('0', '1517', '1080', '2274')
+topo do teclado 577.9 dp; o teclado ocupa 288.4 dp; da janela útil (24 … 898,3) cobre 320.4 dp
+lib-lista com o teclado: y [0.0, 278.5, 411.4, 898.3]

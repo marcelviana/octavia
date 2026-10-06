@@ -1,0 +1,95 @@
+== base
+13:01:38 toque 'buscar' @ 1335,281 (emulator-5554)
+N4-R2 ao abrir: ['mInputShown=false'] · nós com foco: []
+N4P7L-L-base-avd-ret mCurrentRotation=ROTATION_90 png=318200 xml=81157 bf1bd2f79c01
+== rolagem
+13:02:13 toque 'buscar' @ 1335,281 (emulator-5554)
+N4-R3 rolagem lib-regua: antes [0, 396, 1600, 500] depois [0, 396, 1600, 500] IGUAL
+N4-R3 rolagem lib-filtro-letra: antes [54, 269, 294, 377] depois [54, 269, 294, 377] IGUAL
+N4-R3 rolagem lib-filtro-favoritas: antes [1107, 269, 1407, 377] depois [1107, 269, 1407, 377] IGUAL
+N4-R3 rolagem lib-campo: antes [317, 98, 1517, 206] depois [317, 98, 1517, 206] IGUAL
+N4-R3 rolagem lib-lista: antes [0, 500, 1600, 2425] depois [0, 500, 1600, 2425] IGUAL
+N4P7L-L-rolagem-rolada-avd-ret mCurrentRotation=ROTATION_90 png=333701 xml=82587 101f19bff8ac
+== filtros
+13:02:55 toque 'buscar' @ 1335,281 (emulator-5554)
+13:03:03 toque 'lib-filtro-tab' @ 669,323 (emulator-5554)
+N4P7L-L-filtro-tab-avd-ret mCurrentRotation=ROTATION_90 png=116333 xml=32421 717d38c70e15
+13:03:15 toque 'lib-filtro-tab' @ 669,323 (emulator-5554)
+13:03:18 toque 'lib-filtro-favoritas' @ 1257,323 (emulator-5554)
+N4P7L-L-favoritas-1-avd-ret mCurrentRotation=ROTATION_90 png=117346 xml=32109 f123a4536b7f
+13:03:30 toque 'lib-filtro-favoritas' @ 1257,323 (emulator-5554)
+13:03:33 toque 'lib-filtro-tab' @ 669,323 (emulator-5554)
+13:03:36 toque 'lib-campo' @ 917,152 (emulator-5554)
+N4P7L-L-filtro-sem-resultado-avd-ret mCurrentRotation=ROTATION_90 png=112745 xml=28123 dabc23b063e2
+== busca
+13:04:05 toque 'buscar' @ 1335,281 (emulator-5554)
+13:04:13 toque 'lib-campo' @ 917,152 (emulator-5554)
+N4P7L-L-busca-sem-resultado-avd-ret mCurrentRotation=ROTATION_90 png=125708 xml=29838 f692110704e6
+13:04:27 toque 'lib-apagar' @ 1463,152 (emulator-5554)
+FALHA busca: TOQUE FALHOU: sem 'lib-campo' (n=1)
+13:04:38 avião=0 (emulator-5554)
+13:04:40 mock modo=normal vazio=False
+== teclado
+13:04:56 toque 'buscar' @ 1335,281 (emulator-5554)
+13:05:04 toque 'lib-campo' @ 917,152 (emulator-5554)
+N4-R2 teclado: ['mInputShown=true'] · região tocável do IME (px): ('0', '1693', '1600', '2452')
+N4P7L-L-teclado-avd-ret mCurrentRotation=ROTATION_90 png=287176 xml=81156 eba585fd29f0
+== tocar
+13:05:26 toque 'buscar' @ 1335,281 (emulator-5554)
+13:05:34 toque 'lib-campo' @ 917,152 (emulator-5554)
+13:05:40 toque 'lib-filtro-cifra' @ 428,323 (emulator-5554)
+N4P7L-L-antes-do-tocar-avd-ret mCurrentRotation=ROTATION_90 png=161078 xml=43560 b790f5dcc561
+13:06:02 toque 'Tocar “Segunda do ensaio”' @ 1463,797 (emulator-5554)
+o voltar do avulso: content-desc='Voltar para a biblioteca'
+  log: keepawake on | prefetch plan n=0 reason=demand
+N4P7L-S3-avulso-da-biblioteca-avd-ret mCurrentRotation=ROTATION_90 png=465351 xml=22743 9ff3a1c83941
+13:06:17 toque 'sair' @ 1472,2318 (emulator-5554)
+N4P7L-L-depois-do-voltar-avd-ret mCurrentRotation=ROTATION_90 png=161114 xml=43561 9210925cc9af
+N4-R16 a mesma posição (termo, filtros, rolagem, nó a nó): IGUAL (41 nós)
+== favoritando
+13:06:34 mock modo=escrita-lenta content=content.json env={'OCTAVIA_MOCK_LENTA_S': '8'}
+13:06:50 toque 'buscar' @ 1335,281 (emulator-5554)
+13:06:58 toque 'Favoritar “Manhã de ensaio”' @ 1346,1418 (emulator-5554)
+N4P7L-L-favoritando-avd-ret mCurrentRotation=ROTATION_90 png=322079 xml=82489 94359d4a863e
+N4P7L-L-favoritada-avd-ret mCurrentRotation=ROTATION_90 png=319046 xml=81494 e36f24cee08f
+  log: auth refresh=cached | api status=200 path=/api/content n=1 ms=8022 | write op=favorite content=b1b10001 status=200 code=- ms=8028 | cache write kind=content n=15 invalidated=1
+13:07:26 mock modo=normal vazio=False
+13:07:29 toque 'Tirar “Manhã de ensaio” das favoritas' @ 1346,1418 (emulator-5554)
+  desfavoritar (devolve o estado da fixture): auth refresh=cached | api status=200 path=/api/content n=1 ms=24 | write op=unfavorite content=b1b10001 status=200 code=- ms=27 | cache write kind=content n=15 invalidated=1
+== falhou
+13:07:43 toque 'buscar' @ 1335,281 (emulator-5554)
+13:07:51 mock modo=escrita-500 content=content.json env=None
+13:07:53 toque 'Favoritar “Manhã de ensaio”' @ 1346,1418 (emulator-5554)
+  log: auth refresh=cached | api status=500 path=/api/content n=1 ms=24 | write op=favorite content=b1b10001 status=500 code=INTERNAL_ERROR ms=29
+N4P7L-L-favoritar-falhou-servidor-avd-ret mCurrentRotation=ROTATION_90 png=329073 xml=81740 b430bb6f9b68
+13:08:09 mock modo=normal vazio=False
+== falhaCache
+13:08:11 mock modo=500-pagina-1 vazio=False
+13:08:26 toque 'buscar' @ 1335,281 (emulator-5554)
+N4P7L-L-falha-com-cache-avd-ret mCurrentRotation=ROTATION_90 png=337307 xml=83379 f6cebc691447
+13:08:45 mock modo=normal vazio=False
+== semRede
+13:09:01 toque 'buscar' @ 1335,281 (emulator-5554)
+13:09:10 avião=1 (emulator-5554)
+ping: 
+N4P7L-L-sem-rede-avd-ret mCurrentRotation=ROTATION_90 png=335783 xml=81763 85e6d9c3f309
+13:09:26 toque 'Favoritar “Manhã de ensaio”' @ 1346,1526 (emulator-5554)
+  o toque na estrela inerte, sem rede: (nenhuma linha)
+13:09:49 toque 'buscar' @ 1335,281 (emulator-5554)
+N4P7L-L-sem-rede-arquivos-nao-baixados-avd-ret mCurrentRotation=ROTATION_90 png=335133 xml=81763 85e6d9c3f309
+13:10:14 avião=0 (emulator-5554)
+== semCache
+store: files
+13:10:17 mock modo=atraso vazio=False
+13:10:37 toque 'buscar' @ 1335,281 (emulator-5554)
+N4P7L-L-carregando-avd-ret mCurrentRotation=ROTATION_90 png=87720 xml=26099 ee7c6f2b95ee
+store: files
+13:10:52 mock modo=500-pagina-1 vazio=False
+13:11:12 toque 'buscar' @ 1335,281 (emulator-5554)
+N4P7L-L-falha-sem-cache-avd-ret mCurrentRotation=ROTATION_90 png=129532 xml=28237 c7fa9a940b0a
+13:11:26 mock modo=normal content=content-vazio.json env=None
+13:11:42 toque 'buscar' @ 1335,281 (emulator-5554)
+N4P7L-L-vazia-avd-ret mCurrentRotation=ROTATION_90 png=135956 xml=27203 97251e516928
+13:12:00 mock modo=normal vazio=False
+capturas=19 falhas=1
+  busca: TOQUE FALHOU: sem 'lib-campo' (n=1)

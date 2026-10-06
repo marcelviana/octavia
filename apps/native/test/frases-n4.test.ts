@@ -162,17 +162,19 @@ describe('(2) o motivo isolado — o core compõe como as telas de hoje', () => 
  * FONTE da S4 e prova que ele e o core dão o mesmo texto, byte a byte. A PR da tela que reusar a frase (a PR-7) troca
  * a cópia pela importação — e aí este teste muda para "nenhuma cópia na tela", como o molde do site.
  */
-describe('(3) a P-F8 no core, igual à da S4 (lida do fonte)', () => {
+describe('(3) a P-F8 no core, igual à da S4 — e, desde a N4-PR7, sem cópia na S4', () => {
   const FONTE = ler('apps/native/src/screens/SearchScreen.tsx')
   const MOLDE = '`${n} ${n === 1 ? \'resultado\' : \'resultados\'}`'
 
-  // Uma ocorrência: a `Regua` exportada (`SearchScreen.tsx:156`), que a S4 e o picker usam. (O commit 1 contava
-  // duas — defeito do instrumento, consertado aqui no commit 2: div. 1057.)
-  it('a S4 escreve a régua com o template de sempre (uma ocorrência: a `Regua` exportada)', () => {
-    expect(FONTE.split(MOLDE).length - 1).toBe(1)
+  // EM PAR (N4-PR7): era "a S4 escreve a régua com o template de sempre (uma ocorrência: a `Regua` exportada)" —
+  // `expect(FONTE.split(MOLDE).length - 1).toBe(1)`. A PR-7 é a PR da tela que reusa a frase (a régua de L), e troca a
+  // cópia pela importação, como o comentário acima previa: agora o fonte da S4 não tem o template, e importa do core.
+  it('a S4 não tem mais a cópia: a régua importa `nResultados` do core', () => {
+    expect(FONTE.split(MOLDE).length - 1).toBe(0)
+    expect(FONTE).toContain('{nResultados(n)}')
   })
 
-  it('o core e o template da S4 dão o mesmo texto para 0, 1, 2 e 57', () => {
+  it('o core e o template da S4 de antes dão o mesmo texto para 0, 1, 2 e 57', () => {
     const daTela = new Function('n', `return ${MOLDE}`) as (n: number) => string
     for (const n of [0, 1, 2, 57]) expect(conteudo.nResultados(n)).toBe(daTela(n))
   })
@@ -209,5 +211,87 @@ describe('(4) as frases do palco avulso no core, sem cópia no palco', () => {
     expect(FONTE).not.toContain(`'${BASE.avulsa}'`)
     expect(FONTE).not.toContain(`'${BASE.voltarBusca}'`)
     expect(FONTE).not.toContain('`página ${')
+  })
+})
+
+/**
+ * (5) **N4-PR7 — as frases do tablet que a biblioteca (L) reusa, no core, sem cópia nas telas** (`N4-PR3-anexos/
+ * README.md` §1.1, linhas 4–17; o molde da (4)). **A base das telas** é o texto que elas escreviam na `main` de antes
+ * desta PR (`5c707a3`), copiado aqui verbatim com o arquivo:linha de cada uma — o core tem de dar o MESMO texto, e o
+ * fonte de cada tela não pode ter mais a cópia. Duas a mais que a tabela, declaradas: o MAPA inteiro da falha de sync
+ * (a linha 16 é um valor dele; a L mostra a falha que houver) com a idade do dado (`haQuantoTempo`), e o *Voltar para
+ * as setlists* (`IndexScreen.tsx:693`), o nome do voltar de L.
+ */
+describe('(5) as frases do tablet que a L reusa, no core, sem cópia nas telas', () => {
+  const BASE = {
+    carregando: 'carregando…', // IndexScreen.tsx:202
+    'tipo-nao-reconhecido': 'tipo não reconhecido — edite na versão web', // IndexScreen.tsx:190
+    'nada-para-mostrar': 'nada para mostrar — edite na versão web', // IndexScreen.tsx:191
+    'arquivo-nao-baixado': 'arquivo não baixado', // StageScreen.tsx:865
+    'baixando-o-arquivo': 'baixando o arquivo…', // StageScreen.tsx:853
+    'nao-consegui-baixar': 'não consegui baixar', // files.ts:477
+    'sem-conexao': 'sem conexão', // SearchScreen.tsx:297; SetlistsScreen.tsx:184, :215, :219, :644
+    'buscar-musica': 'Buscar música', // SetlistsScreen.tsx:565
+    'tentar-novamente': 'Tentar novamente', // SetlistsScreen.tsx:622, :652
+    'voltar-setlists': 'Voltar para as setlists', // IndexScreen.tsx:693
+  } as const
+  /** `SetlistsScreen.tsx:183-191` (o `TEXTO_DE_ERRO`). */
+  const ERRO = {
+    'erro.sem_conexao': 'sem conexão',
+    'erro.sessao_invalida': 'sua sessão expirou',
+    'erro.servidor_ocupado': 'servidor ocupado · tente em instantes',
+    'erro.nao_encontrado': 'não encontrado no servidor',
+    'erro.requisicao_invalida': 'o servidor recusou o pedido',
+    'erro.falha_do_servidor': 'falha no servidor',
+    'erro.desconhecido': 'falha ao sincronizar',
+  } as const
+  /** `SetlistsScreen.tsx:128-137` (o `haQuantoTempo`), com o relógio como dado. */
+  const idadeDaBase = (ms: number | null, agora: number): string => {
+    if (ms === null) return 'nunca'
+    const min = Math.floor((agora - ms) / 60_000)
+    if (min < 1) return 'agora'
+    if (min < 60) return `há ${min} min`
+    const h = Math.floor(min / 60)
+    if (h < 24) return `há ${h} h`
+    return `há ${Math.floor(h / 24)} d`
+  }
+  const escopoDaBase = (n: number): string =>
+    `busca em título, artista, álbum e letra de toda a biblioteca (${n} ${n === 1 ? 'música' : 'músicas'})`
+
+  it('o core dá o texto que as telas escreviam', () => {
+    expect(conteudo.FRASES_DO_TABLET).toStrictEqual(BASE)
+    expect(conteudo.TEXTO_DA_FALHA_DE_SYNC).toStrictEqual(ERRO)
+    for (const k of Object.keys(ERRO) as (keyof typeof ERRO)[]) expect(conteudo.textoDaFalhaDeSync(k)).toBe(ERRO[k])
+    expect(conteudo.textoDaFalhaDeSync('erro.que-nao-existe')).toBe('falha ao sincronizar')
+    expect(conteudo.nadaEncontradoPara('xablau')).toBe('nada encontrado para “xablau”')
+    for (const n of [0, 1, 2, 63]) expect(conteudo.escopoDaBusca(n)).toBe(escopoDaBase(n))
+    const agora = Date.UTC(2026, 9, 6, 12)
+    for (const atras of [null, 0, 30_000, 60_000, 44 * 60_000, 3 * 3_600_000, 50 * 3_600_000]) {
+      const ms = atras === null ? null : agora - atras
+      expect(conteudo.haQuantoTempo(ms, agora)).toBe(idadeDaBase(ms, agora))
+    }
+    expect(conteudo.mostrandoDadosDe('há 44 min')).toBe(' · mostrando dados de há 44 min')
+    expect(conteudo.REGUA_SEM_NUMERO).toStrictEqual({ rotulo: 'Biblioteca', contagem: '—' })
+  })
+
+  const COPIAS: [string, string[]][] = [
+    ['apps/native/src/screens/IndexScreen.tsx', ["'carregando…'", "'tipo não reconhecido — edite na versão web'", "'nada para mostrar — edite na versão web'", "'Voltar para as setlists'"]],
+    ['apps/native/src/screens/StageScreen.tsx', ['>baixando o arquivo…<', '>arquivo não baixado<']],
+    ['apps/native/src/files.ts', ["'não consegui baixar'"]],
+    ['apps/native/src/screens/SearchScreen.tsx', ['>sem conexão<', '`nada encontrado para', '`busca em título, artista']],
+    // (os comentários de S1 citam *'sem conexão'* entre aspas — por isso as três formas de CÓDIGO, e não a palavra)
+    ['apps/native/src/screens/SetlistsScreen.tsx', ["texto: 'sem conexão'", "? 'sem conexão' :", "'erro.sem_conexao': 'sem conexão'", '>Buscar música<', '>Tentar novamente<', '` · mostrando dados de', "'falha no servidor'", "return 'nunca'"]],
+    ['apps/native/src/screens/LibraryScreen.tsx', ["'Buscar música'", "'Tentar novamente'", "'carregando…'", "'Biblioteca'"]],
+  ]
+
+  it.each(COPIAS)('nenhuma cópia em %s: as frases saem do core', (arquivo, copias) => {
+    const fonte = ler(arquivo)
+    for (const c of copias) expect(fonte, c).not.toContain(c)
+  })
+
+  it('as telas importam do core o que escreviam (o controle do "nenhuma cópia": o texto continua lá, por outro caminho)', () => {
+    expect(ler('apps/native/src/screens/SetlistsScreen.tsx')).toContain("{FRASES_DO_TABLET['buscar-musica']}")
+    expect(ler('apps/native/src/screens/StageScreen.tsx')).toContain("{FRASES_DO_TABLET['arquivo-nao-baixado']}")
+    expect(ler('apps/native/src/files.ts')).toContain("FRASES_DO_TABLET['nao-consegui-baixar']")
   })
 })
