@@ -154,7 +154,10 @@ function tela(p: Props = {}): React.JSX.Element {
 const nome = (testID: string) => exige(testID).getAttribute('aria-label')
 /** O texto das FOLHAS (os nós de texto sem outro dentro), juntas por um espaço — o helper do teste da L. */
 function texto(testID: string): string {
-  return [...exige(testID).querySelectorAll('span')]
+  const e = exige(testID)
+  // o nó de texto com o `testID` nele mesmo (o título, as datas): ele é a folha
+  if (e.tagName === 'SPAN' && e.querySelector('span') === null) return e.textContent ?? ''
+  return [...e.querySelectorAll('span')]
     .filter((e) => e.querySelector('span') === null)
     .map((e) => e.textContent ?? '')
     .join(' ')

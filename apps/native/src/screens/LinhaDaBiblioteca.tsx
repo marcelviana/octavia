@@ -21,24 +21,13 @@
  * servidor responde (o estado mora no `favoritar.ts`, não aqui). SEM REDE: inerte em `lineInfo`, sem arco; o motivo
  * NÃO vai na linha (vai uma vez, na linha de aviso da tela).
  */
-import { Pressable, StyleSheet, Text, View } from 'react-native'
-import Svg, { Circle, Path } from 'react-native-svg'
-import {
-  FRASES_DO_TABLET,
-  ROTULO_DO_TIPO,
-  isValidContent,
-  nomeFavoritando,
-  nomeFavoritar,
-  nomeTirando,
-  nomeTirar,
-  nomeTocar,
-  type ContentDTO,
-  type EstadoDoArquivo,
-} from '@octavia/core'
+import { StyleSheet, Text, View } from 'react-native'
+import { FRASES_DO_TABLET, ROTULO_DO_TIPO, isValidContent, type ContentDTO, type EstadoDoArquivo } from '@octavia/core'
 import type { EstadoDoFavoritar } from '../favoritar'
 import { Icone } from '../icones/Icone'
 import type { NomeIcone } from '../icones/dados'
-import { bar, dark, font, radius, size, space, touch, type TokensDaFaixa } from '../theme'
+import { bar, dark, font, radius, size, space, type TokensDaFaixa } from '../theme'
+import { BotaoTocar, EstrelaDoFavoritar } from './ControlesDaMusica'
 
 /** O ícone de cada tipo do enum (o mesmo mapa do S2 e da S4); fora do enum, nenhum. */
 const ICONE_DO_TIPO: { readonly [k: string]: NomeIcone } = { Lyrics: 'letra', Chords: 'cifra', Tab: 'tab', Sheet: 'partitura' }
@@ -55,22 +44,6 @@ function estadoNaLinha(e: EstadoDoArquivo): { icone: NomeIcone; cor: string; tex
     default:
       return null
   }
-}
-
-/**
- * O arco de andamento em volta da estrela em voo (`N4-*-L-favoritando`: a trilha em `line` e um quarto em
- * `accentInk`, traço 2, na caixa de 42 × 42 da folha, centrada no alvo de 48). É desenho da TELA, não do catálogo —
- * a N4-PR4 o registrou assim (`N4-PR4-anexos/README.md` §1.2: *"o 'em andamento' é o inerte mais um arco de 42 × 42"*).
- * **N4-D96** `[Marcel, 2026-10-06]`: os números da folha (42, r 19, traço 2) entram como literal declarado — herança do
- * bloco de identidade, com os 13 e 20 da N4-D79.
- */
-function ArcoDeAndamento(): React.JSX.Element {
-  return (
-    <Svg width={42} height={42} viewBox="0 0 42 42" style={styles.arco} fill="none" strokeWidth={2} strokeLinecap="round">
-      <Circle cx={21} cy={21} r={19} stroke={dark.line} />
-      <Path d="M21 2a19 19 0 0 1 19 19" stroke={dark.accentInk} />
-    </Svg>
-  )
 }
 
 export interface LinhaDaBibliotecaProps {
@@ -102,15 +75,6 @@ export function LinhaDaBiblioteca({
   const favorita = content.is_favorite === true
   const estado = invalido === null ? estadoNaLinha(arquivo) : null
 
-  const estrelaInerte = emVoo !== null || !online
-  const nomeDaEstrela =
-    emVoo === 'favoritando'
-      ? nomeFavoritando(content.title)
-      : emVoo === 'tirando'
-        ? nomeTirando(content.title)
-        : favorita
-          ? nomeTirar(content.title)
-          : nomeFavoritar(content.title)
   const tocarInerte = invalido !== null
 
   return (
@@ -160,40 +124,17 @@ export function LinhaDaBiblioteca({
         </View>
       </View>
 
+      {/* N4-PR8: a estrela e o ▶ são os controles comuns da linha e da visualização (`ControlesDaMusica.tsx`, m26). */}
       <View style={styles.controles}>
-        <Pressable
-          style={styles.alvo}
-          onPress={() => (estrelaInerte ? undefined : onFavoritar(!favorita))}
-          accessibilityRole="button"
-          accessibilityLabel={nomeDaEstrela}
-          accessibilityState={{ disabled: estrelaInerte, busy: emVoo !== null }}
-          disabled={estrelaInerte}
+        <EstrelaDoFavoritar
+          titulo={content.title}
+          favorita={favorita}
+          emVoo={emVoo}
+          online={online}
+          onFavoritar={onFavoritar}
           testID={`lib-favoritar-${id8}`}
-        >
-          {emVoo !== null ? <ArcoDeAndamento /> : null}
-          <Icone
-            nome="estrela"
-            tamanho={24}
-            cor={!online && emVoo === null ? dark.lineInfo : dark.accentInk}
-            estado={estrelaInerte ? (favorita ? 'ativo-inerte' : 'inerte') : favorita ? 'ativo' : 'normal'}
-          />
-        </Pressable>
-        <Pressable
-          style={[styles.alvo, styles.alvoComBorda, tocarInerte ? styles.alvoInerte : null]}
-          onPress={() => (tocarInerte ? undefined : onTocar())}
-          accessibilityRole="button"
-          accessibilityLabel={nomeTocar(content.title)}
-          accessibilityState={{ disabled: tocarInerte }}
-          disabled={tocarInerte}
-          testID={`lib-tocar-${id8}`}
-        >
-          <Icone
-            nome="tocar"
-            tamanho={24}
-            cor={tocarInerte ? dark.lineInfo : dark.text}
-            estado={tocarInerte ? 'inerte' : 'normal'}
-          />
-        </Pressable>
+        />
+        <BotaoTocar titulo={content.title} inerte={tocarInerte} onTocar={onTocar} testID={`lib-tocar-${id8}`} />
       </View>
     </View>
   )
@@ -228,16 +169,4 @@ const styles = StyleSheet.create({
   ponto: { color: dark.lineInfo, fontFamily: font.ui, fontSize: size.bodySmall },
   estado: { flexDirection: 'row', alignItems: 'center', gap: space.sm, flexShrink: 1 },
   controles: { flexDirection: 'row', alignItems: 'center', gap: space.xs },
-  // `width`/`height` e não `hitSlop`: o alvo tem de estar nos BOUNDS do dump (o G5), como o `botaoIcone` da S4.
-  alvo: {
-    width: touch.min,
-    height: touch.min,
-    borderRadius: radius.control,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  alvoComBorda: { borderWidth: bar.hairline, borderColor: dark.line },
-  // E3 (V1-PR4): o inerte é tinta `lineInfo` na moldura e no ícone, sem opacidade.
-  alvoInerte: { borderColor: dark.lineInfo },
-  arco: { position: 'absolute' },
 })

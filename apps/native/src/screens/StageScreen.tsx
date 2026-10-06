@@ -69,7 +69,6 @@ import {
   dark,
   faixas,
   font,
-  lineHeight,
   radius,
   size,
   space,
@@ -80,6 +79,7 @@ import {
   type ThemeName,
 } from '../theme'
 import { useFaixa } from '../useFaixa'
+import { CorpoDoLeitor, estiloDoLeitor, leitor } from './Leitor'
 
 export interface StageScreenProps {
   /**
@@ -521,12 +521,8 @@ export function StageScreen({
   const alturaConteudo = meio === null ? 0 : Math.max(meio.altura, touch.min)
   const larguraBorda = meio === null ? 0 : Math.max(meio.largura * 0.15, touch.min)
 
-  const estiloTexto = {
-    fontFamily: content?.content_type === 'Chords' || content?.content_type === 'Tab' ? font.mono : font.mono,
-    fontSize: zoom,
-    lineHeight: zoom * (content?.content_type === 'Tab' ? lineHeight.tab : lineHeight.text),
-    color: cor.text,
-  }
+  // N4-PR8: o estilo do corpo é o do leitor compartilhado (`Leitor.tsx`) — o mesmo objeto de antes.
+  const estiloTexto = estiloDoLeitor(content?.content_type ?? null, zoom, cor)
 
   const motivo =
     content === null
@@ -633,7 +629,7 @@ export function StageScreen({
             onBaixar={() => void buscarArquivo(urlArquivo, true)}
           />
         ) : (
-          <ScrollView ref={scroll} style={styles.conteudo} contentContainerStyle={styles.conteudoPad}>
+          <ScrollView ref={scroll} style={leitor.conteudo} contentContainerStyle={leitor.conteudoPad}>
             {motivo !== undefined ? (
               <View style={styles.placeholder} testID="placeholder">
                 <Text style={[styles.placeholderTitulo, { color: cor.text }]}>{motivo.titulo}</Text>
@@ -641,12 +637,9 @@ export function StageScreen({
               </View>
             ) : (
               // O ScrollView horizontal é o que impede a re-quebra da linha
-              // longa em qualquer zoom (T1-R25/R31 — provado no spike).
-              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                <Text style={estiloTexto} testID="corpo">
-                  {corpo ?? ''}
-                </Text>
-              </ScrollView>
+              // longa em qualquer zoom (T1-R25/R31 — provado no spike). N4-PR8:
+              // o corpo é o do leitor compartilhado, que a visualização também usa.
+              <CorpoDoLeitor corpo={corpo} estilo={estiloTexto} testID="corpo" />
             )}
           </ScrollView>
         )}
@@ -1051,8 +1044,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   botaoBaixarTexto: { fontFamily: font.uiBold, fontSize: size.button },
-  conteudo: { flex: 1 },
-  conteudoPad: { padding: space.xxl, paddingBottom: space.xxxl },
   borda: { position: 'absolute', top: 0 },
   placeholder: { alignItems: 'center', justifyContent: 'center', gap: space.lg, paddingTop: space.xxxl },
   placeholderTitulo: { fontFamily: font.uiBold, fontSize: size.titleLarge },
