@@ -195,6 +195,20 @@ describe('N4-R2 — L abre sem teclado', () => {
   })
 })
 
+describe('N4-R2 — com o teclado de pé, nada da L fica sob ele', () => {
+  /**
+   * Medido no aparelho (AVD, C e B; o celular): a janela está em `adjust=resize`, mas com o edge-to-edge do RN a raiz
+   * não encolhe com o teclado — a `lib-lista` ia até o fim da janela, por baixo do IME. Quem trata o teclado é a tela:
+   * a raiz da L é um `KeyboardAvoidingView` com `padding`, e a lista (o único `flex: 1`) encolhe acima dele.
+   */
+  it('a raiz da L é um KeyboardAvoidingView com `padding` — a lista termina acima do teclado', async () => {
+    await montar(tela())
+    const raiz = exige('lib-tela')
+    expect(raiz.getAttribute('data-keyboard-behavior')).toBe('padding')
+    expect(raiz.contains(exige('lib-lista'))).toBe(true)
+  })
+})
+
 describe('N4-R3 — a composição: barra · filtros (P-T1) · régua fixa · a lista que rola', () => {
   it('a régua e os filtros ficam FORA da lista (só a lista rola); a lista vem depois da régua', async () => {
     await montar(tela())

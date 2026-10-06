@@ -260,6 +260,15 @@ export const StyleSheet = {
   absoluteFillObject: {},
 }
 
+/**
+ * N4-PR7 — `KeyboardAvoidingView`: um `View` que escreve o `behavior` em `data-keyboard-behavior`. A altura que ele
+ * tira com o teclado de pé é do aparelho (o dump); o duplo só prova QUE a tela o usa, e com que comportamento.
+ */
+export const KeyboardAvoidingView = forwardRef<unknown, PropsComuns & { behavior?: string }>((p, ref) =>
+  createElement('div', { ...atributos(p), 'data-keyboard-behavior': p.behavior, ref }, p.children as ReactNode),
+)
+KeyboardAvoidingView.displayName = 'KeyboardAvoidingView'
+
 export const Platform = { OS: 'android' as const, select: (o: Record<string, unknown>) => o.android ?? o.default }
 export const Keyboard = { dismiss: (): void => undefined }
 /**
