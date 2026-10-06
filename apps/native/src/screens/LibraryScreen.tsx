@@ -62,6 +62,7 @@ import { Icone } from '../icones/Icone'
 import type { NomeIcone } from '../icones/dados'
 import { bar, dark, faixas, font, radius, size, space, touch, tracking } from '../theme'
 import { useFaixa } from '../useFaixa'
+import { iconeDaEspecie } from './ControlesDaMusica'
 import { FiltrosDaBiblioteca } from './FiltrosDaBiblioteca'
 import { LinhaDaBiblioteca } from './LinhaDaBiblioteca'
 import { LinhaDeAviso, type AcaoDoAviso } from './LinhaDeAviso'
@@ -87,13 +88,6 @@ export interface LibraryScreenProps {
 interface AvisoDoFavoritar {
   motivo: string
   especie: Exclude<EspecieDoFavoritar, 'ok'>
-}
-
-/** N4-R8 — o ícone e a tinta por espécie: `falha` em `errorInk`; sem rede e limite, em `offlineInk`. */
-function iconeDaEspecie(especie: AvisoDoFavoritar['especie']): { icone: NomeIcone; cor: string } {
-  if (especie === 'rede') return { icone: 'sem-conexao', cor: dark.offlineInk }
-  if (especie === 'limite') return { icone: 'ultima-sincronizacao', cor: dark.offlineInk }
-  return { icone: 'falha', cor: dark.errorInk }
 }
 
 /** A régua de L — a da S4 (rótulo · fio · contagem, mono 12 em `muted`), fixa sobre a lista. */

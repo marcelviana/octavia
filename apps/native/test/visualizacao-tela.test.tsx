@@ -445,7 +445,9 @@ describe('N4-R7, N4-R8 — o favoritar em V: a estrela com o arco, sem otimismo,
     expect(inativo('view-tocar')).toBe(false)
     // sem otimismo: o desenho é o da vazada, inerte
     const vazadaInerte = paths('view-favoritar')
-    fav.pedidos[0].responder({ especie: 'ok', linha: { ...CIFRA_SECOES, is_favorite: true } } satisfies Partial<ResultadoDoFavoritar> as unknown)
+    fav.pedidos[0].responder(
+      core.classificarFavoritar(CIFRA_SECOES.id, { status: 200, bodyText: JSON.stringify({ ...CIFRA_SECOES, is_favorite: true }) }) satisfies ResultadoDoFavoritar,
+    )
     await assentar()
     await rerender(tela({ content: { ...CIFRA_SECOES, is_favorite: true } }))
     expect(inativo('view-favoritar')).toBe(false)
@@ -456,7 +458,7 @@ describe('N4-R7, N4-R8 — o favoritar em V: a estrela com o arco, sem otimismo,
   it('a falha: a linha de aviso sob o cabeçalho, com o nome do controle · a frase da espécie; some no próximo favoritar', async () => {
     await montar(tela({ content: CIFRA_SECOES }))
     await tocar('view-favoritar')
-    fav.pedidos[0].responder({ especie: 'servidor' })
+    fav.pedidos[0].responder(core.classificarFavoritar(CIFRA_SECOES.id, { status: 500, bodyText: '{}' }))
     await assentar()
     expect(texto('aviso-motivo')).toBe('Favoritar “Sétima do ensaio”  ·  falha no servidor — nada foi alterado aqui')
     expect(exige('aviso-motivo').getAttribute('data-numberoflines')).toBeNull() // nunca elide
@@ -469,7 +471,7 @@ describe('N4-R7, N4-R8 — o favoritar em V: a estrela com o arco, sem otimismo,
     await montar(tela({ content: CIFRA_SECOES }))
     await tocar('view-favoritar')
     foco.sair?.() // V perde o foco (o palco avulso por cima, ou o voltar)
-    fav.pedidos[0].responder({ especie: 'servidor' })
+    fav.pedidos[0].responder(core.classificarFavoritar(CIFRA_SECOES.id, { status: 500, bodyText: '{}' }))
     await assentar()
     expect(achar('aviso-motivo')).toBeNull()
     expect(fav.pedidos.length).toBe(1) // nada foi cancelado nem repetido

@@ -14,9 +14,10 @@
  */
 import { Pressable, StyleSheet } from 'react-native'
 import Svg, { Circle, Path } from 'react-native-svg'
-import { nomeFavoritando, nomeFavoritar, nomeTirando, nomeTirar, nomeTocar } from '@octavia/core'
+import { nomeFavoritando, nomeFavoritar, nomeTirando, nomeTirar, nomeTocar, type EspecieDoFavoritar } from '@octavia/core'
 import type { EstadoDoFavoritar } from '../favoritar'
 import { Icone } from '../icones/Icone'
+import type { NomeIcone } from '../icones/dados'
 import { bar, dark, radius, touch } from '../theme'
 
 /**
@@ -33,6 +34,17 @@ function ArcoDeAndamento(): React.JSX.Element {
       <Path d="M21 2a19 19 0 0 1 19 19" stroke={dark.accentInk} />
     </Svg>
   )
+}
+
+/**
+ * N4-R8 — a falha do favoritar na linha de aviso: o ícone e a tinta por espécie — `falha` em `errorInk`; sem rede
+ * (`sem-conexao`) e limite (`ultima-sincronizacao`) em `offlineInk`. Era da L (`LibraryScreen.tsx`, N4-PR7); V usa a
+ * mesma.
+ */
+export function iconeDaEspecie(especie: Exclude<EspecieDoFavoritar, 'ok'>): { icone: NomeIcone; cor: string } {
+  if (especie === 'rede') return { icone: 'sem-conexao', cor: dark.offlineInk }
+  if (especie === 'limite') return { icone: 'ultima-sincronizacao', cor: dark.offlineInk }
+  return { icone: 'falha', cor: dark.errorInk }
 }
 
 export interface EstrelaDoFavoritarProps {

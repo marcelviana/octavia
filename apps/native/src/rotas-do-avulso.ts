@@ -72,3 +72,11 @@ export function destinoDoTocarDaBiblioteca(contentId: string): Destino {
 
 /** N4-PR7 — `Buscar música` em S1 (N4-R1, N4-D59): a biblioteca, não mais a S4. */
 export const DESTINO_DE_BUSCAR_MUSICA = 'Biblioteca' as const
+
+/**
+ * N4-PR8 — o ▶ da visualização (N4-R12, N4-R16): o avulso SEM hospedeira desta música, com a origem `visualizacao`.
+ * EMPILHA sobre V (`push`), e o voltar do palco (*Voltar para a visualização*, P-F6) é o `goBack`: V volta como estava.
+ */
+export function destinoDoTocarDaVisualizacao(contentId: string): Destino {
+  return { acao: 'push', rota: 'Stage', params: { avulsa: contentId, origem: 'visualizacao' } }
+}

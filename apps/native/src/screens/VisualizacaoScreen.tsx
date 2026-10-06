@@ -29,6 +29,16 @@
  * entre os dois); a falha — *não consegui baixar* e a espécie embaixo, com o mesmo ícone; o formato que o app ainda não
  * mostra (o do palco, pela extensão). O ▶ segue ativo no arquivo não baixado.
  *
+ * **O favoritar** (N4-R7, N4-R8): a estrela é a da linha — só online, SEM OTIMISMO (inerte com o arco enquanto o
+ * pedido voa; só muda quando o servidor responde, e a linha devolvida chega pelo cache, `content`). O pedido CONTINUA
+ * se o músico sai de V (ele mora no `favoritar.ts`, não aqui) e **não há aviso na volta**: o estado final aparece onde a
+ * estrela estiver. A falha vira UMA linha de aviso sob o cabeçalho, por espécie (o nome do controle · a frase), que
+ * cresce e nunca elide; some no próximo favoritar ou ao sair da tela. **Sem rede** (N4-R9): só a estrela fica inerte, e
+ * o motivo (P-F4) está numa linha de aviso, à vista sem toque; a leitura e o ▶ funcionam.
+ *
+ * **O ▶** abre o palco avulso desta música com a origem `visualizacao` (o voltar dele é *Voltar para a visualização*,
+ * P-F6, e devolve esta tela). **O voltar** de V devolve a biblioteca na mesma posição (o `goBack`: a L não desmonta).
+ *
  * **O arquivo** segue a decisão do palco (T1-R26): disco primeiro, rede se preciso, e sem arquivo nem rede o S3e — sem
  * retry automático (o Baixar é a nova tentativa, T1-R37). **Nenhuma linha de log nova**: o palco loga o
  * `placeholder kind=file-missing` e o `download-error` dele; V não toca e não loga (o `file-reject` e o `file src=…` do
@@ -36,12 +46,14 @@
  */
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { useFocusEffect } from '@react-navigation/native'
 import {
   FRASES_DO_LEITOR,
   FRASES_DO_TABLET,
   FRASES_N4,
   ROTULO_DO_TIPO,
   VOCABULARIO_DE_CONTENT,
+  avisoDoFavoritar,
   bodyOf,
   camposDaVisualizacao,
   ehFormatoQueOAppMostra,
@@ -50,13 +62,16 @@ import {
   notasDaVisualizacao,
   type CampoDaVisualizacao,
   type ContentDTO,
+  type EspecieDoFavoritar,
 } from '@octavia/core'
+import { assinarFavoritar, estadoDoFavoritar, favoritar } from '../favoritar'
 import { ensureFile, fileNameFromUrl, fraseDaFalha, hasFile, knownBytes } from '../files'
 import { Icone } from '../icones/Icone'
 import type { NomeIcone } from '../icones/dados'
 import { INEXISTENTE, bar, colors, dark, faixas, font, lineHeight, radius, size, space, touch, tracking, zoomDefault } from '../theme'
 import { useFaixa } from '../useFaixa'
-import { BotaoTocar, EstrelaDoFavoritar } from './ControlesDaMusica'
+import { BotaoTocar, EstrelaDoFavoritar, iconeDaEspecie } from './ControlesDaMusica'
+import { LinhaDeAviso } from './LinhaDeAviso'
 import {
   CorpoDoLeitor,
   FormatoDoLeitor,
@@ -206,13 +221,38 @@ function BaixarComoIcone({ onBaixar }: { onBaixar: () => void }): React.JSX.Elem
   )
 }
 
+/** A falha do último favoritar: a frase composta e a espécie (que escolhe o ícone e a tinta, N4-R8). */
+interface AvisoDoFavoritar {
+  motivo: string
+  especie: Exclude<EspecieDoFavoritar, 'ok'>
+}
+
 export function VisualizacaoScreen({
   content: atual,
   online,
   onVoltar,
+  onTocar,
   onArquivosMudaram,
 }: VisualizacaoScreenProps): React.JSX.Element {
   const t = faixas[useFaixa()]
+  const [aviso, setAviso] = useState<AvisoDoFavoritar | null>(null)
+
+  // O estado em voo do favoritar mora no módulo (sobrevive à tela); a tela assina e redesenha.
+  const [, setVersao] = useState(0)
+  useEffect(() => assinarFavoritar(() => setVersao((v) => v + 1)), [])
+
+  // N4-R7/R8: a linha da falha some ao sair da tela; e a resposta que chega com a tela fora de foco (o palco avulso por
+  // cima, ou o voltar) NÃO vira aviso na volta.
+  const focada = useRef(true)
+  useFocusEffect(
+    useCallback(() => {
+      focada.current = true
+      return () => {
+        focada.current = false
+        setAviso(null)
+      }
+    }, []),
+  )
   // A música que sumiu do cache com V aberta (um sync que a apagou): V segue com a última que viu.
   const ultimo = useRef<ContentDTO | null>(atual)
   if (atual !== null) ultimo.current = atual
@@ -252,6 +292,26 @@ export function VisualizacaoScreen({
   const artista = content.artist !== null && content.artist.length > 0 ? content.artist : null
   const favorita = content.is_favorite === true
   const duasColunas = t.view.coluna !== INEXISTENTE
+  const id = content.id
+  const titulo = content.title
+
+  const aoFavoritar = (valor: boolean): void => {
+    setAviso(null) // a linha some no próximo favoritar (N4-R8)
+    void favoritar(id, valor).then((r) => {
+      const motivo = avisoDoFavoritar(titulo, valor, r)
+      if (motivo !== null && r.especie !== 'ok' && focada.current) setAviso({ motivo, especie: r.especie })
+    })
+  }
+
+  // Uma linha de aviso por vez (N4-R8 > N4-R9): a falha do último favoritar, senão o sem rede (P-F4).
+  const avisoDaTela =
+    aviso !== null
+      ? { ...iconeDaEspecie(aviso.especie), motivo: aviso.motivo }
+      : !online
+        ? { icone: 'sem-conexao' as const, cor: dark.offlineInk, motivo: FRASES_N4['sem-rede-favoritar'] }
+        : null
+  const linhaDeAviso =
+    avisoDaTela !== null ? <LinhaDeAviso icone={avisoDaTela.icone} cor={avisoDaTela.cor} motivo={avisoDaTela.motivo} recuo={space.xl} /> : null
 
   const cabecalho = (
     <View style={styles.cabecalho} testID="view-cabecalho">
@@ -284,12 +344,12 @@ export function VisualizacaoScreen({
         <EstrelaDoFavoritar
           titulo={content.title}
           favorita={favorita}
-          emVoo={null}
+          emVoo={estadoDoFavoritar(id)}
           online={online}
-          onFavoritar={() => undefined}
+          onFavoritar={aoFavoritar}
           testID="view-favoritar"
         />
-        <BotaoTocar titulo={content.title} inerte={invalido !== null} onTocar={() => undefined} testID="view-tocar" />
+        <BotaoTocar titulo={content.title} inerte={invalido !== null} onTocar={() => onTocar(id)} testID="view-tocar" />
       </View>
     </View>
   )
@@ -365,6 +425,7 @@ export function VisualizacaoScreen({
     return (
       <View style={styles.tela} testID="view-tela">
         {cabecalho}
+        {linhaDeAviso}
         <View style={styles.colunas}>
           <ScrollView
             style={[styles.colunaDetalhes, { width: t.view.coluna as number }]}
@@ -393,6 +454,7 @@ export function VisualizacaoScreen({
     return (
       <View style={styles.tela} testID="view-tela">
         {cabecalho}
+        {linhaDeAviso}
         <View style={styles.detalhesPad} testID="view-detalhes">
           {detalhes}
         </View>
@@ -405,6 +467,7 @@ export function VisualizacaoScreen({
   return (
     <View style={styles.tela} testID="view-tela">
       {cabecalho}
+      {linhaDeAviso}
       <ScrollView style={styles.rolagem} testID="view-rolagem">
         <View style={styles.detalhesPad} testID="view-detalhes">
           {detalhes}
