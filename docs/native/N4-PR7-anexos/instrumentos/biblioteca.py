@@ -45,6 +45,47 @@ def uid_de(s):
     return us[-1]
 
 
+# ---- o que o teste apaga no aparelho: SÓ o que ele mesmo criou, POR NOME (N4-PR7, div. 1097) ----------------------
+# A primeira forma deste arnês apagava pastas inteiras do app (`files/octavia-<uid>/files/*`, `cache/…/files/*`, e o
+# `*.json` do store): no Tab a pasta é a da sessão do Marcel, e o PDF real dele estava ali — saiu junto, e só voltou
+# pela receita do cache. Agora cada passo apaga uma lista FECHADA de nomes, que vem do que a fixture criou, e confere
+# depois que só esses sumiram.
+
+PKG = "rocks.octavia.app"
+#: O store que o teste apaga para os estados sem cache (S1a, S1d, L-carregando, L-falha-sem-cache): só os dois que o
+#: `load()` do `store.ts` lê para dizer se há cache (`setlists.json`, `content.json`). O `files-index.json` NÃO: ele
+#: indexa os arquivos do disco, inclusive os que não são da fixture.
+STORE_DO_TESTE = ("setlists.json", "content.json")
+
+
+def arquivos_da_fixture():
+    """Os nomes dos arquivos que a fixture serve (o diretório `arquivos/` do mock, `SCR`) — os únicos que o app baixou
+    por causa do teste. Lista vazia é erro: um passo de apagar sem lista não apaga."""
+    d = os.path.join(R.SCR, "mock", "arquivos")
+    nomes = sorted(f for f in os.listdir(d) if not f.startswith("."))
+    if not nomes:
+        raise RuntimeError(f"sem arquivos da fixture em {d}")
+    return nomes
+
+
+def apagar_por_nome(s, pasta, nomes):
+    """`rm -f` de cada NOME dentro de `pasta` (relativa ao app), uma string só (`APARATO.md`, "Store apagado"); devolve
+    o `ls` de antes e de depois, e levanta se sumiu algo que não estava na lista."""
+    for n in nomes:
+        if "/" in n or n in ("", ".", "..") or "*" in n:
+            raise RuntimeError(f"nome recusado: {n!r}")
+    antes = set(n3.sh(s, "shell", f"run-as {PKG} sh -c 'ls {pasta}'", check=False).split())
+    alvo = " ".join(f"{pasta}/{n}" for n in nomes)
+    n3.sh(s, "shell", f"run-as {PKG} sh -c 'rm -f {alvo}'", check=False)
+    depois = set(n3.sh(s, "shell", f"run-as {PKG} sh -c 'ls {pasta}'", check=False).split())
+    a_mais = (antes - depois) - set(nomes)
+    if a_mais:
+        raise RuntimeError(f"APAGOU O QUE NÃO CRIOU em {pasta}: {sorted(a_mais)}")
+    print(f"apagados em {pasta.split('octavia-')[0]}octavia-<uid>/…: {sorted(antes - depois)} · ficaram: {sorted(depois)}",
+          flush=True)
+    return antes, depois
+
+
 def linhas_octavia(s):
     r = subprocess.run([ADB, "-s", s, "logcat", "-d", "-s", "ReactNativeJS"], capture_output=True, text=True)
     return [ln.split("OCTAVIA: ", 1)[1] for ln in r.stdout.splitlines() if "OCTAVIA: " in ln]
@@ -220,8 +261,9 @@ class Biblioteca(R.Roteiro):
         # N4-D92: os arquivos da fixture apagados, o app aberto já sem rede — o plano rejeita, e o estado é "não baixado"
         n3.sh(self.s, "shell", "am", "force-stop", "rocks.octavia.app")
         u = uid_de(self.s)
-        n3.sh(self.s, "shell", f"run-as rocks.octavia.app sh -c 'rm -f files/octavia-{u}/files/* cache/octavia-{u}/files/*'")
-        print("arquivos depois do rm: " + repr(n3.sh(self.s, "shell", f"run-as rocks.octavia.app sh -c 'ls files/octavia-{u}/files cache/octavia-{u}/files'", check=False)), flush=True)
+        # só os arquivos que a FIXTURE serve, por nome, nas duas pastas do app (a durável e a de demanda)
+        for pasta in (f"files/octavia-{u}/files", f"cache/octavia-{u}/files"):
+            apagar_por_nome(self.s, pasta, arquivos_da_fixture())
         r = subprocess.run([ADB, "-s", self.s, "shell", "ping", "-c", "1", "-W", "2", "8.8.8.8"], capture_output=True, text=True)
         print("ping antes de abrir: " + (r.stdout + r.stderr).strip()[-70:], flush=True)
         R.ir_s1_ou_s0(self.s)
@@ -255,8 +297,7 @@ class Biblioteca(R.Roteiro):
 
     def _store_apagado(self):
         n3.sh(self.s, "shell", "am", "force-stop", "rocks.octavia.app")
-        n3.sh(self.s, "shell", f"run-as rocks.octavia.app sh -c 'rm -f files/octavia-{uid_de(self.s)}/*.json'")
-        print("store: " + n3.sh(self.s, "shell", f"run-as rocks.octavia.app ls files/octavia-{uid_de(self.s)}").strip(), flush=True)
+        apagar_por_nome(self.s, f"files/octavia-{uid_de(self.s)}", STORE_DO_TESTE)
 
     def semCache(self):
         # carregando: o mock segura o GET (o `atraso`), e a L abre antes do primeiro 200

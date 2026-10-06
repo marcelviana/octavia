@@ -1,0 +1,60 @@
+pasta da sessão: files/octavia-<uid> · arquivos da fixture: ['partitura-12p.pdf', 'partitura-1p.pdf', 'partitura-grande.pdf'] · store do teste: ['setlists.json', 'content.json']
+
+## 1 · o passo NOVO
+sentinelas antes: {'sentinela-n4pr7.pdf': '209503b2a3d6ec921a17d51b31d2d0b6', 'sentinela-n4pr7.json': '3ed7290b203a420a014b8b1412451cdd'}
+apagados em files/octavia-<uid>/…: ['partitura-12p.pdf', 'partitura-1p.pdf', 'partitura-grande.pdf'] · ficaram: ['sentinela-n4pr7.pdf']
+apagados em files/octavia-<uid>/…: ['content.json', 'setlists.json'] · ficaram: ['files', 'sentinela-n4pr7.json']
+sentinelas depois: {'sentinela-n4pr7.pdf': '209503b2a3d6ec921a17d51b31d2d0b6', 'sentinela-n4pr7.json': '3ed7290b203a420a014b8b1412451cdd'}
+RESULTADO 1: os sentinelas FICARAM, md5 igual ✓
+
+## 2 · CONTROLE NEGATIVO — o passo antigo
+sentinelas antes: {'sentinela-n4pr7.pdf': '209503b2a3d6ec921a17d51b31d2d0b6', 'sentinela-n4pr7.json': '3ed7290b203a420a014b8b1412451cdd'}
+sentinelas depois: {'sentinela-n4pr7.pdf': '(ausente)', 'sentinela-n4pr7.json': '(ausente)'}
+RESULTADO 2: o passo antigo APAGOU os sentinelas ✓ (o CN reprova)
+
+sentinelas retirados no fim: {'sentinela-n4pr7.pdf': '(ausente)', 'sentinela-n4pr7.json': '(ausente)'}
+## 3 · os passos do arnês, inteiros (biblioteca.py semRede semCache, AVD em C), com os sentinelas na pasta
+antes: 209503b2a3d6ec921a17d51b31d2d0b6  files/octavia-<uid>/files/sentinela-n4pr7.pdf 3ed7290b203a420a014b8b1412451cdd  files/octavia-<uid>/sentinela-n4pr7.json 
+== semRede
+15:52:32 avião=1 (emulator-5554)
+ping: connect: Network is unreachable
+N4P7S-L-sem-rede-avd-pai mCurrentRotation=ROTATION_0 png=221510 xml=50794 cbea107566e2
+apagados em files/octavia-<uid>/…: ['partitura-12p.pdf', 'partitura-1p.pdf', 'partitura-grande.pdf'] · ficaram: []
+apagados em cache/octavia-<uid>/…: [] · ficaram: []
+ping antes de abrir: connect: Network is unreachable
+N4-D92 os estados de arquivo na L, aberta sem rede: ['arquivo não baixado']
+N4P7S-L-sem-rede-arquivos-nao-baixados-avd-pai mCurrentRotation=ROTATION_0 png=223731 xml=53749 42bf42007a7f
+15:53:36 avião=0 (emulator-5554)
+== semCache
+apagados em files/octavia-<uid>/…: ['content.json', 'setlists.json'] · ficaram: ['files', 'files-index.json', 'sentinela-n4pr7.json']
+N4P7S-L-carregando-avd-pai mCurrentRotation=ROTATION_0 png=89114 xml=26109 af14374cf2a4
+apagados em files/octavia-<uid>/…: [] · ficaram: ['files', 'files-index.json', 'sentinela-n4pr7.json']
+N4P7S-L-falha-sem-cache-avd-pai mCurrentRotation=ROTATION_0 png=133976 xml=28252 8d0b6c027f1c
+N4P7S-L-vazia-avd-pai mCurrentRotation=ROTATION_0 png=139922 xml=27210 613be7d2698f
+capturas=5 falhas=0
+depois: 3ed7290b203a420a014b8b1412451cdd  files/octavia-<uid>/sentinela-n4pr7.json 
+sentinelas retirados: [ls: files/octavia-<uid>/files/sentinela-n4pr7.pdf: No such file or directory ls: files/octavia-<uid>/sentinela-n4pr7.json: No such file or directory ]
+
+(a 1ª forma do passo 3 plantou um .pdf de 20 bytes de TEXTO: o saneamento da abertura do app o recusou — `OCTAVIA: file-reject name=sentinela-n4pr7.pdf kind=malformed bytes=20 expected=-` —, antes de o passo do arnês rodar; é o app, e está certo. Refeito com um PDF VÁLIDO, os bytes do partitura-1p.pdf da fixture com o nome do sentinela — como o PDF real do Marcel no Tab.)
+## 3 (refeito) · os passos do arnês, inteiros, com o sentinela PDF válido
+antes: 2437b35e67b98508f61d9214ad87494d  files/octavia-<uid>/files/sentinela-n4pr7.pdf 3ed7290b203a420a014b8b1412451cdd  files/octavia-<uid>/sentinela-n4pr7.json 
+== semRede
+15:56:29 avião=1 (emulator-5554)
+ping: connect: Network is unreachable
+N4P7S-L-sem-rede-avd-pai mCurrentRotation=ROTATION_0 png=221694 xml=50794 cbea107566e2
+apagados em files/octavia-<uid>/…: ['partitura-12p.pdf', 'partitura-1p.pdf', 'partitura-grande.pdf'] · ficaram: ['sentinela-n4pr7.pdf']
+apagados em cache/octavia-<uid>/…: [] · ficaram: []
+ping antes de abrir: connect: Network is unreachable
+N4-D92 os estados de arquivo na L, aberta sem rede: ['arquivo não baixado']
+N4P7S-L-sem-rede-arquivos-nao-baixados-avd-pai mCurrentRotation=ROTATION_0 png=224089 xml=53749 42bf42007a7f
+15:57:40 avião=0 (emulator-5554)
+== semCache
+apagados em files/octavia-<uid>/…: ['content.json', 'setlists.json'] · ficaram: ['files', 'files-index.json', 'sentinela-n4pr7.json']
+N4P7S-L-carregando-avd-pai mCurrentRotation=ROTATION_0 png=89696 xml=26109 af14374cf2a4
+apagados em files/octavia-<uid>/…: [] · ficaram: ['files', 'files-index.json', 'sentinela-n4pr7.json']
+N4P7S-L-falha-sem-cache-avd-pai mCurrentRotation=ROTATION_0 png=134516 xml=28252 8d0b6c027f1c
+N4P7S-L-vazia-avd-pai mCurrentRotation=ROTATION_0 png=140561 xml=27210 613be7d2698f
+capturas=5 falhas=0
+depois: 2437b35e67b98508f61d9214ad87494d  files/octavia-<uid>/files/sentinela-n4pr7.pdf 3ed7290b203a420a014b8b1412451cdd  files/octavia-<uid>/sentinela-n4pr7.json 
+file-reject/lru do sentinela no logcat: []
+sentinelas retirados no fim (o rm por nome)
