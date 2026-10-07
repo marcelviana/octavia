@@ -1,0 +1,42 @@
+== especiesL 11:19:46
+11:20:05 toque 'buscar' @ 1335,281 (emulator-5554)
+11:20:12 toque 'lib-campo' @ 917,152 (emulator-5554)
+11:20:19 mock modo=escrita-pendurada content=content.json env=None
+11:20:21 toque 'Favoritar “Segunda do ensaio”' @ 1346,797 (emulator-5554)
+  aviso: «Favoritar “Segunda do ensaio”  ·  sem resposta do servidor» motivo 21.8 dp
+  [L sem-resposta] log: auth refresh=cached | write op=favorite content=b1b10002 status=net code=net ms=20028
+N4P9T-L-favoritar-sem-resposta-avd-ret mCurrentRotation=ROTATION_90 png=152123 xml=39912 441864ca6ea3
+11:20:57 mock modo=normal content=content.json env=None
+11:21:16 toque 'buscar' @ 1335,281 (emulator-5554)
+11:21:24 toque 'lib-campo' @ 917,152 (emulator-5554)
+11:21:30 mock modo=escrita-401 content=content.json env=None
+11:21:32 toque 'Favoritar “Segunda do ensaio”' @ 1346,797 (emulator-5554)
+  aviso: «Favoritar “Segunda do ensaio”  ·  não foi possível salvar — confira sua conta no site» motivo 21.8 dp
+  [L auth] log: auth refresh=cached | auth refresh=forced | api status=401 path=/api/content n=2 ms=426 | write op=favorite content=b1b10002 status=401 code=AUTH_REQUIRED ms=431
+N4P9T-L-favoritar-auth-avd-ret mCurrentRotation=ROTATION_90 png=153195 xml=39943 e23e790bbc45
+11:21:47 mock modo=normal content=content.json env=None
+11:22:04 toque 'buscar' @ 1335,281 (emulator-5554)
+11:22:11 toque 'lib-campo' @ 917,152 (emulator-5554)
+11:22:18 mock modo=escrita-500 content=content.json env=None
+11:22:20 toque 'Favoritar “Segunda do ensaio”' @ 1346,797 (emulator-5554)
+  aviso: «Favoritar “Segunda do ensaio”  ·  falha no servidor — nada foi alterado aqui» motivo 21.8 dp
+  [L servidor] log: auth refresh=cached | api status=500 path=/api/content n=1 ms=26 | write op=favorite content=b1b10002 status=500 code=INTERNAL_ERROR ms=34
+N4P9T-L-favoritar-servidor-avd-ret mCurrentRotation=ROTATION_90 png=149761 xml=39932 9619350658ed
+11:22:34 mock modo=normal content=content.json env=None
+11:22:51 toque 'buscar' @ 1335,281 (emulator-5554)
+11:22:59 toque 'lib-campo' @ 917,152 (emulator-5554)
+11:23:05 mock modo=escrita-400 content=content.json env=None
+11:23:07 toque 'Favoritar “Segunda do ensaio”' @ 1346,797 (emulator-5554)
+  aviso: «Favoritar “Segunda do ensaio”  ·  não foi possível salvar» motivo 21.8 dp
+  [L generica] log: auth refresh=cached | api status=400 path=/api/content n=1 ms=46 | write op=favorite content=b1b10002 status=400 code=VALIDATION_ERROR ms=53
+N4P9T-L-favoritar-generica-avd-ret mCurrentRotation=ROTATION_90 png=151092 xml=39912 3ad005914ae8
+11:23:22 mock modo=normal content=content.json env=None
+11:23:35 toque 'buscar' @ 1335,281 (emulator-5554)
+11:23:43 toque 'lib-campo' @ 917,152 (emulator-5554)
+11:23:49 mock modo=escrita-429 content=content.json env=None
+11:23:51 toque 'Favoritar “Segunda do ensaio”' @ 1346,797 (emulator-5554)
+  aviso: «Favoritar “Segunda do ensaio”  ·  muitas alterações seguidas — tente de novo em 30 s» motivo 21.8 dp
+  [L limite] log: auth refresh=cached | api status=429 path=/api/content n=1 ms=32 | ratelimit retry-after=30 family=content-mutate | write op=favorite content=b1b10002 status=429 code=RATE_LIMITED ms=43
+N4P9T-L-favoritar-limite-avd-ret mCurrentRotation=ROTATION_90 png=155840 xml=39619 4c743a8784bd
+11:24:06 mock modo=normal content=content.json env=None
+capturas=5 falhas=0

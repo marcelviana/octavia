@@ -464,6 +464,33 @@ executor (N4-D54); o Tab repousa com o release e volta a ele no fim de todo acei
 > div. 1026 propôs. **Nada se renumera**: A-N4-1…A-N4-26 ficam como estão, e as duas linhas novas da tabela do §2 apontam
 > para o texto deste item.
 
+> **Errata da N4-PR9 — o release sai desta PR (N4-D103, errata da N4-D84, `[Marcel, 2026-10-07]`).** O release do N4
+> **não é da PR-9**: ele se constrói da `main` depois do merge da PR-9, na sessão do encerramento, e o **A-N4-28** passa
+> para lá. A PR-9 fica com o aceite (i), o A-N4-27. Nada se renumera.
+
+> **Errata da N4-PR9 ao A-N4-28 — a condição das quedas nativas (N4-D105 d, `[Marcel, 2026-10-07]`).** Antes de o
+> release ser declarado aceito, **100 aberturas frias do release no Tab S6 e 100 no AVD**, contadas pelo
+> `N4-PR9-anexos/instrumentos/quedas.py` (a queda Java **e a nativa**, `Fatal signal`, e os tombstones), com **zero queda
+> nativa**. Uma queda no release e o encerramento **para e reporta**. A razão: a N4-PR9 mediu um `Fatal signal 11` no
+> Fabric do React Native (`MountingCoordinator::pullTransaction`) na abertura do dev client — 5 em ≈ 300 aberturas —, que
+> a contagem de `FATAL` das PRs 2 a 8 não via (`N4-PR9-anexos/README.md` §5).
+
+> **Errata da N4-PR9 ao A-N4-26 — o teto e a coluna do Marcel.** (i) *"com o teto reduzido no mock"*: o teto é a
+> constante `CAP_BYTES` (200 MB) do app, e o mock não a alcança. Vale **a fixture acima do teto** (N4-D106,
+> `[Marcel, 2026-10-07]`): `N4-PR9-anexos/instrumentos/fixture-teto.py`, gerada na hora e fora do repositório, só no AVD,
+> com o espaço medido antes e depois. Com 14 Partituras de 24 MiB (360,8 MiB) saem o `lru over` e o *arquivo não baixado*
+> nas 5 que não couberam; com 9 não sobra nenhuma — o estouro de até 3 arquivos da N4-D88 cabe nelas (div. 1128).
+> (ii) **O julgamento do Marcel** (*o tempo até tudo baixar num sync real*) **passa para o encerramento**, no Tab, com o
+> release e a conta dele `[Marcel, 2026-10-07]`; a PR-9 só mediu o tempo na prova em prod (4 arquivos, 265 002 B, 2,3 s
+> do plano ao último).
+
+> **Errata da N4-PR9 ao A-N4-8 — a espécie *rede* não se alcança pelo toque (div. 1092 fechada).** Das seis, cinco se
+> mediram no aparelho (L e V, C e B, AVD e Tab); a *rede* é o barrado sem rede, e a estrela sem rede é inerte (N4-R9).
+> A corrida entre o toque e o `estaOnline` (o avião ligado e o toque 0 a 0,8 s depois, cinco atrasos, duas orientações)
+> nunca deu `write blocked … reason=offline`: até 0,2 s o pedido saiu (o mock pelo `adb reverse` responde em avião);
+> de 0,4 s em diante a estrela já estava inerte. A *rede* fica provada em teste (`favoritar.test.ts`,
+> `biblioteca-tela.test.tsx`).
+
 ### Encerramento
 
 O `N4-ENCERRAMENTO.md`, com a herança da §4 e as corridas do bloco no `CI-FAIXA.md` (regra 22).
@@ -501,3 +528,10 @@ rótulo dos campos e a linha das datas em 13, literal, como a N4-D79; **N4-D101*
 literal da folha. As três vão à herança do bloco de identidade, com os 13 e 20 da N4-D79 e o arco da N4-D96
 (`N4-PR8-anexos/README.md` §0). *(Depois da N4-PR8: a **PR-9 — estados transversais, a troca por espécie, o aceite
 completo, a prova em prod e o release**.)*
+
+**Decisões do Marcel na N4-PR9** `[Marcel, 2026-10-07]`: **N4-D103** — o release do N4 sai da PR-9 e vai ao
+encerramento (errata da N4-D84); **N4-D104** — os dois avisos de "a setlist sumiu" de S1 (`falha` em `muted`, que nenhuma
+espécie devolve) ficam com o par à mão na troca por espécie, e a pergunta "o cinza ali é escolha ou acaso" vai ao bloco de
+identidade; **N4-D105** — a queda nativa: a contagem do arnês passa a vê-la, o registro das 5, a rodada de 100 aberturas
+de cada lado, e a condição do A-N4-28; **N4-D106** — o teto do A-N4-26 pela fixture acima de 200 MB, só no AVD, com o
+espaço medido (`N4-PR9-anexos/README.md` §0). *(Depois da N4-PR9: **o encerramento do N4, com o release no Tab**.)*

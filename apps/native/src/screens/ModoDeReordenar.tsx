@@ -64,10 +64,9 @@ import {
 } from '@octavia/core'
 import { escrever, prepararReordenacao, relerPelaOrdem, type EstadoLocal } from '../escrita'
 import { Icone } from '../icones/Icone'
-import type { NomeIcone } from '../icones/dados'
 import { bar, dark, faixas, font, INEXISTENTE, radius, size, space, touch, tracking, type TokensDaFaixa } from '../theme'
 import { useFaixa } from '../useFaixa'
-import { LinhaDeAviso } from './LinhaDeAviso'
+import { LinhaDeAviso, type EspecieDoTablet } from './LinhaDeAviso'
 
 /** A linha do modo: *"A linha cai de 116 para 72 dp"* (`N2-S2e-reordenar`). */
 const LINHA = 72
@@ -498,17 +497,17 @@ export function ModoDeReordenar({
   const releituraFalhou = releitura === 'falhou'
   const alcaAtiva = !salvando
 
-  const aviso = useMemo((): { icone: NomeIcone; cor: string; motivo: string } | null => {
-    if (!online) return { icone: 'sem-conexao', cor: dark.offlineInk, motivo: frase('sem-rede-s2') }
+  const aviso = useMemo((): { especie: EspecieDoTablet; motivo: string } | null => {
+    if (!online) return { especie: 'rede', motivo: frase('sem-rede-s2') }
     if (falha === null) return null
-    if (falha.especie === 'limite') return { icone: 'ultima-sincronizacao', cor: dark.offlineInk, motivo: falha.frase }
+    if (falha.especie === 'limite') return { especie: 'limite', motivo: falha.frase }
     // As três orações da moldura `N2-S2e-ordem-falhou`; a terceira só depois
     // da releitura — antes dela seria promessa sobre uma leitura em voo.
     const oracoes = [frase('falhou-ordem'), falha.frase]
     // "a ordem dela não foi aplicada aqui" seria mentira depois da N2-D37,
     // que aplicou exatamente a ordem relida.
     if (releitura === 'ok' && !descartado) oracoes.push(frase('ordem-relida'))
-    return { icone: 'falha', cor: dark.errorInk, motivo: oracoes.join('  ·  ') }
+    return { especie: 'falha', motivo: oracoes.join('  ·  ') }
   }, [online, falha, releitura, descartado])
 
   const deslocamentoDe = (i: number): number => {
@@ -638,7 +637,7 @@ export function ModoDeReordenar({
       )}
 
       {aviso !== null ? (
-        <LinhaDeAviso icone={aviso.icone} cor={aviso.cor} motivo={aviso.motivo} recuo={space.xl} />
+        <LinhaDeAviso especie={aviso.especie} motivo={aviso.motivo} recuo={space.xl} />
       ) : null}
 
       <View ref={corpoRef} style={styles.corpo}>

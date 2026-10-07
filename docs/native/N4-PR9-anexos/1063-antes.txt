@@ -1,0 +1,8 @@
+     ✓ o nome do objeto do bucket NÃO vai para a tela — vai para o log 1ms
+     ✓ o `status: NNN` continua traduzido, e sem a URL 0ms
+     ✓ o que não é `Error` também não vaza 0ms
+     ✓ o HOST NU entre aspas some do detalhe — div. 137 0ms
+     × a tela lê o status — o servidor respondeu 404 —, não o genérico 4ms
+     × o log fica numa linha só, com o nome e o status (a quebra da biblioteca não chega ao log) 1ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  2 failed | 12 passed (14)

@@ -1,0 +1,2 @@
+apagados em files/octavia-<uid>/…: ['partitura-teto-01.pdf', 'partitura-teto-02.pdf', 'partitura-teto-03.pdf', 'partitura-teto-04.pdf', 'partitura-teto-05.pdf', 'partitura-teto-06.pdf', 'partitura-teto-07.pdf', 'partitura-teto-08.pdf', 'partitura-teto-09.pdf'] · ficaram: ['partitura-12p.pdf', 'partitura-1p.pdf', 'partitura-escaneada.jpg', 'partitura-grande.pdf']
+apagados em cache/octavia-<uid>/…: [] · ficaram: []

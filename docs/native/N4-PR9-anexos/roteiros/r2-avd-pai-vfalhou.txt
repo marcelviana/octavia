@@ -1,0 +1,7 @@
+== falhou
+11:24:26 toque 'buscar' @ 2295,188 (emulator-5554)
+11:24:34 toque 'lib-campo' @ 1397,152 (emulator-5554)
+11:24:41 toque 'Ver “Partitura que nunca baixou”' @ 1280,590 (emulator-5554)
+  log: (nenhuma linha)
+N4P9T-V-arquivo-falhou-avd-pai mCurrentRotation=ROTATION_0 png=121469 xml=21032 0eb7b5541a44
+capturas=1 falhas=0

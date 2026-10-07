@@ -1,0 +1,27 @@
+12:56:21 toque 'buscar' @ 794,396 (emulator-5556)
+12:56:29 toque 'lib-campo' @ 676,177 (emulator-5556)
+12:56:36 toque 'Ver “Manhã de ensaio”' @ 540,836 (emulator-5556)
+-- letra: o cabeçalho [107.0] dp
+   alcançável  view-voltar            'Voltar para a biblioteca'                   [24.0,53.0][72.0,101.0]
+   alcançável  view-favoritar         'Tirar “Manhã de ensaio” das favoritas'      [287.6,53.0][335.6,101.0]
+   alcançável  view-tocar             'Tocar “Manhã de ensaio”'                    [339.8,53.0][387.8,101.0]
+N4P8A-V-letra-phone-ret mCurrentRotation=ROTATION_0 png=246101 xml=30534 0f43af4fdd6b
+12:57:16 toque 'buscar' @ 794,396 (emulator-5556)
+12:57:24 toque 'lib-campo' @ 676,177 (emulator-5556)
+12:57:31 toque 'Ver “Uma música de título bem comprido, para medir o corte do título em retrato e no celular”' @ 540,836 (emulator-5556)
+-- titulo-longo: o cabeçalho [304.8] dp
+   alcançável  view-voltar            'Voltar para a biblioteca'                   [24.0,152.0][72.0,200.0]
+   alcançável  view-favoritar         'Favoritar “Uma música de título bem comp'   [287.6,152.0][335.6,200.0]
+   alcançável  view-tocar             'Tocar “Uma música de título bem comprido'   [339.8,152.0][387.8,200.0]
+N4P8A-V-titulo-longo-phone-ret mCurrentRotation=ROTATION_0 png=230950 xml=24362 70054df53469
+12:58:10 toque 'buscar' @ 794,396 (emulator-5556)
+12:58:19 toque 'lib-campo' @ 676,177 (emulator-5556)
+12:58:26 toque 'Ver “Item sem tipo da fixture”' @ 540,836 (emulator-5556)
+-- tipo-desconhecido: o cabeçalho [112.8] dp
+   alcançável  view-voltar            'Voltar para a biblioteca'                   [24.0,56.0][72.0,104.0]
+   alcançável  view-favoritar         'Favoritar “Item sem tipo da fixture”'       [287.6,56.0][335.6,104.0]
+   alcançável  view-tocar             'Tocar “Item sem tipo da fixture”'           [339.8,56.0][387.8,104.0]
+N4P8A-V-tipo-desconhecido-phone-ret mCurrentRotation=ROTATION_0 png=89553 xml=18671 16c6d9aef02b
+FALHA arquivo-nao-baixado: ESPERA ESGOTADA: 'criar-setlist'
+12:59:55 avião=0 (emulator-5556)
+capturas=3

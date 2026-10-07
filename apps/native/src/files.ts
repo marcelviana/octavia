@@ -601,7 +601,12 @@ export function higienizar(bruta: string): string {
  * Os três ramos, e o que cada um manda para cada metade:
  *   1. já vem de dentro daqui (prefixo `${name}: `) — devolve como está, com a
  *      frase de tela que ele já carrega;
- *   2. `status: NNN` — traduz para as duas metades;
+ *   2. `status: NNN`, ou `HTTP NNN` — traduz para as duas metades. O `HTTP NNN`
+ *      é o 404 do Android (N4-PR9, div. 1063): o `message` do
+ *      `FileSystemDownloadTask` é `Call to function … has been rejected.` e,
+ *      depois de uma quebra de linha, a causa, `→ Caused by: Unable to
+ *      download a file: … HTTP 404` (medido no AVD). A N4-PR5 leu só a
+ *      primeira linha e o motivo da tela virava o genérico;
  *   3. **qualquer outra coisa** — o log fica com o texto cru higienizado, que é
  *      o que faz um relatório ser diagnosticável, e a TELA fica sem frase, logo
  *      com a genérica. Era este ramo que mandava `Call to function
@@ -610,7 +615,7 @@ export function higienizar(bruta: string): string {
 export function falha(erro: unknown, name: string): Error {
   if (erro instanceof Error && erro.message.startsWith(`${name}: `)) return erro
   const bruta = erro instanceof Error ? erro.message : String(erro)
-  const status = /status:?\s*(\d{3})/i.exec(bruta)?.[1]
+  const status = /(?:status:?|\bHTTP)\s*(\d{3})/i.exec(bruta)?.[1]
   if (status !== undefined) {
     return comFrase(`${name}: ${servidorRespondeu(status)}`, servidorRespondeu(status))
   }

@@ -1,0 +1,118 @@
+== especiesL 10:32:43
+10:32:56 toque 'buscar' @ 2295,188 (emulator-5554)
+10:33:04 toque 'lib-campo' @ 1397,152 (emulator-5554)
+10:33:11 mock modo=escrita-pendurada content=content.json env=None
+10:33:13 toque 'Favoritar “Segunda do ensaio”' @ 2306,797 (emulator-5554)
+  aviso: «Favoritar “Segunda do ensaio”  ·  sem resposta do servidor» motivo 21.8 dp
+  [L sem-resposta] log: auth refresh=cached | write op=favorite content=b1b10002 status=net code=net ms=20014
+N4P9T-L-favoritar-sem-resposta-avd-pai mCurrentRotation=ROTATION_0 png=154019 xml=39912 4c1d4516e5a6
+10:33:49 mock modo=normal content=content.json env=None
+10:34:01 toque 'buscar' @ 2295,188 (emulator-5554)
+10:34:09 toque 'lib-campo' @ 1397,152 (emulator-5554)
+10:34:15 mock modo=escrita-401 content=content.json env=None
+10:34:17 toque 'Favoritar “Segunda do ensaio”' @ 2306,797 (emulator-5554)
+  aviso: «Favoritar “Segunda do ensaio”  ·  não foi possível salvar — confira sua conta no site» motivo 21.8 dp
+  [L auth] log: auth refresh=cached | auth refresh=forced | api status=401 path=/api/content n=2 ms=415 | write op=favorite content=b1b10002 status=401 code=AUTH_REQUIRED ms=420
+N4P9T-L-favoritar-auth-avd-pai mCurrentRotation=ROTATION_0 png=156174 xml=39943 026363b01f5f
+10:34:33 mock modo=normal content=content.json env=None
+10:34:53 toque 'buscar' @ 2295,188 (emulator-5554)
+10:35:01 toque 'lib-campo' @ 1397,152 (emulator-5554)
+10:35:07 mock modo=escrita-500 content=content.json env=None
+10:35:10 toque 'Favoritar “Segunda do ensaio”' @ 2306,797 (emulator-5554)
+  aviso: «Favoritar “Segunda do ensaio”  ·  falha no servidor — nada foi alterado aqui» motivo 21.8 dp
+  [L servidor] log: auth refresh=cached | api status=500 path=/api/content n=1 ms=27 | write op=favorite content=b1b10002 status=500 code=INTERNAL_ERROR ms=33
+N4P9T-L-favoritar-servidor-avd-pai mCurrentRotation=ROTATION_0 png=153021 xml=39932 3cc5017cdb3a
+10:35:25 mock modo=normal content=content.json env=None
+10:35:46 toque 'buscar' @ 2295,188 (emulator-5554)
+10:35:54 toque 'lib-campo' @ 1397,152 (emulator-5554)
+10:36:00 mock modo=escrita-400 content=content.json env=None
+10:36:03 toque 'Favoritar “Segunda do ensaio”' @ 2306,797 (emulator-5554)
+  aviso: «Favoritar “Segunda do ensaio”  ·  não foi possível salvar» motivo 21.8 dp
+  [L generica] log: auth refresh=cached | api status=400 path=/api/content n=1 ms=32 | write op=favorite content=b1b10002 status=400 code=VALIDATION_ERROR ms=38
+N4P9T-L-favoritar-generica-avd-pai mCurrentRotation=ROTATION_0 png=153541 xml=39912 efb4719024bf
+10:36:19 mock modo=normal content=content.json env=None
+10:36:38 toque 'buscar' @ 2295,188 (emulator-5554)
+10:36:46 toque 'lib-campo' @ 1397,152 (emulator-5554)
+10:36:52 mock modo=escrita-429 content=content.json env=None
+10:36:55 toque 'Favoritar “Segunda do ensaio”' @ 2306,797 (emulator-5554)
+  aviso: «Favoritar “Segunda do ensaio”  ·  muitas alterações seguidas — tente de novo em 30 s» motivo 21.8 dp
+  [L limite] log: auth refresh=cached | api status=429 path=/api/content n=1 ms=27 | ratelimit retry-after=30 family=content-mutate | write op=favorite content=b1b10002 status=429 code=RATE_LIMITED ms=33
+N4P9T-L-favoritar-limite-avd-pai mCurrentRotation=ROTATION_0 png=158456 xml=39619 29ba7dc255fb
+10:37:11 mock modo=normal content=content.json env=None
+== especiesV 10:37:11
+10:37:30 toque 'buscar' @ 2295,188 (emulator-5554)
+10:37:38 toque 'lib-campo' @ 1397,152 (emulator-5554)
+10:37:45 toque 'Ver “Segunda do ensaio”' @ 1280,797 (emulator-5554)
+10:37:52 mock modo=escrita-pendurada content=content.json env=None
+10:37:55 toque 'view-favoritar' @ 2335,152 (emulator-5554)
+  aviso: «Favoritar “Segunda do ensaio”  ·  sem resposta do servidor» motivo 21.8 dp
+  [V sem-resposta] log: auth refresh=cached | write op=favorite content=b1b10002 status=net code=net ms=20031
+N4P9T-V-favoritar-sem-resposta-avd-pai mCurrentRotation=ROTATION_0 png=296972 xml=25773 67219963651a
+10:38:32 mock modo=normal content=content.json env=None
+10:38:52 toque 'buscar' @ 2295,188 (emulator-5554)
+10:39:00 toque 'lib-campo' @ 1397,152 (emulator-5554)
+10:39:08 toque 'Ver “Segunda do ensaio”' @ 1280,797 (emulator-5554)
+10:39:16 mock modo=escrita-401 content=content.json env=None
+10:39:19 toque 'view-favoritar' @ 2335,152 (emulator-5554)
+  aviso: «Favoritar “Segunda do ensaio”  ·  não foi possível salvar — confira sua conta no site» motivo 21.8 dp
+  [V auth] log: auth refresh=cached | auth refresh=forced | api status=401 path=/api/content n=2 ms=537 | write op=favorite content=b1b10002 status=401 code=AUTH_REQUIRED ms=542
+N4P9T-V-favoritar-auth-avd-pai mCurrentRotation=ROTATION_0 png=298684 xml=25804 4ca1895fbd3a
+10:39:36 mock modo=normal content=content.json env=None
+10:39:58 toque 'buscar' @ 2295,188 (emulator-5554)
+10:40:06 toque 'lib-campo' @ 1397,152 (emulator-5554)
+10:40:13 toque 'Ver “Segunda do ensaio”' @ 1280,797 (emulator-5554)
+10:40:20 mock modo=escrita-500 content=content.json env=None
+10:40:23 toque 'view-favoritar' @ 2335,152 (emulator-5554)
+  aviso: «Favoritar “Segunda do ensaio”  ·  falha no servidor — nada foi alterado aqui» motivo 21.8 dp
+  [V servidor] log: auth refresh=cached | api status=500 path=/api/content n=1 ms=43 | write op=favorite content=b1b10002 status=500 code=INTERNAL_ERROR ms=48
+N4P9T-V-favoritar-servidor-avd-pai mCurrentRotation=ROTATION_0 png=294027 xml=25793 5d414bc070a6
+10:40:39 mock modo=normal content=content.json env=None
+10:41:01 toque 'buscar' @ 2295,188 (emulator-5554)
+10:41:09 toque 'lib-campo' @ 1397,152 (emulator-5554)
+10:41:16 toque 'Ver “Segunda do ensaio”' @ 1280,797 (emulator-5554)
+10:41:23 mock modo=escrita-400 content=content.json env=None
+10:41:26 toque 'view-favoritar' @ 2335,152 (emulator-5554)
+  aviso: «Favoritar “Segunda do ensaio”  ·  não foi possível salvar» motivo 21.8 dp
+  [V generica] log: auth refresh=cached | api status=400 path=/api/content n=1 ms=51 | write op=favorite content=b1b10002 status=400 code=VALIDATION_ERROR ms=55
+N4P9T-V-favoritar-generica-avd-pai mCurrentRotation=ROTATION_0 png=294574 xml=25773 fa7397662ebb
+10:41:42 mock modo=normal content=content.json env=None
+10:42:01 toque 'buscar' @ 2295,188 (emulator-5554)
+10:42:09 toque 'lib-campo' @ 1397,152 (emulator-5554)
+10:42:16 toque 'Ver “Segunda do ensaio”' @ 1280,797 (emulator-5554)
+10:42:23 mock modo=escrita-429 content=content.json env=None
+10:42:26 toque 'view-favoritar' @ 2335,152 (emulator-5554)
+  aviso: «Favoritar “Segunda do ensaio”  ·  muitas alterações seguidas — tente de novo em 30 s» motivo 21.8 dp
+  [V limite] log: auth refresh=cached | api status=429 path=/api/content n=1 ms=36 | ratelimit retry-after=30 family=content-mutate | write op=favorite content=b1b10002 status=429 code=RATE_LIMITED ms=43
+N4P9T-V-favoritar-limite-avd-pai mCurrentRotation=ROTATION_0 png=300609 xml=25480 746de1b2203a
+10:42:42 mock modo=normal content=content.json env=None
+== redeCorrida 10:42:42
+10:43:01 toque 'buscar' @ 2295,188 (emulator-5554)
+10:43:09 toque 'lib-campo' @ 1397,152 (emulator-5554)
+  [rede atraso=0s] ping: connect: Network is unreachable · log: auth refresh=cached | api status=200 path=/api/content n=1 ms=70 | write op=favorite content=b1b10002 status=200 code=- ms=77 | cache write kind=content n=16 invalidated=1 | net offline
+  aviso: «Sem conexão: dá para ler e tocar, não para favoritar. O favoritar volta quando a rede voltar.»
+N4P9T-L-favoritar-rede-0-avd-pai mCurrentRotation=ROTATION_0 png=159098 xml=40282 41d861982627
+10:43:42 avião=0 (emulator-5554)
+10:44:13 toque 'buscar' @ 2295,188 (emulator-5554)
+10:44:21 toque 'lib-campo' @ 1397,152 (emulator-5554)
+FALHA redeCorrida: 'NoneType' object is not subscriptable
+10:44:35 avião=0 (emulator-5554)
+10:44:37 mock modo=normal content=content.json env=None
+== falhouLinha 10:44:37
+10:45:07 toque 'buscar' @ 2295,188 (emulator-5554)
+10:45:17 toque 'lib-campo' @ 1397,152 (emulator-5554)
+N4P9T-L-linha-falhou-avd-pai mCurrentRotation=ROTATION_0 png=125967 xml=35820 62886e815299
+  logcat: k"],nativeLibraryDirectories=[/data/app/~~pn5H4pDM_HpKpBZYLiiFZQ==/rocks.octavia.app-CDxDWhCH0UY6vAH9nipFEw==/lib/arm64, /data/app/~~pn5H4pDM_HpKpBZYLiiFZQ==/rocks.octavia.app-CDxDWhCH0UY6vAH9nipFEw==/base.apk!/lib/arm64-v8a, /system/lib64, /system_ext/lib64]]
+  logcat: 10-07 10:44:48.828 26612 26612 E GEL_DELAYED_EVENT_DEBUG: Caused by: java.lang.IllegalStateException: DefaultAccountIdResolver could not resolve pseudonymous, pseudonymous
+  logcat: 10-07 10:44:48.828 26612 26612 E GEL_DELAYED_EVENT_DEBUG: Caused by: java.util.concurrent.ExecutionException: afuk: account of type pseudonymous is not enabled
+  logcat: 10-07 10:44:48.828 26612 26612 E GEL_DELAYED_EVENT_DEBUG: Caused by: afuk: account of type pseudonymous is not enabled
+  logcat: 10-07 10:44:55.904 27226 27319 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+  logcat: 10-07 10:44:55.904 27226 27319 I ReactNativeJS: → Caused by: Unable to download a file: Unable to download a file: HTTP 404
+== baixandoLinha 10:45:32
+apagados em files/octavia-<uid>/…: [] · ficaram: ['1786218429715-ux-audit-partitura-12p.pdf', 'partitura-12p.pdf', 'partitura-1p.pdf', 'partitura-escaneada.jpg', 'partitura-grande.pdf.part']
+apagados em cache/octavia-<uid>/…: [] · ficaram: ['1786218427769-ux-audit-partitura-1p.pdf']
+10:45:57 toque 'buscar' @ 2295,188 (emulator-5554)
+10:46:05 toque 'lib-campo' @ 1397,152 (emulator-5554)
+  log: faixa=C w=1137.8 h=711.1 | net online | auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored | cache hit kind=setlists n=3 | cache hit kind=content n=16 | sync start | auth refresh=cached | api status=200 path=/api/setlists n=1 ms=445 | auth refresh=cached | api status=200 path=/api/content n=1 ms=103 | cache write kind=setlists n=3 invalidated=0 | cache write kind=content n=16 invalidated=0 | sync ok setlists=3 content=16 pages=1 t=743 | prefetch plan n=2 reason=library | download-error nao-existe.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+N4P9T-L-linha-baixando-avd-pai mCurrentRotation=ROTATION_0 png=118153 xml=35159 97439b1c9604
+capturas=13 falhas=1
+  redeCorrida: 'NoneType' object is not subscriptable

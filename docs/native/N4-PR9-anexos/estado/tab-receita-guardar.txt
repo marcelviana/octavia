@@ -1,0 +1,26 @@
+sessão: files/octavia-<uid> · cache/octavia-<uid>
+== (1) guardado, md5 a md5 igual à cópia: 4 caminho(s)
+9fd3cdfd9bab41a3ef24058690739ef8  files/octavia-<uid>/setlists.json
+b62f192a347e0adac05e405f92f9711d  files/octavia-<uid>/content.json
+b21cc49ba038637f55262202b1fe8f9a  files/octavia-<uid>/files-index.json
+05253d4239dadb2696115b934a546bb1  files/octavia-<uid>/files/<o PDF do Marcel>
+== (2) tirado por nome; o que sobrou na pasta da sessão (ls):
+cache/octavia-<uid>/files:
+total 6
+drwx------ 2 u0_a292 u0_a292       3488 2026-10-04 12:47 .
+drwx------ 3 u0_a292 u0_a292_cache 3488 2026-09-11 09:59 ..
+
+files/octavia-<uid>:
+total 25
+drwx------ 3 u0_a292 u0_a292 3488 2026-10-07 13:22 .
+drwxrwx--x 3 u0_a292 u0_a292 3488 2026-10-07 08:32 ..
+-rw------- 1 u0_a292 u0_a292  163 2026-09-23 19:14 ._content.json
+-rwx------ 1 u0_a292 u0_a292  163 2026-09-24 18:01 ._files
+-rw------- 1 u0_a292 u0_a292  163 2026-09-14 11:49 ._files-index.json
+-rw------- 1 u0_a292 u0_a292  163 2026-09-23 19:14 ._setlists.json
+drwx------ 2 u0_a292 u0_a292 3488 2026-10-07 13:22 files
+
+files/octavia-<uid>/files:
+total 6
+drwx------ 2 u0_a292 u0_a292 3488 2026-10-07 13:22 .
+drwx------ 3 u0_a292 u0_a292 3488 2026-10-07 13:22 ..

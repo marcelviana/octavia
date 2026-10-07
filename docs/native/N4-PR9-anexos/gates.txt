@@ -1,0 +1,73 @@
+# N4-PR9 — os gates na ponta (f80745f), 2026-10-07 15:21:34
+
+$ G1a/G1b (GATES_DECL = o bloco ```gates do corpo da PR #365)
+G1a — diff vazio em 57 arquivos DERIVADOS de apps/native + packages/core/src
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+      EXCEÇÕES DECLARADAS (o escopo desta PR):
+        apps/native/src/screens/LinhaDeAviso.tsx
+        apps/native/src/screens/IndexScreen.tsx
+        apps/native/src/screens/ModoDeReordenar.tsx
+        apps/native/src/screens/Picker.tsx
+        apps/native/src/screens/SetlistsScreen.tsx
+        apps/native/src/files.ts
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+  G1b: só adição ✓
+
+$ G2/G3
+G2 — testIDs  antes=121  depois=121
+  G2: antes ⊆ depois ✓
+G3 — declarações: do corpo da PR (GATES_DECL=/private/tmp/claude-501/-Users-marcelviana-projects-octavia/c23b6ad0-a518-4df6-997d-f1ce3af03e5e/scratchpad/decl.txt)
+G3 — linhas log( antes=70  depois=70
+  G3: nenhuma linha sumiu ✓
+
+$ gate:a20
+  literais em posição de texto examinados: 229
+  acusações: 0
+$ gate:icones
+  acusações: 0 · avisos: 0
+
+$ congelados: shasum -c
+docs/native/DESIGN-V1: 3 0
+docs/native/DESIGN-N2: 2 0
+docs/native/DESIGN-N3: 2 0
+docs/native/DESIGN-N4: 2 0
+docs/ux/DESIGN-I1: 14 0
+docs/native/N3-PRECHECK-anexos: 355 0
+
+$ G-back (GATES_WEB_DECL = o bloco ```gates-web do corpo)
+  ✓ nenhuma
+
+G-back: PASSA
+$ G-palco
+G-palco: PASSA — 0 ocorrências
+$ G-tok
+
+G-tok: PASSA
+$ G-tok cobertura
+G-tok (cobertura): PASSA
+$ G-faixa (o veredito sobre as medições commitadas)
+G-faixa: PASSA
+
+$ tsc
+tsc (.) → exit 0
+tsc (packages/core) → exit 0
+tsc (packages/identidade) → exit 0
+tsc (apps/native) → exit 0
+$ pnpm lint
+✔ No ESLint warnings or errors
+
+$ pnpm test (a suíte inteira)
+ ✓  identidade  packages/identidade/test/css.test.ts (4 tests) 5ms
+ ✓  identidade  packages/identidade/test/igualdade.test.ts (35 tests) 9ms
+ ✓  native  apps/native/test/frases-n4.test.ts (52 tests) 13ms
+ ✓  native  apps/native/test/files-mensagem.test.ts (14 tests) 4ms
+ ✓  native  apps/native/test/linha-de-aviso-contrato.test.ts (2 tests) 4ms
+ ✓  native-tela  apps/native/test/g-par-visualizacao.test.tsx (1 test) 168ms
+ ✓  native-tela  apps/native/test/linha-de-aviso-especie.test.tsx (20 tests) 186ms
+ ✓  web  tests/gates/n4-g-par.test.tsx (2 tests) 58ms
+ ✓  web  tests/gates/n4-favoritar-put.test.tsx (6 tests | 1 skipped) 256ms
+ ✓  web  tests/gates-web/frases-n4.test.ts (179 tests) 51ms
+ ✓  web  tests/gates-web/linha-de-aviso-contrato.test.ts (1 test) 1194ms
+ Test Files  139 passed | 3 skipped (142)
+      Tests  1669 passed | 59 skipped (1728)

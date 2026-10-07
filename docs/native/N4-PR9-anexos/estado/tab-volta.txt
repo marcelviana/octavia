@@ -1,0 +1,33 @@
+== volta ao release (14:15:07): install -r release-31d6b3a.apk (6eae4a8b…)
+    lastUpdateTime=2026-10-07 14:15:07
+    pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+reverse: []
+== N4-D56, em avião (14:15:24)
+airplane=1
+ping: connect: Network is unreachable
+OCTAVIA: net offline
+OCTAVIA: auth uid=xVDJRBh1WpPOatbfWahOLttYn1E3 src=restored
+OCTAVIA: cache hit kind=setlists n=2
+OCTAVIA: cache hit kind=content n=63
+OCTAVIA: sync skip reason=offline
+S1: criar-setlist=1 buscar=1 aviso-motivo=1 cartões(setlist-card)=   1 setlist-    1 setlist-e 
+FATAL EXCEPTION do app=0 · Fatal signal=0
+== N4-D56, com rede (14:16:16)
+airplane=0 wifi=1
+ping: 2 packets transmitted, 2 received, 0% packet loss, time 1003ms
+OCTAVIA: sync start
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=3236
+OCTAVIA: api status=200 path=/api/content n=1 ms=767
+OCTAVIA: cache write kind=setlists n=2 invalidated=0
+OCTAVIA: cache write kind=content n=63 invalidated=0
+OCTAVIA: sync ok setlists=2 content=63 pages=1 t=4090
+OCTAVIA: prefetch plan n=0 reason=7d
+GET=2 escritas(write op)=0
+FATAL EXCEPTION do app=0 · Fatal signal=0
+== fim do Tab (14:16:44)
+stay_on=0 accel=1 user_rot=0 airplane=0 wifi=1 data=1
+lido no início: stay_on=0 accel=1 user_rot=0 airplane=0 wifi=1 data=1
+reverse: []
+    lastUpdateTime=2026-10-07 14:15:07
+    pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+== cópias do host apagadas (14:16:52): /private/tmp/claude-501/-Users-marcelviana-projects-octavia/c23b6ad0-a518-4df6-997d-f1ce3af03e5e/scratchpad/cache-tab

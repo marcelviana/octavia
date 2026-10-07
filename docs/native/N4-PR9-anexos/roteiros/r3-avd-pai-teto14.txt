@@ -1,0 +1,10 @@
+== teto 11:41:29
+  a fixture do teto: 19 arquivos, 360.8 MiB servidos
+11:41:31 mock modo=normal content=content.json env=None
+11:41:50 toque 'buscar' @ 2295,188 (emulator-5554)
+  log: prefetch plan n=6 reason=library
+  log: lru over bytes=252521727 cap=209715200 protected=19
+11:41:58 toque 'lib-campo' @ 1397,152 (emulator-5554)
+N4P9T-L-teto-avd-pai mCurrentRotation=ROTATION_0 png=213074 xml=58184 5f99c4f91894
+  disco: 4198 partitura-12p.pdf | 643 partitura-1p.pdf | 860006 partitura-escaneada.jpg | 25165688 partitura-grande.pdf | 25165688 partitura-teto-01.pdf | 25165688 partitura-teto-02.pdf | 25165688 partitura-teto-03.pdf | 25165688 partitura-teto-04.pdf | 25165688 partitura-teto-05.pdf | 25165688 partitura-teto-06.pdf | 25165688 partitura-teto-07.pdf | 25165688 partitura-teto-08.pdf | 25165688 partitura-teto-09.pdf
+capturas=1 falhas=0

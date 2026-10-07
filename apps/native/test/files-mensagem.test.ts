@@ -154,3 +154,29 @@ describe('a frase que o músico lê (div. 125)', () => {
     expect(fraseDaFalha('qualquer coisa')).toBe(FALHA_GENERICA)
   })
 })
+
+/**
+ * N4-PR9, div. 1063 — **o 404 no Android traz o status, numa segunda linha.** Medido no AVD (`N4-PR9-anexos`, o
+ * `falhouLinha`): o `message` do erro do `FileSystemDownloadTask` é a primeira linha de sempre e, depois de uma quebra,
+ * a causa — `→ Caused by: Unable to download a file: Unable to download a file: HTTP 404`. A N4-PR5 viu só a primeira
+ * linha e concluiu "sem o status"; o `falha()` procurava `status: NNN` e o motivo virava o genérico. A forma é a do
+ * logcat, verbatim (o `→` é da biblioteca).
+ */
+describe('o 404 do Android, com a causa na segunda linha (div. 1063)', () => {
+  const ANDROID_404 =
+    "Call to function 'FileSystemDownloadTask.start' has been rejected.\n→ Caused by: Unable to download a file: Unable to download a file: HTTP 404"
+
+  it('a tela lê o status — o servidor respondeu 404 —, não o genérico', () => {
+    expect(fraseDaFalha(falha(new Error(ANDROID_404), NOME))).toBe('o servidor respondeu 404')
+  })
+
+  it('o log fica numa linha só, com o nome e o status (a quebra da biblioteca não chega ao log)', () => {
+    expect(falha(new Error(ANDROID_404), NOME).message).toBe(`${NOME}: o servidor respondeu 404`)
+  })
+
+  it('sem a causa, a primeira linha sozinha continua no genérico', () => {
+    expect(fraseDaFalha(falha(new Error("Call to function 'FileSystemDownloadTask.start' has been rejected."), NOME))).toBe(
+      FALHA_GENERICA,
+    )
+  })
+})

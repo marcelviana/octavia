@@ -1,0 +1,29 @@
+== antes de gerar a fixture do teto (11:19:57)
+/dev/disk3s5   460Gi   388Gi    48Gi    90%    3.7M  499M    1%   /System/Volumes/Data
+fixture do teto: content=25 arquivos=13 total=252521727 B (240.8 MiB) · teto 200 MiB = 209715200 B
+        4198 partitura-12p.pdf
+         643 partitura-1p.pdf
+      860006 partitura-escaneada.jpg
+    25165688 partitura-grande.pdf
+    25165688 partitura-teto-01.pdf
+    25165688 partitura-teto-02.pdf
+    25165688 partitura-teto-03.pdf
+    25165688 partitura-teto-04.pdf
+    25165688 partitura-teto-05.pdf
+    25165688 partitura-teto-06.pdf
+    25165688 partitura-teto-07.pdf
+    25165688 partitura-teto-08.pdf
+    25165688 partitura-teto-09.pdf
+== depois (11:19:57)
+/dev/disk3s5   460Gi   388Gi    47Gi    90%    3.7M  497M    1%   /System/Volumes/Data
+241M	/private/tmp/claude-501/-Users-marcelviana-projects-octavia/c23b6ad0-a518-4df6-997d-f1ce3af03e5e/scratchpad/harness/teto/mock
+
+== a corrida com n=9 não deixou nada de fora (todos baixaram; lru over 252521727 > 209715200): n=14 (11:41:26)
+/dev/disk3s5   460Gi   388Gi    47Gi    90%    3.7M  497M    1%   /System/Volumes/Data
+fixture do teto: content=30 arquivos=18 total=378350167 B (360.8 MiB) · teto 200 MiB = 209715200 B
+/dev/disk3s5   460Gi   389Gi    47Gi    90%    3.7M  496M    1%   /System/Volumes/Data
+361M	/private/tmp/claude-501/-Users-marcelviana-projects-octavia/c23b6ad0-a518-4df6-997d-f1ce3af03e5e/scratchpad/harness/teto/mock
+
+== fim (11:43:22): a fixture do teto apagada do Mac (ls: 0 diretório) e os 9 PDFs do teto apagados do AVD por nome (r3-teto-limpeza.txt)
+/dev/disk3s5   460Gi   388Gi    48Gi    90%    3.7M  499M    1%   /System/Volumes/Data
+AVD userdata: /dev/block/dm-29 5.8G 716M  4.9G  13% /storage/emulated/0/Android/obb

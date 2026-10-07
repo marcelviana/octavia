@@ -29,6 +29,12 @@
  * duas, 12 + 2 linhas + 12 ≈ 68 (N3-B-X-sem-rede). O alvo da ação continua
  * com 48 próprios e centrado na altura da linha, à direita, em B e C; em A a
  * ação desce para baixo do texto, e isso é do N5.
+ *
+ * **N4-PR9 (N4-D32): a tinta pela espécie.** A tela diz a espécie do contrato
+ * do core (`falha`, `rede`, `limite`, `teto`, `salvo-nao-relido`) e o
+ * componente a pinta pelo `PAR_DA_ESPECIE` — os mesmos pares que as quatro
+ * telas antigas passavam à mão, uso a uso (`linha-de-aviso-especie.test.tsx`).
+ * O par à mão continua aceito para o que não cabe no mapa sem mudar de cor.
  */
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { Icone } from '../icones/Icone'
@@ -43,23 +49,51 @@ export interface AcaoDoAviso {
   motivoInativo?: string
 }
 
-export interface LinhaDeAvisoProps {
-  icone: NomeIcone
-  /** A tinta do ícone e do texto: `offlineInk` sem rede, `muted` no resto. */
-  cor: string
+/**
+ * As espécies que o tablet desenha: as do contrato do core (`ESPECIES_DE_AVISO`, N4-D16) menos `sucesso`, que só o
+ * site usa. Escrita aqui, e não importada: o contrato diz que nenhum dos dois componentes importa o arquivo dele — quem
+ * prova que esta união é a do contrato é a igualdade de tipos do `linha-de-aviso-contrato.test.ts`.
+ */
+export type EspecieDoTablet = 'falha' | 'rede' | 'limite' | 'teto' | 'salvo-nao-relido'
+
+/**
+ * **N4-PR9 (N4-D32): espécie → (ícone, cor).** Os pares são os que as quatro telas antigas passavam à mão até a N4-PR8
+ * — a troca entrou só porque o mapa devolve exatamente os mesmos (`linha-de-aviso-especie.test.tsx`, uso a uso). A tinta
+ * pinta o ícone E o texto; `lineInfo` nunca é texto (§3.3), por isso o teto é `muted` e não a `lineInfo` da moldura.
+ */
+export const PAR_DA_ESPECIE: Readonly<Record<EspecieDoTablet, { icone: NomeIcone; cor: string }>> = {
+  falha: { icone: 'falha', cor: dark.errorInk },
+  rede: { icone: 'sem-conexao', cor: dark.offlineInk },
+  // Âmbar: é "não está pronta", não erro (V1 §6.1).
+  limite: { icone: 'ultima-sincronizacao', cor: dark.offlineInk },
+  teto: { icone: 'n-de-musicas', cor: dark.muted },
+  'salvo-nao-relido': { icone: 'ultima-sincronizacao', cor: dark.muted },
+}
+
+/**
+ * A tinta da linha: a **espécie** (o caminho das telas antigas desde a N4-PR9) **ou** o par à mão — o que sobra dele são
+ * os dois avisos de "a setlist sumiu" de S1 (`falha` em `muted`, que nenhuma espécie devolve; decisão do Marcel na
+ * N4-PR9) e as telas do N4 (L e V), que ainda o passam.
+ */
+export type TintaDoAviso =
+  | { especie: EspecieDoTablet; icone?: never; cor?: never }
+  | {
+      especie?: never
+      icone: NomeIcone
+      /** A tinta do ícone e do texto: `offlineInk` sem rede, `muted` no resto. */
+      cor: string
+    }
+
+export type LinhaDeAvisoProps = TintaDoAviso & {
   motivo: string
   acao?: AcaoDoAviso
   /** §3.3: recuo de 32 dp em S1, 24 em S2. */
   recuo?: number
 }
 
-export function LinhaDeAviso({
-  icone,
-  cor,
-  motivo,
-  acao,
-  recuo = space.xxl,
-}: LinhaDeAvisoProps): React.JSX.Element {
+export function LinhaDeAviso(props: LinhaDeAvisoProps): React.JSX.Element {
+  const { motivo, acao, recuo = space.xxl } = props
+  const { icone, cor } = props.especie !== undefined ? PAR_DA_ESPECIE[props.especie] : props
   const inativo = acao?.inativo === true
   return (
     <View style={[styles.linha, { marginHorizontal: recuo }]}>

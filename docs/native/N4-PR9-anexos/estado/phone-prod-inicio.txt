@@ -1,0 +1,6 @@
+octavia_phone (emulator-5556), para a prova em prod, lido 2026-10-07 15:10:48
+stay_on=1 accel=0 user_rot=0 airplane=0 wifi=1 data=1
+reverse: [host-18 tcp:8081 tcp:8081  ]
+ping: 1 packets transmitted, 1 received, 0% packet loss, time 0ms
+escutando na 8788/8789/8790 no Mac: 0
+bundle: host de prod=1 localhost:8788=0

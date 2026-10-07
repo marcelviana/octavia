@@ -1,0 +1,101 @@
+== especiesL 13:56:17
+13:56:30 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+13:56:39 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+13:56:46 mock modo=escrita-pendurada content=content.json env=None
+13:56:52 toque 'Favoritar “Segunda do ensaio”' @ 1346,797 (RX2N8000F3D)
+  aviso: «Favoritar “Segunda do ensaio”  ·  sem resposta do servidor» motivo 21.8 dp
+  [L sem-resposta] log: auth refresh=cached | write op=favorite content=b1b10002 status=net code=net ms=20019
+N4P9T-L-favoritar-sem-resposta-tab-ret mCurrentRotation=ROTATION_0 png=165213 xml=40254 ec4dc8eda6dd
+13:57:34 mock modo=normal content=content.json env=None
+13:57:47 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+13:57:57 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+13:58:03 mock modo=escrita-401 content=content.json env=None
+13:58:10 toque 'Favoritar “Segunda do ensaio”' @ 1346,797 (RX2N8000F3D)
+  aviso: «Favoritar “Segunda do ensaio”  ·  não foi possível salvar — confira sua conta no site» motivo 21.8 dp
+  [L auth] log: auth refresh=cached | auth refresh=forced | api status=401 path=/api/content n=2 ms=507 | write op=favorite content=b1b10002 status=401 code=AUTH_REQUIRED ms=514
+N4P9T-L-favoritar-auth-tab-ret mCurrentRotation=ROTATION_0 png=168165 xml=40285 d32edf11e7cb
+13:58:29 mock modo=normal content=content.json env=None
+13:58:43 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+13:58:53 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+13:58:59 mock modo=escrita-500 content=content.json env=None
+13:59:05 toque 'Favoritar “Segunda do ensaio”' @ 1346,797 (RX2N8000F3D)
+  aviso: «Favoritar “Segunda do ensaio”  ·  falha no servidor — nada foi alterado aqui» motivo 21.8 dp
+  [L servidor] log: auth refresh=cached | api status=500 path=/api/content n=1 ms=27 | write op=favorite content=b1b10002 status=500 code=INTERNAL_ERROR ms=34
+N4P9T-L-favoritar-servidor-tab-ret mCurrentRotation=ROTATION_0 png=164549 xml=40274 b7ed11499629
+13:59:26 mock modo=normal content=content.json env=None
+13:59:39 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+13:59:49 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+13:59:55 mock modo=escrita-400 content=content.json env=None
+14:00:01 toque 'Favoritar “Segunda do ensaio”' @ 1346,797 (RX2N8000F3D)
+  aviso: «Favoritar “Segunda do ensaio”  ·  não foi possível salvar» motivo 21.8 dp
+  [L generica] log: auth refresh=cached | api status=400 path=/api/content n=1 ms=30 | write op=favorite content=b1b10002 status=400 code=VALIDATION_ERROR ms=38
+N4P9T-L-favoritar-generica-tab-ret mCurrentRotation=ROTATION_0 png=163141 xml=40254 d1be36874033
+14:00:22 mock modo=normal content=content.json env=None
+14:00:35 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+14:00:44 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+14:00:51 mock modo=escrita-429 content=content.json env=None
+14:00:57 toque 'Favoritar “Segunda do ensaio”' @ 1346,797 (RX2N8000F3D)
+  aviso: «Favoritar “Segunda do ensaio”  ·  muitas alterações seguidas — tente de novo em 30 s» motivo 21.8 dp
+  [L limite] log: auth refresh=cached | api status=429 path=/api/content n=1 ms=29 | ratelimit retry-after=30 family=content-mutate | write op=favorite content=b1b10002 status=429 code=RATE_LIMITED ms=37
+N4P9T-L-favoritar-limite-tab-ret mCurrentRotation=ROTATION_0 png=167889 xml=39961 b25e8f52977a
+14:01:18 mock modo=normal content=content.json env=None
+== especiesV 14:01:18
+14:01:32 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+14:01:41 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+14:01:53 toque 'Ver “Segunda do ensaio”' @ 800,797 (RX2N8000F3D)
+14:02:00 mock modo=escrita-pendurada content=content.json env=None
+14:02:07 toque 'view-favoritar' @ 1375,152 (RX2N8000F3D)
+  aviso: «Favoritar “Segunda do ensaio”  ·  sem resposta do servidor» motivo 21.8 dp
+  [V sem-resposta] log: auth refresh=cached | write op=favorite content=b1b10002 status=net code=net ms=20017
+N4P9T-V-favoritar-sem-resposta-tab-ret mCurrentRotation=ROTATION_0 png=454656 xml=25467 29b968833c9d
+14:02:49 mock modo=normal content=content.json env=None
+14:03:02 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+14:03:12 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+14:03:24 toque 'Ver “Segunda do ensaio”' @ 800,797 (RX2N8000F3D)
+14:03:31 mock modo=escrita-401 content=content.json env=None
+14:03:38 toque 'view-favoritar' @ 1375,152 (RX2N8000F3D)
+  aviso: «Favoritar “Segunda do ensaio”  ·  não foi possível salvar — confira sua conta no site» motivo 21.8 dp
+  [V auth] log: auth refresh=cached | auth refresh=forced | api status=401 path=/api/content n=2 ms=459 | write op=favorite content=b1b10002 status=401 code=AUTH_REQUIRED ms=465
+N4P9T-V-favoritar-auth-tab-ret mCurrentRotation=ROTATION_0 png=456550 xml=25498 fa1f93813f0e
+14:03:59 mock modo=normal content=content.json env=None
+14:04:12 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+14:04:21 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+14:04:33 toque 'Ver “Segunda do ensaio”' @ 800,797 (RX2N8000F3D)
+14:04:40 mock modo=escrita-500 content=content.json env=None
+14:04:47 toque 'view-favoritar' @ 1375,152 (RX2N8000F3D)
+  aviso: «Favoritar “Segunda do ensaio”  ·  falha no servidor — nada foi alterado aqui» motivo 21.8 dp
+  [V servidor] log: auth refresh=cached | api status=500 path=/api/content n=1 ms=25 | write op=favorite content=b1b10002 status=500 code=INTERNAL_ERROR ms=32
+N4P9T-V-favoritar-servidor-tab-ret mCurrentRotation=ROTATION_0 png=453428 xml=25487 acc0f75e611f
+14:05:08 mock modo=normal content=content.json env=None
+14:05:22 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+14:05:31 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+14:05:43 toque 'Ver “Segunda do ensaio”' @ 800,797 (RX2N8000F3D)
+14:05:51 mock modo=escrita-400 content=content.json env=None
+14:05:58 toque 'view-favoritar' @ 1375,152 (RX2N8000F3D)
+  aviso: «Favoritar “Segunda do ensaio”  ·  não foi possível salvar» motivo 21.8 dp
+  [V generica] log: auth refresh=cached | api status=400 path=/api/content n=1 ms=23 | write op=favorite content=b1b10002 status=400 code=VALIDATION_ERROR ms=29
+N4P9T-V-favoritar-generica-tab-ret mCurrentRotation=ROTATION_0 png=453710 xml=25467 7346a69c6362
+14:06:19 mock modo=normal content=content.json env=None
+14:06:32 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+14:06:41 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+14:06:53 toque 'Ver “Segunda do ensaio”' @ 800,797 (RX2N8000F3D)
+14:07:01 mock modo=escrita-429 content=content.json env=None
+14:07:08 toque 'view-favoritar' @ 1375,152 (RX2N8000F3D)
+  aviso: «Favoritar “Segunda do ensaio”  ·  muitas alterações seguidas — tente de novo em 30 s» motivo 21.8 dp
+  [V limite] log: auth refresh=cached | api status=429 path=/api/content n=1 ms=28 | ratelimit retry-after=30 family=content-mutate | write op=favorite content=b1b10002 status=429 code=RATE_LIMITED ms=35
+N4P9T-V-favoritar-limite-tab-ret mCurrentRotation=ROTATION_0 png=457618 xml=25174 f9759d934663
+14:07:28 mock modo=normal content=content.json env=None
+== falhouLinha 14:07:28
+14:07:53 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+14:08:02 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+N4P9T-L-linha-falhou-tab-ret mCurrentRotation=ROTATION_0 png=137644 xml=36162 1b9ffe0a8f9c
+  logcat: iveLibraryDirectories=[/data/app/~~W1UICcEyFQk6QUosMfVnGg==/rocks.octavia.app-U-tLQadT8MKPDKbnVPLy0Q==/lib/arm64, /data/app/~~W1UICcEyFQk6QUosMfVnGg==/rocks.octavia.app-U-tLQadT8MKPDKbnVPLy0Q==/base.apk!/lib/arm64-v8a, /system/lib64, /system/system_ext/lib64]]
+  logcat: 10-07 14:07:46.686  1554  1718 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+== baixandoLinha 14:08:29
+apagados em files/octavia-<uid>/…: [] · ficaram: ['partitura-12p.pdf', 'partitura-1p.pdf', 'partitura-escaneada.jpg', 'partitura-grande.pdf.part']
+apagados em cache/octavia-<uid>/…: [] · ficaram: []
+14:08:54 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+14:09:04 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+  log: faixa=B w=711.1 h=1137.8 | net online | auth uid=xVDJRBh1WpPOatbfWahOLttYn1E3 src=restored | cache hit kind=setlists n=3 | cache hit kind=content n=16 | sync start | auth refresh=cached | api status=200 path=/api/setlists n=1 ms=37 | auth refresh=cached | api status=200 path=/api/content n=1 ms=25 | cache write kind=setlists n=3 invalidated=0 | cache write kind=content n=16 invalidated=0 | sync ok setlists=3 content=16 pages=1 t=95 | prefetch plan n=2 reason=library | download-error nao-existe.pdf: o servidor respondeu 404
+N4P9T-L-linha-baixando-tab-ret mCurrentRotation=ROTATION_0 png=128418 xml=35501 d43e4700f18e
+capturas=12 falhas=0

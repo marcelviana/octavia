@@ -1,0 +1,106 @@
+== especiesL 10:46:21
+10:46:43 toque 'buscar' @ 1335,281 (emulator-5554)
+10:46:51 toque 'lib-campo' @ 917,152 (emulator-5554)
+10:46:58 mock modo=escrita-pendurada content=content.json env=None
+10:47:00 toque 'Favoritar “Segunda do ensaio”' @ 1346,797 (emulator-5554)
+FALHA especiesL: ESPERA ESGOTADA: 'aviso-motivo'
+10:47:51 avião=0 (emulator-5554)
+10:47:52 mock modo=normal content=content.json env=None
+== especiesV 10:47:52
+10:48:18 toque 'buscar' @ 1335,281 (emulator-5554)
+10:48:26 toque 'lib-campo' @ 917,152 (emulator-5554)
+10:48:34 toque 'Ver “Segunda do ensaio”' @ 800,797 (emulator-5554)
+10:48:41 mock modo=escrita-pendurada content=content.json env=None
+10:48:43 toque 'view-favoritar' @ 1375,152 (emulator-5554)
+  aviso: «Favoritar “Segunda do ensaio”  ·  sem resposta do servidor» motivo 21.8 dp
+  [V sem-resposta] log: auth refresh=cached | write op=favorite content=b1b10002 status=net code=net ms=20023
+N4P9T-V-favoritar-sem-resposta-avd-ret mCurrentRotation=ROTATION_90 png=437756 xml=25125 bc4664762fe4
+10:49:23 mock modo=normal content=content.json env=None
+10:49:51 toque 'buscar' @ 1335,281 (emulator-5554)
+10:50:00 toque 'lib-campo' @ 917,152 (emulator-5554)
+10:50:07 toque 'Ver “Segunda do ensaio”' @ 800,797 (emulator-5554)
+10:50:14 mock modo=escrita-401 content=content.json env=None
+10:50:17 toque 'view-favoritar' @ 1375,152 (emulator-5554)
+  aviso: «Favoritar “Segunda do ensaio”  ·  não foi possível salvar — confira sua conta no site» motivo 21.8 dp
+  [V auth] log: auth refresh=cached | auth refresh=forced | api status=401 path=/api/content n=2 ms=445 | write op=favorite content=b1b10002 status=401 code=AUTH_REQUIRED ms=449
+N4P9T-V-favoritar-auth-avd-ret mCurrentRotation=ROTATION_90 png=438765 xml=25156 d588da64b9c2
+10:50:31 mock modo=normal content=content.json env=None
+10:50:43 toque 'buscar' @ 1335,281 (emulator-5554)
+10:50:51 toque 'lib-campo' @ 917,152 (emulator-5554)
+10:50:57 toque 'Ver “Segunda do ensaio”' @ 800,797 (emulator-5554)
+10:51:05 mock modo=escrita-500 content=content.json env=None
+10:51:07 toque 'view-favoritar' @ 1375,152 (emulator-5554)
+  aviso: «Favoritar “Segunda do ensaio”  ·  falha no servidor — nada foi alterado aqui» motivo 21.8 dp
+  [V servidor] log: auth refresh=cached | api status=500 path=/api/content n=1 ms=67 | write op=favorite content=b1b10002 status=500 code=INTERNAL_ERROR ms=75
+N4P9T-V-favoritar-servidor-avd-ret mCurrentRotation=ROTATION_90 png=436182 xml=25145 d52dcc740f21
+10:51:23 mock modo=normal content=content.json env=None
+10:51:43 toque 'buscar' @ 1335,281 (emulator-5554)
+10:51:50 toque 'lib-campo' @ 917,152 (emulator-5554)
+10:51:57 toque 'Ver “Segunda do ensaio”' @ 800,797 (emulator-5554)
+10:52:05 mock modo=escrita-400 content=content.json env=None
+10:52:07 toque 'view-favoritar' @ 1375,152 (emulator-5554)
+  aviso: «Favoritar “Segunda do ensaio”  ·  não foi possível salvar» motivo 21.8 dp
+  [V generica] log: auth refresh=cached | api status=400 path=/api/content n=1 ms=32 | write op=favorite content=b1b10002 status=400 code=VALIDATION_ERROR ms=40
+N4P9T-V-favoritar-generica-avd-ret mCurrentRotation=ROTATION_90 png=436690 xml=25125 1df7ffe59fb7
+10:52:22 mock modo=normal content=content.json env=None
+10:52:38 toque 'buscar' @ 1335,281 (emulator-5554)
+10:52:46 toque 'lib-campo' @ 917,152 (emulator-5554)
+10:52:53 toque 'Ver “Segunda do ensaio”' @ 800,797 (emulator-5554)
+10:53:01 mock modo=escrita-429 content=content.json env=None
+10:53:03 toque 'view-favoritar' @ 1375,152 (emulator-5554)
+  aviso: «Favoritar “Segunda do ensaio”  ·  muitas alterações seguidas — tente de novo em 30 s» motivo 21.8 dp
+  [V limite] log: auth refresh=cached | api status=429 path=/api/content n=1 ms=30 | ratelimit retry-after=30 family=content-mutate | write op=favorite content=b1b10002 status=429 code=RATE_LIMITED ms=38
+N4P9T-V-favoritar-limite-avd-ret mCurrentRotation=ROTATION_90 png=441625 xml=24832 0bd224184431
+10:53:18 mock modo=normal content=content.json env=None
+== redeCorrida 10:53:18
+10:53:19 mock modo=normal content=content.json env=None
+10:53:36 toque 'buscar' @ 1335,281 (emulator-5554)
+10:53:44 toque 'lib-campo' @ 917,152 (emulator-5554)
+  [rede atraso=0s] ping: connect: Network is unreachable · log: auth refresh=cached | api status=200 path=/api/content n=1 ms=22 | write op=favorite content=b1b10002 status=200 code=- ms=28 | cache write kind=content n=16 invalidated=1 | net offline
+  aviso: «Sem conexão: dá para ler e tocar, não para favoritar. O favoritar volta quando a rede voltar.»
+N4P9T-L-favoritar-rede-0-avd-ret mCurrentRotation=ROTATION_90 png=157165 xml=40282 976fb357b9d8
+10:54:16 avião=0 (emulator-5554)
+10:54:18 mock modo=normal content=content.json env=None
+10:54:40 toque 'buscar' @ 1335,281 (emulator-5554)
+10:54:47 toque 'lib-campo' @ 917,152 (emulator-5554)
+  [rede atraso=0.1s] ping: connect: Network is unreachable · log: auth refresh=cached | api status=200 path=/api/content n=1 ms=47 | write op=favorite content=b1b10002 status=200 code=- ms=59 | cache write kind=content n=16 invalidated=1 | net offline
+  aviso: «Sem conexão: dá para ler e tocar, não para favoritar. O favoritar volta quando a rede voltar.»
+N4P9T-L-favoritar-rede-0.1-avd-ret mCurrentRotation=ROTATION_90 png=156746 xml=40282 976fb357b9d8
+10:55:19 avião=0 (emulator-5554)
+10:55:21 mock modo=normal content=content.json env=None
+10:55:42 toque 'buscar' @ 1335,281 (emulator-5554)
+10:55:50 toque 'lib-campo' @ 917,152 (emulator-5554)
+  [rede atraso=0.2s] ping: connect: Network is unreachable · log: auth refresh=cached | net offline | api status=200 path=/api/content n=1 ms=122 | write op=favorite content=b1b10002 status=200 code=- ms=130 | cache write kind=content n=16 invalidated=1
+  aviso: «Sem conexão: dá para ler e tocar, não para favoritar. O favoritar volta quando a rede voltar.»
+N4P9T-L-favoritar-rede-0.2-avd-ret mCurrentRotation=ROTATION_90 png=157503 xml=40282 976fb357b9d8
+10:56:23 avião=0 (emulator-5554)
+10:56:25 mock modo=normal content=content.json env=None
+10:56:47 toque 'buscar' @ 1335,281 (emulator-5554)
+10:56:55 toque 'lib-campo' @ 917,152 (emulator-5554)
+  [rede atraso=0.4s] ping: connect: Network is unreachable · log: net offline
+  aviso: «Sem conexão: dá para ler e tocar, não para favoritar. O favoritar volta quando a rede voltar.»
+N4P9T-L-favoritar-rede-0.4-avd-ret mCurrentRotation=ROTATION_90 png=441503 xml=25159 a37556c2ff34
+10:57:27 avião=0 (emulator-5554)
+10:57:29 mock modo=normal content=content.json env=None
+10:57:50 toque 'buscar' @ 1335,281 (emulator-5554)
+10:57:58 toque 'lib-campo' @ 917,152 (emulator-5554)
+  [rede atraso=0.8s] ping: connect: Network is unreachable · log: net offline
+  aviso: «Sem conexão: dá para ler e tocar, não para favoritar. O favoritar volta quando a rede voltar.»
+N4P9T-L-favoritar-rede-0.8-avd-ret mCurrentRotation=ROTATION_90 png=157369 xml=39947 c45fa07645bc
+10:58:35 avião=0 (emulator-5554)
+== falhouLinha 10:58:36
+10:59:05 toque 'buscar' @ 1335,281 (emulator-5554)
+10:59:13 toque 'lib-campo' @ 917,152 (emulator-5554)
+N4P9T-L-linha-falhou-avd-ret mCurrentRotation=ROTATION_90 png=124823 xml=35820 603974c523b0
+  logcat: k"],nativeLibraryDirectories=[/data/app/~~pn5H4pDM_HpKpBZYLiiFZQ==/rocks.octavia.app-CDxDWhCH0UY6vAH9nipFEw==/lib/arm64, /data/app/~~pn5H4pDM_HpKpBZYLiiFZQ==/rocks.octavia.app-CDxDWhCH0UY6vAH9nipFEw==/base.apk!/lib/arm64-v8a, /system/lib64, /system_ext/lib64]]
+  logcat: 10-07 10:58:48.962 20643 20658 D StrictMode: Caused by: java.lang.Throwable: Explicit termination method 'close' not called
+  logcat: 10-07 10:58:54.207  2426  2548 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+== baixandoLinha 10:59:29
+apagados em files/octavia-<uid>/…: [] · ficaram: ['1786218429715-ux-audit-partitura-12p.pdf', 'partitura-12p.pdf', 'partitura-1p.pdf', 'partitura-escaneada.jpg', 'partitura-grande.pdf.part']
+apagados em cache/octavia-<uid>/…: [] · ficaram: ['1786218427769-ux-audit-partitura-1p.pdf']
+FALHA baixandoLinha: ESPERA ESGOTADA: 'criar-setlist'
+11:00:43 avião=0 (emulator-5554)
+11:00:46 mock modo=normal content=content.json env=None
+capturas=11 falhas=2
+  especiesL: ESPERA ESGOTADA: 'aviso-motivo'
+  baixandoLinha: ESPERA ESGOTADA: 'criar-setlist'

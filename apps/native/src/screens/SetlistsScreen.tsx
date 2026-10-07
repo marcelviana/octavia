@@ -75,7 +75,7 @@ import type { NomeIcone } from '../icones/dados'
 import { bar, dark, faixas, font, radius, size, space, touch, tracking, type TokensDaFaixa } from '../theme'
 import { useFaixa } from '../useFaixa'
 import { FolhaDeSetlist } from './FolhaDeCriar'
-import { LinhaDeAviso } from './LinhaDeAviso'
+import { LinhaDeAviso, type AcaoDoAviso, type LinhaDeAvisoProps } from './LinhaDeAviso'
 
 /**
  * A marca em repouso (§8.4): só o laço do oito do PNG oficial, recortado a 60 dp, sem wordmark — a do S1f. Exportada
@@ -492,11 +492,15 @@ export function SetlistsScreen({
    *     músico, e essa é a única coisa nesta lista que ele ainda não sabe;
    *  3. **salvo, não relido** — fala do que ELE acabou de fazer, e o dado na
    *     tela pode estar velho, o que é menos urgente do que uma tela trocada.
+   *
+   * **A tinta é a espécie** (N4-PR9, N4-D32), menos nos dois degraus da
+   * setlist que sumiu: `falha` em `muted` não é par de espécie nenhuma (a
+   * `falha` é `errorInk`), e esses dois continuam com o par à mão — decisão
+   * do Marcel na N4-PR9, para nada mudar de aparência.
    */
-  const aviso = !online
+  const aviso: (LinhaDeAvisoProps & { acao: AcaoDoAviso | undefined }) | null = !online
     ? {
-        icone: 'sem-conexao' as NomeIcone,
-        cor: dark.offlineInk,
+        especie: 'rede' as const,
         motivo: frase('sem-rede-s1'),
         acao: undefined,
       }
@@ -521,8 +525,7 @@ export function SetlistsScreen({
         }
     : apagadaNaoRelida !== null && !relidaDepoisDoApagar
       ? {
-          icone: 'ultima-sincronizacao' as NomeIcone,
-          cor: dark.muted,
+          especie: 'salvo-nao-relido' as const,
           // N2-E23 — espelho do "foi criada" abaixo (div. 227): o core guarda
           // a metade fixa, S1 monta `<nome> foi apagada. ` na frente.
           motivo: `${apagadaNaoRelida} foi apagada. ${frase('apagada-nao-relida')}`,
@@ -535,8 +538,7 @@ export function SetlistsScreen({
         }
     : salvoNaoRelido !== null
       ? {
-          icone: 'ultima-sincronizacao' as NomeIcone,
-          cor: dark.muted,
+          especie: 'salvo-nao-relido' as const,
           // Div. 227 — o core guarda a segunda oração, verbatim; S1 monta
           // `<nome> foi criada. ` na frente, porque nome de setlist é DADO e
           // não texto, e em S1 o objeto da frase não está em lugar nenhum da
@@ -602,13 +604,7 @@ export function SetlistsScreen({
       </View>
 
       {aviso !== null ? (
-        <LinhaDeAviso
-          icone={aviso.icone}
-          cor={aviso.cor}
-          motivo={aviso.motivo}
-          acao={aviso.acao}
-          recuo={space.xxl}
-        />
+        <LinhaDeAviso {...aviso} recuo={space.xxl} />
       ) : null}
 
       {/* (e) falha com cache: banner, e a lista continua embaixo. A causa em

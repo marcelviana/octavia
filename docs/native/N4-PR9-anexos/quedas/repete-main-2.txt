@@ -1,0 +1,8 @@
+== baixandoLinha 11:11:46
+apagados em files/octavia-<uid>/…: [] · ficaram: ['1786218429715-ux-audit-partitura-12p.pdf', 'partitura-12p.pdf', 'partitura-1p.pdf', 'partitura-escaneada.jpg', 'partitura-grande.pdf.part']
+apagados em cache/octavia-<uid>/…: [] · ficaram: ['1786218427769-ux-audit-partitura-1p.pdf']
+11:12:10 toque 'buscar' @ 1335,281 (emulator-5554)
+11:12:18 toque 'lib-campo' @ 917,152 (emulator-5554)
+  log: faixa=B w=711.1 h=1137.8 | net online | auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored | cache hit kind=setlists n=3 | cache hit kind=content n=16 | sync start | auth refresh=cached | api status=200 path=/api/setlists n=1 ms=505 | auth refresh=cached | api status=200 path=/api/content n=1 ms=110 | cache write kind=setlists n=3 invalidated=0 | cache write kind=content n=16 invalidated=0 | sync ok setlists=3 content=16 pages=1 t=719 | prefetch plan n=2 reason=library | download-error nao-existe.pdf: Call to function 'FileSystemDownloadTask.start' has been rejected.
+N4P9M-L-linha-baixando-avd-ret mCurrentRotation=ROTATION_90 png=116871 xml=35159 4a7c6b7c2740
+capturas=1 falhas=0

@@ -311,11 +311,10 @@ export function Picker({
    * acontecer em S2 (T2-R6). Extra X3, div. 305.
    */
   const aviso = !online
-    ? { icone: 'sem-conexao' as NomeIcone, cor: dark.offlineInk, motivo: frase('sem-rede-s2'), acao: undefined }
+    ? { especie: 'rede' as const, motivo: frase('sem-rede-s2'), acao: undefined }
     : releituraFalhou
       ? {
-          icone: 'ultima-sincronizacao' as NomeIcone,
-          cor: dark.muted,
+          especie: 'salvo-nao-relido' as const,
           motivo: frase('salvo-nao-relido-picker'),
           acao: {
             rotulo: 'Tentar recarregar',
@@ -325,7 +324,7 @@ export function Picker({
           },
         }
       : !reordenavel(n)
-        ? { icone: 'n-de-musicas' as NomeIcone, cor: dark.muted, motivo: frase('teto-100'), acao: undefined }
+        ? { especie: 'teto' as const, motivo: frase('teto-100'), acao: undefined }
         : null
 
   const vazio = vazioDoPicker(setlist.name)
@@ -418,7 +417,7 @@ export function Picker({
             §7, empurrando a barra de 64 para baixo (48 + 64 = 112)"*. */}
         {aviso !== null ? (
           <View style={styles.avisoDoRodape}>
-            <LinhaDeAviso icone={aviso.icone} cor={aviso.cor} motivo={aviso.motivo} acao={aviso.acao} recuo={space.xl} />
+            <LinhaDeAviso especie={aviso.especie} motivo={aviso.motivo} acao={aviso.acao} recuo={space.xl} />
           </View>
         ) : null}
         <View style={styles.barraDoRodape}>

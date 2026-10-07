@@ -1,0 +1,4 @@
+octavia_phone, fim 2026-10-07 13:18:42
+stay_on=1 accel=0 user_rot=0 airplane=0 wifi=1 data=1
+reverse: []
+desligado sem salvar o snapshot (-no-snapshot-save)
