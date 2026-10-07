@@ -11,11 +11,11 @@
 set -e
 ADB=~/Library/Android/sdk/platform-tools/adb; S=$1; T=$2; I=$(cd "$(dirname "$0")" && pwd); PKG=rocks.octavia.app
 DEEP="exp+octavia://expo-development-client/?url=http%3A%2F%2Flocalhost%3A8081"
-mkdir -p "$T"; RA() { $ADB -s "$S" shell "run-as $PKG sh -c '$1'"; }
-vigia() { P=$(lsof -tiTCP:8790 -sTCP:LISTEN); [ -n "$P" ] && kill $P && sleep 1; nohup python3 "$I/vigia-arquivos.py" 8790 "$T/vigia-$1.log" >/dev/null 2>&1 & sleep 1; }
+mkdir -p "$T"; RA() { $ADB -s "$S" shell -n "run-as $PKG sh -c '$1'"; }
+vigia() { P=$(lsof -tiTCP:8790 -sTCP:LISTEN || true); [ -z "$P" ] || { kill $P; sleep 1; }; nohup python3 "$I/vigia-arquivos.py" 8790 "$T/vigia-$1.log" >/dev/null 2>&1 & sleep 1; }
 abrir() { # abre o app SEM mock: nada escuta na 8788 (o túnel nem existe); espera 25 s; o logcat da abertura
   $ADB -s "$S" reverse --remove-all; $ADB -s "$S" reverse tcp:8081 tcp:8081 >/dev/null; $ADB -s "$S" reverse tcp:8790 tcp:8790 >/dev/null
-  echo "   8788 no host: [$(lsof -tiTCP:8788 -sTCP:LISTEN | tr '\n' ' ')] · reverse: $($ADB -s "$S" reverse --list | tr '\n' ' ')"
+  echo "   8788 no host: [$(lsof -tiTCP:8788 -sTCP:LISTEN | tr '\n' ' ' || true)] · reverse: $($ADB -s "$S" reverse --list | tr '\n' ' ')"
   $ADB -s "$S" logcat -c; $ADB -s "$S" shell am start -a android.intent.action.VIEW -d "$DEEP" $PKG >/dev/null; sleep 25
   $ADB -s "$S" logcat -d -s ReactNativeJS | grep 'OCTAVIA:' | sed 's/.*OCTAVIA: /   OCTAVIA: /'
   echo "   FATAL: $($ADB -s "$S" logcat -d | grep -c FATAL)"
@@ -60,4 +60,4 @@ echo "   o vigia (8790), requisições: $(wc -l < "$T/vigia-nova.log" | tr -d ' 
 echo "== F. o passo 4 — regravar o sentinela"; sh "$I/receita-cache.sh" "$S" regravar "$T/sent"
 echo "== G. o cache do AVD de volta (o sentinela apagado por nome)"
 sh "$I/receita-cache.sh" "$S" regravar "$T/avd" sentinela-presente.pdf
-P=$(lsof -tiTCP:8790 -sTCP:LISTEN); [ -n "$P" ] && kill $P; $ADB -s "$S" reverse --remove-all; echo "fim"
+P=$(lsof -tiTCP:8790 -sTCP:LISTEN || true); [ -z "$P" ] || kill $P; $ADB -s "$S" reverse --remove-all; echo "fim"

@@ -21,9 +21,11 @@ set -e
 ADB=~/Library/Android/sdk/platform-tools/adb
 S=$1; ACAO=$2; H=$3; shift 3
 PKG=rocks.octavia.app
-RA() { $ADB -s "$S" shell "run-as $PKG sh -c '$1'"; }
+# `shell -n` e `exec-out … </dev/null`: o adb LÊ o stdin, e dentro de um `while read … < MANIFESTO` ele comia as linhas
+# seguintes do manifesto (a primeira corrida guardou um caminho só — corrigido no instrumento, regra 32)
+RA() { $ADB -s "$S" shell -n "run-as $PKG sh -c '$1'"; }
 [ -n "$S" ] && [ -n "$H" ] || { echo "uso: receita-cache.sh <serial> guardar|regravar <dir-host> [nomes…]" >&2; exit 2; }
-$ADB -s "$S" shell am force-stop $PKG
+$ADB -s "$S" shell -n am force-stop $PKG
 U=$(RA 'ls files' | tr -d '\r' | grep '^octavia-' | head -1)
 [ -n "$U" ] || { echo "PARA: sem pasta octavia-<uid> em files/" >&2; exit 1; }
 echo "sessão: files/$U · cache/$U"
@@ -40,7 +42,7 @@ guardar)
   while read -r c; do
     m=$(RA "md5sum \"$c\"" | tr -d '\r' | awk '{print $1}')
     mkdir -p "$H/$(dirname "$c")"
-    $ADB -s "$S" exec-out run-as $PKG cat "$c" > "$H/$c"
+    $ADB -s "$S" exec-out run-as $PKG cat "$c" > "$H/$c" < /dev/null
     h=$(md5 -q "$H/$c")
     [ "$m" = "$h" ] || { echo "PARA: md5 da cópia diferente em $c ($m × $h)" >&2; exit 1; }
     echo "$m  $c" >> "$H/MANIFESTO"
