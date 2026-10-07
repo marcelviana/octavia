@@ -65,6 +65,10 @@ regravar)
   fi
   while read -r m c; do
     $ADB -s "$S" exec-in run-as $PKG sh -c "cat > \"$c\"" < "$H/$c"
+    # o `exec-in` volta ANTES de o `cat` remoto terminar de gravar um arquivo maior (medido: um PDF de 242 KB conferido
+    # cedo demais deu outro md5, e um segundo depois o certo): espera o TAMANHO bater (até 10 s) e só então compara
+    t=$(wc -c < "$H/$c" | tr -d ' '); k=0
+    while [ "$(RA "wc -c < \"$c\"" | tr -d '\r ')" != "$t" ] && [ $k -lt 20 ]; do sleep 0.5; k=$((k + 1)); done
     d=$(RA "md5sum \"$c\"" | tr -d '\r' | awk '{print $1}')
     [ "$d" = "$m" ] || { echo "PARA: md5 regravado diferente em $c ($m × $d)" >&2; exit 1; }
     echo "  ok $m  $c"
