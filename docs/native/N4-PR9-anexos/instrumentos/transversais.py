@@ -238,6 +238,9 @@ class Transversais(Vi.Visualizacao):
     def teto(self):
         servidos, apontados = fixture_de_arquivos()
         print(f"  a fixture do teto: {len(apontados)} arquivos, {sum(servidos.values()) / 2**20:.1f} MiB servidos", flush=True)
+        # o mock DESTA fixture (a `SCR` do teto): sem isto o `ir_s1` sincroniza com o mock que estiver de pé (medido: a
+        # primeira corrida leu a fixture da visualização, `content=16`, e nenhum arquivo do teto entrou no plano)
+        Bi.mock_com("normal")
         n_ini = len(Bi.linhas_octavia(self.s))
         self._abrir_l()
         fim = time.time() + 600
