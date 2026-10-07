@@ -1,0 +1,2 @@
+rotulo	variante	inicio	prebuild_s	gradle_s	total_s	exit	apk_bytes	lib_armeabi-v7a	lib_arm64-v8a	lib_x86	lib_x86_64	picker_no_apk
+R1	release	16:56:23	3	485	488	0	105194421	16783152	24296144	25297248	25078464	so=0,dex=5

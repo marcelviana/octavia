@@ -1,0 +1,28 @@
+== 2026-10-07 17:14:53 Tab: install -r
+       0
+
+[reverse vazio acima]
+Performing Streamed Install
+Success
+    firstInstallTime=2026-09-07 18:08:54
+    lastUpdateTime=2026-10-07 17:15:00
+    pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+/data/app/~~kYx_YQjmrMvHWnu8XBqtdQ==/rocks.octavia.app-cd6dyODtHGE2njb-uwrztw==/base.apk: 1 file pulled, 0 skipped. 34.6 MB/s (105194421 bytes in 2.895s)
+sha256 instalado 070187bf6a5931072afac3f76112905eab732df22d22ad7044048ec70a658e91
+MAX log buffer size is 5 MiB. So set it to 5 MiB
+TotalTime: 259
+10-07 17:15:06.760 CTAVIA: faixa=C w=1137.8 h=711.1
+10-07 17:15:06.761 CTAVIA: net online
+10-07 17:15:07.647 CTAVIA: auth uid=<…> src=restored
+10-07 17:15:07.707 CTAVIA: cache hit kind=setlists n=2
+10-07 17:15:07.707 CTAVIA: cache hit kind=content n=63
+10-07 17:15:07.739 CTAVIA: sync start
+10-07 17:15:07.739 CTAVIA: auth refresh=cached
+10-07 17:15:11.028 CTAVIA: api status=200 path=/api/setlists n=1 ms=3288
+10-07 17:15:11.088 CTAVIA: auth refresh=cached
+10-07 17:15:11.528 CTAVIA: api status=200 path=/api/content n=1 ms=439
+10-07 17:15:11.574 CTAVIA: cache write kind=setlists n=2 invalidated=0
+10-07 17:15:11.583 CTAVIA: cache write kind=content n=63 invalidated=0
+10-07 17:15:11.584 CTAVIA: sync ok setlists=2 content=63 pages=1 t=3845
+10-07 17:15:11.587 CTAVIA: prefetch plan n=0 reason=library
+resource-id="android:id/content" resource-id="android:id/navigationBarBackground" resource-id="baixar-772076b4" resource-id="buscar" resource-id="criar-setlist" resource-id="rocks.octavia.app:id/action_bar_root" resource-id="setlist-772076b4" resource-id="setlist-e39d57cf" 

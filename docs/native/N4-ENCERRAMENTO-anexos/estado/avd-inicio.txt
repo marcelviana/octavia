@@ -1,0 +1,16 @@
+== 2026-10-07 16:57:18 estado inicial do AVD octavia_tab32 (subido com -no-snapshot-save)
+global stay_on_while_plugged_in = 1
+system accelerometer_rotation = 1
+system user_rotation = 0
+global airplane_mode_on = 1
+global wifi_on = 0
+global mobile_data = 0
+reverse:
+
+[fim reverse]
+    firstInstallTime=2026-09-10 11:42:54
+    lastUpdateTime=2026-09-24 14:00:01
+    pkgFlags=[ DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+pm path: /data/app/~~pn5H4pDM_HpKpBZYLiiFZQ==/rocks.octavia.app-CDxDWhCH0UY6vAH9nipFEw==/base.apk
+connect: Network is unreachable
+ram.bin 881129137 Sep 24 14:00

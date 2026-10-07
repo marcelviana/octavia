@@ -77,6 +77,14 @@ mock, do Metro, do `run-as` ou da receita do cache abaixo): `adb -s RX2N8000F3D 
 `pkgFlags` sem `DEBUGGABLE` e o `lastUpdateTime`. O `install -r` mantém dados e sessão nos dois sentidos (div. 372).
 Release novo (outra `main`) → a receita de "Ferramentas", e o caminho e o sha256 trocados aqui.
 `N4-RELEASE-anexos/README.md`.)*
+*(Encerramento do N4, 2026-10-07, A-N4-28: **o release de repouso do Tab passa a ser o da `main` `cf58f7f`** (o merge da
+#365) — `~/octavia-aparato/tab-s6-release/release-cf58f7f.apk`, **105.194.421 B**, sha256
+`070187bf6a5931072afac3f76112905eab732df22d22ad7044048ec70a658e91`, instalado por `install -r` em 2026-10-07 17:15:00. A
+**volta** de todo aceite com mock usa este, não mais o `release-31d6b3a.apk` (que fica guardado, como rastro). O dev client
+da **ida** não muda. Antes de declarar aceito, o release passou por **100 aberturas frias em avião no Tab e 100 no AVD**,
+com zero queda nativa (N4-D105 d; `instrumentos/frias-release.sh`: no release a abertura é `am start -W -n
+rocks.octavia.app/.MainActivity`, não o link do dev client). No Tab o anel do `logcat` aceita no máximo **5 MiB** (o `-G 16M`
+responde *"MAX log buffer size is 5 MiB"*). `N4-ENCERRAMENTO-anexos/README.md` §2–§5.)*
 
 As janelas de retrato e a do celular são do `N3-PRECHECK-anexos/B1-janelas.txt`
 (raiz e janela útil do dump do S1). Criar o celular:

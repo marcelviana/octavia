@@ -1,0 +1,12 @@
+== 2026-10-07 17:04:42 o APK
+sha256 070187bf6a5931072afac3f76112905eab732df22d22ad7044048ec70a658e91
+bytes 105194421
+  2363416  01-01-1981 01:01   assets/index.android.bundle
+00000000: c61f bc03                                ....
+grep -ac octavia.rocks → 1
+grep -ac localhost:8788 → 0
+grep -ac localhost:8081 → 0
+Signer #1 certificate DN: CN=Android Debug, OU=Android, O=Unknown, L=Unknown, ST=Unknown, C=US
+Signer #1 certificate SHA-256 digest: fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c
+package: name='rocks.octavia.app' versionCode='1' versionName='0.0.1' platformBuildVersion
+070187bf6a5931072afac3f76112905eab732df22d22ad7044048ec70a658e91  /Users/marcelviana/octavia-aparato/tab-s6-release/release-cf58f7f.apk

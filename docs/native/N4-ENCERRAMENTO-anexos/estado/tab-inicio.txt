@@ -1,0 +1,27 @@
+== 2026-10-07 16:55:50 estado inicial do Tab
+global stay_on_while_plugged_in = 0
+system accelerometer_rotation = 1
+system user_rotation = 0
+global airplane_mode_on = 0
+global wifi_on = 1
+global mobile_data = 1
+stay_on agora=7
+reverse:
+
+[fim reverse]
+    versionCode=1 minSdk=24 targetSdk=36
+    versionName=0.0.1
+    firstInstallTime=2026-09-07 18:08:54
+    lastUpdateTime=2026-10-07 14:15:07
+    pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+package:/data/app/~~evtF8rvKJhPWV2iMzHGJOg==/rocks.octavia.app-bOR7OnI7ybba1tex_Bbyzw==/base.apk
+  mWakefulness=Dozing
+    mShowingDream=false mDreamingLockscreen=true
+    isKeyguardShowing=true
+pidof exit=1
+== APKs guardados
+9447edc76f329ba3f66f3badd16268e52c779f1ae3363f6c6b94d1f2d4ab0548  /Users/marcelviana/octavia-aparato/tab-s6-devclient/devclient-2026-09-23-191134.apk
+6eae4a8b48e827fc4b6bbf86e398547b55dd84af7c0de08e391e25bcb95307b9  /Users/marcelviana/octavia-aparato/tab-s6-release/release-31d6b3a.apk
+sha256 do instalado: 6eae4a8b48e827fc4b6bbf86e398547b55dd84af7c0de08e391e25bcb95307b9
+105139397 B
+run-as: package not debuggable: rocks.octavia.app
