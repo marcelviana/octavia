@@ -9,8 +9,10 @@
 > `feat(native): a linha da biblioteca abre a visualização (N4-R6)` · **e quatro a mais, declarados** (div. 1110):
 > `37b459b` `test(n4): PR-8 — o otimismo da estrela de V, que o teste não via` (§4) · `aa1a7c4` `fix(native): o comentário
 > do leitor sem citar a chamada de log (G3 70 = 70)` · `f668cf9` `test(n4): PR-8 — a borda do ▶ inerte é a do ativo
-> (P-I2), reprovando` · `d88679d` `fix(native): o ▶ inerte com a borda da folha (P-I2), na linha da L e em V` (§5.4) · o de
-> docs (este README e as erratas).
+> (P-I2), reprovando` · `d88679d` `fix(native): o ▶ inerte com a borda da folha (P-I2), na linha da L e em V` (§5.4) ·
+> `2daf89b` o de docs · **e a receita do cache fechada (N4-D102, §5.7)**: `31b938c` `test(n4): a receita do cache sem dado
+> real no aparelho` · `8470b6c` `… — o adb não come o manifesto` · `5ad9703` `… — a conferência espera o arquivo
+> regravado` (dois consertos do instrumento achados na prova, divs. 1119 e 1120) · o de docs desta parte.
 > `[medido]` = comando + saída literal nesta sessão, nos arquivos desta pasta.
 > Requisitos: N4-R6 (a linha tocável), N4-R7…N4-R9 em V, N4-R12…N4-R15, N4-R20 (P-T3), N4-R22…N4-R25. Aceites: §7.
 
@@ -38,6 +40,16 @@ E, no aceite no Tab, **os julgamentos do Marcel**: **1 — a leitura do corpo em
 (linha × estrela × ▶, em C e em B): "SIM"** · **3 — um achado**: *"A borda do play inativo é mais clara do que a borda do
 play ativo. isso cria uma sensação estranha e a dúvida sobre qual deles deveria ser clicável."* Medido contra a folha
 (§5.4), a resposta: **"sim, siga a folha"** — consertado nesta PR (`f668cf9` → `d88679d`).
+
+E, depois do segundo relatório:
+
+- **N4-D102 `[Marcel, 2026-10-07]` — a receita do cache no Tab, fechada (div. 1113).** *"Aprovo a errata proposta e ela
+  ganha uma segunda parte. A causa da div. 1113 não é só a ordem: o `content.json` e o índice reais ficaram no aparelho, e
+  com eles qualquer abertura do app fora de ordem faz a garantia de arquivos buscar em prod o que a lista real diz que
+  existe."* A receita: (1) guardar por cópia **todo** o cache real, md5 de cada um; (2) **tirar do aparelho, por nome,
+  tudo o que foi guardado** e conferir pelo `ls`; (3) o mock e os túneis de pé, e o app apontando para o mock, **antes
+  de qualquer abertura**; (4) no fim, apagar por nome o que a fixture criou, regravar, conferir os md5, e só então o
+  release. Aplicada no `APARATO.md`; implementada e provada no AVD (§5.7).
 
 ---
 
@@ -256,7 +268,7 @@ Refeitos no Tab, em C e em B, só os estados com ▶ inerte (V tipo desconhecido
 | lido | `stay_on=0 accel=1 user_rot=0 airplane=0 wifi=1 data=1`, `reverse` vazio, **release** de 2026-10-06 15:21:36 (sem `DEBUGGABLE`); `stay_on` a 7 |
 | ida | `install -r` do dev client (`9447edc7…`): `DEBUGGABLE` |
 | o cache do Marcel (N4-D98) | guardado arquivo a arquivo com o app parado (`setlists.json` `4c93a263…`, `content.json` `b62f192a…`, `files-index.json` `b21cc49b…`, o PDF dele `05253d42…`), **4 de 4 md5 iguais**; a demanda vazia; o PDF apagado do aparelho **por nome** |
-| **o furo da receita** | **o PDF voltou ao aparelho às 20:44** (apagado às 20:43): o app abriu antes de o mock do Tab estar de pé, o sync falhou, e a garantia de todos os arquivos (N4-R26) rodou o plano sobre o cache do Marcel — que continuava lá — e **baixou o PDF dele do storage de prod** (md5 `05253d42…`, o mesmo). **1 leitura de arquivo no storage, do próprio PDF; zero escrita; nenhuma chamada à API de prod** (o bundle aponta para `localhost:8788`). Div. 1113 |
+| **o furo da receita** | **o PDF voltou ao aparelho às 20:44** (apagado às 20:43): o app abriu antes de o mock do Tab estar de pé, o sync falhou, e a garantia de todos os arquivos (N4-R26) rodou o plano sobre o cache do Marcel — que continuava lá — e **baixou o PDF dele do storage de prod** (md5 `05253d42…`, o mesmo). **1 leitura de arquivo no storage, do próprio PDF; zero escrita; nenhuma chamada à API de prod** (o bundle aponta para `localhost:8788`). Div. 1113 → **N4-D102** (§5.7) |
 | durante | a `main` primeiro (o Metro de uma árvore temporária), depois a PR; os túneis reaplicados antes de cada passo |
 | volta | apagados por nome os arquivos da fixture (`partitura-12p.pdf`, `-1p.pdf`, `-escaneada.jpg`, `-grande.pdf`); regravados os três `.json` e o PDF — **md5 a md5 idênticos, 4 de 4** (`estado/tab-md5-depois.txt`); os quatro `._*` onde estão; `install -r` do release (`6eae4a8b…`, `release-31d6b3a.apk`): sem `DEBUGGABLE`, `lastUpdateTime=2026-10-07 08:32:08` |
 | N4-D56, em avião | `ping` → `Network is unreachable`; `cache hit kind=setlists n=2` · `kind=content n=63`; `sync skip reason=offline`; o S1 com as duas setlists e o `aviso-motivo`; `FATAL` 0 |
@@ -272,6 +284,42 @@ vazio, `ping` → *unreachable*, `ram.bin` de 2026-09-24 14:00.
 longo, tipo desconhecido, arquivo não baixado). **A lista do inalcançável em V: nenhum** — voltar, estrela, ▶ e o *Baixar*
 dentro da janela útil em todos os estados (`phone-v.txt`). O cabeçalho em A: 107,0 dp (Letra) · **304,8** (título longo)
 · 112,8 · 137,1. Fim: lido igual, app parado, `reverse` vazio, desligado sem salvar.
+
+### 5.7 A receita do cache, fechada (N4-D102) `[medido: prova-receita.txt; instrumentos/receita-cache.sh, prova-receita.sh, vigia-arquivos.py]`
+
+**Quem implementa a receita no repositório** `[medido: git grep -n -E "exec-out run-as|exec-in run-as|files-index\.json|guardado arquivo a arquivo" -- docs apps scripts]`:
+**nenhum arnês** — a guarda e a regravação do cache do Tab foram sempre feitas à mão, e o que existe são **descrições**:
+
+| arquivo:linha | o quê | destino |
+| --- | --- | --- |
+| `docs/native/APARATO.md:178` | a receita (a fonte) | **a errata da N4-D102**, nesta PR |
+| `docs/native/N4-PR4-anexos/README.md:340` · `N4-PR6-anexos/README.md:218` · `N4-PR7-anexos/README.md:233` | *"guardado arquivo a arquivo com o app parado"* — a receita antiga, executada | rastro de PR mergeada: **a receita vale a do `APARATO.md`** |
+| `docs/native/N3-ENCERRAMENTO.md:505` · `N4-PRECHECK.md:517` | a mesma, citada | rastro |
+| este README, §5.5 | a receita da N4-D98, executada nesta PR (e o furo dela) | registro; daqui em diante, o `receita-cache.sh` |
+| `N3-PR6b-anexos/instrumentos/n3pr6b.py:79` · `N4-PR7-anexos/instrumentos/biblioteca.py:58` | apagam o store **do teste** (os estados sem cache), não guardam o real | fora da receita |
+
+**O instrumento** (o primeiro arnês da receita): `receita-cache.sh` — `guardar` (1 e 2) e `regravar` (4); `vigia-arquivos.py`
+— um servidor de arquivos que só registra cada requisição; `prova-receita.sh` — a prova.
+
+**A prova, no AVD `octavia_tab32`, com um cache SENTINELA no lugar do real** (2026-10-07; o AVD subido sem salvar; o Metro
+desta árvore com o bundle conferido: `localhost:8788` 1 · `octavia.rocks` 0; **nada escutando na 8788** — o app sem mock —
+e o vigia na 8790):
+
+| passo | o que se fez | o que se mediu |
+| --- | --- | --- |
+| A | o cache do AVD (a sessão de audit) sai pela receita nova | **5 caminhos** guardados, md5 a md5 iguais à cópia; o `ls` da pasta da sessão vazio |
+| B | o sentinela: um content com duas Partituras de URL do vigia — uma com o arquivo no disco e no índice, outra sem | 4 caminhos gravados |
+| **C — CN** | **a receita ANTIGA** (N4-D98): só o arquivo sai, os `.json` ficam; o app aberto sem mock | `sync fail … code=network` · **`prefetch plan n=2 reason=library`** · 2 `download-error` · **o vigia: 2 requisições** (`GET /sentinela-presente.pdf`, `GET /sentinela-ausente.pdf`) — a div. 1113 reproduzida |
+| D | o sentinela gravado de novo | — |
+| **E** | **a receita NOVA**, passos 1 e 2 (4 caminhos guardados, md5 iguais; o `ls` vazio); o app aberto sem mock | **nenhum `cache hit`** (o "sem nada no aparelho") · `sync fail … code=network` · **`prefetch plan n=0 reason=library`** · **o vigia: 0 requisições** · `FATAL` 0 |
+| **F** | o passo 4: regravar o sentinela | **4 de 4 md5 iguais** |
+| G | o cache do AVD de volta (o sentinela apagado por nome) | **5 de 5 md5 iguais** |
+
+Dois defeitos do instrumento, achados na própria prova e consertados nele (regra 32): na primeira corrida o `adb` comeu o
+manifesto — só um caminho guardado, e o sentinela sobrescreveu o resto do cache do AVD, que o boot seguinte (sem salvar o
+snapshot) devolveu intacto (div. 1119, `8470b6c`); e o `exec-in` volta antes de o arquivo remoto terminar de ser gravado
+— o PDF de 242 KB conferido cedo demais, e certo um segundo depois (div. 1120, `5ad9703`). O AVD terminou igual ao lido
+(`estado/avd-fim-receita.txt`).
 
 ---
 
@@ -351,8 +399,8 @@ g1a: packages/core/src/visualizacao.ts
 - **No `N4-REQUISITOS.md`**: a do **N4-R6** (fecha o estado intermediário da N4-PR7; o ▶ inerte com a borda da folha), a do
   **N4-R13** (as colunas medidas; a Partitura em B), a do **N4-R15** (a falha de V; o *Baixar* em voo), e as **N4-D99,
   N4-D100, N4-D101**.
-- **No `APARATO.md`**: o FAB do dev client sobre o ▶ de V (toca-se pelo canto); e **o furo da receita do cache** (div.
-  1113) — registrado, com a errata **proposta** (§9, a decisão é do Marcel).
+- **No `APARATO.md`**: o FAB do dev client sobre o ▶ de V (toca-se pelo canto); e **a receita do cache sem dado real no
+  aparelho** — a errata da **N4-D102**, com as duas partes (§5.7).
 
 ---
 
@@ -379,15 +427,17 @@ doc anterior · **A** ambiente, dado real ou defeito do produto · **T** toolcha
 | **1110** | T | dois CN não reprovaram: o `trim` (nenhum texto da fixture tem espaço nas pontas) e o otimismo (o teste não afirmava o desenho em voo); e a PR tem doze commits, não os oito do prompt | o plantio trocado (3b); o teste consertado (`37b459b`); os quatro a mais declarados (cabeçalho) |
 | **1111** | T | o duplo do `react-native`: o `click` do Pressable de dentro borbulhava para o de fora; o `style` função não era achatado | consertado no duplo (commits 3 e 7, regra 32); a suíte de tela continuou verde |
 | **1112** | A | o cache dos navegadores do Playwright (`~/Library/Caches/ms-playwright`) sumiu durante a sessão, com o disco a 96 % | a folha já estava medida; o resto lido do HTML; não reinstalado (baixar exige autorização) |
-| **1113** | A | **o furo da receita do cache no Tab (N4-D98)**: o PDF real sai do aparelho, mas o `content.json` e o `files-index.json` do Marcel ficam; o app abriu antes do mock do Tab, o sync falhou, e a garantia de todos os arquivos (N4-R26) baixou o PDF de novo do storage de prod — 1 leitura de arquivo, zero escrita | regravado no fim, md5 idêntico; **errata proposta para o `APARATO.md`**: depois da guarda, o mock do aparelho de pé e os túneis aplicados **antes** de qualquer abertura do app (ou o `content.json` da fixture gravado por cima antes de abrir). **Decisão do Marcel** |
+| **1113** | A | **o furo da receita do cache no Tab (N4-D98)**: o PDF real sai do aparelho, mas o `content.json` e o `files-index.json` do Marcel ficam; o app abriu antes do mock do Tab, o sync falhou, e a garantia de todos os arquivos (N4-R26) baixou o PDF de novo do storage de prod — 1 leitura de arquivo, zero escrita | regravado no fim, md5 idêntico. **N4-D102** `[Marcel, 2026-10-07]`: a receita sem dado real no aparelho (tirar TUDO o que se guardou, por nome; o mock de pé antes de qualquer abertura) — `APARATO.md`; implementada (`receita-cache.sh`) e provada no AVD (§5.7) |
 | **1114** | D | V não emite linha de log: o `placeholder kind=file-missing` e o `download-error` são do palco | declarado (G3 igual); o `file …` e o `file-reject` do `files.ts` continuam saindo |
 | **1115** | D | o N4-R13 diz *"uma rolagem só"* em B; com o PDF pronto, o leitor de PDF rola ele mesmo, e os detalhes ficam em cima, fora da rolagem | declarado; errata do N4-R13 |
 | **1116** | T | no Tab, em retrato, o desfavoritar do fim do *favoritando* não registrou (nenhuma linha) | o mock reinicia por estado e o `sairNoMeio` desfavoritou depois; registro |
 | **1117** | P | *"cada estado da visualização … no AVD e no Tab"*: o conserto da borda (depois do aceite) foi refeito só no Tab | a mudança é de tinta, não de `bounds`; o pixel no Tab, em C e em B; registro |
 | **1118** | T | o primeiro refazer da borda no Tab saiu com o sufixo errado (o laço do zsh não separa palavras) | os quatro arquivos apagados por nome e o passo refeito com as chamadas explícitas |
+| **1119** | T | a primeira corrida da prova da receita guardou UM caminho só: o `adb shell` e o `exec-out` liam o stdin dentro do `while read … < MANIFESTO`; e o `lsof` vazio derrubava a prova sob o `set -e`. O sentinela sobrescreveu o resto do cache do AVD | consertado no instrumento (`8470b6c`); o AVD subido de novo (sem salvar): o cache dele voltou intacto; a prova refeita inteira |
+| **1120** | T | o `exec-in` volta antes de o `cat` remoto terminar de gravar: o PDF de 242 KB do AVD conferido cedo demais deu outro md5, e um segundo depois o certo | consertado no instrumento (`5ad9703`: espera o tamanho bater antes do md5); o passo G refeito: 5 de 5 |
 
-**Contagem**: 21 — D 9 · T 8 · A 3 · P 1 · X 0. **Fechada nesta PR**: a **1095** na parte de V (o *baixando* capturado).
-**Próxima divergência livre: 1119.**
+**Contagem**: 23 — D 9 · T 10 · A 3 · P 1 · X 0. **Fechadas nesta PR**: a **1095** na parte de V (o *baixando* capturado) e
+a **1113** (N4-D102). **Próxima divergência livre: 1121.**
 
 ---
 
@@ -401,8 +451,18 @@ doc anterior · **A** ambiente, dado real ou defeito do produto · **T** toolcha
 | aparelho | AVD `octavia_tab32` (quatro subidas, sem salvar); Tab S6 (destravado pelo Marcel; release → dev client → release; estado final igual ao lido; cache md5 a md5); `octavia_phone` (subido sem salvar) |
 | `.env*` | `apps/native/.env` por `cp -p` (sha256 `f2bfa179cd8e4b1f…`) na árvore da PR e na temporária da `main`, só para o Metro; **apagado** nas duas; nenhum valor lido |
 | temporários | as árvores `../octavia-n4-pr8-main` (o Metro da `main`) e `../octavia-n4-pr8-cn` (os CN de unidade) **removidas**; as cópias do cache do Marcel **apagadas do host**; os PNG das rodadas de G-inv, os bundles, os logs do Metro e do mock: no scratchpad da sessão, fora do commit |
-| perguntas ao Marcel | três valores (N4-D99, N4-D100, N4-D101), os dois julgamentos do Tab e a borda do ▶ |
+| perguntas ao Marcel | três valores (N4-D99, N4-D100, N4-D101), os dois julgamentos do Tab, a borda do ▶ e a receita do cache (N4-D102) |
+| a prova da receita (AVD) | nenhuma requisição a prod: o app sem mock e o vigia local (§5.7); o AVD subido duas vezes a mais, sem salvar |
 | agentes | 0 |
+
+---
+
+## 11. Para o encerramento do N4
+
+| item | origem | destino |
+| --- | --- | --- |
+| **o G3 conta comentário de código como linha de log** — um comentário do `Leitor.tsx` que citava a chamada levou o G3 de 70 a 71 sem linha nova (div. 1109; o coletor lê o texto cru, a decisão da div. 83). Defeito de instrumento | div. 1109 | **W5** |
+| **os três valores soltos de "tocado" e "marcado"** — **6 %** (a linha da L pressionada, N4-D101, `LinhaDaBiblioteca.tsx`), **8 %** (o controle do palco pressionado, `${cor.text}14`, `StageScreen.tsx`) e **12 %** (o chip marcado da L, o `web.alfaMarcado` do pacote — **o valor do bloco do site que a N4-PR7 leu no tablet**, div. 1091): três alfas para o mesmo sentido, nenhuma token do nativo | N4-D101, div. 1091 | **bloco de identidade** |
 
 ---
 

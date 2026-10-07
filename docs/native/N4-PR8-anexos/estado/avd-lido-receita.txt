@@ -1,0 +1,4 @@
+Wed Oct  7 08:57:50 -03 2026
+stay_on=1 accel=1 user_rot=0 airplane=1 wifi=0 data=0
+reverse: []
+    lastUpdateTime=2026-09-24 14:00:01
