@@ -235,8 +235,8 @@ describe('N4-R12 — o cabeçalho, igual nas faixas', () => {
     await rerender(tela({ content: SEM_TIPO }))
     expect(inativo('view-tocar')).toBe(true)
     expect(estilo(exige('view-tocar')).borderColor).toBe(ativo.borderColor)
-    const traco = exige('view-tocar').querySelector('[stroke]')?.getAttribute('stroke')
-    expect(traco).toBe(dark.lineInfo)
+    // o `Icone` desenha em `currentColor`: a tinta é o `color` do `<svg>`
+    expect(exige('view-tocar').querySelector('svg')?.getAttribute('color')).toBe(dark.lineInfo)
   })
 
   it('o corpo inválido (sem conteúdo) também deixa o ▶ inerte, como na linha da L', async () => {

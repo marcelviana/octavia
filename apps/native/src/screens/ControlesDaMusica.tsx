@@ -9,8 +9,8 @@
  * P-F5 — e só muda quando o servidor responde (o estado mora no `favoritar.ts`, não aqui). SEM REDE: inerte em
  * `lineInfo`, sem arco; o motivo não vai no controle (vai uma vez, na linha de aviso da tela).
  *
- * **O ▶** (N4-D61): 48 × 48, com borda, só ícone, nome acessível *Tocar “{título}”* (P-F1). Inerte no item inválido,
- * com a moldura e o ícone em `lineInfo` (E3: sem opacidade).
+ * **O ▶** (N4-D61): 48 × 48, com borda, só ícone, nome acessível *Tocar “{título}”* (P-F1). Inerte no item inválido:
+ * a MESMA borda (`line`, a da folha em todos os estados, P-I2) e o ícone em `lineInfo`, sem opacidade.
  */
 import { Pressable, StyleSheet } from 'react-native'
 import Svg, { Circle, Path } from 'react-native-svg'
@@ -98,7 +98,7 @@ export interface BotaoTocarProps {
 export function BotaoTocar({ titulo, inerte, onTocar, testID }: BotaoTocarProps): React.JSX.Element {
   return (
     <Pressable
-      style={[styles.alvo, styles.alvoComBorda, inerte ? styles.alvoInerte : null]}
+      style={[styles.alvo, styles.alvoComBorda]}
       onPress={() => (inerte ? undefined : onTocar())}
       accessibilityRole="button"
       accessibilityLabel={nomeTocar(titulo)}
@@ -120,8 +120,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  // A borda é `line` em TODOS os estados do ▶ — normal, pressionado, inerte, em andamento (a folha, `DESIGN-N4`, P-I2).
+  // N4-PR8, achado do Marcel no aceite: a N4-PR7 punha a moldura do inerte em `lineInfo` (a E3 do palco, onde a borda
+  // normal já é `lineInfo`) — aqui isso deixava o inerte MAIS CLARO que o ativo. O inerte se distingue só pelo ícone.
   alvoComBorda: { borderWidth: bar.hairline, borderColor: dark.line },
-  // E3 (V1-PR4): o inerte é tinta `lineInfo` na moldura e no ícone, sem opacidade.
-  alvoInerte: { borderColor: dark.lineInfo },
   arco: { position: 'absolute' },
 })
