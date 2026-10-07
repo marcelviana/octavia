@@ -1083,3 +1083,15 @@ A linha `cache write kind=content` não é nova: o `store.ts` a emite de um luga
 biblioteca não coube é o `lru over` (a N4-R26 o nomeia); o que ficou de fora continua contado no `n` de todo plano
 seguinte, até caber.
 
+
+---
+
+## Errata N4-PR9 (2026-10-07) — o 404 do Android cai no ramo do status (div. 1063)
+
+A errata W2 já mostrava a forma do erro do `FileSystemDownloadTask` no Android: a primeira linha (`Call to function
+'FileSystemDownloadTask.start' has been rejected.`) e, **depois de uma quebra**, a causa (`→ Caused by: Unable to download
+a file: …`). Num 404 a causa termina em **`HTTP 404`** — medido no AVD e no Tab (`N4-PR9-anexos/README.md` §1). O
+`falha()` do `files.ts` só reconhecia `status: NNN`, e o 404 caía no ramo 3: a tela lia a genérica (*não consegui
+baixar*) e o `download-error` levava as duas linhas cruas. Agora o ramo 2 reconhece também `HTTP NNN`: a tela lê *o
+servidor respondeu 404* e a linha fica uma só — `download-error <nome>: o servidor respondeu 404`, a forma que o ramo 2
+sempre teve. **Nenhuma linha `log(` mudou** (G3 70 = 70); o que mudou é qual ramo o 404 do Android alcança.

@@ -1,0 +1,33 @@
+== CN1 — um par trocado numa tela antiga: o teto do Picker declarado como salvo-nao-relido
+ apps/native/src/screens/Picker.tsx | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+     × Picker.tsx:328 (o teto de 100): declara a espécie teto, sem icone/cor 10ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  1 failed | 19 passed (20)
+== CN2 — o mapa com outra cor: teto em lineInfo
+ apps/native/src/screens/LinhaDeAviso.tsx | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+     × o mapa espécie → (ícone, cor) devolve, para cada espécie usada, o par de hoje 5ms
+     × o componente, com a espécie, desenha o mesmo ícone na mesma tinta que com o par (e o motivo nessa tinta) 10ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  2 failed | 18 passed (20)
+== CN3 — o mapa com outro ícone: rede com o ícone falha
+ apps/native/src/screens/LinhaDeAviso.tsx | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+     × o mapa espécie → (ícone, cor) devolve, para cada espécie usada, o par de hoje 5ms
+     × o componente, com a espécie, desenha o mesmo ícone na mesma tinta que com o par (e o motivo nessa tinta) 7ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  2 failed | 18 passed (20)
+== CN4 — uma espécie com a frase de outra: servidor com a frase da genérica (core)
+ packages/core/src/favoritar.ts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+     × servidor: 500 com e sem envelope 8ms
+     × favoritar com falha de sessão; tirar com falha de servidor 4ms
+     × a falha: a linha de aviso sob o cabeçalho, com o nome do controle · a frase da espécie; some no próximo favoritar 21ms
+     × escrita-500 → servidor 134ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+ Test Files  3 failed | 21 passed (24)
+      Tests  4 failed | 361 passed (365)
+== git status no fim (só os anexos desta PR, não commitados)
+?? docs/native/N4-PR9-anexos/cn.txt
+?? docs/native/N4-PR9-anexos/especie-antes.txt

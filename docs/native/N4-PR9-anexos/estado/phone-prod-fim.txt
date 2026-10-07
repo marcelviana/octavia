@@ -1,0 +1,5 @@
+octavia_phone, fim da prova em prod 2026-10-07 15:13:43
+stay_on=1 accel=0 user_rot=0 airplane=0 wifi=1 data=1
+reverse: []
+quedas na prova: quedas do app: java=0 · nativas=0 · (a contagem antiga, a subcadeia FATAL: 0) tombstones do app no dropbox: 0 
+desligado sem salvar o snapshot: o cache de prod da conta de audit não fica no AVD

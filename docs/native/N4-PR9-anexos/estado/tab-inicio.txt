@@ -1,0 +1,7 @@
+Tab S6 (RX2N8000F3D), lido 2026-10-07 13:21:27
+stay_on=0 accel=1 user_rot=0 airplane=0 wifi=1 data=1
+reverse: []
+    lastUpdateTime=2026-10-07 08:32:08
+    pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+    lastUpdateTime=2026-10-07 13:21:54
+    pkgFlags=[ DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]

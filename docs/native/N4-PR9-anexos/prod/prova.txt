@@ -1,0 +1,71 @@
+== abertura (sync 1)
+  10-07 15:11:04.774 net online
+  10-07 15:11:05.659 cache hit kind=setlists n=0
+  10-07 15:11:05.659 cache hit kind=content n=12
+  10-07 15:11:05.700 sync start
+  10-07 15:11:08.546 api status=200 path=/api/setlists n=1 ms=2842
+  10-07 15:11:08.904 api status=200 path=/api/content n=1 ms=338
+  10-07 15:11:08.925 cache write kind=setlists n=3 invalidated=3
+  10-07 15:11:08.930 cache write kind=content n=68 invalidated=80
+  10-07 15:11:08.930 sync ok setlists=3 content=68 pages=1 t=3230
+  10-07 15:11:08.938 prefetch plan n=4 reason=library
+  10-07 15:11:09.586 file src=download name=1786295844475-ux-audit-fase-d-cifra.pdf bytes=1117 total=1117 ms=630
+  10-07 15:11:09.959 file src=download name=1786295884124-ux-audit-fase-d-offline.pdf bytes=888 total=888 ms=364
+  10-07 15:11:10.837 file src=download name=1786218427769-ux-audit-partitura-1p.pdf bytes=20821 total=20821 ms=1893
+  10-07 15:11:11.245 file src=download name=1786218429715-ux-audit-partitura-12p.pdf bytes=242176 total=242176 ms=2295
+  sync 1: pages=1
+  a garantia: plano em 10-07 15:11:08.938 · 4 arquivo(s) baixado(s), 265002 B · último em 10-07 15:11:11.245
+  [depois da abertura] cache do aparelho: 4dadcb78 is_favorite=False updated_at=2026-10-01T15:48:59.572+00:00
+15:11:18 toque 'buscar' @ 794,396 (emulator-5556)
+15:11:25 toque 'lib-campo' @ 676,177 (emulator-5556)
+  escrita 1: a estrela antes = *Favoritar “…”* @ [274.3, 294.5, 322.3, 342.5] dp
+  10-07 15:11:32.643 api status=200 path=/api/content n=1 ms=309
+  10-07 15:11:32.646 write op=favorite content=4dadcb78 status=200 code=- ms=313
+  10-07 15:11:32.657 cache write kind=content n=68 invalidated=1
+  escrita 1: syncs entre o toque e agora: 0 (esperado 0 — o cache vem da resposta) · linhas api: 1 (esperado 1, a do PUT)
+  escrita 1: a estrela depois = *Tirar “…”*
+  escrita 1: a tira da estrela (só o alvo, 10 q/s): escrita-1-estrela.png
+  [depois da escrita 1, sem sync] cache do aparelho: 4dadcb78 is_favorite=True updated_at=2026-10-07T18:11:34.589+00:00
+== sync 2 (confirma a escrita 1)
+  10-07 15:11:55.983 net online
+  10-07 15:11:58.445 cache hit kind=setlists n=3
+  10-07 15:11:58.454 cache hit kind=content n=68
+  10-07 15:11:58.561 sync start
+  10-07 15:11:59.203 api status=200 path=/api/setlists n=1 ms=636
+  10-07 15:11:59.658 api status=200 path=/api/content n=1 ms=347
+  10-07 15:11:59.760 cache write kind=setlists n=3 invalidated=0
+  10-07 15:11:59.791 cache write kind=content n=68 invalidated=0
+  10-07 15:11:59.794 sync ok setlists=3 content=68 pages=1 t=1233
+  10-07 15:11:59.891 prefetch plan n=0 reason=library
+  [depois do sync 2] cache do aparelho: 4dadcb78 is_favorite=True updated_at=2026-10-07T18:11:34.589+00:00
+15:12:10 toque 'buscar' @ 794,396 (emulator-5556)
+15:12:16 toque 'lib-campo' @ 676,177 (emulator-5556)
+  escrita 2: a estrela antes = *Tirar “…”* @ [274.3, 294.5, 322.3, 342.5] dp
+  10-07 15:12:24.379 api status=200 path=/api/content n=1 ms=494
+  10-07 15:12:24.382 write op=unfavorite content=4dadcb78 status=200 code=- ms=498
+  10-07 15:12:24.402 cache write kind=content n=68 invalidated=1
+  escrita 2: syncs entre o toque e agora: 0 (esperado 0 — o cache vem da resposta) · linhas api: 1 (esperado 1, a do PUT)
+  escrita 2: a estrela depois = *Favoritar “…”*
+  escrita 2: a tira da estrela (só o alvo, 10 q/s): escrita-2-estrela.png
+  [depois da escrita 2, sem sync] cache do aparelho: 4dadcb78 is_favorite=False updated_at=2026-10-07T18:12:26.124+00:00
+== sync 3 (confirma a escrita 2)
+  10-07 15:12:46.783 net online
+  10-07 15:12:49.470 cache hit kind=setlists n=3
+  10-07 15:12:49.474 cache hit kind=content n=68
+  10-07 15:12:50.787 sync start
+  10-07 15:12:52.021 api status=200 path=/api/setlists n=1 ms=1181
+  10-07 15:12:52.675 api status=200 path=/api/content n=1 ms=467
+  10-07 15:12:52.889 cache write kind=setlists n=3 invalidated=0
+  10-07 15:12:52.983 cache write kind=content n=68 invalidated=0
+  10-07 15:12:52.986 sync ok setlists=3 content=68 pages=1 t=2202
+  10-07 15:12:53.109 prefetch plan n=0 reason=library
+  [depois do sync 3] cache do aparelho: 4dadcb78 is_favorite=False updated_at=2026-10-07T18:12:26.124+00:00
+== contabilidade: linhas api=8 − PUT=2 = GET=6 (orçamento 6) · PUT=2 (orçamento 2) · downloads de storage=4 · 117 s
+  api status=200 path=/api/setlists n=1 ms=2842
+  api status=200 path=/api/content n=1 ms=338
+  api status=200 path=/api/content n=1 ms=309
+  api status=200 path=/api/setlists n=1 ms=636
+  api status=200 path=/api/content n=1 ms=347
+  api status=200 path=/api/content n=1 ms=494
+  api status=200 path=/api/setlists n=1 ms=1181
+  api status=200 path=/api/content n=1 ms=467

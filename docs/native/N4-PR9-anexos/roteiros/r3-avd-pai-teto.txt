@@ -1,0 +1,21 @@
+== teto 11:40:21
+  a fixture do teto: 14 arquivos, 240.8 MiB servidos
+11:40:22 mock modo=normal content=content.json env=None
+11:40:40 toque 'buscar' @ 2295,188 (emulator-5554)
+  log: prefetch plan n=10 reason=library
+  log: file src=download name=partitura-teto-02.pdf bytes=25165688 total=25165688 ms=1029
+  log: file src=download name=partitura-teto-01.pdf bytes=25165688 total=25165688 ms=1229
+  log: file src=download name=partitura-teto-03.pdf bytes=25165688 total=25165688 ms=1264
+  log: file src=download name=partitura-teto-04.pdf bytes=25165688 total=25165688 ms=1131
+  log: file src=download name=partitura-teto-05.pdf bytes=25165688 total=25165688 ms=1371
+  log: file src=download name=partitura-teto-06.pdf bytes=25165688 total=25165688 ms=1244
+  log: file src=download name=partitura-teto-07.pdf bytes=25165688 total=25165688 ms=860
+  log: download-error nao-existe.pdf: o servidor respondeu 404
+  log: file src=download name=partitura-teto-08.pdf bytes=25165688 total=25165688 ms=1015
+  log: file src=download name=partitura-teto-09.pdf bytes=25165688 total=25165688 ms=966
+  log: lru evict n=1 bytes=242176
+  log: lru over bytes=252521727 cap=209715200 protected=14
+11:40:48 toque 'lib-campo' @ 1397,152 (emulator-5554)
+N4P9T-L-teto-avd-pai mCurrentRotation=ROTATION_0 png=212665 xml=58183 13f191e12a3d
+  disco: 4198 partitura-12p.pdf | 643 partitura-1p.pdf | 860006 partitura-escaneada.jpg | 25165688 partitura-grande.pdf | 25165688 partitura-teto-01.pdf | 25165688 partitura-teto-02.pdf | 25165688 partitura-teto-03.pdf | 25165688 partitura-teto-04.pdf | 25165688 partitura-teto-05.pdf | 25165688 partitura-teto-06.pdf | 25165688 partitura-teto-07.pdf | 25165688 partitura-teto-08.pdf | 25165688 partitura-teto-09.pdf
+capturas=1 falhas=0

@@ -1,0 +1,31 @@
+== indice 11:25:48
+11:26:07 toque 'buscar' @ 2295,188 (emulator-5554)
+  a fixture aponta 5 arquivo(s): ['nao-existe.pdf', 'partitura-12p.pdf', 'partitura-1p.pdf', 'partitura-escaneada.jpg', 'partitura-grande.pdf']
+  ls files/octavia-<uid>/files: 242176 1786218429715-ux-audit-partitura-12p.pdf | 4198 partitura-12p.pdf | 643 partitura-1p.pdf | 860006 partitura-escaneada.jpg | 25165688 partitura-grande.pdf
+  ls cache/octavia-<uid>/files: 20821 1786218427769-ux-audit-partitura-1p.pdf
+  nao-existe.pdf: índice=- disco=None fixture=None → 404 na fixture — nunca chega ao disco
+  partitura-12p.pdf: índice=4198 disco=4198 fixture=4198 → ok
+  partitura-1p.pdf: índice=643 disco=643 fixture=643 → ok
+  partitura-escaneada.jpg: índice=860006 disco=860006 fixture=860006 → ok
+  partitura-grande.pdf: índice=25165688 disco=25165688 fixture=25165688 → ok
+== apagadoPorFora 11:26:17
+11:26:35 toque 'buscar' @ 2295,188 (emulator-5554)
+11:26:43 toque 'lib-campo' @ 1397,152 (emulator-5554)
+N4P9T-L-apagado-antes-avd-pai mCurrentRotation=ROTATION_0 png=117649 xml=33849 67f44fb6e977
+apagados em files/octavia-<uid>/…: ['partitura-12p.pdf'] · ficaram: ['1786218429715-ux-audit-partitura-12p.pdf', 'partitura-1p.pdf', 'partitura-escaneada.jpg', 'partitura-grande.pdf']
+  com o app aberto, depois do rm: *arquivo não baixado* na linha? False
+N4P9T-L-apagado-com-app-aberto-avd-pai mCurrentRotation=ROTATION_0 png=117360 xml=33849 67f44fb6e977
+11:27:27 toque 'buscar' @ 2295,188 (emulator-5554)
+11:27:35 toque 'lib-campo' @ 1397,152 (emulator-5554)
+  reaberto: faixa=C w=1137.8 h=711.1 | net online | auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored | cache hit kind=setlists n=3 | cache hit kind=content n=16 | sync start | auth refresh=cached | api status=200 path=/api/setlists n=1 ms=92 | auth refresh=cached | api status=200 path=/api/content n=1 ms=60 | cache write kind=setlists n=3 invalidated=0 | cache write kind=content n=16 invalidated=0 | sync ok setlists=3 content=16 pages=1 t=220 | prefetch plan n=2 reason=library | file src=download name=partitura-12p.pdf bytes=4198 total=4198 ms=144 | download-error nao-existe.pdf: o servidor respondeu 404
+N4P9T-L-apagado-reaberto-avd-pai mCurrentRotation=ROTATION_0 png=117360 xml=33849 67f44fb6e977
+== trimCaches 11:27:50
+11:28:09 toque 'buscar' @ 2295,188 (emulator-5554)
+  antes — files/octavia-<uid>/files: ['1786218429715-ux-audit-partitura-12p.pdf', 'partitura-12p.pdf', 'partitura-1p.pdf', 'partitura-escaneada.jpg', 'partitura-grande.pdf']
+  antes — cache/octavia-<uid>/files: ['1786218427769-ux-audit-partitura-1p.pdf']
+  depois — files/octavia-<uid>/files: ['1786218429715-ux-audit-partitura-12p.pdf', 'partitura-12p.pdf', 'partitura-1p.pdf', 'partitura-escaneada.jpg', 'partitura-grande.pdf']
+  depois — cache/octavia-<uid>/files: ['(vazia)']
+11:28:52 toque 'buscar' @ 2295,188 (emulator-5554)
+  reaberto: faixa=C w=1137.8 h=711.1 | net online | auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored | cache hit kind=setlists n=3 | cache hit kind=content n=16 | sync start | auth refresh=cached | api status=200 path=/api/setlists n=1 ms=327 | auth refresh=cached | api status=200 path=/api/content n=1 ms=219 | cache write kind=setlists n=3 invalidated=0 | cache write kind=content n=16 invalidated=0 | sync ok setlists=3 content=16 pages=1 t=1137 | prefetch plan n=1 reason=library | download-error nao-existe.pdf: o servidor respondeu 404
+N4P9T-L-depois-do-trim-avd-pai mCurrentRotation=ROTATION_0 png=219127 xml=55245 8615fec78cfd
+capturas=4 falhas=0

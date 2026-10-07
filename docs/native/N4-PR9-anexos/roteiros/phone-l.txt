@@ -1,0 +1,45 @@
+12:55:35 toque 'buscar' @ 794,396 (emulator-5556)
+N4P7L-L-base-phone-ret mCurrentRotation=ROTATION_0 png=256338 xml=67936 6f7494610473
+faixa A — a L no celular em pé (411,4 dp): cada alvo, dentro ou fora da janela útil (24 … 898,3)
+  lib-tela                   x 0.0–411.4 (411.4) y 24.0–898.3 (874.3) ok ''
+  lib-voltar                 x 24.0–72.0 (48.0) y 43.4–91.4 (48.0) ok 'Voltar para as setlists'
+  lib-campo                  x 141.0–374.5 (233.5) y 43.4–91.4 (48.0) ok ''
+  lib-filtro-letra           x 24.0–130.7 (106.7) y 119.6–167.6 (48.0) ok 'Só Letra (6)'
+  lib-filtro-cifra           x 138.7–242.3 (103.6) y 119.6–167.6 (48.0) ok 'Só Cifra (3)'
+  lib-filtro-tab             x 250.3–345.5 (95.2) y 119.6–167.6 (48.0) ok 'Só Tab (1)'
+  lib-filtro-partitura       x 24.0–155.4 (131.4) y 175.6–223.6 (48.0) ok 'Só Partitura (5)'
+  lib-filtro-favoritas       x 163.4–297.1 (133.7) y 175.6–223.6 (48.0) ok 'Só as favoritas (1)'
+  lib-regua                  x 0.0–411.4 (411.4) y 232.0–278.5 (46.5) ok ''
+  lib-lista                  x 0.0–411.4 (411.4) y 278.5–898.3 (619.8) ok ''
+  lib-linha-b1b1000c         x 24.0–387.4 (363.4) y 278.5–358.5 (80.0) ok 'Ver “Águas de fixture”'
+  lib-favoritar-b1b1000c     x 274.3–322.3 (48.0) y 294.5–342.5 (48.0) ok 'Favoritar “Águas de fixture”'
+  lib-tocar-b1b1000c         x 326.5–374.5 (48.0) y 294.5–342.5 (48.0) ok 'Tocar “Águas de fixture”'
+  lib-linha-b1b1000a         x 24.0–387.4 (363.4) y 370.7–450.7 (80.0) ok 'Ver “Décima do ensaio”'
+  lib-favoritar-b1b1000a     x 274.3–322.3 (48.0) y 386.7–434.7 (48.0) ok 'Favoritar “Décima do ensaio”'
+  lib-tocar-b1b1000a         x 326.5–374.5 (48.0) y 386.7–434.7 (48.0) ok 'Tocar “Décima do ensaio”'
+  lib-linha-b1b10015         x 24.0–387.4 (363.4) y 462.5–542.5 (80.0) ok 'Ver “Item sem conteúdo da fixture”'
+  lib-favoritar-b1b10015     x 274.3–322.3 (48.0) y 478.5–526.5 (48.0) ok 'Favoritar “Item sem conteúdo da fixture”'
+  lib-tocar-b1b10015         x 326.5–374.5 (48.0) y 478.5–526.5 (48.0) ok 'Tocar “Item sem conteúdo da fixture”'
+  lib-linha-b1b10014         x 24.0–387.4 (363.4) y 554.7–634.7 (80.0) ok 'Ver “Item sem tipo da fixture”'
+  lib-favoritar-b1b10014     x 274.3–322.3 (48.0) y 570.7–618.7 (48.0) ok 'Favoritar “Item sem tipo da fixture”'
+  lib-tocar-b1b10014         x 326.5–374.5 (48.0) y 570.7–618.7 (48.0) ok 'Tocar “Item sem tipo da fixture”'
+  lib-linha-b1b10001         x 24.0–387.4 (363.4) y 646.5–726.5 (80.0) ok 'Ver “Manhã de ensaio”'
+  lib-favoritar-b1b10001     x 274.3–322.3 (48.0) y 662.5–710.5 (48.0) ok 'Tirar “Manhã de ensaio” das favoritas'
+  lib-tocar-b1b10001         x 326.5–374.5 (48.0) y 662.5–710.5 (48.0) ok 'Tocar “Manhã de ensaio”'
+  lib-linha-b1b10009         x 24.0–387.4 (363.4) y 738.7–818.7 (80.0) ok 'Ver “Nona do ensaio”'
+  lib-favoritar-b1b10009     x 274.3–322.3 (48.0) y 754.7–802.7 (48.0) ok 'Favoritar “Nona do ensaio”'
+  lib-tocar-b1b10009         x 326.5–374.5 (48.0) y 754.7–802.7 (48.0) ok 'Tocar “Nona do ensaio”'
+  lib-linha-b1b10008         x 24.0–387.4 (363.4) y 830.5–898.3 (67.8) ok 'Ver “Oitava do ensaio”'
+  lib-favoritar-b1b10008     x 274.3–322.3 (48.0) y 846.5–894.5 (48.0) ok 'Favoritar “Oitava do ensaio”'
+  lib-tocar-b1b10008         x 326.5–374.5 (48.0) y 846.5–894.5 (48.0) ok 'Tocar “Oitava do ensaio”'
+  no dump: lib-filtro-letra True
+  no dump: lib-filtro-cifra True
+  no dump: lib-filtro-tab True
+  no dump: lib-filtro-partitura True
+  no dump: lib-filtro-favoritas True
+  no dump: lib-regua True
+  no dump: lib-lista True
+12:55:47 toque 'Tocar “Águas de fixture”' @ 920,836 (emulator-5556)
+N4P7L-S3-avulso-da-biblioteca-phone-ret mCurrentRotation=ROTATION_0 png=259466 xml=22362 f26ac14c62e9
+depois do BACK, a L (lib-campo): True
+FATAL no logcat (desde o logcat -c da abertura): 0

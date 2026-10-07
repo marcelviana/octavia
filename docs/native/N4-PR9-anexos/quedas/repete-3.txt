@@ -1,0 +1,8 @@
+== baixandoLinha 11:06:27
+apagados em files/octavia-<uid>/…: [] · ficaram: ['1786218429715-ux-audit-partitura-12p.pdf', 'partitura-12p.pdf', 'partitura-1p.pdf', 'partitura-escaneada.jpg', 'partitura-grande.pdf.part']
+apagados em cache/octavia-<uid>/…: [] · ficaram: ['1786218427769-ux-audit-partitura-1p.pdf']
+FALHA baixandoLinha: ESPERA ESGOTADA: 'criar-setlist'
+11:07:39 avião=0 (emulator-5554)
+11:07:41 mock modo=normal content=content.json env=None
+capturas=0 falhas=1
+  baixandoLinha: ESPERA ESGOTADA: 'criar-setlist'

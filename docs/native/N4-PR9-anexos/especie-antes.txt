@@ -1,0 +1,267 @@
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-n4-pr9
+
+ ✓  native  apps/native/test/linha-de-aviso-contrato.test.ts (2 tests) 2ms
+ ❯  native-tela  apps/native/test/linha-de-aviso-especie.test.tsx (20 tests | 16 failed) 176ms
+     ✓ a tabela: 16 usos, 14 por espécie e 2 que não cabem no mapa (a lista de setlists, `falha` em `muted`) 1ms
+     ✓ nenhum aviso das quatro telas fica fora da tabela, e cada âncora acha um uso só 73ms
+     × o mapa espécie → (ícone, cor) devolve, para cada espécie usada, o par de hoje 3ms
+     × IndexScreen.tsx:569 (sem rede): declara a espécie rede, sem icone/cor 11ms
+     × IndexScreen.tsx:574 (limite de taxa): declara a espécie limite, sem icone/cor 9ms
+     × IndexScreen.tsx:586 (a escrita falhou): declara a espécie falha, sem icone/cor 8ms
+     × IndexScreen.tsx:610 (o teto de 100): declara a espécie teto, sem icone/cor 7ms
+     × IndexScreen.tsx:614 (salvo, não relido): declara a espécie salvo-nao-relido, sem icone/cor 5ms
+     × ModoDeReordenar.tsx:502 (sem rede): declara a espécie rede, sem icone/cor 5ms
+     × ModoDeReordenar.tsx:504 (limite de taxa): declara a espécie limite, sem icone/cor 6ms
+     × ModoDeReordenar.tsx:511 (a ordem falhou): declara a espécie falha, sem icone/cor 6ms
+     × Picker.tsx:314 (sem rede): declara a espécie rede, sem icone/cor 7ms
+     × Picker.tsx:317 (a releitura falhou): declara a espécie salvo-nao-relido, sem icone/cor 7ms
+     × Picker.tsx:328 (o teto de 100): declara a espécie teto, sem icone/cor 5ms
+     × SetlistsScreen.tsx:498 (sem rede): declara a espécie rede, sem icone/cor 4ms
+     ✓ SetlistsScreen.tsx:505 (a setlist sumiu e a releitura falhou): não cabe no mapa — continua com falha em muted 4ms
+     ✓ SetlistsScreen.tsx:517 (a setlist sumiu (declarado)): não cabe no mapa — continua com falha em muted 4ms
+     × SetlistsScreen.tsx:524 (apagada, não relida): declara a espécie salvo-nao-relido, sem icone/cor 5ms
+     × SetlistsScreen.tsx:538 (criada, não relida): declara a espécie salvo-nao-relido, sem icone/cor 4ms
+     × o componente, com a espécie, desenha o mesmo ícone na mesma tinta que com o par (e o motivo nessa tinta) 0ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 16 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   native-tela  apps/native/test/linha-de-aviso-especie.test.tsx > a troca por espécie nas quatro telas antigas: os mesmos pares de hoje (N4-D32) > o mapa espécie → (ícone, cor) devolve, para cada espécie usada, o par de hoje
+AssertionError: expected undefined to be defined
+ ❯ apps/native/test/linha-de-aviso-especie.test.tsx:126:28
+    124| 
+    125|   it('o mapa espécie → (ícone, cor) devolve, para cada espécie usada, …
+    126|     expect(PAR_DA_ESPECIE).toBeDefined()
+       |                            ^
+    127|     for (const u of USOS) {
+    128|       if (u.especie === null) continue
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/16]⎯
+
+ FAIL   native-tela  apps/native/test/linha-de-aviso-especie.test.tsx > a troca por espécie nas quatro telas antigas: os mesmos pares de hoje (N4-D32) > IndexScreen.tsx:569 (sem rede): declara a espécie rede, sem icone/cor
+ FAIL   native-tela  apps/native/test/linha-de-aviso-especie.test.tsx > a troca por espécie nas quatro telas antigas: os mesmos pares de hoje (N4-D32) > Picker.tsx:314 (sem rede): declara a espécie rede, sem icone/cor
+ FAIL   native-tela  apps/native/test/linha-de-aviso-especie.test.tsx > a troca por espécie nas quatro telas antigas: os mesmos pares de hoje (N4-D32) > SetlistsScreen.tsx:498 (sem rede): declara a espécie rede, sem icone/cor
+AssertionError: expected { especie: '', …(2) } to deeply equal { especie: 'rede', …(2) }
+
+- Expected
++ Received
+
+  {
+-   "cor": undefined,
+-   "especie": "rede",
+-   "icone": undefined,
++   "cor": "dark.offlineInk",
++   "especie": "",
++   "icone": "'sem-conexao' as NomeIcone",
+  }
+
+ ❯ apps/native/test/linha-de-aviso-especie.test.tsx:153:116
+    151|           })
+    152|         } else {
+    153|           expect({ especie: semAs(props.get('especie') ?? ''), icone: …
+       |                                                                                                                    ^
+    154|             especie: u.especie,
+    155|             icone: undefined,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/16]⎯
+
+ FAIL   native-tela  apps/native/test/linha-de-aviso-especie.test.tsx > a troca por espécie nas quatro telas antigas: os mesmos pares de hoje (N4-D32) > IndexScreen.tsx:574 (limite de taxa): declara a espécie limite, sem icone/cor
+AssertionError: expected { especie: '', …(2) } to deeply equal { especie: 'limite', …(2) }
+
+- Expected
++ Received
+
+  {
+-   "cor": undefined,
+-   "especie": "limite",
+-   "icone": undefined,
++   "cor": "dark.offlineInk",
++   "especie": "",
++   "icone": "'ultima-sincronizacao' as NomeIcone",
+  }
+
+ ❯ apps/native/test/linha-de-aviso-especie.test.tsx:153:116
+    151|           })
+    152|         } else {
+    153|           expect({ especie: semAs(props.get('especie') ?? ''), icone: …
+       |                                                                                                                    ^
+    154|             especie: u.especie,
+    155|             icone: undefined,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/16]⎯
+
+ FAIL   native-tela  apps/native/test/linha-de-aviso-especie.test.tsx > a troca por espécie nas quatro telas antigas: os mesmos pares de hoje (N4-D32) > IndexScreen.tsx:586 (a escrita falhou): declara a espécie falha, sem icone/cor
+AssertionError: expected { especie: '', …(2) } to deeply equal { especie: 'falha', …(2) }
+
+- Expected
++ Received
+
+  {
+-   "cor": undefined,
+-   "especie": "falha",
+-   "icone": undefined,
++   "cor": "dark.errorInk",
++   "especie": "",
++   "icone": "'falha' as NomeIcone",
+  }
+
+ ❯ apps/native/test/linha-de-aviso-especie.test.tsx:153:116
+    151|           })
+    152|         } else {
+    153|           expect({ especie: semAs(props.get('especie') ?? ''), icone: …
+       |                                                                                                                    ^
+    154|             especie: u.especie,
+    155|             icone: undefined,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/16]⎯
+
+ FAIL   native-tela  apps/native/test/linha-de-aviso-especie.test.tsx > a troca por espécie nas quatro telas antigas: os mesmos pares de hoje (N4-D32) > IndexScreen.tsx:610 (o teto de 100): declara a espécie teto, sem icone/cor
+ FAIL   native-tela  apps/native/test/linha-de-aviso-especie.test.tsx > a troca por espécie nas quatro telas antigas: os mesmos pares de hoje (N4-D32) > Picker.tsx:328 (o teto de 100): declara a espécie teto, sem icone/cor
+AssertionError: expected { especie: '', …(2) } to deeply equal { especie: 'teto', …(2) }
+
+- Expected
++ Received
+
+  {
+-   "cor": undefined,
+-   "especie": "teto",
+-   "icone": undefined,
++   "cor": "dark.muted",
++   "especie": "",
++   "icone": "'n-de-musicas' as NomeIcone",
+  }
+
+ ❯ apps/native/test/linha-de-aviso-especie.test.tsx:153:116
+    151|           })
+    152|         } else {
+    153|           expect({ especie: semAs(props.get('especie') ?? ''), icone: …
+       |                                                                                                                    ^
+    154|             especie: u.especie,
+    155|             icone: undefined,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/16]⎯
+
+ FAIL   native-tela  apps/native/test/linha-de-aviso-especie.test.tsx > a troca por espécie nas quatro telas antigas: os mesmos pares de hoje (N4-D32) > IndexScreen.tsx:614 (salvo, não relido): declara a espécie salvo-nao-relido, sem icone/cor
+ FAIL   native-tela  apps/native/test/linha-de-aviso-especie.test.tsx > a troca por espécie nas quatro telas antigas: os mesmos pares de hoje (N4-D32) > Picker.tsx:317 (a releitura falhou): declara a espécie salvo-nao-relido, sem icone/cor
+ FAIL   native-tela  apps/native/test/linha-de-aviso-especie.test.tsx > a troca por espécie nas quatro telas antigas: os mesmos pares de hoje (N4-D32) > SetlistsScreen.tsx:524 (apagada, não relida): declara a espécie salvo-nao-relido, sem icone/cor
+ FAIL   native-tela  apps/native/test/linha-de-aviso-especie.test.tsx > a troca por espécie nas quatro telas antigas: os mesmos pares de hoje (N4-D32) > SetlistsScreen.tsx:538 (criada, não relida): declara a espécie salvo-nao-relido, sem icone/cor
+AssertionError: expected { especie: '', …(2) } to deeply equal { especie: 'salvo-nao-relido', …(2) }
+
+- Expected
++ Received
+
+  {
+-   "cor": undefined,
+-   "especie": "salvo-nao-relido",
+-   "icone": undefined,
++   "cor": "dark.muted",
++   "especie": "",
++   "icone": "'ultima-sincronizacao' as NomeIcone",
+  }
+
+ ❯ apps/native/test/linha-de-aviso-especie.test.tsx:153:116
+    151|           })
+    152|         } else {
+    153|           expect({ especie: semAs(props.get('especie') ?? ''), icone: …
+       |                                                                                                                    ^
+    154|             especie: u.especie,
+    155|             icone: undefined,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/16]⎯
+
+ FAIL   native-tela  apps/native/test/linha-de-aviso-especie.test.tsx > a troca por espécie nas quatro telas antigas: os mesmos pares de hoje (N4-D32) > ModoDeReordenar.tsx:502 (sem rede): declara a espécie rede, sem icone/cor
+AssertionError: expected { especie: '', …(2) } to deeply equal { especie: 'rede', …(2) }
+
+- Expected
++ Received
+
+  {
+-   "cor": undefined,
+-   "especie": "rede",
+-   "icone": undefined,
++   "cor": "dark.offlineInk",
++   "especie": "",
++   "icone": "'sem-conexao'",
+  }
+
+ ❯ apps/native/test/linha-de-aviso-especie.test.tsx:153:116
+    151|           })
+    152|         } else {
+    153|           expect({ especie: semAs(props.get('especie') ?? ''), icone: …
+       |                                                                                                                    ^
+    154|             especie: u.especie,
+    155|             icone: undefined,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/16]⎯
+
+ FAIL   native-tela  apps/native/test/linha-de-aviso-especie.test.tsx > a troca por espécie nas quatro telas antigas: os mesmos pares de hoje (N4-D32) > ModoDeReordenar.tsx:504 (limite de taxa): declara a espécie limite, sem icone/cor
+AssertionError: expected { especie: '', …(2) } to deeply equal { especie: 'limite', …(2) }
+
+- Expected
++ Received
+
+  {
+-   "cor": undefined,
+-   "especie": "limite",
+-   "icone": undefined,
++   "cor": "dark.offlineInk",
++   "especie": "",
++   "icone": "'ultima-sincronizacao'",
+  }
+
+ ❯ apps/native/test/linha-de-aviso-especie.test.tsx:153:116
+    151|           })
+    152|         } else {
+    153|           expect({ especie: semAs(props.get('especie') ?? ''), icone: …
+       |                                                                                                                    ^
+    154|             especie: u.especie,
+    155|             icone: undefined,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/16]⎯
+
+ FAIL   native-tela  apps/native/test/linha-de-aviso-especie.test.tsx > a troca por espécie nas quatro telas antigas: os mesmos pares de hoje (N4-D32) > ModoDeReordenar.tsx:511 (a ordem falhou): declara a espécie falha, sem icone/cor
+AssertionError: expected { especie: '', …(2) } to deeply equal { especie: 'falha', …(2) }
+
+- Expected
++ Received
+
+  {
+-   "cor": undefined,
+-   "especie": "falha",
+-   "icone": undefined,
++   "cor": "dark.errorInk",
++   "especie": "",
++   "icone": "'falha'",
+  }
+
+ ❯ apps/native/test/linha-de-aviso-especie.test.tsx:153:116
+    151|           })
+    152|         } else {
+    153|           expect({ especie: semAs(props.get('especie') ?? ''), icone: …
+       |                                                                                                                    ^
+    154|             especie: u.especie,
+    155|             icone: undefined,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/16]⎯
+
+ FAIL   native-tela  apps/native/test/linha-de-aviso-especie.test.tsx > a troca por espécie nas quatro telas antigas: os mesmos pares de hoje (N4-D32) > o componente, com a espécie, desenha o mesmo ícone na mesma tinta que com o par (e o motivo nessa tinta)
+AssertionError: expected undefined to be defined
+ ❯ apps/native/test/linha-de-aviso-especie.test.tsx:164:28
+    162| 
+    163|   it('o componente, com a espécie, desenha o mesmo ícone na mesma tint…
+    164|     expect(PAR_DA_ESPECIE).toBeDefined()
+       |                            ^
+    165|     const LinhaDeAviso = Componente.LinhaDeAviso as unknown as (p: Rec…
+    166|     for (const u of USOS) {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/16]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  16 failed | 6 passed (22)
+   Start at  09:59:37
+   Duration  1.21s (transform 287ms, setup 0ms, import 706ms, tests 178ms, environment 434ms)
+
+test/linha-de-aviso-contrato.test.ts(16,44): error TS2305: Module '"../src/screens/LinhaDeAviso"' has no exported member 'EspecieDoTablet'.
+test/linha-de-aviso-contrato.test.ts(26,7): error TS2322: Type 'true' is not assignable to type 'false'.
+tsc exit=0

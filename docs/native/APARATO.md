@@ -352,6 +352,20 @@ dobra **no mesmo estado**. O gate pareia pelo nome; que é o mesmo estado, prova
 roteiro e o próprio dump (por exemplo, `enabled=false` nos alvos durante uma escrita
 em voo). Com `ROLAR=1`, o `n3pr3.py` tira o rolado de cada estado de S2.
 
+**O `octavia_phone` sozinho sobe como `emulator-5554`** (N4-PR9, div. 1132): o serial vem da primeira porta livre, e os
+arneses do celular escolhem o fator 2,625 pelo serial `emulator-5556`. Suba-o com **`-port 5556`**.
+
+**A ordem das fixtures no mesmo aparelho** (N4-PR9, div. 1130): depois de uma rodada com a fixture da biblioteca ou da
+visualização (ids `b1b1…`), o sync com a fixture da base **guarda as setlists do cache** (o `updated_at` é o mesmo) — e as
+músicas delas não existem na base: o palco abre o *placeholder* e o G-inv reprova por dado (8 de 9 do B3 no AVD). A base do
+G-inv roda **primeiro**, num boot limpo do snapshot (o AVD) ou com o store apagado por nome; a fixture da biblioteca
+depois. No Tab a receita do cache já deixa a pasta vazia antes da base.
+
+**O `R.mock` do `roteiro.py` do pre-check mata e sobe sempre a 8788** — no Tab o mock é a 8789 (um por aparelho, div. 446),
+e as trocas de modo do arnês (o S1e com o `500-pagina-1`) não chegavam a ele. A N4-PR9 rodou uma cópia que lê a `PORTA`
+(e a `ARVORE`) do ambiente: `N4-PR9-anexos/instrumentos/roteiro-porta.diff`. O original fica como está (o
+`N3-PRECHECK-anexos` tem `SHA256SUMS`).
+
 **O `octavia_phone` repousa com a conta de audit desde a N4-PR6** (N4-D94, `[Marcel, 2026-10-06]`): o Marcel fez o
 login no emulador, e o snapshot `default_boot` foi salvo com ela (app parado, `reverse` vazio, os settings lidos). A
 coluna "estado de repouso" da tabela dos aparelhos, que diz *"sem conta: o S0 é o repouso"*, vale até a N4-PR5. O
@@ -406,6 +420,16 @@ adb -s <serial> shell am start -a android.intent.action.VIEW \
   `FATAL` do aceite tem de cobrir a rodada inteira (N3-PR5, div. 440). Para ler a linha que um toque
   produziu, conte as linhas `OCTAVIA:` antes dele e leia só as que vieram depois
   (`N3-PR5-anexos/instrumentos/phone-palco.py`).
+- **A queda NATIVA não tem a palavra `FATAL`** (N4-PR9, **N4-D105** `[Marcel, 2026-10-07]`, div. 1126). Até a N4-PR8 os
+  arneses contavam `FATAL` como subcadeia (`grep -c FATAL`, `.count('FATAL')`): isso pega a queda Java (`FATAL
+  EXCEPTION`) e **não pega o SIGSEGV do código nativo**, que escreve `F libc : Fatal signal 11 (SIGSEGV) … (cks.octavia.app)`
+  e o tombstone do `debuggerd` (`F DEBUG : … >>> rocks.octavia.app <<<`). **Daqui em diante a contagem do aceite é o
+  `N4-PR9-anexos/instrumentos/quedas.py <serial>`**: a Java do app, a nativa do app e os tombstones do dropbox
+  (`dumpsys dropbox --print SYSTEM_TOMBSTONE`, que sobrevivem ao `logcat -c` — não a um boot de AVD sem salvar), com o
+  topo da pilha de cada nativa. Controle negativo: `quedas.py --cn` (a amostra) e, no AVD, `run-as rocks.octavia.app kill
+  -11 <pid>` → 1 nativa e 1 tombstone, enquanto o `grep -c FATAL` dá 0. **Os "FATAL 0" das N4-PR2…PR8 e do release não
+  viam queda nativa**, e os anexos delas não guardam logcat bruto (só as linhas `OCTAVIA:`): não há o que recontar. Para
+  rodadas longas, `logcat -G 16M` antes (o anel padrão gira).
 
 ## `uiautomator dump`
 

@@ -1,0 +1,7 @@
+== falhou
+14:09:38 toque 'buscar' @ 2295,188 (RX2N8000F3D)
+14:09:46 toque 'lib-campo' @ 1397,152 (RX2N8000F3D)
+14:09:58 toque 'Ver “Partitura que nunca baixou”' @ 1280,590 (RX2N8000F3D)
+  log: (nenhuma linha)
+N4P9T-V-arquivo-falhou-tab-pai mCurrentRotation=ROTATION_90 png=135881 xml=21374 7fd4310cc0df
+capturas=1 falhas=0

@@ -1,0 +1,7 @@
+AVD octavia_tab32, fim 2026-10-07 15:30:14
+stay_on=1 accel=1 user_rot=0 airplane=1 wifi=0 data=0
+lido no início: stay_on=1 accel=1 user_rot=0 airplane=1 wifi=0 data=0
+ping: connect: Network is unreachable
+reverse: []
+    lastUpdateTime=2026-09-24 14:00:01
+desligado sem salvar o snapshot; o ram.bin do default_boot: Sep 24 14:00:20 2026

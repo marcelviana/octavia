@@ -1,0 +1,16 @@
+== CN no aparelho (14:53:18): o app aberto, depois kill -11 no processo dele
+antes do kill:
+quedas do app: java=0 · nativas=0 · (a contagem antiga, a subcadeia FATAL: 0)
+tombstones do app no dropbox: 0
+pid do app=21144
+depois do kill -11:
+quedas do app: java=0 · nativas=1 · (a contagem antiga, a subcadeia FATAL: 0)
+  nativa 10-07 14:53:27.795 sinal 11 (SIGSEGV) pid 21144
+      #00 __epoll_pwait+8
+      #01 android::Looper::pollInner(int
+      #02 android::Looper::pollOnce(int, int*, int*, void**
+      #03 android::android_os_MessageQueue_nativePollOnce(_JNIEnv*, _jobject*, long, int
+      #04 art_jni_trampoline+108
+      #05 deleted
+tombstones do app no dropbox: 1 — 2026-10-07 14:53:28
+a contagem antiga (grep -c FATAL): 0

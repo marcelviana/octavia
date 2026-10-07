@@ -1,0 +1,8 @@
+== baixandoLinha 11:04:47
+apagados em files/octavia-<uid>/…: [] · ficaram: ['1786218429715-ux-audit-partitura-12p.pdf', 'partitura-12p.pdf', 'partitura-1p.pdf', 'partitura-escaneada.jpg', 'partitura-grande.pdf.part']
+apagados em cache/octavia-<uid>/…: [] · ficaram: ['1786218427769-ux-audit-partitura-1p.pdf']
+FALHA baixandoLinha: TOQUE FALHOU: sem 'buscar' (n=1)
+11:05:08 avião=0 (emulator-5554)
+11:05:10 mock modo=normal content=content.json env=None
+capturas=0 falhas=1
+  baixandoLinha: TOQUE FALHOU: sem 'buscar' (n=1)

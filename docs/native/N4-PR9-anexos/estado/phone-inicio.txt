@@ -1,0 +1,5 @@
+octavia_phone (emulator-5556, -port 5556; a primeira subida veio como 5554 e foi desligada sem tocar no app), lido 2026-10-07 12:35:18
+stay_on=1 accel=0 user_rot=0 airplane=0 wifi=1 data=1
+reverse: []
+    lastUpdateTime=2026-09-23 21:10:37
+    pkgFlags=[ DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]

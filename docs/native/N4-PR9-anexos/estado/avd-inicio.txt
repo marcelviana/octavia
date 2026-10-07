@@ -1,0 +1,6 @@
+AVD octavia_tab32, lido 2026-10-07 10:07:28
+stay_on=1 accel=1 user_rot=0 airplane=1 wifi=0 data=0
+reverse: (vazio)
+dev client lastUpdateTime=2026-09-24 14:00:01 pkgFlags=[ DEBUGGABLE ... ]
+userdata: /dev/block/dm-29 5.8G 922M  4.7G  16% /storage/emulated/0/Android/obb
+Mac: /dev/disk3s5   460Gi   386Gi    51Gi    89%    3.7M  535M    1%   /System/Volumes/Data
