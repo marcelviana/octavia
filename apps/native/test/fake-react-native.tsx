@@ -104,7 +104,10 @@ export function __voltarDoSistema(): boolean {
  * e o que o `uiautomator` grava como `enabled="false"`.
  */
 function atributos(p: PropsComuns): Record<string, unknown> {
-  const est = achatar(p.style)
+  // N4-PR8 (regra 32): o `style` de um Pressable pode ser uma FUNÇÃO do estado (`({ pressed }) => …`, a linha da L
+  // tocável); o RN a chama, e o duplo também — sem o dedo encostado (`pressed: false`). Antes ela não era achatada e o
+  // `data-style` sumia do nó.
+  const est = achatar(typeof p.style === 'function' ? (p.style as (e: { pressed: boolean }) => unknown)({ pressed: false }) : p.style)
   const fora: Record<string, unknown> = {
     'data-testid': p.testID,
     'data-style': Object.keys(est).length > 0 ? JSON.stringify(est) : undefined,
@@ -135,14 +138,20 @@ export const Text = primitivo('span', 'Text')
  * `measureInWindow` (onde a lista está na tela). Aqui não há rolagem: os dois
  * existem para que a tela não precise perguntar se existem.
  */
-export const ScrollView = forwardRef<unknown, PropsComuns & { scrollEnabled?: boolean }>((p, ref) => {
+export const ScrollView = forwardRef<unknown, PropsComuns & { scrollEnabled?: boolean; horizontal?: boolean }>((p, ref) => {
   useImperativeHandle(ref, () => ({
     scrollTo: (): void => undefined,
     measureInWindow: (cb: (x: number, y: number, w: number, h: number) => void): void => cb(0, 152, 1138, 475),
   }))
   return createElement(
     'div',
-    { ...atributos(p), 'data-scrollenabled': p.scrollEnabled === false ? 'false' : undefined },
+    // N4-PR8: `data-horizontal` — o leitor do palco põe o corpo numa rolagem HORIZONTAL (é o que impede a quebra de
+    // linha, T1-R25); a visualização tem de pôr também (N4-R13), e o teste lê o atributo.
+    {
+      ...atributos(p),
+      'data-scrollenabled': p.scrollEnabled === false ? 'false' : undefined,
+      'data-horizontal': p.horizontal === true ? 'true' : undefined,
+    },
     p.children as ReactNode,
   )
 })
@@ -167,7 +176,13 @@ export const Pressable = forwardRef<unknown, PropsComuns & { onPress?: () => voi
       {
         ...atributos(p),
         role: 'button',
-        onClick: () => p.onPress?.(),
+        // N4-PR8 (regra 32: o defeito do duplo se conserta no duplo): no RN o toque vai ao Pressable MAIS FUNDO e o de
+        // fora não dispara (o sistema de responder); no DOM o `click` borbulha, e um Pressable dentro de outro (a estrela
+        // e o ▶ dentro da linha da L, que passa a ser tocável) acionava os dois. O de dentro para a propagação.
+        onClick: (e: { stopPropagation: () => void }) => {
+          e.stopPropagation()
+          p.onPress?.()
+        },
         ref,
       },
       p.children as ReactNode,

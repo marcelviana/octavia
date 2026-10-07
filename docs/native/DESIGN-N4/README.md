@@ -490,6 +490,13 @@ duas. Medido pela região tocável do IME: em **C** (AVD deitado) o teclado cobr
 No Tab deitado o teclado da Samsung é **flutuante**, no meio da tela, e não encolhe nada (div. 1087). **Vale a medida.**
 *(As erratas de medida seguintes começam na N4-E12.)*
 
+**N4-E12 — as colunas visíveis do leitor de V em C: 55, não ≈ 56** (div. 1101; N4-PR8, a régua e o dump,
+`N4-PR8-anexos/regua-avd.txt`). A m14 dava *"≈ 56 · largura útil − 60, ÷ 13,2"* (738 dp). V usa o leitor do palco
+(N4-D24), com o respiro de **32** de cada lado (não 30), e o caractere mono 22 mede **13,33 dp** (100 caracteres = 1333,3):
+a janela do texto mede **733,8 dp** (797,8 − 64), **55,0 colunas** — 4,2 dp abaixo. Em B, 647,1 dp e 48,5 colunas (a folha:
+651, ≈ 49 — dentro dos 4 dp). Medido igual no AVD e no Tab. **Vale a medida**; o custo declarado da N4-D65 (≈ 56) fica em
+55. *(As erratas de medida seguintes começam na N4-E13.)*
+
 ---
 
 ## 7 · Erratas ao brief — o que o desenho decidiu diferente do `N4-BRIEF.md`

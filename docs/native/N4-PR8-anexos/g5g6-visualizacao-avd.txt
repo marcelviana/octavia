@@ -1,0 +1,236 @@
+G5/G6 — 24 estados, quatro colunas: tab pai · tab ret · avd pai · avd ret
+
+## L-antes-do-ver
+  (sem dump: tab pai, tab ret)
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `lib-apagar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `lib-campo` | — | — | 900.0 × 48.0 | 473.3 × 48.0 |
+  | `lib-favoritar-<id8>` | — | — | 48.0 × 48.0 ×3 | 48.0 × 48.0 ×3 |
+  | `lib-filtro-cifra` | — | — | 103.1 × 48.0 | 103.1 × 48.0 |
+  | `lib-filtro-favoritas` | — | — | 133.3 × 48.0 | 133.3 × 48.0 |
+  | `lib-filtro-letra` | — | — | 106.7 × 48.0 | 106.7 × 48.0 |
+  | `lib-filtro-partitura` | — | — | 130.7 × 48.0 | 130.7 × 48.0 |
+  | `lib-filtro-tab` | — | — | 95.6 × 48.0 | 95.6 × 48.0 |
+  | `lib-linha-<id8>` | — | — | 1089.8 × 80.0 ×3 | 663.1 × 80.0 ×3 |
+  | `lib-tocar-<id8>` | — | — | 48.0 × 48.0 ×3 | 48.0 × 48.0 ×3 |
+  | `lib-voltar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## L-depois-do-voltar-de-v
+  (sem dump: tab pai, tab ret)
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `lib-apagar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `lib-campo` | — | — | 900.0 × 48.0 | 473.3 × 48.0 |
+  | `lib-favoritar-<id8>` | — | — | 48.0 × 48.0 ×3 | 48.0 × 48.0 ×3 |
+  | `lib-filtro-cifra` | — | — | 103.1 × 48.0 | 103.1 × 48.0 |
+  | `lib-filtro-favoritas` | — | — | 133.3 × 48.0 | 133.3 × 48.0 |
+  | `lib-filtro-letra` | — | — | 106.7 × 48.0 | 106.7 × 48.0 |
+  | `lib-filtro-partitura` | — | — | 130.7 × 48.0 | 130.7 × 48.0 |
+  | `lib-filtro-tab` | — | — | 95.6 × 48.0 | 95.6 × 48.0 |
+  | `lib-linha-<id8>` | — | — | 1089.8 × 80.0 ×3 | 663.1 × 80.0 ×3 |
+  | `lib-tocar-<id8>` | — | — | 48.0 × 48.0 ×3 | 48.0 × 48.0 ×3 |
+  | `lib-voltar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## L-saiu-no-meio-depois
+  (sem dump: tab pai, tab ret)
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `lib-apagar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `lib-campo` | — | — | 900.0 × 48.0 | 473.3 × 48.0 |
+  | `lib-favoritar-<id8>` | — | — | 48.0 × 48.0 ×2 | 48.0 × 48.0 ×2 |
+  | `lib-filtro-cifra` | — | — | 103.1 × 48.0 | 103.1 × 48.0 |
+  | `lib-filtro-favoritas` | — | — | 133.3 × 48.0 | 133.3 × 48.0 |
+  | `lib-filtro-letra` | — | — | 106.7 × 48.0 | 106.7 × 48.0 |
+  | `lib-filtro-partitura` | — | — | 130.7 × 48.0 | 130.7 × 48.0 |
+  | `lib-filtro-tab` | — | — | 95.6 × 48.0 | 95.6 × 48.0 |
+  | `lib-linha-<id8>` | — | — | 1089.8 × 80.0 ×2 | 663.1 × 80.0 ×2 |
+  | `lib-tocar-<id8>` | — | — | 48.0 × 48.0 ×2 | 48.0 × 48.0 ×2 |
+  | `lib-voltar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## L-saiu-no-meio-em-voo
+  (sem dump: tab pai, tab ret)
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `lib-apagar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `lib-campo` | — | — | 900.0 × 48.0 | 473.3 × 48.0 |
+  | `lib-favoritar-<id8>` | — | — | 48.0 × 48.0 ×2 | 48.0 × 48.0 ×2 |
+  | `lib-filtro-cifra` | — | — | 103.1 × 48.0 | 103.1 × 48.0 |
+  | `lib-filtro-favoritas` | — | — | 133.3 × 48.0 | 133.3 × 48.0 |
+  | `lib-filtro-letra` | — | — | 106.7 × 48.0 | 106.7 × 48.0 |
+  | `lib-filtro-partitura` | — | — | 130.7 × 48.0 | 130.7 × 48.0 |
+  | `lib-filtro-tab` | — | — | 95.6 × 48.0 | 95.6 × 48.0 |
+  | `lib-linha-<id8>` | — | — | 1089.8 × 80.0 ×2 | 663.1 × 80.0 ×2 |
+  | `lib-tocar-<id8>` | — | — | 48.0 × 48.0 ×2 | 48.0 × 48.0 ×2 |
+  | `lib-voltar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## S3-avulso-da-visualizacao
+  (sem dump: tab pai, tab ret)
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `auto-scroll` | — | — | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `borda-avancar` | — | — | 170.7 × 467.1 | 106.7 × 869.8 |
+  | `borda-voltar` | — | — | 170.7 × 467.1 | 106.7 × 869.8 |
+  | `busca` | — | — | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `sair` | — | — | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `tema` | — | — | 65.8 × 65.8 | 65.8 × 65.8 |
+  | `zoom-mais` | — | — | 66.2 × 65.8 | 66.2 × 65.8 |
+  | `zoom-menos` | — | — | 65.8 × 65.8 | 65.8 × 65.8 |
+
+## V-arquivo-falhou
+  (sem dump: tab pai, tab ret)
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `view-baixar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-favoritar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-tocar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-voltar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## V-arquivo-nao-baixado
+  (sem dump: tab pai, tab ret)
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `view-baixar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-favoritar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-tocar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-voltar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## V-campos-vazios
+  (sem dump: tab pai, tab ret)
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `view-favoritar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-tocar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-voltar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## V-cifra
+  (sem dump: tab pai, tab ret)
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `view-favoritar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-tocar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-voltar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## V-cifra-secoes
+  (sem dump: tab pai, tab ret)
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `view-favoritar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-tocar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-voltar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## V-corpo-vazio
+  (sem dump: tab pai, tab ret)
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `view-favoritar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-tocar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-voltar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## V-depois-do-palco
+  (sem dump: tab pai, tab ret)
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `view-favoritar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-tocar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-voltar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## V-favoritada
+  (sem dump: tab pai, tab ret)
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `view-favoritar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-tocar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-voltar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## V-favoritando
+  (sem dump: tab pai, tab ret)
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `view-favoritar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-tocar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-voltar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## V-favoritar-falhou-servidor
+  (sem dump: tab pai, tab ret)
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `view-favoritar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-tocar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-voltar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## V-formato
+  (sem dump: tab pai, tab ret)
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `view-favoritar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-tocar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-voltar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## V-letra
+  (sem dump: tab pai, tab ret)
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `view-favoritar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-tocar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-voltar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## V-partitura
+  (sem dump: tab pai, tab ret)
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `view-favoritar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-tocar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-voltar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## V-pdf-baixando
+  (sem dump: tab pai, tab ret)
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `view-favoritar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-tocar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-voltar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## V-sem-artista
+  (sem dump: tab pai, tab ret)
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `view-favoritar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-tocar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-voltar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## V-sem-rede
+  (sem dump: tab pai, tab ret)
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `view-favoritar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-tocar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-voltar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## V-tab
+  (sem dump: tab pai, tab ret)
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `view-favoritar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-tocar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-voltar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## V-tipo-desconhecido
+  (sem dump: tab pai, tab ret)
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `view-favoritar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-tocar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-voltar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+
+## V-titulo-longo
+  (sem dump: tab pai, tab ret)
+  | id | tab pai | tab ret | avd pai | avd ret |
+  |---|---|---|---|---|
+  | `view-favoritar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-tocar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+  | `view-voltar` | — | — | 48.0 × 48.0 | 48.0 × 48.0 |
+
+estados: 24 · células (estado × coluna com dump): 48 de 96
+
+G5: todo alvo ≥ 48 dp ✓ · G6: todo alvo com testID ✓

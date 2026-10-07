@@ -1,0 +1,84 @@
+
+[1m[46m RUN [49m[22m [36mv4.0.16 [39m[90m/Users/marcelviana/projects/octavia-n4-pr8[39m
+
+ [32m✓[39m [30m[43m identidade [49m[39m packages/identidade/test/css.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m [30m[43m identidade [49m[39m packages/identidade/test/fontes.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 4[2mms[22m[39m
+ [31m❯[39m [30m[43m identidade [49m[39m packages/identidade/test/igualdade.test.ts [2m([22m[2m35 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[32m 13[2mms[22m[39m
+     [32m✓[39m dark[32m 1[2mms[22m[39m
+     [32m✓[39m light[32m 0[2mms[22m[39m
+     [32m✓[39m space[32m 0[2mms[22m[39m
+     [32m✓[39m radius[32m 0[2mms[22m[39m
+     [32m✓[39m touch[32m 0[2mms[22m[39m
+     [32m✓[39m bar[32m 0[2mms[22m[39m
+     [32m✓[39m size[32m 0[2mms[22m[39m
+     [32m✓[39m zoomSteps[32m 0[2mms[22m[39m
+     [32m✓[39m zoomDefault[32m 0[2mms[22m[39m
+     [32m✓[39m lineHeight[32m 0[2mms[22m[39m
+     [32m✓[39m tracking[32m 0[2mms[22m[39m
+     [32m✓[39m faixas A, B e C, fora o bloco web — com as três medidas inexistentes por desenho (N4-D64, em par)[32m 1[2mms[22m[39m
+     [32m✓[39m N4-D64: a medida que a faixa não tem é a palavra do tipo, e nenhuma faixa tem `undefined` (só o web tem `null`)[32m 0[2mms[22m[39m
+     [32m✓[39m font é família + peso (I1-D31) — nenhum nome de .ttf no pacote[32m 0[2mms[22m[39m
+     [32m✓[39m o bloco web por faixa — DESIGN-I1/README.md §3 (nome · C · B; A segue B)[32m 0[2mms[22m[39m
+     [32m✓[39m N4-PR7 — o bloco lib (P-T1, P-T2): C 64 · B 64 · A 120; a linha 80[32m 0[2mms[22m[39m
+[31m     [31m×[31m N4-PR8 — o bloco view (P-T3, N4-D99): a coluna 340 só em C, inexistente em B e A; a grade C 2 · B 3 · A 2[39m[32m 4[2mms[22m[39m
+     [32m✓[39m faixaDe e os limiares moram no pacote (I1-D30): A < 700 · B 700–960 · C > 960[32m 0[2mms[22m[39m
+     [32m✓[39m ícones: os 43 da linha de base com os seis pares do N4 aplicados — 45 nomes, e nenhum visto (div. 588, decisão (b))[32m 2[2mms[22m[39m
+     [32m✓[39m TRACO, o envelope por tamanho, veio do Icone.tsx sem mudar (§5.5): 20 → 1,5 · 24 → 1,75 · 28 → 2[32m 0[2mms[22m[39m
+     [32m✓[39m garantida numa forma só, a do catálogo (div. 589, I1-E3)[32m 0[2mms[22m[39m
+     [32m✓[39m theme.dark[32m 0[2mms[22m[39m
+     [32m✓[39m theme.light[32m 0[2mms[22m[39m
+     [32m✓[39m theme.space[32m 0[2mms[22m[39m
+     [32m✓[39m theme.radius[32m 0[2mms[22m[39m
+     [32m✓[39m theme.touch[32m 0[2mms[22m[39m
+     [32m✓[39m theme.bar[32m 0[2mms[22m[39m
+     [32m✓[39m theme.size[32m 0[2mms[22m[39m
+     [32m✓[39m theme.zoomSteps[32m 0[2mms[22m[39m
+     [32m✓[39m theme.zoomDefault[32m 0[2mms[22m[39m
+     [32m✓[39m theme.lineHeight[32m 0[2mms[22m[39m
+     [32m✓[39m theme.tracking[32m 0[2mms[22m[39m
+[31m     [31m×[31m theme.faixas — sem o bloco web, A continua sendo B fora do lib e do view (com os pares da N4-D64)[39m[32m 1[2mms[22m[39m
+     [32m✓[39m theme.font continua com os nomes de .ttf do expo-font (o mapa de fontes.ts)[32m 0[2mms[22m[39m
+     [32m✓[39m icones/dados.ts é o mapa do pacote[32m 0[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 2 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m [30m[43m identidade [49m[39m packages/identidade/test/igualdade.test.ts[2m > [22mpacote ≡ linha de base (em dp)[2m > [22mN4-PR8 — o bloco view (P-T3, N4-D99): a coluna 340 só em C, inexistente em B e A; a grade C 2 · B 3 · A 2
+[31m[1mAssertionError[22m: expected undefined to strictly equal { coluna: 340, grade: 2 }[39m
+
+[32m- Expected:[39m 
+{
+  "coluna": 340,
+  "grade": 2,
+}
+
+[31m+ Received:[39m 
+undefined
+
+[36m [2m❯[22m packages/identidade/test/igualdade.test.ts:[2m156:38[22m[39m
+    [90m154| [39m   */[39m
+    [90m155| [39m  it('N4-PR8 — o bloco view (P-T3, N4-D99): a coluna 340 só em C, inex…
+    [90m156| [39m    expect(identidade.faixas.C.view).toStrictEqual({ coluna: 340, grad…
+    [90m   | [39m                                     [31m^[39m
+    [90m157| [39m    expect(identidade.faixas.B.view).toStrictEqual({ coluna: identidad…
+    [90m158| [39m    expect(identidade.faixas.A.view).toStrictEqual({ coluna: identidad…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[43m identidade [49m[39m packages/identidade/test/igualdade.test.ts[2m > [22mnativo ≡ linha de base (nada mudou em dp)[2m > [22mtheme.faixas — sem o bloco web, A continua sendo B fora do lib e do view (com os pares da N4-D64)
+[31m[1mTypeError[22m: Cannot read properties of undefined (reading 'grade')[39m
+[36m [2m❯[22m packages/identidade/test/igualdade.test.ts:[2m212:31[22m[39m
+    [90m210| [39m    [34mexpect[39m([34msemLib[39m(tema[33m.[39mfaixas[33m.[39m[33mA[39m))[33m.[39m[34mtoStrictEqual[39m([34msemLib[39m(tema[33m.[39mfaixas[33m.[39m[33mB[39m))
+    [90m211| [39m    expect(tema.faixas.A.lib.filtros).not.toBe(tema.faixas.B.lib.filtr…
+    [90m212| [39m    [34mexpect[39m(tema[33m.[39mfaixas[33m.[39m[33mA[39m[33m.[39mview[33m.[39mgrade)[33m.[39mnot[33m.[39m[34mtoBe[39m(tema[33m.[39mfaixas[33m.[39m[33mB[39m[33m.[39mview[33m.[39mgrade)
+    [90m   | [39m                              [31m^[39m
+    [90m213| [39m    [34mexpect[39m(tema[33m.[39mfaixas)[33m.[39m[34mtoBe[39m(identidade[33m.[39mfaixas)
+    [90m214| [39m  })
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m2 passed[39m[22m[90m (3)[39m
+[2m      Tests [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m40 passed[39m[22m[90m (42)[39m
+[2m   Start at [22m 18:17:48
+[2m   Duration [22m 268ms[2m (transform 223ms, setup 0ms, import 314ms, tests 23ms, environment 0ms)[22m
+

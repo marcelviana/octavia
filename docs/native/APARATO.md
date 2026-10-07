@@ -199,6 +199,24 @@ arnês da N4-PR7 o levou. **Daqui em diante: o arquivo real sai junto com o cach
 e conferir o md5 da cópia, apagá-lo do aparelho **por nome** (`rm -f files/octavia-<uid>/files/<nome>`, o nome lido no
 `ls` da guarda), e regravá-lo no fim junto com os três `.json`, conferindo o md5. Assim, durante o mock, a pasta só tem o
 que a fixture criou. Os quatro `._*` continuam onde estão.)*
+*(Errata da N4-PR8, **N4-D102** `[Marcel, 2026-10-07]`, div. 1113 — **a receita sem dado real no aparelho, em duas
+partes.** A causa da div. 1113 não é só a ordem: a receita da N4-D98 tirava o arquivo real, mas o `content.json` e o
+`files-index.json` reais ficavam no aparelho, e com eles qualquer abertura do app fora de ordem fazia a garantia de
+arquivos (N4-R26) buscar em prod o que a lista real diz que existe — aconteceu na N4-PR8: o app abriu antes do mock e
+baixou de novo o PDF do Marcel do storage de prod (1 leitura, zero escrita). **A receita do cache no Tab passa a ser:**
+**(1)** guardar por cópia **todo** o cache real da sessão — os três `.json` de `files/octavia-<uid>/` e cada arquivo de
+`files/octavia-<uid>/files/` e da demanda (`cache/octavia-<uid>/files/`), os `._*` fora — e conferir o md5 de cada um;
+**(2)** **tirar do aparelho, por nome, tudo o que foi guardado** — os três `.json` e os arquivos — e conferir pelo `ls`
+que a pasta da sessão ficou sem dado real; **(3)** subir o mock e os túneis e provar que o app aponta para o mock (o
+`localhost:8788` e nenhum `octavia.rocks` no bundle servido) **antes de qualquer abertura do app**; **(4)** no fim, apagar
+por nome o que a fixture criou, regravar o cache real, conferir os md5 — e só então voltar ao release. Com o app sem
+dado real e sem mock, o pior que acontece é o estado de "sem nada no aparelho", sem pedir arquivo nenhum a prod.
+**A implementação** é `N4-PR8-anexos/instrumentos/receita-cache.sh` (`guardar` = 1 e 2; `regravar` = 4); dois
+cuidados medidos nela: o `adb shell`/`exec-out` leem o stdin (dentro de um laço de leitura, `shell -n` e `</dev/null`),
+e o `exec-in` volta antes de o `cat` remoto terminar (espera-se o tamanho bater antes do md5). **A prova**, no AVD com um
+cache sentinela (`N4-PR8-anexos/prova-receita.txt`): com a receita antiga, o app aberto sem mock pediu os 2 PDFs do
+sentinela; com a nova, 0 requisições e `prefetch plan n=0`; os sentinelas de volta md5 a md5. As receitas que as PRs
+anteriores descrevem nos anexos (N4-PR4…PR7, guardar por cópia e deixar os `.json`) ficam como rastro: **vale esta**.)*
 
 ## O dev client e os teclados atrapalham o arnês
 
@@ -227,6 +245,10 @@ que a fixture criou. Os quatro `._*` continuam onde estão.)*
   **Medido na N3-PR5, palco**: em B o FAB fica na **linha 1** da barra de 88, à direita
   (`[643,1,40,0][695,1,92,0]` dp), sobre o **ponto de sem rede** e o fim da linha do título; em C o
   ponto também fica sob ele. Nenhum controle do palco fica sob o FAB (div. 441).
+  **Medido na N4-PR8, a visualização (V)**: o ▶ do cabeçalho de V (canto superior direito, em C e em B) fica **sob o
+  FAB** — o toque pelo centro e pela margem esquerda (12 px) abre o menu de desenvolvimento. Toca-se pelo **canto
+  inferior esquerdo** do alvo (6 px à direita, 8 px acima da borda): abre o palco avulso (div. 1099;
+  `N4-PR8-anexos/instrumentos/visualizacao.py`, `_tocar_play`).
 - **`input text` fora de um campo recarrega o dev client** (a tecla `r`). Div. 330.
 - **O teclado encaixado do AVD cobre a metade de baixo** — `form-cancelar`, os
   `Adicionar` de baixo; o toque cai numa tecla. Antes de procurar alvo:

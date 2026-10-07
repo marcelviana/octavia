@@ -1,0 +1,6 @@
+ativo — V Letra (a rodada de V, antes do conserto) borda #2A2836 #2A2836 #16151D · fundo #100F16
+inerte — V tipo desconhecido, ANTES do conserto    borda #6E6A80 #6E6A80 #272530 · fundo #100F16
+inerte — V tipo desconhecido, DEPOIS               borda #2A2836 #2A2836 #16151D · fundo #100F16
+inerte — V item sem conteúdo, DEPOIS               borda #2A2836 #2A2836 #16151D · fundo #100F16
+inerte — L linha inválida, DEPOIS                  borda #2A2836 #2A2836 #16151D · fundo #100F16
+inerte — L linha inválida, DEPOIS (B)              borda #2A2836 #2A2836 #16151D · fundo #100F16

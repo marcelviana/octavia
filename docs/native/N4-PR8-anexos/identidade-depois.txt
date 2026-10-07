@@ -1,0 +1,8 @@
+$ shasum -a 256 app/styles/identidade.css  # antes
+1857944a436b5e3c6ab269011355d94cb317b9de8e3a0557f43fa21c7eb984c9  app/styles/identidade.css
+escrito: /Users/marcelviana/projects/octavia-n4-pr8/app/styles/identidade.css
+$ (regenerado) shasum -a 256 app/styles/identidade.css  # depois
+1857944a436b5e3c6ab269011355d94cb317b9de8e3a0557f43fa21c7eb984c9  app/styles/identidade.css
+git diff --exit-code app/styles/identidade.css → vazio (exit 0)
+[2m Test Files [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+[2m      Tests [22m [1m[32m42 passed[39m[22m[90m (42)[39m

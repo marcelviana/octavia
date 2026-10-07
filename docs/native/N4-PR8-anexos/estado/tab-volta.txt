@@ -1,0 +1,5 @@
+6eae4a8b48e827fc4b6bbf86e398547b55dd84af7c0de08e391e25bcb95307b9  /Users/marcelviana/octavia-aparato/tab-s6-release/release-31d6b3a.apk
+Success
+    lastUpdateTime=2026-10-07 08:32:08
+    pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+reverse: []

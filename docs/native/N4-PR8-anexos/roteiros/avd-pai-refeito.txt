@@ -1,0 +1,25 @@
+== tocar
+20:09:50 toque 'buscar' @ 2295,188 (emulator-5554)
+20:09:59 toque 'lib-campo' @ 1397,152 (emulator-5554)
+20:10:07 toque 'Ver “Manhã de ensaio”' @ 1280,590 (emulator-5554)
+20:10:18 toque 'view-tocar' pelo canto @ 2404,198
+o voltar do avulso: content-desc='Voltar para a visualização'
+  log: keepawake on | prefetch plan n=0 reason=demand
+N4P8V-S3-avulso-da-visualizacao-avd-pai mCurrentRotation=ROTATION_0 png=226327 xml=23717 7c1b7892223a
+20:10:35 toque 'sair' @ 2432,1358 (emulator-5554)
+N4-R16 a volta a V (nó a nó): IGUAL (21 nós)
+N4P8V-V-depois-do-palco-avd-pai mCurrentRotation=ROTATION_0 png=364797 xml=30847 1341b7bd311c
+== semRede
+20:11:09 toque 'buscar' @ 2295,188 (emulator-5554)
+20:11:18 toque 'lib-campo' @ 1397,152 (emulator-5554)
+20:11:26 toque 'Ver “Manhã de ensaio”' @ 1280,590 (emulator-5554)
+20:11:36 avião=1 (emulator-5554)
+ping: connect: Network is unreachable
+N4P8V-V-sem-rede-avd-pai mCurrentRotation=ROTATION_0 png=354598 xml=32903 01e2b4463d56
+20:11:52 toque 'view-favoritar' @ 2335,152 (emulator-5554)
+  o toque na estrela inerte, sem rede: (nenhuma linha)
+20:11:56 toque 'view-tocar' pelo canto @ 2404,198
+  sem rede, o ▶ abre o avulso: o voltar content-desc='Voltar para a visualização'
+20:12:04 toque 'sair' @ 2432,1358 (emulator-5554)
+20:12:13 avião=0 (emulator-5554)
+capturas=3 falhas=0

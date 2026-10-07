@@ -12,9 +12,10 @@
  * Baixar na linha** (N4-D62). Item inválido: a frase do índice (*tipo não reconhecido…*, *nada para mostrar…*) e o
  * ▶ INERTE; a estrela continua.
  *
- * **O toque na linha ainda não faz nada** (estado intermediário DECLARADO desta PR): a visualização (V) nasce na
- * PR-8, e a linha só passa a ser tocável ali — com o *Ver “{título}”* (P-F7) e o pressionado da N4-R6. Até lá a
- * linha é um `View`, e os únicos alvos dela são os dois controles (errata do A-N4-6 no aceite desta PR).
+ * **O toque na linha VISUALIZA** (N4-R6, N4-D61; N4-PR8 — o estado intermediário da N4-PR7 se fecha): a linha inteira
+ * é o alvo, com o nome acessível *Ver “{título}”* (P-F7). Pressionada: o contorno em `accentInk` e o fundo do acento a
+ * 6 % (N4-D101, `[Marcel, 2026-10-06]`: o literal da folha, medido no DOM — herança do bloco de identidade, como a
+ * N4-D96). A estrela e o ▶ continuam controles próprios: o toque neles é deles (no RN, o Pressable mais fundo).
  *
  * **A estrela** (N4-R7, N4-R9): vazada = favoritar (*Favoritar “{título}”*), cheia = favorita (*Tirar “{título}” das
  * favoritas*). EM VOO: inerte (traço 1,25), com o arco em volta, e o nome acessível da P-F5 — e só muda quando o
@@ -22,23 +23,13 @@
  * NÃO vai na linha (vai uma vez, na linha de aviso da tela).
  */
 import { Pressable, StyleSheet, Text, View } from 'react-native'
-import Svg, { Circle, Path } from 'react-native-svg'
-import {
-  FRASES_DO_TABLET,
-  ROTULO_DO_TIPO,
-  isValidContent,
-  nomeFavoritando,
-  nomeFavoritar,
-  nomeTirando,
-  nomeTirar,
-  nomeTocar,
-  type ContentDTO,
-  type EstadoDoArquivo,
-} from '@octavia/core'
+import { FRASES_DO_TABLET, ROTULO_DO_TIPO, isValidContent, nomeVer, type ContentDTO, type EstadoDoArquivo } from '@octavia/core'
 import type { EstadoDoFavoritar } from '../favoritar'
 import { Icone } from '../icones/Icone'
 import type { NomeIcone } from '../icones/dados'
-import { bar, dark, font, radius, size, space, touch, type TokensDaFaixa } from '../theme'
+import { bar, dark, font, radius, size, space, type TokensDaFaixa } from '../theme'
+import { BotaoTocar, EstrelaDoFavoritar } from './ControlesDaMusica'
+import { comAlfa } from './FiltrosDaBiblioteca'
 
 /** O ícone de cada tipo do enum (o mesmo mapa do S2 e da S4); fora do enum, nenhum. */
 const ICONE_DO_TIPO: { readonly [k: string]: NomeIcone } = { Lyrics: 'letra', Chords: 'cifra', Tab: 'tab', Sheet: 'partitura' }
@@ -57,22 +48,6 @@ function estadoNaLinha(e: EstadoDoArquivo): { icone: NomeIcone; cor: string; tex
   }
 }
 
-/**
- * O arco de andamento em volta da estrela em voo (`N4-*-L-favoritando`: a trilha em `line` e um quarto em
- * `accentInk`, traço 2, na caixa de 42 × 42 da folha, centrada no alvo de 48). É desenho da TELA, não do catálogo —
- * a N4-PR4 o registrou assim (`N4-PR4-anexos/README.md` §1.2: *"o 'em andamento' é o inerte mais um arco de 42 × 42"*).
- * **N4-D96** `[Marcel, 2026-10-06]`: os números da folha (42, r 19, traço 2) entram como literal declarado — herança do
- * bloco de identidade, com os 13 e 20 da N4-D79.
- */
-function ArcoDeAndamento(): React.JSX.Element {
-  return (
-    <Svg width={42} height={42} viewBox="0 0 42 42" style={styles.arco} fill="none" strokeWidth={2} strokeLinecap="round">
-      <Circle cx={21} cy={21} r={19} stroke={dark.line} />
-      <Path d="M21 2a19 19 0 0 1 19 19" stroke={dark.accentInk} />
-    </Svg>
-  )
-}
-
 export interface LinhaDaBibliotecaProps {
   content: ContentDTO
   arquivo: EstadoDoArquivo
@@ -82,6 +57,8 @@ export interface LinhaDaBibliotecaProps {
   tokens: TokensDaFaixa
   onFavoritar: (valor: boolean) => void
   onTocar: () => void
+  /** N4-PR8 — o toque na linha: a visualização (N4-R6). */
+  onVer: () => void
 }
 
 export function LinhaDaBiblioteca({
@@ -92,6 +69,7 @@ export function LinhaDaBiblioteca({
   tokens,
   onFavoritar,
   onTocar,
+  onVer,
 }: LinhaDaBibliotecaProps): React.JSX.Element {
   const id8 = content.id.slice(0, 8)
   const validade = isValidContent(content.content_type, content.content_data, content.file_url)
@@ -102,19 +80,16 @@ export function LinhaDaBiblioteca({
   const favorita = content.is_favorite === true
   const estado = invalido === null ? estadoNaLinha(arquivo) : null
 
-  const estrelaInerte = emVoo !== null || !online
-  const nomeDaEstrela =
-    emVoo === 'favoritando'
-      ? nomeFavoritando(content.title)
-      : emVoo === 'tirando'
-        ? nomeTirando(content.title)
-        : favorita
-          ? nomeTirar(content.title)
-          : nomeFavoritar(content.title)
   const tocarInerte = invalido !== null
 
   return (
-    <View style={[styles.linha, { minHeight: tokens.lib.linha }]} testID={`lib-linha-${id8}`}>
+    <Pressable
+      style={({ pressed }) => [styles.linha, { minHeight: tokens.lib.linha }, pressed ? styles.pressionada : null]}
+      onPress={onVer}
+      accessibilityRole="button"
+      accessibilityLabel={nomeVer(content.title)}
+      testID={`lib-linha-${id8}`}
+    >
       <View style={styles.texto}>
         <Text style={styles.titulo} numberOfLines={1}>
           {content.title}
@@ -160,42 +135,19 @@ export function LinhaDaBiblioteca({
         </View>
       </View>
 
+      {/* N4-PR8: a estrela e o ▶ são os controles comuns da linha e da visualização (`ControlesDaMusica.tsx`, m26). */}
       <View style={styles.controles}>
-        <Pressable
-          style={styles.alvo}
-          onPress={() => (estrelaInerte ? undefined : onFavoritar(!favorita))}
-          accessibilityRole="button"
-          accessibilityLabel={nomeDaEstrela}
-          accessibilityState={{ disabled: estrelaInerte, busy: emVoo !== null }}
-          disabled={estrelaInerte}
+        <EstrelaDoFavoritar
+          titulo={content.title}
+          favorita={favorita}
+          emVoo={emVoo}
+          online={online}
+          onFavoritar={onFavoritar}
           testID={`lib-favoritar-${id8}`}
-        >
-          {emVoo !== null ? <ArcoDeAndamento /> : null}
-          <Icone
-            nome="estrela"
-            tamanho={24}
-            cor={!online && emVoo === null ? dark.lineInfo : dark.accentInk}
-            estado={estrelaInerte ? (favorita ? 'ativo-inerte' : 'inerte') : favorita ? 'ativo' : 'normal'}
-          />
-        </Pressable>
-        <Pressable
-          style={[styles.alvo, styles.alvoComBorda, tocarInerte ? styles.alvoInerte : null]}
-          onPress={() => (tocarInerte ? undefined : onTocar())}
-          accessibilityRole="button"
-          accessibilityLabel={nomeTocar(content.title)}
-          accessibilityState={{ disabled: tocarInerte }}
-          disabled={tocarInerte}
-          testID={`lib-tocar-${id8}`}
-        >
-          <Icone
-            nome="tocar"
-            tamanho={24}
-            cor={tocarInerte ? dark.lineInfo : dark.text}
-            estado={tocarInerte ? 'inerte' : 'normal'}
-          />
-        </Pressable>
+        />
+        <BotaoTocar titulo={content.title} inerte={tocarInerte} onTocar={onTocar} testID={`lib-tocar-${id8}`} />
       </View>
-    </View>
+    </Pressable>
   )
 }
 
@@ -228,16 +180,6 @@ const styles = StyleSheet.create({
   ponto: { color: dark.lineInfo, fontFamily: font.ui, fontSize: size.bodySmall },
   estado: { flexDirection: 'row', alignItems: 'center', gap: space.sm, flexShrink: 1 },
   controles: { flexDirection: 'row', alignItems: 'center', gap: space.xs },
-  // `width`/`height` e não `hitSlop`: o alvo tem de estar nos BOUNDS do dump (o G5), como o `botaoIcone` da S4.
-  alvo: {
-    width: touch.min,
-    height: touch.min,
-    borderRadius: radius.control,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  alvoComBorda: { borderWidth: bar.hairline, borderColor: dark.line },
-  // E3 (V1-PR4): o inerte é tinta `lineInfo` na moldura e no ícone, sem opacidade.
-  alvoInerte: { borderColor: dark.lineInfo },
-  arco: { position: 'absolute' },
+  // N4-D101: pressionada — o contorno do acento e o fundo a 6 % (o literal da folha).
+  pressionada: { borderColor: dark.accentInk, backgroundColor: comAlfa(dark.accentInk, 0.06) },
 })

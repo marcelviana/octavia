@@ -1,0 +1,6 @@
+$ tsc (.) → exit 0
+$ tsc (packages/core) → exit 0
+$ tsc (packages/identidade) → exit 0
+$ tsc (apps/native) → exit 0
+$ pnpm lint
+✔ No ESLint warnings or errors

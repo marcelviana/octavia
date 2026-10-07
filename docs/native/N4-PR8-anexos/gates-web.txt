@@ -1,0 +1,18 @@
+$ G-back
+  ✓ nenhuma
+
+G-back: PASSA
+$ G-palco
+G-palco: PASSA — 0 ocorrências
+$ SHA256SUMS DESIGN-I1
+14
+$ G-tok
+  arquivos: 133 · literais de identidade acusados: 0 · toasts: 0 · imports de ui: 0 · textos examinados: 33 · isentos de inglês (scripts/gates-web/g-tok-sem-ingles.txt): 1 · vocabulário: 133 · isenções: 9 · strings de .ts examinadas (div. 828): 495 · frases isentas (scripts/gates-web/g-tok-frases-isentas.txt): 5 de 5 entradas
+
+G-tok: PASSA
+$ G-tok cobertura
+G-tok (cobertura): PASSA
+$ css.test
+[2m      Tests [22m [1m[32m4 passed[39m[22m[90m (4)[39m
+$ G-faixa veredito
+G-faixa: PASSA

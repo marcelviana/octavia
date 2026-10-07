@@ -133,6 +133,7 @@ interface Props {
   onTentarNovamente?: () => void
   onVoltar?: () => void
   onTocar?: (id: string) => void
+  onVisualizar?: (id: string) => void
 }
 function tela(p: Props = {}): React.JSX.Element {
   return (
@@ -145,6 +146,7 @@ function tela(p: Props = {}): React.JSX.Element {
       onTentarNovamente={p.onTentarNovamente ?? (() => undefined)}
       onVoltar={p.onVoltar ?? (() => undefined)}
       onTocar={p.onTocar ?? (() => undefined)}
+      onVisualizar={p.onVisualizar ?? (() => undefined)}
     />
   )
 }
@@ -372,12 +374,16 @@ describe('N4-R6 — a linha', () => {
     expect(textoDaTela()).not.toContain('Baixar')
   })
 
-  it('a estrela e o ▶ são controles próprios, com os nomes da folha; a linha não é alvo (V nasce na PR-8)', async () => {
+  // Em par (N4-PR8, a errata do N4-R6 da PR-7 se fecha): era *"a linha não é alvo (V nasce na PR-8)"*, com o `role`
+  // nulo na linha. Agora a linha é alvo — o toque visualiza, com o *Ver “{título}”* (P-F7) — e a estrela e o ▶ seguem
+  // controles próprios (o toque neles não visualiza: `visualizacao-tela.test.tsx`).
+  it('a estrela e o ▶ são controles próprios, com os nomes da folha; a linha é alvo e visualiza (P-F7)', async () => {
     const c = porTitulo('Manhã de ensaio')
     await montar(tela())
     expect(nome(`lib-favoritar-${id8(c)}`)).toBe('Favoritar “Manhã de ensaio”')
     expect(nome(`lib-tocar-${id8(c)}`)).toBe('Tocar “Manhã de ensaio”')
-    expect(exige(`lib-linha-${id8(c)}`).getAttribute('role')).toBeNull()
+    expect(exige(`lib-linha-${id8(c)}`).getAttribute('role')).toBe('button')
+    expect(nome(`lib-linha-${id8(c)}`)).toBe('Ver “Manhã de ensaio”')
     expect(exige(`lib-favoritar-${id8(c)}`).getAttribute('role')).toBe('button')
     expect(exige(`lib-tocar-${id8(c)}`).getAttribute('role')).toBe('button')
   })

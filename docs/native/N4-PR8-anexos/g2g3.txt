@@ -1,0 +1,35 @@
+G2 — testIDs  antes=99  depois=121
+  G2: antes ⊆ depois ✓
+  testID NOVOS:
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="corpo"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-baixando"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-baixar"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-cabecalho"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-datas"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-detalhes"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-falha"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-favoritar"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-formato"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-grade-linha"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-leitor"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-meta"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-nao-baixado"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-notas"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-pdf"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-placeholder"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-rolagem"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-tela"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-titulo"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-tocar"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-voltar"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID={`view-campo-${campo.chave}`}
+G3 — declarações: do corpo da PR (GATES_DECL=/private/tmp/claude-501/-Users-marcelviana-projects-octavia/aa46afb4-7b85-42ab-b140-95fed7764272/scratchpad/decl.txt)
+G3 — linhas log( antes=70  depois=71
+      ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+        (nenhuma)
+      REMOÇÕES DECLARADAS (linha → REMOVIDA: razão; N2-D34):
+        (nenhuma)
+      — nenhuma linha de log pode sumir nesta PR
+  G3: nenhuma linha sumiu ✓
+  linhas NOVAS (declarar no commit e no catálogo):
+      apps/native/src/screens/Leitor.tsx	* do arquivo do palco (o `buscarArquivo` e as linhas de log dele) — a visualização não toca, e as linhas `log(` do

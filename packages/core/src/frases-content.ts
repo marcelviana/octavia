@@ -260,3 +260,49 @@ export function haQuantoTempo(ms: number | null, agoraMs: number): string {
 export function mostrandoDadosDe(haQuanto: string): string {
   return ` · mostrando dados de ${haQuanto}`
 }
+
+/**
+ * Grupo 6 — **as frases do LEITOR (o palco) que a visualização (V) reusa** (N4-PR8; `N4-PR3-anexos/README.md` §1.1,
+ * linhas 18–23: a tabela das que ficaram fora do core). Eram literais do `StageScreen.tsx` e do `files.ts` (a `main`
+ * `836d5e6`); vêm com o texto byte a byte (`apps/native/test/frases-n4.test.ts` (6), contra o texto de antes), e o
+ * palco, o leitor compartilhado e o `files.ts` passam a importar daqui — nenhuma cópia, o molde da N4-PR3. Duas a mais
+ * que a tabela, declaradas: a segunda frase do S3e sem rede (o N4-R15 a cita) e o conjunto FECHADO inteiro das espécies
+ * da falha de download (a linha 23 é uma delas; V mostra a que houver — o molde do mapa da falha de sync do grupo 5).
+ */
+export const FRASES_DO_LEITOR = {
+  'tipo-desconhecido': 'tipo desconhecido', // StageScreen.tsx:151 — o placeholder do tipo fora do enum; V-tipo-desconhecido
+  'sem-conteudo': 'este item não tem conteúdo', // StageScreen.tsx:136, :141, :146 — no-body, no-key, not-string; V-corpo-vazio
+  'toque-em-baixar': 'Toque em Baixar para trazê-lo para este aparelho.', // StageScreen.tsx:861 — o S3e com rede
+  'baixar-sem-rede': 'Sem conexão agora — toque em Baixar quando a rede voltar.', // StageScreen.tsx:862 — o S3e sem rede
+  baixar: 'Baixar', // StageScreen.tsx:881 — a palavra do palco; em V, o nome acessível do ícone (N4-E8)
+} as const
+
+/**
+ * O apoio do S3e (`StageScreen.tsx:868`): *{título} · {tipo}{tamanho} não está neste aparelho.* e a segunda frase pela
+ * rede. O `tamanho` chega já formatado (*" (2,1 MB)"*, ou vazio quando o aparelho não o conhece); o título entra como
+ * dado.
+ */
+export function naoEstaNesteAparelho(titulo: string, tipo: string, tamanho: string, online: boolean): string {
+  const fecho = online ? FRASES_DO_LEITOR['toque-em-baixar'] : FRASES_DO_LEITOR['baixar-sem-rede']
+  return `${titulo} · ${tipo}${tamanho} não está neste aparelho. ${fecho}`
+}
+
+/**
+ * As ESPÉCIES da falha de download que o músico lê (o conjunto FECHADO da W2, `files.ts` `motivo` e `falha`): o arquivo
+ * vazio, o corrompido, o incompleto (com os bytes) e o status do servidor. Em V elas vão embaixo de *não consegui
+ * baixar* (N4-R15, `N4-*-V-arquivo-falhou`); no palco, na linha `download-erro` do S3e, como sempre.
+ */
+export const FRASES_DA_FALHA_DE_ARQUIVO = {
+  vazio: 'o arquivo chegou vazio', // files.ts:487
+  corrompido: 'o arquivo chegou corrompido', // files.ts:489
+} as const
+
+/** *arquivo incompleto: {n} de {m} bytes* (`files.ts:488`); `?` quando o servidor não disse o total. */
+export function arquivoIncompleto(bytes: number, esperado: number | null): string {
+  return `arquivo incompleto: ${bytes} de ${esperado ?? '?'} bytes`
+}
+
+/** *o servidor respondeu {status}* (`files.ts:607`). */
+export function servidorRespondeu(status: string): string {
+  return `o servidor respondeu ${status}`
+}

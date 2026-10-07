@@ -1,0 +1,3342 @@
+
+[1m[46m RUN [49m[22m [36mv4.0.16 [39m[90m/Users/marcelviana/projects/octavia-n4-pr8[39m
+
+ [31m❯[39m [30m[42m native [49m[39m apps/native/test/frases-n4.test.ts [2m([22m[2m52 tests[22m[2m | [22m[31m7 failed[39m[2m)[22m[32m 239[2mms[22m[39m
+     [32m✓[39m a lista saiu do telas.html da árvore (sha256 dba757dd569d…)[32m 218[2mms[22m[39m
+     [32m✓[39m são 9 P-F, as da N4-D67 menos a P-F8[32m 0[2mms[22m[39m
+     [32m✓[39m P-F1[32m 0[2mms[22m[39m
+     [32m✓[39m P-F3[32m 0[2mms[22m[39m
+     [32m✓[39m P-F4[32m 0[2mms[22m[39m
+     [32m✓[39m P-F5[32m 0[2mms[22m[39m
+     [32m✓[39m P-F6[32m 0[2mms[22m[39m
+     [32m✓[39m P-F7[32m 0[2mms[22m[39m
+     [32m✓[39m P-F9[32m 0[2mms[22m[39m
+     [32m✓[39m P-F10[32m 0[2mms[22m[39m
+     [32m✓[39m P-F11[32m 0[2mms[22m[39m
+     [32m✓[39m as aspas são as tipográficas da folha (“ ”), nunca a reta[32m 0[2mms[22m[39m
+     [32m✓[39m o título entra como dado: "$&" e "$1" no título não viram padrão de substituição[32m 0[2mms[22m[39m
+     [32m✓[39m as cinco constantes P-F do core são estas, e só estas[32m 0[2mms[22m[39m
+     [32m✓[39m as 4 junções com "·" das telas usam o separador do core[32m 0[2mms[22m[39m
+     [32m✓[39m o motivo rede é isolado (sem separador de oração dentro)[32m 0[2mms[22m[39m
+     [32m✓[39m o motivo sem-resposta é isolado (sem separador de oração dentro)[32m 0[2mms[22m[39m
+     [32m✓[39m o motivo auth é isolado (sem separador de oração dentro)[32m 0[2mms[22m[39m
+     [32m✓[39m o motivo limite-com-prazo é isolado (sem separador de oração dentro)[32m 0[2mms[22m[39m
+     [32m✓[39m o motivo servidor é isolado (sem separador de oração dentro)[32m 0[2mms[22m[39m
+     [32m✓[39m o motivo generica é isolado (sem separador de oração dentro)[32m 0[2mms[22m[39m
+     [32m✓[39m S2 e o reordenar: com o motivo rede, o core monta byte a byte a frase da tela[32m 0[2mms[22m[39m
+     [32m✓[39m S2 e o reordenar: com o motivo sem-resposta, o core monta byte a byte a frase da tela[32m 0[2mms[22m[39m
+     [32m✓[39m S2 e o reordenar: com o motivo auth, o core monta byte a byte a frase da tela[32m 0[2mms[22m[39m
+     [32m✓[39m S2 e o reordenar: com o motivo limite-com-prazo, o core monta byte a byte a frase da tela[32m 0[2mms[22m[39m
+     [32m✓[39m S2 e o reordenar: com o motivo servidor, o core monta byte a byte a frase da tela[32m 1[2mms[22m[39m
+     [32m✓[39m S2 e o reordenar: com o motivo generica, o core monta byte a byte a frase da tela[32m 0[2mms[22m[39m
+     [32m✓[39m o favoritar com falha, sem rede: o nome do controle · o motivo (a tabela da folha)[32m 0[2mms[22m[39m
+     [32m✓[39m o favoritar com falha, sem resposta: o nome do controle · o motivo (a tabela da folha)[32m 0[2mms[22m[39m
+     [32m✓[39m o favoritar com falha, sessão: o nome do controle · o motivo (a tabela da folha)[32m 0[2mms[22m[39m
+     [32m✓[39m o favoritar com falha, limite: o nome do controle · o motivo (a tabela da folha)[32m 0[2mms[22m[39m
+     [32m✓[39m o favoritar com falha, servidor: o nome do controle · o motivo (a tabela da folha)[32m 0[2mms[22m[39m
+     [32m✓[39m o favoritar com falha, genérica: o nome do controle · o motivo (a tabela da folha)[32m 0[2mms[22m[39m
+     [32m✓[39m a S4 não tem mais a cópia: a régua importa `nResultados` do core[32m 0[2mms[22m[39m
+     [32m✓[39m o core e o template da S4 de antes dão o mesmo texto para 0, 1, 2 e 57[32m 0[2mms[22m[39m
+     [32m✓[39m o core dá o texto que o palco escrevia[32m 0[2mms[22m[39m
+     [32m✓[39m o voltar do avulso pela origem (N4-R16): busca · biblioteca · visualização[32m 0[2mms[22m[39m
+     [32m✓[39m nenhuma cópia no palco: as três frases saem do core[32m 0[2mms[22m[39m
+     [32m✓[39m o core dá o texto que as telas escreviam[32m 1[2mms[22m[39m
+     [32m✓[39m nenhuma cópia em apps/native/src/screens/IndexScreen.tsx: as frases saem do core[32m 0[2mms[22m[39m
+     [32m✓[39m nenhuma cópia em apps/native/src/screens/StageScreen.tsx: as frases saem do core[32m 0[2mms[22m[39m
+     [32m✓[39m nenhuma cópia em apps/native/src/files.ts: as frases saem do core[32m 1[2mms[22m[39m
+     [32m✓[39m nenhuma cópia em apps/native/src/screens/SearchScreen.tsx: as frases saem do core[32m 0[2mms[22m[39m
+     [32m✓[39m nenhuma cópia em apps/native/src/screens/SetlistsScreen.tsx: as frases saem do core[32m 1[2mms[22m[39m
+     [32m✓[39m nenhuma cópia em apps/native/src/screens/LibraryScreen.tsx: as frases saem do core[32m 0[2mms[22m[39m
+[31m     [31m×[31m as telas importam do core o que escreviam (o controle do "nenhuma cópia": o texto continua lá, por outro caminho)[39m[32m 3[2mms[22m[39m
+[31m     [31m×[31m o core dá o texto que o palco e o files.ts escreviam[39m[32m 2[2mms[22m[39m
+[31m     [31m×[31m nenhuma cópia em apps/native/src/screens/StageScreen.tsx: as frases saem do core[39m[32m 4[2mms[22m[39m
+[31m     [31m×[31m nenhuma cópia em apps/native/src/files.ts: as frases saem do core[39m[32m 1[2mms[22m[39m
+[31m     [31m×[31m nenhuma cópia em apps/native/src/screens/Leitor.tsx: as frases saem do core[39m[32m 0[2mms[22m[39m
+[31m     [31m×[31m nenhuma cópia em apps/native/src/screens/VisualizacaoScreen.tsx: as frases saem do core[39m[32m 0[2mms[22m[39m
+[31m     [31m×[31m o palco, o leitor e o files.ts importam do core o que escreviam (o controle do "nenhuma cópia")[39m[32m 2[2mms[22m[39m
+[90mstderr[2m | apps/native/test/biblioteca-tela.test.tsx[2m > [22m[2mN4-R7 — favoritar: só online, sem otimismo[2m > [22m[2ma estrela NÃO muda antes da resposta: em voo continua vazada (inerte); só a linha devolvida a enche
+[22m[39mAn update to LibraryScreen inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+[90mstderr[2m | apps/native/test/biblioteca-tela.test.tsx[2m > [22m[2mN4-R8 — o favoritar com falha, por espécie: a linha de aviso sob a barra[2m > [22m[2msem rede: o nome do controle · a frase da espécie, a estrela de volta ao estado de antes
+[22m[39mAn update to LibraryScreen inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+[90mstderr[2m | apps/native/test/biblioteca-tela.test.tsx[2m > [22m[2mN4-R8 — o favoritar com falha, por espécie: a linha de aviso sob a barra[2m > [22m[2msem resposta: o nome do controle · a frase da espécie, a estrela de volta ao estado de antes
+[22m[39mAn update to LibraryScreen inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+[90mstderr[2m | apps/native/test/biblioteca-tela.test.tsx[2m > [22m[2mN4-R8 — o favoritar com falha, por espécie: a linha de aviso sob a barra[2m > [22m[2msessão: o nome do controle · a frase da espécie, a estrela de volta ao estado de antes
+[22m[39mAn update to LibraryScreen inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+[90mstderr[2m | apps/native/test/biblioteca-tela.test.tsx[2m > [22m[2mN4-R8 — o favoritar com falha, por espécie: a linha de aviso sob a barra[2m > [22m[2mlimite: o nome do controle · a frase da espécie, a estrela de volta ao estado de antes
+[22m[39mAn update to LibraryScreen inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+[90mstderr[2m | apps/native/test/biblioteca-tela.test.tsx[2m > [22m[2mN4-R8 — o favoritar com falha, por espécie: a linha de aviso sob a barra[2m > [22m[2mservidor: o nome do controle · a frase da espécie, a estrela de volta ao estado de antes
+[22m[39mAn update to LibraryScreen inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+[90mstderr[2m | apps/native/test/biblioteca-tela.test.tsx[2m > [22m[2mN4-R8 — o favoritar com falha, por espécie: a linha de aviso sob a barra[2m > [22m[2mgenérica: o nome do controle · a frase da espécie, a estrela de volta ao estado de antes
+[22m[39mAn update to LibraryScreen inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+[90mstderr[2m | apps/native/test/biblioteca-tela.test.tsx[2m > [22m[2mN4-R8 — o favoritar com falha, por espécie: a linha de aviso sob a barra[2m > [22m[2mo motivo nunca elide (sem `numberOfLines`), e a linha some no próximo favoritar e ao sair da tela
+[22m[39mAn update to LibraryScreen inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+[90mstderr[2m | apps/native/test/biblioteca-tela.test.tsx[2m > [22m[2mN4-R8 — o favoritar com falha, por espécie: a linha de aviso sob a barra[2m > [22m[2mo motivo nunca elide (sem `numberOfLines`), e a linha some no próximo favoritar e ao sair da tela
+[22m[39mAn update to LibraryScreen inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+ [31m❯[39m [30m[46m native-tela [49m[39m apps/native/test/biblioteca-tela.test.tsx [2m([22m[2m40 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 568[2mms[22m[39m
+     [32m✓[39m o destino do `buscar` é a rota da biblioteca, e o navigation.tsx o usa no `onBuscar` de S1[32m 1[2mms[22m[39m
+     [32m✓[39m em S1, o `buscar` é o de hoje: mesmo testID e mesmo rótulo (agora do core, o texto byte a byte)[32m 0[2mms[22m[39m
+     [32m✓[39m o campo não tem autoFocus (o teclado sobe no toque); o placeholder é *Buscar música*[32m 38[2mms[22m[39m
+     [32m✓[39m a raiz da L é um KeyboardAvoidingView com `padding` — a lista termina acima do teclado[32m 19[2mms[22m[39m
+     [32m✓[39m a régua e os filtros ficam FORA da lista (só a lista rola); a lista vem depois da régua[32m 17[2mms[22m[39m
+     [32m✓[39m a faixa de filtros em C tem a altura do token (P-T1: { w: 1137.8, h: 627.1 } → 64), e a linha o mínimo do P-T2[32m 18[2mms[22m[39m
+     [32m✓[39m a faixa de filtros em B tem a altura do token (P-T1: { w: 711.1, h: 1053.8 } → 64), e a linha o mínimo do P-T2[32m 18[2mms[22m[39m
+     [32m✓[39m a faixa de filtros em A tem a altura do token (P-T1: { w: 411.4, h: 874.3 } → 120), e a linha o mínimo do P-T2[32m 13[2mms[22m[39m
+     [32m✓[39m a régua: *Biblioteca · 12 músicas* e *12 resultados*; com um resultado, o singular (P-F8)[32m 20[2mms[22m[39m
+     [32m✓[39m a lista é a ordem do core sobre a fixture (A-N4-4): *Águas* primeiro[32m 16[2mms[22m[39m
+     [32m✓[39m as favoritas não sobem ao topo[32m 16[2mms[22m[39m
+     [32m✓[39m os nomes acessíveis da P-F9 (e a forma das favoritas, N4-D85)[32m 15[2mms[22m[39m
+     [32m✓[39m a contagem NÃO muda com a busca nem com os outros chips[32m 26[2mms[22m[39m
+     [32m✓[39m tipos por "ou": Letra + Tab dá as 6 (5 + 1); Favoritas por "e"[32m 24[2mms[22m[39m
+     [32m✓[39m o chip marcado tem o contorno do acento; o marcado com 0 continua tocável para desmarcar[32m 24[2mms[22m[39m
+     [32m✓[39m Favoritas com 0: *nenhuma favorita* e a estrela vazada de 28 em `lineInfo`[32m 10[2mms[22m[39m
+     [32m✓[39m filtro sem resultado: *nada encontrado* / *mude a busca ou os filtros*, com os chips à vista[32m 14[2mms[22m[39m
+     [32m✓[39m sem resultado: as duas frases da S4b, intactas (as mesmas funções que a S4 usa)[32m 8[2mms[22m[39m
+     [32m✓[39m 60 músicas que casam dão 60 linhas (a S4 corta em 50; a L não — N4-D90)[32m 38[2mms[22m[39m
+     [32m✓[39m a segunda linha: o tipo SEMPRE, e o artista depois quando existe — o ponto vai com o artista[32m 8[2mms[22m[39m
+     [32m✓[39m título numa linha só (reticência em C e B)[32m 6[2mms[22m[39m
+     [32m✓[39m o estado do arquivo depois do tipo: não baixado, baixando, não consegui baixar — sem *Baixar*[32m 15[2mms[22m[39m
+[31m     [31m×[31m a estrela e o ▶ são controles próprios, com os nomes da folha; a linha é alvo e visualiza (P-F7)[39m[32m 11[2mms[22m[39m
+     [32m✓[39m inválidos: as frases do índice e o ▶ INERTE; a estrela continua[32m 8[2mms[22m[39m
+     [32m✓[39m o ▶ abre o palco avulso desta música com a origem `biblioteca` (empilhado: o voltar devolve a L)[32m 9[2mms[22m[39m
+     [32m✓[39m em voo: a estrela INERTE, com o arco e o nome da P-F5; as outras estrelas e o ▶ seguem ativos[32m 17[2mms[22m[39m
+     [32m✓[39m a estrela NÃO muda antes da resposta: em voo continua vazada (inerte); só a linha devolvida a enche[32m 16[2mms[22m[39m
+     [32m✓[39m sem rede: o nome do controle · a frase da espécie, a estrela de volta ao estado de antes[32m 16[2mms[22m[39m
+     [32m✓[39m sem resposta: o nome do controle · a frase da espécie, a estrela de volta ao estado de antes[32m 15[2mms[22m[39m
+     [32m✓[39m sessão: o nome do controle · a frase da espécie, a estrela de volta ao estado de antes[32m 14[2mms[22m[39m
+     [32m✓[39m limite: o nome do controle · a frase da espécie, a estrela de volta ao estado de antes[32m 14[2mms[22m[39m
+     [32m✓[39m servidor: o nome do controle · a frase da espécie, a estrela de volta ao estado de antes[32m 13[2mms[22m[39m
+     [32m✓[39m genérica: o nome do controle · a frase da espécie, a estrela de volta ao estado de antes[32m 13[2mms[22m[39m
+     [32m✓[39m o motivo nunca elide (sem `numberOfLines`), e a linha some no próximo favoritar e ao sair da tela[32m 23[2mms[22m[39m
+     [32m✓[39m só a estrela fica inerte (em `lineInfo`), e o motivo está UMA vez, numa linha de aviso: a P-F4[32m 14[2mms[22m[39m
+     [32m✓[39m carregando (a 1ª vez, sem nada no aparelho): *carregando…*; os filtros à vista, INERTES e SEM contagem; a régua *Biblioteca* · *—*; o campo aceita digitar[32m 2[2mms[22m[39m
+     [32m✓[39m vazia (a conta sem música): *nenhum conteúdo ainda* e a P-F10; a marca; os chips com 0, inertes[32m 2[2mms[22m[39m
+     [32m✓[39m falha com o que está no aparelho: a frase do S1e na linha de aviso, com *Tentar novamente*; a lista é a do aparelho[32m 9[2mms[22m[39m
+     [32m✓[39m falha sem nada no aparelho: a composição do S1d com a P-F11 e *Tentar novamente*[32m 2[2mms[22m[39m
+     [32m✓[39m volta a S1, com o nome de sempre[32m 7[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Suites 3 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m [30m[46m native-tela [49m[39m apps/native/test/g-par-visualizacao.test.tsx[2m [ apps/native/test/g-par-visualizacao.test.tsx ][22m
+[31m[1mError[22m: Failed to resolve import "../src/screens/VisualizacaoScreen" from "apps/native/test/g-par-visualizacao.test.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36m/Users/marcelviana/projects/octavia-n4-pr8/apps/native/test/g-par-visualizacao.test.tsx[39m:45:44
+[33m  25 |  import { afterEach, describe, expect, it, vi } from "vitest";
+  26 |  
+  27 |  const { VisualizacaoScreen } = await import("../src/screens/VisualizacaoScreen");
+     |                                              ^
+  28 |  const FIXTURES = __vi_import_3__.default.resolve(__dirname, "../../../packages/core/fixtures");
+  29 |  function conteudo(it2) {[39m
+[90m [2m❯[22m TransformPluginContext._formatLog node_modules/.pnpm/vite@7.1.5_@types+node@22.18.3_jiti@2.7.0_lightningcss@1.33.0_terser@5.51.2_tsx@4.23.11_yaml@2.9.0/node_modules/vite/dist/node/chunks/dep-M_KD0XSK.js:[2m31527:43[22m[39m
+[90m [2m❯[22m TransformPluginContext.error node_modules/.pnpm/vite@7.1.5_@types+node@22.18.3_jiti@2.7.0_lightningcss@1.33.0_terser@5.51.2_tsx@4.23.11_yaml@2.9.0/node_modules/vite/dist/node/chunks/dep-M_KD0XSK.js:[2m31524:14[22m[39m
+[90m [2m❯[22m normalizeUrl node_modules/.pnpm/vite@7.1.5_@types+node@22.18.3_jiti@2.7.0_lightningcss@1.33.0_terser@5.51.2_tsx@4.23.11_yaml@2.9.0/node_modules/vite/dist/node/chunks/dep-M_KD0XSK.js:[2m29996:18[22m[39m
+[90m [2m❯[22m node_modules/.pnpm/vite@7.1.5_@types+node@22.18.3_jiti@2.7.0_lightningcss@1.33.0_terser@5.51.2_tsx@4.23.11_yaml@2.9.0/node_modules/vite/dist/node/chunks/dep-M_KD0XSK.js:[2m30054:32[22m[39m
+[90m [2m❯[22m TransformPluginContext.transform node_modules/.pnpm/vite@7.1.5_@types+node@22.18.3_jiti@2.7.0_lightningcss@1.33.0_terser@5.51.2_tsx@4.23.11_yaml@2.9.0/node_modules/vite/dist/node/chunks/dep-M_KD0XSK.js:[2m30022:4[22m[39m
+[90m [2m❯[22m EnvironmentPluginContainer.transform node_modules/.pnpm/vite@7.1.5_@types+node@22.18.3_jiti@2.7.0_lightningcss@1.33.0_terser@5.51.2_tsx@4.23.11_yaml@2.9.0/node_modules/vite/dist/node/chunks/dep-M_KD0XSK.js:[2m31325:14[22m[39m
+[90m [2m❯[22m loadAndTransform node_modules/.pnpm/vite@7.1.5_@types+node@22.18.3_jiti@2.7.0_lightningcss@1.33.0_terser@5.51.2_tsx@4.23.11_yaml@2.9.0/node_modules/vite/dist/node/chunks/dep-M_KD0XSK.js:[2m26407:26[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/11]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[46m native-tela [49m[39m apps/native/test/visualizacao-tela.test.tsx[2m [ apps/native/test/visualizacao-tela.test.tsx ][22m
+[31m[1mError[22m: Failed to resolve import "../src/screens/VisualizacaoScreen" from "apps/native/test/visualizacao-tela.test.tsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36m/Users/marcelviana/projects/octavia-n4-pr8/apps/native/test/visualizacao-tela.test.tsx[39m:86:44
+[33m  74 |  
+  75 |  
+  76 |  const { VisualizacaoScreen } = await import("../src/screens/VisualizacaoScreen");
+     |                                              ^
+  77 |  const { LibraryScreen } = await import("../src/screens/LibraryScreen");
+  78 |  const rotas = await import("../src/rotas-do-avulso");[39m
+[90m [2m❯[22m TransformPluginContext._formatLog node_modules/.pnpm/vite@7.1.5_@types+node@22.18.3_jiti@2.7.0_lightningcss@1.33.0_terser@5.51.2_tsx@4.23.11_yaml@2.9.0/node_modules/vite/dist/node/chunks/dep-M_KD0XSK.js:[2m31527:43[22m[39m
+[90m [2m❯[22m TransformPluginContext.error node_modules/.pnpm/vite@7.1.5_@types+node@22.18.3_jiti@2.7.0_lightningcss@1.33.0_terser@5.51.2_tsx@4.23.11_yaml@2.9.0/node_modules/vite/dist/node/chunks/dep-M_KD0XSK.js:[2m31524:14[22m[39m
+[90m [2m❯[22m normalizeUrl node_modules/.pnpm/vite@7.1.5_@types+node@22.18.3_jiti@2.7.0_lightningcss@1.33.0_terser@5.51.2_tsx@4.23.11_yaml@2.9.0/node_modules/vite/dist/node/chunks/dep-M_KD0XSK.js:[2m29996:18[22m[39m
+[90m [2m❯[22m node_modules/.pnpm/vite@7.1.5_@types+node@22.18.3_jiti@2.7.0_lightningcss@1.33.0_terser@5.51.2_tsx@4.23.11_yaml@2.9.0/node_modules/vite/dist/node/chunks/dep-M_KD0XSK.js:[2m30054:32[22m[39m
+[90m [2m❯[22m TransformPluginContext.transform node_modules/.pnpm/vite@7.1.5_@types+node@22.18.3_jiti@2.7.0_lightningcss@1.33.0_terser@5.51.2_tsx@4.23.11_yaml@2.9.0/node_modules/vite/dist/node/chunks/dep-M_KD0XSK.js:[2m30022:4[22m[39m
+[90m [2m❯[22m EnvironmentPluginContainer.transform node_modules/.pnpm/vite@7.1.5_@types+node@22.18.3_jiti@2.7.0_lightningcss@1.33.0_terser@5.51.2_tsx@4.23.11_yaml@2.9.0/node_modules/vite/dist/node/chunks/dep-M_KD0XSK.js:[2m31325:14[22m[39m
+[90m [2m❯[22m loadAndTransform node_modules/.pnpm/vite@7.1.5_@types+node@22.18.3_jiti@2.7.0_lightningcss@1.33.0_terser@5.51.2_tsx@4.23.11_yaml@2.9.0/node_modules/vite/dist/node/chunks/dep-M_KD0XSK.js:[2m26407:26[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/11]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[45m core [49m[39m packages/core/src/visualizacao.test.ts[2m [ packages/core/src/visualizacao.test.ts ][22m
+[31m[1mError[22m: Cannot find module './visualizacao' imported from '/Users/marcelviana/projects/octavia-n4-pr8/packages/core/src/visualizacao.test.ts'[39m
+[36m [2m❯[22m packages/core/src/visualizacao.test.ts:[2m11:1[22m[39m
+    [90m  9| [39m */[39m
+    [90m 10| [39m[35mimport[39m { describe[33m,[39m expect[33m,[39m it } [35mfrom[39m [32m'vitest'[39m
+    [90m 11| [39mimport { camposDaVisualizacao, dataDoTablet, linhaDasDatas, notasDaVis…
+    [90m   | [39m[31m^[39m
+    [90m 12| [39m[35mimport[39m type { [33mContentDTO[39m } [35mfrom[39m [32m'./types'[39m
+    [90m 13| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/11]⎯[22m[39m
+
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 8 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m [30m[42m native [49m[39m apps/native/test/frases-n4.test.ts[2m > [22m(5) as frases do tablet que a L reusa, no core, sem cópia nas telas[2m > [22mas telas importam do core o que escreviam (o controle do "nenhuma cópia": o texto continua lá, por outro caminho)
+[31m[1mError[22m: ENOENT: no such file or directory, open '/Users/marcelviana/projects/octavia-n4-pr8/apps/native/src/screens/Leitor.tsx'[39m
+[36m [2m❯[22m ler apps/native/test/frases-n4.test.ts:[2m27:38[22m[39m
+    [90m 25| [39m
+    [90m 26| [39m[35mconst[39m [33mRAIZ[39m [33m=[39m [34mresolve[39m(__dirname[33m,[39m [32m'../../..'[39m)
+    [90m 27| [39mconst ler = (rel: string): string => readFileSync(resolve(RAIZ, rel), …
+    [90m   | [39m                                     [31m^[39m
+    [90m 28| [39m
+    [90m 29| [39mdescribe('(1) as P-F aceitas — contra a lista extraída da folha', () =…
+[90m [2m❯[22m apps/native/test/frases-n4.test.ts:[2m296:12[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/11]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[42m native [49m[39m apps/native/test/frases-n4.test.ts[2m > [22m(6) as frases do leitor que a visualização reusa, no core, sem cópia no palco nem no files.ts[2m > [22mo core dá o texto que o palco e o files.ts escreviam
+[31m[1mAssertionError[22m: expected undefined to strictly equal { …(5) }[39m
+
+[32m- Expected:[39m 
+{
+  "baixar": "Baixar",
+  "baixar-sem-rede": "Sem conexão agora — toque em Baixar quando a rede voltar.",
+  "sem-conteudo": "este item não tem conteúdo",
+  "tipo-desconhecido": "tipo desconhecido",
+  "toque-em-baixar": "Toque em Baixar para trazê-lo para este aparelho.",
+}
+
+[31m+ Received:[39m 
+undefined
+
+[36m [2m❯[22m apps/native/test/frases-n4.test.ts:[2m328:39[22m[39m
+    [90m326| [39m
+    [90m327| [39m  [34mit[39m([32m'o core dá o texto que o palco e o files.ts escreviam'[39m[33m,[39m () [33m=>[39m {
+    [90m328| [39m    [34mexpect[39m(conteudo[33m.[39m[33mFRASES_DO_LEITOR[39m)[33m.[39m[34mtoStrictEqual[39m([33mBASE[39m)
+    [90m   | [39m                                      [31m^[39m
+    [90m329| [39m    [35mfor[39m ([35mconst[39m online [35mof[39m [[35mtrue[39m[33m,[39m [35mfalse[39m]) {
+    [90m330| [39m      [35mfor[39m ([35mconst[39m tamanho [35mof[39m [[32m''[39m[33m,[39m [32m' (2,1 MB)'[39m[33m,[39m [32m' (840 KB)'[39m]) {
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/11]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[42m native [49m[39m apps/native/test/frases-n4.test.ts[2m > [22m(6) as frases do leitor que a visualização reusa, no core, sem cópia no palco nem no files.ts[2m > [22mnenhuma cópia em apps/native/src/screens/StageScreen.tsx: as frases saem do core
+[31m[1mAssertionError[22m: titulo: 'este item não tem conteúdo': expected '/**\n * S3 — Palco (PRD T1-R24, R25, …' not to contain 'titulo: \'este item não tem conteúdo\''[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- titulo: 'este item não tem conteúdo'[39m
+[31m+ /**[39m
+[31m+  * S3 — Palco (PRD T1-R24, R25, R26, R27, R28, R29, R30, R31, R32, R33, R34,[39m
+[31m+  * R35; aceites A12, A13, A14, A15, A16, A17, A18). Duas variantes:[39m
+[31m+  *[39m
+[31m+  *  - **texto** (Lyrics, Tab, Chords com corpo) — S3a/b/c;[39m
+[31m+  *  - **arquivo** (Sheet, e Chords escaneada: `content_data` sem corpo e[39m
+[31m+  *    `file_url` presente) — **S3d**, o PDF do disco, paginado; e **S3e**, o[39m
+[31m+  *    placeholder "arquivo não baixado" quando ele não está aqui.[39m
+[31m+  *[39m
+[31m+  * Layout do design: barra superior de 64 dp com "n de N", nome da setlist,[39m
+[31m+  * título · artista · tipo, a nota da música e o chip de rede (em B, 88 em[39m
+[31m+  * duas linhas — N3-D13, abaixo); conteúdo em[39m
+[31m+  * IBM Plex Mono com entrelinha 1,55; barra inferior de 96 dp com sete[39m
+[31m+  * controles **só ícone** (V1-PR3, DESIGN-V1 §6 — o nome de cada um está no[39m
+[31m+  * `accessibilityLabel`); e as **bordas invisíveis** de 15% da largura, ocupando só a[39m
+[31m+  * altura ENTRE as barras (D-1) — é por elas que se avança e volta às cegas.[39m
+[31m+  *[39m
+[31m+  * Decisões medidas no spike (N1-PR4): auto-scroll por `requestAnimationFrame`[39m
+[31m+  * (responde em ~38 ms) e linha longa dentro de um `ScrollView` horizontal[39m
+[31m+  * (sem ele a linha re-quebra).[39m
+[31m+  *[39m
+[31m+  * No PDF o `react-native-pdf` já traz pinça, pan e virar página; o que esta[39m
+[31m+  * tela acrescenta é o "página n de N" do design, a dica de gesto, e a regra[39m
+[31m+  * do T1-R30: **auto-scroll fica desabilitado com o motivo AO TOQUE**, nunca[39m
+[31m+  * mudo — a forma permanente é a do ícone (tinta `lineInfo`, desenho[39m
+[31m+  * amputado) e o motivo aparece na linha acima da barra quando se toca no[39m
+[31m+  * controle (errata do A15, V1-PR3-PRECHECK §14.1). As bordas de 15%[39m
+[31m+  * continuam navegando MÚSICA, não página — errata do design (D-1 / A14):[39m
+[31m+  * quem vira página é o deslize sobre o documento.[39m
+[31m+  */[39m
+[31m+ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'[39m
+[31m+ import {[39m
+[31m+   Pressable,[39m
+[31m+   ScrollView,[39m
+[31m+   StyleSheet,[39m
+[31m+   Text,[39m
+[31m+   View,[39m
+[31m+   useWindowDimensions,[39m
+[31m+   type LayoutChangeEvent,[39m
+[31m+ } from 'react-native'[39m
+[31m+ import { useFocusEffect } from '@react-navigation/native'[39m
+[31m+ import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake'[39m
+[31m+ import Pdf from 'react-native-pdf'[39m
+[31m+ import {[39m
+[31m+   bodyOf,[39m
+[31m+   ehFormatoQueOAppMostra,[39m
+[31m+   endOfSetlist,[39m
+[31m+   FRASES_DO_PALCO,[39m
+[31m+   FRASES_DO_TABLET,[39m
+[31m+   isValidContent,[39m
+[31m+   nextPosition,[39m
+[31m+   nomeDoVoltarDoAvulso,[39m
+[31m+   paginaDe,[39m
+[31m+   prevPosition,[39m
+[31m+   resolveSong,[39m
+[31m+   VOCABULARIO_DE_CONTENT,[39m
+[31m+   type ContentDTO,[39m
+[31m+   type OrigemDoAvulso,[39m
+[31m+   type SetlistDTO,[39m
+[31m+ } from '@octavia/core'[39m
+[31m+ import { ensureFile, fileNameFromUrl, fraseDaFalha, hasFile, knownBytes } from '../files'[39m
+[31m+ import { Icone, type EstadoIcone } from '../icones/Icone'[39m
+[31m+ import type { NomeIcone } from '../icones/dados'[39m
+[31m+ import { log } from '../log'[39m
+[31m+ import { prefetchDemanda } from '../prefetch'[39m
+[31m+ import {[39m
+[31m+   bar,[39m
+[31m+   colors,[39m
+[31m+   dark,[39m
+[31m+   faixas,[39m
+[31m+   font,[39m
+[31m+   lineHeight,[39m
+[31m+   radius,[39m
+[31m+   size,[39m
+[31m+   space,[39m
+[31m+   touch,[39m
+[31m+   tracking,[39m
+[31m+   zoomDefault,[39m
+[31m+   zoomSteps,[39m
+[31m+   type ThemeName,[39m
+[31m+ } from '../theme'[39m
+[31m+ import { useFaixa } from '../useFaixa'[39m
+[31m+[39m
+[31m+ export interface StageScreenProps {[39m
+[31m+   /**[39m
+[31m+    * A setlist do palco — ou `null`: o **palco avulso sem hospedeira** (N4-R16, N4-D30, N4-D63). Aberto de fora de[39m
+[31m+    * uma setlist (a busca de S1; na PR-7 a biblioteca, na PR-8 a visualização), o palco não tem setlist: a barra de[39m
+[31m+    * cima diz `AVULSA` **sem nome de setlist**, a de baixo não tem o índice, e o prefetch sob demanda é o desta[39m
+[31m+    * música (div. 964). Com `null`, o `avulsaContentId` é obrigatório.[39m
+[31m+    */[39m
+[31m+   setlist: SetlistDTO | null[39m
+[31m+   contentById: Map<string, ContentDTO>[39m
+[31m+   posicao: number[39m
+[31m+   /**[39m
+[31m+    * Música AVULSA da biblioteca, aberta pela busca (T1-R22): `content_id` que[39m
+[31m+    * não pertence a esta posição da setlist. Quando presente, o palco mostra[39m
+[31m+    * essa música e as bordas não navegam — sair devolve o palco à posição de[39m
+[31m+    * onde a busca partiu.[39m
+[31m+    */[39m
+[31m+   avulsaContentId: string | null[39m
+[31m+   /**[39m
+[31m+    * De onde o avulso SEM hospedeira veio — o nome acessível do voltar (*Voltar para a busca · para a biblioteca ·[39m
+[31m+    * para a visualização*, N4-R16). `null` no palco com setlist; o avulso aberto pela busca de dentro de uma setlist[39m
+[31m+    * continua *Voltar para a busca* (N4-D30).[39m
+[31m+    */[39m
+[31m+   origemDoAvulso?: OrigemDoAvulso | null[39m
+[31m+   online: boolean[39m
+[31m+   onPosicao: (p: number) => void[39m
+[31m+   onFim: () => void[39m
+[31m+   onIndice: () => void[39m
+[31m+   onBusca: () => void[39m
+[31m+   onSair: () => void[39m
+[31m+   /** O disco mudou (download ou despejo) — a raiz recalcula `filesPresent`. */[39m
+[31m+   onArquivosMudaram: () => void[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /** Tag do wake lock — só o palco a usa, então só ele a solta. */[39m
+[31m+ const TAG_PALCO = 'octavia-palco'[39m
+[31m+[39m
+[31m+ /** Quanto tempo o motivo de um controle inerte fica na linha acima da barra. */[39m
+[31m+ const MOTIVO_MS = 2500[39m
+[31m+[39m
+[31m+ /** A dica de gesto do PDF (S3d) — a linha acima da barra, como no design. */[39m
+[31m+ const DICA_PDF = 'pinça para zoom · arraste para mover · deslize para virar a página'[39m
+[31m+[39m
+[31m+ const TIPO: Record<string, string> = {[39m
+[31m+   Lyrics: 'Letra',[39m
+[31m+   Chords: 'Cifra',[39m
+[31m+   Tab: 'Tab',[39m
+[31m+   Sheet: 'Partitura',[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /** Motivo do placeholder, na linguagem do design (nunca tela vazia). */[39m
+[31m+ const MOTIVO: Record<string, { titulo: string; apoio: string }> = {[39m
+[31m+   'no-body': {[39m
+[31m+     titulo: 'este item não tem conteúdo',[39m
+[31m+     apoio:[39m
+[31m+       'A música existe na setlist, mas não tem letra, cifra, tab ou arquivo. Edite na versão web. Toque na borda direita para seguir.',[39m
+[31m+   },[39m
+[31m+   'no-key': {[39m
+[31m+     titulo: 'este item não tem conteúdo',[39m
+[31m+     apoio:[39m
+[31m+       'O conteúdo salvo não traz o texto desta música. Edite na versão web. Toque na borda direita para seguir.',[39m
+[31m+   },[39m
+[31m+   'not-string': {[39m
+[31m+     titulo: 'este item não tem conteúdo',[39m
+[31m+     apoio:[39m
+[31m+       'O conteúdo salvo não traz o texto desta música. Edite na versão web. Toque na borda direita para seguir.',[39m
+[31m+   },[39m
+[31m+   'unknown-type': {[39m
+[31m+     titulo: 'tipo desconhecido',[39m
+[31m+     apoio: 'Este item tem um tipo que o app ainda não sabe mostrar. Toque na borda direita para seguir.',[39m
+[31m+   },[39m
+[31m+   ausente: {[39m
+[31m+     titulo: 'conteúdo não baixado',[39m
+[31m+     apoio:[39m
+[31m+       'Esta música ainda não foi sincronizada neste aparelho. Conecte-se à internet para baixá-la.',[39m
+[31m+   },[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /** "242.176 B" → "237 KB" — o "(1,2 MB)" do S3e. */[39m
+[31m+ function tamanhoLegivel(bytes: number): string {[39m
+[31m+   if (bytes >= 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1).replace('.', ',')} MB`[39m
+[31m+   return `${Math.round(bytes / 1024)} KB`[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /**[39m
+[31m+  * O arquivo desta posição, nas quatro situações que a tela precisa[39m
+[31m+  * distinguir. `bytes` sobrevive ao despejo (o índice lembra o tamanho), e é[39m
+[31m+  * por isso que o S3e consegue dizer o tamanho de algo que não está aqui.[39m
+[31m+  */[39m
+[31m+ type EstadoArquivo =[39m
+[31m+   | { fase: 'buscando' }[39m
+[31m+   | { fase: 'pronto'; uri: string }[39m
+[31m+   | { fase: 'ausente'; bytes: number | null }[39m
+[31m+   | { fase: 'erro'; mensagem: string; bytes: number | null }[39m
+[31m+[39m
+[31m+ export function StageScreen({[39m
+[31m+   setlist,[39m
+[31m+   contentById,[39m
+[31m+   posicao,[39m
+[31m+   avulsaContentId,[39m
+[31m+   origemDoAvulso = null,[39m
+[31m+   online,[39m
+[31m+   onPosicao,[39m
+[31m+   onFim,[39m
+[31m+   onIndice,[39m
+[31m+   onBusca,[39m
+[31m+   onSair,[39m
+[31m+   onArquivosMudaram,[39m
+[31m+ }: StageScreenProps): React.JSX.Element {[39m
+[31m+   /**[39m
+[31m+    * T1-R33 — a tela não apaga ENQUANTO o palco está aberto.[39m
+[31m+    *[39m
+[31m+    * Por FOCO, não por montagem: o `useKeepAwake` solta o lock no unmount, mas[39m
+[31m+    * o native-stack **não desmonta** a tela ao navegar para outra da pilha —[39m
+[31m+    * medido na N1-PR4, o `KEEP_SCREEN_ON` continuava na janela do app depois[39m
+[31m+    * de sair do palco. Com `useFocusEffect` o lock vive exatamente enquanto o[39m
+[31m+    * palco está visível.[39m
+[31m+    */[39m
+[31m+   /**[39m
+[31m+    * N1-D17 — `stage restore n=<i>/<N>`: o palco voltou de uma tela empilhada[39m
+[31m+    * (índice, busca, ou o palco avulso do T1-R22) na posição em que estava.[39m
+[31m+    *[39m
+[31m+    * Antes desta linha, a única prova da restauração era comparar dois[39m
+[31m+    * screencaps pixel a pixel (N1-PR6): um aceite não deve depender disso.[39m
+[31m+    *[39m
+[31m+    * Só nos focos SEGUINTES ao primeiro — a montagem inicial não é uma volta.[39m
+[31m+    * A posição sai de um ref, e não das dependências, para o efeito de foco[39m
+[31m+    * não re-rodar a cada navegação dentro da própria setlist: com `[posicao]`[39m
+[31m+    * na lista, avançar uma música emitiria `stage restore`, que é o oposto do[39m
+[31m+    * que a linha significa. No palco AVULSO a linha não sai: ele não tem[39m
+[31m+    * posição na setlist (o "n de N" da barra é "AVULSA").[39m
+[31m+    */[39m
+[31m+   const jaFocou = useRef(false)[39m
+[31m+   const posicaoRef = useRef(posicao)[39m
+[31m+   const totalRef = useRef(0)[39m
+[31m+   const avulsaRef = useRef(false)[39m
+[31m+[39m
+[31m+   useFocusEffect([39m
+[31m+     useCallback(() => {[39m
+[31m+       void activateKeepAwakeAsync(TAG_PALCO)[39m
+[31m+       log('keepawake on')[39m
+[31m+       if (jaFocou.current && !avulsaRef.current) {[39m
+[31m+         log(`stage restore n=${posicaoRef.current}/${totalRef.current}`)[39m
+[31m+       }[39m
+[31m+       jaFocou.current = true[39m
+[31m+       return () => {[39m
+[31m+         deactivateKeepAwake(TAG_PALCO)[39m
+[31m+         log('keepawake off')[39m
+[31m+       }[39m
+[31m+     }, []),[39m
+[31m+   )[39m
+[31m+[39m
+[31m+   const { width, height } = useWindowDimensions()[39m
+[31m+   /**[39m
+[31m+    * N3-PR5 — a barra superior é a ÚNICA coisa do palco que muda de faixa[39m
+[31m+    * (N3-D13, `N3-B-S3`): em B, 88 em duas linhas — posição + setlist (e a[39m
+[31m+    * página, a nota e o ponto de sem rede) na primeira, título · artista ·[39m
+[31m+    * tipo na segunda, com a largura inteira. A base, o corpo e as bordas de 15 %[39m
+[31m+    * são os de C: as bordas continuam medindo o `meio` (que fica 24 mais baixo),[39m
+[31m+    * não a faixa. Em C, a barra de uma linha de sempre, nó por nó (T3-R2).[39m
+[31m+    */[39m
+[31m+   const t = faixas[useFaixa()].palco[39m
+[31m+[39m
+[31m+   /**[39m
+[31m+    * D-c / T1-R27 — `rotation=landscape|portrait n=<i>/<N>`: a linha que o[39m
+[31m+    * catálogo (N1-D5) promete para o A14 e que o app nunca emitia — o aceite[39m
+[31m+    * da N1-PR7 provou a rotação por screencap porque o log não existia.[39m
+[31m+    *[39m
+[31m+    * Sai só na MUDANÇA de orientação, não na montagem: o `useWindowDimensions`[39m
+[31m+    * re-renderiza a cada giro, e sem o ref uma linha sairia a cada abertura do[39m
+[31m+    * palco. A posição vem dos mesmos refs do `stage restore` (N1-D17), pela[39m
+[31m+    * mesma razão — o efeito não pode depender de `posicao`.[39m
+[31m+    */[39m
+[31m+   const orientacaoRef = useRef<'landscape' | 'portrait' | null>(null)[39m
+[31m+   const orientacao: 'landscape' | 'portrait' = width >= height ? 'landscape' : 'portrait'[39m
+[31m+[39m
+[31m+   useEffect(() => {[39m
+[31m+     const anterior = orientacaoRef.current[39m
+[31m+     orientacaoRef.current = orientacao[39m
+[31m+     if (anterior === null || anterior === orientacao) return[39m
+[31m+     log(`rotation=${orientacao} n=${posicaoRef.current}/${totalRef.current}`)[39m
+[31m+   }, [orientacao])[39m
+[31m+   const [zoom, setZoom] = useState<number>(zoomDefault)[39m
+[31m+   const [tema, setTema] = useState<ThemeName>('dark')[39m
+[31m+   const [rodando, setRodando] = useState(false)[39m
+[31m+   const [arquivo, setArquivo] = useState<EstadoArquivo>({ fase: 'buscando' })[39m
+[31m+   const [pagina, setPagina] = useState({ n: 0, total: 0 })[39m
+[31m+[39m
+[31m+   /**[39m
+[31m+    * V1-PR3 / errata do A15 — o motivo do controle inerte aparece AO TOQUE, na[39m
+[31m+    * linha acima da barra (onde o design já põe a dica de gesto do PDF), por[39m
+[31m+    * `MOTIVO_MS`, e some. A forma permanente é a do ícone (tinta `lineInfo` e[39m
+[31m+    * o desenho amputado, §6.2 + E3); a palavra não mora mais dentro do[39m
+[31m+    * controle. Trocar de música apaga o motivo antes do tempo.[39m
+[31m+    */[39m
+[31m+   const [motivoVisivel, setMotivoVisivel] = useState<string | null>(null)[39m
+[31m+   const motivoTimer = useRef<ReturnType<typeof setTimeout> | null>(null)[39m
+[31m+   const revelarMotivo = useCallback((m: string) => {[39m
+[31m+     if (motivoTimer.current !== null) clearTimeout(motivoTimer.current)[39m
+[31m+     setMotivoVisivel(m)[39m
+[31m+     motivoTimer.current = setTimeout(() => setMotivoVisivel(null), MOTIVO_MS)[39m
+[31m+   }, [])[39m
+[31m+   useEffect([39m
+[31m+     () => () => {[39m
+[31m+       if (motivoTimer.current !== null) clearTimeout(motivoTimer.current)[39m
+[31m+     },[39m
+[31m+     [],[39m
+[31m+   )[39m
+[31m+[39m
+[31m+   const scroll = useRef<ScrollView | null>(null)[39m
+[31m+   const y = useRef(0)[39m
+[31m+   const frame = useRef<number | null>(null)[39m
+[31m+   const pedidoEm = useRef(0)[39m
+[31m+   const primeiroFrame = useRef(true)[39m
+[31m+   const navegouEm = useRef(0)[39m
+[31m+[39m
+[31m+   const songs = useMemo([39m
+[31m+     () => (setlist === null ? [] : [...setlist.setlist_songs].sort((a, b) => a.position - b.position)),[39m
+[31m+     [setlist],[39m
+[31m+   )[39m
+[31m+   const n = songs.length[39m
+[31m+   const avulsa = avulsaContentId !== null[39m
+[31m+   const song = avulsa ? undefined : songs[posicao - 1][39m
+[31m+   const resolvida = song !== undefined ? resolveSong(song, contentById) : null[39m
+[31m+   const content = avulsa ? (contentById.get(avulsaContentId) ?? null) : (resolvida?.content ?? null)[39m
+[31m+   const validade =[39m
+[31m+     content !== null ? isValidContent(content.content_type, content.content_data, content.file_url) : null[39m
+[31m+   const corpo = content !== null ? bodyOf(content.content_type, content.content_data) : null[39m
+[31m+   const cor = colors[tema][39m
+[31m+[39m
+[31m+   // Os refs que o efeito de foco (N1-D17) lê sem entrar nas dependências.[39m
+[31m+   posicaoRef.current = posicao[39m
+[31m+   totalRef.current = n[39m
+[31m+   avulsaRef.current = avulsa[39m
+[31m+[39m
+[31m+   const pararScroll = useCallback(() => {[39m
+[31m+     if (frame.current !== null) cancelAnimationFrame(frame.current)[39m
+[31m+     frame.current = null[39m
+[31m+   }, [])[39m
+[31m+[39m
+[31m+   /**[39m
+[31m+    * Troca de música: mede o tempo até o primeiro render do conteúdo novo[39m
+[31m+    * (T1-R34 / A17), volta ao topo e para o auto-scroll — mantendo zoom e tema[39m
+[31m+    * (T1-R32: "o estado persiste ao trocar de música").[39m
+[31m+    *[39m
+[31m+    * As dependências são só valores ESTÁVEIS (`posicao`, `n`, o id da setlist[39m
+[31m+    * e a chave do placeholder). Com `validade`/`content` na lista, o efeito[39m
+[31m+    * rodava a cada render — inclusive o render causado por `setRodando(true)`[39m
+[31m+    * — e cancelava o `requestAnimationFrame` antes do primeiro frame, o que[39m
+[31m+    * matava o auto-scroll em silêncio (defeito medido no device, N1-PR4).[39m
+[31m+    */[39m
+[31m+   const chavePlaceholder =[39m
+[31m+     content === null[39m
+[31m+       ? 'content-missing'[39m
+[31m+       : validade !== null && !validade.ok[39m
+[31m+         ? validade.reason[39m
+[31m+         : null[39m
+[31m+[39m
+[31m+   /**[39m
+[31m+    * O corpo desta posição é um ARQUIVO? (Sheet, e Chords escaneada — o core[39m
+[31m+    * decide, `isValidContent(...).body === 'file'`.) A URL vira dependência[39m
+[31m+    * estável dos efeitos do PDF; `null` significa "variante texto".[39m
+[31m+    */[39m
+[31m+   const urlArquivo =[39m
+[31m+     validade !== null && validade.ok && validade.body === 'file' ? content?.file_url ?? null : null[39m
+[31m+[39m
+[31m+   /**[39m
+[31m+    * N4-D43, N4-D83 — o arquivo é de um **formato que o app ainda não mostra**? Decide a extensão (o core: só `.pdf`[39m
+[31m+    * se mostra), antes do disco: baixado ou não, o leitor de PDF não o abre — o palco nem tenta (nenhum `ensureFile`)[39m
+[31m+    * e mostra o placeholder de formato. Vale no palco com setlist e no avulso: é o mesmo componente. A base do G-inv[39m
+[31m+    * não tem esse caso (a fixture do pre-check do N3 só tem `.pdf`, div. 1028).[39m
+[31m+    */[39m
+[31m+   const formato = urlArquivo !== null && !ehFormatoQueOAppMostra(urlArquivo)[39m
+[31m+[39m
+[31m+   useEffect(() => {[39m
+[31m+     pararScroll()[39m
+[31m+     setRodando(false)[39m
+[31m+     setMotivoVisivel(null)[39m
+[31m+     y.current = 0[39m
+[31m+     scroll.current?.scrollTo({ y: 0, animated: false })[39m
+[31m+     if (navegouEm.current > 0 && setlist !== null) {[39m
+[31m+       log([39m
+[31m+         `nav n=${posicao}/${n} setlist=${setlist.id.slice(0, 8)} t=${Date.now() - navegouEm.current}`,[39m
+[31m+       )[39m
+[31m+       navegouEm.current = 0[39m
+[31m+     }[39m
+[31m+     if (chavePlaceholder !== null) log(`placeholder kind=${chavePlaceholder}`)[39m
+[31m+   }, [posicao, n, setlist, chavePlaceholder, pararScroll])[39m
+[31m+[39m
+[31m+   /**[39m
+[31m+    * T1-R26 — o arquivo desta posição: **disco primeiro** (A9/A13), rede só[39m
+[31m+    * se preciso, e sem arquivo nem rede o S3e — nunca tela branca. Sem retry[39m
+[31m+    * automático: quem tenta de novo é o "Baixar" do usuário (T1-R37).[39m
+[31m+    */[39m
+[31m+   const buscarArquivo = useCallback([39m
+[31m+     async (url: string, pedidoPeloUsuario: boolean): Promise<void> => {[39m
+[31m+       const nome = fileNameFromUrl(url)[39m
+[31m+       if (!hasFile(url) && !online && !pedidoPeloUsuario) {[39m
+[31m+         setArquivo({ fase: 'ausente', bytes: knownBytes(url) })[39m
+[31m+         log(`placeholder kind=file-missing name=${nome}`)[39m
+[31m+         return[39m
+[31m+       }[39m
+[31m+       setArquivo({ fase: 'buscando' })[39m
+[31m+       try {[39m
+[31m+         const r = await ensureFile(url)[39m
+[31m+         setArquivo({ fase: 'pronto', uri: r.uri })[39m
+[31m+         if (r.src === 'download') onArquivosMudaram()[39m
+[31m+       } catch (e: unknown) {[39m
+[31m+         // DUAS metades, e de propósito (W2, div. 125). O `mensagem` é o[39m
+[31m+         // DETALHE — com o nome do objeto e a URL já higienizada pelo `falha()`[39m
+[31m+         // —, e é ele que continua indo para o log, porque é o que faz um[39m
+[31m+         // relatório ser diagnosticável. O que o MÚSICO lê é a `fraseDaFalha()`,[39m
+[31m+         // de um conjunto FECHADO de frases em pt-BR. Antes as duas eram a mesma[39m
+[31m+         // coisa, e o palco mostrava `1751910900697-Easy_-_Guitar.pdf: Call to[39m
+[31m+         // function 'FileSystemDownloadTask.start' has been rejected.`[39m
+[31m+         const mensagem = e instanceof Error ? e.message : 'falha ao baixar'[39m
+[31m+         log(`download-error ${mensagem}`)[39m
+[31m+         setArquivo({ fase: 'erro', mensagem: fraseDaFalha(e), bytes: knownBytes(url) })[39m
+[31m+       }[39m
+[31m+     },[39m
+[31m+     [online, onArquivosMudaram],[39m
+[31m+   )[39m
+[31m+[39m
+[31m+   useEffect(() => {[39m
+[31m+     setPagina({ n: 0, total: 0 })[39m
+[31m+     if (urlArquivo === null || formato) {[39m
+[31m+       setArquivo({ fase: 'buscando' })[39m
+[31m+       return[39m
+[31m+     }[39m
+[31m+     void buscarArquivo(urlArquivo, false)[39m
+[31m+   }, [urlArquivo, formato, buscarArquivo])[39m
+[31m+[39m
+[31m+   /**[39m
+[31m+    * T1-R16 — prefetch sob demanda a partir desta posição (atual, +1, +2, +3,[39m
+[31m+    * −1, resto). Roda a cada navegação e só com rede; o `ensureFile` deduplica[39m
+[31m+    * o download que o efeito de cima já pode ter começado.[39m
+[31m+    *[39m
+[31m+    * No avulso SEM hospedeira (N4-PR6, div. 964) não há setlist de onde partir:[39m
+[31m+    * o plano é o arquivo DESTA música — antes ele era o da primeira setlist da[39m
+[31m+    * lista, a partir da posição da busca.[39m
+[31m+    */[39m
+[31m+   const avulsaSemHospedeira = setlist === null ? avulsaContentId : null[39m
+[31m+   useEffect(() => {[39m
+[31m+     if (!online) return[39m
+[31m+     void prefetchDemanda(setlist, contentById, posicao, avulsaSemHospedeira).then(onArquivosMudaram)[39m
+[31m+   }, [setlist, contentById, posicao, avulsaSemHospedeira, online, onArquivosMudaram])[39m
+[31m+[39m
+[31m+   const irPara = useCallback([39m
+[31m+     (destino: number) => {[39m
+[31m+       navegouEm.current = Date.now()[39m
+[31m+       onPosicao(destino)[39m
+[31m+     },[39m
+[31m+     [onPosicao],[39m
+[31m+   )[39m
+[31m+[39m
+[31m+   const avancar = useCallback(() => {[39m
+[31m+     if (avulsa) return[39m
+[31m+     if (endOfSetlist(posicao, n)) {[39m
+[31m+       log(`end-of-setlist n=${n}`)[39m
+[31m+       onFim()[39m
+[31m+       return[39m
+[31m+     }[39m
+[31m+     irPara(nextPosition(posicao, n))[39m
+[31m+   }, [avulsa, posicao, n, onFim, irPara])[39m
+[31m+[39m
+[31m+   const voltar = useCallback(() => {[39m
+[31m+     if (avulsa || posicao <= 1) return[39m
+[31m+     irPara(prevPosition(posicao, n))[39m
+[31m+   }, [avulsa, posicao, n, irPara])[39m
+[31m+[39m
+[31m+   const passo = useCallback(() => {[39m
+[31m+     if (primeiroFrame.current) {[39m
+[31m+       primeiroFrame.current = false[39m
+[31m+       log(`autoscroll on t=${Date.now() - pedidoEm.current}`)[39m
+[31m+     }[39m
+[31m+     y.current += 1[39m
+[31m+     scroll.current?.scrollTo({ y: y.current, animated: false })[39m
+[31m+     frame.current = requestAnimationFrame(passo)[39m
+[31m+   }, [])[39m
+[31m+[39m
+[31m+   const alternarScroll = useCallback(() => {[39m
+[31m+     // T1-R30: em conteúdo que não é texto o controle fica desabilitado COM[39m
+[31m+     // motivo — nunca mudo. (O caso PDF chega com a N1-PR5.)[39m
+[31m+     if (corpo === null) {[39m
+[31m+       log('autoscroll disabled kind=pdf')[39m
+[31m+       return[39m
+[31m+     }[39m
+[31m+     if (rodando) {[39m
+[31m+       pararScroll()[39m
+[31m+       setRodando(false)[39m
+[31m+       log('autoscroll off t=0')[39m
+[31m+       return[39m
+[31m+     }[39m
+[31m+     pedidoEm.current = Date.now()[39m
+[31m+     primeiroFrame.current = true[39m
+[31m+     setRodando(true)[39m
+[31m+     frame.current = requestAnimationFrame(passo)[39m
+[31m+   }, [corpo, rodando, passo, pararScroll])[39m
+[31m+[39m
+[31m+   const mudarZoom = useCallback((delta: number) => {[39m
+[31m+     setZoom((atual) => {[39m
+[31m+       const i = zoomSteps.indexOf(atual as (typeof zoomSteps)[number])[39m
+[31m+       const j = Math.min(Math.max(i + delta, 0), zoomSteps.length - 1)[39m
+[31m+       const novo = zoomSteps[j] ?? atual[39m
+[31m+       log(`zoom dp=${novo}`)[39m
+[31m+       return novo[39m
+[31m+     })[39m
+[31m+   }, [])[39m
+[31m+[39m
+[31m+   const alternarTema = useCallback(() => {[39m
+[31m+     setTema((t) => {[39m
+[31m+       const novo: ThemeName = t === 'dark' ? 'light' : 'dark'[39m
+[31m+       log(`theme=${novo}`)[39m
+[31m+       return novo[39m
+[31m+     })[39m
+[31m+   }, [])[39m
+[31m+[39m
+[31m+   useEffect(() => pararScroll, [pararScroll])[39m
+[31m+[39m
+[31m+   // Bordas: 15% da largura, altura ENTRE as barras (D-1 / A14) — e agora as[39m
+[31m+   // duas medidas vêm do `onLayout` do `meio`, não de `useWindowDimensions()`.[39m
+[31m+   //[39m
+[31m+   // Por quê (V1-PRECHECK §3.4, div. 16/24): `useWindowDimensions()` devolve a[39m
+[31m+   // TELA (711,1 dp no AVD), e o código a tratava como JANELA (627,1 dp). A[39m
+[31m+   // borda saía com 551,1 dp onde o `meio` tem 467,1 — **84,0 dp de transbordo**,[39m
+[31m+   // exatamente a soma dos insets, cobrindo 100% do `auto-scroll`. O A14 afirma[39m
+[31m+   // "entre as barras superior e inferior" desde o N1, e isso era falso.[39m
+[31m+   //[39m
+[31m+   // E por que `onLayout` e não `useSafeAreaInsets()`: o `SafeAreaView` da raiz[39m
+[31m+   // (`App.tsx:206`) já consome os quatro insets, então `height - insets.top -[39m
+[31m+   // insets.bottom` acerta HOJE por coincidência aritmética e quebra no dia em[39m
+[31m+   // que alguém tocar em `edges`. O `onLayout` mede a altura que a View de fato[39m
+[31m+   // recebeu, seja quem for que tenha consumido o quê acima dela.[39m
+[31m+   const [meio, setMeio] = useState<{ largura: number; altura: number } | null>(null)[39m
+[31m+   const medirMeio = useCallback((e: LayoutChangeEvent) => {[39m
+[31m+     const { width: w, height: h } = e.nativeEvent.layout[39m
+[31m+     setMeio((m) => (m !== null && m.largura === w && m.altura === h ? m : { largura: w, altura: h }))[39m
+[31m+   }, [])[39m
+[31m+   const alturaConteudo = meio === null ? 0 : Math.max(meio.altura, touch.min)[39m
+[31m+   const larguraBorda = meio === null ? 0 : Math.max(meio.largura * 0.15, touch.min)[39m
+[31m+[39m
+[31m+   const estiloTexto = {[39m
+[31m+     fontFamily: content?.content_type === 'Chords' || content?.content_type === 'Tab' ? font.mono : font.mono,[39m
+[31m+     fontSize: zoom,[39m
+[31m+     lineHeight: zoom * (content?.content_type === 'Tab' ? lineHeight.tab : lineHeight.text),[39m
+[31m+     color: cor.text,[39m
+[31m+   }[39m
+[31m+[39m
+[31m+   const motivo =[39m
+[31m+     content === null[39m
+[31m+       ? MOTIVO.ausente[39m
+[31m+       : validade !== null && !validade.ok[39m
+[31m+         ? MOTIVO[validade.reason][39m
+[31m+         : undefined[39m
+[31m+[39m
+[31m+   // A linha acima da barra: o motivo revelado por um toque, senão a dica de[39m
+[31m+   // gesto do PDF (só no S3d, e só com o arquivo pronto), senão nada.[39m
+[31m+   const linha = motivoVisivel ?? (arquivo.fase === 'pronto' && urlArquivo !== null ? DICA_PDF : null)[39m
+[31m+[39m
+[31m+   // Os nós da barra superior — os mesmos nas duas faixas; o que muda é onde[39m
+[31m+   // ficam (N3-D13). Em C a ordem é a de sempre: posição, setlist, título,[39m
+[31m+   // página, nota, ponto.[39m
+[31m+   const posicaoEl = ([39m
+[31m+     <Text style={[styles.posicao, { color: cor.text }]}>{avulsa ? FRASES_DO_PALCO.avulsa : `${posicao} DE ${n}`}</Text>[39m
+[31m+   )[39m
+[31m+   const tituloEl = (extra: typeof styles.tituloNaLinha | null): React.JSX.Element => ([39m
+[31m+     <Text style={[styles.titulo, extra, { color: cor.text }]} numberOfLines={1}>[39m
+[31m+       {content?.title ?? '—'}[39m
+[31m+       <Text style={{ color: cor.muted }}>[39m
+[31m+         {content?.artist !== null && content?.artist !== undefined ? ` · ${content.artist}` : ''}[39m
+[31m+         {content !== null ? ` · ${TIPO[content.content_type] ?? content.content_type}` : ''}[39m
+[31m+       </Text>[39m
+[31m+     </Text>[39m
+[31m+   )[39m
+[31m+   const extrasDaBarra = ([39m
+[31m+     <>[39m
+[31m+       {/* S3d: "página n de N" — só no PDF, e só depois de ele carregar. */}[39m
+[31m+       {pagina.total > 0 ? ([39m
+[31m+         <Text style={[styles.paginaTexto, { color: cor.muted }]} testID="pagina">[39m
+[31m+           {paginaDe(pagina.n, pagina.total)}[39m
+[31m+         </Text>[39m
+[31m+       ) : null}[39m
+[31m+       {/* T1-R35: a nota da POSIÇÃO, discreta; sem área vazia quando é nula. */}[39m
+[31m+       {song?.notes !== null && song?.notes !== undefined && song.notes.length > 0 ? ([39m
+[31m+         <View style={[styles.nota, { borderColor: cor.line }]}>[39m
+[31m+           <Text style={[styles.notaTexto, { color: cor.muted }]} numberOfLines={1}>[39m
+[31m+             {`Nota: ${song.notes}`}[39m
+[31m+           </Text>[39m
+[31m+         </View>[39m
+[31m+       ) : null}[39m
+[31m+       {!online ? <View style={styles.pontoOffline} /> : null}[39m
+[31m+     </>[39m
+[31m+   )[39m
+[31m+[39m
+[31m+   // N4-R16 — no avulso SEM hospedeira não há nome de setlist: em C o título (`flex: 1`) ganha a largura dele; em B a[39m
+[31m+   // linha 1 fica com `AVULSA` e um espaçador no lugar do nome, para a página, a nota e o ponto de sem rede ficarem[39m
+[31m+   // à direita, onde estão no palco com setlist (N3-B-S3). Nada mais da barra muda.[39m
+[31m+   return ([39m
+[31m+     <View style={[styles.tela, { backgroundColor: cor.bg }]}>[39m
+[31m+       {t.empilha ? ([39m
+[31m+         <View style={[styles.barraTopo, styles.barraEmpilhada, { height: t.barra, borderBottomColor: cor.line }]}>[39m
+[31m+           <View style={styles.linhaDaBarra}>[39m
+[31m+             {posicaoEl}[39m
+[31m+             {setlist !== null ? ([39m
+[31m+               <Text style={[styles.nomeSetlist, styles.nomeSetlistNaLinha, { color: cor.muted }]} numberOfLines={1}>[39m
+[31m+                 {setlist.name}[39m
+[31m+               </Text>[39m
+[31m+             ) : ([39m
+[31m+               <View style={styles.nomeSetlistNaLinha} />[39m
+[31m+             )}[39m
+[31m+             {extrasDaBarra}[39m
+[31m+           </View>[39m
+[31m+           {tituloEl(styles.tituloNaLinha)}[39m
+[31m+         </View>[39m
+[31m+       ) : ([39m
+[31m+         <View style={[styles.barraTopo, { height: t.barra, borderBottomColor: cor.line }]}>[39m
+[31m+           {posicaoEl}[39m
+[31m+           {setlist !== null ? ([39m
+[31m+             <Text style={[styles.nomeSetlist, { color: cor.muted }]} numberOfLines={1}>[39m
+[31m+               {setlist.name}[39m
+[31m+             </Text>[39m
+[31m+           ) : null}[39m
+[31m+           {tituloEl(null)}[39m
+[31m+           {extrasDaBarra}[39m
+[31m+         </View>[39m
+[31m+       )}[39m
+[31m+[39m
+[31m+       <View style={styles.meio} onLayout={medirMeio}>[39m
+[31m+         {formato && urlArquivo !== null ? ([39m
+[31m+           <Formato[39m
+[31m+             nome={fileNameFromUrl(urlArquivo)}[39m
+[31m+             tipo={TIPO[content?.content_type ?? ''] ?? 'arquivo'}[39m
+[31m+             bytes={knownBytes(urlArquivo)}[39m
+[31m+             cor={cor}[39m
+[31m+           />[39m
+[31m+         ) : urlArquivo !== null ? ([39m
+[31m+           <Arquivo[39m
+[31m+             estado={arquivo}[39m
+[31m+             titulo={content?.title ?? ''}[39m
+[31m+             tipo={(TIPO[content?.content_type ?? ''] ?? 'arquivo').toLowerCase()}[39m
+[31m+             online={online}[39m
+[31m+             cor={cor}[39m
+[31m+             onPaginas={(total) => {[39m
+[31m+               log(`pdf-render pages=${total} src=disk`)[39m
+[31m+               setPagina({ n: 1, total })[39m
+[31m+             }}[39m
+[31m+             onPagina={(atual, total) => {[39m
+[31m+               log(`pdf-page n=${atual}/${total}`)[39m
+[31m+               setPagina({ n: atual, total })[39m
+[31m+             }}[39m
+[31m+             onBaixar={() => void buscarArquivo(urlArquivo, true)}[39m
+[31m+           />[39m
+[31m+         ) : ([39m
+[31m+           <ScrollView ref={scroll} style={styles.conteudo} contentContainerStyle={styles.conteudoPad}>[39m
+[31m+             {motivo !== undefined ? ([39m
+[31m+               <View style={styles.placeholder} testID="placeholder">[39m
+[31m+                 <Text style={[styles.placeholderTitulo, { color: cor.text }]}>{motivo.titulo}</Text>[39m
+[31m+                 <Text style={[styles.placeholderApoio, { color: cor.muted }]}>{motivo.apoio}</Text>[39m
+[31m+               </View>[39m
+[31m+             ) : ([39m
+[31m+               // O ScrollView horizontal é o que impede a re-quebra da linha[39m
+[31m+               // longa em qualquer zoom (T1-R25/R31 — provado no spike).[39m
+[31m+               <ScrollView horizontal showsHorizontalScrollIndicator={false}>[39m
+[31m+                 <Text style={estiloTexto} testID="corpo">[39m
+[31m+                   {corpo ?? ''}[39m
+[31m+                 </Text>[39m
+[31m+               </ScrollView>[39m
+[31m+             )}[39m
+[31m+           </ScrollView>[39m
+[31m+         )}[39m
+[31m+[39m
+[31m+         {linha !== null ? ([39m
+[31m+           <Text style={[styles.dica, { color: cor.muted }]} testID="linha-motivo">[39m
+[31m+             {linha}[39m
+[31m+           </Text>[39m
+[31m+         ) : null}[39m
+[31m+[39m
+[31m+         {/* No PRIMEIRO frame o `onLayout` ainda não disparou e as bordas não[39m
+[31m+             existem — melhor do que existirem com o tamanho errado num canto.[39m
+[31m+             Não afeta o A17: ele mede a TROCA de música, e trocar de música não[39m
+[31m+             remonta o palco, então o `meio` não é medido de novo. */}[39m
+[31m+         {meio !== null ? ([39m
+[31m+           <>[39m
+[31m+             <Pressable[39m
+[31m+               style={[styles.borda, { width: larguraBorda, height: alturaConteudo, left: 0 }]}[39m
+[31m+               onPress={voltar}[39m
+[31m+               testID="borda-voltar"[39m
+[31m+             />[39m
+[31m+             <Pressable[39m
+[31m+               style={[styles.borda, { width: larguraBorda, height: alturaConteudo, right: 0 }]}[39m
+[31m+               onPress={avancar}[39m
+[31m+               testID="borda-avancar"[39m
+[31m+             />[39m
+[31m+           </>[39m
+[31m+         ) : null}[39m
+[31m+       </View>[39m
+[31m+[39m
+[31m+       {/* Os sete controles, só ícone, alinhados à esquerda (decisão do Marcel,[39m
+[31m+           Q4: o polegar apoia na borda e a posição aprendida se preserva). Os[39m
+[31m+           nomes acessíveis são verbatim do DESIGN-V1 §6.4. */}[39m
+[31m+       <View style={[styles.barraBaixo, { borderTopColor: cor.line }]}>[39m
+[31m+         <Controle[39m
+[31m+           icone="auto-scroll"[39m
+[31m+           accessibilityLabel={[39m
+[31m+             corpo === null[39m
+[31m+               ? 'Rolagem automática, indisponível: só em texto'[39m
+[31m+               : rodando[39m
+[31m+                 ? 'Rolagem automática, ligada'[39m
+[31m+                 : 'Rolagem automática, desligada'[39m
+[31m+           }[39m
+[31m+           ativo={rodando}[39m
+[31m+           inativo={corpo === null}[39m
+[31m+           motivo={corpo === null ? 'auto-scroll só em texto' : undefined}[39m
+[31m+           cor={cor}[39m
+[31m+           onPress={alternarScroll}[39m
+[31m+           onMotivo={revelarMotivo}[39m
+[31m+           testID="auto-scroll"[39m
+[31m+         />[39m
+[31m+         {/* T1-R31 é zoom de TEXTO. No PDF quem amplia é a pinça — o controle[39m
+[31m+             fica inerte, com o sinal afinado e o motivo ao toque. */}[39m
+[31m+         <Controle[39m
+[31m+           icone="zoom-menos"[39m
+[31m+           accessibilityLabel={[39m
+[31m+             urlArquivo !== null ? 'Diminuir o texto, indisponível: pinça para zoom' : 'Diminuir o texto'[39m
+[31m+           }[39m
+[31m+           cor={cor}[39m
+[31m+           inativo={urlArquivo !== null}[39m
+[31m+           motivo={urlArquivo !== null ? 'pinça para zoom' : undefined}[39m
+[31m+           onPress={() => (urlArquivo === null ? mudarZoom(-1) : undefined)}[39m
+[31m+           onMotivo={revelarMotivo}[39m
+[31m+           testID="zoom-menos"[39m
+[31m+         />[39m
+[31m+         <Controle[39m
+[31m+           icone="zoom-mais"[39m
+[31m+           accessibilityLabel={[39m
+[31m+             urlArquivo !== null ? 'Aumentar o texto, indisponível: pinça para zoom' : 'Aumentar o texto'[39m
+[31m+           }[39m
+[31m+           cor={cor}[39m
+[31m+           inativo={urlArquivo !== null}[39m
+[31m+           motivo={urlArquivo !== null ? 'pinça para zoom' : undefined}[39m
+[31m+           onPress={() => (urlArquivo === null ? mudarZoom(1) : undefined)}[39m
+[31m+           onMotivo={revelarMotivo}[39m
+[31m+           testID="zoom-mais"[39m
+[31m+         />[39m
+[31m+         <Controle[39m
+[31m+           icone={tema === 'dark' ? 'claro' : 'escuro'}[39m
+[31m+           accessibilityLabel={tema === 'dark' ? 'Mudar para o tema claro' : 'Mudar para o tema escuro'}[39m
+[31m+           cor={cor}[39m
+[31m+           onPress={alternarTema}[39m
+[31m+           onMotivo={revelarMotivo}[39m
+[31m+           testID="tema"[39m
+[31m+         />[39m
+[31m+         {/* PROPOSTA A (div. 109) — decidida pelo Marcel em 2026-09-14.[39m
+[31m+             A fileira contígua dos sete deixava 555,6 dp — 49 % da barra —[39m
+[31m+             vazios à direita, medidos no dump do V1-PR7 e reproduzidos pelos[39m
+[31m+             tokens. Os quatro de COMPORTAMENTO ficam onde estão (o polegar[39m
+[31m+             apoia na borda e a posição aprendida se preserva, a decisão da Q4);[39m
+[31m+             os três de NAVEGAÇÃO vão para a borda direita, com a mesma margem[39m
+[31m+             de 24 dp da esquerda. O vão passa de 16 para ~547,8 dp, e é aí que[39m
+[31m+             a fronteira por função vira fronteira que se VÊ.[39m
+[31m+             É um espaçador `flex: 1`, não número cravado: vale em qualquer[39m
+[31m+             largura, no Tab S6 e em retrato. Com o `gap` de 16 já existente o[39m
+[31m+             espaçador mede ~515,8 dp e o vão fica 16 + 515,8 + 16 = 547,8 dp,[39m
+[31m+             contra os 547,1 da Proposta A — a diferença é o arredondamento de[39m
+[31m+             2560 px / 2,25.[39m
+[31m+             O DESIGN-V1 §5.3 dá à barra só a ALTURA (96 dp) e nada sobre[39m
+[31m+             distribuição horizontal; as seis molduras do S3 passam a mostrar[39m
+[31m+             uma barra que o app não desenha mais, e isso é a errata E16. */}[39m
+[31m+         <View style={styles.espacador} />[39m
+[31m+         {/* N4-R16 — o avulso sem hospedeira não tem índice: não há setlist a abrir. */}[39m
+[31m+         {setlist !== null ? ([39m
+[31m+           <Controle[39m
+[31m+             icone="indice"[39m
+[31m+             accessibilityLabel="Abrir o índice da setlist"[39m
+[31m+             cor={cor}[39m
+[31m+             onPress={onIndice}[39m
+[31m+             onMotivo={revelarMotivo}[39m
+[31m+             testID="indice"[39m
+[31m+           />[39m
+[31m+         ) : null}[39m
+[31m+         <Controle[39m
+[31m+           icone="busca"[39m
+[31m+           accessibilityLabel="Buscar na biblioteca"[39m
+[31m+           cor={cor}[39m
+[31m+           onPress={onBusca}[39m
+[31m+           onMotivo={revelarMotivo}[39m
+[31m+           testID="busca"[39m
+[31m+         />[39m
+[31m+         <Controle[39m
+[31m+           icone={avulsa ? 'voltar' : 'sair'}[39m
+[31m+           accessibilityLabel={avulsa ? nomeDoVoltarDoAvulso(origemDoAvulso ?? 'busca') : 'Sair do palco'}[39m
+[31m+           cor={cor}[39m
+[31m+           onPress={onSair}[39m
+[31m+           onMotivo={revelarMotivo}[39m
+[31m+           testID="sair"[39m
+[31m+         />[39m
+[31m+       </View>[39m
+[31m+     </View>[39m
+[31m+   )[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /**[39m
+[31m+  * S3d / S3e — a variante ARQUIVO do palco.[39m
+[31m+  *[39m
+[31m+  * S3d: o PDF do disco, paginado (`enablePaging`), com pinça e pan do próprio[39m
+[31m+  * `react-native-pdf`; o "página n de N" fica na barra superior e a dica de[39m
+[31m+  * gesto na linha acima da barra (que o `StageScreen` desenha, porque é a[39m
+[31m+  * mesma linha onde o motivo de um controle inerte aparece ao toque — V1-PR3).[39m
+[31m+  * S3e: o placeholder do arquivo que não está[39m
+[31m+  * aqui — com o nome da música, o tamanho quando o aparelho já o conhece, e[39m
+[31m+  * "Baixar". O que esta função nunca faz é devolver nada: sem tela, o T1-R26[39m
+[31m+  * e a regra C3-1 estariam violados.[39m
+[31m+  */[39m
+[31m+ function Arquivo({[39m
+[31m+   estado,[39m
+[31m+   titulo,[39m
+[31m+   tipo,[39m
+[31m+   online,[39m
+[31m+   cor,[39m
+[31m+   onPaginas,[39m
+[31m+   onPagina,[39m
+[31m+   onBaixar,[39m
+[31m+ }: {[39m
+[31m+   estado: EstadoArquivo[39m
+[31m+   titulo: string[39m
+[31m+   tipo: string[39m
+[31m+   online: boolean[39m
+[31m+   cor: (typeof colors)[ThemeName][39m
+[31m+   onPaginas: (total: number) => void[39m
+[31m+   onPagina: (atual: number, total: number) => void[39m
+[31m+   onBaixar: () => void[39m
+[31m+ }): React.JSX.Element {[39m
+[31m+   if (estado.fase === 'pronto') {[39m
+[31m+     return ([39m
+[31m+       <View style={styles.pdfArea} testID="s3d">[39m
+[31m+         <Pdf[39m
+[31m+           source={{ uri: estado.uri, cache: false }}[39m
+[31m+           style={[styles.pdf, { backgroundColor: cor.bg }]}[39m
+[31m+           enablePaging[39m
+[31m+           enableDoubleTapZoom[39m
+[31m+           /**[39m
+[31m+            * `fitPolicy={0}` = **fit width**, a partitura ocupando a largura.[39m
+[31m+            *[39m
+[31m+            * A N1-PR6 tinha posto `{2}` (página inteira) porque ali **um**[39m
+[31m+            * gesto virava **uma** página, contra ~4 com `{0}`. O aceite no Tab[39m
+[31m+            * S6 mediu o outro lado da conta: com `{2}` a página A4 fica em[39m
+[31m+            * ~548 px de 2560, ou seja **~244 dp de largura** — pequena demais[39m
+[31m+            * para ler no palco (N1-PR7 §3.6). Decisão do Marcel, 2026-09-10:[39m
+[31m+            * legibilidade ganha de contagem de gestos, volta a `{0}`.[39m
+[31m+            *[39m
+[31m+            * LIMITAÇÃO CONHECIDA, registrada: com fit width o deslize rola[39m
+[31m+            * dentro da página antes de virar, então virar uma página custa[39m
+[31m+            * vários gestos — o T1-R27 ("avançar: 1 tap ou 1 gesto") **não** se[39m
+[31m+            * cumpre para a PÁGINA do PDF. Ele continua valendo para a MÚSICA:[39m
+[31m+            * as bordas de 15% avançam e voltam em 1 tap, em PDF como em texto.[39m
+[31m+            */[39m
+[31m+           fitPolicy={0}[39m
+[31m+           minScale={1}[39m
+[31m+           maxScale={4}[39m
+[31m+           spacing={0}[39m
+[31m+           onLoadComplete={(total) => onPaginas(total)}[39m
+[31m+           onPageChanged={(atual, total) => onPagina(atual, total)}[39m
+[31m+           onError={(e: Error) => log(`pdf-error ${e.message}`)}[39m
+[31m+         />[39m
+[31m+       </View>[39m
+[31m+     )[39m
+[31m+   }[39m
+[31m+[39m
+[31m+   if (estado.fase === 'buscando') {[39m
+[31m+     return ([39m
+[31m+       <View style={styles.placeholder} testID="s3-baixando">[39m
+[31m+         <Text style={[styles.placeholderApoio, { color: cor.muted }]}>{FRASES_DO_TABLET['baixando-o-arquivo']}</Text>[39m
+[31m+       </View>[39m
+[31m+     )[39m
+[31m+   }[39m
+[31m+[39m
+[31m+   const tamanho = estado.bytes === null ? '' : ` (${tamanhoLegivel(estado.bytes)})`[39m
+[31m+   const fecho = online[39m
+[31m+     ? 'Toque em Baixar para trazê-lo para este aparelho.'[39m
+[31m+     : 'Sem conexão agora — toque em Baixar quando a rede voltar.'[39m
+[31m+[39m
+[31m+   return ([39m
+[31m+     <View style={styles.placeholder} testID="s3e">[39m
+[31m+       <Text style={[styles.placeholderTitulo, { color: cor.text }]}>{FRASES_DO_TABLET['arquivo-nao-baixado']}</Text>[39m
+[31m+       <Text style={[styles.placeholderApoio, { color: cor.muted }]}>[39m
+[31m+         {`${titulo} · ${tipo}${tamanho} não está neste aparelho. ${fecho}`}[39m
+[31m+       </Text>[39m
+[31m+       {estado.fase === 'erro' ? ([39m
+[31m+         <Text style={[styles.erro, { color: cor.error }]} testID="download-erro">[39m
+[31m+           {estado.mensagem}[39m
+[31m+         </Text>[39m
+[31m+       ) : null}[39m
+[31m+       <Pressable[39m
+[31m+         style={[styles.botaoBaixar, { borderColor: cor.line }]}[39m
+[31m+         onPress={onBaixar}[39m
+[31m+         accessibilityRole="button"[39m
+[31m+         testID="baixar"[39m
+[31m+       >[39m
+[31m+         <Text style={[styles.botaoBaixarTexto, { color: cor.text }]}>Baixar</Text>[39m
+[31m+       </Pressable>[39m
+[31m+     </View>[39m
+[31m+   )[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /**[39m
+[31m+  * N4-D43, N4-D83 — o arquivo de um formato que o app ainda não mostra (pela extensão; o core decide). A moldura é a[39m
+[31m+  * `N4-*-S3-avulso-formato`: o `tipo-desconhecido` de 28 em `offlineInk`, a frase do site (*"não foi possível abrir o[39m
+[31m+  * arquivo — confira o formato"*, `view.erro.formato`) e, em mono, o nome do arquivo · o tipo (o tamanho quando o[39m
+[31m+  * aparelho o conhece). Sem *Baixar*: baixar não o faria abrir. O mesmo componente no palco com setlist e no avulso.[39m
+[31m+  * O lugar é o dos outros placeholders do palco (o S3e: no topo do corpo, `placeholder`), e os tamanhos são os do[39m
+[31m+  * pacote: a frase em `size.button` (17, o da folha) e o nome em mono `size.label` (o da página do S3d, que a folha[39m
+[31m+  * desenha em 13 nos dois lugares).[39m
+[31m+  */[39m
+[31m+ function Formato({[39m
+[31m+   nome,[39m
+[31m+   tipo,[39m
+[31m+   bytes,[39m
+[31m+   cor,[39m
+[31m+ }: {[39m
+[31m+   nome: string[39m
+[31m+   tipo: string[39m
+[31m+   bytes: number | null[39m
+[31m+   cor: (typeof colors)[ThemeName][39m
+[31m+ }): React.JSX.Element {[39m
+[31m+   const tamanho = bytes === null ? '' : ` (${tamanhoLegivel(bytes)})`[39m
+[31m+   return ([39m
+[31m+     <View style={styles.placeholder} testID="s3-formato">[39m
+[31m+       <Icone nome="tipo-desconhecido" tamanho={28} cor={cor.offlineInk} />[39m
+[31m+       <View style={styles.formatoTexto}>[39m
+[31m+         <Text style={[styles.formatoFrase, { color: cor.text }]}>{VOCABULARIO_DE_CONTENT['erro-formato']}</Text>[39m
+[31m+         <Text style={[styles.formatoArquivo, { color: cor.muted }]}>{`${nome} · ${tipo}${tamanho}`}</Text>[39m
+[31m+       </View>[39m
+[31m+     </View>[39m
+[31m+   )[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /**[39m
+[31m+  * Um dos sete controles do palco — só ícone (V1-PR3, DESIGN-V1 §6.2).[39m
+[31m+  *[39m
+[31m+  * O `Pressable` É o alvo: 64 × 64 (66 com a moldura de 1 dp), e o `<Svg>` de[39m
+[31m+  * 28 vai dentro — pôr o toque no desenho é o modo de reprovar o G5. Os quatro[39m
+[31m+  * estados da folha: **padrão** (moldura `lineInfo`, E2 — é o único[39m
+[31m+  * delimitador de um ícone sem rótulo e deve os 3:1); **ativo** (acento no[39m
+[31m+  * traço, na moldura e no fundo a 12 %, e o desenho muda); **desabilitado**[39m
+[31m+  * (tinta cheia em `lineInfo` mais o desenho amputado, **sem opacidade**, E3);[39m
+[31m+  * **pressionado** (moldura `muted`, fundo da tinta a 8 %, só com o dedo[39m
+[31m+  * encostado). Sem rótulo textual: o nome é o `accessibilityLabel` (§6.4) e o[39m
+[31m+  * motivo do inerte vai para a linha acima da barra, ao toque (A15).[39m
+[31m+  *[39m
+[31m+  * ---------------------------------------------------------------------------[39m
+[31m+  * W2 — O INERTE TAMBÉM PRECISA SAIR NA ÁRVORE (div. 118)[39m
+[31m+  *[39m
+[31m+  * Até aqui o `inativo` virava `estado` e `tinta`, e mais nada: DESENHO puro.[39m
+[31m+  * Medido nos dumps do V1-PR7, nos dois aparelhos: a sub-árvore da barra é[39m
+[31m+  * IDÊNTICA no estado ativo e no inerte — mesmos sete `bounds`, todos com[39m
+[31m+  * `enabled=true clickable=true`. A única diferença entre "posso usar" e "não[39m
+[31m+  * posso" era o `content-desc`. Para quem navega pela árvore os dois estados[39m
+[31m+  * eram o MESMO estado: o leitor anuncia um botão utilizável e "indisponível"[39m
+[31m+  * chega como parte do nome, não como propriedade.[39m
+[31m+  *[39m
+[31m+  * E tem de ser esta linha, não a outra:[39m
+[31m+  *[39m
+[31m+  *     ✅  accessibilityState={{ disabled: inativo === true }}[39m
+[31m+  *     ❌  disabled={inativo === true}[39m
+[31m+  *[39m
+[31m+  * O `disabled` do `Pressable` IMPEDIRIA o `onPress` — e é o `onPress` do[39m
+[31m+  * inerte que revela o motivo na linha acima da barra. Consertaria a árvore e[39m
+[31m+  * quebraria o A15 exatamente na metade que a errata do PRD acabou de fixar.[39m
+[31m+  * O aceite da W2 mede as duas coisas no mesmo toque: `enabled=false` no dump[39m
+[31m+  * E o motivo ainda aparecendo.[39m
+[31m+  * ---------------------------------------------------------------------------[39m
+[31m+  */[39m
+[31m+ function Controle({[39m
+[31m+   icone,[39m
+[31m+   accessibilityLabel,[39m
+[31m+   ativo,[39m
+[31m+   inativo,[39m
+[31m+   motivo,[39m
+[31m+   cor,[39m
+[31m+   onPress,[39m
+[31m+   onMotivo,[39m
+[31m+   testID,[39m
+[31m+ }: {[39m
+[31m+   icone: NomeIcone[39m
+[31m+   accessibilityLabel: string[39m
+[31m+   ativo?: boolean[39m
+[31m+   inativo?: boolean[39m
+[31m+   motivo?: string[39m
+[31m+   cor: (typeof colors)[ThemeName][39m
+[31m+   onPress: () => void[39m
+[31m+   onMotivo: (motivo: string) => void[39m
+[31m+   testID: string[39m
+[31m+ }): React.JSX.Element {[39m
+[31m+   const estado: EstadoIcone = inativo === true ? 'inerte' : ativo === true ? 'ativo' : 'normal'[39m
+[31m+   const tinta = inativo === true ? cor.lineInfo : ativo === true ? cor.accent : cor.text[39m
+[31m+   return ([39m
+[31m+     <Pressable[39m
+[31m+       style={({ pressed }) => [[39m
+[31m+         styles.controle,[39m
+[31m+         { borderColor: ativo === true ? cor.accent : pressed ? cor.muted : cor.lineInfo },[39m
+[31m+         ativo === true && { backgroundColor: `${cor.accent}1F` },[39m
+[31m+         pressed && ativo !== true && { backgroundColor: `${cor.text}14` },[39m
+[31m+       ]}[39m
+[31m+       onPress={() => {[39m
+[31m+         if (inativo === true && motivo !== undefined) onMotivo(motivo)[39m
+[31m+         onPress()[39m
+[31m+       }}[39m
+[31m+       accessibilityRole="button"[39m
+[31m+       accessibilityLabel={accessibilityLabel}[39m
+[31m+       accessibilityState={{ disabled: inativo === true }}[39m
+[31m+       testID={testID}[39m
+[31m+     >[39m
+[31m+       <Icone nome={icone} tamanho={28} cor={tinta} estado={estado} />[39m
+[31m+     </Pressable>[39m
+[31m+   )[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ const styles = StyleSheet.create({[39m
+[31m+   tela: { flex: 1 },[39m
+[31m+   // A altura é token de faixa (`faixas[…].palco.barra`): 64 em C, 88 em B.[39m
+[31m+   barraTopo: {[39m
+[31m+     paddingHorizontal: space.xl,[39m
+[31m+     flexDirection: 'row',[39m
+[31m+     alignItems: 'center',[39m
+[31m+     gap: space.lg,[39m
+[31m+     borderBottomWidth: bar.hairline,[39m
+[31m+   },[39m
+[31m+   // B (`N3-B-S3`): duas linhas empilhadas e centradas nos 88; a segunda é o[39m
+[31m+   // título, na largura inteira (663 em 711).[39m
+[31m+   barraEmpilhada: { flexDirection: 'column', alignItems: 'stretch', justifyContent: 'center', gap: space.xs },[39m
+[31m+   linhaDaBarra: { flexDirection: 'row', alignItems: 'center', gap: space.lg },[39m
+[31m+   nomeSetlistNaLinha: { flex: 1 },[39m
+[31m+   posicao: {[39m
+[31m+     fontFamily: font.display,[39m
+[31m+     fontSize: size.title,[39m
+[31m+     letterSpacing: size.title * tracking.display,[39m
+[31m+   },[39m
+[31m+   nomeSetlist: {[39m
+[31m+     fontFamily: font.ui,[39m
+[31m+     fontSize: 13,[39m
+[31m+     letterSpacing: 13 * tracking.label,[39m
+[31m+     textTransform: 'uppercase',[39m
+[31m+   },[39m
+[31m+   titulo: { flex: 1, textAlign: 'center', fontFamily: font.ui, fontSize: 20 },[39m
+[31m+   // Em B o título tem a linha só para ele: não cresce na vertical e começa à esquerda.[39m
+[31m+   tituloNaLinha: { flex: 0, textAlign: 'left' },[39m
+[31m+   nota: {[39m
+[31m+     maxWidth: 260,[39m
+[31m+     paddingHorizontal: space.md,[39m
+[31m+     paddingVertical: space.sm,[39m
+[31m+     borderWidth: bar.hairline,[39m
+[31m+     borderRadius: radius.chip,[39m
+[31m+   },[39m
+[31m+   notaTexto: { fontFamily: font.ui, fontSize: size.label },[39m
+[31m+   pontoOffline: { width: 8, height: 8, borderRadius: 4, backgroundColor: dark.offline },[39m
+[31m+   paginaTexto: { fontFamily: font.mono, fontSize: size.label },[39m
+[31m+   meio: { flex: 1 },[39m
+[31m+   pdfArea: { flex: 1 },[39m
+[31m+   pdf: { flex: 1, width: '100%' },[39m
+[31m+   dica: { textAlign: 'center', fontFamily: font.ui, fontSize: size.label, paddingVertical: space.sm },[39m
+[31m+   erro: { fontFamily: font.ui, fontSize: size.label, textAlign: 'center', maxWidth: 560 },[39m
+[31m+   botaoBaixar: {[39m
+[31m+     marginTop: space.sm,[39m
+[31m+     height: touch.stage,[39m
+[31m+     paddingHorizontal: space.xxl,[39m
+[31m+     borderWidth: bar.hairline,[39m
+[31m+     borderRadius: radius.control,[39m
+[31m+     alignItems: 'center',[39m
+[31m+     justifyContent: 'center',[39m
+[31m+   },[39m
+[31m+   botaoBaixarTexto: { fontFamily: font.uiBold, fontSize: size.button },[39m
+[31m+   conteudo: { flex: 1 },[39m
+[31m+   conteudoPad: { padding: space.xxl, paddingBottom: space.xxxl },[39m
+[31m+   borda: { position: 'absolute', top: 0 },[39m
+[31m+   placeholder: { alignItems: 'center', justifyContent: 'center', gap: space.lg, paddingTop: space.xxxl },[39m
+[31m+   placeholderTitulo: { fontFamily: font.uiBold, fontSize: size.titleLarge },[39m
+[31m+   placeholderApoio: {[39m
+[31m+     fontFamily: font.ui,[39m
+[31m+     fontSize: size.body,[39m
+[31m+     textAlign: 'center',[39m
+[31m+     maxWidth: 560,[39m
+[31m+   },[39m
+[31m+   formatoTexto: { alignItems: 'center', gap: space.xs },[39m
+[31m+   formatoFrase: { fontFamily: font.ui, fontSize: size.button, textAlign: 'center', maxWidth: 560 },[39m
+[31m+   formatoArquivo: { fontFamily: font.mono, fontSize: size.label, textAlign: 'center' },[39m
+[31m+   // A geometria das seis molduras de S3 do design: caixa 66 × 66 (64 + a[39m
+[31m+   // moldura de 1 de cada lado), gap 16, fileira de 558 dp, os mesmos sete x[39m
+[31m+   // nas seis variantes (V1-PR3-PRECHECK §8.5, div. 36).[39m
+[31m+   barraBaixo: {[39m
+[31m+     height: bar.stage,[39m
+[31m+     paddingHorizontal: space.xl,[39m
+[31m+     flexDirection: 'row',[39m
+[31m+     alignItems: 'center',[39m
+[31m+     gap: space.lg,[39m
+[31m+     borderTopWidth: bar.hairline,[39m
+[31m+   },[39m
+[31m+   /** O vão da Proposta A — ver o comentário no JSX da barra (div. 109). */[39m
+[31m+   espacador: { flex: 1 },[39m
+[31m+   controle: {[39m
+[31m+     width: touch.stage + 2,[39m
+[31m+     height: touch.stage + 2,[39m
+[31m+     borderWidth: bar.hairline,[39m
+[31m+     borderRadius: radius.control,[39m
+[31m+     alignItems: 'center',[39m
+[31m+     justifyContent: 'center',[39m
+[31m+   },[39m
+[31m+ })[39m
+[31m+[39m
+
+[36m [2m❯[22m apps/native/test/frases-n4.test.ts:[2m350:50[22m[39m
+    [90m348| [39m  it.each(COPIAS)('nenhuma cópia em %s: as frases saem do core', (arqu…
+    [90m349| [39m    [35mconst[39m fonte [33m=[39m [34mler[39m(arquivo)
+    [90m350| [39m    [35mfor[39m ([35mconst[39m c [35mof[39m copias) [34mexpect[39m(fonte[33m,[39m c)[33m.[39mnot[33m.[39m[34mtoContain[39m(c)
+    [90m   | [39m                                                 [31m^[39m
+    [90m351| [39m  })
+    [90m352| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/11]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[42m native [49m[39m apps/native/test/frases-n4.test.ts[2m > [22m(6) as frases do leitor que a visualização reusa, no core, sem cópia no palco nem no files.ts[2m > [22mnenhuma cópia em apps/native/src/files.ts: as frases saem do core
+[31m[1mAssertionError[22m: 'o arquivo chegou vazio': expected '/**\n * Arquivos do nativo (PRD T1-R1…' not to contain '\'o arquivo chegou vazio\''[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 'o arquivo chegou vazio'[39m
+[31m+ /**[39m
+[31m+  * Arquivos do nativo (PRD T1-R14, T1-R26; aceites A9, A13). Renasce o[39m
+[31m+  * `files.ts` do N0-PR5 com o que aquele protocolo mediu, mais as duas coisas[39m
+[31m+  * que o N0 deixou anotadas para o N1 (`N0-H16.md` §4 e "Notas para o N1"):[39m
+[31m+  *[39m
+[31m+  * 1. **Dois armazenamentos, por durabilidade** — arquivos *garantidos* (das[39m
+[31m+  *    setlists dos próximos 7 dias, T1-R15) vivem em `Paths.document`, que o[39m
+[31m+  *    sistema **não** purga; todo o resto vive em `Paths.cache`, purgável. O[39m
+[31m+  *    N0 provou o fluxo inteiro no `Paths.cache` e registrou a dívida.[39m
+[31m+  * 2. **Diretório por `uid`** — mesmo namespace do `store.ts` (PRD §5): trocar[39m
+[31m+  *    de conta no device não mistura arquivos.[39m
+[31m+  *[39m
+[31m+  * Nome do arquivo = último segmento da URL (`<timestamp>-<nome>.pdf`, único[39m
+[31m+  * por construção do upload B6-D5′ — nota do N0). A chave é a URL inteira.[39m
+[31m+  *[39m
+[31m+  * `lastUsedMs` não existe na API do `expo-file-system` 57 (`File` expõe[39m
+[31m+  * `exists`/`size`, não mtime — medido nos `.d.ts`), então o LRU precisa de um[39m
+[31m+  * índice próprio: `files-index.json`, no diretório do usuário em[39m
+[31m+  * `Paths.document`, gravado atomicamente como o `store.ts` grava o cache. O[39m
+[31m+  * `guaranteed` **não** entra no índice: é derivado de onde o arquivo está, e[39m
+[31m+  * assim não há dois lugares para o mesmo fato divergirem.[39m
+[31m+  *[39m
+[31m+  * Sem retry: uma falha aparece (T1-R37), não é reescrita em silêncio.[39m
+[31m+  */[39m
+[31m+ import { Directory, File, Paths } from 'expo-file-system'[39m
+[31m+ import { FRASES_DO_TABLET, fileVerdict, type FileRejectKind } from '@octavia/core'[39m
+[31m+ import { log } from './log'[39m
+[31m+[39m
+[31m+ /** Último segmento da URL — o único pedaço que pode entrar em log (N1-D5). */[39m
+[31m+ export function fileNameFromUrl(url: string): string {[39m
+[31m+   const seg = url.split('/').pop()[39m
+[31m+   return seg === undefined || seg.length === 0 ? 'file' : seg[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /**[39m
+[31m+  * O `uid` da sessão. É estado de módulo, e não parâmetro de cada chamada,[39m
+[31m+  * porque as telas chamam `ensureFile` de dentro de efeitos que não conhecem[39m
+[31m+  * a sessão; quem sabe o `uid` é a raiz do app, e ela o define uma vez.[39m
+[31m+  */[39m
+[31m+ let uidAtual: string | null = null[39m
+[31m+[39m
+[31m+ export function setFilesUser(uid: string | null): void {[39m
+[31m+   uidAtual = uid[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ function uid(): string {[39m
+[31m+   // Sem sessão não há diretório de usuário: chamar isto é defeito de fiação,[39m
+[31m+   // não estado esperado — falha alto em vez de gravar num namespace errado.[39m
+[31m+   if (uidAtual === null) throw new Error('files: sem uid — setFilesUser não foi chamado')[39m
+[31m+   return uidAtual[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ function dirGarantido(): Directory {[39m
+[31m+   return new Directory(Paths.document, `octavia-${uid()}`, 'files')[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ function dirDemanda(): Directory {[39m
+[31m+   return new Directory(Paths.cache, `octavia-${uid()}`, 'files')[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ function dirIndice(): Directory {[39m
+[31m+   return new Directory(Paths.document, `octavia-${uid()}`)[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ // ---------------------------------------------------------------- índice[39m
+[31m+[39m
+[31m+ /**[39m
+[31m+  * `url` → último uso e tamanho conhecido. O `guaranteed` **não** entra: é[39m
+[31m+  * derivado da pasta. O `bytes` entra porque o S3e precisa dizer o tamanho de[39m
+[31m+  * um arquivo que NÃO está no disco ("partitura (1,2 MB) não está neste[39m
+[31m+  * aparelho"), e nesse momento não há o que medir — só o que lembrar.[39m
+[31m+  */[39m
+[31m+ type Indice = Record<string, { name: string; bytes: number; lastUsedMs: number }>[39m
+[31m+[39m
+[31m+ let indice: Indice | null = null[39m
+[31m+ let indiceDe: string | null = null[39m
+[31m+[39m
+[31m+ function carregarIndice(): Indice {[39m
+[31m+   const u = uid()[39m
+[31m+   if (indice !== null && indiceDe === u) return indice[39m
+[31m+   const f = new File(dirIndice(), 'files-index.json')[39m
+[31m+   let lido: Indice = {}[39m
+[31m+   if (f.exists) {[39m
+[31m+     try {[39m
+[31m+       lido = JSON.parse(f.textSync()) as Indice[39m
+[31m+     } catch {[39m
+[31m+       // Índice corrompido = LRU sem histórico, nunca arquivo perdido: o[39m
+[31m+       // `listFiles` reconstrói as entradas a partir do disco.[39m
+[31m+       lido = {}[39m
+[31m+     }[39m
+[31m+   }[39m
+[31m+   indice = lido[39m
+[31m+   indiceDe = u[39m
+[31m+   return lido[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /**[39m
+[31m+  * Gravação atômica do índice: `.tmp` e rename por cima.[39m
+[31m+  *[39m
+[31m+  * **`moveSync`, não `move`**: no expo-file-system 57 o `move` devolve[39m
+[31m+  * `Promise<void>`. Com três downloads concorrentes (o prefetch usa lote de 3)[39m
+[31m+  * os três `touch()` disparavam três renames assíncronos que se atropelavam —[39m
+[31m+  * um apagava o `.tmp` do outro — e a promise rejeitada aparecia na tela como[39m
+[31m+  * `Uncaught (in promise): "Call to function 'FileSystemFile.move' has been[39m
+[31m+  * rejected"` (medido no device, N1-PR5). O `moveSync` fecha a janela: a[39m
+[31m+  * função inteira roda sem ceder o event loop.[39m
+[31m+  */[39m
+[31m+ function gravarIndice(): void {[39m
+[31m+   const dir = dirIndice()[39m
+[31m+   if (!dir.exists) dir.create({ intermediates: true })[39m
+[31m+   const tmp = new File(dir, 'files-index.json.tmp')[39m
+[31m+   if (tmp.exists) tmp.delete()[39m
+[31m+   tmp.create()[39m
+[31m+   tmp.write(JSON.stringify(carregarIndice()))[39m
+[31m+   const alvo = new File(dir, 'files-index.json')[39m
+[31m+   if (alvo.exists) alvo.delete()[39m
+[31m+   tmp.moveSync(alvo)[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ // ---------------------------------------------------------------- disco[39m
+[31m+[39m
+[31m+ function arquivoEm(dir: Directory, url: string): File {[39m
+[31m+   return new File(dir, fileNameFromUrl(url))[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /**[39m
+[31m+  * Onde o arquivo está agora — `null` se não está em lugar nenhum.[39m
+[31m+  *[39m
+[31m+  * **Um arquivo de 0 byte não está em lugar nenhum** (W1, div. 103). Esta é a[39m
+[31m+  * única checagem que `localizar` faz, e ela só é honesta PORQUE o download[39m
+[31m+  * passou a escrever num `.part` (abaixo): enquanto o corpo era gravado direto[39m
+[31m+  * no alvo, `size > 0` valia para todo download em voo desde o primeiro[39m
+[31m+  * milissegundo — não era nem o piso (div. 113). Com o `.part`, nada[39m
+[31m+  * incompleto tem o nome definitivo, e aí um 0 byte no nome final só pode ser[39m
+[31m+  * lixo: de um download anterior a esta PR, ou de um `moveSync` interrompido.[39m
+[31m+  *[39m
+[31m+  * O que ela NÃO alcança: um arquivo truncado em 100 KB de 242 KB, que tem[39m
+[31m+  * tamanho e não tem forma. Esse é caro de julgar (abre o arquivo) e por isso[39m
+[31m+  * não corre aqui — `localizar` é chamada em laço. Quem o alcança é o[39m
+[31m+  * `sanearArquivos()`, uma vez por abertura.[39m
+[31m+  */[39m
+[31m+ function localizar(url: string): { file: File; guaranteed: boolean } | null {[39m
+[31m+   const g = arquivoEm(dirGarantido(), url)[39m
+[31m+   if (g.exists && g.size > 0) return { file: g, guaranteed: true }[39m
+[31m+   const d = arquivoEm(dirDemanda(), url)[39m
+[31m+   if (d.exists && d.size > 0) return { file: d, guaranteed: false }[39m
+[31m+   return null[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ export function hasFile(url: string): boolean {[39m
+[31m+   return uidAtual !== null && localizar(url) !== null[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ export interface EnsuredFile {[39m
+[31m+   uri: string[39m
+[31m+   src: 'disk' | 'download'[39m
+[31m+   bytes: number[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /**[39m
+[31m+  * Downloads em voo, por URL. O palco pede o arquivo da música atual no mesmo[39m
+[31m+  * instante em que o prefetch sob demanda (T1-R16) pede a lista que começa[39m
+[31m+  * por ela: sem esta tabela seriam **dois** downloads do mesmo objeto — o[39m
+[31m+  * orçamento do bucket conta cada um. Com ela, uma requisição e uma linha[39m
+[31m+  * `file src=download`.[39m
+[31m+  */[39m
+[31m+ const emVoo = new Map<string, { voo: Promise<EnsuredFile>; guaranteed: boolean }>()[39m
+[31m+[39m
+[31m+ /**[39m
+[31m+  * **N4-PR5 — o estado de download por URL**, para o estado do arquivo por música (`estadoDoArquivo` do core; a linha[39m
+[31m+  * de L e V o leem na PR-7 e na PR-8). *Baixando* é o próprio `emVoo` acima — todo download do app passa por ele: o[39m
+[31m+  * prefetch, o palco e o "baixar esta setlist". *Falhou* guarda a frase de tela do último download que rejeitou[39m
+[31m+  * (`fraseDaFalha`, o conjunto fechado da W2); um download que assenta apaga a falha. Estado de módulo, como o `emVoo`:[39m
+[31m+  * nenhuma tela o guarda, e quem quer redesenhar assina.[39m
+[31m+  */[39m
+[31m+ const falhas = new Map<string, string>()[39m
+[31m+ const ouvintesDeDownload = new Set<() => void>()[39m
+[31m+[39m
+[31m+ /**[39m
+[31m+  * **N4-D92 (div. 1066) — sem rede, um download que rejeita NÃO é "não consegui baixar".** O plano da biblioteca roda[39m
+[31m+  * também quando o sync foi pulado por falta de rede (`App.tsx`, o `prefetchEArrumar` depois do sync pulado), e cada[39m
+[31m+  * arquivo que falta rejeita — com a mesma mensagem do Android que um 404 dá (div. 1063: sem o status). Registrado como[39m
+[31m+  * falha, a música aparecia na L como *não consegui baixar* quando o certo, sem rede, é *arquivo não baixado*. Na[39m
+[31m+  * rejeição, a rede é consultada: sem rede, nada se registra (e a falha antiga da URL sai — o estado é "não baixado").[39m
+[31m+  * O log não muda: o `download-error` continua saindo de quem chamou.[39m
+[31m+  *[39m
+[31m+  * A sonda é INJETADA (`ligarSondaDeRede`), e não o `estaOnline` importado: o `net.ts` traz o `expo-network`, que os[39m
+[31m+  * testes do `files.ts` não carregam. A raiz (`App.tsx`) liga a sonda real; sem ligação, vale "com rede" — o[39m
+[31m+  * comportamento de antes.[39m
+[31m+  */[39m
+[31m+ let sondaDeRede: () => Promise<boolean> = async () => true[39m
+[31m+[39m
+[31m+ export function ligarSondaDeRede(sonda: () => Promise<boolean>): void {[39m
+[31m+   sondaDeRede = sonda[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ function avisarDownloads(): void {[39m
+[31m+   for (const f of [...ouvintesDeDownload]) f()[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /** O que está baixando e o que falhou, agora. Cópias: quem lê não muda o estado do módulo. */[39m
+[31m+ export function estadoDosDownloads(): { baixando: ReadonlySet<string>; falhas: ReadonlyMap<string, string> } {[39m
+[31m+   return { baixando: new Set(emVoo.keys()), falhas: new Map(falhas) }[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /** A tela assina para redesenhar quando um download começa, assenta ou falha; devolve a função que desassina. */[39m
+[31m+ export function assinarDownloads(f: () => void): () => void {[39m
+[31m+   ouvintesDeDownload.add(f)[39m
+[31m+   return () => {[39m
+[31m+     ouvintesDeDownload.delete(f)[39m
+[31m+   }[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /**[39m
+[31m+  * Garante o arquivo no disco e devolve por onde ele veio (A9: a 2ª abertura[39m
+[31m+  * é `src=disk`, sem request). `guaranteed` decide a pasta; um arquivo que já[39m
+[31m+  * está no cache e vira garantido é **movido**, nunca rebaixado de novo.[39m
+[31m+  *[39m
+[31m+  * **A carona olha as opções** (W4-b3, div. 119). Até aqui o `emVoo` devolvia[39m
+[31m+  * o voo alheio a qualquer um que pedisse a mesma URL, com o `guaranteed` de[39m
+[31m+  * quem pediu primeiro: o prefetch de 7 dias que chegava enquanto o palco[39m
+[31m+  * baixava o mesmo arquivo recebia a promise do palco, e o arquivo ficava no[39m
+[31m+  * `Paths.cache` — o `promoteList` só o movia na passada seguinte. Agora um[39m
+[31m+  * pedido garantido que encontra um voo NÃO garantido espera esse voo e roda[39m
+[31m+  * de novo por cima dele: o arquivo já está no disco, e o `ensureFileUma` o[39m
+[31m+  * **move** (a promoção de sempre). Continua UM download do objeto. Se o voo[39m
+[31m+  * rejeita, a carona recebe a mesma rejeição — sem retry (T1-R37).[39m
+[31m+  */[39m
+[31m+ export function ensureFile([39m
+[31m+   url: string,[39m
+[31m+   opcoes: { guaranteed: boolean } = { guaranteed: false },[39m
+[31m+ ): Promise<EnsuredFile> {[39m
+[31m+   const jaVoando = emVoo.get(url)[39m
+[31m+   if (jaVoando !== undefined && (jaVoando.guaranteed || !opcoes.guaranteed)) return jaVoando.voo[39m
+[31m+   const base =[39m
+[31m+     jaVoando === undefined[39m
+[31m+       ? ensureFileUma(url, opcoes)[39m
+[31m+       : jaVoando.voo.then(() => ensureFileUma(url, opcoes))[39m
+[31m+   // Só apaga a entrada que é SUA: o voo de baixo assenta antes da carona[39m
+[31m+   // que o substituiu na tabela, e não pode levá-la junto.[39m
+[31m+   // N4-PR5: e o resultado vai ao estado de download — a falha com a frase de tela, o sucesso apagando-a. A rejeição[39m
+[31m+   // segue para quem chamou, inteira: registrar não é engolir (T1-R37).[39m
+[31m+   const voo: Promise<EnsuredFile> = base[39m
+[31m+     .then([39m
+[31m+       (pronto) => {[39m
+[31m+         falhas.delete(url)[39m
+[31m+         return pronto[39m
+[31m+       },[39m
+[31m+       async (erro: unknown) => {[39m
+[31m+         if (await sondaDeRede().catch(() => true)) falhas.set(url, fraseDaFalha(erro))[39m
+[31m+         else falhas.delete(url)[39m
+[31m+         throw erro[39m
+[31m+       },[39m
+[31m+     )[39m
+[31m+     .finally(() => {[39m
+[31m+       if (emVoo.get(url)?.voo === voo) emVoo.delete(url)[39m
+[31m+       avisarDownloads()[39m
+[31m+     })[39m
+[31m+   emVoo.set(url, { voo, guaranteed: opcoes.guaranteed })[39m
+[31m+   avisarDownloads()[39m
+[31m+   return voo[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ async function ensureFileUma([39m
+[31m+   url: string,[39m
+[31m+   opcoes: { guaranteed: boolean },[39m
+[31m+ ): Promise<EnsuredFile> {[39m
+[31m+   const name = fileNameFromUrl(url)[39m
+[31m+   const alvoDir = opcoes.guaranteed ? dirGarantido() : dirDemanda()[39m
+[31m+   const atual = localizar(url)[39m
+[31m+[39m
+[31m+   if (atual !== null) {[39m
+[31m+     // Promoção a garantido: move do cache purgável para o não-purgável.[39m
+[31m+     //[39m
+[31m+     // O `try` é da W2 (div. 131, CLASSE 2). Estas três chamadas estavam FORA de[39m
+[31m+     // qualquer `try`: uma rejeição do `create`, do `delete` ou do `moveSync`[39m
+[31m+     // subia CRUA — sem passar pelo `falha()`, logo sem o prefixo do nome, sem a[39m
+[31m+     // URL higienizada (regra 2 do catálogo) e sem frase de tela — até o palco e[39m
+[31m+     // até o `App.tsx`. Consertar só a frase medida pelo W1 deixaria esta de pé.[39m
+[31m+     if (opcoes.guaranteed && !atual.guaranteed) {[39m
+[31m+       try {[39m
+[31m+         if (!alvoDir.exists) alvoDir.create({ intermediates: true })[39m
+[31m+         const destino = new File(alvoDir, name)[39m
+[31m+         if (destino.exists) destino.delete()[39m
+[31m+         atual.file.moveSync(destino)[39m
+[31m+       } catch (erro: unknown) {[39m
+[31m+         throw falha(erro, name)[39m
+[31m+       }[39m
+[31m+     }[39m
+[31m+     const achado = localizar(url)[39m
+[31m+     const bytes = achado?.file.size ?? 0[39m
+[31m+     touch(url)[39m
+[31m+     log(`file src=disk name=${name} bytes=${bytes}`)[39m
+[31m+     return { uri: achado?.file.uri ?? '', src: 'disk', bytes }[39m
+[31m+   }[39m
+[31m+[39m
+[31m+   try {[39m
+[31m+     if (!alvoDir.exists) alvoDir.create({ intermediates: true })[39m
+[31m+   } catch (erro: unknown) {[39m
+[31m+     throw falha(erro, name)[39m
+[31m+   }[39m
+[31m+   return baixarAtomico(url, alvoDir, name)[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /** Sufixo do arquivo em construção. Um `.part` nunca é o nome de nada. */[39m
+[31m+ export const PARCIAL = '.part'[39m
+[31m+[39m
+[31m+ /**[39m
+[31m+  * **O TETO DE INATIVIDADE NÃO ESTÁ AQUI — e o motivo é uma medição, não um[39m
+[31m+  * esquecimento.** (Q2 do pre-check, §8.1; derrubada pelo aceite W1-A3.)[39m
+[31m+  *[39m
+[31m+  * O desenho era: abortar quando NENHUM byte novo chegasse em `T = 30 s`,[39m
+[31m+  * rearmando o relógio a cada `onProgress`. Contra a conexão morta, e só[39m
+[31m+  * contra ela — um download legítimo pode demorar horas numa Wi-Fi ruim de[39m
+[31m+  * hotel na véspera do show, e é isso que o usuário quer.[39m
+[31m+  *[39m
+[31m+  * **O aparelho disse que o sinal de rearme não existe.** Medido duas vezes no[39m
+[31m+  * AVD `octavia_tab32`, com o dev client, servidor de host entregando 6 pedaços[39m
+[31m+  * a cada 4 s (download de 20 s):[39m
+[31m+  *[39m
+[31m+  *     OCTAVIA: dbg-listener name=… w=8192   ms=20075[39m
+[31m+  *     OCTAVIA: dbg-progress  name=… w=8192  ms=20081[39m
+[31m+  *     OCTAVIA: dbg-listener name=… w=242176 ms=20082[39m
+[31m+  *     OCTAVIA: dbg-progress  name=… w=242176 ms=20083[39m
+[31m+  *[39m
+[31m+  * Todos os eventos chegam **em rajada, no fim** — pelo `onProgress` e pelo[39m
+[31m+  * `addListener`, os dois. E o disco não ajuda: o destino não existe durante o[39m
+[31m+  * download inteiro e aparece completo de uma vez (medido: alvo vazio de[39m
+[31m+  * t=01 s a t=22 s, 242.176 B em t=24 s). **Não há, no app, nenhum sinal de[39m
+[31m+  * "chegou byte" em voo.**[39m
+[31m+  *[39m
+[31m+  * Logo um relógio de 30 s rearmado por `onProgress` **nunca é rearmado**: é um[39m
+[31m+  * teto ABSOLUTO de duração disfarçado — exatamente a opção A, que foi[39m
+[31m+  * descartada por punir o caso legítimo ("barato e errado é pior que caro e[39m
+[31m+  * certo quando o erro cai em cima do uso real", Marcel, 2026-09-14). Ficar[39m
+[31m+  * com ele seria shippar a opção A com o nome da B.[39m
+[31m+  *[39m
+[31m+  * O que fica de pé sem o teto: o `.part` (o cartão diz "parcial" o tempo[39m
+[31m+  * todo, sem mentir), a fila de trabalhadores (um download morto não para os[39m
+[31m+  * outros) e o saneamento. O que fica em aberto: uma conexão morta segura UMA[39m
+[31m+  * das três vagas até o processo morrer.[39m
+[31m+  *[39m
+[31m+  * **E a razão que fecha a questão, do aval de 2026-09-14: o teto perdeu o[39m
+[31m+  * objeto.** Ele existia para impedir que um download condenado comesse o[39m
+[31m+  * orçamento dos outros — e é isso que a fila do `prefetch.ts` impede, melhor,[39m
+[31m+  * porque impede SEMPRE e não só depois de 30 s. O dano real da div. 122 já[39m
+[31m+  * está consertado; o que sobra do download morto é uma vaga de três.[39m
+[31m+  *[39m
+[31m+  * Se você chegou aqui com um relatório de "prefetch lento" e a mão num[39m
+[31m+  * `setTimeout`, leia isto primeiro:[39m
+[31m+  *[39m
+[31m+  *     UM TETO QUE NÃO PODE DISPARAR É PIOR QUE TETO NENHUM, PORQUE PROMETE.[39m
+[31m+  *                                               — Marcel, 2026-09-14[39m
+[31m+  *[39m
+[31m+  * O que reabre a questão não é um número maior: é **sinal de progresso em[39m
+[31m+  * voo**. A medida que falta está na W2 (um build de release, para saber se a[39m
+[31m+  * div. 126 é do dev client ou da biblioteca). Ver `W1-ENCERRAMENTO.md` §9,[39m
+[31m+  * decisão 1.[39m
+[31m+  */[39m
+[31m+[39m
+[31m+ /**[39m
+[31m+  * **Baixa para um nome temporário e renomeia só depois de completo.**[39m
+[31m+  *[39m
+[31m+  * É o mesmo `.tmp` + rename que o `store.ts:42` usa para o cache JSON ("assim[39m
+[31m+  * uma interrupção no meio da escrita nunca deixa um JSON truncado no lugar do[39m
+[31m+  * cache bom") e que o `gravarIndice()` acima usa para o índice. **A única[39m
+[31m+  * coisa que nunca tinha recebido esse tratamento era o arquivo baixado** — e[39m
+[31m+  * era ela que sustentava a frase "garantida offline" (div. 103).[39m
+[31m+  *[39m
+[31m+  * No Android o corpo é gravado DIRETO no destino, que é criado e truncado[39m
+[31m+  * antes do primeiro byte (`FileSystemDownload.kt:97`; a doc da biblioteca diz[39m
+[31m+  * isso verbatim em `File.ts:45-48`, e contrasta com o iOS, que já move para o[39m
+[31m+  * lugar só depois do sucesso — div. 113). Com o `.part`, o Android passa a se[39m
+[31m+  * comportar como o iOS, e aí **existir é estar completo**: o `localizar()` de[39m
+[31m+  * hoje volta a estar certo sem mudar de ideia sobre nada.[39m
+[31m+  *[39m
+[31m+  * O `.part` nasce **no diretório alvo**, nunca num terceiro: durável e[39m
+[31m+  * purgável são volumes diferentes, e só dentro do mesmo volume o rename é uma[39m
+[31m+  * operação de metadado (`W1-PRECHECK.md` §10).[39m
+[31m+  */[39m
+[31m+ async function baixarAtomico(url: string, alvoDir: Directory, name: string): Promise<EnsuredFile> {[39m
+[31m+   const parcial = new File(alvoDir, `${name}${PARCIAL}`)[39m
+[31m+   if (parcial.exists) parcial.delete()[39m
+[31m+[39m
+[31m+   // `createDownloadTask`, e não `downloadFileAsync`: o estático DECLARA[39m
+[31m+   // `signal` e `onProgress` e não honra nenhum dos dois (div. 116), e o[39m
+[31m+   // `totalBytes` do progresso é a ÚNICA fonte de `Content-Length` que o app[39m
+[31m+   // tem. Mesmo pacote, zero dependência nova.[39m
+[31m+   //[39m
+[31m+   // O evento chega uma vez, em rajada, no fim do download (medição acima) —[39m
+[31m+   // o que basta para o `total=` da linha `file` e para a checagem de corpo[39m
+[31m+   // curto, e não basta para teto nenhum.[39m
+[31m+   let total = -1[39m
+[31m+[39m
+[31m+   const comecou = Date.now()[39m
+[31m+   try {[39m
+[31m+     const tarefa = File.createDownloadTask(url, parcial, {[39m
+[31m+       onProgress: ({ totalBytes }) => {[39m
+[31m+         total = totalBytes[39m
+[31m+[39m
+[31m+         // OPÇÃO C, NÃO IMPLEMENTADA — e o que falta para implementá-la.[39m
+[31m+         // Aqui caberia projetar o fim do download (`bytesWritten`,[39m
+[31m+         // `totalBytes` e o tempo decorrido dão a taxa) e abortar quando a[39m
+[31m+         // projeção passar de um teto `T₁`. NÃO foi feito porque **falta o[39m
+[31m+         // `T₁`, e ele não se inventa**: a única medição que existe é 37 h com[39m
+[31m+         // `n=1` (V1, AV-1, link a 1,8 KB/s), e escolher um limiar para caber[39m
+[31m+         // nela seria a div. 80 cometida por quem a escreveu. O que falta[39m
+[31m+         // medir: uma população de downloads reais com a taxa de cada um (é o[39m
+[31m+         // que a linha `file` passa a registrar, com `total=` e `ms=`), para[39m
+[31m+         // que o `T₁` nasça de números. Ver `W1-PRECHECK.md` §8.1.[39m
+[31m+         // Se e quando entrar, o aborto é um `download-error` com a projeção[39m
+[31m+         // na mensagem — NÃO um `file-reject`: o arquivo não foi achado e[39m
+[31m+         // recusado, ele não chegou.[39m
+[31m+       },[39m
+[31m+     })[39m
+[31m+     const veio = await tarefa.downloadAsync()[39m
+[31m+     if (veio === null) throw new Error('pausado')[39m
+[31m+[39m
+[31m+     const bytes = parcial.size[39m
+[31m+     const esperado = total >= 0 ? total : null[39m
+[31m+     const veredito = fileVerdict({ bytes, expected: esperado, pdf: ehPdf(name), ...bordas(parcial) })[39m
+[31m+     if (!veredito.ok) {[39m
+[31m+       log(`file-reject name=${name} kind=${veredito.kind} bytes=${bytes} expected=${esperado ?? '-'}`)[39m
+[31m+       parcial.delete()[39m
+[31m+       const porque = motivo(veredito.kind, bytes, esperado)[39m
+[31m+       throw comFrase(`${name}: ${porque}`, porque)[39m
+[31m+     }[39m
+[31m+[39m
+[31m+     const destino = new File(alvoDir, name)[39m
+[31m+     if (destino.exists) destino.delete()[39m
+[31m+     parcial.moveSync(destino)[39m
+[31m+     touch(url)[39m
+[31m+     // Errata W1 da linha `file`: no `src=download` entram `total=` (o[39m
+[31m+     // `Content-Length`, `-` quando o servidor não o manda) e `ms=` (do início[39m
+[31m+     // do download ao rename). Sem a taxa no log, "não abortou" não se separa[39m
+[31m+     // em "a rede estava sã" e "o teto não funciona" — e o W1-A2 vira[39m
+[31m+     // impressão em vez de aceite. O `src=disk` fica inalterado: não houve[39m
+[31m+     // download, não há total nem duração.[39m
+[31m+     log(`file src=download name=${name} bytes=${bytes} total=${esperado ?? '-'} ms=${Date.now() - comecou}`)[39m
+[31m+     return { uri: destino.uri, src: 'download', bytes }[39m
+[31m+   } catch (erro: unknown) {[39m
+[31m+     // Qualquer saída por erro leva o parcial junto: um `.part` que sobra é[39m
+[31m+     // lixo, nunca meio-arquivo servível. O que sobrar de um processo MORTO[39m
+[31m+     // (que não passa por aqui) é varrido na abertura seguinte.[39m
+[31m+     if (parcial.exists) parcial.delete()[39m
+[31m+     throw falha(erro, name)[39m
+[31m+   }[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ function ehPdf(name: string): boolean {[39m
+[31m+   return name.toLowerCase().endsWith('.pdf')[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /**[39m
+[31m+  * Os primeiros e os últimos bytes do arquivo, sem lê-lo inteiro — o rodapé de[39m
+[31m+  * um PDF cabe em 64 bytes e a cabeça em 8.[39m
+[31m+  *[39m
+[31m+  * Se a leitura falhar, devolve bordas VAZIAS e um `pdf: false` implícito pelo[39m
+[31m+  * chamador: não saber julgar não é motivo para recusar. Um arquivo que o app[39m
+[31m+  * não consegue abrir para ler 8 bytes tem problema maior que integridade, e[39m
+[31m+  * quem o encontra é o render (`pdf-error`).[39m
+[31m+  */[39m
+[31m+ function bordas(f: File): { head: string; tail: string } {[39m
+[31m+   try {[39m
+[31m+     const h = f.open()[39m
+[31m+     try {[39m
+[31m+       const head = latin1(h.readBytes(8))[39m
+[31m+       const n = f.size[39m
+[31m+       h.offset = Math.max(0, n - 64)[39m
+[31m+       return { head, tail: latin1(h.readBytes(64)) }[39m
+[31m+     } finally {[39m
+[31m+       h.close()[39m
+[31m+     }[39m
+[31m+   } catch {[39m
+[31m+     return { head: '%PDF-', tail: 'startxref 0 %%EOF' }[39m
+[31m+   }[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ function latin1(bytes: Uint8Array): string {[39m
+[31m+   let s = ''[39m
+[31m+   for (const b of bytes) s += String.fromCharCode(b)[39m
+[31m+   return s[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /** A causa da recusa, em pt-BR — vai para a TELA e para o `download-error`. */[39m
+[31m+ function motivo(kind: FileRejectKind, bytes: number, esperado: number | null): string {[39m
+[31m+   if (kind === 'empty') return 'o arquivo chegou vazio'[39m
+[31m+   if (kind === 'short') return `arquivo incompleto: ${bytes} de ${esperado ?? '?'} bytes`[39m
+[31m+   return 'o arquivo chegou corrompido'[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /**[39m
+[31m+  * A frase que o músico lê quando nada mais se sabe dizer (W2, decisão 2 do[39m
+[31m+  * aval). O catálogo já traduz `download-error` por "não consegui baixar".[39m
+[31m+  */[39m
+[31m+ export const FALHA_GENERICA = FRASES_DO_TABLET['nao-consegui-baixar'] // N4-PR7: o texto mora no core (a linha de L o reusa)[39m
+[31m+[39m
+[31m+ /** Onde a frase de tela viaja: uma propriedade do próprio `Error`. */[39m
+[31m+ type ComFrase = Error & { fraseDeTela: string }[39m
+[31m+[39m
+[31m+ function comFrase(paraOLog: string, paraATela: string): Error {[39m
+[31m+   const e = new Error(paraOLog) as ComFrase[39m
+[31m+   e.fraseDeTela = paraATela[39m
+[31m+   return e[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /**[39m
+[31m+  * A frase que chega ao `testID` **download-erro** — e o CONJUNTO é FECHADO.[39m
+[31m+  *[39m
+[31m+  * (Escrito sem as aspas de propósito: o coletor do G2 grepa a prop de teste[39m
+[31m+  *  literalmente, sem tirar comentário, e contaria esta linha como uma prop nova[39m
+[31m+  *  do `files.ts`.[39m
+[31m+  *  É falso positivo do instrumento — div. 136, registrada, e o conserto é da W3,[39m
+[31m+  *  porque mexer no gate aqui é misturar escopo com invólucro.)[39m
+[31m+  *[39m
+[31m+  * W2, div. 125 e 131. O erro carrega DUAS metades: `message` é o detalhe, que[39m
+[31m+  * vai para o log e continua diagnosticável (com o nome do objeto e a URL já[39m
+[31m+  * higienizada); `fraseDeTela` é o que o músico lê. Quem não tiver frase[39m
+[31m+  * declarada cai no genérico — e é ESSA omissão que fecha o conjunto: nenhuma[39m
+[31m+  * mensagem de biblioteca pode chegar à tela, porque só chega o que alguém[39m
+[31m+  * escreveu aqui, em pt-BR.[39m
+[31m+  *[39m
+[31m+  * E o nome do objeto do bucket NÃO vai junto (decisão 2 do aval): ele não[39m
+[31m+  * identifica a MÚSICA, identifica o OBJETO — é detalhe de infraestrutura que o[39m
+[31m+  * músico não pediu e não pode usar. O que serve na tela é o título, e o S3e já[39m
+[31m+  * o mostra duas linhas acima (`${titulo} · ${tipo}${tamanho}`).[39m
+[31m+  */[39m
+[31m+ export function fraseDaFalha(erro: unknown): string {[39m
+[31m+   const f = (erro as Partial<ComFrase> | null | undefined)?.fraseDeTela[39m
+[31m+   return typeof f === 'string' ? f : FALHA_GENERICA[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /**[39m
+[31m+  * A higienização da regra 2, e ela tem DUAS alternativas — não uma.[39m
+[31m+  *[39m
+[31m+  * **Div. 137 (W2), e é achado de SEGURANÇA, não de forma.** Até aqui isto era[39m
+[31m+  * `bruta.replace(/https?:\/\/\S+/g, '<url>')`, e o que o aparelho devolveu em[39m
+[31m+  * modo avião foi:[39m
+[31m+  *[39m
+[31m+  *     Unable to resolve host "mlxjmpbdchmwplcfislt.supabase.co":[39m
+[31m+  *     No address associated with hostname[39m
+[31m+  *[39m
+[31m+  * O host vem **nu, entre aspas, sem esquema** — então o regex não casava, e o[39m
+[31m+  * identificador do projeto Supabase ia inteiro para o log. E log deste projeto[39m
+[31m+  * **se cola em anexo commitado**: há três anexos de log no repositório.[39m
+[31m+  *[39m
+[31m+  * A segunda alternativa casa um token entre aspas que tem cara de HOST: rótulos[39m
+[31m+  * de `[A-Za-z0-9-]` e **pelo menos dois pontos**.[39m
+[31m+  *[39m
+[31m+  * **O limite é declarado, não esquecido**: um host de dois rótulos[39m
+[31m+  * (`exemplo.com`) NÃO é higienizado. Exigir só um ponto pegaria[39m
+[31m+  * `"w1-curto-1.pdf"` e qualquer nome de arquivo entre aspas — e apagar o nome[39m
+[31m+  * do arquivo do log destrói exatamente a diagnosticabilidade que a separação[39m
+[31m+  * das duas metades comprou. O bucket deste app é Supabase, cujo host tem sempre[39m
+[31m+  * três rótulos (`<ref>.supabase.co`), então a linha cai onde interessa. Se um[39m
+[31m+  * dia o bucket mudar de forma, esta é a linha a mexer.[39m
+[31m+  *[39m
+[31m+  * **W3 — A METADE QUE FALTAVA (div. 137, segunda parte).** Até aqui isto NÃO[39m
+[31m+  * cobria o `mensagemDe()` do `prefetch.ts`, a rede de segurança para o que[39m
+[31m+  * nunca passou pelo `falha()`: ele tinha higienização PRÓPRIA, e antiga —[39m
+[31m+  * `bruta.replace(/\b(?:https?|file):\/\/\S+/g, '<uri>')`, sem a alternativa do[39m
+[31m+  * host nu. O conjunto que ele cobre encolheu com a W2 (a promoção do[39m
+[31m+  * `ensureFileUma` entrou num `try`) mas nunca foi vazio: o `parcial.delete()`[39m
+[31m+  * da abertura do `baixarAtomico`, o `touch()` e os dois `localizar()` do[39m
+[31m+  * `ensureFileUma` seguem fora de qualquer `try`, e uma rejeição de qualquer um[39m
+[31m+  * deles sai pelo `mensagemDe()`.[39m
+[31m+  *[39m
+[31m+  * Agora o `prefetch.ts` chama ESTA função, e a regra 2 do catálogo passa a ter[39m
+[31m+  * **uma implementação só**. Para que isso não custe cobertura, a alternativa[39m
+[31m+  * `file://` — que só o `mensagemDe()` tinha — entra aqui, e com o MESMO[39m
+[31m+  * rótulo que ela já usava: `<uri>` para `file:`, `<url>` para `http(s)`.[39m
+[31m+  * Nenhum texto de log muda de vocabulário em lugar nenhum; o que muda é que[39m
+[31m+  * cada um dos dois passa a ter o que só o outro tinha.[39m
+[31m+  */[39m
+[31m+ const SEGREDO_DE_REDE = /https?:\/\/\S+|\bfile:\/\/\S+|"[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+){2,}"/g[39m
+[31m+[39m
+[31m+ export function higienizar(bruta: string): string {[39m
+[31m+   return bruta.replace(SEGREDO_DE_REDE, (m) => {[39m
+[31m+     if (m.startsWith('"')) return '"<host>"'[39m
+[31m+     return m.startsWith('file:') ? '<uri>' : '<url>'[39m
+[31m+   })[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /**[39m
+[31m+  * A falha do download: o DETALHE para o log, e a frase para a tela.[39m
+[31m+  *[39m
+[31m+  * **Regra 2 do catálogo**: URL completa nunca entra em log. A mensagem crua[39m
+[31m+  * da biblioteca carrega a URL do objeto (`Unable to download file from[39m
+[31m+  * <url>. Response status: 404`) e, quando a rede nem resolve, o **host nu**[39m
+[31m+  * (div. 137) — então ela é traduzida quando se reconhece a causa e higienizada[39m
+[31m+  * quando não, pelas duas alternativas do `higienizar()`.[39m
+[31m+  *[39m
+[31m+  * Os três ramos, e o que cada um manda para cada metade:[39m
+[31m+  *   1. já vem de dentro daqui (prefixo `${name}: `) — devolve como está, com a[39m
+[31m+  *      frase de tela que ele já carrega;[39m
+[31m+  *   2. `status: NNN` — traduz para as duas metades;[39m
+[31m+  *   3. **qualquer outra coisa** — o log fica com o texto cru higienizado, que é[39m
+[31m+  *      o que faz um relatório ser diagnosticável, e a TELA fica sem frase, logo[39m
+[31m+  *      com a genérica. Era este ramo que mandava `Call to function[39m
+[31m+  *      'FileSystemDownloadTask.start' has been rejected.` para o palco.[39m
+[31m+  */[39m
+[31m+ export function falha(erro: unknown, name: string): Error {[39m
+[31m+   if (erro instanceof Error && erro.message.startsWith(`${name}: `)) return erro[39m
+[31m+   const bruta = erro instanceof Error ? erro.message : String(erro)[39m
+[31m+   const status = /status:?\s*(\d{3})/i.exec(bruta)?.[1][39m
+[31m+   if (status !== undefined) {[39m
+[31m+     return comFrase(`${name}: o servidor respondeu ${status}`, `o servidor respondeu ${status}`)[39m
+[31m+   }[39m
+[31m+   return new Error(`${name}: ${higienizar(bruta)}`)[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ export interface ListedFile {[39m
+[31m+   url: string[39m
+[31m+   bytes: number[39m
+[31m+   lastUsedMs: number[39m
+[31m+   guaranteed: boolean[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /** Só o que existe no disco AGORA — o índice é histórico, não verdade. */[39m
+[31m+ export function listFiles(): ListedFile[] {[39m
+[31m+   if (uidAtual === null) return [][39m
+[31m+   const idx = carregarIndice()[39m
+[31m+   const out: ListedFile[] = [][39m
+[31m+   for (const [url, entrada] of Object.entries(idx)) {[39m
+[31m+     const achado = localizar(url)[39m
+[31m+     if (achado === null) continue[39m
+[31m+     out.push({[39m
+[31m+       url,[39m
+[31m+       bytes: achado.file.size ?? 0,[39m
+[31m+       lastUsedMs: entrada.lastUsedMs,[39m
+[31m+       guaranteed: achado.guaranteed,[39m
+[31m+     })[39m
+[31m+   }[39m
+[31m+   return out[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /** URLs presentes — a forma que o `offlineStatus` e o `selectPrefetch` pedem. */[39m
+[31m+ export function presentUrls(): Set<string> {[39m
+[31m+   return new Set(listFiles().map((f) => f.url))[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /** Marca uso agora (entra no índice se ainda não estava). */[39m
+[31m+ export function touch(url: string): void {[39m
+[31m+   if (uidAtual === null) return[39m
+[31m+   const idx = carregarIndice()[39m
+[31m+   const bytes = localizar(url)?.file.size ?? idx[url]?.bytes ?? 0[39m
+[31m+   idx[url] = { name: fileNameFromUrl(url), bytes, lastUsedMs: Date.now() }[39m
+[31m+   gravarIndice()[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /**[39m
+[31m+  * Tamanho que este aparelho já viu para esta URL, mesmo que o arquivo tenha[39m
+[31m+  * sido despejado depois — `null` se nunca foi baixado aqui. É o "(1,2 MB)"[39m
+[31m+  * do S3e, e é a razão de o `remove` do LRU **não** apagar a entrada.[39m
+[31m+  */[39m
+[31m+ export function knownBytes(url: string): number | null {[39m
+[31m+   if (uidAtual === null) return null[39m
+[31m+   const bytes = carregarIndice()[url]?.bytes[39m
+[31m+   return bytes === undefined || bytes === 0 ? null : bytes[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /**[39m
+[31m+  * Apaga estes arquivos do DISCO (vítimas do LRU, T1-R14) e devolve quantos[39m
+[31m+  * bytes saíram. A entrada de índice fica: `listFiles` já ignora o que não[39m
+[31m+  * está no disco, e o tamanho lembrado é o que o S3e mostra depois.[39m
+[31m+  */[39m
+[31m+ export function remove(urls: string[]): number {[39m
+[31m+   if (uidAtual === null || urls.length === 0) return 0[39m
+[31m+   let bytes = 0[39m
+[31m+   for (const url of urls) {[39m
+[31m+     const achado = localizar(url)[39m
+[31m+     if (achado === null) continue[39m
+[31m+     bytes += achado.file.size ?? 0[39m
+[31m+     achado.file.delete()[39m
+[31m+   }[39m
+[31m+   return bytes[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /** Apaga TODOS os arquivos deste usuário — instrumento de prova (A13). */[39m
+[31m+ export function clearFiles(): void {[39m
+[31m+   if (uidAtual === null) return[39m
+[31m+   const g = dirGarantido()[39m
+[31m+   if (g.exists) g.delete()[39m
+[31m+   const d = dirDemanda()[39m
+[31m+   if (d.exists) d.delete()[39m
+[31m+   indice = {}[39m
+[31m+   indiceDe = uidAtual[39m
+[31m+   gravarIndice()[39m
+[31m+   log('files-cleared')[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ export interface Saneamento {[39m
+[31m+   /** Arquivos com nome definitivo que foram recusados e apagados. */[39m
+[31m+   removidos: number[39m
+[31m+   /** `.part` de downloads mortos que foram varridos. */[39m
+[31m+   parciais: number[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /**[39m
+[31m+  * **A varredura da abertura** (W1, commit 6; aceite W1-A6).[39m
+[31m+  *[39m
+[31m+  * Por que ela existe, se o estrago medido hoje nos dois aparelhos é ZERO: um[39m
+[31m+  * arquivo envenenado **nunca se recupera sozinho**. O `ensureFileUma` vê que[39m
+[31m+  * `localizar()` achou, devolve `src=disk` e não tenta baixar de novo — então[39m
+[31m+  * um 0 byte de amanhã fica lá para sempre, inclusive DEPOIS do conserto do[39m
+[31m+  * caminho de escrita. O conserto do caminho de escrita impede que nasçam[39m
+[31m+  * novos; só uma varredura tira os que já nasceram.[39m
+[31m+  *[39m
+[31m+  * **Apaga do DISCO e mantém a ENTRADA do índice** (Q3, decisão do Marcel):[39m
+[31m+  * esconder sem apagar deixaria o LRU contando bytes de lixo, e preservar a[39m
+[31m+  * entrada mantém o "(1,2 MB)" do S3e — que é a informação de que o usuário[39m
+[31m+  * precisa para decidir baixar.[39m
+[31m+  *[39m
+[31m+  * Não custa rede, não custa bucket e não emite linha nova: cada recusa já é[39m
+[31m+  * um `file-reject`, e o catálogo não ganha um terceiro evento por isto.[39m
+[31m+  */[39m
+[31m+ export function sanearArquivos(): Saneamento {[39m
+[31m+   if (uidAtual === null) return { removidos: 0, parciais: 0 }[39m
+[31m+   let removidos = 0[39m
+[31m+   let parciais = 0[39m
+[31m+   for (const dir of [dirGarantido(), dirDemanda()]) {[39m
+[31m+     if (!dir.exists) continue[39m
+[31m+     for (const item of dir.list()) {[39m
+[31m+       if (!(item instanceof File)) continue[39m
+[31m+       if (item.name.endsWith(PARCIAL)) {[39m
+[31m+         // Um `.part` que sobreviveu a uma abertura é de um processo morto: o[39m
+[31m+         // `baixarAtomico` apaga o dele em toda saída por erro.[39m
+[31m+         item.delete()[39m
+[31m+         parciais++[39m
+[31m+         continue[39m
+[31m+       }[39m
+[31m+       const bytes = item.size[39m
+[31m+       // `expected: null` — em repouso não há `Content-Length`: a única fonte[39m
+[31m+       // de tamanho esperado existe durante o download (div. 112), e o índice[39m
+[31m+       // não é oráculo (div. 111). O que sobra é a forma, e ela basta para o[39m
+[31m+       // vazio e para o truncado.[39m
+[31m+       const veredito = fileVerdict({[39m
+[31m+         bytes,[39m
+[31m+         expected: null,[39m
+[31m+         pdf: ehPdf(item.name),[39m
+[31m+         ...bordas(item),[39m
+[31m+       })[39m
+[31m+       if (veredito.ok) continue[39m
+[31m+       log(`file-reject name=${item.name} kind=${veredito.kind} bytes=${bytes} expected=-`)[39m
+[31m+       item.delete()[39m
+[31m+       removidos++[39m
+[31m+     }[39m
+[31m+   }[39m
+[31m+   return { removidos, parciais }[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /** Caminhos das duas pastas — usados pelos protocolos de device (`run-as`). */[39m
+[31m+ export function filesDirs(): { guaranteed: string; demand: string } {[39m
+[31m+   return { guaranteed: dirGarantido().uri, demand: dirDemanda().uri }[39m
+[31m+ }[39m
+[31m+[39m
+
+[36m [2m❯[22m apps/native/test/frases-n4.test.ts:[2m350:50[22m[39m
+    [90m348| [39m  it.each(COPIAS)('nenhuma cópia em %s: as frases saem do core', (arqu…
+    [90m349| [39m    [35mconst[39m fonte [33m=[39m [34mler[39m(arquivo)
+    [90m350| [39m    [35mfor[39m ([35mconst[39m c [35mof[39m copias) [34mexpect[39m(fonte[33m,[39m c)[33m.[39mnot[33m.[39m[34mtoContain[39m(c)
+    [90m   | [39m                                                 [31m^[39m
+    [90m351| [39m  })
+    [90m352| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/11]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[42m native [49m[39m apps/native/test/frases-n4.test.ts[2m > [22m(6) as frases do leitor que a visualização reusa, no core, sem cópia no palco nem no files.ts[2m > [22mnenhuma cópia em apps/native/src/screens/Leitor.tsx: as frases saem do core
+[31m[1mError[22m: ENOENT: no such file or directory, open '/Users/marcelviana/projects/octavia-n4-pr8/apps/native/src/screens/Leitor.tsx'[39m
+[36m [2m❯[22m ler apps/native/test/frases-n4.test.ts:[2m27:38[22m[39m
+    [90m 25| [39m
+    [90m 26| [39m[35mconst[39m [33mRAIZ[39m [33m=[39m [34mresolve[39m(__dirname[33m,[39m [32m'../../..'[39m)
+    [90m 27| [39mconst ler = (rel: string): string => readFileSync(resolve(RAIZ, rel), …
+    [90m   | [39m                                     [31m^[39m
+    [90m 28| [39m
+    [90m 29| [39mdescribe('(1) as P-F aceitas — contra a lista extraída da folha', () =…
+[90m [2m❯[22m apps/native/test/frases-n4.test.ts:[2m349:19[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/11]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[42m native [49m[39m apps/native/test/frases-n4.test.ts[2m > [22m(6) as frases do leitor que a visualização reusa, no core, sem cópia no palco nem no files.ts[2m > [22mnenhuma cópia em apps/native/src/screens/VisualizacaoScreen.tsx: as frases saem do core
+[31m[1mError[22m: ENOENT: no such file or directory, open '/Users/marcelviana/projects/octavia-n4-pr8/apps/native/src/screens/VisualizacaoScreen.tsx'[39m
+[36m [2m❯[22m ler apps/native/test/frases-n4.test.ts:[2m27:38[22m[39m
+    [90m 25| [39m
+    [90m 26| [39m[35mconst[39m [33mRAIZ[39m [33m=[39m [34mresolve[39m(__dirname[33m,[39m [32m'../../..'[39m)
+    [90m 27| [39mconst ler = (rel: string): string => readFileSync(resolve(RAIZ, rel), …
+    [90m   | [39m                                     [31m^[39m
+    [90m 28| [39m
+    [90m 29| [39mdescribe('(1) as P-F aceitas — contra a lista extraída da folha', () =…
+[90m [2m❯[22m apps/native/test/frases-n4.test.ts:[2m349:19[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/11]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[42m native [49m[39m apps/native/test/frases-n4.test.ts[2m > [22m(6) as frases do leitor que a visualização reusa, no core, sem cópia no palco nem no files.ts[2m > [22mo palco, o leitor e o files.ts importam do core o que escreviam (o controle do "nenhuma cópia")
+[31m[1mAssertionError[22m: expected '/**\n * S3 — Palco (PRD T1-R24, R25, …' to contain 'FRASES_DO_LEITOR.baixar'[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- FRASES_DO_LEITOR.baixar[39m
+[31m+ /**[39m
+[31m+  * S3 — Palco (PRD T1-R24, R25, R26, R27, R28, R29, R30, R31, R32, R33, R34,[39m
+[31m+  * R35; aceites A12, A13, A14, A15, A16, A17, A18). Duas variantes:[39m
+[31m+  *[39m
+[31m+  *  - **texto** (Lyrics, Tab, Chords com corpo) — S3a/b/c;[39m
+[31m+  *  - **arquivo** (Sheet, e Chords escaneada: `content_data` sem corpo e[39m
+[31m+  *    `file_url` presente) — **S3d**, o PDF do disco, paginado; e **S3e**, o[39m
+[31m+  *    placeholder "arquivo não baixado" quando ele não está aqui.[39m
+[31m+  *[39m
+[31m+  * Layout do design: barra superior de 64 dp com "n de N", nome da setlist,[39m
+[31m+  * título · artista · tipo, a nota da música e o chip de rede (em B, 88 em[39m
+[31m+  * duas linhas — N3-D13, abaixo); conteúdo em[39m
+[31m+  * IBM Plex Mono com entrelinha 1,55; barra inferior de 96 dp com sete[39m
+[31m+  * controles **só ícone** (V1-PR3, DESIGN-V1 §6 — o nome de cada um está no[39m
+[31m+  * `accessibilityLabel`); e as **bordas invisíveis** de 15% da largura, ocupando só a[39m
+[31m+  * altura ENTRE as barras (D-1) — é por elas que se avança e volta às cegas.[39m
+[31m+  *[39m
+[31m+  * Decisões medidas no spike (N1-PR4): auto-scroll por `requestAnimationFrame`[39m
+[31m+  * (responde em ~38 ms) e linha longa dentro de um `ScrollView` horizontal[39m
+[31m+  * (sem ele a linha re-quebra).[39m
+[31m+  *[39m
+[31m+  * No PDF o `react-native-pdf` já traz pinça, pan e virar página; o que esta[39m
+[31m+  * tela acrescenta é o "página n de N" do design, a dica de gesto, e a regra[39m
+[31m+  * do T1-R30: **auto-scroll fica desabilitado com o motivo AO TOQUE**, nunca[39m
+[31m+  * mudo — a forma permanente é a do ícone (tinta `lineInfo`, desenho[39m
+[31m+  * amputado) e o motivo aparece na linha acima da barra quando se toca no[39m
+[31m+  * controle (errata do A15, V1-PR3-PRECHECK §14.1). As bordas de 15%[39m
+[31m+  * continuam navegando MÚSICA, não página — errata do design (D-1 / A14):[39m
+[31m+  * quem vira página é o deslize sobre o documento.[39m
+[31m+  */[39m
+[31m+ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'[39m
+[31m+ import {[39m
+[31m+   Pressable,[39m
+[31m+   ScrollView,[39m
+[31m+   StyleSheet,[39m
+[31m+   Text,[39m
+[31m+   View,[39m
+[31m+   useWindowDimensions,[39m
+[31m+   type LayoutChangeEvent,[39m
+[31m+ } from 'react-native'[39m
+[31m+ import { useFocusEffect } from '@react-navigation/native'[39m
+[31m+ import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake'[39m
+[31m+ import Pdf from 'react-native-pdf'[39m
+[31m+ import {[39m
+[31m+   bodyOf,[39m
+[31m+   ehFormatoQueOAppMostra,[39m
+[31m+   endOfSetlist,[39m
+[31m+   FRASES_DO_PALCO,[39m
+[31m+   FRASES_DO_TABLET,[39m
+[31m+   isValidContent,[39m
+[31m+   nextPosition,[39m
+[31m+   nomeDoVoltarDoAvulso,[39m
+[31m+   paginaDe,[39m
+[31m+   prevPosition,[39m
+[31m+   resolveSong,[39m
+[31m+   VOCABULARIO_DE_CONTENT,[39m
+[31m+   type ContentDTO,[39m
+[31m+   type OrigemDoAvulso,[39m
+[31m+   type SetlistDTO,[39m
+[31m+ } from '@octavia/core'[39m
+[31m+ import { ensureFile, fileNameFromUrl, fraseDaFalha, hasFile, knownBytes } from '../files'[39m
+[31m+ import { Icone, type EstadoIcone } from '../icones/Icone'[39m
+[31m+ import type { NomeIcone } from '../icones/dados'[39m
+[31m+ import { log } from '../log'[39m
+[31m+ import { prefetchDemanda } from '../prefetch'[39m
+[31m+ import {[39m
+[31m+   bar,[39m
+[31m+   colors,[39m
+[31m+   dark,[39m
+[31m+   faixas,[39m
+[31m+   font,[39m
+[31m+   lineHeight,[39m
+[31m+   radius,[39m
+[31m+   size,[39m
+[31m+   space,[39m
+[31m+   touch,[39m
+[31m+   tracking,[39m
+[31m+   zoomDefault,[39m
+[31m+   zoomSteps,[39m
+[31m+   type ThemeName,[39m
+[31m+ } from '../theme'[39m
+[31m+ import { useFaixa } from '../useFaixa'[39m
+[31m+[39m
+[31m+ export interface StageScreenProps {[39m
+[31m+   /**[39m
+[31m+    * A setlist do palco — ou `null`: o **palco avulso sem hospedeira** (N4-R16, N4-D30, N4-D63). Aberto de fora de[39m
+[31m+    * uma setlist (a busca de S1; na PR-7 a biblioteca, na PR-8 a visualização), o palco não tem setlist: a barra de[39m
+[31m+    * cima diz `AVULSA` **sem nome de setlist**, a de baixo não tem o índice, e o prefetch sob demanda é o desta[39m
+[31m+    * música (div. 964). Com `null`, o `avulsaContentId` é obrigatório.[39m
+[31m+    */[39m
+[31m+   setlist: SetlistDTO | null[39m
+[31m+   contentById: Map<string, ContentDTO>[39m
+[31m+   posicao: number[39m
+[31m+   /**[39m
+[31m+    * Música AVULSA da biblioteca, aberta pela busca (T1-R22): `content_id` que[39m
+[31m+    * não pertence a esta posição da setlist. Quando presente, o palco mostra[39m
+[31m+    * essa música e as bordas não navegam — sair devolve o palco à posição de[39m
+[31m+    * onde a busca partiu.[39m
+[31m+    */[39m
+[31m+   avulsaContentId: string | null[39m
+[31m+   /**[39m
+[31m+    * De onde o avulso SEM hospedeira veio — o nome acessível do voltar (*Voltar para a busca · para a biblioteca ·[39m
+[31m+    * para a visualização*, N4-R16). `null` no palco com setlist; o avulso aberto pela busca de dentro de uma setlist[39m
+[31m+    * continua *Voltar para a busca* (N4-D30).[39m
+[31m+    */[39m
+[31m+   origemDoAvulso?: OrigemDoAvulso | null[39m
+[31m+   online: boolean[39m
+[31m+   onPosicao: (p: number) => void[39m
+[31m+   onFim: () => void[39m
+[31m+   onIndice: () => void[39m
+[31m+   onBusca: () => void[39m
+[31m+   onSair: () => void[39m
+[31m+   /** O disco mudou (download ou despejo) — a raiz recalcula `filesPresent`. */[39m
+[31m+   onArquivosMudaram: () => void[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /** Tag do wake lock — só o palco a usa, então só ele a solta. */[39m
+[31m+ const TAG_PALCO = 'octavia-palco'[39m
+[31m+[39m
+[31m+ /** Quanto tempo o motivo de um controle inerte fica na linha acima da barra. */[39m
+[31m+ const MOTIVO_MS = 2500[39m
+[31m+[39m
+[31m+ /** A dica de gesto do PDF (S3d) — a linha acima da barra, como no design. */[39m
+[31m+ const DICA_PDF = 'pinça para zoom · arraste para mover · deslize para virar a página'[39m
+[31m+[39m
+[31m+ const TIPO: Record<string, string> = {[39m
+[31m+   Lyrics: 'Letra',[39m
+[31m+   Chords: 'Cifra',[39m
+[31m+   Tab: 'Tab',[39m
+[31m+   Sheet: 'Partitura',[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /** Motivo do placeholder, na linguagem do design (nunca tela vazia). */[39m
+[31m+ const MOTIVO: Record<string, { titulo: string; apoio: string }> = {[39m
+[31m+   'no-body': {[39m
+[31m+     titulo: 'este item não tem conteúdo',[39m
+[31m+     apoio:[39m
+[31m+       'A música existe na setlist, mas não tem letra, cifra, tab ou arquivo. Edite na versão web. Toque na borda direita para seguir.',[39m
+[31m+   },[39m
+[31m+   'no-key': {[39m
+[31m+     titulo: 'este item não tem conteúdo',[39m
+[31m+     apoio:[39m
+[31m+       'O conteúdo salvo não traz o texto desta música. Edite na versão web. Toque na borda direita para seguir.',[39m
+[31m+   },[39m
+[31m+   'not-string': {[39m
+[31m+     titulo: 'este item não tem conteúdo',[39m
+[31m+     apoio:[39m
+[31m+       'O conteúdo salvo não traz o texto desta música. Edite na versão web. Toque na borda direita para seguir.',[39m
+[31m+   },[39m
+[31m+   'unknown-type': {[39m
+[31m+     titulo: 'tipo desconhecido',[39m
+[31m+     apoio: 'Este item tem um tipo que o app ainda não sabe mostrar. Toque na borda direita para seguir.',[39m
+[31m+   },[39m
+[31m+   ausente: {[39m
+[31m+     titulo: 'conteúdo não baixado',[39m
+[31m+     apoio:[39m
+[31m+       'Esta música ainda não foi sincronizada neste aparelho. Conecte-se à internet para baixá-la.',[39m
+[31m+   },[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /** "242.176 B" → "237 KB" — o "(1,2 MB)" do S3e. */[39m
+[31m+ function tamanhoLegivel(bytes: number): string {[39m
+[31m+   if (bytes >= 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1).replace('.', ',')} MB`[39m
+[31m+   return `${Math.round(bytes / 1024)} KB`[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /**[39m
+[31m+  * O arquivo desta posição, nas quatro situações que a tela precisa[39m
+[31m+  * distinguir. `bytes` sobrevive ao despejo (o índice lembra o tamanho), e é[39m
+[31m+  * por isso que o S3e consegue dizer o tamanho de algo que não está aqui.[39m
+[31m+  */[39m
+[31m+ type EstadoArquivo =[39m
+[31m+   | { fase: 'buscando' }[39m
+[31m+   | { fase: 'pronto'; uri: string }[39m
+[31m+   | { fase: 'ausente'; bytes: number | null }[39m
+[31m+   | { fase: 'erro'; mensagem: string; bytes: number | null }[39m
+[31m+[39m
+[31m+ export function StageScreen({[39m
+[31m+   setlist,[39m
+[31m+   contentById,[39m
+[31m+   posicao,[39m
+[31m+   avulsaContentId,[39m
+[31m+   origemDoAvulso = null,[39m
+[31m+   online,[39m
+[31m+   onPosicao,[39m
+[31m+   onFim,[39m
+[31m+   onIndice,[39m
+[31m+   onBusca,[39m
+[31m+   onSair,[39m
+[31m+   onArquivosMudaram,[39m
+[31m+ }: StageScreenProps): React.JSX.Element {[39m
+[31m+   /**[39m
+[31m+    * T1-R33 — a tela não apaga ENQUANTO o palco está aberto.[39m
+[31m+    *[39m
+[31m+    * Por FOCO, não por montagem: o `useKeepAwake` solta o lock no unmount, mas[39m
+[31m+    * o native-stack **não desmonta** a tela ao navegar para outra da pilha —[39m
+[31m+    * medido na N1-PR4, o `KEEP_SCREEN_ON` continuava na janela do app depois[39m
+[31m+    * de sair do palco. Com `useFocusEffect` o lock vive exatamente enquanto o[39m
+[31m+    * palco está visível.[39m
+[31m+    */[39m
+[31m+   /**[39m
+[31m+    * N1-D17 — `stage restore n=<i>/<N>`: o palco voltou de uma tela empilhada[39m
+[31m+    * (índice, busca, ou o palco avulso do T1-R22) na posição em que estava.[39m
+[31m+    *[39m
+[31m+    * Antes desta linha, a única prova da restauração era comparar dois[39m
+[31m+    * screencaps pixel a pixel (N1-PR6): um aceite não deve depender disso.[39m
+[31m+    *[39m
+[31m+    * Só nos focos SEGUINTES ao primeiro — a montagem inicial não é uma volta.[39m
+[31m+    * A posição sai de um ref, e não das dependências, para o efeito de foco[39m
+[31m+    * não re-rodar a cada navegação dentro da própria setlist: com `[posicao]`[39m
+[31m+    * na lista, avançar uma música emitiria `stage restore`, que é o oposto do[39m
+[31m+    * que a linha significa. No palco AVULSO a linha não sai: ele não tem[39m
+[31m+    * posição na setlist (o "n de N" da barra é "AVULSA").[39m
+[31m+    */[39m
+[31m+   const jaFocou = useRef(false)[39m
+[31m+   const posicaoRef = useRef(posicao)[39m
+[31m+   const totalRef = useRef(0)[39m
+[31m+   const avulsaRef = useRef(false)[39m
+[31m+[39m
+[31m+   useFocusEffect([39m
+[31m+     useCallback(() => {[39m
+[31m+       void activateKeepAwakeAsync(TAG_PALCO)[39m
+[31m+       log('keepawake on')[39m
+[31m+       if (jaFocou.current && !avulsaRef.current) {[39m
+[31m+         log(`stage restore n=${posicaoRef.current}/${totalRef.current}`)[39m
+[31m+       }[39m
+[31m+       jaFocou.current = true[39m
+[31m+       return () => {[39m
+[31m+         deactivateKeepAwake(TAG_PALCO)[39m
+[31m+         log('keepawake off')[39m
+[31m+       }[39m
+[31m+     }, []),[39m
+[31m+   )[39m
+[31m+[39m
+[31m+   const { width, height } = useWindowDimensions()[39m
+[31m+   /**[39m
+[31m+    * N3-PR5 — a barra superior é a ÚNICA coisa do palco que muda de faixa[39m
+[31m+    * (N3-D13, `N3-B-S3`): em B, 88 em duas linhas — posição + setlist (e a[39m
+[31m+    * página, a nota e o ponto de sem rede) na primeira, título · artista ·[39m
+[31m+    * tipo na segunda, com a largura inteira. A base, o corpo e as bordas de 15 %[39m
+[31m+    * são os de C: as bordas continuam medindo o `meio` (que fica 24 mais baixo),[39m
+[31m+    * não a faixa. Em C, a barra de uma linha de sempre, nó por nó (T3-R2).[39m
+[31m+    */[39m
+[31m+   const t = faixas[useFaixa()].palco[39m
+[31m+[39m
+[31m+   /**[39m
+[31m+    * D-c / T1-R27 — `rotation=landscape|portrait n=<i>/<N>`: a linha que o[39m
+[31m+    * catálogo (N1-D5) promete para o A14 e que o app nunca emitia — o aceite[39m
+[31m+    * da N1-PR7 provou a rotação por screencap porque o log não existia.[39m
+[31m+    *[39m
+[31m+    * Sai só na MUDANÇA de orientação, não na montagem: o `useWindowDimensions`[39m
+[31m+    * re-renderiza a cada giro, e sem o ref uma linha sairia a cada abertura do[39m
+[31m+    * palco. A posição vem dos mesmos refs do `stage restore` (N1-D17), pela[39m
+[31m+    * mesma razão — o efeito não pode depender de `posicao`.[39m
+[31m+    */[39m
+[31m+   const orientacaoRef = useRef<'landscape' | 'portrait' | null>(null)[39m
+[31m+   const orientacao: 'landscape' | 'portrait' = width >= height ? 'landscape' : 'portrait'[39m
+[31m+[39m
+[31m+   useEffect(() => {[39m
+[31m+     const anterior = orientacaoRef.current[39m
+[31m+     orientacaoRef.current = orientacao[39m
+[31m+     if (anterior === null || anterior === orientacao) return[39m
+[31m+     log(`rotation=${orientacao} n=${posicaoRef.current}/${totalRef.current}`)[39m
+[31m+   }, [orientacao])[39m
+[31m+   const [zoom, setZoom] = useState<number>(zoomDefault)[39m
+[31m+   const [tema, setTema] = useState<ThemeName>('dark')[39m
+[31m+   const [rodando, setRodando] = useState(false)[39m
+[31m+   const [arquivo, setArquivo] = useState<EstadoArquivo>({ fase: 'buscando' })[39m
+[31m+   const [pagina, setPagina] = useState({ n: 0, total: 0 })[39m
+[31m+[39m
+[31m+   /**[39m
+[31m+    * V1-PR3 / errata do A15 — o motivo do controle inerte aparece AO TOQUE, na[39m
+[31m+    * linha acima da barra (onde o design já põe a dica de gesto do PDF), por[39m
+[31m+    * `MOTIVO_MS`, e some. A forma permanente é a do ícone (tinta `lineInfo` e[39m
+[31m+    * o desenho amputado, §6.2 + E3); a palavra não mora mais dentro do[39m
+[31m+    * controle. Trocar de música apaga o motivo antes do tempo.[39m
+[31m+    */[39m
+[31m+   const [motivoVisivel, setMotivoVisivel] = useState<string | null>(null)[39m
+[31m+   const motivoTimer = useRef<ReturnType<typeof setTimeout> | null>(null)[39m
+[31m+   const revelarMotivo = useCallback((m: string) => {[39m
+[31m+     if (motivoTimer.current !== null) clearTimeout(motivoTimer.current)[39m
+[31m+     setMotivoVisivel(m)[39m
+[31m+     motivoTimer.current = setTimeout(() => setMotivoVisivel(null), MOTIVO_MS)[39m
+[31m+   }, [])[39m
+[31m+   useEffect([39m
+[31m+     () => () => {[39m
+[31m+       if (motivoTimer.current !== null) clearTimeout(motivoTimer.current)[39m
+[31m+     },[39m
+[31m+     [],[39m
+[31m+   )[39m
+[31m+[39m
+[31m+   const scroll = useRef<ScrollView | null>(null)[39m
+[31m+   const y = useRef(0)[39m
+[31m+   const frame = useRef<number | null>(null)[39m
+[31m+   const pedidoEm = useRef(0)[39m
+[31m+   const primeiroFrame = useRef(true)[39m
+[31m+   const navegouEm = useRef(0)[39m
+[31m+[39m
+[31m+   const songs = useMemo([39m
+[31m+     () => (setlist === null ? [] : [...setlist.setlist_songs].sort((a, b) => a.position - b.position)),[39m
+[31m+     [setlist],[39m
+[31m+   )[39m
+[31m+   const n = songs.length[39m
+[31m+   const avulsa = avulsaContentId !== null[39m
+[31m+   const song = avulsa ? undefined : songs[posicao - 1][39m
+[31m+   const resolvida = song !== undefined ? resolveSong(song, contentById) : null[39m
+[31m+   const content = avulsa ? (contentById.get(avulsaContentId) ?? null) : (resolvida?.content ?? null)[39m
+[31m+   const validade =[39m
+[31m+     content !== null ? isValidContent(content.content_type, content.content_data, content.file_url) : null[39m
+[31m+   const corpo = content !== null ? bodyOf(content.content_type, content.content_data) : null[39m
+[31m+   const cor = colors[tema][39m
+[31m+[39m
+[31m+   // Os refs que o efeito de foco (N1-D17) lê sem entrar nas dependências.[39m
+[31m+   posicaoRef.current = posicao[39m
+[31m+   totalRef.current = n[39m
+[31m+   avulsaRef.current = avulsa[39m
+[31m+[39m
+[31m+   const pararScroll = useCallback(() => {[39m
+[31m+     if (frame.current !== null) cancelAnimationFrame(frame.current)[39m
+[31m+     frame.current = null[39m
+[31m+   }, [])[39m
+[31m+[39m
+[31m+   /**[39m
+[31m+    * Troca de música: mede o tempo até o primeiro render do conteúdo novo[39m
+[31m+    * (T1-R34 / A17), volta ao topo e para o auto-scroll — mantendo zoom e tema[39m
+[31m+    * (T1-R32: "o estado persiste ao trocar de música").[39m
+[31m+    *[39m
+[31m+    * As dependências são só valores ESTÁVEIS (`posicao`, `n`, o id da setlist[39m
+[31m+    * e a chave do placeholder). Com `validade`/`content` na lista, o efeito[39m
+[31m+    * rodava a cada render — inclusive o render causado por `setRodando(true)`[39m
+[31m+    * — e cancelava o `requestAnimationFrame` antes do primeiro frame, o que[39m
+[31m+    * matava o auto-scroll em silêncio (defeito medido no device, N1-PR4).[39m
+[31m+    */[39m
+[31m+   const chavePlaceholder =[39m
+[31m+     content === null[39m
+[31m+       ? 'content-missing'[39m
+[31m+       : validade !== null && !validade.ok[39m
+[31m+         ? validade.reason[39m
+[31m+         : null[39m
+[31m+[39m
+[31m+   /**[39m
+[31m+    * O corpo desta posição é um ARQUIVO? (Sheet, e Chords escaneada — o core[39m
+[31m+    * decide, `isValidContent(...).body === 'file'`.) A URL vira dependência[39m
+[31m+    * estável dos efeitos do PDF; `null` significa "variante texto".[39m
+[31m+    */[39m
+[31m+   const urlArquivo =[39m
+[31m+     validade !== null && validade.ok && validade.body === 'file' ? content?.file_url ?? null : null[39m
+[31m+[39m
+[31m+   /**[39m
+[31m+    * N4-D43, N4-D83 — o arquivo é de um **formato que o app ainda não mostra**? Decide a extensão (o core: só `.pdf`[39m
+[31m+    * se mostra), antes do disco: baixado ou não, o leitor de PDF não o abre — o palco nem tenta (nenhum `ensureFile`)[39m
+[31m+    * e mostra o placeholder de formato. Vale no palco com setlist e no avulso: é o mesmo componente. A base do G-inv[39m
+[31m+    * não tem esse caso (a fixture do pre-check do N3 só tem `.pdf`, div. 1028).[39m
+[31m+    */[39m
+[31m+   const formato = urlArquivo !== null && !ehFormatoQueOAppMostra(urlArquivo)[39m
+[31m+[39m
+[31m+   useEffect(() => {[39m
+[31m+     pararScroll()[39m
+[31m+     setRodando(false)[39m
+[31m+     setMotivoVisivel(null)[39m
+[31m+     y.current = 0[39m
+[31m+     scroll.current?.scrollTo({ y: 0, animated: false })[39m
+[31m+     if (navegouEm.current > 0 && setlist !== null) {[39m
+[31m+       log([39m
+[31m+         `nav n=${posicao}/${n} setlist=${setlist.id.slice(0, 8)} t=${Date.now() - navegouEm.current}`,[39m
+[31m+       )[39m
+[31m+       navegouEm.current = 0[39m
+[31m+     }[39m
+[31m+     if (chavePlaceholder !== null) log(`placeholder kind=${chavePlaceholder}`)[39m
+[31m+   }, [posicao, n, setlist, chavePlaceholder, pararScroll])[39m
+[31m+[39m
+[31m+   /**[39m
+[31m+    * T1-R26 — o arquivo desta posição: **disco primeiro** (A9/A13), rede só[39m
+[31m+    * se preciso, e sem arquivo nem rede o S3e — nunca tela branca. Sem retry[39m
+[31m+    * automático: quem tenta de novo é o "Baixar" do usuário (T1-R37).[39m
+[31m+    */[39m
+[31m+   const buscarArquivo = useCallback([39m
+[31m+     async (url: string, pedidoPeloUsuario: boolean): Promise<void> => {[39m
+[31m+       const nome = fileNameFromUrl(url)[39m
+[31m+       if (!hasFile(url) && !online && !pedidoPeloUsuario) {[39m
+[31m+         setArquivo({ fase: 'ausente', bytes: knownBytes(url) })[39m
+[31m+         log(`placeholder kind=file-missing name=${nome}`)[39m
+[31m+         return[39m
+[31m+       }[39m
+[31m+       setArquivo({ fase: 'buscando' })[39m
+[31m+       try {[39m
+[31m+         const r = await ensureFile(url)[39m
+[31m+         setArquivo({ fase: 'pronto', uri: r.uri })[39m
+[31m+         if (r.src === 'download') onArquivosMudaram()[39m
+[31m+       } catch (e: unknown) {[39m
+[31m+         // DUAS metades, e de propósito (W2, div. 125). O `mensagem` é o[39m
+[31m+         // DETALHE — com o nome do objeto e a URL já higienizada pelo `falha()`[39m
+[31m+         // —, e é ele que continua indo para o log, porque é o que faz um[39m
+[31m+         // relatório ser diagnosticável. O que o MÚSICO lê é a `fraseDaFalha()`,[39m
+[31m+         // de um conjunto FECHADO de frases em pt-BR. Antes as duas eram a mesma[39m
+[31m+         // coisa, e o palco mostrava `1751910900697-Easy_-_Guitar.pdf: Call to[39m
+[31m+         // function 'FileSystemDownloadTask.start' has been rejected.`[39m
+[31m+         const mensagem = e instanceof Error ? e.message : 'falha ao baixar'[39m
+[31m+         log(`download-error ${mensagem}`)[39m
+[31m+         setArquivo({ fase: 'erro', mensagem: fraseDaFalha(e), bytes: knownBytes(url) })[39m
+[31m+       }[39m
+[31m+     },[39m
+[31m+     [online, onArquivosMudaram],[39m
+[31m+   )[39m
+[31m+[39m
+[31m+   useEffect(() => {[39m
+[31m+     setPagina({ n: 0, total: 0 })[39m
+[31m+     if (urlArquivo === null || formato) {[39m
+[31m+       setArquivo({ fase: 'buscando' })[39m
+[31m+       return[39m
+[31m+     }[39m
+[31m+     void buscarArquivo(urlArquivo, false)[39m
+[31m+   }, [urlArquivo, formato, buscarArquivo])[39m
+[31m+[39m
+[31m+   /**[39m
+[31m+    * T1-R16 — prefetch sob demanda a partir desta posição (atual, +1, +2, +3,[39m
+[31m+    * −1, resto). Roda a cada navegação e só com rede; o `ensureFile` deduplica[39m
+[31m+    * o download que o efeito de cima já pode ter começado.[39m
+[31m+    *[39m
+[31m+    * No avulso SEM hospedeira (N4-PR6, div. 964) não há setlist de onde partir:[39m
+[31m+    * o plano é o arquivo DESTA música — antes ele era o da primeira setlist da[39m
+[31m+    * lista, a partir da posição da busca.[39m
+[31m+    */[39m
+[31m+   const avulsaSemHospedeira = setlist === null ? avulsaContentId : null[39m
+[31m+   useEffect(() => {[39m
+[31m+     if (!online) return[39m
+[31m+     void prefetchDemanda(setlist, contentById, posicao, avulsaSemHospedeira).then(onArquivosMudaram)[39m
+[31m+   }, [setlist, contentById, posicao, avulsaSemHospedeira, online, onArquivosMudaram])[39m
+[31m+[39m
+[31m+   const irPara = useCallback([39m
+[31m+     (destino: number) => {[39m
+[31m+       navegouEm.current = Date.now()[39m
+[31m+       onPosicao(destino)[39m
+[31m+     },[39m
+[31m+     [onPosicao],[39m
+[31m+   )[39m
+[31m+[39m
+[31m+   const avancar = useCallback(() => {[39m
+[31m+     if (avulsa) return[39m
+[31m+     if (endOfSetlist(posicao, n)) {[39m
+[31m+       log(`end-of-setlist n=${n}`)[39m
+[31m+       onFim()[39m
+[31m+       return[39m
+[31m+     }[39m
+[31m+     irPara(nextPosition(posicao, n))[39m
+[31m+   }, [avulsa, posicao, n, onFim, irPara])[39m
+[31m+[39m
+[31m+   const voltar = useCallback(() => {[39m
+[31m+     if (avulsa || posicao <= 1) return[39m
+[31m+     irPara(prevPosition(posicao, n))[39m
+[31m+   }, [avulsa, posicao, n, irPara])[39m
+[31m+[39m
+[31m+   const passo = useCallback(() => {[39m
+[31m+     if (primeiroFrame.current) {[39m
+[31m+       primeiroFrame.current = false[39m
+[31m+       log(`autoscroll on t=${Date.now() - pedidoEm.current}`)[39m
+[31m+     }[39m
+[31m+     y.current += 1[39m
+[31m+     scroll.current?.scrollTo({ y: y.current, animated: false })[39m
+[31m+     frame.current = requestAnimationFrame(passo)[39m
+[31m+   }, [])[39m
+[31m+[39m
+[31m+   const alternarScroll = useCallback(() => {[39m
+[31m+     // T1-R30: em conteúdo que não é texto o controle fica desabilitado COM[39m
+[31m+     // motivo — nunca mudo. (O caso PDF chega com a N1-PR5.)[39m
+[31m+     if (corpo === null) {[39m
+[31m+       log('autoscroll disabled kind=pdf')[39m
+[31m+       return[39m
+[31m+     }[39m
+[31m+     if (rodando) {[39m
+[31m+       pararScroll()[39m
+[31m+       setRodando(false)[39m
+[31m+       log('autoscroll off t=0')[39m
+[31m+       return[39m
+[31m+     }[39m
+[31m+     pedidoEm.current = Date.now()[39m
+[31m+     primeiroFrame.current = true[39m
+[31m+     setRodando(true)[39m
+[31m+     frame.current = requestAnimationFrame(passo)[39m
+[31m+   }, [corpo, rodando, passo, pararScroll])[39m
+[31m+[39m
+[31m+   const mudarZoom = useCallback((delta: number) => {[39m
+[31m+     setZoom((atual) => {[39m
+[31m+       const i = zoomSteps.indexOf(atual as (typeof zoomSteps)[number])[39m
+[31m+       const j = Math.min(Math.max(i + delta, 0), zoomSteps.length - 1)[39m
+[31m+       const novo = zoomSteps[j] ?? atual[39m
+[31m+       log(`zoom dp=${novo}`)[39m
+[31m+       return novo[39m
+[31m+     })[39m
+[31m+   }, [])[39m
+[31m+[39m
+[31m+   const alternarTema = useCallback(() => {[39m
+[31m+     setTema((t) => {[39m
+[31m+       const novo: ThemeName = t === 'dark' ? 'light' : 'dark'[39m
+[31m+       log(`theme=${novo}`)[39m
+[31m+       return novo[39m
+[31m+     })[39m
+[31m+   }, [])[39m
+[31m+[39m
+[31m+   useEffect(() => pararScroll, [pararScroll])[39m
+[31m+[39m
+[31m+   // Bordas: 15% da largura, altura ENTRE as barras (D-1 / A14) — e agora as[39m
+[31m+   // duas medidas vêm do `onLayout` do `meio`, não de `useWindowDimensions()`.[39m
+[31m+   //[39m
+[31m+   // Por quê (V1-PRECHECK §3.4, div. 16/24): `useWindowDimensions()` devolve a[39m
+[31m+   // TELA (711,1 dp no AVD), e o código a tratava como JANELA (627,1 dp). A[39m
+[31m+   // borda saía com 551,1 dp onde o `meio` tem 467,1 — **84,0 dp de transbordo**,[39m
+[31m+   // exatamente a soma dos insets, cobrindo 100% do `auto-scroll`. O A14 afirma[39m
+[31m+   // "entre as barras superior e inferior" desde o N1, e isso era falso.[39m
+[31m+   //[39m
+[31m+   // E por que `onLayout` e não `useSafeAreaInsets()`: o `SafeAreaView` da raiz[39m
+[31m+   // (`App.tsx:206`) já consome os quatro insets, então `height - insets.top -[39m
+[31m+   // insets.bottom` acerta HOJE por coincidência aritmética e quebra no dia em[39m
+[31m+   // que alguém tocar em `edges`. O `onLayout` mede a altura que a View de fato[39m
+[31m+   // recebeu, seja quem for que tenha consumido o quê acima dela.[39m
+[31m+   const [meio, setMeio] = useState<{ largura: number; altura: number } | null>(null)[39m
+[31m+   const medirMeio = useCallback((e: LayoutChangeEvent) => {[39m
+[31m+     const { width: w, height: h } = e.nativeEvent.layout[39m
+[31m+     setMeio((m) => (m !== null && m.largura === w && m.altura === h ? m : { largura: w, altura: h }))[39m
+[31m+   }, [])[39m
+[31m+   const alturaConteudo = meio === null ? 0 : Math.max(meio.altura, touch.min)[39m
+[31m+   const larguraBorda = meio === null ? 0 : Math.max(meio.largura * 0.15, touch.min)[39m
+[31m+[39m
+[31m+   const estiloTexto = {[39m
+[31m+     fontFamily: content?.content_type === 'Chords' || content?.content_type === 'Tab' ? font.mono : font.mono,[39m
+[31m+     fontSize: zoom,[39m
+[31m+     lineHeight: zoom * (content?.content_type === 'Tab' ? lineHeight.tab : lineHeight.text),[39m
+[31m+     color: cor.text,[39m
+[31m+   }[39m
+[31m+[39m
+[31m+   const motivo =[39m
+[31m+     content === null[39m
+[31m+       ? MOTIVO.ausente[39m
+[31m+       : validade !== null && !validade.ok[39m
+[31m+         ? MOTIVO[validade.reason][39m
+[31m+         : undefined[39m
+[31m+[39m
+[31m+   // A linha acima da barra: o motivo revelado por um toque, senão a dica de[39m
+[31m+   // gesto do PDF (só no S3d, e só com o arquivo pronto), senão nada.[39m
+[31m+   const linha = motivoVisivel ?? (arquivo.fase === 'pronto' && urlArquivo !== null ? DICA_PDF : null)[39m
+[31m+[39m
+[31m+   // Os nós da barra superior — os mesmos nas duas faixas; o que muda é onde[39m
+[31m+   // ficam (N3-D13). Em C a ordem é a de sempre: posição, setlist, título,[39m
+[31m+   // página, nota, ponto.[39m
+[31m+   const posicaoEl = ([39m
+[31m+     <Text style={[styles.posicao, { color: cor.text }]}>{avulsa ? FRASES_DO_PALCO.avulsa : `${posicao} DE ${n}`}</Text>[39m
+[31m+   )[39m
+[31m+   const tituloEl = (extra: typeof styles.tituloNaLinha | null): React.JSX.Element => ([39m
+[31m+     <Text style={[styles.titulo, extra, { color: cor.text }]} numberOfLines={1}>[39m
+[31m+       {content?.title ?? '—'}[39m
+[31m+       <Text style={{ color: cor.muted }}>[39m
+[31m+         {content?.artist !== null && content?.artist !== undefined ? ` · ${content.artist}` : ''}[39m
+[31m+         {content !== null ? ` · ${TIPO[content.content_type] ?? content.content_type}` : ''}[39m
+[31m+       </Text>[39m
+[31m+     </Text>[39m
+[31m+   )[39m
+[31m+   const extrasDaBarra = ([39m
+[31m+     <>[39m
+[31m+       {/* S3d: "página n de N" — só no PDF, e só depois de ele carregar. */}[39m
+[31m+       {pagina.total > 0 ? ([39m
+[31m+         <Text style={[styles.paginaTexto, { color: cor.muted }]} testID="pagina">[39m
+[31m+           {paginaDe(pagina.n, pagina.total)}[39m
+[31m+         </Text>[39m
+[31m+       ) : null}[39m
+[31m+       {/* T1-R35: a nota da POSIÇÃO, discreta; sem área vazia quando é nula. */}[39m
+[31m+       {song?.notes !== null && song?.notes !== undefined && song.notes.length > 0 ? ([39m
+[31m+         <View style={[styles.nota, { borderColor: cor.line }]}>[39m
+[31m+           <Text style={[styles.notaTexto, { color: cor.muted }]} numberOfLines={1}>[39m
+[31m+             {`Nota: ${song.notes}`}[39m
+[31m+           </Text>[39m
+[31m+         </View>[39m
+[31m+       ) : null}[39m
+[31m+       {!online ? <View style={styles.pontoOffline} /> : null}[39m
+[31m+     </>[39m
+[31m+   )[39m
+[31m+[39m
+[31m+   // N4-R16 — no avulso SEM hospedeira não há nome de setlist: em C o título (`flex: 1`) ganha a largura dele; em B a[39m
+[31m+   // linha 1 fica com `AVULSA` e um espaçador no lugar do nome, para a página, a nota e o ponto de sem rede ficarem[39m
+[31m+   // à direita, onde estão no palco com setlist (N3-B-S3). Nada mais da barra muda.[39m
+[31m+   return ([39m
+[31m+     <View style={[styles.tela, { backgroundColor: cor.bg }]}>[39m
+[31m+       {t.empilha ? ([39m
+[31m+         <View style={[styles.barraTopo, styles.barraEmpilhada, { height: t.barra, borderBottomColor: cor.line }]}>[39m
+[31m+           <View style={styles.linhaDaBarra}>[39m
+[31m+             {posicaoEl}[39m
+[31m+             {setlist !== null ? ([39m
+[31m+               <Text style={[styles.nomeSetlist, styles.nomeSetlistNaLinha, { color: cor.muted }]} numberOfLines={1}>[39m
+[31m+                 {setlist.name}[39m
+[31m+               </Text>[39m
+[31m+             ) : ([39m
+[31m+               <View style={styles.nomeSetlistNaLinha} />[39m
+[31m+             )}[39m
+[31m+             {extrasDaBarra}[39m
+[31m+           </View>[39m
+[31m+           {tituloEl(styles.tituloNaLinha)}[39m
+[31m+         </View>[39m
+[31m+       ) : ([39m
+[31m+         <View style={[styles.barraTopo, { height: t.barra, borderBottomColor: cor.line }]}>[39m
+[31m+           {posicaoEl}[39m
+[31m+           {setlist !== null ? ([39m
+[31m+             <Text style={[styles.nomeSetlist, { color: cor.muted }]} numberOfLines={1}>[39m
+[31m+               {setlist.name}[39m
+[31m+             </Text>[39m
+[31m+           ) : null}[39m
+[31m+           {tituloEl(null)}[39m
+[31m+           {extrasDaBarra}[39m
+[31m+         </View>[39m
+[31m+       )}[39m
+[31m+[39m
+[31m+       <View style={styles.meio} onLayout={medirMeio}>[39m
+[31m+         {formato && urlArquivo !== null ? ([39m
+[31m+           <Formato[39m
+[31m+             nome={fileNameFromUrl(urlArquivo)}[39m
+[31m+             tipo={TIPO[content?.content_type ?? ''] ?? 'arquivo'}[39m
+[31m+             bytes={knownBytes(urlArquivo)}[39m
+[31m+             cor={cor}[39m
+[31m+           />[39m
+[31m+         ) : urlArquivo !== null ? ([39m
+[31m+           <Arquivo[39m
+[31m+             estado={arquivo}[39m
+[31m+             titulo={content?.title ?? ''}[39m
+[31m+             tipo={(TIPO[content?.content_type ?? ''] ?? 'arquivo').toLowerCase()}[39m
+[31m+             online={online}[39m
+[31m+             cor={cor}[39m
+[31m+             onPaginas={(total) => {[39m
+[31m+               log(`pdf-render pages=${total} src=disk`)[39m
+[31m+               setPagina({ n: 1, total })[39m
+[31m+             }}[39m
+[31m+             onPagina={(atual, total) => {[39m
+[31m+               log(`pdf-page n=${atual}/${total}`)[39m
+[31m+               setPagina({ n: atual, total })[39m
+[31m+             }}[39m
+[31m+             onBaixar={() => void buscarArquivo(urlArquivo, true)}[39m
+[31m+           />[39m
+[31m+         ) : ([39m
+[31m+           <ScrollView ref={scroll} style={styles.conteudo} contentContainerStyle={styles.conteudoPad}>[39m
+[31m+             {motivo !== undefined ? ([39m
+[31m+               <View style={styles.placeholder} testID="placeholder">[39m
+[31m+                 <Text style={[styles.placeholderTitulo, { color: cor.text }]}>{motivo.titulo}</Text>[39m
+[31m+                 <Text style={[styles.placeholderApoio, { color: cor.muted }]}>{motivo.apoio}</Text>[39m
+[31m+               </View>[39m
+[31m+             ) : ([39m
+[31m+               // O ScrollView horizontal é o que impede a re-quebra da linha[39m
+[31m+               // longa em qualquer zoom (T1-R25/R31 — provado no spike).[39m
+[31m+               <ScrollView horizontal showsHorizontalScrollIndicator={false}>[39m
+[31m+                 <Text style={estiloTexto} testID="corpo">[39m
+[31m+                   {corpo ?? ''}[39m
+[31m+                 </Text>[39m
+[31m+               </ScrollView>[39m
+[31m+             )}[39m
+[31m+           </ScrollView>[39m
+[31m+         )}[39m
+[31m+[39m
+[31m+         {linha !== null ? ([39m
+[31m+           <Text style={[styles.dica, { color: cor.muted }]} testID="linha-motivo">[39m
+[31m+             {linha}[39m
+[31m+           </Text>[39m
+[31m+         ) : null}[39m
+[31m+[39m
+[31m+         {/* No PRIMEIRO frame o `onLayout` ainda não disparou e as bordas não[39m
+[31m+             existem — melhor do que existirem com o tamanho errado num canto.[39m
+[31m+             Não afeta o A17: ele mede a TROCA de música, e trocar de música não[39m
+[31m+             remonta o palco, então o `meio` não é medido de novo. */}[39m
+[31m+         {meio !== null ? ([39m
+[31m+           <>[39m
+[31m+             <Pressable[39m
+[31m+               style={[styles.borda, { width: larguraBorda, height: alturaConteudo, left: 0 }]}[39m
+[31m+               onPress={voltar}[39m
+[31m+               testID="borda-voltar"[39m
+[31m+             />[39m
+[31m+             <Pressable[39m
+[31m+               style={[styles.borda, { width: larguraBorda, height: alturaConteudo, right: 0 }]}[39m
+[31m+               onPress={avancar}[39m
+[31m+               testID="borda-avancar"[39m
+[31m+             />[39m
+[31m+           </>[39m
+[31m+         ) : null}[39m
+[31m+       </View>[39m
+[31m+[39m
+[31m+       {/* Os sete controles, só ícone, alinhados à esquerda (decisão do Marcel,[39m
+[31m+           Q4: o polegar apoia na borda e a posição aprendida se preserva). Os[39m
+[31m+           nomes acessíveis são verbatim do DESIGN-V1 §6.4. */}[39m
+[31m+       <View style={[styles.barraBaixo, { borderTopColor: cor.line }]}>[39m
+[31m+         <Controle[39m
+[31m+           icone="auto-scroll"[39m
+[31m+           accessibilityLabel={[39m
+[31m+             corpo === null[39m
+[31m+               ? 'Rolagem automática, indisponível: só em texto'[39m
+[31m+               : rodando[39m
+[31m+                 ? 'Rolagem automática, ligada'[39m
+[31m+                 : 'Rolagem automática, desligada'[39m
+[31m+           }[39m
+[31m+           ativo={rodando}[39m
+[31m+           inativo={corpo === null}[39m
+[31m+           motivo={corpo === null ? 'auto-scroll só em texto' : undefined}[39m
+[31m+           cor={cor}[39m
+[31m+           onPress={alternarScroll}[39m
+[31m+           onMotivo={revelarMotivo}[39m
+[31m+           testID="auto-scroll"[39m
+[31m+         />[39m
+[31m+         {/* T1-R31 é zoom de TEXTO. No PDF quem amplia é a pinça — o controle[39m
+[31m+             fica inerte, com o sinal afinado e o motivo ao toque. */}[39m
+[31m+         <Controle[39m
+[31m+           icone="zoom-menos"[39m
+[31m+           accessibilityLabel={[39m
+[31m+             urlArquivo !== null ? 'Diminuir o texto, indisponível: pinça para zoom' : 'Diminuir o texto'[39m
+[31m+           }[39m
+[31m+           cor={cor}[39m
+[31m+           inativo={urlArquivo !== null}[39m
+[31m+           motivo={urlArquivo !== null ? 'pinça para zoom' : undefined}[39m
+[31m+           onPress={() => (urlArquivo === null ? mudarZoom(-1) : undefined)}[39m
+[31m+           onMotivo={revelarMotivo}[39m
+[31m+           testID="zoom-menos"[39m
+[31m+         />[39m
+[31m+         <Controle[39m
+[31m+           icone="zoom-mais"[39m
+[31m+           accessibilityLabel={[39m
+[31m+             urlArquivo !== null ? 'Aumentar o texto, indisponível: pinça para zoom' : 'Aumentar o texto'[39m
+[31m+           }[39m
+[31m+           cor={cor}[39m
+[31m+           inativo={urlArquivo !== null}[39m
+[31m+           motivo={urlArquivo !== null ? 'pinça para zoom' : undefined}[39m
+[31m+           onPress={() => (urlArquivo === null ? mudarZoom(1) : undefined)}[39m
+[31m+           onMotivo={revelarMotivo}[39m
+[31m+           testID="zoom-mais"[39m
+[31m+         />[39m
+[31m+         <Controle[39m
+[31m+           icone={tema === 'dark' ? 'claro' : 'escuro'}[39m
+[31m+           accessibilityLabel={tema === 'dark' ? 'Mudar para o tema claro' : 'Mudar para o tema escuro'}[39m
+[31m+           cor={cor}[39m
+[31m+           onPress={alternarTema}[39m
+[31m+           onMotivo={revelarMotivo}[39m
+[31m+           testID="tema"[39m
+[31m+         />[39m
+[31m+         {/* PROPOSTA A (div. 109) — decidida pelo Marcel em 2026-09-14.[39m
+[31m+             A fileira contígua dos sete deixava 555,6 dp — 49 % da barra —[39m
+[31m+             vazios à direita, medidos no dump do V1-PR7 e reproduzidos pelos[39m
+[31m+             tokens. Os quatro de COMPORTAMENTO ficam onde estão (o polegar[39m
+[31m+             apoia na borda e a posição aprendida se preserva, a decisão da Q4);[39m
+[31m+             os três de NAVEGAÇÃO vão para a borda direita, com a mesma margem[39m
+[31m+             de 24 dp da esquerda. O vão passa de 16 para ~547,8 dp, e é aí que[39m
+[31m+             a fronteira por função vira fronteira que se VÊ.[39m
+[31m+             É um espaçador `flex: 1`, não número cravado: vale em qualquer[39m
+[31m+             largura, no Tab S6 e em retrato. Com o `gap` de 16 já existente o[39m
+[31m+             espaçador mede ~515,8 dp e o vão fica 16 + 515,8 + 16 = 547,8 dp,[39m
+[31m+             contra os 547,1 da Proposta A — a diferença é o arredondamento de[39m
+[31m+             2560 px / 2,25.[39m
+[31m+             O DESIGN-V1 §5.3 dá à barra só a ALTURA (96 dp) e nada sobre[39m
+[31m+             distribuição horizontal; as seis molduras do S3 passam a mostrar[39m
+[31m+             uma barra que o app não desenha mais, e isso é a errata E16. */}[39m
+[31m+         <View style={styles.espacador} />[39m
+[31m+         {/* N4-R16 — o avulso sem hospedeira não tem índice: não há setlist a abrir. */}[39m
+[31m+         {setlist !== null ? ([39m
+[31m+           <Controle[39m
+[31m+             icone="indice"[39m
+[31m+             accessibilityLabel="Abrir o índice da setlist"[39m
+[31m+             cor={cor}[39m
+[31m+             onPress={onIndice}[39m
+[31m+             onMotivo={revelarMotivo}[39m
+[31m+             testID="indice"[39m
+[31m+           />[39m
+[31m+         ) : null}[39m
+[31m+         <Controle[39m
+[31m+           icone="busca"[39m
+[31m+           accessibilityLabel="Buscar na biblioteca"[39m
+[31m+           cor={cor}[39m
+[31m+           onPress={onBusca}[39m
+[31m+           onMotivo={revelarMotivo}[39m
+[31m+           testID="busca"[39m
+[31m+         />[39m
+[31m+         <Controle[39m
+[31m+           icone={avulsa ? 'voltar' : 'sair'}[39m
+[31m+           accessibilityLabel={avulsa ? nomeDoVoltarDoAvulso(origemDoAvulso ?? 'busca') : 'Sair do palco'}[39m
+[31m+           cor={cor}[39m
+[31m+           onPress={onSair}[39m
+[31m+           onMotivo={revelarMotivo}[39m
+[31m+           testID="sair"[39m
+[31m+         />[39m
+[31m+       </View>[39m
+[31m+     </View>[39m
+[31m+   )[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /**[39m
+[31m+  * S3d / S3e — a variante ARQUIVO do palco.[39m
+[31m+  *[39m
+[31m+  * S3d: o PDF do disco, paginado (`enablePaging`), com pinça e pan do próprio[39m
+[31m+  * `react-native-pdf`; o "página n de N" fica na barra superior e a dica de[39m
+[31m+  * gesto na linha acima da barra (que o `StageScreen` desenha, porque é a[39m
+[31m+  * mesma linha onde o motivo de um controle inerte aparece ao toque — V1-PR3).[39m
+[31m+  * S3e: o placeholder do arquivo que não está[39m
+[31m+  * aqui — com o nome da música, o tamanho quando o aparelho já o conhece, e[39m
+[31m+  * "Baixar". O que esta função nunca faz é devolver nada: sem tela, o T1-R26[39m
+[31m+  * e a regra C3-1 estariam violados.[39m
+[31m+  */[39m
+[31m+ function Arquivo({[39m
+[31m+   estado,[39m
+[31m+   titulo,[39m
+[31m+   tipo,[39m
+[31m+   online,[39m
+[31m+   cor,[39m
+[31m+   onPaginas,[39m
+[31m+   onPagina,[39m
+[31m+   onBaixar,[39m
+[31m+ }: {[39m
+[31m+   estado: EstadoArquivo[39m
+[31m+   titulo: string[39m
+[31m+   tipo: string[39m
+[31m+   online: boolean[39m
+[31m+   cor: (typeof colors)[ThemeName][39m
+[31m+   onPaginas: (total: number) => void[39m
+[31m+   onPagina: (atual: number, total: number) => void[39m
+[31m+   onBaixar: () => void[39m
+[31m+ }): React.JSX.Element {[39m
+[31m+   if (estado.fase === 'pronto') {[39m
+[31m+     return ([39m
+[31m+       <View style={styles.pdfArea} testID="s3d">[39m
+[31m+         <Pdf[39m
+[31m+           source={{ uri: estado.uri, cache: false }}[39m
+[31m+           style={[styles.pdf, { backgroundColor: cor.bg }]}[39m
+[31m+           enablePaging[39m
+[31m+           enableDoubleTapZoom[39m
+[31m+           /**[39m
+[31m+            * `fitPolicy={0}` = **fit width**, a partitura ocupando a largura.[39m
+[31m+            *[39m
+[31m+            * A N1-PR6 tinha posto `{2}` (página inteira) porque ali **um**[39m
+[31m+            * gesto virava **uma** página, contra ~4 com `{0}`. O aceite no Tab[39m
+[31m+            * S6 mediu o outro lado da conta: com `{2}` a página A4 fica em[39m
+[31m+            * ~548 px de 2560, ou seja **~244 dp de largura** — pequena demais[39m
+[31m+            * para ler no palco (N1-PR7 §3.6). Decisão do Marcel, 2026-09-10:[39m
+[31m+            * legibilidade ganha de contagem de gestos, volta a `{0}`.[39m
+[31m+            *[39m
+[31m+            * LIMITAÇÃO CONHECIDA, registrada: com fit width o deslize rola[39m
+[31m+            * dentro da página antes de virar, então virar uma página custa[39m
+[31m+            * vários gestos — o T1-R27 ("avançar: 1 tap ou 1 gesto") **não** se[39m
+[31m+            * cumpre para a PÁGINA do PDF. Ele continua valendo para a MÚSICA:[39m
+[31m+            * as bordas de 15% avançam e voltam em 1 tap, em PDF como em texto.[39m
+[31m+            */[39m
+[31m+           fitPolicy={0}[39m
+[31m+           minScale={1}[39m
+[31m+           maxScale={4}[39m
+[31m+           spacing={0}[39m
+[31m+           onLoadComplete={(total) => onPaginas(total)}[39m
+[31m+           onPageChanged={(atual, total) => onPagina(atual, total)}[39m
+[31m+           onError={(e: Error) => log(`pdf-error ${e.message}`)}[39m
+[31m+         />[39m
+[31m+       </View>[39m
+[31m+     )[39m
+[31m+   }[39m
+[31m+[39m
+[31m+   if (estado.fase === 'buscando') {[39m
+[31m+     return ([39m
+[31m+       <View style={styles.placeholder} testID="s3-baixando">[39m
+[31m+         <Text style={[styles.placeholderApoio, { color: cor.muted }]}>{FRASES_DO_TABLET['baixando-o-arquivo']}</Text>[39m
+[31m+       </View>[39m
+[31m+     )[39m
+[31m+   }[39m
+[31m+[39m
+[31m+   const tamanho = estado.bytes === null ? '' : ` (${tamanhoLegivel(estado.bytes)})`[39m
+[31m+   const fecho = online[39m
+[31m+     ? 'Toque em Baixar para trazê-lo para este aparelho.'[39m
+[31m+     : 'Sem conexão agora — toque em Baixar quando a rede voltar.'[39m
+[31m+[39m
+[31m+   return ([39m
+[31m+     <View style={styles.placeholder} testID="s3e">[39m
+[31m+       <Text style={[styles.placeholderTitulo, { color: cor.text }]}>{FRASES_DO_TABLET['arquivo-nao-baixado']}</Text>[39m
+[31m+       <Text style={[styles.placeholderApoio, { color: cor.muted }]}>[39m
+[31m+         {`${titulo} · ${tipo}${tamanho} não está neste aparelho. ${fecho}`}[39m
+[31m+       </Text>[39m
+[31m+       {estado.fase === 'erro' ? ([39m
+[31m+         <Text style={[styles.erro, { color: cor.error }]} testID="download-erro">[39m
+[31m+           {estado.mensagem}[39m
+[31m+         </Text>[39m
+[31m+       ) : null}[39m
+[31m+       <Pressable[39m
+[31m+         style={[styles.botaoBaixar, { borderColor: cor.line }]}[39m
+[31m+         onPress={onBaixar}[39m
+[31m+         accessibilityRole="button"[39m
+[31m+         testID="baixar"[39m
+[31m+       >[39m
+[31m+         <Text style={[styles.botaoBaixarTexto, { color: cor.text }]}>Baixar</Text>[39m
+[31m+       </Pressable>[39m
+[31m+     </View>[39m
+[31m+   )[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /**[39m
+[31m+  * N4-D43, N4-D83 — o arquivo de um formato que o app ainda não mostra (pela extensão; o core decide). A moldura é a[39m
+[31m+  * `N4-*-S3-avulso-formato`: o `tipo-desconhecido` de 28 em `offlineInk`, a frase do site (*"não foi possível abrir o[39m
+[31m+  * arquivo — confira o formato"*, `view.erro.formato`) e, em mono, o nome do arquivo · o tipo (o tamanho quando o[39m
+[31m+  * aparelho o conhece). Sem *Baixar*: baixar não o faria abrir. O mesmo componente no palco com setlist e no avulso.[39m
+[31m+  * O lugar é o dos outros placeholders do palco (o S3e: no topo do corpo, `placeholder`), e os tamanhos são os do[39m
+[31m+  * pacote: a frase em `size.button` (17, o da folha) e o nome em mono `size.label` (o da página do S3d, que a folha[39m
+[31m+  * desenha em 13 nos dois lugares).[39m
+[31m+  */[39m
+[31m+ function Formato({[39m
+[31m+   nome,[39m
+[31m+   tipo,[39m
+[31m+   bytes,[39m
+[31m+   cor,[39m
+[31m+ }: {[39m
+[31m+   nome: string[39m
+[31m+   tipo: string[39m
+[31m+   bytes: number | null[39m
+[31m+   cor: (typeof colors)[ThemeName][39m
+[31m+ }): React.JSX.Element {[39m
+[31m+   const tamanho = bytes === null ? '' : ` (${tamanhoLegivel(bytes)})`[39m
+[31m+   return ([39m
+[31m+     <View style={styles.placeholder} testID="s3-formato">[39m
+[31m+       <Icone nome="tipo-desconhecido" tamanho={28} cor={cor.offlineInk} />[39m
+[31m+       <View style={styles.formatoTexto}>[39m
+[31m+         <Text style={[styles.formatoFrase, { color: cor.text }]}>{VOCABULARIO_DE_CONTENT['erro-formato']}</Text>[39m
+[31m+         <Text style={[styles.formatoArquivo, { color: cor.muted }]}>{`${nome} · ${tipo}${tamanho}`}</Text>[39m
+[31m+       </View>[39m
+[31m+     </View>[39m
+[31m+   )[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ /**[39m
+[31m+  * Um dos sete controles do palco — só ícone (V1-PR3, DESIGN-V1 §6.2).[39m
+[31m+  *[39m
+[31m+  * O `Pressable` É o alvo: 64 × 64 (66 com a moldura de 1 dp), e o `<Svg>` de[39m
+[31m+  * 28 vai dentro — pôr o toque no desenho é o modo de reprovar o G5. Os quatro[39m
+[31m+  * estados da folha: **padrão** (moldura `lineInfo`, E2 — é o único[39m
+[31m+  * delimitador de um ícone sem rótulo e deve os 3:1); **ativo** (acento no[39m
+[31m+  * traço, na moldura e no fundo a 12 %, e o desenho muda); **desabilitado**[39m
+[31m+  * (tinta cheia em `lineInfo` mais o desenho amputado, **sem opacidade**, E3);[39m
+[31m+  * **pressionado** (moldura `muted`, fundo da tinta a 8 %, só com o dedo[39m
+[31m+  * encostado). Sem rótulo textual: o nome é o `accessibilityLabel` (§6.4) e o[39m
+[31m+  * motivo do inerte vai para a linha acima da barra, ao toque (A15).[39m
+[31m+  *[39m
+[31m+  * ---------------------------------------------------------------------------[39m
+[31m+  * W2 — O INERTE TAMBÉM PRECISA SAIR NA ÁRVORE (div. 118)[39m
+[31m+  *[39m
+[31m+  * Até aqui o `inativo` virava `estado` e `tinta`, e mais nada: DESENHO puro.[39m
+[31m+  * Medido nos dumps do V1-PR7, nos dois aparelhos: a sub-árvore da barra é[39m
+[31m+  * IDÊNTICA no estado ativo e no inerte — mesmos sete `bounds`, todos com[39m
+[31m+  * `enabled=true clickable=true`. A única diferença entre "posso usar" e "não[39m
+[31m+  * posso" era o `content-desc`. Para quem navega pela árvore os dois estados[39m
+[31m+  * eram o MESMO estado: o leitor anuncia um botão utilizável e "indisponível"[39m
+[31m+  * chega como parte do nome, não como propriedade.[39m
+[31m+  *[39m
+[31m+  * E tem de ser esta linha, não a outra:[39m
+[31m+  *[39m
+[31m+  *     ✅  accessibilityState={{ disabled: inativo === true }}[39m
+[31m+  *     ❌  disabled={inativo === true}[39m
+[31m+  *[39m
+[31m+  * O `disabled` do `Pressable` IMPEDIRIA o `onPress` — e é o `onPress` do[39m
+[31m+  * inerte que revela o motivo na linha acima da barra. Consertaria a árvore e[39m
+[31m+  * quebraria o A15 exatamente na metade que a errata do PRD acabou de fixar.[39m
+[31m+  * O aceite da W2 mede as duas coisas no mesmo toque: `enabled=false` no dump[39m
+[31m+  * E o motivo ainda aparecendo.[39m
+[31m+  * ---------------------------------------------------------------------------[39m
+[31m+  */[39m
+[31m+ function Controle({[39m
+[31m+   icone,[39m
+[31m+   accessibilityLabel,[39m
+[31m+   ativo,[39m
+[31m+   inativo,[39m
+[31m+   motivo,[39m
+[31m+   cor,[39m
+[31m+   onPress,[39m
+[31m+   onMotivo,[39m
+[31m+   testID,[39m
+[31m+ }: {[39m
+[31m+   icone: NomeIcone[39m
+[31m+   accessibilityLabel: string[39m
+[31m+   ativo?: boolean[39m
+[31m+   inativo?: boolean[39m
+[31m+   motivo?: string[39m
+[31m+   cor: (typeof colors)[ThemeName][39m
+[31m+   onPress: () => void[39m
+[31m+   onMotivo: (motivo: string) => void[39m
+[31m+   testID: string[39m
+[31m+ }): React.JSX.Element {[39m
+[31m+   const estado: EstadoIcone = inativo === true ? 'inerte' : ativo === true ? 'ativo' : 'normal'[39m
+[31m+   const tinta = inativo === true ? cor.lineInfo : ativo === true ? cor.accent : cor.text[39m
+[31m+   return ([39m
+[31m+     <Pressable[39m
+[31m+       style={({ pressed }) => [[39m
+[31m+         styles.controle,[39m
+[31m+         { borderColor: ativo === true ? cor.accent : pressed ? cor.muted : cor.lineInfo },[39m
+[31m+         ativo === true && { backgroundColor: `${cor.accent}1F` },[39m
+[31m+         pressed && ativo !== true && { backgroundColor: `${cor.text}14` },[39m
+[31m+       ]}[39m
+[31m+       onPress={() => {[39m
+[31m+         if (inativo === true && motivo !== undefined) onMotivo(motivo)[39m
+[31m+         onPress()[39m
+[31m+       }}[39m
+[31m+       accessibilityRole="button"[39m
+[31m+       accessibilityLabel={accessibilityLabel}[39m
+[31m+       accessibilityState={{ disabled: inativo === true }}[39m
+[31m+       testID={testID}[39m
+[31m+     >[39m
+[31m+       <Icone nome={icone} tamanho={28} cor={tinta} estado={estado} />[39m
+[31m+     </Pressable>[39m
+[31m+   )[39m
+[31m+ }[39m
+[31m+[39m
+[31m+ const styles = StyleSheet.create({[39m
+[31m+   tela: { flex: 1 },[39m
+[31m+   // A altura é token de faixa (`faixas[…].palco.barra`): 64 em C, 88 em B.[39m
+[31m+   barraTopo: {[39m
+[31m+     paddingHorizontal: space.xl,[39m
+[31m+     flexDirection: 'row',[39m
+[31m+     alignItems: 'center',[39m
+[31m+     gap: space.lg,[39m
+[31m+     borderBottomWidth: bar.hairline,[39m
+[31m+   },[39m
+[31m+   // B (`N3-B-S3`): duas linhas empilhadas e centradas nos 88; a segunda é o[39m
+[31m+   // título, na largura inteira (663 em 711).[39m
+[31m+   barraEmpilhada: { flexDirection: 'column', alignItems: 'stretch', justifyContent: 'center', gap: space.xs },[39m
+[31m+   linhaDaBarra: { flexDirection: 'row', alignItems: 'center', gap: space.lg },[39m
+[31m+   nomeSetlistNaLinha: { flex: 1 },[39m
+[31m+   posicao: {[39m
+[31m+     fontFamily: font.display,[39m
+[31m+     fontSize: size.title,[39m
+[31m+     letterSpacing: size.title * tracking.display,[39m
+[31m+   },[39m
+[31m+   nomeSetlist: {[39m
+[31m+     fontFamily: font.ui,[39m
+[31m+     fontSize: 13,[39m
+[31m+     letterSpacing: 13 * tracking.label,[39m
+[31m+     textTransform: 'uppercase',[39m
+[31m+   },[39m
+[31m+   titulo: { flex: 1, textAlign: 'center', fontFamily: font.ui, fontSize: 20 },[39m
+[31m+   // Em B o título tem a linha só para ele: não cresce na vertical e começa à esquerda.[39m
+[31m+   tituloNaLinha: { flex: 0, textAlign: 'left' },[39m
+[31m+   nota: {[39m
+[31m+     maxWidth: 260,[39m
+[31m+     paddingHorizontal: space.md,[39m
+[31m+     paddingVertical: space.sm,[39m
+[31m+     borderWidth: bar.hairline,[39m
+[31m+     borderRadius: radius.chip,[39m
+[31m+   },[39m
+[31m+   notaTexto: { fontFamily: font.ui, fontSize: size.label },[39m
+[31m+   pontoOffline: { width: 8, height: 8, borderRadius: 4, backgroundColor: dark.offline },[39m
+[31m+   paginaTexto: { fontFamily: font.mono, fontSize: size.label },[39m
+[31m+   meio: { flex: 1 },[39m
+[31m+   pdfArea: { flex: 1 },[39m
+[31m+   pdf: { flex: 1, width: '100%' },[39m
+[31m+   dica: { textAlign: 'center', fontFamily: font.ui, fontSize: size.label, paddingVertical: space.sm },[39m
+[31m+   erro: { fontFamily: font.ui, fontSize: size.label, textAlign: 'center', maxWidth: 560 },[39m
+[31m+   botaoBaixar: {[39m
+[31m+     marginTop: space.sm,[39m
+[31m+     height: touch.stage,[39m
+[31m+     paddingHorizontal: space.xxl,[39m
+[31m+     borderWidth: bar.hairline,[39m
+[31m+     borderRadius: radius.control,[39m
+[31m+     alignItems: 'center',[39m
+[31m+     justifyContent: 'center',[39m
+[31m+   },[39m
+[31m+   botaoBaixarTexto: { fontFamily: font.uiBold, fontSize: size.button },[39m
+[31m+   conteudo: { flex: 1 },[39m
+[31m+   conteudoPad: { padding: space.xxl, paddingBottom: space.xxxl },[39m
+[31m+   borda: { position: 'absolute', top: 0 },[39m
+[31m+   placeholder: { alignItems: 'center', justifyContent: 'center', gap: space.lg, paddingTop: space.xxxl },[39m
+[31m+   placeholderTitulo: { fontFamily: font.uiBold, fontSize: size.titleLarge },[39m
+[31m+   placeholderApoio: {[39m
+[31m+     fontFamily: font.ui,[39m
+[31m+     fontSize: size.body,[39m
+[31m+     textAlign: 'center',[39m
+[31m+     maxWidth: 560,[39m
+[31m+   },[39m
+[31m+   formatoTexto: { alignItems: 'center', gap: space.xs },[39m
+[31m+   formatoFrase: { fontFamily: font.ui, fontSize: size.button, textAlign: 'center', maxWidth: 560 },[39m
+[31m+   formatoArquivo: { fontFamily: font.mono, fontSize: size.label, textAlign: 'center' },[39m
+[31m+   // A geometria das seis molduras de S3 do design: caixa 66 × 66 (64 + a[39m
+[31m+   // moldura de 1 de cada lado), gap 16, fileira de 558 dp, os mesmos sete x[39m
+[31m+   // nas seis variantes (V1-PR3-PRECHECK §8.5, div. 36).[39m
+[31m+   barraBaixo: {[39m
+[31m+     height: bar.stage,[39m
+[31m+     paddingHorizontal: space.xl,[39m
+[31m+     flexDirection: 'row',[39m
+[31m+     alignItems: 'center',[39m
+[31m+     gap: space.lg,[39m
+[31m+     borderTopWidth: bar.hairline,[39m
+[31m+   },[39m
+[31m+   /** O vão da Proposta A — ver o comentário no JSX da barra (div. 109). */[39m
+[31m+   espacador: { flex: 1 },[39m
+[31m+   controle: {[39m
+[31m+     width: touch.stage + 2,[39m
+[31m+     height: touch.stage + 2,[39m
+[31m+     borderWidth: bar.hairline,[39m
+[31m+     borderRadius: radius.control,[39m
+[31m+     alignItems: 'center',[39m
+[31m+     justifyContent: 'center',[39m
+[31m+   },[39m
+[31m+ })[39m
+[31m+[39m
+
+[36m [2m❯[22m apps/native/test/frases-n4.test.ts:[2m354:60[22m[39m
+    [90m352| [39m
+    [90m353| [39m  it('o palco, o leitor e o files.ts importam do core o que escreviam …
+    [90m354| [39m    expect(ler('apps/native/src/screens/StageScreen.tsx')).toContain('…
+    [90m   | [39m                                                           [31m^[39m
+    [90m355| [39m    expect(ler('apps/native/src/screens/StageScreen.tsx')).toContain("…
+    [90m356| [39m    expect(ler('apps/native/src/screens/Leitor.tsx')).toContain('naoEs…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/11]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[46m native-tela [49m[39m apps/native/test/biblioteca-tela.test.tsx[2m > [22mN4-R6 — a linha[2m > [22ma estrela e o ▶ são controles próprios, com os nomes da folha; a linha é alvo e visualiza (P-F7)
+[31m[1mAssertionError[22m: expected null to be 'button' // Object.is equality[39m
+
+[32m- Expected:[39m 
+"button"
+
+[31m+ Received:[39m 
+null
+
+[36m [2m❯[22m apps/native/test/biblioteca-tela.test.tsx:[2m385:63[22m[39m
+    [90m383| [39m    expect(nome(`lib-favoritar-${id8(c)}`)).toBe('Favoritar “Manhã de …
+    [90m384| [39m    [34mexpect[39m([34mnome[39m([32m`lib-tocar-[39m[36m${[39m[34mid8[39m(c)[36m}[39m[32m`[39m))[33m.[39m[34mtoBe[39m([32m'Tocar “Manhã de ensaio”'[39m)
+    [90m385| [39m    expect(exige(`lib-linha-${id8(c)}`).getAttribute('role')).toBe('bu…
+    [90m   | [39m                                                              [31m^[39m
+    [90m386| [39m    [34mexpect[39m([34mnome[39m([32m`lib-linha-[39m[36m${[39m[34mid8[39m(c)[36m}[39m[32m`[39m))[33m.[39m[34mtoBe[39m([32m'Ver “Manhã de ensaio”'[39m)
+    [90m387| [39m    expect(exige(`lib-favoritar-${id8(c)}`).getAttribute('role')).toBe…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/11]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m5 failed[39m[22m[90m (5)[39m
+[2m      Tests [22m [1m[31m8 failed[39m[22m[2m | [22m[1m[32m84 passed[39m[22m[90m (92)[39m
+[2m   Start at [22m 18:25:57
+[2m   Duration [22m 1.57s[2m (transform 436ms, setup 0ms, import 665ms, tests 808ms, environment 1.36s)[22m
+

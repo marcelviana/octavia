@@ -40,11 +40,11 @@ import {
 } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake'
-import Pdf from 'react-native-pdf'
 import {
   bodyOf,
   ehFormatoQueOAppMostra,
   endOfSetlist,
+  FRASES_DO_LEITOR,
   FRASES_DO_PALCO,
   FRASES_DO_TABLET,
   isValidContent,
@@ -53,7 +53,6 @@ import {
   paginaDe,
   prevPosition,
   resolveSong,
-  VOCABULARIO_DE_CONTENT,
   type ContentDTO,
   type OrigemDoAvulso,
   type SetlistDTO,
@@ -69,7 +68,6 @@ import {
   dark,
   faixas,
   font,
-  lineHeight,
   radius,
   size,
   space,
@@ -80,6 +78,16 @@ import {
   type ThemeName,
 } from '../theme'
 import { useFaixa } from '../useFaixa'
+import {
+  CorpoDoLeitor,
+  FormatoDoLeitor,
+  PdfDoLeitor,
+  PlaceholderDoLeitor,
+  S3eDoLeitor,
+  estiloDoLeitor,
+  leitor,
+  type EstadoDoArquivoDoLeitor,
+} from './Leitor'
 
 export interface StageScreenProps {
   /**
@@ -133,22 +141,22 @@ const TIPO: Record<string, string> = {
 /** Motivo do placeholder, na linguagem do design (nunca tela vazia). */
 const MOTIVO: Record<string, { titulo: string; apoio: string }> = {
   'no-body': {
-    titulo: 'este item não tem conteúdo',
+    titulo: FRASES_DO_LEITOR['sem-conteudo'],
     apoio:
       'A música existe na setlist, mas não tem letra, cifra, tab ou arquivo. Edite na versão web. Toque na borda direita para seguir.',
   },
   'no-key': {
-    titulo: 'este item não tem conteúdo',
+    titulo: FRASES_DO_LEITOR['sem-conteudo'],
     apoio:
       'O conteúdo salvo não traz o texto desta música. Edite na versão web. Toque na borda direita para seguir.',
   },
   'not-string': {
-    titulo: 'este item não tem conteúdo',
+    titulo: FRASES_DO_LEITOR['sem-conteudo'],
     apoio:
       'O conteúdo salvo não traz o texto desta música. Edite na versão web. Toque na borda direita para seguir.',
   },
   'unknown-type': {
-    titulo: 'tipo desconhecido',
+    titulo: FRASES_DO_LEITOR['tipo-desconhecido'],
     apoio: 'Este item tem um tipo que o app ainda não sabe mostrar. Toque na borda direita para seguir.',
   },
   ausente: {
@@ -158,22 +166,12 @@ const MOTIVO: Record<string, { titulo: string; apoio: string }> = {
   },
 }
 
-/** "242.176 B" → "237 KB" — o "(1,2 MB)" do S3e. */
-function tamanhoLegivel(bytes: number): string {
-  if (bytes >= 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1).replace('.', ',')} MB`
-  return `${Math.round(bytes / 1024)} KB`
-}
-
 /**
  * O arquivo desta posição, nas quatro situações que a tela precisa
- * distinguir. `bytes` sobrevive ao despejo (o índice lembra o tamanho), e é
- * por isso que o S3e consegue dizer o tamanho de algo que não está aqui.
+ * distinguir — o tipo do leitor compartilhado (`Leitor.tsx`), que é o que
+ * esta tela já tinha.
  */
-type EstadoArquivo =
-  | { fase: 'buscando' }
-  | { fase: 'pronto'; uri: string }
-  | { fase: 'ausente'; bytes: number | null }
-  | { fase: 'erro'; mensagem: string; bytes: number | null }
+type EstadoArquivo = EstadoDoArquivoDoLeitor
 
 export function StageScreen({
   setlist,
@@ -521,12 +519,8 @@ export function StageScreen({
   const alturaConteudo = meio === null ? 0 : Math.max(meio.altura, touch.min)
   const larguraBorda = meio === null ? 0 : Math.max(meio.largura * 0.15, touch.min)
 
-  const estiloTexto = {
-    fontFamily: content?.content_type === 'Chords' || content?.content_type === 'Tab' ? font.mono : font.mono,
-    fontSize: zoom,
-    lineHeight: zoom * (content?.content_type === 'Tab' ? lineHeight.tab : lineHeight.text),
-    color: cor.text,
-  }
+  // N4-PR8: o estilo do corpo é o do leitor compartilhado (`Leitor.tsx`) — o mesmo objeto de antes.
+  const estiloTexto = estiloDoLeitor(content?.content_type ?? null, zoom, cor)
 
   const motivo =
     content === null
@@ -609,11 +603,12 @@ export function StageScreen({
 
       <View style={styles.meio} onLayout={medirMeio}>
         {formato && urlArquivo !== null ? (
-          <Formato
+          <FormatoDoLeitor
             nome={fileNameFromUrl(urlArquivo)}
             tipo={TIPO[content?.content_type ?? ''] ?? 'arquivo'}
             bytes={knownBytes(urlArquivo)}
             cor={cor}
+            testID="s3-formato"
           />
         ) : urlArquivo !== null ? (
           <Arquivo
@@ -633,20 +628,14 @@ export function StageScreen({
             onBaixar={() => void buscarArquivo(urlArquivo, true)}
           />
         ) : (
-          <ScrollView ref={scroll} style={styles.conteudo} contentContainerStyle={styles.conteudoPad}>
+          <ScrollView ref={scroll} style={leitor.conteudo} contentContainerStyle={leitor.conteudoPad}>
             {motivo !== undefined ? (
-              <View style={styles.placeholder} testID="placeholder">
-                <Text style={[styles.placeholderTitulo, { color: cor.text }]}>{motivo.titulo}</Text>
-                <Text style={[styles.placeholderApoio, { color: cor.muted }]}>{motivo.apoio}</Text>
-              </View>
+              <PlaceholderDoLeitor testID="placeholder" titulo={motivo.titulo} apoio={motivo.apoio} cor={cor} />
             ) : (
               // O ScrollView horizontal é o que impede a re-quebra da linha
-              // longa em qualquer zoom (T1-R25/R31 — provado no spike).
-              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                <Text style={estiloTexto} testID="corpo">
-                  {corpo ?? ''}
-                </Text>
-              </ScrollView>
+              // longa em qualquer zoom (T1-R25/R31 — provado no spike). N4-PR8:
+              // o corpo é o do leitor compartilhado, que a visualização também usa.
+              <CorpoDoLeitor corpo={corpo} estilo={estiloTexto} testID="corpo" />
             )}
           </ScrollView>
         )}
@@ -813,60 +802,28 @@ function Arquivo({
   onBaixar: () => void
 }): React.JSX.Element {
   if (estado.fase === 'pronto') {
+    // N4-PR8: o PDF do leitor compartilhado (`Leitor.tsx`) — o mesmo `Pdf`, com as mesmas props (o `fitPolicy` e o
+    // porquê dele moram lá); o que o palco faz quando ele carrega, vira a página ou falha continua aqui.
     return (
-      <View style={styles.pdfArea} testID="s3d">
-        <Pdf
-          source={{ uri: estado.uri, cache: false }}
-          style={[styles.pdf, { backgroundColor: cor.bg }]}
-          enablePaging
-          enableDoubleTapZoom
-          /**
-           * `fitPolicy={0}` = **fit width**, a partitura ocupando a largura.
-           *
-           * A N1-PR6 tinha posto `{2}` (página inteira) porque ali **um**
-           * gesto virava **uma** página, contra ~4 com `{0}`. O aceite no Tab
-           * S6 mediu o outro lado da conta: com `{2}` a página A4 fica em
-           * ~548 px de 2560, ou seja **~244 dp de largura** — pequena demais
-           * para ler no palco (N1-PR7 §3.6). Decisão do Marcel, 2026-09-10:
-           * legibilidade ganha de contagem de gestos, volta a `{0}`.
-           *
-           * LIMITAÇÃO CONHECIDA, registrada: com fit width o deslize rola
-           * dentro da página antes de virar, então virar uma página custa
-           * vários gestos — o T1-R27 ("avançar: 1 tap ou 1 gesto") **não** se
-           * cumpre para a PÁGINA do PDF. Ele continua valendo para a MÚSICA:
-           * as bordas de 15% avançam e voltam em 1 tap, em PDF como em texto.
-           */
-          fitPolicy={0}
-          minScale={1}
-          maxScale={4}
-          spacing={0}
-          onLoadComplete={(total) => onPaginas(total)}
-          onPageChanged={(atual, total) => onPagina(atual, total)}
-          onError={(e: Error) => log(`pdf-error ${e.message}`)}
-        />
-      </View>
+      <PdfDoLeitor
+        uri={estado.uri}
+        cor={cor}
+        onLoadComplete={(total) => onPaginas(total)}
+        onPageChanged={(atual, total) => onPagina(atual, total)}
+        onError={(e: Error) => log(`pdf-error ${e.message}`)}
+        testID="s3d"
+      />
     )
   }
 
   if (estado.fase === 'buscando') {
-    return (
-      <View style={styles.placeholder} testID="s3-baixando">
-        <Text style={[styles.placeholderApoio, { color: cor.muted }]}>{FRASES_DO_TABLET['baixando-o-arquivo']}</Text>
-      </View>
-    )
+    return <PlaceholderDoLeitor testID="s3-baixando" apoio={FRASES_DO_TABLET['baixando-o-arquivo']} cor={cor} />
   }
 
-  const tamanho = estado.bytes === null ? '' : ` (${tamanhoLegivel(estado.bytes)})`
-  const fecho = online
-    ? 'Toque em Baixar para trazê-lo para este aparelho.'
-    : 'Sem conexão agora — toque em Baixar quando a rede voltar.'
-
+  // O S3e do leitor compartilhado; o controle é o do PALCO — a palavra *Baixar* (N4-D78: o palco não muda), com a
+  // linha do erro em cima dela. Em V o mesmo S3e leva o ícone (N4-E8): o controle é a única diferença.
   return (
-    <View style={styles.placeholder} testID="s3e">
-      <Text style={[styles.placeholderTitulo, { color: cor.text }]}>{FRASES_DO_TABLET['arquivo-nao-baixado']}</Text>
-      <Text style={[styles.placeholderApoio, { color: cor.muted }]}>
-        {`${titulo} · ${tipo}${tamanho} não está neste aparelho. ${fecho}`}
-      </Text>
+    <S3eDoLeitor testID="s3e" titulo={titulo} tipo={tipo} bytes={estado.bytes} online={online} cor={cor}>
       {estado.fase === 'erro' ? (
         <Text style={[styles.erro, { color: cor.error }]} testID="download-erro">
           {estado.mensagem}
@@ -878,41 +835,9 @@ function Arquivo({
         accessibilityRole="button"
         testID="baixar"
       >
-        <Text style={[styles.botaoBaixarTexto, { color: cor.text }]}>Baixar</Text>
+        <Text style={[styles.botaoBaixarTexto, { color: cor.text }]}>{FRASES_DO_LEITOR.baixar}</Text>
       </Pressable>
-    </View>
-  )
-}
-
-/**
- * N4-D43, N4-D83 — o arquivo de um formato que o app ainda não mostra (pela extensão; o core decide). A moldura é a
- * `N4-*-S3-avulso-formato`: o `tipo-desconhecido` de 28 em `offlineInk`, a frase do site (*"não foi possível abrir o
- * arquivo — confira o formato"*, `view.erro.formato`) e, em mono, o nome do arquivo · o tipo (o tamanho quando o
- * aparelho o conhece). Sem *Baixar*: baixar não o faria abrir. O mesmo componente no palco com setlist e no avulso.
- * O lugar é o dos outros placeholders do palco (o S3e: no topo do corpo, `placeholder`), e os tamanhos são os do
- * pacote: a frase em `size.button` (17, o da folha) e o nome em mono `size.label` (o da página do S3d, que a folha
- * desenha em 13 nos dois lugares).
- */
-function Formato({
-  nome,
-  tipo,
-  bytes,
-  cor,
-}: {
-  nome: string
-  tipo: string
-  bytes: number | null
-  cor: (typeof colors)[ThemeName]
-}): React.JSX.Element {
-  const tamanho = bytes === null ? '' : ` (${tamanhoLegivel(bytes)})`
-  return (
-    <View style={styles.placeholder} testID="s3-formato">
-      <Icone nome="tipo-desconhecido" tamanho={28} cor={cor.offlineInk} />
-      <View style={styles.formatoTexto}>
-        <Text style={[styles.formatoFrase, { color: cor.text }]}>{VOCABULARIO_DE_CONTENT['erro-formato']}</Text>
-        <Text style={[styles.formatoArquivo, { color: cor.muted }]}>{`${nome} · ${tipo}${tamanho}`}</Text>
-      </View>
-    </View>
+    </S3eDoLeitor>
   )
 }
 
@@ -1037,8 +962,6 @@ const styles = StyleSheet.create({
   pontoOffline: { width: 8, height: 8, borderRadius: 4, backgroundColor: dark.offline },
   paginaTexto: { fontFamily: font.mono, fontSize: size.label },
   meio: { flex: 1 },
-  pdfArea: { flex: 1 },
-  pdf: { flex: 1, width: '100%' },
   dica: { textAlign: 'center', fontFamily: font.ui, fontSize: size.label, paddingVertical: space.sm },
   erro: { fontFamily: font.ui, fontSize: size.label, textAlign: 'center', maxWidth: 560 },
   botaoBaixar: {
@@ -1051,20 +974,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   botaoBaixarTexto: { fontFamily: font.uiBold, fontSize: size.button },
-  conteudo: { flex: 1 },
-  conteudoPad: { padding: space.xxl, paddingBottom: space.xxxl },
   borda: { position: 'absolute', top: 0 },
-  placeholder: { alignItems: 'center', justifyContent: 'center', gap: space.lg, paddingTop: space.xxxl },
-  placeholderTitulo: { fontFamily: font.uiBold, fontSize: size.titleLarge },
-  placeholderApoio: {
-    fontFamily: font.ui,
-    fontSize: size.body,
-    textAlign: 'center',
-    maxWidth: 560,
-  },
-  formatoTexto: { alignItems: 'center', gap: space.xs },
-  formatoFrase: { fontFamily: font.ui, fontSize: size.button, textAlign: 'center', maxWidth: 560 },
-  formatoArquivo: { fontFamily: font.mono, fontSize: size.label, textAlign: 'center' },
   // A geometria das seis molduras de S3 do design: caixa 66 × 66 (64 + a
   // moldura de 1 de cada lado), gap 16, fileira de 558 dp, os mesmos sete x
   // nas seis variantes (V1-PR3-PRECHECK §8.5, div. 36).

@@ -1,0 +1,53 @@
+19:04:56 toque canto de setlist-00000001 @ 96,474
+19:05:03 toque 'song-1' @ 800,580 (emulator-5554)
+N4P8D-S3-S3a-letra-1a-avd-ret mCurrentRotation=ROTATION_90 png=387570 xml=26380 76b8201e1687
+19:05:19 toque 'indice' @ 1103,2318 (emulator-5554)
+N4P8D-S2-sem-edicao-S2p-avd-ret mCurrentRotation=ROTATION_90 png=258539 xml=41984 89ee7fb44ad6
+N4P8D-S2-sem-edicao-S2p-rolada-avd-ret mCurrentRotation=ROTATION_90 png=262676 xml=41973 f2fe3783267d
+19:06:07 toque 'borda-avancar' @ 1480,1230 (emulator-5554)
+N4P8D-S3-S3b-cifra-escuro-avd-ret mCurrentRotation=ROTATION_90 png=471158 xml=25410 395df0c23676
+19:06:23 toque 'tema' @ 682,2318 (emulator-5554)
+N4P8D-S3-S3b-cifra-claro-avd-ret mCurrentRotation=ROTATION_90 png=473865 xml=25084 3352c0a05ac1
+19:06:37 toque 'tema' @ 682,2318 (emulator-5554)
+19:06:41 toque 'borda-avancar' @ 1480,1230 (emulator-5554)
+19:06:47 toque 'auto-scroll' @ 128,2318 (emulator-5554)
+N4P8D-S3-S3c-tab-autoscroll-avd-ret mCurrentRotation=ROTATION_90 png=147572 xml=26960 fc524823eec6
+19:07:06 toque 'auto-scroll' @ 128,2318 (emulator-5554)
+19:07:10 toque 'borda-avancar' @ 1480,1230 (emulator-5554)
+N4P8D-S3-S3d-pdf-12p-avd-ret mCurrentRotation=ROTATION_90 png=179595 xml=23839 95a4d979932d
+19:07:30 avião=1 (emulator-5554)
+19:07:34 toque 'borda-avancar' @ 1480,1230 (emulator-5554)
+N4P8D-S3-S3e-nao-baixado-avd-ret mCurrentRotation=ROTATION_90 png=142421 xml=24215 46a878edf60e
+19:07:54 avião=0 (emulator-5554)
+19:07:58 toque 'borda-avancar' @ 1480,1230 (emulator-5554)
+N4P8D-S3-titulo-longo-avd-ret mCurrentRotation=ROTATION_90 png=391995 xml=26490 e370a4d8743a
+19:08:14 toque 'borda-avancar' @ 1480,1230 (emulator-5554)
+19:08:20 toque 'borda-avancar' @ 1480,1230 (emulator-5554)
+N4P8D-S3-ultima-avd-ret mCurrentRotation=ROTATION_90 png=389411 xml=26380 5b9a0f47b13e
+19:08:35 toque 'borda-avancar' @ 1480,1230 (emulator-5554)
+N4P8D-S5-fim-avd-ret mCurrentRotation=ROTATION_90 png=100478 xml=17859 3731785cad08
+19:09:10 toque canto de setlist-00000001 @ 96,474
+N4P8D-S2-com-edicao-avd-ret mCurrentRotation=ROTATION_90 png=275329 xml=59975 c23a968d610e
+N4P8D-S2-com-edicao-rolada-avd-ret mCurrentRotation=ROTATION_90 png=275755 xml=64911 73aeaf93c9dc
+19:09:57 avião=1 (emulator-5554)
+N4P8D-S2-com-edicao-aviso-sem-rede-avd-ret mCurrentRotation=ROTATION_90 png=293242 xml=60364 b1c040231448
+N4P8D-S2-com-edicao-aviso-sem-rede-rolada-avd-ret mCurrentRotation=ROTATION_90 png=294117 xml=60689 06ddedc9e0fd
+19:10:42 avião=0 (emulator-5554)
+19:11:05 toque canto de setlist-00000001 @ 96,474
+19:11:13 toque 'picker-abrir' @ 207,323 (emulator-5554)
+N4P8D-picker-vazio-avd-ret mCurrentRotation=ROTATION_90 png=116099 xml=16385 a1e8fa8fa988
+19:11:28 picker-vazio: sem lista rolável — sem rolado
+19:11:31 toque 'picker-campo' @ 917,152 (emulator-5554)
+N4P8D-picker-resultados-avd-ret mCurrentRotation=ROTATION_90 png=354464 xml=59739 afaeed4618b6
+N4P8D-picker-resultados-rolada-avd-ret mCurrentRotation=ROTATION_90 png=350740 xml=58705 2fb228b5ddf9
+19:12:21 toque 'fechar-busca' @ 108,152 (emulator-5554)
+19:12:45 toque 'buscar' @ 1335,281 (emulator-5554)
+19:12:53 toque 'Tocar “Águas de fixture”' @ 1463,590 (emulator-5554)
+19:13:01 toque 'busca' @ 1287,2318 (emulator-5554)
+N4P8D-S4-vazio-avd-ret mCurrentRotation=ROTATION_90 png=88059 xml=13970 03d24a726be1
+19:13:19 S4-vazio: sem lista rolável — sem rolado
+19:13:21 toque 'campo-busca' @ 917,152 (emulator-5554)
+N4P8D-S4-resultados-avd-ret mCurrentRotation=ROTATION_90 png=262285 xml=42099 457fdf31bf57
+N4P8D-S4-resultados-rolada-avd-ret mCurrentRotation=ROTATION_90 png=262305 xml=42099 457fdf31bf57
+19:14:09 toque 'fechar-busca' @ 108,152 (emulator-5554)
+capturas=21 falhas=0

@@ -1,0 +1,11 @@
+$ gate:a20
+  literais em posição de texto examinados: 229
+  acusações: 0
+$ gate:icones
+  acusações: 0 · avisos: 0
+$ SHA256SUMS
+DESIGN-V1: 3 OK, 0 falha
+DESIGN-N2: 2 OK, 0 falha
+DESIGN-N3: 2 OK, 0 falha
+DESIGN-N4: 2 OK, 0 falha
+N3-PRECHECK-anexos: 355 OK

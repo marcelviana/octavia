@@ -289,9 +289,72 @@ describe('(5) as frases do tablet que a L reusa, no core, sem cópia nas telas',
     for (const c of copias) expect(fonte, c).not.toContain(c)
   })
 
+  // Em par (N4-PR8): o S3e passou do `StageScreen.tsx` para o leitor compartilhado (`Leitor.tsx`, o que o palco e a
+  // visualização desenham) — o *arquivo não baixado* continua vindo do core, agora daquele arquivo.
   it('as telas importam do core o que escreviam (o controle do "nenhuma cópia": o texto continua lá, por outro caminho)', () => {
     expect(ler('apps/native/src/screens/SetlistsScreen.tsx')).toContain("{FRASES_DO_TABLET['buscar-musica']}")
-    expect(ler('apps/native/src/screens/StageScreen.tsx')).toContain("{FRASES_DO_TABLET['arquivo-nao-baixado']}")
+    expect(ler('apps/native/src/screens/Leitor.tsx')).toContain("{FRASES_DO_TABLET['arquivo-nao-baixado']}")
     expect(ler('apps/native/src/files.ts')).toContain("FRASES_DO_TABLET['nao-consegui-baixar']")
+  })
+})
+
+/**
+ * (6) **N4-PR8 — as frases do LEITOR que a visualização (V) reusa, no core, sem cópia no palco nem no `files.ts`**
+ * (`N4-PR3-anexos/README.md` §1.1, linhas 18–23; o molde da (4) e da (5)). **A base** é o texto que o
+ * `StageScreen.tsx` e o `files.ts` escreviam na `main` de antes desta PR (`836d5e6`), copiado aqui verbatim com o
+ * arquivo:linha — o core tem de dar o MESMO texto (o palco não muda), e os fontes não podem ter mais a cópia. Duas a
+ * mais que a tabela, declaradas: a segunda frase do S3e sem rede (`:862`; o N4-R15 a cita: *"sem rede, a segunda frase
+ * troca para a existente"*) e o conjunto FECHADO inteiro das espécies da falha de download (a linha 23 é uma delas:
+ * V mostra a que houver, e as quatro são o mesmo mecanismo da W2 — o molde do mapa da falha de sync da (5)).
+ */
+describe('(6) as frases do leitor que a visualização reusa, no core, sem cópia no palco nem no files.ts', () => {
+  const BASE = {
+    'tipo-desconhecido': 'tipo desconhecido', // StageScreen.tsx:151 — o MOTIVO['unknown-type']
+    'sem-conteudo': 'este item não tem conteúdo', // StageScreen.tsx:136, :141, :146 — no-body, no-key, not-string
+    'toque-em-baixar': 'Toque em Baixar para trazê-lo para este aparelho.', // StageScreen.tsx:861
+    'baixar-sem-rede': 'Sem conexão agora — toque em Baixar quando a rede voltar.', // StageScreen.tsx:862
+    baixar: 'Baixar', // StageScreen.tsx:881 — a palavra do palco; em V, o nome acessível do ícone (N4-E8)
+  } as const
+  /** `StageScreen.tsx:859-868`: o tamanho já formatado (`' (2,1 MB)'` ou `''`) e a segunda frase pela rede. */
+  const apoioDaBase = (titulo: string, tipo: string, tamanho: string, online: boolean): string =>
+    `${titulo} · ${tipo}${tamanho} não está neste aparelho. ${online ? BASE['toque-em-baixar'] : BASE['baixar-sem-rede']}`
+  /** `files.ts:487-489` (o `motivo`) e `:607` (o `falha`). */
+  const vazioDaBase = 'o arquivo chegou vazio'
+  const corrompidoDaBase = 'o arquivo chegou corrompido'
+  const incompletoDaBase = (bytes: number, esperado: number | null): string => `arquivo incompleto: ${bytes} de ${esperado ?? '?'} bytes`
+  const servidorDaBase = (status: string): string => `o servidor respondeu ${status}`
+
+  it('o core dá o texto que o palco e o files.ts escreviam', () => {
+    expect(conteudo.FRASES_DO_LEITOR).toStrictEqual(BASE)
+    for (const online of [true, false]) {
+      for (const tamanho of ['', ' (2,1 MB)', ' (840 KB)']) {
+        expect(conteudo.naoEstaNesteAparelho('Partitura de doze páginas', 'partitura', tamanho, online)).toBe(
+          apoioDaBase('Partitura de doze páginas', 'partitura', tamanho, online),
+        )
+      }
+    }
+    expect(conteudo.FRASES_DA_FALHA_DE_ARQUIVO).toStrictEqual({ vazio: vazioDaBase, corrompido: corrompidoDaBase })
+    for (const [b, e] of [[1048576, 2202009], [0, null], [10, 0]] as const) expect(conteudo.arquivoIncompleto(b, e)).toBe(incompletoDaBase(b, e))
+    for (const st of ['404', '500', '403']) expect(conteudo.servidorRespondeu(st)).toBe(servidorDaBase(st))
+  })
+
+  const COPIAS: [string, string[]][] = [
+    ['apps/native/src/screens/StageScreen.tsx', ["titulo: 'este item não tem conteúdo'", "titulo: 'tipo desconhecido'", "'Toque em Baixar para", "'Sem conexão agora", '>Baixar<', 'não está neste aparelho']],
+    ['apps/native/src/files.ts', ["'o arquivo chegou vazio'", '`arquivo incompleto:', "'o arquivo chegou corrompido'", '`o servidor respondeu', ': o servidor respondeu ${']],
+    ['apps/native/src/screens/Leitor.tsx', ['não está neste aparelho', "'Toque em Baixar", '>baixando o arquivo…<', '>arquivo não baixado<']],
+    ['apps/native/src/screens/VisualizacaoScreen.tsx', ["'este item não tem conteúdo'", "'tipo desconhecido'", "'Baixar'", "'não consegui baixar'", "'notas da música'", "'Detalhes'"]],
+  ]
+
+  it.each(COPIAS)('nenhuma cópia em %s: as frases saem do core', (arquivo, copias) => {
+    const fonte = ler(arquivo)
+    for (const c of copias) expect(fonte, c).not.toContain(c)
+  })
+
+  it('o palco, o leitor e o files.ts importam do core o que escreviam (o controle do "nenhuma cópia")', () => {
+    expect(ler('apps/native/src/screens/StageScreen.tsx')).toContain('FRASES_DO_LEITOR.baixar')
+    expect(ler('apps/native/src/screens/StageScreen.tsx')).toContain("FRASES_DO_LEITOR['tipo-desconhecido']")
+    expect(ler('apps/native/src/screens/Leitor.tsx')).toContain('naoEstaNesteAparelho(')
+    expect(ler('apps/native/src/files.ts')).toContain('arquivoIncompleto(')
+    expect(ler('apps/native/src/files.ts')).toContain('servidorRespondeu(')
   })
 })

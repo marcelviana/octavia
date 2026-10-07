@@ -1,0 +1,17 @@
+== aparelho (antes)
+4c93a263c7bea5155c9487c2faa211f4  setlists.json
+b62f192a347e0adac05e405f92f9711d  content.json
+b21cc49ba038637f55262202b1fe8f9a  files-index.json
+05253d4239dadb2696115b934a546bb1  files/1751910900697-Easy_-_Guitar.pdf
+== cópias
+4c93a263c7bea5155c9487c2faa211f4 setlists.json
+b62f192a347e0adac05e405f92f9711d content.json
+b21cc49ba038637f55262202b1fe8f9a files-index.json
+05253d4239dadb2696115b934a546bb1 real.pdf
+== a demanda (cache/…/files)
+total 6
+drwx------ 2 u0_a292 u0_a292       3488 2026-10-04 12:47 .
+drwx------ 3 u0_a292 u0_a292_cache 3488 2026-09-11 09:59 ..
+total 6
+drwx------ 2 u0_a292 u0_a292 3488 2026-10-06 20:43 .
+drwx------ 3 u0_a292 u0_a292 3488 2026-10-06 15:22 ..

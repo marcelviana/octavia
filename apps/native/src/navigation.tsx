@@ -1,7 +1,8 @@
 /**
  * Navegação da tela 1 (N1-D1: `@react-navigation/native` + native-stack).
  * Seis rotas: S0 Login, S1 Setlists, S2 Index, S3 Stage, S4 Search, S5 End — e, desde a N4-PR7, a sétima: L, a
- * Biblioteca, que `Buscar música` em S1 abre (N4-R1).
+ * Biblioteca, que `Buscar música` em S1 abre (N4-R1); desde a N4-PR8, a oitava: V, a Visualização, que o toque numa
+ * linha da L abre (N4-R6).
  * Sem header — as barras são do design (T1-R27/R28).
  *
  * A **posição no palco vive nos params da rota** (`Stage.position`): assim
@@ -20,13 +21,17 @@ import { LoginScreen } from './screens/LoginScreen'
 import { SearchScreen } from './screens/SearchScreen'
 import { SetlistsScreen, type SetlistsScreenProps } from './screens/SetlistsScreen'
 import { StageScreen } from './screens/StageScreen'
+import { VisualizacaoScreen } from './screens/VisualizacaoScreen'
 import {
   DESTINO_DE_BUSCAR_MUSICA,
   destinoDaBuscaDoPalco,
   destinoDoResultado,
   destinoDoTocarDaBiblioteca,
+  destinoDoTocarDaVisualizacao,
+  destinoDoVerDaBiblioteca,
   type Destino,
   type ParamsDaBusca,
+  type ParamsDaVisualizacao,
   type ParamsDoPalco,
 } from './rotas-do-avulso'
 import { dark, font, size, space, tracking } from './theme'
@@ -49,6 +54,8 @@ export type RootStackParamList = {
   End: { setlistId: string }
   /** N4-PR7 — L, a biblioteca (N4-R1…N4-R11). Sem params: abre sempre do topo, sem termo e sem filtro. */
   Biblioteca: undefined
+  /** N4-PR8 — V, a visualização (N4-R12…N4-R15): a música pelo id; o corpo, os campos e a estrela vêm do cache. */
+  Visualizacao: ParamsDaVisualizacao
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
@@ -97,6 +104,10 @@ export interface NavigationProps {
  * `goBack` na mesma posição.
  */
 function ir(navigation: NativeStackNavigationProp<RootStackParamList>, d: Destino): void {
+  if (d.rota === 'Visualizacao') {
+    navigation.push('Visualizacao', d.params)
+    return
+  }
   if (d.rota === 'Stage') {
     if (d.acao === 'push') navigation.push('Stage', d.params)
     else if (d.acao === 'replace') navigation.replace('Stage', d.params)
@@ -305,6 +316,19 @@ export function Navigation({ signedIn, setlists, dados }: NavigationProps): Reac
                   onTentarNovamente={setlists.onTentarNovamente}
                   onVoltar={() => navigation.goBack()}
                   onTocar={(contentId) => ir(navigation, destinoDoTocarDaBiblioteca(contentId))}
+                  onVisualizar={(contentId) => ir(navigation, destinoDoVerDaBiblioteca(contentId))}
+                />
+              )}
+            </Stack.Screen>
+
+            <Stack.Screen name="Visualizacao">
+              {({ navigation, route }) => (
+                <VisualizacaoScreen
+                  content={dados.contentById.get(route.params.contentId) ?? null}
+                  online={dados.online}
+                  onVoltar={() => navigation.goBack()}
+                  onTocar={(contentId) => ir(navigation, destinoDoTocarDaVisualizacao(contentId))}
+                  onArquivosMudaram={dados.onArquivosMudaram}
                 />
               )}
             </Stack.Screen>

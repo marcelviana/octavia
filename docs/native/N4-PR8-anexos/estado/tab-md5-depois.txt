@@ -1,0 +1,27 @@
+== apagados por nome (o que a fixture criou)
+== aparelho (depois)
+4c93a263c7bea5155c9487c2faa211f4  setlists.json
+b62f192a347e0adac05e405f92f9711d  content.json
+b21cc49ba038637f55262202b1fe8f9a  files-index.json
+05253d4239dadb2696115b934a546bb1  files/1751910900697-Easy_-_Guitar.pdf
+.:
+total 145
+drwx------ 3 u0_a292 u0_a292   3488 2026-10-07 08:30 .
+drwxrwx--x 3 u0_a292 u0_a292   3488 2026-10-07 08:30 ..
+-rw------- 1 u0_a292 u0_a292    163 2026-09-23 19:14 ._content.json
+-rwx------ 1 u0_a292 u0_a292    163 2026-09-24 18:01 ._files
+-rw------- 1 u0_a292 u0_a292    163 2026-09-14 11:49 ._files-index.json
+-rw------- 1 u0_a292 u0_a292    163 2026-09-23 19:14 ._setlists.json
+-rw------- 1 u0_a292 u0_a292 111580 2026-10-07 08:31 content.json
+drwx------ 2 u0_a292 u0_a292   3488 2026-10-07 08:31 files
+-rw------- 1 u0_a292 u0_a292    200 2026-10-07 08:31 files-index.json
+-rw------- 1 u0_a292 u0_a292   2752 2026-10-07 08:31 setlists.json
+
+files:
+total 142
+drwx------ 2 u0_a292 u0_a292   3488 2026-10-07 08:31 .
+drwx------ 3 u0_a292 u0_a292   3488 2026-10-07 08:30 ..
+-rw------- 1 u0_a292 u0_a292 138916 2026-10-07 08:31 1751910900697-Easy_-_Guitar.pdf
+total 6
+drwx------ 2 u0_a292 u0_a292       3488 2026-10-04 12:47 .
+drwx------ 3 u0_a292 u0_a292_cache 3488 2026-09-11 09:59 ..

@@ -41,6 +41,20 @@ export interface ContentDTO {
    * (`ehFavorita`). Muda só pelo `PUT /api/content` do favoritar, e o cache recebe a linha que ele devolve (N4-D35).
    */
   is_favorite?: boolean | null
+  /**
+   * N4-PR8 — os campos que a visualização (V) mostra (N4-R14; N4-D31: **só os que o site salva de verdade**,
+   * `N4-PRECHECK.md` A4). Como o `is_favorite`: o servidor manda as colunas em todo item (`select('*')`) e o sync as
+   * grava sem mapear — já estavam no cache, não estavam no tipo. Opcionais porque a fixture do mock do N3 não as traz.
+   * Compasso (`time_signature`), capo e afinação (`tuning`) NÃO entram: o site não os salva de verdade (herança D).
+   */
+  difficulty?: string | null
+  genre?: string | null
+  key?: string | null
+  bpm?: number | null
+  tags?: string[] | null
+  /** As notas DO CONTENT (P-F3, *notas da música*) — não a nota da posição na setlist (`SetlistSongDTO.notes`). */
+  notes?: string | null
+  created_at?: string | null
 }
 
 /**
