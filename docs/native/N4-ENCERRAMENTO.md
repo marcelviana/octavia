@@ -19,7 +19,7 @@ reescrito aqui.
   em paralelo, com extração por roteiro fixo (PRs e defeitos; decisões e erratas; divergências; heranças, catálogo e
   prod); o executor leu o `N4-REQUISITOS.md`, o README da PR-9, o do release, o `APARATO.md`, os encerramentos do N3 e do
   I1 e o `CI-FAIXA.md`, e conferiu com `grep` cada contagem e cada citação de seção usada aqui.
-- **Divergências desta PR**: **1136–1142** (§13).
+- **Divergências desta PR**: **1136–1144** (§13).
 
 > **"O TABLET TEM A BIBLIOTECA INTEIRA, E ELA SE LÊ."** — *"está tudo funcionando bem"*, o Marcel, no Tab, com o
 > release e as 63 músicas dele (A-N4-28, 2026-10-07).
@@ -166,7 +166,7 @@ aceites com veredito.**
 ## 4. Decisões N4-D1…D106
 
 `[medido]`: `grep -noE 'N4-D[0-9]+'` nos 16 documentos do bloco → **106 números, de N4-D1 a N4-D106, sem lacuna**, nenhum
-definido duas vezes com sentidos diferentes; nada acima de D106 em `docs/`. *(Depois do aval: mais **oito**, N4-D107…D114, que vivem no §15 — 114 no bloco.)* O texto de cada uma vive **só** na coluna
+definido duas vezes com sentidos diferentes; nada acima de D106 em `docs/`. *(Depois do aval: mais **onze**, N4-D107…D117, que vivem no §15 e no §15.4 — 117 no bloco.)* O texto de cada uma vive **só** na coluna
 "onde"; o rótulo é para achar a linha.
 
 | # | rótulo | onde o texto vive |
@@ -208,6 +208,7 @@ definido duas vezes com sentidos diferentes; nada acima de D106 em `docs/`. *(De
 | D99…D102 | `view.grade`; o rótulo em 13; o pressionado a 6 %; **a receita do cache sem dado real** | `N4-PR8-anexos/README.md` §0 |
 | D103…D106 | o release ao encerramento; o par à mão da "setlist sumiu"; **a queda nativa**; o teto pela fixture | `N4-PR9-anexos/README.md` §0 (a D106 foi dada antes da D105; a numeração explicada lá) |
 | D107…D114 | o aval do encerramento: os destinos; o A-N4-26 no N5; **a ordem depois do N4**; as escritas do Marcel; o I1 no `CI-FAIXA`; a errata da 1140; o catálogo; a 1142 ao pre-check da quebra | §15 daqui |
+| D115…D117 | a segunda rodada: a regra 38 com o (d) como fato e a 1143; a justificativa do D corrigida e a PR D-0 proposta; os instrumentos sob `docs/` | §15.4 daqui |
 
 **As mudadas por errata** (a decisão posterior que muda a anterior; o texto das duas fica onde está):
 
@@ -259,7 +260,7 @@ saiu de composição —, e o próprio parágrafo da E9 no `DESIGN-N4` registra 
 
 ---
 
-## 6. Divergências 956–1142
+## 6. Divergências 956–1144
 
 ### 6.1 A contagem
 
@@ -288,13 +289,13 @@ P 47 · D 55 · A 30 · T 47 · X 1
 | PR-7 | 1081–1097 | 2 | 6 | 4 | 5 | | 17 |
 | PR-8 | 1098–1120 | 1 | **10** | 3 | **9** | | 23 |
 | PR-9 | 1121–1135 | 2 | 2 | 4 | 7 | | 15 |
-| encerramento (esta PR) | 1136–1142 | 3 | 2 | | 2 | | 7 |
-| **N4** | | **50** | **57** | **30** | **49** | **1** | **187** |
+| encerramento (esta PR) | 1136–1144 | 3 | 2 | 1 | 3 | | 9 |
+| **N4** | | **50** | **57** | **31** | **50** | **1** | **189** |
 
 Os negritos são a div. 1140: as linhas de contagem do README da PR-4 (*"T 8"*, que soma 17) e da PR-8 (*"D 9 · T 10"*)
 não batem com a coluna das próprias tabelas; vale a coluna.
 
-**O D cresceu** (14 de 85 no N3; 92 de 458 no I1; **57 de 187** aqui): 15 delas são do desenho, a folha conferida contra o
+**O D cresceu** (14 de 85 no N3; 92 de 458 no I1; **57 de 189** aqui): 15 delas são do desenho, a folha conferida contra o
 app e o catálogo antes do congelamento (seis viraram E1…E6), e 10 da PR-8, a folha de V contra a tela. **O T** segue o do
 N3 — o aceite é aparelho, em três aparelhos, e cada queda de arnês virou divergência. **O A** carrega os defeitos: os dois
 de prod (975, 964/1001), a queda nativa (1126), o furo da receita do cache (1113), o sync que desfazia o favorito (1065).
@@ -618,7 +619,7 @@ Só a nota, no molde das existentes, sem reescrever texto:
 
 ---
 
-## 13. Divergências desta PR — 1136 a 1142
+## 13. Divergências desta PR — 1136 a 1144
 
 As 1136–1138 são da Parte A (`N4-ENCERRAMENTO-anexos/README.md` §10, com o texto inteiro); aqui o resumo, e as da Parte B.
 
@@ -632,7 +633,10 @@ As 1136–1138 são da Parte A (`N4-ENCERRAMENTO-anexos/README.md` §10, com o t
 | **1141** | P | o prompt lista *"o nome padrão da seção"* entre as heranças do N4 para o Bloco D; nos anexos do N4 ele só aparece citado como herança **do I1** (`I1-ENCERRAMENTO.md` §10.1 item 3, div. 784; a N4-D40: *"sem item novo"*) | fora das heranças do N4; nota no §10.4 |
 | **1142** | T | três corridas com APK de push **só fora do filtro** (124, 127, 146); a 127 é a div. 381, as outras duas sem causa medida | registrado no `CI-FAIXA.md`; §10.5.11; pergunta 8 |
 
-**Contagem**: 7 — P 3 · D 2 · T 2. A próxima livre é a **1143**.
+| **1143** | A | **pergunta de produto**, só registrada (N4-D115): não sincronizar quando a rede volta com o app aberto (medido nos releases `31d6b3a` e `cf58f7f`, regra 38 (d)) é **comportamento desejado ou lacuna**? | sem resposta; sem proposta |
+| **1144** | T | **os instrumentos executáveis sob `docs/` ficam fora de CI, lint e typecheck** `[medido]`: o `tsconfig.json` exclui `docs/**` (`:45`); o `next lint` varre só os diretórios do app; nenhum projeto do `vitest.config.mts` inclui `docs/`; os workflows só rodam `shasum -c` lá. São **200** arquivos (`git ls-files 'docs/**/*.<ext>'`: 77 `.py` · 54 `.sh` · 57 `.mjs` · 12 `.ts`) — e vários já são reaproveitados de um bloco para outro (o `roteiro.py` do pre-check do N3, o `builds.sh` do W4-b3, o `quedas.py` da N4-PR9, usados nesta PR) | **N4-D117**: reaproveitado em outro bloco, **sai de `docs/`** (para onde o CI, o lint e o typecheck o alcancem); **os atuais não se movem** |
+
+**Contagem**: 9 — P 3 · D 2 · T 3 · A 1. A próxima livre é a **1145**.
 
 ---
 
@@ -661,8 +665,9 @@ Os blocos de declaração desta PR, verbatim (a cópia que a regra do W4-b2 pede
 
 ## 15. O aval do encerramento — N4-D107…D114 `[Marcel, 2026-10-07]`
 
-**Com este commit (o 3) e os checks dele verdes, o N4 está encerrado.** O merge da #366 é do Marcel. Fica pendente só a
-regra 38 do catálogo (§15.2), que não é do bloco: entra quando o texto for aprovado.
+**O commit 3 aplicou a primeira rodada do aval (N4-D107…D114); o commit 4, a segunda (N4-D115…D117, §15.4).** O merge da
+#366 é do Marcel. Fica em aberto, como pergunta, a **PR D-0** proposta no §15.1 (o Marcel decide se entra antes da quebra
+de linha).
 
 As oito perguntas do §12, na ordem; o texto da decisão é este (o rótulo do §4 aponta para cá).
 
@@ -700,13 +705,39 @@ cada tipo) e o site.
 mais pre-check e encerramento — **o maior bloco da fila**. A quebra de linha é um algoritmo no leitor compartilhado (o palco
 e V usam o mesmo `Leitor.tsx` desde a N4-PR8) e o aceite nas três faixas: **3 a 5 PRs**.
 
-**Caberia antes da quebra de linha?** **Não como bloco** — colocá-lo antes empurraria o N5 pelo D inteiro, quando a
-quebra de linha é pequena, já decidida como pré-requisito do N5 (N3-D15; N4-D13) e independente do backend. **A ordem
-aprovada (quebra → D → N5) fica**, e a estimativa não a muda. Uma observação para o pre-check do D, não uma proposta de
-reordenar: **as três primeiras da fila** (a Tab, a Cifra, o `updated_at` — I1 §10.1.17–19) são o recorte natural de uma
-primeira PR do D, e são as que têm dado real errado hoje.
+**Caberia antes da quebra de linha?** *(Reescrito na segunda rodada do aval, N4-D116: o commit 3 dizia que pôr o D antes
+"empurraria o N5 pelo D inteiro" — **não procede**: nas duas ordens o N5 vem depois da quebra de linha **e** do D, e chega
+no mesmo ponto.)* O que distingue as duas ordens é **o que fica esperando**: com a quebra primeiro, o palco e V ganham a
+quebra de linha 3 a 5 PRs mais cedo e o D começa depois; com o D primeiro, **o defeito que grava errado em prod para mais
+cedo** e a quebra espera 8 a 12 PRs. Por isso a pergunta decisiva é a do Marcel: **a gravação errada continua ativa hoje?**
 
-### 15.2 A regra 38 — o texto integral, para o aval (não está no `LOGS-OCTAVIA.md`)
+**A evidência, na `main` `cf58f7f`** `[medido: leitura do código desta sessão]`:
+
+| | a gravação, hoje | quem lê | ativo? |
+|---|---|---|---|
+| **Tab** | o editor guarda a edição em `measures` (`components/tab-editor.tsx:31`, `:42`, `:50` — `onChange({ ...content, ...newData })`) e o salvar a põe no corpo do `PUT` em `content_data.measures` (`components/content-editor.tsx:70`), espalhando o `content_data` de antes, com a `tablature` velha intocada (`:64-65`) | o core lê a Tab por `tablature` (`packages/core/src/content-contract.ts:40`, `Tab: 'tablature'`); o site também (`components/content/corpo-de-texto.ts:60`); **nenhum leitor lê `measures`** (`git grep -n measures -- apps/native/src packages/core/src components/content components/content-viewer lib` → nada fora de teste) | **sim** — toda edição de Tab feita agora vai para um campo que ninguém mostra; o palco, V e o site seguem com o texto de antes (div. 976) |
+| **Cifra** | o editor guarda as seções em `sections` (`components/chord-editor.tsx:38-41`; `content-editor.tsx:68`) e leva o `chords` do topo de antes no `content_data` espalhado (`:64-65`) — o `chords` **continua velho no banco** | desde a N4-PR2 as seções vencem o `chords` nos dois leitores: o core (`content-contract.ts:115-117`, a regra (e)) e o site (`corpo-de-texto.ts:48-54`); o `chords` de topo só se lê em Letra e Tab (`LyricsDisplay.tsx:17`, `TabDisplay.tsx:20`) | **a gravação, sim; o efeito, não** — o dado fica inconsistente, mas nenhum leitor mostra o velho quando há seções (div. 975, neutralizada pela N4-PR2) |
+| **`updated_at`** | o `PUT /api/content` põe `updated_at: new Date()` em **todo** `PUT` (`app/api/content/route.ts:282-283`), antes de olhar os campos — o do favorito (`{id, is_favorite}`, `:300`) inclusive | o painel do site ordena *Recentes* por ele (`N4-PRECHECK.md`, L1; N4-D39) | **sim** — as três escritas do Marcel desta sessão (div. 1138) mexeram no `updated_at` das duas músicas |
+
+**Continua ativo** (a Tab e o `updated_at`; a Cifra grava inconsistente sem efeito visível). Pela regra do aval, **a
+proposta** (pergunta ao Marcel, N4-D116):
+
+> **PR D-0 — estancar a gravação**, antes da quebra de linha; o resto do D fica na posição aprovada (depois da quebra).
+> - **Tab**: a edição passa a chegar ao campo que os leitores leem — a forma (o editor serializa os compassos para a
+>   `tablature`, ou o salvar grava os dois) decide o pre-check da D-0, com o G-par como prova de que o leitor mostra o
+>   que o editor gravou.
+> - **`updated_at`**: o `PUT` que só muda `is_favorite` não toca no `updated_at` — com o G-back declarando a rota
+>   (`app/api/content/route.ts`, núcleo) e o gate do corpo do favoritar da N4-PR1 intacto.
+> - **Cifra**: **recomendo fora da D-0** — não há gravação com efeito visível a estancar; o `chords` velho é dado
+>   inconsistente que nenhum leitor mostra, e se acerta com a migração do D.
+> - **Fora da D-0, no D**: a migração do dado **já** gravado (as Tabs com `measures` que nenhum leitor vê; as Cifras com
+>   o `chords` velho), que pede `supabase/migrations/` aplicada pelo Marcel, e os outros ≈ 30 itens.
+> - **Tamanho** `[estimado]`: uma PR de código (gate primeiro, como toda PR do N4), com pre-check curto; toca o site e uma
+>   rota do núcleo — nenhum aparelho além de uma prova de leitura no Tab.
+>
+> Com a D-0, a fila ficaria: **D-0 → quebra de linha → Bloco D (o resto) → N5 → identidade → iOS**; o W5 à parte.
+
+### 15.2 A regra 38 — o texto do commit 3, para o aval *(aprovada com ajuste no item (d), N4-D115; o texto final está no `LOGS-OCTAVIA.md`, "As regras que o N4 firmou — 33 a 38")*
 
 > **38. O release sincroniza ao abrir com rede.** *(Divs. 1000, N4 brief; 1136, encerramento do N4; N4-D56.)* O release
 > não tem Metro nem mock: aberto com rede, ele faz o sync de leitura contra prod na primeira abertura — `GET /api/setlists`
@@ -717,8 +748,8 @@ primeira PR do D, e são as que têm dado real errado hoje.
 > mesmo quando ninguém tocou em nada; **(d)** a volta da rede com o app aberto **não** dispara sync (`net online` sem `api`,
 > medido no release anterior e neste), então a prova com rede depois do avião não gasta um sync a mais.
 
-**Entra só com o OK do Marcel a este texto** (N4-D113): numa errata do `LOGS-OCTAVIA.md`, no próximo commit que tocar o
-catálogo, com a data do OK.
+**Entrou no commit 4** com o item (d) reescrito como fato observado — os dois releases em que foi medido (`31d6b3a`,
+`cf58f7f`) e a obrigação de remedir sempre que o código de sync mudar (N4-D115).
 
 ### 15.3 As duas confirmações
 
@@ -738,4 +769,12 @@ as únicas PRs do I1 cujo push construiu o APK) e as **25 do N4**, as **126–15
 estatística da **população do regime 2** — as corridas desde a 19ª (#284), menos as 4 falhas riscadas: era **96** (as
 19ª–118ª, 100 corridas − 4 falhas); com as 32 novas, todas `success`, fica **128** (132 − 4). A mediana dessa população
 passa de 12m20,5s a **12m30s**, e o IQR de 1m43s a **2m03,2s**.
+
+### 15.4 A segunda rodada do aval — N4-D115…D117 `[Marcel, 2026-10-07]`
+
+| # | decisão | o que mudou (commit 4) |
+|---|---|---|
+| **N4-D115** | **a regra 38 aprovada com ajuste**: o item (d) é **fato observado**, não premissa — os releases em que foi medido, e remedir sempre que o código de sync mudar. E a **div. 1143**, só registrada: não sincronizar quando a rede volta com o app aberto é comportamento desejado ou lacuna? | `LOGS-OCTAVIA.md` (a 38); §13 (a 1143) |
+| **N4-D116** | **a justificativa da ordem do D estava errada** ("atrasaria o N5": nas duas ordens o N5 vem depois da quebra e do D) — corrigida aqui e no `PLANO-TRANSICAO.md`; e a pergunta decisiva, com evidência: a gravação errada continua ativa? **Sim** (a Tab e o `updated_at`) → a **PR D-0** proposta no §15.1, **para o Marcel decidir** | §15.1; `PLANO-TRANSICAO.md` |
+| **N4-D117** | **instrumento executável sob `docs/` fica fora de CI, lint e typecheck; reaproveitado em outro bloco, sai de `docs/`**; os atuais não se movem | §13 (a 1144) |
 

@@ -1508,4 +1508,9 @@ automaticamente.
 > a lista com filtros e busca, a visualização, o palco avulso sem setlist hospedeira, o favoritar e todo arquivo no
 > aparelho (#353–#366, `docs/native/N4-ENCERRAMENTO.md`). **A ordem depois do N4** (N4-D109, o aval do encerramento,
 > `[Marcel, 2026-10-07]`): **quebra de linha → Bloco D → N5 → identidade → iOS**; o **W5** à parte. A estimativa do D
-> (≈ 33 itens, 8 a 12 PRs, com migração de dado real) está no `N4-ENCERRAMENTO.md` §15.1.
+> (≈ 33 itens, 8 a 12 PRs, com migração de dado real) está no `N4-ENCERRAMENTO.md` §15.1. *(Errata da justificativa,
+> N4-D116: pôr o D antes da quebra **não** atrasa o N5 — nas duas ordens o N5 vem depois dos dois. O que muda é o que
+> espera: a quebra de linha, ou o conserto da gravação errada.)* **Em aberto, para o Marcel**: a gravação errada **continua
+> ativa** na `main` (a Tab vai para `measures`, que nenhum leitor lê; todo `PUT` do favorito mexe no `updated_at`), e o
+> encerramento propõe uma **PR D-0** só para estancá-la **antes** da quebra de linha, com o resto do D na posição aprovada
+> (`N4-ENCERRAMENTO.md` §15.1).

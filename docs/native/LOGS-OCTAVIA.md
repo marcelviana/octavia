@@ -680,10 +680,11 @@ de cada PR.
 **32. O defeito do instrumento se conserta no instrumento, não com errata da folha.**
 *(I1-E31, I1-PR-13.)*
 
-### As regras que o N4 firmou — 33 a 37
+### As regras que o N4 firmou — 33 a 38
 
-*(Encerramento do N4, 2026-10-07; fonte: `N4-ENCERRAMENTO.md` §8; aprovadas no aval `[Marcel, 2026-10-07]`.)* Numeradas
-na sequência das do I1. São do aparelho e dos gates de dump; a 36 vale para todo aceite no aparelho.
+*(Encerramento do N4, 2026-10-07; fonte: `N4-ENCERRAMENTO.md` §8; aprovadas no aval `[Marcel, 2026-10-07]`; a 38 com o ajuste do item (d), N4-D115.)* Numeradas
+na sequência das do I1. São do aparelho e dos gates de dump; a 36 vale para todo aceite no aparelho, e a 38 para todo
+aceite de release.
 
 **33. Mudança decidida que muda a base do G-inv entra como errata em par da base, com gate próprio.** *(Div. 1049,
 N4-PR4: `66e4b9e` o gate, `54ce0d1` os 8 dumps; N4-D69.)* A base não se regrava e o gate não se relaxa: o par (velho →
@@ -704,6 +705,19 @@ rodada; "FATAL 0" por subcadeia não é contagem (caso 38). Aplicada no release 
 **37. Quando a exceção do bloco ```` ```gates ```` é do commit novo, o push vem antes de editar o corpo da PR.** *(Div.
 1068, N4-PR5.)* O gate roda no evento `edited` contra o head que estiver lá: o corpo editado antes do push é lido contra o
 commit velho.
+
+**38. O release sincroniza ao abrir com rede.** *(Divs. 1000, N4 brief; 1136, encerramento do N4; N4-D56; N4-D115.)* O
+release não tem Metro nem mock: aberto com rede, ele faz o sync de leitura contra prod na primeira abertura — `GET
+/api/setlists` e `GET /api/content` —, antes de qualquer toque. Por isso: **(a)** prova de release que não pode fazer
+requisição se faz **em avião** (regra 11: ler, declarar, provar pelo `ping`, restaurar); **(b)** prompt de aceite de
+release que tenha um passo *"com rede"* e um *"sem requisição"* põe o avião **antes** da primeira abertura com o app novo,
+ou declara que a primeira abertura **é** o sync autorizado; **(c)** a contabilidade de prod de toda sessão com release
+conta esse sync, mesmo quando ninguém tocou em nada; **(d)** **observado, não garantido**: nos dois releases medidos, a
+volta da rede com o app aberto **não** disparou sync — o `31d6b3a` (`N4-RELEASE-anexos/README.md` §4: `net online`, e a
+contagem de `api` seguiu em 2) e o `cf58f7f` (`N4-ENCERRAMENTO-anexos/README.md` §5: `net online` às 17:31:00, 0 `api`
+desde o `logcat -c`). É um fato desses dois builds, não uma propriedade do app: **se remede sempre que o código de sync
+mudar**, e até lá a prova com rede depois do avião pode contar com ele, declarando-o. Se é o comportamento desejado ou uma
+lacuna é a div. 1143 (pergunta de produto, sem resposta).
 
 ### A regra de método que o padrão implica
 
