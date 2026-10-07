@@ -166,7 +166,7 @@ aceites com veredito.**
 ## 4. Decisões N4-D1…D106
 
 `[medido]`: `grep -noE 'N4-D[0-9]+'` nos 16 documentos do bloco → **106 números, de N4-D1 a N4-D106, sem lacuna**, nenhum
-definido duas vezes com sentidos diferentes; nada acima de D106 em `docs/`. O texto de cada uma vive **só** na coluna
+definido duas vezes com sentidos diferentes; nada acima de D106 em `docs/`. *(Depois do aval: mais **oito**, N4-D107…D114, que vivem no §15 — 114 no bloco.)* O texto de cada uma vive **só** na coluna
 "onde"; o rótulo é para achar a linha.
 
 | # | rótulo | onde o texto vive |
@@ -207,6 +207,7 @@ definido duas vezes com sentidos diferentes; nada acima de D106 em `docs/`. O te
 | D96…D98 | o arco da estrela; o `maxWidth` 560; **a receita do cache aprovada** | `N4-PR7-anexos/README.md` §0 |
 | D99…D102 | `view.grade`; o rótulo em 13; o pressionado a 6 %; **a receita do cache sem dado real** | `N4-PR8-anexos/README.md` §0 |
 | D103…D106 | o release ao encerramento; o par à mão da "setlist sumiu"; **a queda nativa**; o teto pela fixture | `N4-PR9-anexos/README.md` §0 (a D106 foi dada antes da D105; a numeração explicada lá) |
+| D107…D114 | o aval do encerramento: os destinos; o A-N4-26 no N5; **a ordem depois do N4**; as escritas do Marcel; o I1 no `CI-FAIXA`; a errata da 1140; o catálogo; a 1142 ao pre-check da quebra | §15 daqui |
 
 **As mudadas por errata** (a decisão posterior que muda a anterior; o texto das duas fica onde está):
 
@@ -399,7 +400,9 @@ escrita do executor fora da conta de audit; todo descartável ficou para o Marce
 do padrão *"instrumento com escopo menor do que parece"* é o **37** (div. 908, I1). **O N4 não acrescentou regra nem caso
 numerado**: entraram três erratas de catálogo (as linhas do favoritar e o `reason=library`, "Errata N4-PR5"; o 404 no
 ramo do status, "Errata N4-PR9") e as erratas do `APARATO.md`. **Proposta do encerramento** — numeradas na sequência,
-**entram no `LOGS-OCTAVIA.md` só com o aval** (pergunta 7):
+**entram no `LOGS-OCTAVIA.md` só com o aval** (pergunta 7). *(Aval, N4-D113: as regras **33–37** e os casos **38–43**
+entraram no `LOGS-OCTAVIA.md` no commit 3 desta PR — "As regras que o N4 firmou — 33 a 37" e a tabela do padrão; a **38**
+fica de fora até o Marcel aprovar o texto integral, §15.)*
 
 **Regras**
 
@@ -443,13 +446,22 @@ fica 2,8 s acima do Q3 da referência de antes; sem a condição (1), não há c
 medições, como o N3 fez com as dele. **Três corridas com APK vieram de push só fora do filtro** (124, 127, 146): a 127 é
 a div. 381 (o APK anterior ainda corria); a 124 e a 146 não foram medidas aqui (div. 1142).
 
+**A troca de base, explícita** (aval, N4-D111) `[medido: git grep -n "CI-FAIXA\|mediana\|timeout-minutes" -- .github
+scripts apps/native/scripts]`: **nenhum gate, workflow ou script usa a referência como limiar** — nenhum lê o `CI-FAIXA.md`,
+e nenhum job tem `timeout-minutes`; a única "mediana" em workflow é um comentário histórico do `native.yml` (*"mediana
+~11m45s"*, o N1). Quem usa a referência é **a regra de segmentos** (`CI-FAIXA.md`, "Os segmentos"; `LOGS-OCTAVIA.md`,
+"Errata W4-b2"), à mão: a condição (2) compara a mediana de dez corridas seguintes a uma mudança da lista fechada com
+**o IQR do segmento vigente**. Com o recálculo, esse IQR passa de **11m12,2s–12m55,2s** (n=96) a **11m12,2s–13m15,5s**
+(n=128): a mediana de dez que até ontem ficaria "fora, para cima" entre 12m55,2s e 13m15,5s agora fica dentro. É a base
+que vale daqui em diante; a troca está escrita também no `CI-FAIXA.md`.
+
 ---
 
 ## 10. Heranças, com destino
 
 **A parte que os próximos blocos vão ler.** Numeração estável — cite por **§10.<bloco>.<n>**, e confira com `grep` antes
-(a lição da div. 397). Toda linha tem origem; as marcadas **[proposta]** são do revisor do encerramento e **o Marcel
-confirma no aval** (pergunta 1); as outras já tinham destino nos anexos (`N4-PR9-anexos/README.md` §9.1, `N4-REQUISITOS.md`
+(a lição da div. 397). Toda linha tem origem. As dez que o commit 2 marcava como proposta do revisor foram
+**confirmadas no aval** (N4-D107, §15) e perderam a marca; as outras já tinham destino nos anexos (`N4-PR9-anexos/README.md` §9.1, `N4-REQUISITOS.md`
 §4).
 
 ### 10.1 N5 (celular)
@@ -467,7 +479,8 @@ confirma no aval** (pergunta 1); as outras já tinham destino nos anexos (`N4-PR
 | # | item | origem |
 |---|---|---|
 | 1 | **a quebra de linha na letra, nunca na tab — no palco e em V** (≈ 55 colunas em C, N4-E12; ≈ 26 em A) | N4-D13; N4-D65; N4-D66 (P-O5); N3-D15 |
-| 2 | **[proposta]** **as notas da música no palco** — o pre-check do bloco da quebra decide se entram nele (os dois mexem no corpo do palco) | N4-D57 (*"o encerramento do N4 nomeia o bloco"*) |
+| 2 | **as notas da música no palco** — o pre-check do bloco da quebra decide se entram nele (os dois mexem no corpo do palco) | N4-D57 (*"o encerramento do N4 nomeia o bloco"*) |
+| 3 | **as corridas do APK de push só fora do filtro** (124 e 146 do `CI-FAIXA.md`; a 127 é a div. 381): o pre-check **mede por que** um push que não tocou o filtro disparou o build, e **se a mesma lógica pode deixar de disparar quando deveria** (o H1 do W4-b2; a avaliação do `paths` contra o diff acumulado) | div. 1142; N4-D114 |
 
 ### 10.3 Bloco de identidade (a definir)
 
@@ -482,8 +495,8 @@ confirma no aval** (pergunta 1); as outras já tinham destino nos anexos (`N4-PR
 | 7 | os ícones preenchidos com traço no site | div. 1046 |
 | 8 | a barra do palco sem ícone de tipo | divs. 1047, 1074 |
 | 9 | **o cinza de "a setlist sumiu"** (`falha` em `muted`) — escolha ou acaso | N4-D104 |
-| 10 | **[proposta]** **as demais frases do site**, fora do vocabulário de content | N4-D14 |
-| 11 | **[proposta]** **o vocabulário do tablet inteiro no core** (as 16 só de S1) | div. 1040 (*"bloco a definir"*) |
+| 10 | **as demais frases do site**, fora do vocabulário de content | N4-D14 |
+| 11 | **o vocabulário do tablet inteiro no core** (as 16 só de S1) | div. 1040 (*"bloco a definir"*) |
 
 ### 10.4 Bloco D (backend e dado)
 
@@ -509,20 +522,20 @@ confirma no aval** (pergunta 1); as outras já tinham destino nos anexos (`N4-PR
 | 3 | o G3 conta `log(` em comentário | div. 1109 |
 | 4 | o `fechar-busca` "inalcançável" do arnês de A do N3 (o caminho velho) | div. 1131 |
 | 5 | o `R.mock` do `roteiro.py` preso à 8788 (a cópia com a `PORTA` vira o instrumento) | div. 1134 |
-| 6 | **[proposta]** a PR de instrumento do **envio ao Codecov tolerante a falha** | div. 1072; N4-D93 |
-| 7 | **[proposta]** **a medição fria do release** (`W4-ENCERRAMENTO.md` §7.5): agora **n=2** — 369 s (div. 998) e **488 s** (esta PR), de árvores diferentes | div. 998; `N4-ENCERRAMENTO-anexos` §2 |
-| 8 | **[proposta]** o `rm *.json` do `n3pr6b.py:84` (rastro; a receita do `APARATO.md` é a fonte) | `N4-PR7-anexos:287` |
-| 9 | **[proposta]** a linha `download-error` em **duas linhas** quando a causa não é reconhecida (só o ramo do status virou uma) | `N4-PR9-anexos` §9.2 |
-| 10 | **[proposta]** **a queda nativa na abertura do dev client** (`Fatal signal 11`, Fabric, ≈ 1 % no dia da PR-9), **com a regra nova de contar quedas nativas em todo aceite** (regra 36). O release desta PR **não** mostrou queda (100 + 100), então o destino é proposta, não pergunta | div. 1126; N4-D105 e |
-| 11 | as três corridas com APK em push fora do filtro (124, 146 sem causa medida) | div. 1142 |
+| 6 | a PR de instrumento do **envio ao Codecov tolerante a falha** | div. 1072; N4-D93 |
+| 7 | **a medição fria do release** (`W4-ENCERRAMENTO.md` §7.5): agora **n=2** — 369 s (div. 998) e **488 s** (esta PR), de árvores diferentes | div. 998; `N4-ENCERRAMENTO-anexos` §2 |
+| 8 | o `rm *.json` do `n3pr6b.py:84` (rastro; a receita do `APARATO.md` é a fonte) | `N4-PR7-anexos:287` |
+| 9 | a linha `download-error` em **duas linhas** quando a causa não é reconhecida (só o ramo do status virou uma) | `N4-PR9-anexos` §9.2 |
+| 10 | **a queda nativa na abertura do dev client** (`Fatal signal 11`, Fabric, ≈ 1 % no dia da PR-9), **com a regra nova de contar quedas nativas em todo aceite** (regra 36). O release desta PR **não** mostrou queda (100 + 100) | div. 1126; N4-D105 e |
+| ~~11~~ | ~~as três corridas com APK em push fora do filtro~~ — **movida** (aval, N4-D114): vai ao **pre-check do bloco da quebra de linha**, §10.2.3 | div. 1142 |
 
 ### 10.6 Polimento do nativo
 
 | # | item | origem |
 |---|---|---|
 | 1 | o rodapé do picker sob o teclado em B (não se repete na L) | div. 450; div. 1082 |
-| 2 | **[proposta]** o **corte de 50** que continua na S4 (a busca do palco) e no picker (`search.ts:58`) | N4-D90 |
-| 3 | **[proposta]** **a foto do sync que deixa um arquivo apagado como "baixado"** até reabrir | div. 1121 (a 1086) |
+| 2 | o **corte de 50** que continua na S4 (a busca do palco) e no picker (`search.ts:58`) | N4-D90 |
+| 3 | **a foto do sync que deixa um arquivo apagado como "baixado"** até reabrir | div. 1121 (a 1086) |
 
 ### 10.7 Os outros destinos
 
@@ -530,7 +543,7 @@ confirma no aval** (pergunta 1); as outras já tinham destino nos anexos (`N4-PR
 |---|---|---|---|
 | 1 | as duas formas do motivo dentro do web | N4-D29 | **bloco seguinte ao I1** (`I1-ENCERRAMENTO.md` §10.5.11) |
 | 2 | o tema claro nas telas de lista (L, V, S1…) | brief §4, regra 12 | **herança do V1, fora do N4** |
-| 3 | **o julgamento do A-N4-26 com uma biblioteca de muitos arquivos** (*"sem objeto neste dado"*: 1 arquivo, já no aparelho) | `[Marcel, 2026-10-07]` | **pergunta 2** — sem bloco ainda (regra 23) |
+| 3 | **o julgamento do A-N4-26 com uma biblioteca de muitos arquivos** (*"sem objeto neste dado"*: 1 arquivo, já no aparelho) | `[Marcel, 2026-10-07]` | **o pre-check do N5** (N4-D108): *"o tempo até tudo baixar"*, com a biblioteca da fixture do teto |
 
 **Fechadas no encerramento** (tarefas do `N4-PR9-anexos` §9.1): a tabela das 39 frases (N4-R21, §3), as corridas no
 `CI-FAIXA.md` (§9), o release com 100 + 100 (A-N4-28) e o julgamento do A-N4-26 (§3). **O que o N4 fechou de heranças
@@ -538,9 +551,9 @@ anteriores**: o `I1-ENCERRAMENTO.md` §10.2 itens 1 (o vocabulário de content),
 três `undefined`, N4-D64); o `N2-ENCERRAMENTO.md` §10.2 item 6 (C-D7, medido); o `N3-ENCERRAMENTO.md` §10.6 (o content
 nasceu adaptativo) — as quatro com nota na fonte (§11).
 
-**Em números**: **42 linhas** — N5 **5** · quebra de linha **2** (1 proposta) · identidade **11** (2 propostas) · Bloco D
-**7** · W5 **11** (5 propostas) · polimento **3** (2 propostas) · outros **3** (1 pergunta). **Propostas: 10**, todas na
-pergunta 1.
+**Em números**: **42 linhas** — N5 **5** · quebra de linha **3** · identidade **11** · Bloco D **7** · W5 **10** ·
+polimento **3** · outros **3**. **As 10 propostas confirmadas** no aval (N4-D107); a 1142 saiu do W5 para o pre-check da
+quebra de linha (N4-D114), e o A-N4-26 ganhou bloco (N4-D108).
 
 ---
 
@@ -554,11 +567,16 @@ Só a nota, no molde das existentes, sem reescrever texto:
 | `docs/native/N3-ENCERRAMENTO.md` | §10.6, depois da nota do pre-check do N4 | o N4 está encerrado; o content nasceu adaptativo |
 | `docs/native/N2-ENCERRAMENTO.md` | §10.2, depois da errata do N4 | o item 6 (C-D7) foi medido; o N4 está encerrado |
 | `docs/ux/PLANO-TRANSICAO.md` | "Sequência", depois da nota do I1 | o N4 encerrado; a ordem decidida depois dele, e o que está em aberto |
+| `docs/native/N4-PR4-anexos/README.md` · `N4-PR8-anexos/README.md` | depois da linha de **Contagem** | a errata da div. 1140 (a contagem da coluna), sem mudar a tabela — aval, N4-D112 (commit 3) |
+| `docs/native/LOGS-OCTAVIA.md` | a tabela do padrão; "As regras que o N4 firmou" | os casos 38–43 e as regras 33–37 — aval, N4-D113 (commit 3) |
+| `docs/native/CI-FAIXA.md` | "Quem acrescenta" | a troca de base da regra de segmentos e o destino novo da 1142 (commit 3) |
 | `CLAUDE.md` | — | **nenhuma**: não cita o N4 nem o estado dos blocos `[medido: grep -n N4 CLAUDE.md README.md ARCHITECTURE.md → nada]` |
 
 ---
 
 ## 12. Perguntas para o aval do encerramento
+
+*(Respondidas no aval `[Marcel, 2026-10-07]`: §15, N4-D107…D114. O texto abaixo fica como foi perguntado.)*
 
 1. **Os destinos propostos (§10, as dez [proposta]).** Confirmar, um a um ou em bloco:
    (a) as notas no palco → o pre-check do bloco da quebra de linha decide · (b) o corte de 50 e (c) a foto do sync →
@@ -626,7 +644,7 @@ As 1136–1138 são da Parte A (`N4-ENCERRAMENTO-anexos/README.md` §10, com o t
 | aparelhos | Tab S6 (destravado pelo Marcel; release trocado; avião ligado e desligado; estado final igual ao lido); AVD (em avião, desligado sem salvar) |
 | builds | 1 release (488 s) |
 | agentes | **4** de leitura, só leitura, em paralelo (PRs e defeitos; decisões e erratas; divergências; heranças, catálogo e prod) — as contagens que entram aqui foram refeitas pelo executor com `grep` |
-| commits | `473eea5` (o release no Tab: o anexo e a errata do `APARATO.md`) · o commit 2 (este arquivo; `CI-FAIXA.md`; as notas no `I1-ENCERRAMENTO.md`, `N3-ENCERRAMENTO.md`, `N2-ENCERRAMENTO.md`, `PLANO-TRANSICAO.md`; o `gates.txt` do anexo) |
+| commits | `473eea5` (o release no Tab: o anexo e a errata do `APARATO.md`) · `7bc8441` (este arquivo; `CI-FAIXA.md`; as notas no `I1-ENCERRAMENTO.md`, `N3-ENCERRAMENTO.md`, `N2-ENCERRAMENTO.md`, `PLANO-TRANSICAO.md`; o `gates.txt` do anexo) · o commit 3, o aval (§15; `LOGS-OCTAVIA.md`; as erratas da 1140; `CI-FAIXA.md`; `PLANO-TRANSICAO.md`) |
 | código | nenhuma linha |
 
 Os blocos de declaração desta PR, verbatim (a cópia que a regra do W4-b2 pede):
@@ -638,3 +656,86 @@ Os blocos de declaração desta PR, verbatim (a cópia que a regra do W4-b2 pede
 ```gates-web
 # só docs — N4 encerramento: nenhum arquivo do núcleo do G-back tocado; nenhuma linha de código.
 ```
+
+---
+
+## 15. O aval do encerramento — N4-D107…D114 `[Marcel, 2026-10-07]`
+
+**Com este commit (o 3) e os checks dele verdes, o N4 está encerrado.** O merge da #366 é do Marcel. Fica pendente só a
+regra 38 do catálogo (§15.2), que não é do bloco: entra quando o texto for aprovado.
+
+As oito perguntas do §12, na ordem; o texto da decisão é este (o rótulo do §4 aponta para cá).
+
+| # | decisão | o que mudou nesta PR (commit 3) |
+|---|---|---|
+| **N4-D107** | **os dez destinos propostos, confirmados em bloco**; a queda nativa ao **W5** (§10.5.10), com a regra 36 | a marca *[proposta]* sai do §10 |
+| **N4-D108** | **o A-N4-26 com muitos arquivos vai ao pre-check do N5** | §10.7.3 |
+| **N4-D109** | **a ordem depois do N4: quebra de linha → Bloco D → N5 → identidade → iOS; o W5 à parte** — com a estimativa do Bloco D pedida antes de fixar (abaixo) | `PLANO-TRANSICAO.md`, a nota do N4 |
+| **N4-D110** | **as três escritas do Marcel ficam só registradas** (div. 1138) | — |
+| **N4-D111** | **as corridas do I1 entram no `CI-FAIXA.md`** (div. 1139), com a verificação de que nenhum gate usa a referência como limiar e a troca de base escrita | §9; `CI-FAIXA.md` |
+| **N4-D112** | **a div. 1140 ganha uma linha de errata nos READMEs da PR-4 e da PR-8**, sem mudar as tabelas | os dois READMEs |
+| **N4-D113** | **as regras 33–37 e os casos 38–43 entram no `LOGS-OCTAVIA.md`; a 38 só depois de o Marcel ver o texto integral** (abaixo) | `LOGS-OCTAVIA.md` |
+| **N4-D114** | **os APKs da 124 e da 146 não vão ao W5: vão ao pre-check do bloco da quebra de linha**, com a tarefa de medir por que um push fora do filtro disparou o build e se a mesma lógica pode deixar de disparar quando deveria | §10.2.3; §10.5.11 riscada; `CI-FAIXA.md` |
+
+### 15.1 O tamanho do Bloco D, e se caberia antes da quebra de linha `[estimado — leitura dos três inventários, nada medido]`
+
+**O inventário** — o que os encerramentos destinam ao D, com as sobreposições contadas uma vez:
+
+| fonte | itens | abertos | sobreposição |
+|---|---|---|---|
+| `I1-ENCERRAMENTO.md` §10.1 | 19 | **18** (o 15, o Google, fechado na I1-PR-2); vários são grupos — o 2 (campos que não se salvam) tem quatro, o 4 (o lote) tem cinco | — |
+| `N2-ENCERRAMENTO.md` §10.3 | 9 | **7** (o 5 e o 6 fechados na I1-PR-13) | o 4 e o 8 (o teto do reorder) tocam o I1 §10.1.7 |
+| `N2-ENCERRAMENTO.md` §10.2 (errata do N4) | 5 | **5** (B9, `DELETE` 200 para inexistente, a cascata content × storage, B1.5, B10) | — |
+| `N4-ENCERRAMENTO.md` §10.4 | 7 | **7** | o 1, o 2, o 3 e o 7 **são** o I1 §10.1.17, .18, .19 e .7 — **3 novos** (o enum, compasso/capo/afinação, os fora do par) |
+| **total** | | **≈ 33 itens distintos** | |
+
+**A natureza**: rotas da API e validação (o `refine`, os ids do path, o 401, o teto), o **editor do site** (a Tab que grava
+`measures` e deixa `tablature`; a Cifra que não regrava `chords`; o `content_data` poluído; o nome padrão da seção), o
+**upload em lote** e os sentinelas *Unknown*, a cascata do storage — e, nas duas primeiras da fila, **dado real já gravado
+errado** em prod (as Tabs e as Cifras editadas desde o I1), que pede **migração** (`supabase/migrations/`, aplicada pelo
+Marcel, `CLAUDE.md`) e prova contra o dado real. Toca o G-back em quase toda PR (o núcleo do backend), o G-par (o leitor de
+cada tipo) e o site.
+
+**A estimativa**: com o molde do I1 (15 PRs de código para 8 superfícies) e do N4 (8 PRs de código), o D dá **8 a 12 PRs**,
+mais pre-check e encerramento — **o maior bloco da fila**. A quebra de linha é um algoritmo no leitor compartilhado (o palco
+e V usam o mesmo `Leitor.tsx` desde a N4-PR8) e o aceite nas três faixas: **3 a 5 PRs**.
+
+**Caberia antes da quebra de linha?** **Não como bloco** — colocá-lo antes empurraria o N5 pelo D inteiro, quando a
+quebra de linha é pequena, já decidida como pré-requisito do N5 (N3-D15; N4-D13) e independente do backend. **A ordem
+aprovada (quebra → D → N5) fica**, e a estimativa não a muda. Uma observação para o pre-check do D, não uma proposta de
+reordenar: **as três primeiras da fila** (a Tab, a Cifra, o `updated_at` — I1 §10.1.17–19) são o recorte natural de uma
+primeira PR do D, e são as que têm dado real errado hoje.
+
+### 15.2 A regra 38 — o texto integral, para o aval (não está no `LOGS-OCTAVIA.md`)
+
+> **38. O release sincroniza ao abrir com rede.** *(Divs. 1000, N4 brief; 1136, encerramento do N4; N4-D56.)* O release
+> não tem Metro nem mock: aberto com rede, ele faz o sync de leitura contra prod na primeira abertura — `GET /api/setlists`
+> e `GET /api/content` —, antes de qualquer toque. Por isso: **(a)** prova de release que não pode fazer requisição se faz
+> **em avião** (regra 11: ler, declarar, provar pelo `ping`, restaurar); **(b)** prompt de aceite de release que tenha um
+> passo *"com rede"* e um *"sem requisição"* põe o avião **antes** da primeira abertura com o app novo, ou declara que a
+> primeira abertura **é** o sync autorizado; **(c)** a contabilidade de prod de toda sessão com release conta esse sync,
+> mesmo quando ninguém tocou em nada; **(d)** a volta da rede com o app aberto **não** dispara sync (`net online` sem `api`,
+> medido no release anterior e neste), então a prova com rede depois do avião não gasta um sync a mais.
+
+**Entra só com o OK do Marcel a este texto** (N4-D113): numa errata do `LOGS-OCTAVIA.md`, no próximo commit que tocar o
+catálogo, com a data do OK.
+
+### 15.3 As duas confirmações
+
+**O commit `473eea5` só toca docs** `[medido: git show --name-only 473eea5]` — 18 arquivos, **todos sob `docs/`** (`git show
+--name-only --format= 473eea5 | grep -v '^docs/' | wc -l` → **0**): `docs/native/APARATO.md` e, em
+`docs/native/N4-ENCERRAMENTO-anexos/`, o `README.md`, `estado/` (`apk.txt`, `avd-fim.txt`, `avd-inicio.txt`,
+`avd-install.txt`, `build-serie.tsv`, `build.txt`, `tab-aviao.txt`, `tab-fim.txt`, `tab-inicio.txt`, `tab-install.txt`),
+`favoritar-marcel.txt`, `instrumentos/` (`frias-release.sh`, `prova-dado-real.py`), `prova-dado-real.txt` e `quedas/`
+(`frias-avd.txt`, `frias-tab.txt`). Os dois instrumentos são scripts **de anexo** (rodam contra o aparelho, fora de toda
+suíte e de todo workflow), como os de cada PR do bloco.
+
+**"A série vai a 119–150 e a referência fica em n=128"**: a **série** é a tabela do `CI-FAIXA.md` — **uma linha por
+corrida do job `android-debug-apk` que produziu APK**, em ordem, numerada desde a 1ª (#265), com o tempo do job pelos
+carimbos (`startedAt → completedAt`). Ela tinha **118** linhas (a última, o merge da #333, fim do N3). As 32 corridas com
+APK desde então entram **no fim, na ordem em que rodaram**: as **7 do I1** viram as linhas **119–125** (I1-PR4, PR6 e PR9 —
+as únicas PRs do I1 cujo push construiu o APK) e as **25 do N4**, as **126–150**. A **referência** é a
+estatística da **população do regime 2** — as corridas desde a 19ª (#284), menos as 4 falhas riscadas: era **96** (as
+19ª–118ª, 100 corridas − 4 falhas); com as 32 novas, todas `success`, fica **128** (132 − 4). A mediana dessa população
+passa de 12m20,5s a **12m30s**, e o IQR de 1m43s a **2m03,2s**.
+

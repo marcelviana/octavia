@@ -426,6 +426,7 @@ A última usada era a **1040** (`N4-PR3-anexos/README.md`) `[medido: git grep -h
 
 **Contagem**: 16 — T 8 · D 5 · P 2 · A 2 · X 0. *(A 1045 é T porque é o gate local achando o que o commit não cobria; a
 1046 é A, defeito do produto no site.)* **Próxima divergência livre: 1057.**
+*(Errata do encerramento do N4, div. 1140 `[Marcel, 2026-10-07]`: a **Contagem** acima soma 17; a coluna de origem da tabela dá **T 7** — 1045, 1048, 1051–1055 —, e vale a coluna. A tabela não muda. `N4-ENCERRAMENTO.md` §6.1.)*
 
 ---
 

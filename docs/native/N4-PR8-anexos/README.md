@@ -438,6 +438,7 @@ doc anterior · **A** ambiente, dado real ou defeito do produto · **T** toolcha
 
 **Contagem**: 23 — D 9 · T 10 · A 3 · P 1 · X 0. **Fechadas nesta PR**: a **1095** na parte de V (o *baixando* capturado) e
 a **1113** (N4-D102). **Próxima divergência livre: 1121.**
+*(Errata do encerramento do N4, div. 1140 `[Marcel, 2026-10-07]`: a coluna de origem da tabela dá **D 10 · T 9** — D 1101–1108, 1114, 1115; T 1098, 1099, 1109–1111, 1116, 1118–1120 —, não D 9 · T 10, e vale a coluna. A tabela não muda. `N4-ENCERRAMENTO.md` §6.1.)*
 
 ---
 

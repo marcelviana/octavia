@@ -292,6 +292,12 @@ perigoso: um instrumento que mede **mais** do que a coisa medida.
 | 35 | **div. 761** (I1-PR-10) | classes, valores arbitrários e texto, no G-tok | "nenhum literal de medida no visualizador". O `800` da largura da página do PDF era um número numa expressão de JavaScript |
 | 36 | **div. 901** (I1-PR-14) | o teste verde do upload | "as asserções do toast passam". O `vi.mock('sonner', fábrica)` nunca resolvia: cinco asserções que não podiam falhar |
 | 37 | **div. 908** (I1-PR-14) | o `knip` sem órfãos | "`components/ui/` não tem arquivo morto". Ele **ignorava** `components/ui/**` por configuração — a prova foi o `grep` |
+| 38 | **div. 1126** (N4-PR9) | a contagem de quedas dos arneses (`grep -c FATAL`, `.count('FATAL')`), da N4-PR2 ao release | "nenhuma queda". A subcadeia pega a queda **Java** (`FATAL EXCEPTION`) e **não** a **nativa**: o SIGSEGV do Fabric escreve `Fatal signal 11` e o tombstone do `debuggerd`, sem a palavra. 17 "FATAL 0" em cinco PRs e 1 no release não viam a nativa, e nenhum anexo guardava logcat bruto para recontar. Daí o `quedas.py` (a Java, a nativa e os tombstones, com CN) e a regra 36 |
+| 39 | **divs. 977, 1035** (N4 pre-check; N4-PR3) | o G-tok e o `gate:a20` | "a frase está sob gate". Os dois varriam as telas, não `packages/core`: a frase que o N4 move para o core **sai do escopo** dos dois (446 → 445 strings no G-tok). Fechada com o `frases-content.ts` nos `EXTRAS` do `a20` (169 → 223 literais) e o gate de igualdade das frases — é o 25 de novo, noutro arquivo |
+| 40 | **div. 1021 → 1049** (N4 desenho → N4-PR4) | o G-inv | "o G-inv não vê a troca de desenho de um ícone; ela não muda `bounds`". **Vê**: ele conta os `PathView` dentro do `SvgView`, e 8 dumps da base reprovaram. O instrumento media **mais** do que o desenho supunha — o 15 e o 19 pelo outro lado. A resposta não foi relaxar o gate nem regravar a base: foi a errata **em par** com gate próprio (`g-inv-par`, regra 33) |
+| 41 | **divs. 1034, 1109** (N4-PR3; N4-PR8) | o G-tok e o G3 | o G-tok leu um genérico de TypeScript (`<…>`) como texto de JSX (33 → 34 sem frase nova); o G3 contou um `log(` dentro de comentário (70 → 71). Superconjunto, como o 19: quem lê texto bruto mede mais do que afirma. Os dois ao W5 |
+| 42 | **divs. 1081, 1110** (N4-PR7; N4-PR8) | CNs da L e de V | "o CN reprova". O duplo do `FlatList` ignorava o cabeçalho e o `autoFocus` era atributo; a planta do otimismo não exercia o caminho: CNs **verdes antes do conserto**. CN que não reprova na `main` não prova nada (regra 4) |
+| 43 | **div. 1137** (encerramento do N4) | o reconhecimento de S1 por `resource-id="buscar"` no arnês da prova do release | "voltei a S1". O **S2 também tem `buscar`** (abre a S4): o "de volta a S1: True" era falso, e o toque seguinte abriu a S4. Tela se reconhece pelo id que só ela tem (`criar-setlist`) |
 
 > **O 19 é o 15 outra vez, e a segunda vez muda o que a primeira parecia ser.** Quando o
 > 15 apareceu, o texto acima o chamou de *"a primeira vez no projeto em que o instrumento
@@ -673,6 +679,31 @@ de cada PR.
 
 **32. O defeito do instrumento se conserta no instrumento, não com errata da folha.**
 *(I1-E31, I1-PR-13.)*
+
+### As regras que o N4 firmou — 33 a 37
+
+*(Encerramento do N4, 2026-10-07; fonte: `N4-ENCERRAMENTO.md` §8; aprovadas no aval `[Marcel, 2026-10-07]`.)* Numeradas
+na sequência das do I1. São do aparelho e dos gates de dump; a 36 vale para todo aceite no aparelho.
+
+**33. Mudança decidida que muda a base do G-inv entra como errata em par da base, com gate próprio.** *(Div. 1049,
+N4-PR4: `66e4b9e` o gate, `54ce0d1` os 8 dumps; N4-D69.)* A base não se regrava e o gate não se relaxa: o par (velho →
+novo) se declara, o `g-inv-par` prova que só o declarado mudou, e o resto da base fica byte a byte.
+
+**34. O arnês só apaga, por nome, o que criou.** *(Div. 1097, N4-PR7; N4-D98.)* Lista fechada, vinda do próprio teste;
+nenhum curinga, nenhuma pasta inteira do app; o passo confere que nada fora da lista sumiu, e a prova é com sentinelas
+(`apagar_por_nome`, `N4-PR7-anexos/instrumentos/biblioteca.py`).
+
+**35. Aceite com mock num aparelho com dado real começa sem dado real no aparelho.** *(Div. 1113, N4-PR8; N4-D102.)*
+Guardar por cópia todo o cache, tirar do aparelho por nome, provar que o app aponta para o mock **antes** de qualquer
+abertura, e só regravar no fim, md5 a md5 (`receita-cache.sh`; `APARATO.md`, a receita do cache).
+
+**36. Todo aceite no aparelho conta as quedas nativas.** *(Div. 1126, N4-PR9; N4-D105.)* A Java, a nativa (`Fatal
+signal`) e os tombstones do dropbox, pelo `N4-PR9-anexos/instrumentos/quedas.py`, com o `logcat -c` uma vez antes da
+rodada; "FATAL 0" por subcadeia não é contagem (caso 38). Aplicada no release do encerramento: 100 + 100 aberturas frias.
+
+**37. Quando a exceção do bloco ```` ```gates ```` é do commit novo, o push vem antes de editar o corpo da PR.** *(Div.
+1068, N4-PR5.)* O gate roda no evento `edited` contra o head que estiver lá: o corpo editado antes do push é lido contra o
+commit velho.
 
 ### A regra de método que o padrão implica
 

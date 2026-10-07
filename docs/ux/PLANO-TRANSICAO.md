@@ -1506,6 +1506,6 @@ automaticamente.
 
 > **Nota do encerramento do N4 (2026-10-07)** — sem reescrever a nota acima. **N4 encerrado** — a biblioteca no tablet:
 > a lista com filtros e busca, a visualização, o palco avulso sem setlist hospedeira, o favoritar e todo arquivo no
-> aparelho (#353–#366, `docs/native/N4-ENCERRAMENTO.md`). **A ordem depois do N4**, pelo que já está decidido: o bloco
-> próprio da **quebra de linha** entre o N4 e o N5 (N4-D13; N3-D15), depois o **N5** e o **iOS** (N4-D1); o **W5** à parte.
-> O lugar do **Bloco D** e do **bloco de identidade** na fila é pergunta do aval do encerramento do N4 (§12 de lá).
+> aparelho (#353–#366, `docs/native/N4-ENCERRAMENTO.md`). **A ordem depois do N4** (N4-D109, o aval do encerramento,
+> `[Marcel, 2026-10-07]`): **quebra de linha → Bloco D → N5 → identidade → iOS**; o **W5** à parte. A estimativa do D
+> (≈ 33 itens, 8 a 12 PRs, com migração de dado real) está no `N4-ENCERRAMENTO.md` §15.1.

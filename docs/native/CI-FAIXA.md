@@ -326,4 +326,8 @@ corridas do I1 — a série parou na 118ª de novo. O do N4 pôs as **119–125 
 (N4)**, todas `success` no job, e recalculou a referência (`n=128`). As `skipped` do bloco —
 vinte e uma, pushes de docs e de instrumento depois do APK verde — não entram. Três corridas
 **com APK** vieram de push **só fora do filtro** (124, 127, 146): a 127 é a div. 381 (o APK
-anterior ainda corria); a 124 e a 146 não foram medidas aqui (div. 1142).)*
+anterior ainda corria); a 124 e a 146 não foram medidas aqui (div. 1142) — **vão ao pre-check do bloco da quebra de
+linha** (aval, N4-D114): medir por que um push fora do filtro disparou o build e se a mesma lógica pode deixar de disparar
+quando deveria. **A troca de base** (aval, N4-D111): nenhum gate, workflow ou script lê esta referência como limiar; quem a
+usa é a regra de segmentos acima, à mão, e o IQR do segmento vigente passa de 11m12,2s–12m55,2s (n=96) a
+**11m12,2s–13m15,5s** (n=128) — `N4-ENCERRAMENTO.md` §9.)*
