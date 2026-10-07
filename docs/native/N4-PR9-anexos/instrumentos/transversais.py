@@ -120,12 +120,16 @@ class Transversais(Vi.Visualizacao):
         host entre os dois). O que se lê: `write blocked … reason=offline` (a espécie rede, ALCANÇADA), nada (a estrela
         já estava inerte), ou um `write op=…` (o pedido saiu antes de a rede cair)."""
         for atraso in ("0", "0.1", "0.2", "0.4", "0.8"):
+            # o mock de novo a cada tentativa: o mock é `localhost` pelo `adb reverse` e responde EM AVIÃO — uma
+            # tentativa que perde a corrida grava o favorito, e a seguinte não acharia mais *Favoritar “…”* (medido)
+            Bi.mock_com("normal")
             self._abrir_l()
             n3.tap(self.s, rid="lib-campo")
             self.digitar(ALVO[0])
             n3.esconder_teclado(self.s)
             time.sleep(0.8)
-            estrela = n3.achar(n3.dump(self.s), texto=f"Favoritar “{ALVO[1]}”")
+            nos = n3.dump(self.s)
+            estrela = n3.achar(nos, texto=f"Favoritar “{ALVO[1]}”") or n3.achar(nos, texto=f"Tirar “{ALVO[1]}”")
             b = estrela["b"]
             x, y = (b[0] + b[2]) // 2, (b[1] + b[3]) // 2
             n0 = len(Bi.linhas_octavia(self.s))
@@ -153,7 +157,9 @@ class Transversais(Vi.Visualizacao):
         self.cap("L", "linha-baixando")
 
     def falhouLinha(self):
-        n3.sh(self.s, "logcat", "-c")
+        # sem `logcat -c` aqui: a contagem de `FATAL` cobre a rodada inteira (`APARATO.md`, "logcat"; div. 440) — lê-se
+        # só o que veio depois desta marca (a primeira forma limpava o buffer no meio da rodada)
+        n_todas = len(logcat_tudo(self.s))
         self._abrir_l()
         n3.tap(self.s, rid="lib-campo")
         self.digitar("nunca")
@@ -162,7 +168,7 @@ class Transversais(Vi.Visualizacao):
         self.cap("L", "linha-falhou")
         # div. 1063: a mensagem INTEIRA que o Android dá ao 404 — toda linha do logcat (não só as `OCTAVIA:`) que fala
         # do download do `nao-existe.pdf` ou do `FileSystemDownloadTask`
-        for ln in logcat_tudo(self.s):
+        for ln in logcat_tudo(self.s)[n_todas:]:
             if any(k in ln for k in ("nao-existe", "FileSystemDownloadTask", "download-error", "Caused by")):
                 print("  logcat: " + ln[-260:], flush=True)
 
@@ -232,15 +238,15 @@ class Transversais(Vi.Visualizacao):
     def teto(self):
         servidos, apontados = fixture_de_arquivos()
         print(f"  a fixture do teto: {len(apontados)} arquivos, {sum(servidos.values()) / 2**20:.1f} MiB servidos", flush=True)
-        n3.sh(self.s, "logcat", "-c")
+        n_ini = len(Bi.linhas_octavia(self.s))
         self._abrir_l()
         fim = time.time() + 600
         while time.time() < fim:
-            ls = Bi.linhas_octavia(self.s)
+            ls = Bi.linhas_octavia(self.s)[n_ini:]
             if any(ln.startswith("lru ") for ln in ls):
                 break
             time.sleep(5)
-        for ln in Bi.linhas_octavia(self.s):
+        for ln in Bi.linhas_octavia(self.s)[n_ini:]:
             if ln.startswith(("prefetch", "lru", "download-error", "file src")):
                 print("  log: " + ln, flush=True)
         n3.tap(self.s, rid="lib-campo")
