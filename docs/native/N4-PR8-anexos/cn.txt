@@ -1,0 +1,57 @@
+== CN 1 — um campo vazio aparecendo (o texto vazio vira valor)
+   plantado em packages/core/src/visualizacao.ts:  packages/core/src/visualizacao.ts | 2 +-
+   -  return typeof v === 'string' && v.trim().length > 0 ? v.trim() : null
+   +  return typeof v === 'string' ? v : null
+        × campo vazio não aparece: null, ausente, texto vazio ou só espaço, lista vazia, andamento 0 4ms
+        × o texto das notas; vazio ou só espaço = sem notas 0ms
+        × C: a coluna da esquerda fica MESMO vazia (sem campos e sem notas: só as datas) — o corpo não muda de lugar 7ms
+        × campo vazio não aparece; sem nenhum campo e sem notas, sobra só a linha das datas (sem o título *Detalhes*) 4ms
+   ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+         Tests  4 failed | 38 passed (42)
+   desfeito: git status --short → []
+
+== CN 2 — o compasso aparecendo (time_signature como campo)
+   plantado em packages/core/src/visualizacao.ts:  packages/core/src/visualizacao.ts | 1 +
+   +  par('genero', 'compasso', texto((c as { time_signature?: string }).time_signature))
+        × compasso, capo e afinação NUNCA, mesmo no dado (o site não os salva de verdade — herança D, N4-D31) 4ms
+        × na ordem da folha, com o rótulo do site; a dificuldade como *Intermediário*; o andamento em BPM; as etiquetas com · 10ms
+        × compasso, capo e afinação NÃO aparecem, mesmo no dado (herança D, N4-D31) 5ms
+   ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+         Tests  3 failed | 39 passed (42)
+   desfeito: git status --short → []
+
+== CN 3 — o corpo de V diferente do site (o texto aparado)
+   plantado em apps/native/src/screens/VisualizacaoScreen.tsx:  apps/native/src/screens/VisualizacaoScreen.tsx | 2 +-
+   -        corpo={bodyOf(content.content_type, content.content_data)}
+   +        corpo={bodyOf(content.content_type, content.content_data)?.trim() ?? null}
+   G-par da visualização: zero diferenças ✓
+         Tests  1 passed (1)
+   desfeito: git status --short → []
+
+== CN 4 — o Baixar de V com a PALAVRA
+   plantado em apps/native/src/screens/VisualizacaoScreen.tsx:  apps/native/src/screens/VisualizacaoScreen.tsx | 2 +-
+   -      <Icone nome="baixar-setlist" tamanho={24} cor={dark.text} />
+   +      <Text style={styles.metaTexto}>{FRASES_DO_LEITOR.baixar}</Text>
+        × não baixado: o placeholder do S3e — *arquivo não baixado*, o título · tipo (tamanho) — com o BAIXAR COMO ÍCONE (N4-E8) 10ms
+        × não baixado COM rede: a segunda frase é a de sempre; tocar no Baixar pede o arquivo e mostra o baixando 16ms
+        × a falha genérica não se repete embaixo: *não consegui baixar* uma vez só 9ms
+   ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+         Tests  3 failed | 32 passed (35)
+   desfeito: git status --short → []
+
+== CN 5 — a estrela de V mudando antes da resposta (otimismo)
+   plantado em apps/native/src/screens/VisualizacaoScreen.tsx:  apps/native/src/screens/VisualizacaoScreen.tsx | 2 +-
+   -          favorita={favorita}
+   +          favorita={estadoDoFavoritar(id) === 'favoritando' ? true : favorita}
+         Tests  35 passed (35)
+   desfeito: git status --short → []
+
+== CN 6 — o voltar de V perdendo a posição da L (V no lugar da L: replace)
+   plantado em apps/native/src/rotas-do-avulso.ts:  apps/native/src/rotas-do-avulso.ts | 2 +-
+   -  return { acao: 'push', rota: 'Visualizacao', params: { contentId } }
+   +  return { acao: 'replace' as 'push', rota: 'Visualizacao', params: { contentId } }
+        × o voltar devolve a biblioteca (o goBack da pilha: a L na mesma posição) 10ms
+   ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+         Tests  1 failed | 34 passed (35)
+   desfeito: git status --short → []
+

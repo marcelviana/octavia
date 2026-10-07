@@ -1,0 +1,70 @@
+G-N3 — 16 par(es) (paisagem × faixa); medidas: docs/native/DESIGN-N3/medidas.json (tolerância 4 dp)
+
+(e) TEXTO QUE SOME — REPROVA: 0
+
+(d′) MENOS ESPAÇO QUE NA PAISAGEM — TRIAGEM (confirmar no PNG): 45
+  N4P8M-S2-com-edicao-avd-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N4P8M-S2-com-edicao-aviso-sem-rede-avd-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N4P8M-S2-com-edicao-aviso-sem-rede-avd-ret: aviso-motivo 762.2 → 631.1 dp (altura ×1.9)
+  N4P8M-S2-com-edicao-aviso-sem-rede-avd-ret: "Sétima do ensaio" 272 → 398.2 dp (altura ×22.3)
+  N4P8M-S2-sem-edicao-S2p-avd-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N4P8M-S3-S3a-letra-1a-avd-ret: "Manhã de ensaio · Banda da fixture · Let" 832 → 663.1 dp
+  N4P8M-S3-S3a-letra-1a-avd-ret: corpo 1073.8 → 647.1 dp (altura ×1.9)
+  N4P8M-S3-S3b-cifra-claro-avd-ret: "Segunda do ensaio · Duo Manacá · Cifra" 830.2 → 663.1 dp
+  N4P8M-S3-S3b-cifra-claro-avd-ret: corpo 906.7 → 647.1 dp (altura ×1.9)
+  N4P8M-S3-S3b-cifra-escuro-avd-ret: "Segunda do ensaio · Duo Manacá · Cifra" 830.2 → 663.1 dp
+  N4P8M-S3-S3b-cifra-escuro-avd-ret: corpo 906.7 → 647.1 dp (altura ×1.9)
+  N4P8M-S3-S3c-tab-autoscroll-avd-ret: "Terceira do ensaio · Trio de fixture · T" 830.2 → 663.1 dp
+  N4P8M-S3-S3c-tab-autoscroll-avd-ret: corpo 1040 → 647.1 dp (altura ×2)
+  N4P8M-S3-S3d-pdf-12p-avd-ret: "Partitura de doze páginas · Orquestra de" 694.2 → 663.1 dp
+  N4P8M-S3-S3d-pdf-12p-avd-ret: linha-motivo 1137.8 → 711.1 dp
+  N4P8M-S3-S3e-nao-baixado-avd-ret: "Partitura que nunca baixou · Orquestra d" 806.2 → 663.1 dp
+  N4P8M-S3-titulo-longo-avd-ret: "Uma música de título bem comprido, para " 828.4 → 663.1 dp
+  N4P8M-S3-titulo-longo-avd-ret: corpo 1073.8 → 647.1 dp (altura ×1.9)
+  N4P8M-S3-ultima-avd-ret: "Oitava do ensaio · Banda da fixture · Le" 828.4 → 663.1 dp
+  N4P8M-S3-ultima-avd-ret: corpo 1073.8 → 647.1 dp (altura ×1.9)
+  N4P8M-S4-resultados-avd-ret: "Manhã de ensaio" 892 → 465.3 dp
+  N4P8M-S4-resultados-avd-ret: "Banda da fixture  ·  Disco de fixture" 892 → 465.3 dp
+  N4P8M-S4-resultados-avd-ret: "Segunda do ensaio" 892 → 465.3 dp
+  N4P8M-S4-resultados-avd-ret: "Duo Manacá" 892 → 465.3 dp
+  N4P8M-S4-resultados-avd-ret: "Terceira do ensaio" 892 → 465.3 dp
+  N4P8M-S4-resultados-avd-ret: "Trio de fixture" 892 → 465.3 dp
+  N4P8M-S4-resultados-avd-ret: "Sétima do ensaio" 892 → 465.3 dp
+  N4P8M-S4-resultados-avd-ret: "Banda da fixture" 892 → 465.3 dp
+  N4P8M-S4-resultados-avd-ret: "Oitava do ensaio" 892 → 465.3 dp
+  N4P8M-S4-resultados-avd-ret: "Banda da fixture" 892 → 465.3 dp
+  N4P8M-S4-resultados-avd-ret: "Nona do ensaio" 892 → 465.3 dp (altura ×4.2)
+  N4P8M-S4-resultados-avd-ret: "Duo Manacá" 892 → 465.3 dp
+  N4P8M-S4-resultados-avd-ret: "Banda da fixture" 892 → 465.3 dp
+  N4P8M-picker-resultados-avd-ret: "Manhã de ensaio" 726.2 → 299.1 dp
+  N4P8M-picker-resultados-avd-ret: "Banda da fixture" 726.2 → 299.1 dp
+  N4P8M-picker-resultados-avd-ret: "Segunda do ensaio" 726.2 → 299.1 dp
+  N4P8M-picker-resultados-avd-ret: "Duo Manacá" 726.2 → 299.1 dp
+  N4P8M-picker-resultados-avd-ret: "Terceira do ensaio" 726.2 → 299.1 dp
+  N4P8M-picker-resultados-avd-ret: "Trio de fixture" 726.2 → 299.1 dp
+  N4P8M-picker-resultados-avd-ret: "Sétima do ensaio" 726.2 → 299.1 dp
+  N4P8M-picker-resultados-avd-ret: "Banda da fixture" 726.2 → 299.1 dp
+  N4P8M-picker-resultados-avd-ret: "Oitava do ensaio" 726.2 → 299.1 dp
+  N4P8M-picker-resultados-avd-ret: "Banda da fixture" 726.2 → 299.1 dp
+  N4P8M-picker-resultados-avd-ret: "Duo Manacá" 726.2 → 461.3 dp
+  N4P8M-picker-resultados-avd-ret: "Banda da fixture" 726.2 → 461.3 dp
+
+4 dp CONTRA A FOLHA — ERRATA CANDIDATA: 0
+
+NOME ACESSÍVEL — o texto está no content-desc do nó de mesmo resource-id (N3-D17); não reprova, não soma ao (e): 4
+  N4P8M-S2-com-edicao-avd-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N4P8M-S2-com-edicao-avd-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N4P8M-S2-com-edicao-aviso-sem-rede-avd-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N4P8M-S2-com-edicao-aviso-sem-rede-avd-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+
+ROLAGEM — o texto está no dump rolado do mesmo estado; não reprova, não soma ao (e): 3
+  N4P8M-S2-com-edicao-avd-ret: "8" → N4P8M-S2-com-edicao-rolada-avd-ret
+  N4P8M-S2-com-edicao-avd-ret: "Oitava do ensaio" → N4P8M-S2-com-edicao-rolada-avd-ret
+  N4P8M-S2-com-edicao-aviso-sem-rede-avd-ret: "Oitava do ensaio" → N4P8M-S2-com-edicao-aviso-sem-rede-rolada-avd-ret
+  dumps rolados usados (sha256, 12):
+    06ddedc9e0fd  N4P8M-S2-com-edicao-aviso-sem-rede-rolada-avd-ret.xml
+    73aeaf93c9dc  N4P8M-S2-com-edicao-rolada-avd-ret.xml
+
+(b) CORTE — nó que sai da janela útil ou encosta na borda lateral, NOVO contra a paisagem — REPROVA: 0
+
+G-N3: (e)=0 · (b)=0 · nome-acessível=4 · rolagem=3 ✓ (d′ e 4 dp não reprovam: triagem e errata)

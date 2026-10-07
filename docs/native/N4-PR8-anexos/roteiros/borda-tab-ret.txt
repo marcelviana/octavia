@@ -1,0 +1,16 @@
+== tipoDesconhecido
+08:28:30 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+08:28:40 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+08:28:55 toque 'Ver “Item sem tipo da fixture”' @ 800,590 (RX2N8000F3D)
+N4P8B-V-tipo-desconhecido-tab-ret mCurrentRotation=ROTATION_0 png=116367 xml=19027 62f676a33242
+== corpoVazio
+08:29:23 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+08:29:32 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+08:29:47 toque 'Ver “Item sem conteúdo da fixture”' @ 800,590 (RX2N8000F3D)
+N4P8B-V-corpo-vazio-tab-ret mCurrentRotation=ROTATION_0 png=115485 xml=17735 d3b4a01189f6
+== linhasInvalidas
+08:30:16 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+08:30:25 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+  ▶ na L: [('lib-tocar-b1b10015', 'false'), ('lib-tocar-b1b10014', 'false')]
+N4P8B-L-linhas-invalidas-tab-ret mCurrentRotation=ROTATION_0 png=163487 xml=39353 b341298fad37
+capturas=3 falhas=0

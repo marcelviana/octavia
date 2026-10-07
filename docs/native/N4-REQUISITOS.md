@@ -82,6 +82,13 @@ duas linhas (a linha cresce para 106, e4). Pressionada: contorno `accentInk`, fu
 > baixado* da linha usa o ícone `arquivo-nao-baixado` do catálogo e o *baixando o arquivo…* o `baixando` (N4-E6: vale o
 > catálogo pelo nome; div. 1085); em A o título fica numa linha (as duas linhas são do N5).
 
+> **Errata da N4-PR8 ao N4-R6 (o estado intermediário se fecha; a borda do ▶ inerte).** A linha da L é o alvo do toque:
+> visualiza, com o *Ver “{título}”* (P-F7); pressionada, contorno `accentInk` e o fundo a 6 % (**N4-D101**, literal da
+> folha). A estrela e o ▶ continuam controles próprios. E, achado do Marcel no aceite do Tab: **a borda do ▶ é `line` em
+> todos os estados** (a folha, P-I2: normal, pressionado, inerte, em andamento) — o inerte se distingue só pelo ícone, em
+> `lineInfo`. A N4-PR7 punha a moldura do inerte em `lineInfo` (a E3 do palco, onde a borda normal já é `lineInfo`), e o
+> inerte ficava mais claro que o ativo (div. 1100; `N4-PR8-anexos/README.md` §5.4).
+
 *Aceite*: A-N4-6.
 
 **N4-R7 — favoritar: só online, sem otimismo** `[N4-D21; N4-D22; N4-D23; N4-D35; N4-D62; N4-D63; P-F5; molduras *-L-favoritando, *-V-favoritando]`.
@@ -136,6 +143,12 @@ mesmo vazia**, para o corpo não mudar de lugar entre músicas. Em **B** e **A**
 rolagem só (grade de 3 em B, de 2 em A). O corpo é **o leitor do palco** — mono 22, entrelinha 34, sem quebra de linha, sem
 os controles de tocar (rolagem automática, bordas, zoom) — e fica **escuro** (P-O1). **Custo declarado** (N4-D65): ≈ 56
 colunas em C, e o leitor corta linhas que o palco mostra inteiras (≈ 81), até o bloco da quebra de linha.
+> **Errata da N4-PR8 ao N4-R13 (medido).** As colunas visíveis do leitor: **55,0 em C** (733,8 dp; a N4-E12) e 48,5 em
+> B (647,1 dp) — o respiro de 32 do leitor do palco e o caractere de 13,33 dp. A grade de *Detalhes* é o token
+> `view.grade` (C 2 · B 3 · A 2, **N4-D99**); o rótulo do campo e as datas em 13 (**N4-D100**). Em B, *"uma rolagem só"*
+> vale para o texto e os placeholders; com a Partitura aberta, o leitor de PDF rola ele mesmo e os detalhes ficam em cima
+> (div. 1115).
+
 *Aceite*: A-N4-13.
 
 **N4-R14 — os campos de V** `[N4-D31; N4-D57; N4-D62; P-F3; molduras *-V-letra, *-V-campos-vazios]`. V mostra **só os
@@ -160,6 +173,13 @@ segue ativo no arquivo não baixado.
 > acessível *Baixar***. Vale para o arquivo não baixado e para a falha. As molduras `*-V-arquivo-nao-baixado` e
 > `*-V-arquivo-falhou`, que desenham a palavra, cedem (N4-E8). Se V reaproveitar o componente do placeholder do palco, o
 > controle é a única diferença entre os dois.
+
+> **Errata da N4-PR8 ao N4-R15 (a falha e o *Baixar* em voo).** O arquivo não baixado é **o S3e do palco**, num
+> componente compartilhado (`S3eDoLeitor`), e o *Baixar* de ícone é a única diferença (N4-E8). A **falha** de V tem a
+> composição deste requisito e da folha — *não consegui baixar* e a espécie embaixo (a genérica não se repete), com o
+> `falha` do catálogo e o mesmo *Baixar* de ícone — e não a do S3e com erro do palco (div. 1102). O *"em voo, o
+> `baixando-acao`"* da N4-E8 não chega a aparecer: a máquina do arquivo é a do palco, e o toque no *Baixar* troca o S3e
+> pelo *baixando o arquivo…* com o `baixando` (div. 1105).
 
 *Aceite*: A-N4-15.
 
@@ -474,3 +494,10 @@ cópia declarada. Os dois vão à herança do bloco de identidade, com os 13 e 2
 
 **A próxima PR desta lista** (N4-D72): depois do merge do congelamento, a **PR-3 — core das frases**. *(Depois da N4-PR4: a
 **PR-5 — core da biblioteca**.)*
+
+**Decisões do Marcel na N4-PR8** `[Marcel, 2026-10-06]`: **N4-D99** — a grade de *Detalhes* de V é o token
+`faixas.*.view.grade` (C 2 · B 3 · A 2), junto da P-T3 (`view.coluna`: 340 em C, `INEXISTENTE` em B e A); **N4-D100** — o
+rótulo dos campos e a linha das datas em 13, literal, como a N4-D79; **N4-D101** — o fundo da linha pressionada da L a 6 %,
+literal da folha. As três vão à herança do bloco de identidade, com os 13 e 20 da N4-D79 e o arco da N4-D96
+(`N4-PR8-anexos/README.md` §0). *(Depois da N4-PR8: a **PR-9 — estados transversais, a troca por espécie, o aceite
+completo, a prova em prod e o release**.)*

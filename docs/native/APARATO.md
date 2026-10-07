@@ -199,6 +199,12 @@ arnês da N4-PR7 o levou. **Daqui em diante: o arquivo real sai junto com o cach
 e conferir o md5 da cópia, apagá-lo do aparelho **por nome** (`rm -f files/octavia-<uid>/files/<nome>`, o nome lido no
 `ls` da guarda), e regravá-lo no fim junto com os três `.json`, conferindo o md5. Assim, durante o mock, a pasta só tem o
 que a fixture criou. Os quatro `._*` continuam onde estão.)*
+*(Registro da N4-PR8, div. 1113 — **um furo, com a errata proposta e a decisão pendente com o Marcel**: o PDF sai, mas o
+`content.json` e o `files-index.json` dele ficam no aparelho até o primeiro sync com o mock. Se o app abre ANTES de o mock
+do aparelho estar de pé, o sync falha e a garantia de todos os arquivos (N4-R26) roda o plano sobre o cache do Marcel e
+**baixa o PDF dele de novo, do storage de prod** — aconteceu na N4-PR8 (1 leitura do arquivo, zero escrita, nenhuma
+chamada à API). A proposta: depois da guarda, o mock do aparelho de pé e os túneis aplicados **antes** de qualquer
+abertura do app.)*
 
 ## O dev client e os teclados atrapalham o arnês
 
@@ -227,6 +233,10 @@ que a fixture criou. Os quatro `._*` continuam onde estão.)*
   **Medido na N3-PR5, palco**: em B o FAB fica na **linha 1** da barra de 88, à direita
   (`[643,1,40,0][695,1,92,0]` dp), sobre o **ponto de sem rede** e o fim da linha do título; em C o
   ponto também fica sob ele. Nenhum controle do palco fica sob o FAB (div. 441).
+  **Medido na N4-PR8, a visualização (V)**: o ▶ do cabeçalho de V (canto superior direito, em C e em B) fica **sob o
+  FAB** — o toque pelo centro e pela margem esquerda (12 px) abre o menu de desenvolvimento. Toca-se pelo **canto
+  inferior esquerdo** do alvo (6 px à direita, 8 px acima da borda): abre o palco avulso (div. 1099;
+  `N4-PR8-anexos/instrumentos/visualizacao.py`, `_tocar_play`).
 - **`input text` fora de um campo recarrega o dev client** (a tecla `r`). Div. 330.
 - **O teclado encaixado do AVD cobre a metade de baixo** — `form-cancelar`, os
   `Adicionar` de baixo; o toque cai numa tecla. Antes de procurar alvo:

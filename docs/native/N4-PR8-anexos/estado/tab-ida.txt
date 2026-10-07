@@ -1,0 +1,4 @@
+9447edc76f329ba3f66f3badd16268e52c779f1ae3363f6c6b94d1f2d4ab0548  /Users/marcelviana/octavia-aparato/tab-s6-devclient/devclient-2026-09-23-191134.apk
+Success
+    lastUpdateTime=2026-10-06 20:43:36
+    pkgFlags=[ DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]

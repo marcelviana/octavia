@@ -1,0 +1,42 @@
+regua t="Manhã de ensaio" s=view-titulo w=178.2
+  caixa=178.2x32.9 dp
+regua t="Uma música de título bem comprido, para medir a quebra" s=view-titulo w=596.9
+  caixa=596.9x32.9 dp
+regua t="Uma música de título bem comprido, para medir o corte do título em retrato e no celular" s=view-titulo w=914.7
+  caixa=914.7x32.9 dp
+regua t="Banda da fixture" s=view-meta w=130.7
+  caixa=130.7x24.4 dp
+regua t="Artista de nome igualmente comprido da fixture do N3" s=view-meta w=427.6
+  caixa=427.6x24.4 dp
+regua t="·" s=view-meta w=4.0
+  caixa=4.0x24.4 dp
+regua t="Letra" s=view-meta w=41.8
+  caixa=41.8x24.4 dp
+regua t="tipo desconhecido" s=view-meta w=148.9
+  caixa=148.9x24.4 dp
+regua t="criado 2026-03-14 · alterado 2026-09-30" s=view-rotulo w=249.8
+  caixa=249.8x19.1 dp
+regua t="dificuldade" s=view-rotulo w=68.9
+  caixa=68.9x19.1 dp
+regua t="andamento" s=view-rotulo w=70.7
+  caixa=70.7x19.1 dp
+regua t="Intermediário" s=view-valor w=106.7
+  caixa=106.7x24.4 dp
+regua t="Disco de fixture" s=view-valor w=124.9
+  caixa=124.9x24.4 dp
+regua t="Toada de fixture" s=view-valor w=129.3
+  caixa=129.3x24.4 dp
+regua t="Disco de nome comprido da fixture do N3" s=view-valor w=324.9
+  caixa=324.9x24.4 dp
+regua t="ensaio · voz e violão" s=view-valor w=156.0
+  caixa=156.0x24.4 dp
+regua t="pior caso · comprimento · fixture" s=view-valor w=254.2
+  caixa=254.2x24.4 dp
+regua t="Entrar depois da contagem de quatro do metrônomo. Segunda voz só no refrão; no fim, segurar o último acorde até a sala apagar." s=view-notas w=941.3
+  caixa=941.3x24.9 dp
+regua t="0123456789" s=leitor w=133.3
+  caixa=133.3x34.2 dp
+regua t="0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789" s=leitor w=1333.3
+  caixa=1137.8x34.2 dp
+regua t="Linha de refrão escrita para medir quebra de linha em retrato, com palavras suficientes" s=leitor w=1160.0
+  caixa=1137.8x34.2 dp

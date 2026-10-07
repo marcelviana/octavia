@@ -1,0 +1,28 @@
+18:41:03 toque canto de setlist-00000001 @ 96,420
+18:41:10 toque 'song-1' @ 658,580 (emulator-5554)
+N4P8M-S3-S3a-letra-1a-avd-pai mCurrentRotation=ROTATION_0 png=230983 xml=26380 f8e18747289d
+18:41:25 toque 'indice' @ 2063,1358 (emulator-5554)
+N4P8M-S2-sem-edicao-S2p-avd-pai mCurrentRotation=ROTATION_0 png=233307 xml=41949 bd6c1b684305
+18:41:51 toque 'borda-avancar' @ 2368,723 (emulator-5554)
+N4P8M-S3-S3b-cifra-escuro-avd-pai mCurrentRotation=ROTATION_0 png=257114 xml=25410 3a0b6700b09d
+18:42:12 toque 'tema' @ 682,1358 (emulator-5554)
+N4P8M-S3-S3b-cifra-claro-avd-pai mCurrentRotation=ROTATION_0 png=258135 xml=25084 fee0ff3c423a
+18:42:26 toque 'tema' @ 682,1358 (emulator-5554)
+18:42:31 toque 'borda-avancar' @ 2368,723 (emulator-5554)
+18:42:36 toque 'auto-scroll' @ 128,1358 (emulator-5554)
+N4P8M-S3-S3c-tab-autoscroll-avd-pai mCurrentRotation=ROTATION_0 png=120182 xml=26960 fab9dbd07986
+18:43:00 toque 'auto-scroll' @ 128,1358 (emulator-5554)
+18:43:04 toque 'borda-avancar' @ 2368,723 (emulator-5554)
+N4P8M-S3-S3d-pdf-12p-avd-pai mCurrentRotation=ROTATION_0 png=203995 xml=23840 29ab9b3dd74f
+18:43:23 avião=1 (emulator-5554)
+18:43:28 toque 'borda-avancar' @ 2368,723 (emulator-5554)
+N4P8M-S3-S3e-nao-baixado-avd-pai mCurrentRotation=ROTATION_0 png=144496 xml=24219 ddb7c7fe47dc
+18:43:47 avião=0 (emulator-5554)
+18:43:54 toque 'borda-avancar' @ 2368,723 (emulator-5554)
+N4P8M-S3-titulo-longo-avd-pai mCurrentRotation=ROTATION_0 png=236962 xml=26490 7d807b075071
+18:44:10 toque 'borda-avancar' @ 2368,723 (emulator-5554)
+18:44:15 toque 'borda-avancar' @ 2368,723 (emulator-5554)
+N4P8M-S3-ultima-avd-pai mCurrentRotation=ROTATION_0 png=232542 xml=26380 d0efa7d96cac
+18:44:30 toque 'borda-avancar' @ 2368,723 (emulator-5554)
+N4P8M-S5-fim-avd-pai mCurrentRotation=ROTATION_0 png=99626 xml=17850 572893035237
+capturas=10 falhas=0

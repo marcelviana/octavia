@@ -1,0 +1,150 @@
+== letra
+21:56:12 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+21:56:21 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+21:56:35 toque 'Ver “Manhã de ensaio”' @ 800,590 (RX2N8000F3D)
+m14 a janela do texto (HorizontalScrollView) 647.1 dp → 48.5 colunas de mono 22 (13,33 dp, a régua) · view-leitor 711.1 dp
+N4P8V-V-letra-tab-ret mCurrentRotation=ROTATION_0 png=373144 xml=30553 1cfad0186771
+== cifra
+21:57:06 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+21:57:15 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+21:57:29 toque 'Ver “Segunda do ensaio”' @ 800,797 (RX2N8000F3D)
+N4P8V-V-cifra-tab-ret mCurrentRotation=ROTATION_0 png=466872 xml=23450 77ca219b2ec8
+== cifraSecoes
+21:57:58 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+21:58:07 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+21:58:21 toque 'Ver “Sétima do ensaio”' @ 800,590 (RX2N8000F3D)
+N4P8V-V-cifra-secoes-tab-ret mCurrentRotation=ROTATION_0 png=361604 xml=22466 1fee1b69faaf
+== tab
+21:58:50 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+21:58:59 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+21:59:13 toque 'Ver “Terceira do ensaio”' @ 800,590 (RX2N8000F3D)
+N4P8V-V-tab-tab-ret mCurrentRotation=ROTATION_0 png=172443 xml=25646 3e010b2c6724
+== partitura
+21:59:41 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+21:59:51 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+22:00:04 toque 'Ver “Partitura de doze páginas”' @ 800,590 (RX2N8000F3D)
+  log: file src=disk name=partitura-12p.pdf bytes=4198
+N4P8V-V-partitura-tab-ret mCurrentRotation=ROTATION_0 png=184735 xml=20698 1f3f9423f7bb
+== camposVazios
+22:00:44 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+22:00:53 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+22:01:07 toque 'Ver “Oitava do ensaio”' @ 800,590 (RX2N8000F3D)
+N4P8V-V-campos-vazios-tab-ret mCurrentRotation=ROTATION_0 png=409318 xml=21397 c3247ba3036f
+== semArtista
+22:01:35 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+22:01:45 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+22:01:59 toque 'Ver “Décima do ensaio”' @ 800,590 (RX2N8000F3D)
+N4P8V-V-sem-artista-tab-ret mCurrentRotation=ROTATION_0 png=444074 xml=20769 d8897b6ed193
+== tituloLongo
+22:02:27 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+22:02:36 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+22:02:50 toque 'Ver “Uma música de título bem comprido, para medir o corte do título em retrato e no celular”' @ 800,590 (RX2N8000F3D)
+N4P8V-V-titulo-longo-tab-ret mCurrentRotation=ROTATION_0 png=393634 xml=24707 9dd95e487de1
+== tipoDesconhecido
+22:03:18 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+22:03:28 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+22:03:42 toque 'Ver “Item sem tipo da fixture”' @ 800,590 (RX2N8000F3D)
+N4P8V-V-tipo-desconhecido-tab-ret mCurrentRotation=ROTATION_0 png=116425 xml=19027 62f676a33242
+== corpoVazio
+22:04:10 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+22:04:20 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+22:04:34 toque 'Ver “Item sem conteúdo da fixture”' @ 800,590 (RX2N8000F3D)
+N4P8V-V-corpo-vazio-tab-ret mCurrentRotation=ROTATION_0 png=115427 xml=17735 d3b4a01189f6
+== formato
+22:05:02 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+22:05:11 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+22:05:25 toque 'Ver “Partitura escaneada de fixture”' @ 800,590 (RX2N8000F3D)
+  log: (nenhuma linha)
+N4P8V-V-formato-tab-ret mCurrentRotation=ROTATION_0 png=133642 xml=20105 70f25b07cfab
+== baixando
+apagados em files/octavia-<uid>/…: [] · ficaram: ['1751910900697-Easy_-_Guitar.pdf', 'partitura-12p.pdf', 'partitura-1p.pdf', 'partitura-escaneada.jpg', 'partitura-grande.pdf.part']
+apagados em cache/octavia-<uid>/…: [] · ficaram: []
+22:06:11 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+22:06:20 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+22:06:35 toque 'Ver “Partitura grande da fixture”' @ 800,590 (RX2N8000F3D)
+  log: (nenhuma linha)
+N4P8V-V-pdf-baixando-tab-ret mCurrentRotation=ROTATION_0 png=106447 xml=19025 3ffd6f814b43
+== naoBaixado
+22:07:12 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+22:07:22 avião=1 (RX2N8000F3D)
+ping: connect: Network is unreachable
+22:07:25 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+22:07:40 toque 'Ver “Partitura que nunca baixou”' @ 800,698 (RX2N8000F3D)
+  log: (nenhuma linha)
+N4P8V-V-arquivo-nao-baixado-tab-ret mCurrentRotation=ROTATION_0 png=173637 xml=22214 1790a2e1c1b9
+22:08:12 avião=0 (RX2N8000F3D)
+== falhou
+22:08:26 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+22:08:35 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+22:08:49 toque 'Ver “Partitura que nunca baixou”' @ 800,590 (RX2N8000F3D)
+  log: (nenhuma linha)
+N4P8V-V-arquivo-falhou-tab-ret mCurrentRotation=ROTATION_0 png=123352 xml=21329 6181e74f7640
+== favoritando
+22:09:14 mock modo=escrita-lenta content=content.json env={'OCTAVIA_MOCK_LENTA_S': '8'}
+22:09:28 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+22:09:37 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+22:09:51 toque 'Ver “Segunda do ensaio”' @ 800,797 (RX2N8000F3D)
+22:10:06 toque 'view-favoritar' @ 1375,152 (RX2N8000F3D)
+N4P8V-V-favoritando-tab-ret mCurrentRotation=ROTATION_0 png=465872 xml=24777 b71eb9a7c67a
+N4P8V-V-favoritada-tab-ret mCurrentRotation=ROTATION_0 png=465876 xml=23785 f79f05ec3d0e
+  log: auth refresh=cached | api status=200 path=/api/content n=1 ms=8050 | write op=favorite content=b1b10002 status=200 code=- ms=8057 | cache write kind=content n=16 invalidated=1
+22:10:42 mock modo=normal vazio=False
+22:10:51 toque 'view-favoritar' @ 1375,152 (RX2N8000F3D)
+  desfavoritar (devolve o estado da fixture): (nenhuma linha)
+== falhouFav
+22:11:14 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+22:11:24 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+22:11:37 toque 'Ver “Segunda do ensaio”' @ 800,797 (RX2N8000F3D)
+22:11:44 mock modo=escrita-500 content=content.json env=None
+22:11:53 toque 'view-favoritar' @ 1375,152 (RX2N8000F3D)
+  log: auth refresh=cached | api status=500 path=/api/content n=1 ms=29 | write op=favorite content=b1b10002 status=500 code=INTERNAL_ERROR ms=34
+N4P8V-V-favoritar-falhou-servidor-tab-ret mCurrentRotation=ROTATION_0 png=452556 xml=25487 db893f554bce
+22:12:15 mock modo=normal vazio=False
+== semRede
+22:12:29 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+22:12:38 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+22:12:51 toque 'Ver “Manhã de ensaio”' @ 800,590 (RX2N8000F3D)
+22:13:02 avião=1 (RX2N8000F3D)
+ping: connect: Network is unreachable
+N4P8V-V-sem-rede-tab-ret mCurrentRotation=ROTATION_0 png=373009 xml=32606 2d5ae4774091
+22:13:23 toque 'view-favoritar' @ 1375,152 (RX2N8000F3D)
+  o toque na estrela inerte, sem rede: (nenhuma linha)
+22:13:34 toque 'view-tocar' pelo canto @ 1444,198
+  sem rede, o ▶ abre o avulso: o voltar content-desc='Voltar para a visualização'
+22:13:42 toque 'sair' @ 1472,2345 (RX2N8000F3D)
+22:13:52 avião=0 (RX2N8000F3D)
+== sairNoMeio
+22:13:53 mock modo=escrita-lenta content=content.json env={'OCTAVIA_MOCK_LENTA_S': '8'}
+22:14:07 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+22:14:16 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+22:14:30 toque 'Ver “Segunda do ensaio”' @ 800,797 (RX2N8000F3D)
+22:14:44 toque 'view-favoritar' @ 1375,152 (RX2N8000F3D)
+22:14:47 toque 'view-voltar' @ 108,152 (RX2N8000F3D)
+N4P8V-L-saiu-no-meio-em-voo-tab-ret mCurrentRotation=ROTATION_0 png=147013 xml=38572 2767f801ef2f
+N4-R7 saiu de V no meio: a estrela na L = ['Favoritar “Décima do ensaio”', 'Tirar “Segunda do ensaio” das favoritas'] · linha de aviso: False
+  log: auth refresh=cached | api status=200 path=/api/content n=1 ms=8040 | write op=favorite content=b1b10002 status=200 code=- ms=8048 | cache write kind=content n=16 invalidated=1
+N4P8V-L-saiu-no-meio-depois-tab-ret mCurrentRotation=ROTATION_0 png=146300 xml=38572 2767f801ef2f
+22:15:28 mock modo=normal vazio=False
+22:15:31 toque 'Tirar “Segunda do ensaio” das favoritas' @ 1346,797 (RX2N8000F3D)
+== tocar
+22:15:48 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+22:15:57 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+22:16:10 toque 'Ver “Manhã de ensaio”' @ 800,590 (RX2N8000F3D)
+22:16:28 toque 'view-tocar' pelo canto @ 1444,198
+o voltar do avulso: content-desc='Voltar para a visualização'
+  log: keepawake on | prefetch plan n=0 reason=demand
+N4P8V-S3-avulso-da-visualizacao-tab-ret mCurrentRotation=ROTATION_0 png=405378 xml=24059 627fa0949e1a
+22:16:51 toque 'sair' @ 1472,2345 (RX2N8000F3D)
+N4-R16 a volta a V (nó a nó): IGUAL (21 nós)
+N4P8V-V-depois-do-palco-tab-ret mCurrentRotation=ROTATION_0 png=372708 xml=30553 1cfad0186771
+== voltar
+22:17:22 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+22:17:31 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+22:17:38 toque 'lib-filtro-cifra' @ 428,323 (RX2N8000F3D)
+N4P8V-L-antes-do-ver-tab-ret mCurrentRotation=ROTATION_0 png=173217 xml=43650 21ad98438983
+a linha tocada: 'Ver “Sétima do ensaio”'
+V aberta: 'Sétima do ensaio' · o voltar content-desc='Voltar para a biblioteca'
+22:18:13 toque 'view-voltar' @ 108,152 (RX2N8000F3D)
+o voltar de V: a L na mesma posição (termo, filtro, rolagem, nó a nó): IGUAL (42 nós)
+N4P8V-L-depois-do-voltar-de-v-tab-ret mCurrentRotation=ROTATION_0 png=173676 xml=43651 af298b2fb751
+capturas=24 falhas=0

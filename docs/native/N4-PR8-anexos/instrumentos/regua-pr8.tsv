@@ -1,0 +1,25 @@
+# N4-PR8 — as estimadas de V, na ordem da folha (N4-R25; DESIGN-N4 §4.1): e5 · e6 · m14
+# e5: o cabeçalho com o título longo (o título em 22/600, a meta em 17)
+view-titulo	Manhã de ensaio
+view-titulo	Uma música de título bem comprido, para medir a quebra
+view-titulo	Uma música de título bem comprido, para medir o corte do título em retrato e no celular
+view-meta	Banda da fixture
+view-meta	Artista de nome igualmente comprido da fixture do N3
+view-meta	·
+view-meta	Letra
+view-meta	tipo desconhecido
+# e6: a coluna de 340 (C) — o que tem de caber nela: a linha das datas, os valores numa célula da grade de 2
+view-rotulo	criado 2026-03-14 · alterado 2026-09-30
+view-rotulo	dificuldade
+view-rotulo	andamento
+view-valor	Intermediário
+view-valor	Disco de fixture
+view-valor	Toada de fixture
+view-valor	Disco de nome comprido da fixture do N3
+view-valor	ensaio · voz e violão
+view-valor	pior caso · comprimento · fixture
+view-notas	Entrar depois da contagem de quatro do metrônomo. Segunda voz só no refrão; no fim, segurar o último acorde até a sala apagar.
+# m14: as colunas visíveis do leitor (mono 22): 10 e 100 caracteres, e a linha longa da fixture
+leitor	0123456789
+leitor	0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+leitor	Linha de refrão escrita para medir quebra de linha em retrato, com palavras suficientes

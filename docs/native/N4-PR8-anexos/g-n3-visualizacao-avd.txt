@@ -1,0 +1,59 @@
+G-N3 — 24 par(es) (paisagem × faixa); medidas: docs/native/DESIGN-N3/medidas.json (tolerância 4 dp)
+
+(e) TEXTO QUE SOME — REPROVA: 0
+
+(d′) MENOS ESPAÇO QUE NA PAISAGEM — TRIAGEM (confirmar no PNG): 44
+  N4P8V-L-antes-do-ver-avd-ret: "Décima do ensaio" 948 → 521.3 dp
+  N4P8V-L-antes-do-ver-avd-ret: "Segunda do ensaio" 948 → 521.3 dp
+  N4P8V-L-antes-do-ver-avd-ret: "Sétima do ensaio" 948 → 521.3 dp
+  N4P8V-L-depois-do-voltar-de-v-avd-ret: "Décima do ensaio" 948 → 521.3 dp
+  N4P8V-L-depois-do-voltar-de-v-avd-ret: "Segunda do ensaio" 948 → 521.3 dp
+  N4P8V-L-depois-do-voltar-de-v-avd-ret: "Sétima do ensaio" 948 → 521.3 dp
+  N4P8V-L-saiu-no-meio-depois-avd-ret: "Décima do ensaio" 948 → 521.3 dp
+  N4P8V-L-saiu-no-meio-depois-avd-ret: "Segunda do ensaio" 948 → 521.3 dp
+  N4P8V-L-saiu-no-meio-em-voo-avd-ret: "Décima do ensaio" 948 → 521.3 dp
+  N4P8V-L-saiu-no-meio-em-voo-avd-ret: "Segunda do ensaio" 948 → 521.3 dp
+  N4P8V-S3-avulso-da-visualizacao-avd-ret: "Manhã de ensaio · Banda da fixture · Let" 968.9 → 663.1 dp
+  N4P8V-S3-avulso-da-visualizacao-avd-ret: corpo 1073.8 → 647.1 dp (altura ×1.9)
+  N4P8V-V-arquivo-falhou-avd-ret: view-titulo 910.2 → 483.1 dp
+  N4P8V-V-arquivo-nao-baixado-avd-ret: view-titulo 910.2 → 483.1 dp
+  N4P8V-V-campos-vazios-avd-ret: view-titulo 910.2 → 483.1 dp
+  N4P8V-V-campos-vazios-avd-ret: corpo 733.8 → 647.1 dp (altura ×1.7)
+  N4P8V-V-cifra-avd-ret: view-titulo 910.2 → 483.1 dp
+  N4P8V-V-cifra-avd-ret: corpo 733.8 → 647.1 dp (altura ×1.5)
+  N4P8V-V-cifra-secoes-avd-ret: view-titulo 910.2 → 483.1 dp
+  N4P8V-V-cifra-secoes-avd-ret: corpo 666.7 → 647.1 dp
+  N4P8V-V-corpo-vazio-avd-ret: view-titulo 910.2 → 483.1 dp
+  N4P8V-V-depois-do-palco-avd-ret: view-titulo 910.2 → 483.1 dp
+  N4P8V-V-depois-do-palco-avd-ret: corpo 733.8 → 647.1 dp
+  N4P8V-V-favoritada-avd-ret: view-titulo 910.2 → 483.1 dp
+  N4P8V-V-favoritada-avd-ret: corpo 733.8 → 647.1 dp (altura ×1.5)
+  N4P8V-V-favoritando-avd-ret: view-titulo 910.2 → 483.1 dp
+  N4P8V-V-favoritando-avd-ret: corpo 733.8 → 647.1 dp (altura ×1.5)
+  N4P8V-V-favoritar-falhou-servidor-avd-ret: view-titulo 910.2 → 483.1 dp
+  N4P8V-V-favoritar-falhou-servidor-avd-ret: corpo 733.8 → 647.1 dp (altura ×1.6)
+  N4P8V-V-formato-avd-ret: view-titulo 910.2 → 483.1 dp
+  N4P8V-V-letra-avd-ret: view-titulo 910.2 → 483.1 dp
+  N4P8V-V-letra-avd-ret: corpo 733.8 → 647.1 dp
+  N4P8V-V-partitura-avd-ret: view-titulo 910.2 → 483.1 dp
+  N4P8V-V-pdf-baixando-avd-ret: view-titulo 910.2 → 483.1 dp
+  N4P8V-V-sem-artista-avd-ret: view-titulo 910.2 → 483.1 dp
+  N4P8V-V-sem-artista-avd-ret: corpo 733.8 → 647.1 dp (altura ×1.5)
+  N4P8V-V-sem-rede-avd-ret: view-titulo 910.2 → 483.1 dp
+  N4P8V-V-sem-rede-avd-ret: corpo 733.8 → 647.1 dp
+  N4P8V-V-tab-avd-ret: view-titulo 910.2 → 483.1 dp
+  N4P8V-V-tab-avd-ret: corpo 733.8 → 647.1 dp
+  N4P8V-V-tipo-desconhecido-avd-ret: view-titulo 910.2 → 483.1 dp
+  N4P8V-V-tipo-desconhecido-avd-ret: "tipo desconhecido" 148.9 → 248.4 dp (altura ×1.7)
+  N4P8V-V-titulo-longo-avd-ret: view-titulo 910.2 → 483.1 dp
+  N4P8V-V-titulo-longo-avd-ret: corpo 733.8 → 647.1 dp
+
+4 dp CONTRA A FOLHA — ERRATA CANDIDATA: 0
+
+NOME ACESSÍVEL — o texto está no content-desc do nó de mesmo resource-id (N3-D17); não reprova, não soma ao (e): 0
+
+ROLAGEM — o texto está no dump rolado do mesmo estado; não reprova, não soma ao (e): 0
+
+(b) CORTE — nó que sai da janela útil ou encosta na borda lateral, NOVO contra a paisagem — REPROVA: 0
+
+G-N3: (e)=0 · (b)=0 · nome-acessível=0 · rolagem=0 ✓ (d′ e 4 dp não reprovam: triagem e errata)

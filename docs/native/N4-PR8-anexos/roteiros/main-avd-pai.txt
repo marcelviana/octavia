@@ -1,0 +1,49 @@
+FALHA palco: ESPERA ESGOTADA: 'setlist-00000001'
+18:15:52 avião=0 (emulator-5554)
+18:15:53 mock modo=normal vazio=False
+18:15:55 mock modo=normal vazio=True
+N4P8M-S1-S1f-vazia-avd-pai mCurrentRotation=ROTATION_0 png=115473 xml=17992 cb426b582744
+18:16:23 mock modo=normal vazio=False
+18:16:53 toque canto de setlist-00000001 @ 96,420
+N4P8M-S2-com-edicao-avd-pai mCurrentRotation=ROTATION_0 png=254810 xml=64880 dbd68a3b1789
+18:17:11 avião=1 (emulator-5554)
+N4P8M-S2-com-edicao-aviso-sem-rede-avd-pai mCurrentRotation=ROTATION_0 png=243638 xml=57732 8c33af5fd7bf
+18:17:30 avião=0 (emulator-5554)
+18:17:49 toque canto de setlist-00000001 @ 96,420
+18:17:56 toque 'reordenar' @ 676,323 (emulator-5554)
+N4P8M-reordenar-aberto-avd-pai mCurrentRotation=ROTATION_0 png=242364 xml=41986 3e734b76e8ff
+18:18:10 toque 'reordenar-sair' @ 1326,152 (emulator-5554)
+18:18:29 toque canto de setlist-00000001 @ 96,420
+18:18:37 toque 'picker-abrir' @ 266,323 (emulator-5554)
+N4P8M-picker-vazio-avd-pai mCurrentRotation=ROTATION_0 png=117307 xml=16381 69957ef14d48
+18:18:52 toque 'picker-campo' @ 1397,152 (emulator-5554)
+N4P8M-picker-resultados-avd-pai mCurrentRotation=ROTATION_0 png=239747 xml=43605 c0e59ab2467c
+18:19:07 toque 'fechar-busca' @ 108,152 (emulator-5554)
+18:19:21 toque 'criar-setlist' @ 1878,188 (emulator-5554)
+N4P8M-folha-criar-avd-pai mCurrentRotation=ROTATION_0 png=207723 xml=11723 2b058ced40b6
+18:19:33 toque 'form-cancelar' @ 681,1040 (emulator-5554)
+18:19:36 toque canto de setlist-00000001 @ 96,420
+18:19:43 toque 'setlist-editar' @ 1877,323 (emulator-5554)
+18:19:47 toque 'form-nome' @ 1280,552 (emulator-5554)
+N4P8M-folha-validacao-avd-pai mCurrentRotation=ROTATION_0 png=242230 xml=11730 1016ab28bc1a
+18:20:05 toque 'form-cancelar' @ 681,1040 (emulator-5554)
+18:20:08 mock modo=escrita-500 vazio=False
+18:20:27 toque 'criar-setlist' @ 1878,188 (emulator-5554)
+18:20:31 toque 'form-nome' @ 1280,552 (emulator-5554)
+18:20:41 toque 'form-salvar' @ 1875,973 (emulator-5554)
+N4P8M-folha-falhou-avd-pai mCurrentRotation=ROTATION_0 png=202687 xml=12051 d32c9b6f2efc
+18:20:58 toque 'form-cancelar' @ 662,1224 (emulator-5554)
+18:21:01 mock modo=normal vazio=False
+18:21:21 toque canto de setlist-00000001 @ 96,420
+18:21:28 toque 'setlist-apagar' @ 2318,323 (emulator-5554)
+N4P8M-dialogo-apagar-avd-pai mCurrentRotation=ROTATION_0 png=269046 xml=8486 159dc723400f
+18:21:41 toque 'apagar-manter' @ 853,998 (emulator-5554)
+18:21:59 toque 'buscar' @ 2295,188 (emulator-5554)
+18:22:07 toque 'Tocar “Águas de fixture”' @ 2423,590 (emulator-5554)
+18:22:14 toque 'busca' @ 2247,1358 (emulator-5554)
+N4P8M-S4-vazio-avd-pai mCurrentRotation=ROTATION_0 png=87386 xml=13968 e8ea9f2531aa
+18:22:32 toque 'campo-busca' @ 1397,152 (emulator-5554)
+N4P8M-S4-resultados-avd-pai mCurrentRotation=ROTATION_0 png=175091 xml=30142 a7a5fa5f7748
+18:22:47 toque 'fechar-busca' @ 108,152 (emulator-5554)
+capturas=12 falhas=1
+  palco: ESPERA ESGOTADA: 'setlist-00000001'

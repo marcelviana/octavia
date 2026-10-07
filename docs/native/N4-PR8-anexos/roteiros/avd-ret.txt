@@ -1,0 +1,149 @@
+== letra
+19:46:10 toque 'buscar' @ 1335,281 (emulator-5554)
+19:46:20 toque 'lib-campo' @ 917,152 (emulator-5554)
+19:46:28 toque 'Ver “Manhã de ensaio”' @ 800,590 (emulator-5554)
+m14 a janela do texto (HorizontalScrollView) 647.1 dp → 48.5 colunas de mono 22 (13,33 dp, a régua) · view-leitor 711.1 dp
+N4P8V-V-letra-avd-ret mCurrentRotation=ROTATION_90 png=352335 xml=30211 43a1f372e543
+== cifra
+19:47:10 toque 'buscar' @ 1335,281 (emulator-5554)
+19:47:20 toque 'lib-campo' @ 917,152 (emulator-5554)
+19:47:29 toque 'Ver “Segunda do ensaio”' @ 800,797 (emulator-5554)
+N4P8V-V-cifra-avd-ret mCurrentRotation=ROTATION_90 png=439208 xml=23108 8e1e502f800b
+== cifraSecoes
+19:48:08 toque 'buscar' @ 1335,281 (emulator-5554)
+19:48:17 toque 'lib-campo' @ 917,152 (emulator-5554)
+19:48:26 toque 'Ver “Sétima do ensaio”' @ 800,590 (emulator-5554)
+N4P8V-V-cifra-secoes-avd-ret mCurrentRotation=ROTATION_90 png=346754 xml=22124 eb6189f3de66
+== tab
+19:49:04 toque 'buscar' @ 1335,281 (emulator-5554)
+19:49:14 toque 'lib-campo' @ 917,152 (emulator-5554)
+19:49:23 toque 'Ver “Terceira do ensaio”' @ 800,590 (emulator-5554)
+N4P8V-V-tab-avd-ret mCurrentRotation=ROTATION_90 png=159251 xml=25304 23976807109b
+== partitura
+19:50:00 toque 'buscar' @ 1335,281 (emulator-5554)
+19:50:10 toque 'lib-campo' @ 917,152 (emulator-5554)
+19:50:18 toque 'Ver “Partitura de doze páginas”' @ 800,590 (emulator-5554)
+  log: file src=disk name=partitura-12p.pdf bytes=4198
+N4P8V-V-partitura-avd-ret mCurrentRotation=ROTATION_90 png=174330 xml=20356 e511ade3cef9
+== camposVazios
+19:51:01 toque 'buscar' @ 1335,281 (emulator-5554)
+19:51:11 toque 'lib-campo' @ 917,152 (emulator-5554)
+19:51:20 toque 'Ver “Oitava do ensaio”' @ 800,590 (emulator-5554)
+N4P8V-V-campos-vazios-avd-ret mCurrentRotation=ROTATION_90 png=394720 xml=21055 6850b5dc3074
+== semArtista
+19:51:58 toque 'buscar' @ 1335,281 (emulator-5554)
+19:52:08 toque 'lib-campo' @ 917,152 (emulator-5554)
+19:52:16 toque 'Ver “Décima do ensaio”' @ 800,590 (emulator-5554)
+N4P8V-V-sem-artista-avd-ret mCurrentRotation=ROTATION_90 png=418798 xml=20427 e706bba08aff
+== tituloLongo
+19:52:54 toque 'buscar' @ 1335,281 (emulator-5554)
+19:53:04 toque 'lib-campo' @ 917,152 (emulator-5554)
+19:53:12 toque 'Ver “Uma música de título bem comprido, para medir o corte do título em retrato e no celular”' @ 800,590 (emulator-5554)
+N4P8V-V-titulo-longo-avd-ret mCurrentRotation=ROTATION_90 png=369142 xml=24365 77acea79a861
+== tipoDesconhecido
+19:53:50 toque 'buscar' @ 1335,281 (emulator-5554)
+19:53:59 toque 'lib-campo' @ 917,152 (emulator-5554)
+19:54:08 toque 'Ver “Item sem tipo da fixture”' @ 800,590 (emulator-5554)
+N4P8V-V-tipo-desconhecido-avd-ret mCurrentRotation=ROTATION_90 png=103330 xml=18685 6bb2a18e231e
+== corpoVazio
+19:54:46 toque 'buscar' @ 1335,281 (emulator-5554)
+19:54:56 toque 'lib-campo' @ 917,152 (emulator-5554)
+19:55:05 toque 'Ver “Item sem conteúdo da fixture”' @ 800,590 (emulator-5554)
+N4P8V-V-corpo-vazio-avd-ret mCurrentRotation=ROTATION_90 png=102467 xml=17393 4649bb35b65c
+== formato
+19:55:43 toque 'buscar' @ 1335,281 (emulator-5554)
+19:55:52 toque 'lib-campo' @ 917,152 (emulator-5554)
+19:56:01 toque 'Ver “Partitura escaneada de fixture”' @ 800,590 (emulator-5554)
+  log: (nenhuma linha)
+N4P8V-V-formato-avd-ret mCurrentRotation=ROTATION_90 png=120285 xml=19763 1ad964367f07
+== baixando
+apagados em files/octavia-<uid>/…: [] · ficaram: ['1786218429715-ux-audit-partitura-12p.pdf', 'partitura-12p.pdf', 'partitura-1p.pdf', 'partitura-escaneada.jpg', 'partitura-grande.pdf.part']
+apagados em cache/octavia-<uid>/…: [] · ficaram: ['1786218427769-ux-audit-partitura-1p.pdf']
+19:56:43 toque 'buscar' @ 1335,281 (emulator-5554)
+19:56:52 toque 'lib-campo' @ 917,152 (emulator-5554)
+19:57:01 toque 'Ver “Partitura grande da fixture”' @ 800,590 (emulator-5554)
+  log: (nenhuma linha)
+N4P8V-V-pdf-baixando-avd-ret mCurrentRotation=ROTATION_90 png=95813 xml=18683 3689dbc20e34
+== naoBaixado
+19:57:41 toque 'buscar' @ 1335,281 (emulator-5554)
+19:57:52 avião=1 (emulator-5554)
+ping: connect: Network is unreachable
+19:57:57 toque 'lib-campo' @ 917,152 (emulator-5554)
+19:58:06 toque 'Ver “Partitura que nunca baixou”' @ 800,698 (emulator-5554)
+  log: (nenhuma linha)
+N4P8V-V-arquivo-nao-baixado-avd-ret mCurrentRotation=ROTATION_90 png=161751 xml=21872 41c0955fec21
+19:58:32 avião=0 (emulator-5554)
+== falhou
+19:58:57 toque 'buscar' @ 1335,281 (emulator-5554)
+19:59:07 toque 'lib-campo' @ 917,152 (emulator-5554)
+19:59:15 toque 'Ver “Partitura que nunca baixou”' @ 800,590 (emulator-5554)
+  log: (nenhuma linha)
+N4P8V-V-arquivo-falhou-avd-ret mCurrentRotation=ROTATION_90 png=110940 xml=20987 d0c292983980
+== favoritando
+19:59:37 mock modo=escrita-lenta content=content.json env={'OCTAVIA_MOCK_LENTA_S': '8'}
+19:59:55 toque 'buscar' @ 1335,281 (emulator-5554)
+20:00:05 toque 'lib-campo' @ 917,152 (emulator-5554)
+20:00:14 toque 'Ver “Segunda do ensaio”' @ 800,797 (emulator-5554)
+20:00:23 toque 'view-favoritar' @ 1375,152 (emulator-5554)
+N4P8V-V-favoritando-avd-ret mCurrentRotation=ROTATION_90 png=439648 xml=24432 6d1f3a7ceccc
+N4P8V-V-favoritada-avd-ret mCurrentRotation=ROTATION_90 png=439648 xml=23443 c292c2fe784d
+  log: auth refresh=cached | api status=200 path=/api/content n=1 ms=8071 | write op=favorite content=b1b10002 status=200 code=- ms=8090 | cache write kind=content n=16 invalidated=1
+20:00:51 mock modo=normal vazio=False
+20:00:54 toque 'view-favoritar' @ 1375,152 (emulator-5554)
+  desfavoritar (devolve o estado da fixture): auth refresh=cached | api status=200 path=/api/content n=1 ms=68 | write op=unfavorite content=b1b10002 status=200 code=- ms=74 | cache write kind=content n=16 invalidated=1
+== falhouFav
+20:01:15 toque 'buscar' @ 1335,281 (emulator-5554)
+20:01:24 toque 'lib-campo' @ 917,152 (emulator-5554)
+20:01:32 toque 'Ver “Segunda do ensaio”' @ 800,797 (emulator-5554)
+20:01:39 mock modo=escrita-500 content=content.json env=None
+20:01:41 toque 'view-favoritar' @ 1375,152 (emulator-5554)
+  log: auth refresh=cached | api status=500 path=/api/content n=1 ms=20 | write op=favorite content=b1b10002 status=500 code=INTERNAL_ERROR ms=28
+N4P8V-V-favoritar-falhou-servidor-avd-ret mCurrentRotation=ROTATION_90 png=436442 xml=25145 f98471993094
+20:01:56 mock modo=normal vazio=False
+== semRede
+20:02:07 toque 'buscar' @ 1335,281 (emulator-5554)
+20:02:16 toque 'lib-campo' @ 917,152 (emulator-5554)
+20:02:24 toque 'Ver “Manhã de ensaio”' @ 800,590 (emulator-5554)
+20:02:34 avião=1 (emulator-5554)
+ping: connect: Network is unreachable
+N4P8V-V-sem-rede-avd-ret mCurrentRotation=ROTATION_90 png=359057 xml=32264 43ccf402acdd
+20:02:50 toque 'view-favoritar' @ 1375,152 (emulator-5554)
+  o toque na estrela inerte, sem rede: (nenhuma linha)
+20:02:54 toque 'view-tocar' pela margem @ 1450,152
+FALHA semRede: ESPERA ESGOTADA: 'sair'
+20:03:35 avião=0 (emulator-5554)
+20:03:37 mock modo=normal vazio=False
+== sairNoMeio
+20:03:38 mock modo=escrita-lenta content=content.json env={'OCTAVIA_MOCK_LENTA_S': '8'}
+20:04:00 toque 'buscar' @ 1335,281 (emulator-5554)
+20:04:09 toque 'lib-campo' @ 917,152 (emulator-5554)
+20:04:17 toque 'Ver “Segunda do ensaio”' @ 800,797 (emulator-5554)
+20:04:26 toque 'view-favoritar' @ 1375,152 (emulator-5554)
+20:04:29 toque 'view-voltar' @ 108,152 (emulator-5554)
+N4P8V-L-saiu-no-meio-em-voo-avd-ret mCurrentRotation=ROTATION_90 png=135519 xml=38230 ff123a830178
+N4-R7 saiu de V no meio: a estrela na L = ['Favoritar “Décima do ensaio”', 'Tirar “Segunda do ensaio” das favoritas'] · linha de aviso: False
+  log: auth refresh=cached | api status=200 path=/api/content n=1 ms=8065 | write op=favorite content=b1b10002 status=200 code=- ms=8073 | cache write kind=content n=16 invalidated=1
+N4P8V-L-saiu-no-meio-depois-avd-ret mCurrentRotation=ROTATION_90 png=135519 xml=38230 ff123a830178
+20:05:03 mock modo=normal vazio=False
+20:05:06 toque 'Tirar “Segunda do ensaio” das favoritas' @ 1346,797 (emulator-5554)
+== tocar
+20:05:26 toque 'buscar' @ 1335,281 (emulator-5554)
+20:05:35 toque 'lib-campo' @ 917,152 (emulator-5554)
+20:05:43 toque 'Ver “Manhã de ensaio”' @ 800,590 (emulator-5554)
+20:05:54 toque 'view-tocar' pela margem @ 1450,152
+FALHA tocar: ESPERA ESGOTADA: 'sair'
+20:06:35 avião=0 (emulator-5554)
+20:06:37 mock modo=normal vazio=False
+== voltar
+20:06:55 toque 'buscar' @ 1335,281 (emulator-5554)
+20:07:04 toque 'lib-campo' @ 917,152 (emulator-5554)
+20:07:12 toque 'lib-filtro-cifra' @ 428,323 (emulator-5554)
+N4P8V-L-antes-do-ver-avd-ret mCurrentRotation=ROTATION_90 png=161955 xml=43308 56501fb9effb
+a linha tocada: 'Ver “Sétima do ensaio”'
+V aberta: 'Sétima do ensaio' · o voltar content-desc='Voltar para a biblioteca'
+20:07:45 toque 'view-voltar' @ 108,152 (emulator-5554)
+o voltar de V: a L na mesma posição (termo, filtro, rolagem, nó a nó): IGUAL (42 nós)
+N4P8V-L-depois-do-voltar-de-v-avd-ret mCurrentRotation=ROTATION_90 png=161892 xml=43309 7e4af4e9f94a
+capturas=22 falhas=2
+  semRede: ESPERA ESGOTADA: 'sair'
+  tocar: ESPERA ESGOTADA: 'sair'

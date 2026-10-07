@@ -1,0 +1,62 @@
+G-inv — invariante C (T3-R2): bounds em dp, nó a nó
+  base:  docs/native/N3-PRECHECK-anexos/B3-referencia-paisagem
+  novos: /private/tmp/claude-501/-Users-marcelviana-projects-octavia/aa46afb4-7b85-42ab-b140-95fed7764272/scratchpad/harness/run/dumps/main
+  ✓ S3-S3a-letra-1a-avd-pai: idêntico (65 nós)
+  ✗ S3-S3a-letra-1a-tab-pai: SEM DUMP NOVO — a invariante é para toda tela e estado da base
+  ✓ S3-S3b-cifra-claro-avd-pai: idêntico (64 nós)
+  ✗ S3-S3b-cifra-claro-tab-pai: SEM DUMP NOVO — a invariante é para toda tela e estado da base
+  ✓ S3-S3b-cifra-escuro-avd-pai: idêntico (65 nós)
+  ✗ S3-S3b-cifra-escuro-tab-pai: SEM DUMP NOVO — a invariante é para toda tela e estado da base
+  ✓ S3-S3c-tab-autoscroll-avd-pai: idêntico (66 nós)
+  ✗ S3-S3c-tab-autoscroll-tab-pai: SEM DUMP NOVO — a invariante é para toda tela e estado da base
+  ✓ S3-S3d-pdf-12p-avd-pai: idêntico (65 nós)
+  ✗ S3-S3d-pdf-12p-tab-pai: SEM DUMP NOVO — a invariante é para toda tela e estado da base
+  ✓ S3-S3e-nao-baixado-avd-pai: idêntico (66 nós)
+  ✗ S3-S3e-nao-baixado-tab-pai: SEM DUMP NOVO — a invariante é para toda tela e estado da base
+  ✓ S3-titulo-longo-avd-pai: idêntico (65 nós)
+  ✗ S3-titulo-longo-tab-pai: SEM DUMP NOVO — a invariante é para toda tela e estado da base
+  ✓ S3-ultima-avd-pai: idêntico (65 nós)
+  ✗ S3-ultima-tab-pai: SEM DUMP NOVO — a invariante é para toda tela e estado da base
+  ✓ S5-fim-avd-pai: idêntico (48 nós)
+  ✗ S5-fim-tab-pai: SEM DUMP NOVO — a invariante é para toda tela e estado da base
+  · N4P8M-S0-erro-avd-pai: sem chave na base (fora da conta)
+  · N4P8M-S0-login-avd-pai: sem chave na base (fora da conta)
+  · N4P8M-S1-S1e-falha-com-cache-avd-pai: sem chave na base (fora da conta)
+  · N4P8M-S1-S1f-vazia-avd-pai: sem chave na base (fora da conta)
+  · N4P8M-S1-aviso-sem-rede-avd-pai: sem chave na base (fora da conta)
+  · N4P8M-S1-setlists-avd-pai: sem chave na base (fora da conta)
+  · N4P8M-S2-com-edicao-avd-pai: sem chave na base (fora da conta)
+  · N4P8M-S2-com-edicao-avd-ret: sem chave na base (fora da conta)
+  · N4P8M-S2-com-edicao-aviso-sem-rede-avd-pai: sem chave na base (fora da conta)
+  · N4P8M-S2-com-edicao-aviso-sem-rede-avd-ret: sem chave na base (fora da conta)
+  · N4P8M-S2-com-edicao-aviso-sem-rede-rolada-avd-ret: sem chave na base (fora da conta)
+  · N4P8M-S2-com-edicao-rolada-avd-ret: sem chave na base (fora da conta)
+  · N4P8M-S2-sem-edicao-S2p-avd-pai: sem chave na base (fora da conta)
+  · N4P8M-S2-sem-edicao-S2p-avd-ret: sem chave na base (fora da conta)
+  · N4P8M-S2-sem-edicao-S2p-rolada-avd-ret: sem chave na base (fora da conta)
+  · N4P8M-S3-S3a-letra-1a-avd-ret: sem chave na base (fora da conta)
+  · N4P8M-S3-S3b-cifra-claro-avd-ret: sem chave na base (fora da conta)
+  · N4P8M-S3-S3b-cifra-escuro-avd-ret: sem chave na base (fora da conta)
+  · N4P8M-S3-S3c-tab-autoscroll-avd-ret: sem chave na base (fora da conta)
+  · N4P8M-S3-S3d-pdf-12p-avd-ret: sem chave na base (fora da conta)
+  · N4P8M-S3-S3e-nao-baixado-avd-ret: sem chave na base (fora da conta)
+  · N4P8M-S3-titulo-longo-avd-ret: sem chave na base (fora da conta)
+  · N4P8M-S3-ultima-avd-ret: sem chave na base (fora da conta)
+  · N4P8M-S4-resultados-avd-pai: sem chave na base (fora da conta)
+  · N4P8M-S4-resultados-avd-ret: sem chave na base (fora da conta)
+  · N4P8M-S4-resultados-rolada-avd-ret: sem chave na base (fora da conta)
+  · N4P8M-S4-vazio-avd-pai: sem chave na base (fora da conta)
+  · N4P8M-S4-vazio-avd-ret: sem chave na base (fora da conta)
+  · N4P8M-S5-fim-avd-ret: sem chave na base (fora da conta)
+  · N4P8M-dialogo-apagar-avd-pai: sem chave na base (fora da conta)
+  · N4P8M-folha-criar-avd-pai: sem chave na base (fora da conta)
+  · N4P8M-folha-falhou-avd-pai: sem chave na base (fora da conta)
+  · N4P8M-folha-validacao-avd-pai: sem chave na base (fora da conta)
+  · N4P8M-picker-resultados-avd-pai: sem chave na base (fora da conta)
+  · N4P8M-picker-resultados-avd-ret: sem chave na base (fora da conta)
+  · N4P8M-picker-resultados-rolada-avd-ret: sem chave na base (fora da conta)
+  · N4P8M-picker-vazio-avd-pai: sem chave na base (fora da conta)
+  · N4P8M-picker-vazio-avd-ret: sem chave na base (fora da conta)
+  · N4P8M-reordenar-aberto-avd-pai: sem chave na base (fora da conta)
+G-inv: 9 de 18 idênticos
+G-inv: REPROVA ✗

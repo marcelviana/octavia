@@ -1,0 +1,28 @@
+(o teste de V com o conserto do instrumento do CN 5 copiado: a única diferença da árvore)
+== CN 3b — o corpo de V diferente do site (a primeira quebra de linha vira espaço)
+   -        corpo={bodyOf(content.content_type, content.content_data)}
+   +        corpo={bodyOf(content.content_type, content.content_data)?.replace('\n', ' ') ?? null}
+   stdout | apps/native/test/g-par-visualizacao.test.tsx > G-par da visualização (N4-PR8) — o nó corpo de V mostra o que o site mostra > cada item do par: V igual ao retrato do site, byte a byte
+   G-par da visualização — itens 16 · pares 9 · iguais 2 · diferentes 7 · fora do par 7 · retrato do site 9
+     DIFERENTE letra                        site=texto(108)       V=texto(108)
+     DIFERENTE cifra-texto                  site=texto(48)        V=texto(48)
+     DIFERENTE tab-texto                    site=texto(92)        V=texto(92)
+     DIFERENTE letra-poluida-editor         site=texto(44)        V=texto(44)
+     DIFERENTE cifra-secoes-acordes-vazios  site=texto(123)       V=texto(123)
+     DIFERENTE cifra-secoes-completas       site=texto(39)        V=texto(39)
+     DIFERENTE cifra-duas-secoes            site=texto(97)        V=texto(97)
+   G-par da visualização: ✗ reprova (letra, cifra-texto, tab-texto, letra-poluida-editor, cifra-secoes-acordes-vazios, cifra-secoes-completas, cifra-duas-secoes)
+        × cada item do par: V igual ao retrato do site, byte a byte 96ms
+   ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+    FAIL   native-tela  apps/native/test/g-par-visualizacao.test.tsx > G-par da visualização (N4-PR8) — o nó corpo de V mostra o que o site mostra > cada item do par: V igual ao retrato do site, byte a byte
+         Tests  1 failed (1)
+   desfeito: git status --short → [ M apps/native/test/visualizacao-tela.test.tsx ]
+
+== CN 5b — a estrela de V mudando antes da resposta (otimismo) — com o instrumento consertado
+   -          favorita={favorita}
+   +          favorita={estadoDoFavoritar(id) === 'favoritando' ? true : favorita}
+        × em voo: a estrela INERTE com o arco e o nome da P-F5; nada muda antes da resposta; o ▶ segue ativo 10ms
+   ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+         Tests  1 failed | 34 passed (35)
+   desfeito: git status --short → [ M apps/native/test/visualizacao-tela.test.tsx ]
+

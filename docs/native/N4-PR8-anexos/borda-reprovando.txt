@@ -1,0 +1,65 @@
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-n4-pr8
+
+ ❯  native-tela  apps/native/test/visualizacao-tela.test.tsx (36 tests | 1 failed | 35 skipped) 38ms
+     ↓ voltar · título · artista · tipo · a estrela · o ▶ só ícone
+     ↓ o título não elide (cresce quando quebra); a altura mínima é 88 = bar.top + space.xl (m12)
+     ↓ sem artista: a meta é só o tipo; nunca *artista desconhecido*
+     ↓ o tipo vem com o ícone de 20 do catálogo, e o tipo desconhecido em `offlineInk`, com o ▶ inerte
+     × o ▶ inerte tem a MESMA borda do ativo (`line`, a da folha); só o ícone muda, para `lineInfo` (P-I2) 37ms
+     ↓ o corpo inválido (sem conteúdo) também deixa o ▶ inerte, como na linha da L
+     ↓ o voltar devolve a biblioteca (o goBack da pilha: a L na mesma posição)
+     ↓ C: a coluna de detalhes tem a largura do token P-T3 (340), à esquerda, e o leitor à direita
+     ↓ C: a coluna da esquerda fica MESMO vazia (sem campos e sem notas: só as datas) — o corpo não muda de lugar
+     ↓ B: uma coluna só — os detalhes sobre o corpo, numa rolagem só; nenhuma largura de coluna
+     ↓ o leitor é o do palco: mono 22, entrelinha do texto, ESCURO, sem quebra de linha (o corpo dentro de uma rolagem horizontal)
+     ↓ sem os controles de tocar: nenhuma rolagem automática, nenhum zoom, nenhuma borda de virar página
+     ↓ a grade de Detalhes por faixa (N4-D99): 2 por linha em C, 3 em B — as etiquetas na largura inteira
+     ↓ na ordem da folha, com o rótulo do site; a dificuldade como *Intermediário*; o andamento em BPM; as etiquetas com ·
+     ↓ compasso, capo e afinação NÃO aparecem, mesmo no dado (herança D, N4-D31)
+     ↓ as notas da música com o rótulo da P-F3 — só em V
+     ↓ as duas datas numa linha, no FIM dos detalhes (o formato de data de S1, YYYY-MM-DD)
+     ↓ campo vazio não aparece; sem nenhum campo e sem notas, sobra só a linha das datas (sem o título *Detalhes*)
+     ↓ a Cifra com seções: o nome de cada seção como o editor gravou (*Content*, *Verse 1*), o texto do core
+     ↓ a Tab como foi importada, sem quebra
+     ↓ a Partitura pelo leitor de PDF do palco (o arquivo do disco)
+     ↓ o corpo vazio: *este item não tem conteúdo*, o mesmo para os quatro tipos
+     ↓ o tipo desconhecido: *tipo desconhecido*, com o ícone do catálogo em `offlineInk`
+     ↓ baixando: *baixando o arquivo…* com o arco (o ícone `baixando` do catálogo, N4-E6)
+     ↓ não baixado: o placeholder do S3e — *arquivo não baixado*, o título · tipo (tamanho) — com o BAIXAR COMO ÍCONE (N4-E8)
+     ↓ não baixado COM rede: a segunda frase é a de sempre; tocar no Baixar pede o arquivo e mostra o baixando
+     ↓ a falha genérica não se repete embaixo: *não consegui baixar* uma vez só
+     ↓ o formato que o app ainda não mostra: a frase do site e o nome do arquivo em mono — sem Baixar
+     ↓ em voo: a estrela INERTE com o arco e o nome da P-F5; nada muda antes da resposta; o ▶ segue ativo
+     ↓ a falha: a linha de aviso sob o cabeçalho, com o nome do controle · a frase da espécie; some no próximo favoritar
+     ↓ o pedido continua se o músico sai de V, e NÃO há aviso na volta (o estado final aparece onde a estrela estiver)
+     ↓ só a estrela fica inerte (em `lineInfo`), e o motivo numa linha de aviso: a P-F4; a leitura e o ▶ funcionam
+     ↓ abre o avulso desta música, empilhado: o voltar devolve V e se chama *Voltar para a visualização*
+     ↓ a linha é um alvo com o nome *Ver “{título}”* (P-F7); o toque abre V desta música
+     ↓ a estrela e o ▶ continuam controles próprios: o toque neles NÃO visualiza
+     ↓ os testIDs novos de V são todos `view-*` (G2: adição); os da linha não mudam
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   native-tela  apps/native/test/visualizacao-tela.test.tsx > N4-R12 — o cabeçalho, igual nas faixas > o ▶ inerte tem a MESMA borda do ativo (`line`, a da folha); só o ícone muda, para `lineInfo` (P-I2)
+AssertionError: expected '#6E6A80' to be '#2A2836' // Object.is equality
+
+Expected: "#2A2836"
+Received: "#6E6A80"
+
+ ❯ apps/native/test/visualizacao-tela.test.tsx:237:53
+    235|     await rerender(tela({ content: SEM_TIPO }))
+    236|     expect(inativo('view-tocar')).toBe(true)
+    237|     expect(estilo(exige('view-tocar')).borderColor).toBe(ativo.borderC…
+       |                                                     ^
+    238|     const traco = exige('view-tocar').querySelector('[stroke]')?.getAt…
+    239|     expect(traco).toBe(dark.lineInfo)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 35 skipped (36)
+   Start at  08:19:54
+   Duration  4.03s (transform 490ms, setup 0ms, import 767ms, tests 38ms, environment 3.01s)
+
