@@ -528,6 +528,14 @@ bloco (regra 23).
 | 3 | **a `LinhaDeAviso` como componente do core** — hoje `components/identidade/linha-de-aviso.tsx` (web) e a do nativo: **o N4 decide** se vira contrato compartilhado | PR-1; PR-9; aval 11 |
 | 4 | os três `undefined` do `TokensDaFaixa` (`faixas.A.folha.alturaMin`, `faixas.B.folha.alturaMin`, `faixas.C.reordenar.artistaMin`): *"a medida não existe nesta faixa"*, e o CSS gerado a omite — a forma final vem com o content nas três faixas | `I1-PR4-anexos` §2; div. 932; aval 10 |
 
+> **Nota do encerramento do N4 (2026-10-07; `docs/native/N4-ENCERRAMENTO.md` §10):** sem reescrever os itens. O **1**
+> se fez para o **vocabulário de content** (N4-D14; N4-PR3, #359: `packages/core/src/frases-content.ts`, igual byte a
+> byte no web e no nativo); **as demais frases do web** seguem herança — destino proposto no encerramento do N4. O **2**
+> já tinha ido ao bloco seguinte ao I1 (N4-D29). O **3**: o N4 decidiu **só o contrato no core**, com duas implementações
+> (N4-D16; N4-PR3), e as quatro telas antigas do tablet passaram a declarar a espécie (N4-PR9). O **4**: as três medidas
+> ficaram **inexistentes por desenho** (N4-D64; N4-PR4, `a267e6e`). Onde o §3.2 e o §14 daqui dizem *"N4"* para esses
+> itens, vale esta nota.
+
 ### 10.3 N5 (celular) e I2
 
 | # | item | origem |

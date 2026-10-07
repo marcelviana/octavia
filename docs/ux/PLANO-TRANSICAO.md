@@ -1503,3 +1503,9 @@ automaticamente.
 > **A ordem depois do I1** é a da I1-D15 (`docs/ux/I1-PRECHECK.md` §0.1): **N4** (content nos
 > apps) → **N5** (celular) → **iOS**; o **W5** (instrumento) corre à parte. As heranças do I1 para
 > cada um estão no `I1-ENCERRAMENTO.md` §10.
+
+> **Nota do encerramento do N4 (2026-10-07)** — sem reescrever a nota acima. **N4 encerrado** — a biblioteca no tablet:
+> a lista com filtros e busca, a visualização, o palco avulso sem setlist hospedeira, o favoritar e todo arquivo no
+> aparelho (#353–#366, `docs/native/N4-ENCERRAMENTO.md`). **A ordem depois do N4**, pelo que já está decidido: o bloco
+> próprio da **quebra de linha** entre o N4 e o N5 (N4-D13; N3-D15), depois o **N5** e o **iOS** (N4-D1); o **W5** à parte.
+> O lugar do **Bloco D** e do **bloco de identidade** na fila é pergunta do aval do encerramento do N4 (§12 de lá).
