@@ -1,0 +1,18 @@
+== 2026-10-07 17:50:40 Tab fim
+global stay_on_while_plugged_in = 0
+system accelerometer_rotation = 1
+system user_rotation = 0
+global airplane_mode_on = 0
+global wifi_on = 1
+global mobile_data = 1
+reverse: []
+Metro 8081: 0
+    firstInstallTime=2026-09-07 18:08:54
+    lastUpdateTime=2026-10-07 17:15:00
+    pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+ls: /sdcard/x.xml: No such file or directory
+ls: /sdcard/pdr.xml: No such file or directory
+ls: /sdcard/fr.xml: No such file or directory
+ls: apps/native/.env: No such file or directory
+ls: apps/native/android: No such file or directory
+?? docs/native/N4-ENCERRAMENTO-anexos/

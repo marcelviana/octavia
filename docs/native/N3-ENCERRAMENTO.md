@@ -665,6 +665,11 @@ depois. O que o N2 deixou para o content segue no `N2-ENCERRAMENTO.md` §10.2
 > `N2-ENCERRAMENTO.md` §10.2 muda o destino dos itens **1–5** para o **Bloco D**; só o **6** (C-D7) fica no N4,
 > como medição. Onde este parágrafo diz *"itens 1–6, destino N4"*, vale aquela errata.
 
+> **Nota do encerramento do N4 (2026-10-07; `N4-ENCERRAMENTO.md`):** o **N4 está encerrado** (#353–#366). O content
+> nasceu adaptativo como pedido acima — a biblioteca (L), a visualização (V) e o palco avulso desenhados nas três faixas
+> (`DESIGN-N4/`) e implementados em C e B, com A como lista de herança para o N5 (`N4-ENCERRAMENTO.md` §10). As
+> heranças do N3 que o N4 tocou e as que seguem estão no §10 de lá; nenhum item deste parágrafo é reescrito.
+
 ### 10.7 Do V1, do N2 e do W4, que segue aberto
 
 O N3 **não tocou** estes — cite-os pela fonte:

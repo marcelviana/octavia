@@ -1,0 +1,412 @@
+# os gates na ponta da main (cf58f7f), árvore ../octavia-n4-encerramento, 2026-10-07 17:5x — saída literal; o G-faixa e a suíte só com cabeçalho e fecho (o corpo se reproduz pelo comando: o veredito lê as medições commitadas)
+
+################ ginv-b5
+$ sh apps/native/scripts/g-inv.sh docs/native/N3-PRECHECK-anexos/B5-baseline docs/native/N4-PR9-anexos/dumps-g-inv
+G-inv — invariante C (T3-R2): bounds em dp, nó a nó
+  base:  docs/native/N3-PRECHECK-anexos/B5-baseline
+  novos: docs/native/N4-PR9-anexos/dumps-g-inv
+G-inv: 34 de 34 idênticos
+G-inv: IDÊNTICO EM DP ✓
+[exit 0]
+
+################ ginv-b3
+$ sh apps/native/scripts/g-inv.sh docs/native/N3-PRECHECK-anexos/B3-referencia-paisagem docs/native/N4-PR9-anexos/dumps-g-inv
+G-inv — invariante C (T3-R2): bounds em dp, nó a nó
+  base:  docs/native/N3-PRECHECK-anexos/B3-referencia-paisagem
+  novos: docs/native/N4-PR9-anexos/dumps-g-inv
+G-inv: 18 de 18 idênticos
+G-inv: IDÊNTICO EM DP ✓
+[exit 0]
+
+################ ginv-par
+$ node apps/native/scripts/g-inv-par.mjs docs/native/N3-PRECHECK-anexos/B5-baseline docs/native/N4-PR9-anexos/dumps-g-inv
+g-inv-par — a errata em par da base do G-inv: 8 dumps declarados
+  base:  docs/native/N3-PRECHECK-anexos/B5-baseline
+  novos: docs/native/N4-PR9-anexos/dumps-g-inv
+  ✓ S2-com-edicao-avd-pai: SvgView de tipo podados base 8 · novo 8 · byte a byte iguais — N4-D69 — os quatro ícones de tipo trocam de desenho na mesma caixa (P-I9…P-I12)
+  ✓ S2-com-edicao-aviso-sem-rede-avd-pai: SvgView de tipo podados base 6 · novo 6 · byte a byte iguais — N4-D69 — os quatro ícones de tipo trocam de desenho na mesma caixa (P-I9…P-I12)
+  ✓ S2-sem-edicao-S2p-avd-pai: SvgView de tipo podados base 8 · novo 8 · byte a byte iguais — N4-D69 — os quatro ícones de tipo trocam de desenho na mesma caixa (P-I9…P-I12)
+  ✓ S4-resultados-avd-pai: SvgView de tipo podados base 5 · novo 5 · byte a byte iguais — N4-D69 — os quatro ícones de tipo trocam de desenho na mesma caixa (P-I9…P-I12)
+  ✓ S2-com-edicao-tab-pai: SvgView de tipo podados base 8 · novo 8 · byte a byte iguais — N4-D69 — os quatro ícones de tipo trocam de desenho na mesma caixa (P-I9…P-I12)
+  ✓ S2-com-edicao-aviso-sem-rede-tab-pai: SvgView de tipo podados base 6 · novo 6 · byte a byte iguais — N4-D69 — os quatro ícones de tipo trocam de desenho na mesma caixa (P-I9…P-I12)
+  ✓ S2-sem-edicao-S2p-tab-pai: SvgView de tipo podados base 8 · novo 8 · byte a byte iguais — N4-D69 — os quatro ícones de tipo trocam de desenho na mesma caixa (P-I9…P-I12)
+  ✓ S4-resultados-tab-pai: SvgView de tipo podados base 6 · novo 6 · byte a byte iguais — N4-D69 — os quatro ícones de tipo trocam de desenho na mesma caixa (P-I9…P-I12)
+g-inv-par: 8 medidos · todo par provado ✓
+[exit 0]
+
+################ gn3
+$ node apps/native/scripts/g-n3.mjs --pai docs/native/N4-PR9-anexos/dumps-g-inv --faixa docs/native/N4-PR9-anexos/dumps-g-inv --rolada docs/native/N4-PR9-anexos/dumps-g-inv
+G-N3 — 32 par(es) (paisagem × faixa); medidas: docs/native/DESIGN-N3/medidas.json (tolerância 4 dp)
+  sem paisagem de referência (fora da conta): N3P6F-S1-S1e-falha-com-cache-avd-pai, N3P6F-S1-aviso-sem-rede-avd-pai, N3P6F-S1-setlists-avd-pai, N4P9F-S0-erro-avd-pai, N4P9F-S0-login-avd-pai, N4P9F-S1-S1e-falha-com-cache-tab-pai, N4P9F-S1-S1f-vazia-avd-pai, N4P9F-S1-S1f-vazia-tab-pai, N4P9F-S1-aviso-sem-rede-tab-pai, N4P9F-S1-setlists-tab-pai, N4P9F-S2-com-edicao-avd-pai, N4P9F-S2-com-edicao-aviso-sem-rede-avd-pai, N4P9F-S2-com-edicao-aviso-sem-rede-tab-pai, N4P9F-S2-com-edicao-tab-pai, N4P9F-S2-sem-edicao-S2p-avd-pai, N4P9F-S2-sem-edicao-S2p-tab-pai, N4P9F-S3-S3a-letra-1a-avd-pai, N4P9F-S3-S3a-letra-1a-tab-pai, N4P9F-S3-S3b-cifra-claro-avd-pai, N4P9F-S3-S3b-cifra-claro-tab-pai, N4P9F-S3-S3b-cifra-escuro-avd-pai, N4P9F-S3-S3b-cifra-escuro-tab-pai, N4P9F-S3-S3c-tab-autoscroll-avd-pai, N4P9F-S3-S3c-tab-autoscroll-tab-pai, N4P9F-S3-S3d-pdf-12p-avd-pai, N4P9F-S3-S3d-pdf-12p-tab-pai, N4P9F-S3-S3e-nao-baixado-avd-pai, N4P9F-S3-S3e-nao-baixado-tab-pai, N4P9F-S3-titulo-longo-avd-pai, N4P9F-S3-titulo-longo-tab-pai, N4P9F-S3-ultima-avd-pai, N4P9F-S3-ultima-tab-pai, N4P9F-S4-resultados-avd-pai, N4P9F-S4-resultados-tab-pai, N4P9F-S4-vazio-avd-pai, N4P9F-S4-vazio-tab-pai, N4P9F-S5-fim-avd-pai, N4P9F-S5-fim-tab-pai, N4P9F-dialogo-apagar-avd-pai, N4P9F-dialogo-apagar-tab-pai, N4P9F-folha-criar-avd-pai, N4P9F-folha-criar-tab-pai, N4P9F-folha-falhou-avd-pai, N4P9F-folha-falhou-tab-pai, N4P9F-folha-validacao-avd-pai, N4P9F-folha-validacao-tab-pai, N4P9F-picker-resultados-avd-pai, N4P9F-picker-resultados-tab-pai, N4P9F-picker-vazio-avd-pai, N4P9F-picker-vazio-tab-pai, N4P9F-reordenar-aberto-avd-pai, N4P9F-reordenar-aberto-tab-pai
+
+(e) TEXTO QUE SOME — REPROVA: 0
+
+(d′) MENOS ESPAÇO QUE NA PAISAGEM — TRIAGEM (confirmar no PNG): 90
+  N4P9F-S2-com-edicao-avd-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N4P9F-S2-com-edicao-aviso-sem-rede-avd-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N4P9F-S2-com-edicao-aviso-sem-rede-avd-ret: aviso-motivo 762.2 → 631.1 dp (altura ×1.9)
+  N4P9F-S2-com-edicao-aviso-sem-rede-avd-ret: "Sétima do ensaio" 272 → 398.2 dp (altura ×22.3)
+  N4P9F-S2-com-edicao-aviso-sem-rede-tab-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N4P9F-S2-com-edicao-aviso-sem-rede-tab-ret: aviso-motivo 762.2 → 631.1 dp (altura ×1.9)
+  N4P9F-S2-com-edicao-aviso-sem-rede-tab-ret: "Sétima do ensaio" 272 → 398.2 dp (altura ×2.2)
+  N4P9F-S2-com-edicao-tab-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N4P9F-S2-sem-edicao-S2p-avd-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N4P9F-S2-sem-edicao-S2p-tab-ret: "ENSAIO DE RETRATO" 783.6 → 356.9 dp
+  N4P9F-S3-S3a-letra-1a-avd-ret: "Manhã de ensaio · Banda da fixture · Let" 832 → 663.1 dp
+  N4P9F-S3-S3a-letra-1a-avd-ret: corpo 1073.8 → 647.1 dp (altura ×1.9)
+  N4P9F-S3-S3a-letra-1a-tab-ret: "Manhã de ensaio · Banda da fixture · Let" 832 → 663.1 dp
+  N4P9F-S3-S3a-letra-1a-tab-ret: corpo 1073.8 → 647.1 dp (altura ×1.9)
+  N4P9F-S3-S3b-cifra-claro-avd-ret: "Segunda do ensaio · Duo Manacá · Cifra" 830.2 → 663.1 dp
+  N4P9F-S3-S3b-cifra-claro-avd-ret: corpo 906.7 → 647.1 dp (altura ×1.9)
+  N4P9F-S3-S3b-cifra-claro-tab-ret: "Segunda do ensaio · Duo Manacá · Cifra" 830.2 → 663.1 dp
+  N4P9F-S3-S3b-cifra-claro-tab-ret: corpo 906.7 → 647.1 dp (altura ×1.9)
+  N4P9F-S3-S3b-cifra-escuro-avd-ret: "Segunda do ensaio · Duo Manacá · Cifra" 830.2 → 663.1 dp
+  N4P9F-S3-S3b-cifra-escuro-avd-ret: corpo 906.7 → 647.1 dp (altura ×1.9)
+  N4P9F-S3-S3b-cifra-escuro-tab-ret: "Segunda do ensaio · Duo Manacá · Cifra" 830.2 → 663.1 dp
+  N4P9F-S3-S3b-cifra-escuro-tab-ret: corpo 906.7 → 647.1 dp (altura ×1.9)
+  N4P9F-S3-S3c-tab-autoscroll-avd-ret: "Terceira do ensaio · Trio de fixture · T" 830.2 → 663.1 dp
+  N4P9F-S3-S3c-tab-autoscroll-avd-ret: corpo 1040 → 647.1 dp (altura ×2)
+  N4P9F-S3-S3c-tab-autoscroll-tab-ret: "Terceira do ensaio · Trio de fixture · T" 830.2 → 663.1 dp
+  N4P9F-S3-S3c-tab-autoscroll-tab-ret: corpo 1040 → 647.1 dp (altura ×1.9)
+  N4P9F-S3-S3d-pdf-12p-avd-ret: "Partitura de doze páginas · Orquestra de" 694.2 → 663.1 dp
+  N4P9F-S3-S3d-pdf-12p-avd-ret: linha-motivo 1137.8 → 711.1 dp
+  N4P9F-S3-S3d-pdf-12p-tab-ret: "Partitura de doze páginas · Orquestra de" 694.2 → 663.1 dp
+  N4P9F-S3-S3d-pdf-12p-tab-ret: linha-motivo 1137.8 → 711.1 dp
+  N4P9F-S3-S3e-nao-baixado-avd-ret: "Partitura que nunca baixou · Orquestra d" 806.2 → 663.1 dp
+  N4P9F-S3-S3e-nao-baixado-tab-ret: "Partitura que nunca baixou · Orquestra d" 806.2 → 663.1 dp
+  N4P9F-S3-titulo-longo-avd-ret: "Uma música de título bem comprido, para " 828.4 → 663.1 dp
+  N4P9F-S3-titulo-longo-avd-ret: corpo 1073.8 → 647.1 dp (altura ×1.9)
+  N4P9F-S3-titulo-longo-tab-ret: "Uma música de título bem comprido, para " 828.4 → 663.1 dp
+  N4P9F-S3-titulo-longo-tab-ret: corpo 1073.8 → 647.1 dp (altura ×1.9)
+  N4P9F-S3-ultima-avd-ret: "Oitava do ensaio · Banda da fixture · Le" 828.4 → 663.1 dp
+  N4P9F-S3-ultima-avd-ret: corpo 1073.8 → 647.1 dp (altura ×1.9)
+  N4P9F-S3-ultima-tab-ret: "Oitava do ensaio · Banda da fixture · Le" 828.4 → 663.1 dp
+  N4P9F-S3-ultima-tab-ret: corpo 1073.8 → 647.1 dp (altura ×1.9)
+  N4P9F-S4-resultados-avd-ret: "Manhã de ensaio" 892 → 465.3 dp
+  N4P9F-S4-resultados-avd-ret: "Banda da fixture  ·  Disco de fixture" 892 → 465.3 dp
+  N4P9F-S4-resultados-avd-ret: "Segunda do ensaio" 892 → 465.3 dp
+  N4P9F-S4-resultados-avd-ret: "Duo Manacá" 892 → 465.3 dp
+  N4P9F-S4-resultados-avd-ret: "Terceira do ensaio" 892 → 465.3 dp
+  N4P9F-S4-resultados-avd-ret: "Trio de fixture" 892 → 465.3 dp
+  N4P9F-S4-resultados-avd-ret: "Sétima do ensaio" 892 → 465.3 dp
+  N4P9F-S4-resultados-avd-ret: "Banda da fixture" 892 → 465.3 dp
+  N4P9F-S4-resultados-avd-ret: "Oitava do ensaio" 892 → 465.3 dp
+  N4P9F-S4-resultados-avd-ret: "Banda da fixture" 892 → 465.3 dp
+  N4P9F-S4-resultados-avd-ret: "Nona do ensaio" 892 → 465.3 dp (altura ×4.2)
+  N4P9F-S4-resultados-avd-ret: "Duo Manacá" 892 → 465.3 dp
+  N4P9F-S4-resultados-avd-ret: "Banda da fixture" 892 → 465.3 dp
+  N4P9F-S4-resultados-tab-ret: "Manhã de ensaio" 892 → 465.3 dp
+  N4P9F-S4-resultados-tab-ret: "Banda da fixture  ·  Disco de fixture" 892 → 465.3 dp
+  N4P9F-S4-resultados-tab-ret: "Segunda do ensaio" 892 → 465.3 dp
+  N4P9F-S4-resultados-tab-ret: "Duo Manacá" 892 → 465.3 dp
+  N4P9F-S4-resultados-tab-ret: "Terceira do ensaio" 892 → 465.3 dp
+  N4P9F-S4-resultados-tab-ret: "Trio de fixture" 892 → 465.3 dp
+  N4P9F-S4-resultados-tab-ret: "Sétima do ensaio" 892 → 465.3 dp
+  N4P9F-S4-resultados-tab-ret: "Banda da fixture" 892 → 465.3 dp
+  N4P9F-S4-resultados-tab-ret: "Oitava do ensaio" 892 → 465.3 dp
+  N4P9F-S4-resultados-tab-ret: "Banda da fixture" 892 → 465.3 dp
+  N4P9F-S4-resultados-tab-ret: "Nona do ensaio" 892 → 465.3 dp (altura ×1.6)
+  N4P9F-S4-resultados-tab-ret: "Duo Manacá" 892 → 465.3 dp
+  N4P9F-S4-resultados-tab-ret: "Banda da fixture" 892 → 465.3 dp
+  N4P9F-picker-resultados-avd-ret: "Manhã de ensaio" 726.2 → 299.1 dp
+  N4P9F-picker-resultados-avd-ret: "Banda da fixture" 726.2 → 299.1 dp
+  N4P9F-picker-resultados-avd-ret: "Segunda do ensaio" 726.2 → 299.1 dp
+  N4P9F-picker-resultados-avd-ret: "Duo Manacá" 726.2 → 299.1 dp
+  N4P9F-picker-resultados-avd-ret: "Terceira do ensaio" 726.2 → 299.1 dp
+  N4P9F-picker-resultados-avd-ret: "Trio de fixture" 726.2 → 299.1 dp
+  N4P9F-picker-resultados-avd-ret: "Sétima do ensaio" 726.2 → 299.1 dp
+  N4P9F-picker-resultados-avd-ret: "Banda da fixture" 726.2 → 299.1 dp
+  N4P9F-picker-resultados-avd-ret: "Oitava do ensaio" 726.2 → 299.1 dp
+  N4P9F-picker-resultados-avd-ret: "Banda da fixture" 726.2 → 299.1 dp
+  N4P9F-picker-resultados-avd-ret: "Duo Manacá" 726.2 → 461.3 dp
+  N4P9F-picker-resultados-avd-ret: "Banda da fixture" 726.2 → 461.3 dp
+  N4P9F-picker-resultados-tab-ret: "Manhã de ensaio" 726.2 → 299.1 dp
+  N4P9F-picker-resultados-tab-ret: "Banda da fixture" 726.2 → 299.1 dp
+  N4P9F-picker-resultados-tab-ret: "Segunda do ensaio" 726.2 → 299.1 dp
+  N4P9F-picker-resultados-tab-ret: "Duo Manacá" 726.2 → 299.1 dp
+  N4P9F-picker-resultados-tab-ret: "Terceira do ensaio" 726.2 → 299.1 dp
+  N4P9F-picker-resultados-tab-ret: "Trio de fixture" 726.2 → 299.1 dp
+  N4P9F-picker-resultados-tab-ret: "Sétima do ensaio" 726.2 → 299.1 dp
+  N4P9F-picker-resultados-tab-ret: "Banda da fixture" 726.2 → 299.1 dp
+  N4P9F-picker-resultados-tab-ret: "Oitava do ensaio" 726.2 → 299.1 dp
+  N4P9F-picker-resultados-tab-ret: "Banda da fixture" 726.2 → 299.1 dp
+  N4P9F-picker-resultados-tab-ret: "Duo Manacá" 726.2 → 461.3 dp
+  N4P9F-picker-resultados-tab-ret: "Banda da fixture" 726.2 → 461.3 dp
+
+4 dp CONTRA A FOLHA — ERRATA CANDIDATA: 0
+
+NOME ACESSÍVEL — o texto está no content-desc do nó de mesmo resource-id (N3-D17); não reprova, não soma ao (e): 8
+  N4P9F-S2-com-edicao-avd-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N4P9F-S2-com-edicao-avd-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N4P9F-S2-com-edicao-aviso-sem-rede-avd-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N4P9F-S2-com-edicao-aviso-sem-rede-avd-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N4P9F-S2-com-edicao-aviso-sem-rede-tab-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N4P9F-S2-com-edicao-aviso-sem-rede-tab-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+  N4P9F-S2-com-edicao-tab-ret: "Adicionar música" → content-desc de `picker-abrir`
+  N4P9F-S2-com-edicao-tab-ret: "Apagar setlist" → content-desc de `setlist-apagar`
+
+ROLAGEM — o texto está no dump rolado do mesmo estado; não reprova, não soma ao (e): 6
+  N4P9F-S2-com-edicao-avd-ret: "8" → N4P9F-S2-com-edicao-rolada-avd-ret
+  N4P9F-S2-com-edicao-avd-ret: "Oitava do ensaio" → N4P9F-S2-com-edicao-rolada-avd-ret
+  N4P9F-S2-com-edicao-aviso-sem-rede-avd-ret: "Oitava do ensaio" → N4P9F-S2-com-edicao-aviso-sem-rede-rolada-avd-ret
+  N4P9F-S2-com-edicao-aviso-sem-rede-tab-ret: "Oitava do ensaio" → N4P9F-S2-com-edicao-aviso-sem-rede-rolada-tab-ret
+  N4P9F-S2-com-edicao-tab-ret: "8" → N4P9F-S2-com-edicao-rolada-tab-ret
+  N4P9F-S2-com-edicao-tab-ret: "Oitava do ensaio" → N4P9F-S2-com-edicao-rolada-tab-ret
+  dumps rolados usados (sha256, 12):
+    06ddedc9e0fd  N4P9F-S2-com-edicao-aviso-sem-rede-rolada-avd-ret.xml
+    42ef684f9134  N4P9F-S2-com-edicao-aviso-sem-rede-rolada-tab-ret.xml
+    73aeaf93c9dc  N4P9F-S2-com-edicao-rolada-avd-ret.xml
+    6275d3fd071f  N4P9F-S2-com-edicao-rolada-tab-ret.xml
+
+(b) CORTE — nó que sai da janela útil ou encosta na borda lateral, NOVO contra a paisagem — REPROVA: 0
+
+G-N3: (e)=0 · (b)=0 · nome-acessível=8 · rolagem=6 ✓ (d′ e 4 dp não reprovam: triagem e errata)
+[exit 0]
+
+################ g1
+$ sh apps/native/scripts/g1.sh cf58f7f WORKTREE
+declarações: as listas locais deste script (sem GATES_DECL — rodada à mão)
+base=cf58f7f head=WORKTREE
+G1a — diff vazio em 63 arquivos DERIVADOS de apps/native + packages/core/src
+      escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+      EXCEÇÕES DECLARADAS (o escopo desta PR):
+        (nenhuma — nenhum arquivo de comportamento está fora da invariância)
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+      PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+        (nenhum — nenhuma asserção do core pode mudar nesta PR)
+  G1b: só adição ✓
+[exit 0]
+
+################ g2g3
+$ sh apps/native/scripts/g2g3.sh cf58f7f WORKTREE
+G2 — testIDs  antes=121  depois=121
+  G2: antes ⊆ depois ✓
+G3 — declarações: as listas locais deste script (sem GATES_DECL — rodada à mão)
+G3 — linhas log( antes=70  depois=70
+      ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+        (nenhuma)
+      REMOÇÕES DECLARADAS (linha → REMOVIDA: razão; N2-D34):
+        (nenhuma)
+      — nenhuma linha de log pode sumir nesta PR
+  G3: nenhuma linha sumiu ✓
+[exit 0]
+
+################ g2g3-bloco
+$ sh apps/native/scripts/g2g3.sh 046797e WORKTREE
+G2 — testIDs  antes=80  depois=121
+  G2: antes ⊆ depois ✓
+  testID NOVOS:
+      apps/native/src/screens/FiltrosDaBiblioteca.tsx	testID="lib-filtro-favoritas"
+      apps/native/src/screens/FiltrosDaBiblioteca.tsx	testID={`lib-filtro-${id}`}
+      apps/native/src/screens/LibraryScreen.tsx	testID="lib-apagar"
+      apps/native/src/screens/LibraryScreen.tsx	testID="lib-busca-sem-resultado"
+      apps/native/src/screens/LibraryScreen.tsx	testID="lib-campo"
+      apps/native/src/screens/LibraryScreen.tsx	testID="lib-carregando"
+      apps/native/src/screens/LibraryScreen.tsx	testID="lib-falha-sem-cache"
+      apps/native/src/screens/LibraryScreen.tsx	testID="lib-favoritas-0"
+      apps/native/src/screens/LibraryScreen.tsx	testID="lib-filtro-sem-resultado"
+      apps/native/src/screens/LibraryScreen.tsx	testID="lib-lista"
+      apps/native/src/screens/LibraryScreen.tsx	testID="lib-regua"
+      apps/native/src/screens/LibraryScreen.tsx	testID="lib-tela"
+      apps/native/src/screens/LibraryScreen.tsx	testID="lib-tentar"
+      apps/native/src/screens/LibraryScreen.tsx	testID="lib-vazia"
+      apps/native/src/screens/LibraryScreen.tsx	testID="lib-voltar"
+      apps/native/src/screens/LinhaDaBiblioteca.tsx	testID={`lib-favoritar-${id8}`}
+      apps/native/src/screens/LinhaDaBiblioteca.tsx	testID={`lib-linha-${id8}`}
+      apps/native/src/screens/LinhaDaBiblioteca.tsx	testID={`lib-tocar-${id8}`}
+      apps/native/src/screens/StageScreen.tsx	testID="s3-formato"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="corpo"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-baixando"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-baixar"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-cabecalho"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-datas"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-detalhes"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-falha"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-favoritar"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-formato"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-grade-linha"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-leitor"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-meta"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-nao-baixado"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-notas"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-pdf"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-placeholder"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-rolagem"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-tela"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-titulo"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-tocar"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID="view-voltar"
+      apps/native/src/screens/VisualizacaoScreen.tsx	testID={`view-campo-${campo.chave}`}
+G3 — declarações: as listas locais deste script (sem GATES_DECL — rodada à mão)
+G3 — linhas log( antes=68  depois=70
+      ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+        (nenhuma)
+      REMOÇÕES DECLARADAS (linha → REMOVIDA: razão; N2-D34):
+        (nenhuma)
+      — nenhuma linha de log pode sumir nesta PR
+  linhas que SUMIRAM (cada uma precisa de um PAR de errata com a substituta, ou de uma REMOÇÃO declarada):
+      apps/native/src/api.ts	if (prazo !== null) log(`ratelimit retry-after=${prazo} family=setlist-mutate`)
+      apps/native/src/prefetch.ts	log(`prefetch plan n=${plano.length} reason=7d`)
+  G3: linha sumiu SEM ERRATA NEM REMOÇÃO ✗
+      apps/native/src/api.ts	if (prazo !== null) log(`ratelimit retry-after=${prazo} family=setlist-mutate`)
+  linhas NOVAS (declarar no commit e no catálogo):
+      apps/native/src/api.ts	if (prazo !== null) log(`ratelimit retry-after=${prazo} family=${familia}`)
+      apps/native/src/favoritar.ts	log(`write blocked op=${op} reason=${motivo}`)
+      apps/native/src/favoritar.ts	log(`write op=${pedido.op} content=${pedido.content} status=${status} code=${code} ms=${ms}`)
+      apps/native/src/prefetch.ts	log(`prefetch plan n=${plano.length} reason=library`)
+[exit 1]
+
+################ a20
+$ cd apps/native && node scripts/a20.mjs .
+  escopo: ESTENDIDO (V1-A3 §A3.3 + labels em expressão, V1-PR3 + chave de objeto, V1-PR6)
+  raiz: . · não descidos: test, scripts, node_modules, android, ios, .expo, .git, assets (W2, div. 123)
+  arquivos varridos: 43 (inclui 2 de fora da raiz: ../../packages/core/src/frases.ts, ../../packages/core/src/frases-content.ts — N2-PR3, div. 229)
+  vocabulário: 45 termos · isenções do produto: 9
+  literais em posição de texto examinados: 229
+  acusações: 0
+[exit 0]
+
+################ icones
+$ cd apps/native && node scripts/icones.mjs ../../packages/identidade/src/icones.ts
+  §6.4: 34 linhas → 33 nomes distintos, + 4 fora do catálogo + 6 da tela 2 + 2 do N4 = 45 esperados
+  anexo D: 34 registros (V1) + 5 (DESIGN-N2, E17) + 2 (DESIGN-N4, N4-D76) = 41 registros · 68 elementos distintos no do V1
+  DESIGN-N4: 7/7 linhas P-I achadas · 49 células cobradas · trocas em par: 4 (12 elementos velhos cobrados ausentes)
+  pares do N4: em20 4 (DESIGN-V1/telas.html · tab@20 de quatro cordas (§6.3) → P-I11 em 20, traço 1,8) · traço em 24/28: markup da folha: 1,8 em 24 e 28 → TRACO da família (1,75 · 2)
+  tela 2 (E17): 6/6 nomes já no mapa e cobrados · 0 declarados pendentes
+  mapa: 45 nomes · 96 elementos distintos · 45 com 'normal'
+  hex cravado: 0 · tinta por token: 6
+  §6.3 → T1 (N4-D69): tab em20 3 linhas · normal 3 linhas · a tab@20 de quatro cordas do telas.html (o velho do par): achada
+  fora do catálogo: 4/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  acusações: 0 · avisos: 0
+[exit 0]
+
+################ sha
+$ for d in docs/native/DESIGN-V1 docs/native/DESIGN-N2 docs/native/DESIGN-N3 docs/native/DESIGN-N4 docs/ux/DESIGN-I1 docs/native/N3-PRECHECK-anexos; do echo "== $d"; (cd $d && shasum -a 256 -c SHA256SUMS* | grep -c ': OK'; shasum -a 256 -c SHA256SUMS* | grep -v ': OK'); done
+== docs/native/DESIGN-V1
+3
+== docs/native/DESIGN-N2
+2
+== docs/native/DESIGN-N3
+2
+== docs/native/DESIGN-N4
+2
+== docs/ux/DESIGN-I1
+14
+== docs/native/N3-PRECHECK-anexos
+355
+[exit 1]
+
+################ gback
+$ sh scripts/gates-web/g-back.sh 046797e WORKTREE
+G-back — base 046797e · head WORKTREE
+núcleo: congelado 39 · derivação BASE 39 · HEAD 39 · união 40
+declarações gback: 0 caminho(s)
+
+## (i) arquivo do núcleo que mudou
+  ✓ nenhum — diff vazio no núcleo
+## (ii) arquivo novo no alcance (derivação do HEAD fora do congelado)
+  ✓ nenhum
+## (iii) declaração órfã (gback: de arquivo que não mudou)
+  ✓ nenhuma
+
+G-back: PASSA
+[exit 0]
+
+################ gpalco
+$ sh scripts/gates-web/g-palco.sh
+G-palco — lista: docs/ux/I1-PR3-anexos/lista-do-corte.txt
+MORRE: 69 caminhos · SIMBOLO: 7 · TEXTO: 6
+
+## 1. MORRE — o arquivo existe
+  ✓ nenhum
+## 2. MORRE — o arquivo é importado
+  ✓ nenhum
+## 3. SIMBOLO — símbolo morto dentro de arquivo que fica
+  ✓ nenhum
+## 4. TEXTO — referência a rota/arquivo morto
+  ✓ nenhum
+
+G-palco: PASSA — 0 ocorrências
+[exit 0]
+
+################ gtok
+$ node scripts/gates-web/g-tok.mjs
+## (i) a folha — conferir.mjs × erratas.json
+  ✓ I1-E1 (estado) cobre 2
+  ✓ I1-E2 (estado) cobre 1
+  ✓ I1-E2 (estado) cobre 2
+  ✓ I1-E15 (estado) cobre 4
+  ✓ I1-E3 (forma) cobre 1
+  ✓ I1-E4 (inventario-sem-px) cobre 6
+  ✓ I1-E5 (declaracao) cobre 8
+  ✓ I1-E6 (forma) cobre 1
+  ✓ decisao-588 (nome-icone) cobre 1
+  ✓ decisao-589 (forma) cobre 1
+  ✓ I1-E32 (forma) cobre 1
+  ✓ I1-E32 (forma) cobre 1
+  ✓ I1-E32 (forma) cobre 1
+  achados do conferir: 29 · cobertos: 29 · descobertos: 0 · erratas: 10 · órfãs: 0
+## (ii) arquivos redesenhados — scripts/gates-web/g-tok-arquivos.txt
+  arquivos: 133 · literais de identidade acusados: 0 · toasts: 0 · imports de ui: 0 · textos examinados: 33 · isentos de inglês (scripts/gates-web/g-tok-sem-ingles.txt): 1 · vocabulário: 133 · isenções: 9 · strings de .ts examinadas (div. 828): 495 · frases isentas (scripts/gates-web/g-tok-frases-isentas.txt): 5 de 5 entradas
+
+G-tok: PASSA
+[exit 0]
+
+################ gtokcob
+$ node scripts/gates-web/g-tok-cobertura.mjs
+## cobertura da lista (ii) — scripts/gates-web/g-tok-arquivos.txt (raiz .)
+  arquivos de tela: 129 · na lista: 129 · excluídos: 0 · FORA: 0 · da lista que não são de tela (informa): 4
+
+G-tok (cobertura): PASSA
+[exit 0]
+
+################ css
+$ pnpm exec vitest run --project identidade packages/identidade/test/css.test.ts
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-n4-encerramento
+
+ ✓  identidade  packages/identidade/test/css.test.ts (4 tests) 5ms
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  17:54:12
+   Duration  308ms (transform 53ms, setup 0ms, import 77ms, tests 5ms, environment 0ms)
+
+[exit 0]
+
+################ gfaixa
+$ node scripts/gates-web/g-faixa-veredito.mjs tests/gates-web/medicoes
+G-faixa (veredito) — tests/gates-web/medicoes: 14 medição(ões)
+  […] (3344 linhas; o fecho:)
+  · login · AUTH-login-nao-configurado · 711: NÃO ALCANÇADO — o texto esperado não apareceu: "o login não está disponível neste servidor"
+  · login · AUTH-login-nao-configurado · 1138: NÃO ALCANÇADO — o texto esperado não apareceu: "o login não está disponível neste servidor"
+  · signup · AUTH-signup-excecao: INALCANÇÁVEL (declarado) — o contexto não lança (todo catch devolve { error }): o catch da tela não se alcança [hipótese] (div. 640)
+  · verify-email · AUTH-verify-reenviar-excecao: INALCANÇÁVEL (declarado) — o contexto não lança: o catch da tela não se alcança [hipótese] (I1-E1, div. 640)
+
+G-faixa: PASSA
+[exit 0]
+
+################ tsc
+$ pnpm exec tsc --noEmit -p . && echo raiz 0; (cd packages/core && pnpm exec tsc --noEmit && echo core 0); (cd packages/identidade && pnpm exec tsc --noEmit && echo identidade 0); (cd apps/native && pnpm exec tsc --noEmit && echo nativo 0)
+raiz 0
+core 0
+identidade 0
+nativo 0
+[exit 0]
+
+################ lint
+$ pnpm lint
+
+> octavia@0.1.0 lint /Users/marcelviana/projects/octavia-n4-encerramento
+> pnpm exec next lint
+
+✔ No ESLint warnings or errors
+[exit 0]
+
+################ test
+$ pnpm test
+ Test Files  139 passed | 3 skipped (142)
+      Tests  1669 passed | 59 skipped (1728)
+[exit 0]

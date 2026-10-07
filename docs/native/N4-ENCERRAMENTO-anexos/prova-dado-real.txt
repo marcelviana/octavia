@@ -1,0 +1,49 @@
+S1: baixar-772076b4 buscar criar-setlist setlist-772076b4 setlist-e39d57cf
+L: lib-tela · régua (só os dígitos) = [] · linhas lib-linha-* na tela = 5 · teclado de pé = False
+   ids: lib-campo lib-filtro-cifra lib-filtro-favoritas lib-filtro-letra lib-filtro-partitura lib-filtro-tab lib-lista lib-regua lib-tela lib-voltar
+V: a 1ª linha da L (4379bdb9) · ids: corpo view-cabecalho view-datas view-detalhes view-favoritar view-grade-linha view-leitor view-meta view-tela view-titulo view-tocar view-voltar · corpo len=1060 sha12=26449a499ed8
+palco avulso: ids: auto-scroll borda-avancar borda-voltar busca corpo sair tema zoom-mais zoom-menos · corpo len=1060 sha12=26449a499ed8
+    palco avulso · OCTAVIA: keepawake on
+    palco avulso · OCTAVIA: prefetch plan n=0 reason=demand
+BACK → view-tela ✓
+BACK → lib-tela ✓
+BACK → buscar ✓
+    voltar · OCTAVIA: keepawake off
+S2 (772076b4): músicas song-* na tela = 4
+palco com setlist: ids: auto-scroll borda-avancar borda-voltar busca corpo indice sair tema zoom-mais zoom-menos · corpo len=1831 sha12=8eaa08ad353f
+    palco com setlist · OCTAVIA: index open
+    palco com setlist · OCTAVIA: index jump n=1
+    palco com setlist · OCTAVIA: keepawake on
+    palco com setlist · OCTAVIA: prefetch plan n=0 reason=demand
+de volta a S1: True
+    fim · OCTAVIA: keepawake off
+Traceback (most recent call last):
+  File "<stdin>", line 9, in <module>
+StopIteration
+Traceback (most recent call last):
+  File "<stdin>", line 10, in <module>
+IndexError: list index out of range
+
+== 2ª passada, 2026-10-07 17:35:57, com o instrumento consertado (o S1 por criar-setlist; a régua pelos filhos) — a 1ª passada acima parou no S2, que também tem 'buscar' (div. 1137)
+S1: baixar-772076b4 buscar criar-setlist setlist-772076b4 setlist-e39d57cf
+L: lib-tela · régua (só os dígitos) = [] · linhas lib-linha-* na tela = 5 · teclado de pé = False
+   ids: lib-campo lib-filtro-cifra lib-filtro-favoritas lib-filtro-letra lib-filtro-partitura lib-filtro-tab lib-lista lib-regua lib-tela lib-voltar
+V: a 1ª linha da L (4379bdb9) · ids: corpo view-cabecalho view-datas view-detalhes view-favoritar view-grade-linha view-leitor view-meta view-tela view-titulo view-tocar view-voltar · corpo len=1060 sha12=26449a499ed8
+palco avulso: ids: auto-scroll borda-avancar borda-voltar busca corpo sair tema zoom-mais zoom-menos · corpo len=1060 sha12=26449a499ed8
+    palco avulso · OCTAVIA: keepawake on
+    palco avulso · OCTAVIA: prefetch plan n=0 reason=demand
+BACK → view-tela ✓
+BACK → lib-tela ✓
+BACK → criar-setlist ✓
+    voltar · OCTAVIA: keepawake off
+S2 (772076b4): músicas song-* na tela = 4
+palco com setlist: ids: auto-scroll borda-avancar borda-voltar busca corpo indice sair tema zoom-mais zoom-menos · corpo len=1831 sha12=8eaa08ad353f
+    palco com setlist · OCTAVIA: index open
+    palco com setlist · OCTAVIA: index jump n=1
+    palco com setlist · OCTAVIA: keepawake on
+    palco com setlist · OCTAVIA: prefetch plan n=0 reason=demand
+de volta a S1: True
+    fim · OCTAVIA: keepawake off
+api desde o logcat -c das 100 aberturas: 0
+== a régua (3ª leitura): os nós de texto DENTRO dos bounds do lib-regua (o RN os põe como irmãos no dump): 2 · só os dígitos: [['63'], ['63']]
+de volta a S1: True

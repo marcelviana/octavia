@@ -18,20 +18,24 @@ uma referência (div. 80).
 **Nível job** (`startedAt → completedAt` do `android-debug-apk`), as corridas **do
 regime em vigor**, que começa na **#284**: todas as que produziram APK, eventos
 `pull_request` e `push` (`[medido: gh run list --workflow=native.yml · gh run view <id> --json jobs]`).
-Decisão do Marcel, 2026-09-23. **Recalculado no encerramento do N3 (2026-09-26, div.
-467)**, com as corridas 101–118 (W4-b3 e N3):
+Decisão do Marcel, 2026-09-23. **Recalculado no encerramento do N4 (2026-10-07, div.
+1139)**, com as corridas 119–150 (as 7 do I1, que o encerramento dele não pôs, e as 25 do N4):
 
 ```
-n=96   mín 8m09s   máx 14m32s   mediana 12m20,5s   Q1 11m12,2s   Q3 12m55,2s   IQR 1m43s
+n=128  mín 8m09s   máx 14m32s   mediana 12m30s     Q1 11m12,2s   Q3 13m15,5s   IQR 2m03,2s
 ```
+
+No encerramento do N3 (as 101–118) era `n=96 · mín 8m09s · máx 14m32s · mediana 12m20,5s ·
+Q1 11m12,2s · Q3 12m55,2s · IQR 1m43s`. Só as do I1 (n=7): mediana 12m42s, IQR 1m11,5s; só as
+do N4 (n=25): mín 8m22s · máx 14m11s · mediana 12m58s · IQR 2m47s — recortes descritivos.
 
 Até a 100ª (W4-b2) era `n=78 · mín 8m09s · máx 14m32s · mediana 12m12s · Q1 11m01s ·
-Q3 12m50s · IQR 1m49s`. Desde este recálculo os valores levam a décima quando o
+Q3 12m50s · IQR 1m49s`. Desde o recálculo do N3 os valores levam a décima quando o
 quartil cai no meio de dois segundos (antes eram arredondados, e não sempre para o
 mesmo lado: 12m12,5s saía 12m12s e 11m49,5s saía 11m50s).
 
 Quartis pelo método inclusivo (interpolação linear, `statistics.quantiles(…,
-method='inclusive')`, o "tipo 7"). O regime 2 tem 100 corridas; **4 falhas**
+method='inclusive')`, o "tipo 7"). O regime 2 tem 132 corridas; **4 falhas**
 ficam na tabela, riscadas, e **fora da população**. São as duas **plantadas** da #322
 (o CN da div. 360) e as duas do `setup-android@v3` (#301). Nenhuma produziu APK.
 
@@ -57,7 +61,7 @@ tem hoje **dois** segmentos; a razão do corte está abaixo, `[medido]`.
 | segmento | de | até | corridas | falhas | população | faixa |
 |---|---|---|---|---|---|---|
 | **regime 1** — antes da #284 | a 1ª (`34117343294`, #265) | a 18ª (`34488090147`, #283) | 18 | 2 | 16 | 4m42s–9m26s, mediana 6m57s, IQR 0m51s |
-| **regime 2** — desde a #284 (**a referência**) | a 19ª (`34495434672`, #284) | a última | 100 | 4 | 96 | 8m09s–14m32s, mediana 12m20,5s, IQR 1m43s |
+| **regime 2** — desde a #284 (**a referência**) | a 19ª (`34495434672`, #284) | a última | 132 | 4 | 128 | 8m09s–14m32s, mediana 12m30s, IQR 2m03,2s |
 
 **A razão do corte `[medido]`.** `git log -- .github/workflows/native.yml` mostra que
 **o workflow não mudou na #284**: entre o `6ccf644` (N0-PR3, 2026-09-07) e o `d83d94f`
@@ -98,11 +102,12 @@ dá "nenhuma" para trás:
 
 | recorte | n | mín | máx | mediana | Q1 | Q3 | IQR |
 |---|---|---|---|---|---|---|---|
-| a série inteira, os dois regimes | 112 | 4m42s | 14m32s | 11m59s | 9m52,5s | 12m50,5s | 2m58s |
-| regime 2, só `pull_request` | 62 | 8m09s | 14m31s | 12m19s | 11m23,8s | 13m05s | 1m41,2s |
-| regime 2, desde o `setup-android@v4` (#302) | 67 | 8m09s | 14m32s | 12m34s | 10m55,5s | 13m08s | 2m12,5s |
+| a série inteira, os dois regimes | 144 | 4m42s | 14m32s | 12m18s | 10m13,8s | 13m07,5s | 2m53,8s |
+| regime 2, só `pull_request` | 83 | 8m09s | 14m31s | 12m32s | 11m31s | 13m18s | 1m47s |
+| regime 2, desde o `setup-android@v4` (#302) | 99 | 8m09s | 14m32s | 12m39s | 10m55,5s | 13m18s | 2m22,5s |
 
-(Recalculados com a referência no encerramento do N3. Até a 100ª: 94 · 11m50s · IQR
+(Recalculados com a referência no encerramento do N4. No encerramento do N3: 112 · 11m59s · IQR
+2m58s; 62 · 12m19s · IQR 1m41,2s; 67 · 12m34s · IQR 2m12,5s. Recalculados com a referência no encerramento do N3. Até a 100ª: 94 · 11m50s · IQR
 3m17s; 53 · 12m10s · IQR 1m43s; 49 · 12m31s · IQR 2m33s.)
 
 **O teto de 14m11s, "intacto" desde a V1**, caiu na corrida 93 (push da #321 na
@@ -254,6 +259,38 @@ Fora da referência, pela razão acima. Ficam aqui, em ordem, e não se apagam.
 | 116 | `36200633657` | push | #331 | `73b45ea` | merge na `main` | v4 | 2026-09-25 23:20 | **10m02s** |  |
 | 117 | `36240343744` | PR | #333 | `3acee67` | abertura | v4 | 2026-09-26 11:56 | **13m55s** | N3-PR6c (a #332, só docs, não dispara) |
 | 118 | `36241234150` | push | #333 | `53bf0d5` | merge na `main` | v4 | 2026-09-26 12:13 | **13m15s** | fim do N3 |
+| 119 | `36334712031` | PR | #339 | `08cdf6b` | abertura | v4 | 2026-09-27 16:50 | **12m21s** | I1-PR4 — as 7 do I1 (119–125) não entraram no encerramento do I1 (div. 1139) |
+| 120 | `36337398858` | push | #339 | `73612be` | merge na `main` | v4 | 2026-09-27 17:33 | **10m19s** |  |
+| 121 | `36357168753` | PR | #341 | `f87b639` | abertura | v4 | 2026-09-27 22:59 | **13m52s** | I1-PR6 |
+| 122 | `36431893212` | push | #341 | `c8533c4` | merge na `main` | v4 | 2026-09-28 13:53 | **14m03s** |  |
+| 123 | `36458680620` | PR | #344 | `ed85f23` | abertura | v4 | 2026-09-28 17:31 | **12m42s** | I1-PR9 |
+| 124 | `36469768806` | PR | #344 | `2587cf1` | **só fora do filtro** | v4 | 2026-09-28 19:05 | **13m27s** | causa do APK num push fora do filtro não medida aqui (div. 1142) |
+| 125 | `36470300274` | push | #344 | `8b662fc` | merge na `main` | v4 | 2026-09-28 19:09 | **12m35s** | fim das corridas do I1 (a PR-15 e a PR-2 não dispararam) |
+| 126 | `36912615247` | PR | #355 | `dae7009` | abertura | v4 | 2026-10-01 19:12 | **11m45s** | N4-PR2 — o leitor |
+| 127 | `36913708176` | PR | #355 | `050980e` | **só fora do filtro** | v4 | 2026-10-01 19:21 | **13m20s** | o APK anterior (126) ainda corria: o H1 não filtra sem `success` (div. 381) |
+| 128 | `36942349578` | push | #355 | `31d6b3a` | merge na `main` | v4 | 2026-10-01 23:44 | **12m55s** |  |
+| 129 | `37136605039` | PR | #359 | `5d96a70` | abertura | v4 | 2026-10-03 16:22 | **13m40s** | N4-PR3 |
+| 130 | `37154736628` | PR | #359 | `d0012e7` | nativo | v4 | 2026-10-03 21:20 | **13m18s** |  |
+| 131 | `37203582302` | push | #359 | `bf678e3` | merge na `main` | v4 | 2026-10-04 12:51 | **13m24s** |  |
+| 132 | `37205700725` | PR | #360 | `a267e6e` | abertura | v4 | 2026-10-04 13:27 | **13m35s** | N4-PR4 |
+| 133 | `37216289073` | PR | #360 | `54ce0d1` | nativo | v4 | 2026-10-04 16:18 | **13m36s** |  |
+| 134 | `37230797775` | push | #360 | `364e5c7` | merge na `main` | v4 | 2026-10-04 20:05 | **8m22s** |  |
+| 135 | `37235047533` | PR | #361 | `f5fb36d` | abertura | v4 | 2026-10-04 21:10 | **13m18s** | N4-PR5 |
+| 136 | `37241704858` | PR | #361 | `5e3bcdd` | nativo | v4 | 2026-10-04 22:53 | **10m48s** |  |
+| 137 | `37244806393` | push | #361 | `d78ea89` | merge na `main` | v4 | 2026-10-04 23:43 | **12m58s** |  |
+| 138 | `37248763758` | PR | #362 | `c8e5554` | abertura | v4 | 2026-10-05 00:45 | **12m56s** | N4-PR6 |
+| 139 | `37479668293` | push | #362 | `5c707a3` | merge na `main` | v4 | 2026-10-06 14:31 | **10m39s** |  |
+| 140 | `37486711171` | PR | #363 | `2a095a7` | abertura | v4 | 2026-10-06 15:20 | **10m01s** | N4-PR7 |
+| 141 | `37497253727` | PR | #363 | `105b98d` | nativo | v4 | 2026-10-06 16:38 | **12m22s** |  |
+| 142 | `37497318382` | PR | #363 | `b941a13` | nativo | v4 | 2026-10-06 16:38 | **9m21s** |  |
+| 143 | `37528457465` | push | #363 | `836d5e6` | merge na `main` | v4 | 2026-10-06 20:42 | **13m36s** |  |
+| 144 | `37542247683` | PR | #364 | `aa1a7c4` | abertura | v4 | 2026-10-06 22:42 | **8m26s** | N4-PR8 |
+| 145 | `37614961030` | PR | #364 | `d88679d` | nativo | v4 | 2026-10-07 11:34 | **14m11s** |  |
+| 146 | `37618112090` | PR | #364 | `5ad9703` | **só fora do filtro** | v4 | 2026-10-07 12:01 | **11m55s** | causa do APK num push fora do filtro não medida aqui (div. 1142) |
+| 147 | `37622055336` | push | #364 | `5c41c2d` | merge na `main` | v4 | 2026-10-07 12:35 | **10m45s** |  |
+| 148 | `37625875787` | PR | #365 | `6af916d` | abertura | v4 | 2026-10-07 13:06 | **13m59s** | N4-PR9 |
+| 149 | `37631556721` | PR | #365 | `527cf93` | nativo | v4 | 2026-10-07 13:49 | **13m50s** |  |
+| 150 | `37678036870` | push | #365 | `cf58f7f` | merge na `main` | v4 | 2026-10-07 19:54 | **13m34s** | fim do N4 (o release do encerramento sai deste `cf58f7f`) |
 
 ## Como acrescentar uma linha
 
@@ -284,3 +321,13 @@ parada na 100ª do W4-b2 ao N3 inteiro; o encerramento do N3 (#334) pôs as 101�
 corrida que o push do próprio encerramento dispara (nenhuma, se ele é só docs) entra no
 encerramento seguinte. As `skipped` do N3 — os seis pushes de docs das PRs de código,
 depois do APK verde — não entram.
+*(Encerramento do N4, 2026-10-07, div. 1139: o encerramento do I1 (#350) **não** acrescentou as
+corridas do I1 — a série parou na 118ª de novo. O do N4 pôs as **119–125 (I1)** e as **126–150
+(N4)**, todas `success` no job, e recalculou a referência (`n=128`). As `skipped` do bloco —
+vinte e uma, pushes de docs e de instrumento depois do APK verde — não entram. Três corridas
+**com APK** vieram de push **só fora do filtro** (124, 127, 146): a 127 é a div. 381 (o APK
+anterior ainda corria); a 124 e a 146 não foram medidas aqui (div. 1142) — **vão ao pre-check do bloco da quebra de
+linha** (aval, N4-D114): medir por que um push fora do filtro disparou o build e se a mesma lógica pode deixar de disparar
+quando deveria. **A troca de base** (aval, N4-D111): nenhum gate, workflow ou script lê esta referência como limiar; quem a
+usa é a regra de segmentos acima, à mão, e o IQR do segmento vigente passa de 11m12,2s–12m55,2s (n=96) a
+**11m12,2s–13m15,5s** (n=128) — `N4-ENCERRAMENTO.md` §9.)*

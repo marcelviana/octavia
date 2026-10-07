@@ -1,0 +1,9 @@
+ls: apps/native/.env: No such file or directory
+== 2026-10-07 17:04:54 AVD: install -r do release
+Performing Streamed Install
+Success
+    firstInstallTime=2026-09-10 11:42:54
+    lastUpdateTime=2026-10-07 17:04:52
+    pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+connect: Network is unreachable
+airplane=1 wifi=0 data=0

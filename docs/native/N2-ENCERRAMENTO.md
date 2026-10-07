@@ -577,6 +577,11 @@ A numeração abaixo é estável — cite por **§10.<bloco>.<n>** (a lição da
 > Os itens e o título ficam como estavam; onde o `N3-ENCERRAMENTO.md` §10.6 e
 > §10.7 dizem *"1–6 (N4)"*, vale esta errata (div. 971).
 
+> **Nota do encerramento do N4 (2026-10-07; `N4-ENCERRAMENTO.md`):** o item **6** (C-D7) foi **medido** no pre-check do
+> N4 (`N4-PRECHECK.md` A14; H-N4-22 *"meio falsa"*: o Zod de escrita por tipo existe, o modelo de anotação não), e o
+> leitor de cada tipo ganhou gate de igualdade com o web (G-par, N4-PR1/PR2). O N4 está encerrado; os itens 1–5 seguem
+> no **Bloco D**, pela errata acima.
+
 | # | item | origem |
 |---|---|---|
 | 1 | **B9 na frente** | N2-D1 |
