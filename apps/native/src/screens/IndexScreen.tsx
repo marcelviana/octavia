@@ -109,7 +109,7 @@ import { bar, dark, faixas, font, radius, size, space, touch, tracking } from '.
 import { useFaixa } from '../useFaixa'
 import { DialogoDeApagar } from './DialogoDeApagar'
 import { FolhaDeSetlist } from './FolhaDeCriar'
-import { LinhaDeAviso } from './LinhaDeAviso'
+import { LinhaDeAviso, type AcaoDoAviso, type EspecieDoTablet } from './LinhaDeAviso'
 import { ModoDeReordenar } from './ModoDeReordenar'
 import { Picker } from './Picker'
 
@@ -563,15 +563,15 @@ export function IndexScreen({
    * que é de uma escrita que o músico acabou de fazer, e mais que o "salvo",
    * que não bloqueia nada.
    */
-  const aviso = useMemo(() => {
+  const aviso = useMemo((): { especie: EspecieDoTablet; motivo: string; acao: AcaoDoAviso | undefined } | null => {
     if (edicao === null) return null
     if (!online) {
-      return { icone: 'sem-conexao' as NomeIcone, cor: dark.offlineInk, motivo: frase('sem-rede-s2'), acao: undefined }
+      return { especie: 'rede', motivo: frase('sem-rede-s2'), acao: undefined }
     }
     if (falha !== null && falha.especie === 'limite') {
       // Âmbar: é "não está pronta", não erro (V1 §6.1). Sem ação — o que
       // falta é tempo, e o prazo já está na frase.
-      return { icone: 'ultima-sincronizacao' as NomeIcone, cor: dark.offlineInk, motivo: falha.frase, acao: undefined }
+      return { especie: 'limite', motivo: falha.frase, acao: undefined }
     }
     if (falha !== null) {
       // As três orações da moldura `N2-X-falhou`, nesta ordem: o que não deu
@@ -583,8 +583,7 @@ export function IndexScreen({
       // ela, nem depois de ela falhar.
       if (!relendo && !releituraFalhou) oracoes.push(frase('lista-relida'))
       return {
-        icone: 'falha' as NomeIcone,
-        cor: dark.errorInk,
+        especie: 'falha',
         motivo: oracoes.join('  ·  '),
         acao:
           repetir === null
@@ -605,14 +604,14 @@ export function IndexScreen({
       }
     }
     if (!cabeNoTeto) {
-      // A tinta é `muted` e não a `lineInfo` do ícone da moldura: a linha
-      // pinta ícone e texto com a mesma cor, e `lineInfo` nunca é texto (§3.3).
-      return { icone: 'n-de-musicas' as NomeIcone, cor: dark.muted, motivo: frase('teto-100'), acao: undefined }
+      // A espécie `teto` pinta em `muted`, não na `lineInfo` do ícone da
+      // moldura: a linha pinta ícone e texto com a mesma cor, e `lineInfo`
+      // nunca é texto (§3.3; `PAR_DA_ESPECIE`).
+      return { especie: 'teto', motivo: frase('teto-100'), acao: undefined }
     }
     if (salvoNaoRelido) {
       return {
-        icone: 'ultima-sincronizacao' as NomeIcone,
-        cor: dark.muted,
+        especie: 'salvo-nao-relido',
         motivo: frase('salvo-nao-relido-s2'),
         acao: {
           rotulo: 'Tentar recarregar',
@@ -783,8 +782,7 @@ export function IndexScreen({
       {/* §3.3 — a linha de 48 dp, com recuo de 24 em S2 (32 é o de S1). */}
       {aviso !== null ? (
         <LinhaDeAviso
-          icone={aviso.icone}
-          cor={aviso.cor}
+          especie={aviso.especie}
           motivo={aviso.motivo}
           acao={aviso.acao}
           recuo={space.xl}
