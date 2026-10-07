@@ -225,6 +225,20 @@ describe('N4-R12 — o cabeçalho, igual nas faixas', () => {
     expect(inativo('view-favoritar')).toBe(false)
   })
 
+  // N4-PR8, achado do Marcel no aceite (o ▶ inerte com a borda MAIS CLARA que a do ativo): a folha (`DESIGN-N4`, P-I2,
+  // os quatro estados — normal, pressionado, inerte, em andamento) desenha a borda `line` (#2A2836) em TODOS; o que
+  // muda no inerte é só o ícone, em `lineInfo` com o traço do inerte. Vale na linha da L e em V (o mesmo controle).
+  it('o ▶ inerte tem a MESMA borda do ativo (`line`, a da folha); só o ícone muda, para `lineInfo` (P-I2)', async () => {
+    await montar(tela())
+    const ativo = estilo(exige('view-tocar'))
+    expect(ativo.borderColor).toBe(dark.line)
+    await rerender(tela({ content: SEM_TIPO }))
+    expect(inativo('view-tocar')).toBe(true)
+    expect(estilo(exige('view-tocar')).borderColor).toBe(ativo.borderColor)
+    const traco = exige('view-tocar').querySelector('[stroke]')?.getAttribute('stroke')
+    expect(traco).toBe(dark.lineInfo)
+  })
+
   it('o corpo inválido (sem conteúdo) também deixa o ▶ inerte, como na linha da L', async () => {
     await montar(tela({ content: SEM_CORPO }))
     expect(inativo('view-tocar')).toBe(true)
