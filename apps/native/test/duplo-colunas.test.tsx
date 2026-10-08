@@ -45,7 +45,7 @@ describe('o duplo do native-tela recebe colunas (QL-PR1)', () => {
     [26, 22],
     [26, 40],
     [14, 40],
-  ])('__colunas(%i, %i): o leitor de mentira chega a %i colunas', async (n, zoom) => {
+  ])('__colunas(%i, %i): o leitor de mentira chega às colunas pedidas', async (n, zoom) => {
     __colunas(n, zoom)
     await montar(<Colunas zoom={zoom} />)
     expect(achar('colunas')?.textContent).toBe(String(n))
