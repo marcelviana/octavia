@@ -1,0 +1,14 @@
+$ pnpm test
+ Test Files  140 passed | 3 skipped (143)
+      Tests  1706 passed | 59 skipped (1765)
+
+$ pnpm exec tsc --noEmit -p . && echo raiz 0; (cd packages/core && pnpm exec tsc --noEmit && echo core 0); (cd packages/identidade && pnpm exec tsc --noEmit && echo identidade 0); (cd apps/native && pnpm exec tsc --noEmit && echo nativo 0)
+raiz 0
+core 0
+identidade 0
+nativo 0
+
+$ pnpm lint
+✔ No ESLint warnings or errors
+
+$ git diff --stat origin/main -- . ':!docs'  (vazio esperado)

@@ -1529,3 +1529,20 @@ automaticamente.
 > em *Informações* que não chega à coluna (div. 1147) — e o pre-check do D trata a aba *Informações* inteira, com os
 > campos que o site não grava (D0-D25); o `updated_at` do favoritar segue amarrado à N4-D91.
 
+> **Nota da abertura do QL (2026-10-08)** — sem reescrever a nota acima. **Aberto o bloco QL — a quebra de linha**, o
+> primeiro da ordem que segue (`docs/native/QL-PRECHECK.md`, QL-D1…D11 `[Marcel, 2026-10-08]`): a quebra na Letra e na
+> Cifra (pelo par acorde/letra), nunca na Tab, no palco e em V, nas faixas C e B; as notas da música no palco; e a medição
+> das corridas do APK fora do filtro. A ordem não muda: **QL → resto do D → N5 → identidade → iOS**; o **W5** à parte. O
+> **sync automático** do tablet foi registrado como **lacuna** (QL-D5, a div. 1143) — já era o T1-R13 passo 4 do PRD da
+> tela 1 —, e o pre-check propõe para ele **um bloco próprio, logo depois do QL e antes do resto do D** (a decisão é do aval).
+
+> **Nota do aval do pre-check do QL (2026-10-08)** — sem reescrever a nota acima. A sincronização automática do tablet vira
+> **bloco próprio, o SY** (QL-D12 `[Marcel, 2026-10-08]`, `docs/native/QL-PRECHECK.md` §9): o T1-R13 passo 4 (a rede volta;
+> a volta do segundo plano depois de 30 s), o voo único, a foto da música aberta (o texto não muda no meio de uma música),
+> a prova da janela da `naoRegredir` e o release com a regra 38 (c)/(d) remedida. **A fila passa a ser: QL → SY → resto do
+> D → N5 → identidade → iOS**; o **W5** à parte.
+
+> **Nota do aval da Fase B do QL (2026-10-08)** — sem reescrever a nota acima. O aval QL-D22…D27 `[Marcel, 2026-10-08]`
+> (`docs/native/QL-PRECHECK.md` §11) fecha o pre-check: o par acorde/letra só na Cifra, a reserva por linha, e **as notas
+> da música no palco ficam no QL**, como última fatia, provadas com fixture (QL-D26) — o Marcel escreve a primeira nota de
+> verdade no encerramento. **O próximo passo do QL é o brief** para o Claude Design.

@@ -1,0 +1,30 @@
+# QL pre-check, o acréscimo da QL-D14 — prova LOCAL (Postgres 17.11 descartável, 127.0.0.1:55432; nenhuma requisição a prod). Fixture fixture.json; esperado: esperado-b.json, chave 'a'.
+
+$ psql -f q1-linhas-por-tipo.sql
+ conta |  tipo  | musicas | com_corpo_de_texto | linhas | musicas_acima_26 | musicas_acima_48 | musicas_acima_55 | musicas_acima_80 | linhas_acima_26 | linhas_acima_48 | linhas_acima_55 | linhas_acima_80 | maior_linha | p95_linha | musicas_com_tab_char | musicas_com_cr | musicas_com_acento_combinante 
+-------+--------+---------+--------------------+--------+------------------+------------------+------------------+------------------+-----------------+-----------------+-----------------+-----------------+-------------+-----------+----------------------+----------------+-------------------------------
+ xVDJ  | Chords |       6 |                  6 |     33 |                3 |                2 |                2 |                0 |               6 |               2 |               2 |               0 |          70 |        60 |                    1 |              1 |                             0
+ xVDJ  | Lyrics |       6 |                  5 |     19 |                4 |                1 |                1 |                1 |               8 |               3 |               2 |               1 |          81 |        81 |                    0 |              0 |                             1
+ xVDJ  | Sheet  |       2 |                  0 |      0 |                0 |                0 |                0 |                0 |               0 |               0 |               0 |               0 |             |           |                    0 |              0 |                             0
+ xVDJ  | Tab    |       3 |                  3 |      8 |                2 |                1 |                1 |                1 |               4 |               1 |               1 |               1 |          93 |        93 |                    0 |              0 |                             0
+(4 rows)
+
+
+$ psql -f q2-cifra-pares.sql
+ conta |  tipo  | musicas_com_corpo | linhas | linhas_de_acordes | musicas_com_linha_de_acordes | pares | musicas_com_par | pares_acima_26 | pares_acima_48 | pares_acima_55 | pares_acima_80 | linha_de_acordes_do_par_acima_26 | maior_par | linhas_de_acordes_acima_26 | outras_linhas_acima_26 | linhas_quase_acorde | musicas_com_quase_acorde | quase_acima_26 | quase_acima_48 | quase_acima_55 | quase_acima_80 | fracao_quase | linhas_quase_maioria | fracao_quase_maioria 
+-------+--------+-------------------+--------+-------------------+------------------------------+-------+-----------------+----------------+----------------+----------------+----------------+----------------------------------+-----------+----------------------------+------------------------+---------------------+--------------------------+----------------+----------------+----------------+----------------+--------------+----------------------+----------------------
+ xVDJ  | Chords |                 6 |     33 |                 9 |                            5 |     7 |               5 |              3 |              2 |              2 |              0 |                                0 |        70 |                          0 |                      6 |                   2 |                        2 |              0 |              0 |              0 |              0 |        0.182 |                    1 |                0.100
+ xVDJ  | Lyrics |                 5 |     19 |                 1 |                            1 |     1 |               1 |              1 |              0 |              0 |              0 |                                0 |        36 |                          0 |                      8 |                   0 |                        0 |              0 |              0 |              0 |              0 |        0.000 |                    0 |                0.000
+(2 rows)
+
+
+$ psql -f q3-notas.sql
+ conta |  tipo  | musicas | com_notas | maior_comprimento | mediana_comprimento | mais_linhas | maior_linha | com_linha_acima_26 | com_linha_acima_48 | com_mais_de_uma_linha 
+-------+--------+---------+-----------+-------------------+---------------------+-------------+-------------+--------------------+--------------------+-----------------------
+ xVDJ  | Chords |       6 |         0 |                   |                     |             |             |                  0 |                  0 |                     0
+ xVDJ  | Lyrics |       6 |         1 |               100 |                 100 |           2 |          73 |                  1 |                  1 |                     1
+ xVDJ  | Sheet  |       2 |         0 |                   |                     |             |             |                  0 |                  0 |                     0
+ xVDJ  | Tab    |       3 |         1 |                10 |                  10 |           1 |          10 |                  0 |                  0 |                     0
+ xVDJ  | todos  |      17 |         2 |               100 |                  10 |           2 |          73 |                  1 |                  1 |                     1
+(5 rows)
+
