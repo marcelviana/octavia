@@ -9,8 +9,8 @@ registra (§6).
 - **Convenção**: `[medido]` = comando + saída literal desta sessão (no anexo); `[lido]` = do arquivo citado, com caminho e
   linha; `[hipótese]` = o resto.
 - **Anexos**: [`QL-PRECHECK-anexos/`](QL-PRECHECK-anexos/README.md).
-- **Divergências**: **1175–1187** no commit 1 (Fase A), **1188–1189** no commit 2 (o aval, §9) e **1190–1191** no commit 3
-  (a Fase B, §10) — §6. A faixa foi conferida na coluna `[medido]`:
+- **Divergências**: **1175–1187** no commit 1 (Fase A), **1188–1189** no commit 2 (o aval, §9), **1190–1191** no commit 3
+  (a Fase B, §10) e **1192–1193** no commit 4 (o aval da Fase B, §11) — §6. A faixa foi conferida na coluna `[medido]`:
   `git grep -nE '^\| \*\*(11[0-9]{2}|12[0-9]{2})\*\*' -- docs`, filtrando ≥ 1170 → só **1170–1174** (`D0-ENCERRAMENTO.md`);
   nenhum número ≥ 1175 em prosa (`git grep -nE "div(s)?\. ?(117[5-9]|11[89][0-9]|12[0-9]{2})" -- docs` → vazio). A
   primeira livre era a **1175**, como diz o `D0-ENCERRAMENTO.md` §10.
@@ -575,7 +575,7 @@ token de régua.
 
 ---
 
-## 6. Divergências desta PR — 1175 a 1191
+## 6. Divergências desta PR — 1175 a 1193
 
 Origem: **P** premissa do prompt · **D** documento anterior · **A** ambiente, dado real ou defeito do produto · **T**
 toolchain/aparato · **X** terceiros (`N4-PRECHECK.md:603-604`; `D0-PRECHECK.md` §4).
@@ -599,10 +599,12 @@ toolchain/aparato · **X** terceiros (`N4-PRECHECK.md:603-604`; `D0-PRECHECK.md`
 | **1189** | P | *(commit 2)* O critério "quase acorde" (recusada pela heurística, com ao menos um token acorde) conta **toda linha de letra com o artigo "A" ou a conjunção "E" soltos** — *"A noite chega"*, *"E o dia"*: os dois são acordes pelo token. A fração quase ÷ (acorde + quase) sai inflada pelo português | o critério fica como pedido; **extra declarado**: a coluna *quase acorde, maioria* (acordes + separadores ≥ metade dos tokens) e a fração dela (§3.1) |
 | **1190** | T | *(commit 3)* **A consulta 2 conta como par a progressão de uma seção seguida da letra**: no corpo da Cifra por seções, o `chords` da seção (um `input` de uma linha, `partes-da-cifra.tsx:50`) vem numa linha logo acima da primeira linha do `lyrics` (`content-contract.ts:72-82`), e a heurística não sabe de onde a linha veio. Os **46 pares** da Cifra somam os dois casos — acorde alinhado sobre a sílaba e progressão sobre a letra —, sem separar | §10.2; a função da quebra recebe o mesmo texto (QL-D13) e tem o mesmo limite — pergunta (a) do §10.5 |
 | **1191** | A | *(commit 3)* **A conta principal não tem nenhuma nota** (`com_notas` 0 em 63, q3): a QL-D4 (as notas no palco) não tem objeto no dado do Marcel — o caso do A-N4-26 (*"sem objeto neste dado"*) | §10.4; pergunta (e) do §10.5 |
+| **1192** | D | *(commit 4)* O `N4-BRIEF.md:52` e a N4-D57 (`N4-BRIEF-anexos/README.md:115`) dizem que *"hoje o que o músico escreve em Notas de palco não aparece em palco nenhum"*: o Marcel **nunca escreveu** uma nota (q3: 0 em 63) — era uma observação do que o site oferece | QL-D26: as notas ficam no QL, provadas com fixture; a primeira nota de verdade no encerramento |
+| **1193** | P | *(commit 4)* O prompt do aval da Fase B registra a 1192 como **P**, *"o prompt do pre-check (vindo da abertura do Marcel) dizia…"*: o prompt do pre-check **não** traz a frase — ele cita só *"as notas da música no palco (N4-D57)"*; a frase está no `N4-BRIEF.md:52` e na N4-D57, por isso a 1192 tem origem **D** | registrado; a 1192 com a origem do documento onde a frase está |
 
 **Contagem** `[medido: a coluna]`: commit 1, **13 — P 5 · D 3 · A 3 · T 2** (P: 1175, 1177, 1178, 1179, 1185 · D: 1176, 1181,
-1186 · A: 1180, 1182, 1183 · T: 1184, 1187); commit 2, **2 — P 2** (1188, 1189); commit 3, **2 — T 1 · A 1** (1190, 1191).
-**A PR: 17 — P 7 · D 3 · A 4 · T 3. A próxima livre é a 1192.**
+1186 · A: 1180, 1182, 1183 · T: 1184, 1187); commit 2, **2 — P 2** (1188, 1189); commit 3, **2 — T 1 · A 1** (1190, 1191);
+commit 4, **2 — D 1 · P 1** (1192, 1193). **A PR: 19 — P 8 · D 4 · A 4 · T 3. A próxima livre é a 1194.**
 
 ---
 
@@ -718,6 +720,7 @@ só teria falso positivo a oferecer (o "A" e o "E" de 16 linhas). O custo, decla
 **quebraria como letra**, separando o acorde da sílaba — hoje não há nenhuma; o caso se reabre quando houver. E, na Cifra, a
 progressão de seção sobre a letra (div. 1190) **também** vira par: o efeito é inócuo (a progressão é curta e se corta na
 mesma coluna da letra, sem continuação), e o desenho deve mostrá-lo.
+→ **Respondida: QL-D22** (§11).
 
 **(b) A regra de reserva quando a heurística erra (QL-D14)?** Fração quase acorde na Cifra: **0,080** (4 de 50, 1 música;
 todas com maioria de acordes, **nenhuma acima de 26**). (1) **por linha**: a linha quase acorde não forma par e quebra como
@@ -725,11 +728,13 @@ letra, se precisar; (2) a candidata do aval — **a Cifra em que a heurística n
 rolagem lateral. **Recomendo (1)**: com (2), 1 das 3 Cifras do Marcel (a das 4 quase acorde) perderia a quebra inteira
 por quatro linhas que, no dado de hoje, nunca precisam quebrar — e o par das outras linhas dela, que precisa em A e no
 tablet em pé, ficaria de fora. Com (1), as 4 linhas ficam como estão em toda faixa medida.
+→ **Respondida: QL-D23** (§11).
 
 **(c) O `\t`, o `\r` e o acento combinante na função?** Zero no dado. (1) **casos de teste no core, sem tocar no texto**:
 o `\t` conta até a próxima coluna múltipla de 8, o `\r` do fim da linha conta 0, o acento combinante conta 0 — só para
 medir; a invariância (ii) segue exata (nada se normaliza); (2) ignorar até aparecer. **Recomendo (1)**: custa três casos
 de teste no gate (i) da PR-1 e protege o primeiro texto colado de outro lugar.
+→ **Respondida: QL-D24** (§11).
 
 **(d) O que o brief do QL leva, de entrada, para o Claude Design?** **Recomendo**:
 1. **onde a quebra aparece de verdade** (§10.1): **V em C** e o **tablet em pé** com o zoom padrão; o **zoom 32/40** no
@@ -746,8 +751,31 @@ de teste no gate (i) da PR-1 e protege o primeiro texto colado de outro lugar.
 7. **o "antes"**: os PNGs e dumps já commitados (QL-D21) — a Letra de 110 colunas da B3 em C e em B (`N3-PRECHECK-anexos/
    B3-referencia-paisagem/REF-S3-S3a-letra-1a-*-pai.png`, `N4-PR9-anexos/dumps-g-inv/N4P9F-S3-S3a-letra-1a-*-ret.*`);
 8. **a âncora** ao girar e ao mudar o zoom (QL-D18), que o desenho precisa mostrar (o que fica no topo depois do giro).
+→ **Respondida: QL-D25** (§11).
 
 **(e) As notas no palco (QL-D4), com zero notas no dado?** (1) **ficam no bloco**, como última fatia (QL-D19), provadas
 com fixture e com o julgamento do Marcel no encerramento numa música em que ele escreva uma nota — o A-N4-26 como
 precedente; (2) saem do QL, para quando houver nota. **Recomendo (1)**: o custo é pequeno (V já as mostra; o palco já as
 recebe, A5) e o site já tem o campo — escrever a primeira nota é o uso que a tela abre.
+→ **Respondida: QL-D26** (§11).
+
+**(f) — pergunta do revisor no aval** `[Marcel, 2026-10-08]`: **onde o Marcel julga a leitura no Tab**, se no palco
+deitado no zoom 22 nada muda para nenhuma música dele (§10.1)?
+→ **Respondida: QL-D27** (§11) — no tablet em pé no zoom padrão, no tablet deitado no zoom 40 e numa das 11 Letras que
+quebram em V em C; as músicas escolhidas pelo comprimento das linhas, sem ler o texto, e ditas pelo id8.
+
+---
+
+## 11. O aval da Fase B — QL-D22…QL-D27 `[Marcel, 2026-10-08]`
+
+**O commit 4 aplicou o aval.** As seis perguntas do §10.5 — as cinco do executor e a (f), do revisor —; o texto da
+decisão é este (o "→ Respondida" de cada pergunta aponta para cá).
+
+| # | pergunta | decisão | o que mudou nesta PR (commit 4) |
+|---|---|---|---|
+| **QL-D22** | (a) | **O par acorde/letra vale só na Cifra.** A Letra quebra sempre como letra. O custo fica declarado: uma cifra digitada numa Letra quebraria separando o acorde da sílaba; hoje não há nenhuma (0 pares nas 57 Letras), e o caso se reabre quando houver. **A progressão de seção sobre a letra vira par** (div. 1190), por ser inofensiva. O desenho a mostra, e o gate (i) da PR-2 ganha um caso para ela. | — |
+| **QL-D23** | (b) | **A reserva é por linha:** a linha que a heurística não reconhece com certeza não forma par e quebra como letra, se precisar. A candidata do primeiro aval ("a Cifra incerta não quebra") cai, derrubada pelo dado (fração 0,080; as 4 linhas nunca passam de 26). **A errata do T1-R31 da QL-D15 registra a reserva por linha** no lugar da candidata. | — (a errata é da PR-1) |
+| **QL-D24** | (c) | **Tabulação, `\r` e acento combinante: três casos de teste no gate (i) da PR-1, que só medem, sem normalizar o texto.** O `\t` conta até a próxima coluna múltipla de 8, o `\r` do fim da linha conta 0, o acento combinante conta 0. A invariância (ii) segue exata. | — (PR-1) |
+| **QL-D25** | (d) | **O brief leva as oito entradas do §10.5 (d)**, com a primeira (onde a quebra aparece de verdade) em destaque: no palco deitado, no zoom 22, nada muda para nenhuma música do Marcel. | — (o brief) |
+| **QL-D26** | (e) | **As notas no palco ficam no QL, como última fatia (QL-D19), provadas com fixture.** O Marcel nunca escreveu uma nota: a frase da abertura era uma observação do que o site oferece. No encerramento, ele escreve a primeira nota de verdade, no site, numa música dele, e julga no palco, no molde do A-N4-26. | divs. 1192, 1193; nota no `PLANO-TRANSICAO.md` |
+| **QL-D27** | (f) | **Onde o Marcel julga, no Tab (na PR-3 e no encerramento):** (1) o tablet em pé, no zoom padrão; (2) o tablet deitado, no zoom 40; (3) uma das 11 Letras que quebram em V em C. O executor escolhe as músicas **pelo comprimento das linhas, sem ler o texto**, e diz quais são pelo id8. O Tab deitado no zoom 22 fica só como prova de que nada mudou. **A QL-D9 ganha esta condição** no julgamento do encerramento. | a (f) escrita no §10.5 |
