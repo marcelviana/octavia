@@ -695,9 +695,9 @@ G-faixa (veredito) — tests/gates-web/medicoes: 14 medição(ões)
     · errata candidata: <fora das frases do projeto: h2 heading, 6 car., 7cf015b6b2cb> Δ[x,y,w,h]=[0,-19,0,0] — coberta por I1-E33
     · errata candidata: <fora das frases do projeto: div texto, 35 car., ca845524e117> Δ[x,y,w,h]=[0,-19,2,2.2] — coberta por I1-E33
     · sem par na folha: "Buscar…"
-    · sem par na folha: "Trenzinho do caipira"
-    · sem par na folha: "Trenzinho do caipira"
-    · sem par na folha: "Villa-Lobos"
+    · sem par na folha: "[D0: título real da folha omitido]"
+    · sem par na folha: "[D0: título real da folha omitido]"
+    · sem par na folha: "[D0: autor real da folha omitido]"
     · sem par na folha: "Padrão (EADGBE)"
     · sem par na folha: "casa"
     · sem par na folha: "72"
@@ -754,9 +754,9 @@ G-faixa (veredito) — tests/gates-web/medicoes: 14 medição(ões)
     · errata candidata: <fora das frases do projeto: button checkbox, 8 car., 281aed4958d1> Δ[x,y,w,h]=[0,-19.8,2,0] — coberta por I1-E33
     · errata candidata: <fora das frases do projeto: button checkbox, 30 car., 5d196a66d26b> Δ[x,y,w,h]=[0,-19.8,2,0] — coberta por I1-E33
     · sem par na folha: "Buscar…"
-    · sem par na folha: "Trenzinho do caipira"
-    · sem par na folha: "Trenzinho do caipira"
-    · sem par na folha: "Villa-Lobos"
+    · sem par na folha: "[D0: título real da folha omitido]"
+    · sem par na folha: "[D0: título real da folha omitido]"
+    · sem par na folha: "[D0: autor real da folha omitido]"
     · sem par na folha: "Padrão (EADGBE)"
     · sem par na folha: "casa"
     · sem par na folha: "72"
@@ -1048,14 +1048,14 @@ G-faixa (veredito) — tests/gates-web/medicoes: 14 medição(ões)
   inalcançáveis em A (411) — VIEW-tab: 0 (herança da I1-D11, decisão 619; reprova desde a div. 677)
   VIEW-tab · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · quebra por dado=0 · sem par folha/app=2/4 · saídas: nome-acessível=0 rolagem=0
     · sem par na folha: "Buscar…"
-    · sem par na folha: "Trenzinho do caipira"
+    · sem par na folha: "[D0: título real da folha omitido]"
     · sem par no app: <fora das frases do projeto: nav texto, 36 car., e8bb7013c1eb>
     · sem par no app: <fora das frases do projeto: input textbox, 7 car., 9120df43bebb>
     · sem par no app: <fora das frases do projeto: h1 heading, 31 car., f27e1364a4af>
     · sem par no app: <fora das frases do projeto: section texto, 396 car., 3bbfc20a7380>
   VIEW-tab · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · quebra por dado=0 · sem par folha/app=2/4 · saídas: nome-acessível=0 rolagem=0
     · sem par na folha: "Buscar…"
-    · sem par na folha: "Trenzinho do caipira"
+    · sem par na folha: "[D0: título real da folha omitido]"
     · sem par no app: <fora das frases do projeto: nav texto, 36 car., e8bb7013c1eb>
     · sem par no app: <fora das frases do projeto: input textbox, 7 car., 9120df43bebb>
     · sem par no app: <fora das frases do projeto: h1 heading, 31 car., f27e1364a4af>
@@ -1281,7 +1281,7 @@ G-faixa (veredito) — tests/gates-web/medicoes: 14 medição(ões)
     · sem par na folha: "Buscar…"
     · sem par na folha: "Linha de 120 colunas Cifra"
     · sem par na folha: "Batch três Letra"
-    · sem par na folha: "Trenzinho do caipira Tab"
+    · sem par na folha: "[D0: título real da folha omitido] Tab"
     · sem par na folha: "Partitura de 12 páginas Partitura"
     · sem par na folha: "Construção Letra"
     · sem par na folha: "Anunciação Letra"
@@ -1301,7 +1301,7 @@ G-faixa (veredito) — tests/gates-web/medicoes: 14 medição(ões)
     · sem par na folha: "Buscar…"
     · sem par na folha: "Linha de 120 colunas Cifra"
     · sem par na folha: "Batch três Letra"
-    · sem par na folha: "Trenzinho do caipira Tab"
+    · sem par na folha: "[D0: título real da folha omitido] Tab"
     · sem par na folha: "Partitura de 12 páginas Partitura"
     · sem par na folha: "Construção Letra"
     · sem par na folha: "Anunciação Letra"
@@ -1329,7 +1329,7 @@ G-faixa (veredito) — tests/gates-web/medicoes: 14 medição(ões)
     · sem par na folha: "a sessão não foi renovada: o servidor não devolveu o token"
     · sem par na folha: "Linha de 120 colunas Cifra"
     · sem par na folha: "Batch três Letra"
-    · sem par na folha: "Trenzinho do caipira Tab"
+    · sem par na folha: "[D0: título real da folha omitido] Tab"
     · sem par na folha: "Partitura de 12 páginas Partitura"
     · sem par na folha: "Construção Letra"
     · sem par na folha: "Anunciação Letra"
@@ -1351,7 +1351,7 @@ G-faixa (veredito) — tests/gates-web/medicoes: 14 medição(ões)
     · sem par na folha: "a sessão não foi renovada: o servidor não devolveu o token"
     · sem par na folha: "Linha de 120 colunas Cifra"
     · sem par na folha: "Batch três Letra"
-    · sem par na folha: "Trenzinho do caipira Tab"
+    · sem par na folha: "[D0: título real da folha omitido] Tab"
     · sem par na folha: "Partitura de 12 páginas Partitura"
     · sem par na folha: "Construção Letra"
     · sem par na folha: "Anunciação Letra"
