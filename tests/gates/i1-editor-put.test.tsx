@@ -3,10 +3,16 @@
  * Bloco D e fica como está).
  *
  * Monta a ROTA do editor (`app/content/[id]/edit/page.tsx`) para um content de cada tipo, com o `GET
- * /api/content/<id>` e o `PUT /api/content` respondidos por um `fetch` falso que GUARDA o corpo do `PUT`; faz uma
+ * /api/content/<id>` fabricado e o `PUT /api/content` levado à ROTA REAL (`./rota-real.ts`); faz uma
  * edição roteirizada por tipo (a mesma intenção antes e depois do redesenho — só os seletores mudam, porque os
  * rótulos mudam) e clica em salvar. O corpo, byte a byte, tem de ser o de `fixtures/editor-put-antes.json`, gravado
  * no commit 1 sobre o código da `main` (`CN_GRAVAR=1`).
+ *
+ * D-0 (div. 1157; D0-D19): **"não mudou" não é "funciona"**. Até a D-0 o `fetch` falso deste gate devolvia 200 a
+ * qualquer corpo, e o gate travou byte a byte, em 4 dos 5 casos, um corpo com `difficulty: ""` que o servidor recusava
+ * desde 2025-07-08 (div. 1152). Agora cada corpo passa pelo handler `PUT` real — o esquema `contentSchemas.update` e o
+ * contrato de escrita com o tipo da linha —, com a autenticação e o banco simulados, e o gate exige **200** antes de
+ * comparar os bytes. Um corpo que o esquema recusa não passa por construção: o status vem da rota, não do gate.
  *
  * `Date` é fixado (o `updated_at` do corpo e os `id` de seção/compasso vêm de `new Date()`/`Date.now()`).
  * Texto dos fixtures: do projeto (os exemplos das folhas 5 e 6) — a regra "anexo não carrega texto de música" não o
@@ -36,8 +42,12 @@ vi.mock('next/image', () => ({
   // eslint-disable-next-line @next/next/no-img-element
   default: ({ src, alt }: { src: string; alt: string }) => <img src={src} alt={alt} />,
 }))
+// D-0 (div. 1157): o lado do servidor — a rota é a real; só a autenticação e o banco são simulados (`./rota-real.ts`)
+vi.mock('@/lib/firebase-server-utils', () => ({ requireAuthServer: async () => ({ uid: 'cn-user', email: 'cn@exemplo.com' }) }))
+vi.mock('@/lib/supabase-service', async () => ({ getSupabaseServiceClient: (await import('./rota-real')).clienteSimulado }))
 
 import EditContentPage from '@/app/content/[id]/edit/page'
+import { chamadas, motivo, servir } from './rota-real'
 
 const ANTES = path.resolve(__dirname, 'fixtures/editor-put-antes.json')
 const T = '2026-09-10T15:00:00.000Z'
@@ -106,20 +116,11 @@ const CASOS: Caso[] = [
 /** O botão de salvar — o nome muda no redesenho (antes *Save Changes*); o clique é o mesmo. */
 const salvar = async () => fireEvent.click(await screen.findByRole('button', { name: 'Salvar' }))
 
-let corpos: string[] = []
 beforeEach(() => {
   vi.useFakeTimers({ toFake: ['Date'] })
   vi.setSystemTime(new Date('2026-09-29T12:00:00.000Z'))
-  corpos = []
 })
 afterEach(() => { cleanup(); vi.useRealTimers(); vi.unstubAllGlobals() })
-
-const servir = (content: Record<string, unknown>) =>
-  vi.stubGlobal('fetch', vi.fn(async (url: string, init?: RequestInit) => {
-    if ((init?.method ?? 'GET') === 'PUT') { corpos.push(String(init?.body)); return new Response(String(init?.body), { status: 200 }) }
-    if (String(url).startsWith(`/api/content/${content.id}`)) return new Response(JSON.stringify(content), { status: 200 })
-    return new Response('{}', { status: 404 })
-  }))
 
 describe('I1-PR11 — o corpo do PUT do editor, byte a byte contra o da main', () => {
   const gravados: Record<string, string> = {}
@@ -130,11 +131,17 @@ describe('I1-PR11 — o corpo do PUT do editor, byte a byte contra o da main', (
       render(<EditContentPage />)
       await c.editar()
       await salvar()
-      await waitFor(() => expect(corpos).toHaveLength(1))
-      gravados[c.nome] = corpos[0]
+      await waitFor(() => expect(chamadas.respostas).toHaveLength(1))
+      const corpo = chamadas.corpos[0]
+      const resposta = chamadas.respostas[0]
+      // regra 4: o tamanho do que se leu, e o que a rota disse
+      console.log(`PUT do editor · ${c.nome}: corpo ${corpo.length} B · rota ${motivo(resposta)}`)
+      // D-0 (div. 1157): primeiro o servidor aceita — e nada que ele recuse se grava como fixture; só então os bytes
+      expect(resposta.status, `o servidor recusou o corpo: ${motivo(resposta)}`).toBe(200)
+      gravados[c.nome] = corpo
       if (process.env.CN_GRAVAR) return
       const antes = JSON.parse(fs.readFileSync(ANTES, 'utf8')) as Record<string, string>
-      expect(corpos[0]).toBe(antes[c.nome])
+      expect(corpo).toBe(antes[c.nome])
     }, 20_000)
   }
   it.runIf(!!process.env.CN_GRAVAR)('grava o antes (CN_GRAVAR=1, só no commit 1, sobre o código da main)', () => {
