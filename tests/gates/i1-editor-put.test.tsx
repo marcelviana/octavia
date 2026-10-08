@@ -202,6 +202,10 @@ describe('I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte
     expect(PARES.filter((p) => !nomes.has(p.caso)).map((p) => p.caso)).toEqual([])
   })
   it.runIf(!!process.env.CN_GRAVAR)('grava o depois (CN_GRAVAR=1, D-0 commit 2, só com a rota dizendo 200)', () => {
+    // só com TODOS os casos gravados: um caso que a rota recusou não entra em `gravados`, e gravar assim truncaria o
+    // depois sem nenhum vermelho no lugar (o controle negativo 5 da D-0-PR1 o achou — div. 1161)
+    const faltam = CASOS.map((c) => c.nome).filter((n) => !(n in gravados))
+    expect(faltam, 'casos sem corpo aceito pela rota — o depois NÃO se grava').toEqual([])
     fs.writeFileSync(DEPOIS, JSON.stringify(gravados, null, 1) + '\n')
   })
 })
