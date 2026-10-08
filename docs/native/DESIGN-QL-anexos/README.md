@@ -13,7 +13,7 @@ inventados do brief e as fixtures do projeto.
 | `instrumentos/nomes.py` | procura no texto renderizado **todo** valor de `artist`/`title` dos arquivos que a lista do D-0 (`docs/ux/D0-PRECHECK-anexos/fixtures-nomes-reais.txt`) aponta — a lista não traz os nomes; imprime só contagens |
 | `nomes.txt` | a saída do `nomes.py` (0 de 40) e o controle negativo (1) |
 | `capturas/*.png` | 11 molduras-chave (a Letra em B, a Cifra em A, as notas abertas e recolhidas em C, o zoom 40 em B, a âncora antes e depois do giro e do zoom, o "nada muda", a amostra da divisa) |
-| `suite-tsc-lint.txt` | `pnpm test`, os quatro `tsc` (de dentro de cada pacote), o `pnpm lint` e o `git diff --stat origin/main -- . ':!docs'` (vazio) |
+| `suite-tsc-lint.txt` · `suite-tsc-lint-commit2.txt` | (commits 1 e 2) `pnpm test`, os quatro `tsc` (de dentro de cada pacote), o `pnpm lint` e o `git diff --stat origin/main -- . ':!docs'` (vazio) |
 
 Os instrumentos são **de anexo** (fora de CI, lint e typecheck — N4-D117): se um bloco seguinte os reaproveitar, saem de
 `docs/`.

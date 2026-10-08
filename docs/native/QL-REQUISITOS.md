@@ -93,9 +93,11 @@ nada, nem a régua.** A nota **da posição** continua na barra de cima. *Aceite
 abre. A **divisa** de 20 em `muted`, na ponta direita da régua, mostra o estado (aberta para cima, recolhida para baixo). O
 nome acessível é *notas da música*, com o estado expandido do sistema; **nenhuma frase nova**. *Aceite*: A-QL-17, A-QL-18.
 
-**QL-R16 — O estado lembrado** `[QL-D33; div. 1198]`. O estado recolhido **vale para todas as músicas e fica lembrado
-entre aberturas**. *(Como se lembra é a pergunta Q1 do `DESIGN-QL/README.md` §8: hoje o zoom e o tema não são lembrados
-entre aberturas.)* *Aceite*: A-QL-18.
+**QL-R16 — O estado lembrado** `[QL-D33; QL-D39; div. 1198]`. O estado recolhido das notas **vale para todas as músicas
+e é lembrado de verdade**: gravado no aparelho, volta como estava ao reabrir o app ou o palco. **O zoom e o tema seguem
+como hoje** — estado do palco, que recomeça a cada palco aberto (T1-R31 e T1-R32 intactos). É a **primeira preferência do
+app gravada no aparelho fora do Firebase**: a PR-4 declara a chave, prova com teste (gravar, reabrir, ler) e declara a
+mudança nos gates que a contam. *Aceite*: A-QL-18.
 
 **QL-R17 — A divisa no catálogo** `[QL-D31]`. Um registro com dois estados (o mesmo traço espelhado), no catálogo de
 ícones: **41 → 42**, cobrado pelo `gate:icones`. *Aceite*: A-QL-19.
@@ -151,7 +153,7 @@ nativas** (regra 36), e o Tab repousa com o release e volta a ele no fim de todo
 | A-QL-15 | **uma das 11 Letras que quebram em V em C** | idem | **julga** (PR-3 e encerramento) | QL-D27 (3) |
 | A-QL-16 | **o palco deitado no zoom 22 não muda**: para as músicas do Marcel, o corpo igual ao de hoje (comprimento e `sha12` do texto lógico; nenhuma continuação) | dump no Tab | — (prova, não julgamento) | QL-R11; QL-D27 |
 | A-QL-17 | as notas no palco: abertas por padrão, recolhidas, a longa (zoom 40) e **sem nota nada**, pelas molduras; a nota da posição na barra | dumps; capturas | — | QL-R14, R15 |
-| A-QL-18 | recolher e abrir pela régua de 48; o estado vale para todas as músicas e fica lembrado conforme a resposta à Q1 do `DESIGN-QL` §8 | dumps antes/depois; a reabertura | — | QL-R15, R16 |
+| A-QL-18 | recolher e abrir pela régua de 48; o estado vale para todas as músicas; **recolher as notas, matar o app (`force-stop`), reabrir e ver as notas recolhidas**, com o **zoom e o tema de volta ao padrão** (22, escuro), como hoje (QL-D39); o teste da preferência (gravar, reabrir, ler) e a chave declarada | dumps antes/depois da reabertura; o teste; a chave | — | QL-R15, R16 |
 | A-QL-19 | a divisa no catálogo (41 → 42) e no `gate:icones` (0 acusações); nenhum token novo | `gate:icones`; `gate:a20` | **o traço no Tab, em 20 dp** (PR-4) | QL-R17, R23 |
 | A-QL-20 | **a primeira nota de verdade**: o Marcel a escreve no site, numa música dele, e a vê no palco | o sync e o dump (comprimento, sem o texto) | **escreve e julga** (encerramento) | QL-D26 |
 | A-QL-21 | **o release no Tab**: o release da `main` sem Metro; **100 + 100 aberturas frias** (AVD e Tab), **0 queda nativa** (regra 36); os julgamentos A-QL-13…15 com as músicas do Marcel | `frias-release.sh`; `quedas.py` | **julga** (encerramento) | QL-D9; QL-D27 |
@@ -183,7 +185,8 @@ e no Tab, e os julgamentos do Marcel da QL-D27. *Aceites*: A-QL-8…A-QL-16.
 ### PR-4 — as notas no palco
 
 As notas no topo do corpo (QL-D30, D32); recolher e abrir; a **divisa** no catálogo (41 → 42) e no `gate:icones`; o
-**estado lembrado** (QL-D33, com a resposta à Q1); o julgamento do traço no Tab. *Podem entrar na PR-3* se o desenho as
+**estado lembrado** (QL-D33, QL-D39: gravado no aparelho, a chave declarada, o teste de gravar-reabrir-ler e a mudança
+nos gates que a contam); o julgamento do traço no Tab. *Podem entrar na PR-3* se o desenho as
 puser em mono no corpo (QL-D19) — **não pôs**: elas vão em Manrope (QL-D30), então ficam na PR-4 `[derivado]`. *Aceites*:
 A-QL-17…A-QL-19.
 

@@ -81,6 +81,7 @@ são a QL-D37; o congelamento é a QL-D38.
 | **QL-D36** | **A nota da posição em A** (O4, P-QL6) **e a barra de baixo de A saindo da tela** (O3) **vão para o bloco do celular** (N5). |
 | **QL-D37** | **As respostas da folha que viram regra:** a âncora põe o começo da linha lógica no topo, a 32 da barra, sem sinal de rearranjo; **só a Tab rola para o lado**; no escuro e no claro do palco só as tintas trocam (o par em `text`; nas notas, o texto em `text`, o rótulo em `muted` e o fio em `line`). Nas molduras com setlist, a nota da posição aparece na barra de cima, ao lado das notas da música no corpo, com o texto inventado. |
 | **QL-D38** | **Congela-se o arquivo único offline**, como `DESIGN-QL/telas.html`, com sha. Os geradores do designer ficam fora do repositório. |
+| **QL-D39** | `[Marcel, 2026-10-08]` — o aval do congelamento, a Q1 do §8. **O estado recolhido das notas é lembrado de verdade** — gravado no aparelho; ao reabrir o app ou o palco, volta como estava. **O zoom e o tema seguem como hoje** (estado do palco, T1-R31 e T1-R32 intactos). É a primeira preferência do app gravada no aparelho fora do Firebase: a PR-4 declara a chave, prova com teste (gravar, reabrir, ler) e declara a mudança nos gates que a contam. *(Fica ao lado da QL-D33, cujo texto não muda.)* |
 
 ### 3.1 As regras do corte — o resumo da seção 1 da folha `[lido: o texto renderizado]`
 
@@ -235,6 +236,7 @@ respiro em A (O2) fica o do brief (QL-D35); a O6 da folha não procede (div. 119
   palco aberto, e nada os grava no aparelho (o único `AsyncStorage` do app é o do Firebase, `apps/native/src/firebase.ts:9`).
   O PRD da tela 1 diz que o zoom *"persiste por música durante a sessão"* (T1-R31) e o tema *"persiste ao trocar de
   música"* (T1-R32). **Pergunta para o aval** (§8).
+  **→ Resolvido pela QL-D39** (§3): gravado no aparelho e lembrado de verdade; o zoom e o tema seguem como hoje.
 - **As medidas estimadas** (§4): a PR-1 mede.
 - **A nota da posição em A, a barra de baixo de A e o respiro de A**: N5 (QL-D35, QL-D36).
 
@@ -246,6 +248,7 @@ mesmo jeito que o zoom e o tema hoje** — vale enquanto o palco está aberto e 
 três — as notas, o zoom e o tema passam a ser lembrados (muda o T1-R31/T1-R32 e o palco de hoje). **Recomendo (a)**: é o
 que a decisão diz que o músico quer (recolheu uma vez, fica recolhido); (c) muda o palco em C, o que a QL-D25 diz que não
 muda.
+→ **Respondida: QL-D39** (§3).
 
 ## 9 · Aparato
 
