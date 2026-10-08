@@ -1,0 +1,28 @@
+G-faixa · rodada 2026-10-08T12:28:06.943Z · base http://localhost:3000 · saída tests/gates-web/medicoes
+G-faixa · perfil com sessão ativa
+
+Running 3 tests using 1 worker
+
+G-faixa · content-edit · EDIT-tab · 1138: começa
+G-faixa · content-edit · EDIT-tab · 1138: preparado em 3487 ms
+G-faixa · content-edit · base-tab · 1138: começa
+G-faixa · content-edit · base-tab · 1138: preparado em 3358 ms
+  ✓  1 [C-1138] › scripts/gates-web/g-faixa-medir.ts:122:7 › content-edit (9.8s)
+G-faixa · content-edit · EDIT-tab · 711: começa
+G-faixa · content-edit · EDIT-tab · 711: preparado em 3442 ms
+G-faixa · content-edit · base-tab · 711: começa
+G-faixa · content-edit · base-tab · 711: preparado em 3513 ms
+  ✓  2 [B-711] › scripts/gates-web/g-faixa-medir.ts:122:7 › content-edit (9.8s)
+G-faixa · content-edit · EDIT-tab · 411: começa
+G-faixa · content-edit · EDIT-tab · 411: preparado em 3400 ms
+G-faixa · content-edit · base-tab · 411: começa
+G-faixa · content-edit · base-tab · 411: preparado em 3291 ms
+  ✓  3 [A-411] › scripts/gates-web/g-faixa-medir.ts:122:7 › content-edit (9.6s)
+G-faixa · content-edit · EDIT-carregando-auth: INALCANÇÁVEL (declarado) — a espera da sessão (isLoading): com a sessão do perfil o Firebase já responde antes de qualquer route() alcançar — prova na pré-verificação sem sessão (docs/ux/I1-PR11-anexos/pre-verificacao/) e no Vitest (components/editors/__tests__/editor-estados.test.tsx)
+G-faixa · content-edit · EDIT-sem-usuario: INALCANÇÁVEL (declarado) — sem usuário (a rota sem cookie vai ao /login pelo middleware): com a sessão do perfil o Firebase já responde antes de qualquer route() alcançar — prova na pré-verificação sem sessão (docs/ux/I1-PR11-anexos/pre-verificacao/) e no Vitest (components/editors/__tests__/editor-estados.test.tsx)
+G-faixa · content-edit · 411: (e)=0 · (b)=0 · (d′)=25 · errata candidata=0 · quebra por dado=0 · saídas: nome-acessível=0 rolagem=0 (faixa A)
+G-faixa · content-edit · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=33 · quebra por dado=0 · saídas: nome-acessível=0 rolagem=0
+G-faixa · content-edit · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=3 · quebra por dado=0 · saídas: nome-acessível=0 rolagem=0
+G-faixa · gravado: content-edit.json → /Users/marcelviana/projects/octavia-d0-pr1/tests/gates-web/medicoes
+
+  3 passed (35.6s)
