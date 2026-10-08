@@ -800,5 +800,5 @@ nem a errata acima: a PR D-0 do §15.1 **foi feita e entregou mais do que estanc
 (D0-D20): a Tab como texto, a dificuldade vazia como `null` (158 de 196 contents eram recusados), a Tab de upload e a Cifra
 com `content_data` nulo, e as anotações mantidas. #367 e #368; prova em prod no AVD. O tablet e o release não mudaram. **A
 ordem que segue** é a da N4-D109 com a D0-D4: **quebra de linha → resto do D → N5 → identidade → iOS**; o W5 à parte —
-sujeita ao aval do encerramento da D-0 (Q2 de lá).
+confirmada no aval do encerramento da D-0 (D0-D25), com a div. 1147 primeira do resto do D.
 

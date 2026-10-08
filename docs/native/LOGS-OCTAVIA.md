@@ -722,7 +722,7 @@ lacuna é a div. 1143 (pergunta de produto, sem resposta).
 ### A regra que a D-0 firmou — 39
 
 *(Encerramento da D-0, 2026-10-08; fonte: `docs/ux/D0-ENCERRAMENTO.md` §6; proposta no `docs/ux/D0-PR1-anexos/README.md`
-§9; **sujeita ao aval do encerramento**.)* Numerada na sequência das do N4. Vale para todo gate que compare um corpo de
+§9; **aprovada como está — D0-D27** `[Marcel, 2026-10-08]`.)* Numerada na sequência das do N4. Vale para todo gate que compare um corpo de
 requisição.
 
 **39. Um gate de corpo prova que o corpo é aceito pelo esquema real, não só que ele não mudou.** *(Div. 1157, D-0-PR1;

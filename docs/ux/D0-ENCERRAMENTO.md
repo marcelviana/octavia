@@ -166,7 +166,7 @@ A última do `LOGS-OCTAVIA.md` era a 38 (N4). Entra neste commit, em *"A regra q
 
 > **39. Um gate de corpo prova que o corpo é aceito pelo esquema real, não só que ele não mudou.**
 
-O texto completo está no `LOGS-OCTAVIA.md`; a proposta veio do `D0-PR1-anexos/README.md` §9. **Sujeita ao aval** (§9, Q4).
+O texto completo está no `LOGS-OCTAVIA.md`; a proposta veio do `D0-PR1-anexos/README.md` §9. **Aprovada como está — D0-D27** (§13).
 
 ## 7. A contabilidade de prod do bloco
 
@@ -181,7 +181,7 @@ O texto completo está no `LOGS-OCTAVIA.md`; a proposta veio do `D0-PR1-anexos/R
 **O que ficou em prod**: a Tab **`D0 descartável`** (id8 `f9b78d0e`) e a nota `D0` da música do item (ii), na conta de
 audit — **do Marcel apagar** (regra 12). O rastro da sonda da Fase D (div. 1159) segue onde estava (§8).
 
-## 8. Heranças, com destino — **proposta para o aval**
+## 8. Heranças, com destino — **aprovadas: D0-D24** (§13)
 
 Tiradas do `D0-PRECHECK.md` §12.2, do `D0-PR1-anexos/README.md` e das listas do D do `I1-ENCERRAMENTO.md` §10.1 e do
 `N4-ENCERRAMENTO.md` §10.4.
@@ -226,6 +226,7 @@ O **tablet** e o **release** de repouso do Tab (`cf58f7f`): a D-0 não tocou nen
 
 **Q1 — os destinos do §8?** (a) **como estão**: o resto do D na ordem do §8.2, com a 1147 primeiro; o W5 com os quatro do
 §8.3; o tablet sem mudança. (b) outra ordem no D. **Recomendo (a).**
+→ **Respondida: D0-D24** — (a); os destinos deixam de ser proposta.
 
 **Q2 — a ordem dos blocos: o próximo é a quebra de linha?** O que está decidido `[lido]`: a N4-D109 (*quebra de linha → D
 → N5 → identidade → iOS*, o W5 à parte) e a D0-D4, que pôs a D-0 antes da quebra (`PLANO-TRANSICAO.md`, as notas do N4 e
@@ -235,16 +236,21 @@ frente?** A D-0 tirou o que apagava ou perdia dado em silêncio. O candidato mai
 salvamentos que davam 400 passam a dar certo, e o título digitado em *Informações* agora "salva" sem chegar à coluna — mas
 o músico vê o título velho na lista logo depois, e *Detalhes* edita o título. O `updated_at` do favoritar não apaga dado e
 depende da N4-D91. **Recomendo: o próximo é a quebra de linha, como decidido; a 1147 primeiro no D.**
+→ **Respondida: D0-D25** — a quebra de linha é o próximo; a 1147 é a primeira do resto do D, e o pre-check do D trata a aba
+*Informações* inteira.
 
 **Q3 — a div. 1154 (o Vitest coletando teste em `docs/`)**: o pre-check a destinava ao `LOGS-OCTAVIA.md` *"no
 encerramento do bloco"*; este encerramento a põe no W5 (o conserto é de instrumento: o `include` do `vitest.config.mts`).
 (a) **W5**, sem regra nova; (b) também um caso no catálogo. **Recomendo (a)**: a N4-D117 já é a regra; falta o instrumento
 cumpri-la.
+→ **Respondida: D0-D26** — (a).
 
 **Q4 — a regra 39**: (a) **aprovada como está no `LOGS-OCTAVIA.md`**; (b) com ajuste. **Recomendo (a).**
+→ **Respondida: D0-D27** — (a).
 
 **Q5 — a Tab `D0 descartável` e a nota `D0`** na conta de audit: (a) **o Marcel apaga** (regra 12); (b) ficam como
 fixture de prova. **Recomendo (a).**
+→ **Respondida: D0-D28** — (a), pendência do Marcel, não do bloco.
 
 ## 10. Divergências desta PR — 1170 a 1174
 
@@ -284,6 +290,21 @@ No molde das existentes, sem reescrever:
 # só docs — D-0 encerramento: nenhum arquivo do núcleo do G-back tocado; nenhuma linha de código.
 ```
 
+## 13. O aval do encerramento — D0-D24…D28 `[Marcel, 2026-10-08]`
+
+| # | decisão (pergunta) | o que muda |
+|---|---|---|
+| **D0-D24** | (Q1) **Os destinos das heranças ficam como propostos** — o resto do D na ordem do §8.2, o W5 com os quatro do §8.3, o tablet e o release sem mudança. Deixam de ser proposta. | o título do §8 |
+| **D0-D25** | (Q2) **O próximo bloco é a quebra de linha.** A div. 1147 (o título digitado em *Informações* que não chega à coluna) é **a primeira do resto do D**. A observação, registrada: **depois da D-0, o salvar dá certo sem esse título chegar à coluna** (antes, 81 % dos salvamentos voltavam 400 e a perda nem acontecia); por isso **o pre-check do resto do D trata a aba *Informações* inteira** — o título e os outros campos dela — artista, tom (Cifra) ou afinação (Tab), capo e BPM (`components/editors/informacoes.tsx`), que vão ao `content_data` pelo mesmo caminho da 1147 e não à coluna — e os campos que o site não grava (`I1-ENCERRAMENTO.md` §10.1 item 2; `N4-ENCERRAMENTO.md` §10.4 item 5) —, não só o título. | §8.2 item 1; a nota do plano |
+| **D0-D26** | (Q3) **A div. 1154 vai ao W5**, sem caso novo no catálogo. | §8.3 item 1 |
+| **D0-D27** | (Q4) **A regra 39 fica aprovada como está** no `LOGS-OCTAVIA.md`. | §6; o `LOGS-OCTAVIA.md` |
+| **D0-D28** | (Q5) **Os dados de teste em prod** — a Tab `D0 descartável` (id8 `f9b78d0e`) e a nota `D0`, na conta de audit — **são apagados pelo Marcel**: pendência dele, não do bloco. | §7 |
+
+**As árvores de blocos já mergeados** `[medido]`: `../octavia-d0-precheck` (`d0/precheck-fase-a`, `d89e291`) e
+`../octavia-n4-encerramento` (`n4/encerramento`, `638dc30`) estavam limpas (`git status --short` vazio) e foram removidas
+com `git worktree remove`, **sem `--force`** (exit 0 nas duas). Fica só esta árvore, além do checkout principal.
+
 ---
 
-**O bloco só se declara encerrado depois do aval.** O próximo, pela N4-D109 e pela D0-D4: **o bloco da quebra de linha**.
+**A D-0 está encerrada** (D0-D24…D28). **O que vem depois: o bloco da quebra de linha**, aberto numa conversa nova de
+revisão, com o `docs/native/N4-ENCERRAMENTO.md` e este `docs/ux/D0-ENCERRAMENTO.md` anexados inteiros.
