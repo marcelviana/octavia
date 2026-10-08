@@ -719,6 +719,24 @@ desde o `logcat -c`). É um fato desses dois builds, não uma propriedade do app
 mudar**, e até lá a prova com rede depois do avião pode contar com ele, declarando-o. Se é o comportamento desejado ou uma
 lacuna é a div. 1143 (pergunta de produto, sem resposta).
 
+### A regra que a D-0 firmou — 39
+
+*(Encerramento da D-0, 2026-10-08; fonte: `docs/ux/D0-ENCERRAMENTO.md` §6; proposta no `docs/ux/D0-PR1-anexos/README.md`
+§9; **sujeita ao aval do encerramento**.)* Numerada na sequência das do N4. Vale para todo gate que compare um corpo de
+requisição.
+
+**39. Um gate de corpo prova que o corpo é aceito pelo esquema real, não só que ele não mudou.** *(Div. 1157, D-0-PR1;
+D0-D19.)* O gate do `PUT` do editor do I1 (`tests/gates/i1-editor-put.test.tsx`, `f5260ec`, 2026-09-29) travou byte a
+byte, em 4 de 5 casos, um corpo com `difficulty: ""` que a rota recusava desde 2025-07-08 (`f0947c3`) — o `fetch` falso do
+gate devolvia 200 a qualquer corpo, e o aceite do I1 rodava sem `PUT` real (I1-D37). O gate provou que o editor mandava o
+mesmo corpo de antes; esse corpo nunca chegava ao banco, e 158 de 196 contents não se salvavam no site (div. 1152).
+**"Não mudou" não é "funciona" quando o lado que diz se funciona está simulado.** O gate de corpo passa o corpo pelo
+validador de verdade — a rota com a autenticação e o banco simulados (`tests/gates/rota-real.ts`), ou, sem a rota, o
+esquema e o contrato — e exige o aceite **antes** de comparar os bytes. E **o passo que grava a fixture só grava com todos
+os casos aceitos**: na D-0, o controle negativo achou o gravar escrevendo a fixture com só o caso que passou, em silêncio
+(div. 1161, `2d90f60`). O par de quem muda de propósito continua sendo a regra 14 — agora sobre corpos que o servidor
+aceita.
+
 ### A regra de método que o padrão implica
 
 **Uma medição não vira referência sem `n`** (div. 80). Onde houver população, faixa com

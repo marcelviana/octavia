@@ -1,0 +1,2 @@
+# os gates na ponta da main 9c1f23c, rodados em 2026-10-08 na árvore ../octavia-d0-encerramento (rastro; a fonte é o D0-ENCERRAMENTO.md §5).
+# G-back, G1 e G2/G3 com a base a613b1d (o merge do pre-check). Sem códigos de cor.

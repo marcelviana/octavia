@@ -519,6 +519,13 @@ bloco (regra 23).
 | 18 | **o editor da Cifra não atualiza o `chords` do topo**: grava `sections` e leva o `chords` de antes ao `PUT` (`components/chord-editor.tsx:38-41`; `components/content-editor.tsx:64-68`) — o `checkContentData` do `PUT` valida esse `chords` desatualizado | N4: div. 975; N4-D44 |
 | 19 | **o `PUT` do favorito mexe no `updated_at`** (`app/api/content/route.ts:282-284`): favoritar reordena o "Recentes" do painel do web (`app/dashboard/page.tsx:33-37`) e conta como mudança no T1-R10 do nativo | N4: L1; N4-D39 |
 
+*(Errata de ponteiro do encerramento da D-0, 2026-10-08 — `docs/ux/D0-ENCERRAMENTO.md` §8.1, sem reescrever a tabela: o
+**item 17** (a Tab editada no web que nenhum leitor vê) está **fechado** pela D-0 (D0-D6, #368); o **item 3**, na metade da
+div. 776 (o compasso-fixture aberto e gravado), também (D0-D7) — a metade da div. 784 (*"Verse 1"*/*"Content"*) segue no D;
+o **item 1** segue no D sem as anotações: o editor deixou de zerar o `annotations` (D0-D23). O **item 18** (as seções × o
+`chords`) e o **item 19** (o `updated_at` do favoritar, **amarrado à N4-D91**) seguem no D, na ordem do
+`D0-ENCERRAMENTO.md` §8.2.)*
+
 ### 10.2 N4 (content nos apps)
 
 | # | item | origem |
