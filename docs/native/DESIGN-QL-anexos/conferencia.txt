@@ -1,0 +1,152 @@
+## 1. A rede e os erros
+requisições: 1 · por esquema: {"file":1} · abortadas (fora de file/data/blob): 0
+erros da página: 0
+
+## 2. A seção 13 (verbatim, o texto renderizado)
+13 · CONFERÊNCIA
+A tabela sai da mesma função que desenhou as molduras. As colunas divisa e na tela são medidas no navegador quando esta página abre. Elas conferem que cada controle de 64 está inteiro dentro do canvas, que cada linha de Letra, Cifra e nota termina antes da coluna, e que a divisa de 20 está inteira dentro do corpo, no estado da moldura.
+Resumo: 56 molduras normativas e 1 de estudo conferidas (a do par sem saída; as outras 5 de estudo comparam forma, não colunas). Colunas, acorde e Tab: tudo bate. O F#m7(11) não parte em nenhuma faixa nem zoom. Em A no zoom 40, quem parte é a palavra (R2). A Tab mantém as 6 linhas e as 78 colunas em todas as molduras. A divisa está em 18 molduras de notas, no estado certo. Na tela: todas as molduras ok
+MOLDURA	COLUNAS §3	MAIOR LINHA VISUAL	CABE	F#M7(11) INTEIRO	TAB SEM QUEBRA	DIVISA	NA TELA
+QL-C-S3-letra-escuro	80 · medida	77	sim	—	—	—	ok
+QL-B-S3-letra-escuro	48 · medida	47	sim	—	—	—	ok
+QL-A-S3-letra-escuro	26 · medida	26	sim	—	—	—	ok
+QL-C-S3-letra-claro	80 · medida	77	sim	—	—	—	ok
+QL-B-S3-letra-claro	48 · medida	47	sim	—	—	—	ok
+QL-A-S3-letra-claro	26 · medida	26	sim	—	—	—	ok
+QL-C-S3-cifra-escuro	80 · medida	50	sim	sim	—	—	ok
+QL-B-S3-cifra-escuro	48 · medida	45	sim	sim	—	—	ok
+QL-A-S3-cifra-escuro	26 · medida	24	sim	sim	—	—	ok
+QL-C-S3-cifra-claro	80 · medida	50	sim	sim	—	—	ok
+QL-B-S3-cifra-claro	48 · medida	45	sim	sim	—	—	ok
+QL-A-S3-cifra-claro	26 · medida	24	sim	sim	—	—	ok
+QL-C-S3-tab-rolando-escuro	80 · medida	0	sim	—	sim · 78 colunas, 6 linhas	—	ok
+QL-B-S3-tab-rolando-escuro	48 · medida	0	sim	—	sim · 78 colunas, 6 linhas	—	ok
+QL-A-S3-tab-rolando-escuro	26 · medida	0	sim	—	sim · 78 colunas, 6 linhas	—	ok
+QL-C-S3-tab-rolando-claro	80 · medida	0	sim	—	sim · 78 colunas, 6 linhas	—	ok
+QL-B-S3-tab-rolando-claro	48 · medida	0	sim	—	sim · 78 colunas, 6 linhas	—	ok
+QL-A-S3-tab-rolando-claro	26 · medida	0	sim	—	sim · 78 colunas, 6 linhas	—	ok
+QL-C-S3-notas-abertas-escuro	80 · medida	77	sim	—	—	aberta · inteira	ok
+QL-B-S3-notas-abertas-escuro	48 · medida	47	sim	—	—	aberta · inteira	ok
+QL-A-S3-notas-abertas-escuro	26 · medida	26	sim	—	—	aberta · inteira	ok
+QL-C-S3-notas-abertas-claro	80 · medida	77	sim	—	—	aberta · inteira	ok
+QL-B-S3-notas-abertas-claro	48 · medida	47	sim	—	—	aberta · inteira	ok
+QL-A-S3-notas-abertas-claro	26 · medida	26	sim	—	—	aberta · inteira	ok
+QL-C-S3-notas-recolhidas-escuro	80 · medida	77	sim	—	—	recolhida · inteira	ok
+QL-B-S3-notas-recolhidas-escuro	48 · medida	47	sim	—	—	recolhida · inteira	ok
+QL-A-S3-notas-recolhidas-escuro	26 · medida	26	sim	—	—	recolhida · inteira	ok
+QL-C-S3-notas-recolhidas-claro	80 · medida	77	sim	—	—	recolhida · inteira	ok
+QL-B-S3-notas-recolhidas-claro	48 · medida	47	sim	—	—	recolhida · inteira	ok
+QL-A-S3-notas-recolhidas-claro	26 · medida	26	sim	—	—	recolhida · inteira	ok
+QL-C-S3-notas-longa-escuro	44 · estimada	44	sim	—	—	aberta · inteira	ok
+QL-B-S3-notas-longa-escuro	26 · estimada	26	sim	—	—	aberta · inteira	ok
+QL-A-S3-notas-longa-escuro	14 · estimada	14	sim	—	—	aberta · inteira	ok
+QL-C-S3-notas-longa-claro	44 · estimada	44	sim	—	—	aberta · inteira	ok
+QL-B-S3-notas-longa-claro	26 · estimada	26	sim	—	—	aberta · inteira	ok
+QL-A-S3-notas-longa-claro	14 · estimada	14	sim	—	—	aberta · inteira	ok
+QL-B-S3-letra-zoom40-escuro	26 · estimada	26	sim	—	—	—	ok
+QL-B-S3-letra-zoom40-claro	26 · estimada	26	sim	—	—	—	ok
+QL-B-S3-cifra-zoom40-escuro	26 · estimada	24	sim	sim	—	—	ok
+QL-B-S3-cifra-zoom40-claro	26 · estimada	24	sim	sim	—	—	ok
+QL-C-V-letra-escuro	55 · medida	54	sim	—	—	—	ok
+QL-B-V-letra-escuro	48 · medida	47	sim	—	—	—	ok
+QL-A-V-letra-escuro	26 · medida	26	sim	—	—	—	ok
+QL-C-V-cifra-escuro	55 · medida	50	sim	sim	—	—	ok
+QL-B-V-cifra-escuro	48 · medida	45	sim	sim	—	—	ok
+QL-A-V-cifra-escuro	26 · medida	24	sim	sim	—	—	ok
+QL-C-V-tab-escuro	55 · medida	0	sim	—	sim · 78 colunas, 6 linhas	—	ok
+QL-B-V-tab-escuro	48 · medida	0	sim	—	sim · 78 colunas, 6 linhas	—	ok
+QL-A-V-tab-escuro	26 · medida	0	sim	—	sim · 78 colunas, 6 linhas	—	ok
+QL-B-S3-ancora-giro-antes-escuro	48 · medida	48	sim	—	—	—	ok
+QL-C-S3-ancora-giro-depois-escuro	80 · medida	75	sim	—	—	—	ok
+QL-C-S3-ancora-giro2-antes-escuro	80 · medida	75	sim	—	—	—	ok
+QL-B-S3-ancora-giro2-depois-escuro	48 · medida	48	sim	—	—	—	ok
+QL-B-S3-ancora-zoom-antes-escuro	48 · medida	48	sim	—	—	—	ok
+QL-B-S3-ancora-zoom-depois-escuro	41 · estimada	41	sim	—	—	—	ok
+QL-C-S3-letra-z22-77col-escuro	80 · medida	77	sim	—	—	—	ok
+EST-QL-A-S3-cifra-zoom40-sem-saida-escuro	14 · estimada	14	sim	sim	—	—	ok
+
+"Na tela: todas as molduras ok" presente: true
+
+## 3. As molduras
+normativas (no molde): 56 · de estudo (EST-): 6 · outras: 1 (QL-divisa-amostra)
+  QL-C-S3-letra-escuro                           ✓ canvas 1138 × 627 · molde ok
+  QL-B-S3-letra-escuro                           ✓ canvas 711 × 1054 · molde ok
+  QL-A-S3-letra-escuro                           ✓ canvas 411 × 874 · molde ok
+  QL-C-S3-letra-claro                            ✓ canvas 1138 × 627 · molde ok
+  QL-B-S3-letra-claro                            ✓ canvas 711 × 1054 · molde ok
+  QL-A-S3-letra-claro                            ✓ canvas 411 × 874 · molde ok
+  QL-C-S3-cifra-escuro                           ✓ canvas 1138 × 627 · molde ok
+  QL-B-S3-cifra-escuro                           ✓ canvas 711 × 1054 · molde ok
+  QL-A-S3-cifra-escuro                           ✓ canvas 411 × 874 · molde ok
+  QL-C-S3-cifra-claro                            ✓ canvas 1138 × 627 · molde ok
+  QL-B-S3-cifra-claro                            ✓ canvas 711 × 1054 · molde ok
+  QL-A-S3-cifra-claro                            ✓ canvas 411 × 874 · molde ok
+  QL-C-S3-tab-rolando-escuro                     ✓ canvas 1138 × 627 · molde ok
+  QL-B-S3-tab-rolando-escuro                     ✓ canvas 711 × 1054 · molde ok
+  QL-A-S3-tab-rolando-escuro                     ✓ canvas 411 × 874 · molde ok
+  QL-C-S3-tab-rolando-claro                      ✓ canvas 1138 × 627 · molde ok
+  QL-B-S3-tab-rolando-claro                      ✓ canvas 711 × 1054 · molde ok
+  QL-A-S3-tab-rolando-claro                      ✓ canvas 411 × 874 · molde ok
+  QL-C-S3-notas-abertas-escuro                   ✓ canvas 1138 × 627 · molde ok
+  QL-B-S3-notas-abertas-escuro                   ✓ canvas 711 × 1054 · molde ok
+  QL-A-S3-notas-abertas-escuro                   ✓ canvas 411 × 874 · molde ok
+  QL-C-S3-notas-abertas-claro                    ✓ canvas 1138 × 627 · molde ok
+  QL-B-S3-notas-abertas-claro                    ✓ canvas 711 × 1054 · molde ok
+  QL-A-S3-notas-abertas-claro                    ✓ canvas 411 × 874 · molde ok
+  QL-C-S3-notas-recolhidas-escuro                ✓ canvas 1138 × 627 · molde ok
+  QL-B-S3-notas-recolhidas-escuro                ✓ canvas 711 × 1054 · molde ok
+  QL-A-S3-notas-recolhidas-escuro                ✓ canvas 411 × 874 · molde ok
+  QL-C-S3-notas-recolhidas-claro                 ✓ canvas 1138 × 627 · molde ok
+  QL-B-S3-notas-recolhidas-claro                 ✓ canvas 711 × 1054 · molde ok
+  QL-A-S3-notas-recolhidas-claro                 ✓ canvas 411 × 874 · molde ok
+  QL-C-S3-notas-longa-escuro                     ✓ canvas 1138 × 627 · molde ok
+  QL-B-S3-notas-longa-escuro                     ✓ canvas 711 × 1054 · molde ok
+  QL-A-S3-notas-longa-escuro                     ✓ canvas 411 × 874 · molde ok
+  QL-C-S3-notas-longa-claro                      ✓ canvas 1138 × 627 · molde ok
+  QL-B-S3-notas-longa-claro                      ✓ canvas 711 × 1054 · molde ok
+  QL-A-S3-notas-longa-claro                      ✓ canvas 411 × 874 · molde ok
+  QL-B-S3-letra-zoom40-escuro                    ✓ canvas 711 × 1054 · molde ok
+  QL-B-S3-letra-zoom40-claro                     ✓ canvas 711 × 1054 · molde ok
+  QL-B-S3-cifra-zoom40-escuro                    ✓ canvas 711 × 1054 · molde ok
+  QL-B-S3-cifra-zoom40-claro                     ✓ canvas 711 × 1054 · molde ok
+  QL-C-V-letra-escuro                            ✓ canvas 1138 × 627 · molde ok
+  QL-B-V-letra-escuro                            ✓ canvas 711 × 1054 · molde ok
+  QL-A-V-letra-escuro                            ✓ canvas 411 × 874 · molde ok
+  QL-C-V-cifra-escuro                            ✓ canvas 1138 × 627 · molde ok
+  QL-B-V-cifra-escuro                            ✓ canvas 711 × 1054 · molde ok
+  QL-A-V-cifra-escuro                            ✓ canvas 411 × 874 · molde ok
+  QL-C-V-tab-escuro                              ✓ canvas 1138 × 627 · molde ok
+  QL-B-V-tab-escuro                              ✓ canvas 711 × 1054 · molde ok
+  QL-A-V-tab-escuro                              ✓ canvas 411 × 874 · molde ok
+  QL-B-S3-ancora-giro-antes-escuro               ✓ canvas 711 × 1054 · molde ok
+  QL-C-S3-ancora-giro-depois-escuro              ✓ canvas 1138 × 627 · molde ok
+  QL-C-S3-ancora-giro2-antes-escuro              ✓ canvas 1138 × 627 · molde ok
+  QL-B-S3-ancora-giro2-depois-escuro             ✓ canvas 711 × 1054 · molde ok
+  QL-B-S3-ancora-zoom-antes-escuro               ✓ canvas 711 × 1054 · molde ok
+  QL-B-S3-ancora-zoom-depois-escuro              ✓ canvas 711 × 1054 · molde ok
+  QL-C-S3-letra-z22-77col-escuro                 ✓ canvas 1138 × 627 · molde ok
+  EST-QL-A-S3-cont-a-recuo                       ✓ canvas 411 × 874 · estudo
+  EST-QL-A-S3-cont-b-fio                         ✓ canvas 411 × 874 · estudo
+  EST-QL-A-S3-cont-c-seta                        ✓ canvas 411 × 874 · estudo
+  EST-QL-B-S3-notas-a-corpo                      ✓ canvas 711 × 1054 · estudo
+  EST-QL-B-S3-notas-b-faixa                      ✓ canvas 711 × 1054 · estudo
+  EST-QL-A-S3-cifra-zoom40-sem-saida-escuro      ✓ canvas 411 × 874 · estudo
+canvas fora da faixa: 0
+
+## 4. O que o §9 do brief pede
+pedidas por nome: 47 · faltam: 0 
+âncora (antes e depois de giro e de zoom): 6 — QL-B-S3-ancora-giro-antes-escuro QL-C-S3-ancora-giro-depois-escuro QL-C-S3-ancora-giro2-antes-escuro QL-B-S3-ancora-giro2-depois-escuro QL-B-S3-ancora-zoom-antes-escuro QL-B-S3-ancora-zoom-depois-escuro
+"nada muda" (Letra de 77 em C, zoom 22): 1 — QL-C-S3-letra-z22-77col-escuro
+
+## 5. As capturas
+  QL-B-S3-letra-escuro.png
+  QL-A-S3-cifra-escuro.png
+  QL-C-S3-notas-abertas-escuro.png
+  QL-C-S3-notas-recolhidas-escuro.png
+  QL-B-S3-letra-zoom40-escuro.png
+  QL-B-S3-ancora-giro-antes-escuro.png
+  QL-C-S3-ancora-giro-depois-escuro.png
+  QL-B-S3-ancora-zoom-antes-escuro.png
+  QL-B-S3-ancora-zoom-depois-escuro.png
+  QL-C-S3-letra-z22-77col-escuro.png
+  QL-divisa-amostra.png

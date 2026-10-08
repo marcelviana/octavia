@@ -1546,3 +1546,8 @@ automaticamente.
 > (`docs/native/QL-PRECHECK.md` §11) fecha o pre-check: o par acorde/letra só na Cifra, a reserva por linha, e **as notas
 > da música no palco ficam no QL**, como última fatia, provadas com fixture (QL-D26) — o Marcel escreve a primeira nota de
 > verdade no encerramento. **O próximo passo do QL é o brief** para o Claude Design.
+
+> **Nota do congelamento do desenho do QL (2026-10-08)** — sem reescrever a nota acima. O brief (#371) foi ao Claude Design,
+> que entregou a folha em duas rodadas; **o desenho está congelado** em `docs/native/DESIGN-QL/` (`telas.html`, 56 molduras
+> normativas, com sha), com as decisões QL-D28…D38 (as regras do corte, a continuação por recuo de 2 colunas, as notas no
+> topo do corpo com a divisa) e os requisitos em `docs/native/QL-REQUISITOS.md`. **A próxima é a PR-1 — gates.**

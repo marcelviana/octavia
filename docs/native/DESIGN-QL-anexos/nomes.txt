@@ -1,0 +1,8 @@
+# DESIGN-QL — nenhum título ou artista das fixtures com nome real (a lista do D-0) no texto renderizado da folha
+$ node …/texto-renderizado.mjs docs/native/DESIGN-QL/telas.html <texto.txt>   (o texto fica no scratch: é a folha inteira)
+$ python3 -I docs/native/DESIGN-QL-anexos/instrumentos/nomes.py <texto.txt> .
+arquivos da lista: 17 · valores de artist/title extraídos (≥ 4 caracteres): 40 · presentes no texto da folha: 0
+
+# controle negativo: o mesmo texto com o 1º valor extraído acrescentado no fim — tem de acusar 1
+arquivos da lista: 17 · valores de artist/title extraídos (≥ 4 caracteres): 40 · presentes no texto da folha: 1
+  presente: <valor de 13 caracteres>
