@@ -1,0 +1,5 @@
+2026-10-08 11:06:28
+airplane=1 wifi=0 data=0
+stay_on=1 accel=1 user_rot=0
+reverse: []
+connect: Network is unreachable
