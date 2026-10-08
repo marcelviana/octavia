@@ -77,10 +77,13 @@ jobs:
     # N4-PR3 (N4-D81, div. 1022): o DESIGN-N4 entrou na `main` (#358) fora do
     # laço; entra no commit 1 da primeira PR de código do bloco. O SHA256SUMS
     # dele cobre o `telas.html` e o `icones.html` (o README fica fora).
-    - name: Congelados — shasum -c dos SHA256SUMS do DESIGN-V1, do DESIGN-N2, do DESIGN-N3 e do DESIGN-N4
+    # QL-PR1 (QL-D38, QL-R22, A-QL-7): o DESIGN-QL entrou na `main` (#372) fora do
+    # laço; entra no commit de gates da primeira PR de código do bloco, como o
+    # DESIGN-N4 na N4-PR3. O SHA256SUMS dele cobre o `telas.html` (o README fica fora).
+    - name: Congelados — shasum -c dos SHA256SUMS do DESIGN-V1, do DESIGN-N2, do DESIGN-N3, do DESIGN-N4 e do DESIGN-QL
       run: |
         F=0
-        for d in docs/native/DESIGN-V1 docs/native/DESIGN-N2 docs/native/DESIGN-N3 docs/native/DESIGN-N4; do
+        for d in docs/native/DESIGN-V1 docs/native/DESIGN-N2 docs/native/DESIGN-N3 docs/native/DESIGN-N4 docs/native/DESIGN-QL; do
           echo "== $d"
           (cd "$d" && shasum -a 256 -c SHA256SUMS) || F=1
         done
