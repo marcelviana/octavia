@@ -160,6 +160,10 @@ E a noite inteira cabe numa canção de exemplo
   dele e recua para a coluna 22;
 - *"Refrão"* — o nome da seção; *"Am  F  C  G"* — a **progressão**, que vira par com a linha de baixo (regra 5).
 
+*(Errata de ponteiro do congelamento do desenho, `[Marcel, 2026-10-08]` — `docs/native/DESIGN-QL/README.md` §3 e §6,
+QL-D28, **QL-E1**: no celular, o corte do par de 50 recua para a **coluna 18**, não para a 22 — a 22 partiria *conta*, e a
+regra R2 recua até o primeiro ponto que não parte nem um acorde nem uma palavra.)*
+
 ### 5.3 Tab — 78 colunas (não quebra)
 
 ```

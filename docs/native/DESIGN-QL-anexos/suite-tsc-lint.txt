@@ -1,0 +1,13 @@
+$ pnpm test
+ Test Files  140 passed | 3 skipped (143)
+      Tests  1706 passed | 59 skipped (1765)
+$ tsc (de dentro de cada pacote)
+raiz 0
+core 0
+identidade 0
+nativo 0
+$ pnpm lint
+✔ No ESLint warnings or errors
+$ git diff --stat origin/main -- . ':!docs'
+$ (cd docs/native/DESIGN-QL && shasum -a 256 -c SHA256SUMS)
+telas.html: OK
