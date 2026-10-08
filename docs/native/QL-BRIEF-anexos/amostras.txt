@@ -1,0 +1,76 @@
+# QL brief — as amostras de texto por largura, COMO ESTÁ HOJE (a linha inteira, que rola para o lado).
+# Gerado por instrumentos/amostras.mjs. Textos inventados para o brief. Larguras do zoom 22: 26 = A · 48 = B · 55 = V em C · 80 = palco em C.
+# A régua: cada ▼ fica sobre a ÚLTIMA coluna que cabe naquela largura. Em cada linha: o comprimento e as larguras que ela
+# passa (onde, hoje, ela sai da coluna e só se lê rolando o corpo para o lado).
+
+## LETRA — Letra — a forma real (no dado do Marcel: a maior linha 77, p95 46)
+
+                               26                    48     55                       80
+                               ▼                     ▼      ▼                        ▼
+   1 │Acendi a lanterna do quintal e
+     │  └ 30 col · passa de 26
+   2 │Quando a maré da fixture sobe devagar pelo cais lá
+     │  └ 50 col · passa de 26, 48
+   3 │o vento assobia baixinho
+     │  └ 24 col · cabe em todas
+   4 │
+     │  └ (vazia)
+   5 │Cada passo que eu dou na areia fria deixa um rastro de sal e
+     │  └ 60 col · passa de 26, 48, 55
+   6 │e a cidade inteira dorme enquanto o barco da fixture segue sem pressa pro mar
+     │  └ 77 col · passa de 26, 48, 55
+   7 │ô ô ô
+     │  └ 5 col · cabe em todas
+
+## CIFRA — Cifra — pares de 30 e de 50, um acorde que atravessa o corte de 26, a progressão de seção e a linha quase acorde
+
+                               26                    48     55                       80
+                               ▼                     ▼      ▼                        ▼
+   1 │Intro: Am  E
+     │  └ 12 col · cabe em todas · quase acorde (Intro:) — reserva por linha, QL-D23
+   2 │
+     │  └ (vazia)
+   3 │Am            F              C
+     │  └ 30 col · passa de 26 · acordes do par de 30
+   4 │Dobrei a esquina da fixture, e
+     │  └ 30 col · passa de 26 · letra do par de 30
+   5 │Am                    F#m7(11)        G          C
+     │  └ 50 col · passa de 26, 48 · o corte de 26 cai dentro de "F#m7(11)" (col. 23–30) · acordes do par de 50 — o F#m7(11) ocupa as colunas 23 a 30 e atravessa o corte de 26
+   6 │Cada janela acesa conta uma história de quem passa
+     │  └ 50 col · passa de 26, 48 · letra do par de 50
+   7 │
+     │  └ (vazia)
+   8 │Refrão
+     │  └ 6 col · cabe em todas · nome da seção
+   9 │Am  F  C  G
+     │  └ 11 col · cabe em todas · progressão da seção — vira par com a linha de baixo (QL-D22)
+  10 │E a noite inteira cabe numa canção de exemplo
+     │  └ 45 col · passa de 26 · letra da seção
+
+## TAB — Tab — 78 colunas, seis cordas (não quebra: rola, como hoje)
+
+                               26                    48     55                       80
+                               ▼                     ▼      ▼                        ▼
+   1 │e|-----0-----0---------0-----0---------0-----0---------0-----0---------0-----|
+     │  └ 78 col · passa de 26, 48, 55
+   2 │B|---1---1-----1-----1---1-----1-----1---1-----1-----1---1-----1-----1---1---|
+     │  └ 78 col · passa de 26, 48, 55
+   3 │G|-2-------2-------2-------2-------2-------2-------2-------2-------2-------2-|
+     │  └ 78 col · passa de 26, 48, 55
+   4 │D|---------------------------------------------------------------------------|
+     │  └ 78 col · passa de 26, 48, 55
+   5 │A|-3---------3-----3---------3-----3---------3-----3---------3-----3---------|
+     │  └ 78 col · passa de 26, 48, 55
+   6 │E|---------------------------------------------------------------------------|
+     │  └ 78 col · passa de 26, 48, 55
+
+## NOTA — Nota da música — várias linhas, uma longa
+
+                               26                    48     55                       80
+                               ▼                     ▼      ▼                        ▼
+   1 │Capo na 2.
+     │  └ 10 col · cabe em todas
+   2 │Entrar depois da contagem de quatro do metrônomo da fixture.
+     │  └ 60 col · passa de 26, 48, 55
+   3 │Segunda voz só no refrão; no fim, segurar o último acorde até a luz da sala apagar de vez.
+     │  └ 90 col · passa de 26, 48, 55, 80
