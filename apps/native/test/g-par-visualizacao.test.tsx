@@ -24,6 +24,8 @@
  * zoom 40), onde linhas da fixture passam da coluna. Antes o duplo nunca chamava `onLayout`, e o G-par passaria sem
  * ver a quebra (div. 1185).
  *
+ * E a TAB NÃO QUEBRA (QL-R8): um item de Tab com continuação em V é diferente, mesmo com o texto preservado.
+ *
  * `O_LEITOR_QUEBRA` é a declaração do estado do leitor: `false` até a PR-3 — e então V não pode mostrar continuação
  * nenhuma (uma quebra sem a declaração reprova); `true` desde a PR-3 — e então todo item de texto com linha acima de 26
  * colunas (fora a Tab) tem de mostrar continuação em 26 (um leitor que ignore as colunas do duplo reprova).
@@ -153,14 +155,16 @@ describe('G-par da visualização (N4-PR8) — o nó corpo de V mostra o que o s
       for (const it of fx.par) {
         const s = site[it.id]
         const v = await visualizacao(it)
-        const c = s === undefined ? { igual: false, continuacoes: 0 } : comparar(s, v)
+        const c0 = s === undefined ? { igual: false, continuacoes: 0 } : comparar(s, v)
+        const tabQuebrada = it.content_type === 'Tab' && c0.continuacoes > 0
+        const c = tabQuebrada ? { ...c0, igual: false } : c0
         const n = colunas === undefined ? 0 : acimaDe(s, it.content_type, colunas)
         acima += n
         continuacoes += c.continuacoes
         if (c.igual) iguais++
         else diferentes.push(it.id)
         if (O_LEITOR_QUEBRA && n > 0 && c.continuacoes === 0) cegos.push(it.id)
-        const estado = !c.igual ? 'DIFERENTE' : c.continuacoes > 0 ? 'QUEBRA   ' : 'IGUAL    '
+        const estado = tabQuebrada ? 'TAB QUEBRADA' : !c.igual ? 'DIFERENTE' : c.continuacoes > 0 ? 'QUEBRA   ' : 'IGUAL    '
         out.push(
           `  ${estado} ${it.id.padEnd(28)} site=${s === undefined ? '(sem retrato)' : descrever(s).padEnd(16)} V=${descrever(v)}` +
             (c.continuacoes > 0 ? ` · ${c.continuacoes} continuações` : '') +
