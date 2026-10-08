@@ -18,7 +18,9 @@
  *       `tests/gates/n4-g-par.test.tsx` lê pelos dois lados;
  *   (e) as três classes de dado do pre-check (§8.2): o editor abre a `tablature`, e salvar não apaga nem altera o
  *       `measures` gravado (D0-D8);
- *   (f) o compasso de exemplo não existe em lugar nenhum do código do site (D0-D7).
+ *   (f) o compasso de exemplo não existe em lugar nenhum do código do site (D0-D7);
+ *   (g) o editor não apaga o que não conhece: a chave que nenhum editor de tipo edita, num `content_data` não nulo, volta
+ *       no corpo e na linha gravada com o mesmo valor, nos quatro tipos (a Partitura com a chave legada `file`).
  *
  * Sobre a `main` (gate-first, regra 30) ele REPROVA: (a) nos 4 casos de dificuldade nula; (b) e (c) pelo contrato de
  * escrita; (d), (e) e (f) porque não há painel de texto e o exemplo está no `tab-editor.tsx`. Dado fabricado: nenhum
@@ -206,6 +208,33 @@ describe('D-0 — o editor do site salva, e o que salva os leitores mostram', ()
       expect(g.tablature).toBe(TAB_EDITADA)
       if (measures === undefined) expect('measures' in g, 'nenhum measures novo').toBe(false)
       else expect(JSON.stringify(g.measures), 'o measures gravado, intacto').toBe(JSON.stringify(measures))
+    }, 20_000)
+  }
+
+  // (g) o editor não apaga o que não conhece: uma chave que nenhum editor de tipo edita, num `content_data` que NÃO é
+  // nulo, volta no corpo com o mesmo valor depois de um salvar por *Detalhes* — a generalização do (e) (D0-D8) aos
+  // quatro tipos. A Partitura leva também a chave legada `file` (a forma que o pre-check do N4 mediu na conta principal,
+  // `docs/native/N4-PRECHECK.md:950`); os valores são fabricados.
+  const DESCONHECIDA = { chave_d0_desconhecida: { origem: 'fabricada D0', n: 7, lista: ['a', 'b'] } }
+  const COM_DESCONHECIDA: Record<string, { content_data: Record<string, unknown>; file_url: string | null }> = {
+    Lyrics: { content_data: { lyrics: 'Primeira linha fabricada D0', ...DESCONHECIDA }, file_url: null },
+    Chords: { content_data: { chords: 'C  G\nLa la D0', ...DESCONHECIDA }, file_url: null },
+    Tab: { content_data: { tablature: TAB, ...DESCONHECIDA }, file_url: null },
+    Sheet: { content_data: { file: 'd0-legado-fabricado.pdf', ...DESCONHECIDA }, file_url: PDF },
+  }
+  for (const tipo of Object.keys(COM_DESCONHECIDA)) {
+    it(`(g) ${tipo} · uma chave desconhecida no content_data · Notas em Detalhes → a chave volta no corpo, igual`, async () => {
+      const linha = { ...base, id: novoId(), content_type: tipo, difficulty: 'Beginner', ...COM_DESCONHECIDA[tipo] }
+      await abrir(linha)
+      await mudar('campo-notas', 'nota fabricada D0')
+      const s = await salvar()
+      expect(s.status, `a rota recusou: ${s.motivo}`).toBe(200)
+      const corpo = dados(s.corpo) ?? {}
+      const antes = linha.content_data as Record<string, unknown>
+      const desconhecidas = Object.keys(antes).filter((k) => !['lyrics', 'chords', 'tablature', 'sections', 'annotations'].includes(k))
+      console.log(`  (g) ${tipo}: chaves que nenhum editor edita ${desconhecidas.length} (${desconhecidas.join(', ')}) · no corpo ${desconhecidas.filter((k) => k in corpo).length}`)
+      for (const k of desconhecidas) expect(JSON.stringify(corpo[k]), `a chave ${k} perdeu-se ou mudou no corpo`).toBe(JSON.stringify(antes[k]))
+      for (const k of desconhecidas) expect(JSON.stringify((dados(gravada()) ?? {})[k]), `a chave ${k} na linha gravada`).toBe(JSON.stringify(antes[k]))
     }, 20_000)
   }
 
