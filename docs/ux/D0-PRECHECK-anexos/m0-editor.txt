@@ -1,0 +1,98 @@
+# D-0 pre-check, M0 — o editor de Tab medido (rastro; local, main 69fd3c2 + só docs; 0 requisições; dado fabricado)
+# $ npx vitest run --config docs/ux/D0-PRECHECK-anexos/instrumentos/m0.vitest.config.mts
+== R1 título em Detalhes (Tab de lote, sem measures) · difficulty=null
+   Salvar ativo: true
+   corpo: chaves do topo = album,artist,bpm,content_data,difficulty,genre,id,is_favorite,is_public,key,notes,tags,title,updated_at
+   corpo: chaves do content_data (2) = annotations,tablature
+   measures: ausente
+   tablature: len 8, igual à da linha: true
+   title do topo = "Título novo D0" · content_data.title = undefined
+   rota: status 400 · error="Validation failed" · code="VALIDATION_ERROR" · details=[{"field":"difficulty","message":"Invalid enum value. Expected 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert', received ''","code":"invalid_enum_value"}]
+   tela: "não foi possível salvar — o servidor recusou os dadoso que você escreveu continua aqui"
+== R2 título em Informações do editor de tab · difficulty=null
+   Salvar ativo: true
+   corpo: chaves do topo = album,artist,bpm,content_data,difficulty,genre,id,is_favorite,is_public,key,notes,tags,title,updated_at
+   corpo: chaves do content_data (25) = album,annotations,artist,bpm,capo,content_data,content_type,created_at,difficulty,file_url,genre,id,is_favorite,is_public,key,measures,notes,tablature,tags,thumbnail_url,time_signature,title,tuning,updated_at,user_id
+   measures: IGUAL ao exemplo
+   tablature: len 8, igual à da linha: true
+   title do topo = "Tab de régua D0" · content_data.title = "Título novo D0"
+   rota: status 400 · error="Validation failed" · code="VALIDATION_ERROR" · details=[{"field":"difficulty","message":"Invalid enum value. Expected 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert', received ''","code":"invalid_enum_value"}]
+   tela: "não foi possível salvar — o servidor recusou os dadoso que você escreveu continua aqui"
+== R3 uma corda do compasso · difficulty=null
+   Salvar ativo: true
+   corpo: chaves do topo = album,artist,bpm,content_data,difficulty,genre,id,is_favorite,is_public,key,notes,tags,title,updated_at
+   corpo: chaves do content_data (25) = album,annotations,artist,bpm,capo,content_data,content_type,created_at,difficulty,file_url,genre,id,is_favorite,is_public,key,measures,notes,tablature,tags,thumbnail_url,time_signature,title,tuning,updated_at,user_id
+   measures: diferente do exemplo
+   tablature: len 8, igual à da linha: true
+   title do topo = "Tab de régua D0" · content_data.title = "Tab de régua D0"
+   rota: status 400 · error="Validation failed" · code="VALIDATION_ERROR" · details=[{"field":"difficulty","message":"Invalid enum value. Expected 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert', received ''","code":"invalid_enum_value"}]
+   tela: "não foi possível salvar — o servidor recusou os dadoso que você escreveu continua aqui"
+== R4 abrir sem mudar nada · difficulty=null
+   Salvar ativo: false
+== R5 Tab na forma do upload (content_data null, file_url), título em Detalhes · difficulty=null
+   Salvar ativo: true
+   corpo: chaves do topo = album,artist,bpm,content_data,difficulty,genre,id,is_favorite,is_public,key,notes,tags,title,updated_at
+   corpo: chaves do content_data (1) = annotations
+   measures: ausente
+   tablature: ausente
+   title do topo = "Título novo D0" · content_data.title = undefined
+   rota: status 400 · error="Validation failed" · code="VALIDATION_ERROR" · details=[{"field":"difficulty","message":"Invalid enum value. Expected 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert', received ''","code":"invalid_enum_value"}]
+   tela: "não foi possível salvar — o servidor recusou os dadoso que você escreveu continua aqui"
+== R6 Tab na forma do upload, uma corda do compasso · difficulty=null
+   Salvar ativo: true
+   corpo: chaves do topo = album,artist,bpm,content_data,difficulty,genre,id,is_favorite,is_public,key,notes,tags,title,updated_at
+   corpo: chaves do content_data (24) = album,annotations,artist,bpm,capo,content_data,content_type,created_at,difficulty,file_url,genre,id,is_favorite,is_public,key,measures,notes,tags,thumbnail_url,time_signature,title,tuning,updated_at,user_id
+   measures: diferente do exemplo
+   tablature: ausente
+   title do topo = "Tab de régua D0" · content_data.title = "Tab de régua D0"
+   rota: status 400 · error="Validation failed" · code="VALIDATION_ERROR" · details=[{"field":"difficulty","message":"Invalid enum value. Expected 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert', received ''","code":"invalid_enum_value"}]
+   tela: "não foi possível salvar — o servidor recusou os dadoso que você escreveu continua aqui"
+== R1 título em Detalhes (Tab de lote, sem measures) · difficulty="Beginner"
+   Salvar ativo: true
+   corpo: chaves do topo = album,artist,bpm,content_data,difficulty,genre,id,is_favorite,is_public,key,notes,tags,title,updated_at
+   corpo: chaves do content_data (2) = annotations,tablature
+   measures: ausente
+   tablature: len 8, igual à da linha: true
+   title do topo = "Título novo D0" · content_data.title = undefined
+   rota: status 200
+== R2 título em Informações do editor de tab · difficulty="Beginner"
+   Salvar ativo: true
+   corpo: chaves do topo = album,artist,bpm,content_data,difficulty,genre,id,is_favorite,is_public,key,notes,tags,title,updated_at
+   corpo: chaves do content_data (25) = album,annotations,artist,bpm,capo,content_data,content_type,created_at,difficulty,file_url,genre,id,is_favorite,is_public,key,measures,notes,tablature,tags,thumbnail_url,time_signature,title,tuning,updated_at,user_id
+   measures: IGUAL ao exemplo
+   tablature: len 8, igual à da linha: true
+   title do topo = "Tab de régua D0" · content_data.title = "Título novo D0"
+   rota: status 200
+== R3 uma corda do compasso · difficulty="Beginner"
+   Salvar ativo: true
+   corpo: chaves do topo = album,artist,bpm,content_data,difficulty,genre,id,is_favorite,is_public,key,notes,tags,title,updated_at
+   corpo: chaves do content_data (25) = album,annotations,artist,bpm,capo,content_data,content_type,created_at,difficulty,file_url,genre,id,is_favorite,is_public,key,measures,notes,tablature,tags,thumbnail_url,time_signature,title,tuning,updated_at,user_id
+   measures: diferente do exemplo
+   tablature: len 8, igual à da linha: true
+   title do topo = "Tab de régua D0" · content_data.title = "Tab de régua D0"
+   rota: status 200
+== R4 abrir sem mudar nada · difficulty="Beginner"
+   Salvar ativo: false
+== R5 Tab na forma do upload (content_data null, file_url), título em Detalhes · difficulty="Beginner"
+   Salvar ativo: true
+   corpo: chaves do topo = album,artist,bpm,content_data,difficulty,genre,id,is_favorite,is_public,key,notes,tags,title,updated_at
+   corpo: chaves do content_data (1) = annotations
+   measures: ausente
+   tablature: ausente
+   title do topo = "Título novo D0" · content_data.title = undefined
+   rota: status 400 · error="Validation failed" · code="VALIDATION_ERROR" · details=[{"field":"content_data.tablature","message":"obrigatória para Tab","code":"custom"}]
+   tela: "não foi possível salvar — o servidor recusou os dadoso que você escreveu continua aqui"
+== R6 Tab na forma do upload, uma corda do compasso · difficulty="Beginner"
+   Salvar ativo: true
+   corpo: chaves do topo = album,artist,bpm,content_data,difficulty,genre,id,is_favorite,is_public,key,notes,tags,title,updated_at
+   corpo: chaves do content_data (24) = album,annotations,artist,bpm,capo,content_data,content_type,created_at,difficulty,file_url,genre,id,is_favorite,is_public,key,measures,notes,tags,thumbnail_url,time_signature,title,tuning,updated_at,user_id
+   measures: diferente do exemplo
+   tablature: ausente
+   title do topo = "Tab de régua D0" · content_data.title = "Tab de régua D0"
+   rota: status 400 · error="Validation failed" · code="VALIDATION_ERROR" · details=[{"field":"content_data.tablature","message":"obrigatória para Tab","code":"custom"}]
+   tela: "não foi possível salvar — o servidor recusou os dadoso que você escreveu continua aqui"
+     ✓ R1 título em Detalhes (Tab de lote, sem measures) · difficulty=null  310ms
+ Test Files  1 passed (1)
+      Tests  12 passed (12)
+   Start at  06:52:42
+   Duration  2.44s (transform 295ms, setup 195ms, import 286ms, tests 1.42s, environment 326ms)

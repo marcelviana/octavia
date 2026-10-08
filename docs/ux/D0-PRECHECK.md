@@ -13,6 +13,13 @@
 > Nenhum texto, título ou artista de música real: os exemplos de tab são fabricados (`e|--1--|`) ou do próprio projeto
 > (o compasso de exemplo do editor).
 
+> **O bloco, reescrito no aval (D0-D20, `[Marcel, 2026-10-08]`)** — **hoje o editor do site só salva cerca de 1 em cada
+> 5 músicas**: **158 de 196 contents (81 %)**, em todas as contas, têm a dificuldade vazia, e todo salvar deles volta 400
+> (div. 1152; o M1, §9.2). **A D-0 faz o editor do site voltar a salvar**: a Tab editável como texto (o caminho 1a), a
+> `tablature` sempre presente no corpo de uma Tab (div. 1149) e a dificuldade vazia indo como `null` (div. 1152). **Fora**:
+> o título em *Informações* (div. 1147, segundo da fila do D), a Tab criada do zero, o `updated_at` do favoritar, a Cifra.
+> O §0–§6 é o commit 1 (a Fase A, antes destes números); o §7–§12 é o commit 2.
+
 ---
 
 ## 0. As decisões — D0-D1…D5 `[Marcel, 2026-10-07]`
@@ -336,6 +343,7 @@ no fim do §15 (o prompt pede a errata de ponteiro; a D0-D2 pede a dependência 
 ## 5. Perguntas para o aval
 
 **Q1 — qual caminho?**
+→ **Respondida: D0-D6** (§7).
 (a) **1a — o texto inteiro num painel** (abre e grava a `tablature`; o exemplo sai). (b) 1b — os compassos sem exemplo
 (abre a `tablature` como linhas; grava o texto juntado). (c) 2 — os leitores leem `measures`. (d) 3 — o 1 com a
 recuperação das Tabs do zero no abrir.
@@ -344,11 +352,13 @@ contrato. A (d) entra **só se** o M1 achar Tab com `tablature` vazia e `measure
 (o campo de texto no lugar dos seis campos) é mudança da tela da folha 6: o G-faixa remede `EDIT-tab`.
 
 **Q2 — o compasso de exemplo?**
+→ **Respondida: D0-D7** (§7).
 (a) **sai**: a Tab sem `tablature` abre o campo vazio, com o vazio honesto da folha. (b) vira só um texto de dica, nunca
 gravado (exige frase isenta no G-tok). (c) fica.
 **Recomendo (a)**: nenhum dado de exemplo volta a ser gravado.
 
 **Q3 — as Tabs já editadas?**
+→ **Respondida: D0-D8** (§7).
 (a) **ficam como estão**: a `tablature` nunca foi tocada; o `measures` vira chave morta, e a limpeza vai com a poluição
 do `content_data` no resto do D (`I1-ENCERRAMENTO.md` §10.1 item 1). O conserto **não apaga** o `measures` ao salvar. (b)
 recuperação no editor (o caminho 3). (c) migração na D-0.
@@ -356,6 +366,7 @@ recuperação no editor (o caminho 3). (c) migração na D-0.
 recuperação (b) só para as do zero.
 
 **Q4 — o fatiamento?**
+→ **Respondida: D0-D9** (§7).
 (a) **uma PR**, gate primeiro: commit 1, o gate da D-0 entrando reprovado (o editor abre com a `tablature`; o que ele
 grava, os dois leitores mostram; mudar só o título não troca o corpo); commit 2, o conserto, com o par declarado do caso
 da Tab no gate do `PUT`; commit 3, o G-faixa `EDIT-tab` remedido; commit de docs. (b) duas PRs, no molde da N4-PR1/PR2
@@ -364,6 +375,7 @@ da Tab no gate do `PUT`; commit 3, o G-faixa `EDIT-tab` remedido; commit de docs
 compartilhado com o tablet — aqui não é.
 
 **Q5 — quem mede o aceite?**
+→ **Respondida: D0-D10** (§7).
 Site: **o executor** (regra 28; I1-D37 — o perfil persistente do Marcel em `localhost:3000`, sem `POST` real), e a prova
 em prod (M2) com a Tab descartável da conta de audit, que o Marcel cria. Tablet: o caminho 1 não muda o tablet; a prova é
 o sync trazer a `tablature` nova e o palco mostrá-la. (a) **no AVD tab, com a conta de audit** (o Tab S6 está na conta
@@ -372,20 +384,24 @@ core intocado bastam.
 **Recomendo (a)**, com o avião levantado e restaurado pela regra 11, contando o sync de abertura.
 
 **Q6 — o release do tablet precisa ser refeito no fim?**
+→ **Respondida: D0-D10** (§7).
 Com o caminho 1 (ou 3): **não** — o app e o core não mudam; o release de repouso (`cf58f7f`) já lê a `tablature`. Com o
 caminho 2: **sim**, pela receita do release, e o caminho e o sha256 trocados no `APARATO.md`.
 
 **Q7 — o título em *Informações* (div. 1147)?**
+→ **Respondida: D0-D11** (§7).
 (a) a D-0 conserta só no editor de tab (que ela reescreve de qualquer jeito). (b) **resto do D**, para os dois editores,
 junto dos *"campos que não se salvam"* (`I1-ENCERRAMENTO.md` §10.1 item 2).
 **Recomendo (b)**: é outro defeito, nos dois editores; a D0-D1 diz *"só da Tab"*. O M0 o mede para o registro.
 
 **Q8 — as duas pontas soltas do par e das fixtures?**
+→ **Respondida: D0-D12 e D0-D14** (§7).
 (i) A Tab vazia (div. 1148): (a) **resto do D**, como pergunta do contrato de leitura (mexe no core e no release); (b)
 na D-0. **Recomendo (a)**. (ii) O título real nas fixtures (div. 1151): (a) **o caso da Tab que a D-0 regrava passa a
 título e artista fabricados**, no mesmo par declarado; as outras fixtures ficam; (b) nada muda. **Recomendo (a)**.
 
 **Q9 — a árvore `../octavia-d0` e a branch local `d0/precheck` (div. 1145)?**
+→ **Respondida: D0-D15** (§7).
 O rascunho de lá parte da D-0 antiga. (a) **o Marcel descarta** a árvore e a branch local (`git worktree remove
 ../octavia-d0` com o descarte do rascunho; `git branch -D d0/precheck`) — passo dele, porque é trabalho de outra sessão;
 (b) ficam. **Recomendo (a)**, antes da PR de implementação: se a outra sessão empurrar a branch local dela, ela colide
@@ -440,3 +456,347 @@ se alguma Tab mudou desde então — e, pela (a), se há Tab da classe 3 em **ou
 
 **A ordem proposta**: M1 **antes** da implementação (decide a Q3 e se o caminho 3 entra); M0 no commit 1 da PR (vira o
 gate); M2 depois do merge.
+
+---
+
+## 7. O aval — D0-D6…D15 `[Marcel, 2026-10-08]`
+
+| # | decisão (pergunta) | o que muda |
+|---|---|---|
+| **D0-D6** | (Q1) O caminho é o **1a**: o editor de Tab passa a mostrar e a editar o texto da tablatura, e o que se salva chega a todos os leitores. **O editor de compassos deixa de existir.** O caminho 3 (a recuperação) só entra se o M1 achar Tab criada do zero com edição presa em `measures`. | §8 (o painel); §10 |
+| **D0-D7** | (Q2) O compasso de exemplo sai. | — |
+| **D0-D8** | (Q3) As Tabs já editadas ficam como estão; o `measures` gravado **não se apaga** na D-0 e vai com a limpeza do `content_data` no resto do D. | §8.2 |
+| **D0-D9** | (Q4) **Uma PR**, com o gate entrando reprovado no commit 1. | — |
+| **D0-D10** | (Q5, Q6) O aceite do site é medido pelo executor; o tablet se confere no **AVD com a conta de audit**; o release do tablet **não se refaz** no caminho 1a. | — |
+| **D0-D11** | (Q7) O título digitado em *Informações* que não chega à coluna (div. 1147) vai ao resto do D, como **segundo da fila**. | §8.1 (o 1a não remove *Informações*) |
+| **D0-D12** | (Q8) A Tab criada do zero com `tablature: ""` (div. 1148) vai ao D. A Tab regravada no gate passa a ter título fabricado. | — |
+| **D0-D13** | A div. 1149 se mede no M0; **se confirmar, o conserto entra na D-0**. | §9.1: **confirmou** |
+| **D0-D14** | A div. 1151 se conserta na D-0: título e compositor fabricados nas fixtures do gate do `PUT` e do G-faixa, em par onde o gate exigir; listar todo lugar em que o `grep` acha nome real em fixture. | §9.3 |
+| **D0-D15** | (Q9) A árvore `../octavia-d0` é descartada, com `git worktree remove`; se o Git recusar por mudança não commitada, parar e perguntar antes de forçar. | §9.4: **o Git recusou** — parado e perguntado; **removida pela D0-D16** (§12.1) |
+
+---
+
+## 8. O painel do 1a e as três classes de dado
+
+### 8.1 O painel — reaproveita o editor de Letra?
+
+**A composição, sim; a tipografia, não** `[lido]`.
+
+- **O que serve do editor de Letra** (`components/lyrics-editor.tsx:26-37`): o `Bloco` com título
+  (`components/editors/campos.tsx:15`), o `Campo` com rótulo e o `<textarea>` com `ENTRADA_ALTA` (`campos.tsx:41` —
+  contorno, `radius.control`, `resize-y`) e `min-h-campo-letra` (`5 × touch.min`, `tailwind.config.ts:29`). O estado de
+  um campo só e o `onChange` de uma chave (`:18-23`) são o molde do 1a — trocando `lyrics` por `tablature`.
+- **O que não serve**: a letra é `text.body` no `ENTRADA_ALTA` com `font-fam-mono`, **e quebra linha** (o `textarea`
+  quebra por padrão). A tab precisa do que o compasso de hoje já tem (`components/editors/partes-da-tab.tsx:30`, `:42`):
+  mono no **`zoom.padrao` (22)**, **`lineHeight.tab` (1,45)** (`app/styles/identidade.css:56`, `:60`) e **rolagem
+  horizontal sem quebra** (`data-rolagem="painel"`; num `textarea`, `wrap="off"` e `white-space: pre`) — *"a quebra de
+  linha na letra, nunca na tab"* (N4-D13; `N4-ENCERRAMENTO.md` §10.2 item 1).
+- **O que a folha desenha para a Tab hoje** (`docs/ux/DESIGN-I1/6-content-editor/telas.html`, estado `EDIT-tab`; sha256
+  em `DESIGN-I1/SHA256SUMS:7`): *Informações* (título, artista, afinação, capo, BPM) · **Tablatura** — um compasso por
+  painel (contorno `line`, mono 22, `lineHeight.tab`, rola na horizontal), com *Adicionar compasso* no bloco e
+  *Duplicar*/*Remover* no compasso (`README-design.md:247`, `:488`) · *Prévia* (afinação · capo · BPM). A folha desenha
+  **o compasso 1 com a tablatura do content**, como painel de leitura (div. 776).
+- **A errata que o 1a exige**: a folha não se reescreve (tem sha registrado; `CLAUDE.md`). Entra uma errata no
+  `docs/ux/DESIGN-I1/erratas.json`, como as do I1: **de faixa** (`erratasFaixa`) para os nós que deixam de existir — os
+  compassos, as cordas como campos, *Adicionar compasso*, *Duplicar* e *Remover* —, com o bloco *Tablatura* valendo
+  como **um** painel de texto editável; e **de frase** (`erratasFrase`) para `edit.tab.adicionar-compasso`,
+  `edit.tab.compasso`, `edit.tab.corda`, `edit.tab.duplicar-compasso` e `edit.tab.remover-compasso`, que saem das
+  `frases-editor.ts` (texto sem leitor é poda, regra 31). O `EDIT-tab` se **remede** no G-faixa nas três larguras.
+- **Precisa de desenho?** Pela leitura, **não**: o painel é a composição do `Bloco`/`Campo` que a folha já usa na Letra,
+  com os tokens que a folha já usa no compasso da Tab, e o resultado é o *"painel de leitura com a tablatura do content"*
+  que a própria folha desenhou. **Fica como pergunta (Q10, §10)**: o Marcel aceita o painel pela errata, ou quer a folha
+  do `EDIT-tab` redesenhada antes da PR?
+- **D0-D11 — o 1a remove *Informações*?** **Não.** O 1a troca só o bloco *Tablatura*; *Informações* (`tab-editor.tsx:86`)
+  fica, e com ela o defeito da div. 1147 **na Tab também** — o M0 o mede na Tab (§9.1, R2). Ele segue para o resto do D
+  como segundo da fila, para os dois editores. (Tirar *Informações* da Tab tiraria o único lugar onde se edita afinação e
+  capo — que, de todo modo, não chegam às colunas, `N4-ENCERRAMENTO.md` §10.4 item 5: é decisão do D, não da D-0.)
+
+### 8.2 O que o 1a faz com as três classes (e com a Tab de upload)
+
+| classe (A2) | ao abrir, o músico vê | ao salvar, grava |
+|---|---|---|
+| **1 — sem `measures`** (lote; do zero; nunca editada) | o texto da `tablature` no painel (vazio se `""`) | a `tablature` editada; nenhum `measures` |
+| **2 — `measures` igual ao exemplo** | o texto da `tablature` — **a tab real** (hoje ele vê o exemplo) | a `tablature` editada; o `measures` fica como estava (D0-D8) |
+| **3 — `measures` diferente do exemplo** | o texto da `tablature` — a tab real; **a edição presa no `measures` continua invisível** | a `tablature` editada; o `measures` fica (D0-D8). Se a `tablature` era `""` (do zero), o painel abre vazio: é o caso do caminho 3, que o M1 decide |
+| **Tab de upload** (`content_data: null`) | o painel vazio | a `tablature` — **só se o conserto da D0-D13 garantir a chave em todo salvar da Tab** (§9.1): uma mudança só em *Detalhes* não passa pelo editor de tab, e hoje o corpo vai `{ annotations: [] }` |
+
+Nenhuma classe perde texto que algum leitor mostre hoje: a `tablature` só muda quando o músico a edita no painel.
+
+---
+
+## 9. A Fase B
+
+### 9.1 M0 — o editor medido, local `[medido: D0-PRECHECK-anexos/m0-editor.txt]`
+
+Instrumento: `D0-PRECHECK-anexos/instrumentos/m0-editor.medir.tsx`, com config própria (`m0.vitest.config.mts`) e **sem
+sufixo `.test`** — o projeto `web` coleta `**/*.test.tsx` em qualquer pasta, `docs/` inclusive (div. 1154). Monta a rota
+do editor como o gate do `PUT`, com dado fabricado; o corpo do `PUT` vai à **rota real** (`app/api/content/route.ts`,
+`PUT`), com a autenticação e o banco simulados. **Zero requisições.** Seis roteiros, cada um com `difficulty: null` e com
+`'Beginner'`: **12 corridas, 10 salvamentos** (os dois *"abrir sem mudar"* têm o *Salvar* inativo).
+
+| roteiro | `difficulty: null` | `difficulty: 'Beginner'` |
+|---|---|---|
+| R1 título em *Detalhes* (Tab de lote) | **400** `difficulty` | **200** · `content_data` = `annotations,tablature` (2 chaves); sem `measures`; a coluna recebe o título |
+| R2 título em *Informações* | **400** `difficulty` | **200** · 25 chaves; **`measures` IGUAL ao exemplo**; a coluna `title` **fica a velha**, `content_data.title` = o novo (**div. 1147 confirmada**) |
+| R3 uma corda | **400** `difficulty` | **200** · 25 chaves; `measures` diferente do exemplo; **`tablature` igual à da linha** (A1 confirmado) |
+| R4 abrir sem mudar | *Salvar* inativo | *Salvar* inativo |
+| R5 Tab de upload, título em *Detalhes* | **400** `difficulty` | **400** `content_data.tablature` *"obrigatória para Tab"* · corpo `{ annotations: [] }` |
+| R6 Tab de upload, uma corda | **400** `difficulty` | **400** `content_data.tablature` *"obrigatória para Tab"* · 24 chaves, sem `tablature` |
+
+**Em números**: 10 salvamentos — **3 × 200**, **7 × 400** (5 por `difficulty`, 2 por `content_data.tablature`). Nos 7, a
+tela mostra a linha *"não foi possível salvar — o servidor recusou os dados"* com *"o que você escreveu continua aqui"*.
+
+**O veredito da div. 1149: confirmada** — com a dificuldade preenchida, salvar uma Tab de upload dá **400
+`VALIDATION_ERROR`**, `details: [{ field: "content_data.tablature", message: "obrigatória para Tab", code: "custom" }]`,
+pelo caminho de *Detalhes* e pelo do editor de tab. **Pela D0-D13, o conserto entra na D-0.**
+
+**E um achado maior — div. 1152**: **com `difficulty: null`, os 5 salvamentos deram 400**, de qualquer roteiro — o editor
+normaliza `null` em `""` (`components/content-editor.tsx:42`) e o manda no corpo (`:59`); o esquema da rota é
+`z.enum([...]).nullish()` (`lib/api-schemas.ts:150`), que aceita `null` e recusa `""`. **Não depende do tipo**: todo
+content sem dificuldade cai nisso, no editor do site. Não estava registrado (`git grep` em `docs` e `.audit`: nada). O
+gate do `PUT` do editor não o via porque o `fetch` dele é falso e devolve 200 a qualquer corpo
+(`tests/gates/i1-editor-put.test.tsx:117-122`), e o aceite do I1 roda sem `POST` real (I1-D37). **Quantos contents estão
+nesse caso é o que a consulta (2) do M1 conta** (`dificuldade_nula`, e `salvas_pelo_editor` — a chave `annotations` só o
+editor grava).
+
+### 9.2 M1 — o dado real: a consulta, provada localmente, e a saída do Marcel
+
+A consulta (`D0-PRECHECK-anexos/instrumentos/m1-consulta.sql`), **só de leitura**, para colar no SQL Editor do
+Supabase — trocar `<UID_PRINCIPAL>` pelo uid da conta principal (a saída só mostra `true`/`false`):
+
+```sql
+-- D-0 pre-check, M1 — SÓ LEITURA. Nenhum texto sai: nem título, nem artista, nem corpo.
+
+-- (1) por Tab
+select left(c.id::text, 8)                                        as id8,
+       c.user_id = '<UID_PRINCIPAL>'                              as principal,
+       case when jsonb_typeof(c.content_data) = 'object'
+            then (select string_agg(k, ',' order by k) from jsonb_object_keys(c.content_data) as k)
+            else coalesce(jsonb_typeof(c.content_data), 'null') end as chaves,
+       jsonb_typeof(c.content_data -> 'tablature')                as tipo_tablature,
+       case when jsonb_typeof(c.content_data -> 'tablature') = 'string'
+            then length(c.content_data ->> 'tablature') end       as len_tablature,
+       c.content_data ? 'measures'                                as tem_measures,
+       c.content_data -> 'measures' = '[{"id":1,"strings":["E|--0--3--0--2--0--|","B|--1--1--1--1--1--|","G|--0--0--0--0--0--|","D|--2--2--2--2--2--|","A|--3-------------|","E|----------------|"]}]'::jsonb
+                                                                  as measures_eh_exemplo,
+       c.file_url is not null                                     as tem_arquivo,
+       c.difficulty is null                                       as dificuldade_nula,
+       c.updated_at
+from content c
+where c.content_type = 'Tab'
+order by c.updated_at desc;
+
+-- (2) por tipo, contagens (a div. 1152; `annotations` só o editor grava)
+select c.content_type,
+       count(*)                                                   as total,
+       count(*) filter (where c.difficulty is null)               as dificuldade_nula,
+       count(*) filter (where c.content_data ? 'annotations')     as salvas_pelo_editor,
+       max(c.updated_at) filter (where c.content_data ? 'annotations') as ultima_salva_pelo_editor
+from content c
+group by c.content_type
+order by c.content_type;
+```
+
+**Provada antes de entregar** `[medido: D0-PRECHECK-anexos/m1-prova-local.txt]`: num Postgres 17.11 local descartável
+(`initdb` no scratchpad, socket local, sem rede; apagado no fim), com a fixture fabricada `m1-fixture-local.sql` (a tabela
+do `supabase/schema.dump.sql`; seis Tabs — lote, as classes 2 e 3, do zero, upload, `tablature` em lista — mais uma Letra
+e uma Cifra, todos os textos `MARCADOR-*`). As duas consultas fecham (`exit 0`) e classificam as seis formas certo;
+**`grep -c MARCADOR` na saída dá 0**, e o controle positivo (`select title`) dá 1.
+
+**A saída do Marcel** (2026-10-08; inteira em `D0-PRECHECK-anexos/m1-saida-marcel.txt`), em contagens:
+
+- **Consulta 1 — 15 Tabs, em todas as contas: nenhuma tem `measures`** (`tem_measures` = `false` ou nulo nas 15). Dez são
+  `[tablature]` string — oito de comprimento 353 (2026-08-08, um só minuto) e duas de comprimento 7 (2025-07-07) —, e
+  **cinco têm `content_data` nulo, sem arquivo**, todas com o mesmo `updated_at` (2025-06-02 14:46:09.465166, até o
+  microssegundo). Dificuldade nula: 5 das 15.
+- **Consulta 2 — por tipo**: Letra 148 (dificuldade nula 129; salvas pelo editor 15, a última em 2026-09-21); Cifra 26
+  (20; 4, a última em 2026-10-01); Partitura 7 (4; 1, em 2025-07-07); Tab 15 (5; **0**). **Dificuldade nula: 158 de 196
+  (81 %).**
+- **Consulta 3 — o cruzamento** (§9.6).
+
+**A identificação das contas: não conferida nesta medição.** A coluna `principal` saiu `true` justamente nas cinco Tabs
+de `content_data` nulo, com a mesma data até o microssegundo — o desenho de uma carga inicial de uma terceira conta. A
+conta principal, pelo que o N4 mediu (as B1 e B2 do pre-check do N4, `N4-PRECHECK-anexos/b1-b4-biblioteca-principal.txt`,
+e o aceite da N4-PR2), tem **2 Tabs com tablatura e nenhum item inválido** — batem com as duas linhas de `len_tablature =
+7`, que saíram `false`. O mais provável é o uid colado no lugar de `<UID_PRINCIPAL>` não ser o da principal. **Nenhuma
+conclusão deste documento depende das contas** (o caminho 3 sai porque nenhuma Tab, em conta nenhuma, tem `measures`; a
+1152 e o cruzamento são contagens globais) — por isso não se pediu a consulta por `user_id`. **As 5 Tabs com
+`content_data` nulo e sem arquivo, numa conta a identificar**, vão ao Bloco D como achado (div. 1155).
+
+### 9.3 D0-D14 — os nomes reais em fixture `[medido: D0-PRECHECK-anexos/fixtures-nomes-reais.txt]`
+
+O `grep` dos 20 autores reais achados entre os 39 valores distintos de `artist:` fora de `docs/` dá **419 linhas em 29
+arquivos**, e mais **158 linhas nas 5 folhas** do `DESIGN-I1` (4, 5, 6, 7 e 8). O anexo traz arquivo:linha, sem o texto.
+
+| grupo | arquivos | linhas | o que a D-0 faz (D0-D14) |
+|---|---|---|---|
+| **o gate do `PUT` do editor** | `tests/gates/i1-editor-put.test.tsx`; `tests/gates/fixtures/editor-put-antes.json` | 1 + 1 | **troca**, no par declarado do caso da Tab (o mesmo que o 1a já regrava) |
+| **o G-faixa do editor** | `scripts/gates-web/g-faixa-editor-exemplos.ts`; `tests/gates-web/medicoes/content-edit.json`; `tests/gates-web/esperado/6-content-editor.json` | 1 + 10 + 4 | **troca** no exemplo e na medição (remedida com o 1a). O esperado sai da folha 6, que tem o nome e não se reescreve: os nós que pareiam por `testid` (`campo-info-titulo`, `campo-artista`) seguem pareando; os que pareiam pelo texto, no `EDIT-tab`, vão na mesma errata de faixa do §8.1 — **o par que o gate exige é a errata, não a folha** |
+| os outros G-faixa (lista, visualização, upload, setlists) | `g-faixa-conteudo.ts`, `-lista.ts`, `-setlists.ts`, `-upload.ts`; `medicoes/*.json`; `esperado/4,5,7,8-*.json` | 11 + 184 + 156 | **fora da D-0**: cada um pareia com a sua folha (sha registrado) — trocar exige errata em cada superfície. Pergunta Q11 |
+| os outros gates do I1 | `i1-upload-post.test.tsx`, `fixtures/upload-post-antes.json`, `i1-tab-acordes.test.tsx` | 5 | fora da D-0 (Q11) |
+| testes de unidade e mocks | `servidor-falso.ts`, `use-setlist-data.test.tsx`, `useMetadataForm.test.ts`, `contract-content.test.ts`, `supabase-mock-factory.ts`, `search.test.ts`, `song.test.ts` | 16 | fora da D-0 (Q11) |
+| a semente da audit (prod) | `scripts/ux-audit/seed.ts`; `tests/ux-audit/harvest-populated.spec.ts` | 30 | fora da D-0: a semente **gravou** esses títulos na conta de audit em prod (Q11) |
+
+### 9.4 D0-D15 — a árvore `../octavia-d0` `[medido]`
+
+```
+$ git status                       (em ../octavia-d0)
+On branch d0/precheck
+Your branch is up to date with 'origin/main'.
+Changes not staged for commit:
+	modified:   docs/ux/PLANO-TRANSICAO.md
+Untracked files:
+	docs/ux/D0-PRECHECK.md
+$ git diff --stat
+ docs/ux/PLANO-TRANSICAO.md | 5 +++++
+ 1 file changed, 5 insertions(+)
+$ git worktree remove ../octavia-d0
+fatal: '../octavia-d0' contains modified or untracked files, use --force to delete it      [exit 128]
+```
+
+**O Git recusou. Parado, pela D0-D15** — *e feito depois, pela D0-D16 (§12.1)*: a remoção forçada (`git worktree remove --force ../octavia-d0`, e depois `git
+branch -D d0/precheck`, a branch local sem commit próprio) apaga o rascunho de 240 linhas e a nota de 5 linhas de outra
+sessão. **Pergunta ao Marcel.**
+
+### 9.5 Os outros campos — o mesmo defeito da dificuldade? `[medido: D0-PRECHECK-anexos/campos-nulos.txt]`
+
+Cada campo do corpo do `PUT` do editor, com o valor que o editor manda quando a coluna da linha é `null`
+(`components/content-editor.tsx:33-48`, `:51-73`), passado sozinho pelo esquema real (`contentSchemas.update`,
+`lib/api-schemas.ts`); instrumento `instrumentos/campos-nulos.ts`, função pura, 0 requisições.
+
+| campo | manda (coluna `null`) | o esquema | veredito |
+|---|---|---|---|
+| `difficulty` | `""` | `z.enum([...]).nullish()` (`:150`) | **RECUSADO — o defeito (div. 1152); entra na D-0 (D0-D19)**. `null` é aceito: o conserto no editor basta |
+| `artist`, `album`, `genre`, `notes` | `""` | `createSafeText(0, n)` — `z.string().trim().min(0)` (`:66-74`) | aceito — **conferido** |
+| `key` | `""` | `z.string().max(10)` | aceito — **conferido** |
+| `bpm` | `null` (`:58`, `bpm ? parseInt : null`) | `z.number()…nullish()` | aceito — **conferido** |
+| `tags` | `[]` | `z.array(…).max(20).nullish()` | aceito — **conferido** |
+| `is_favorite`, `is_public` | `false` | `z.boolean().nullish()` | aceito — **conferido** |
+| `title` | `""` | `createSafeText(1, 255)` | recusaria — **inalcançável a partir de `null`**: a coluna é `NOT NULL` (`supabase/schema.dump.sql`); `""` só se o músico apagar o título, e aí o 400 é validação legítima |
+| `content_data` | `{ annotations: [] }` | `z.record(…)` — aceito | o esquema aceita; **o contrato, com o tipo da linha, recusa** quando falta a chave do tipo: é a div. 1149, e o mesmo desenho alcança a Cifra (div. 1156) |
+
+**Só a dificuldade.** `time_signature`, `capo` e `tuning` não vão no corpo (o *"campos que não se salvam"*,
+`I1-ENCERRAMENTO.md` §10.1 item 2).
+
+### 9.6 Desde quando — a data da div. 1152, e o cruzamento `[medido: git log -S; m1-saida-marcel.txt]`
+
+| a linha | nasceu | commit |
+|---|---|---|
+| o editor transforma `null` em `""` (`difficulty: content.difficulty \|\| ""`) e o manda no corpo (`difficulty: editedContent.difficulty`) | **2025-05-31 / 2025-06-02** — a importação do projeto | `cce69b5`, `050963d` |
+| o salvar do editor passa pela rota `PUT /api/content` (não mais direto no Supabase) | **2025-07-01 / 2025-07-06** | `776af7e` (*"implement PUT and DELETE endpoints"*), `e6d6b9e` (*"remove browser supabase usage"*) |
+| **a rota recusa `""`**: o `PUT` passa a validar com o `updateContentSchema` (`difficulty: z.enum([...]).optional().nullable()`, `lib/validation-schemas.ts`), por `schema.parse(body)`, sem limpar nada antes (`lib/validation-utils.ts`, `validateRequestBody`) | **2025-07-08** | `f0947c3` (*"enhance API request validation"*) |
+| o enum muda de módulo (`lib/api-schemas.ts`), com a mesma regra | 2026-08-25 | `fc99e60` (B2 PR-4b) |
+
+**A div. 1152 nasceu em 2025-07-08** (`f0947c3`), **15 meses antes do I1**. A reescrita do editor (I1-PR-11, `c44c975`)
+não a criou: herdou o corpo de antes, **por decisão** (I1-D9, *"o que o editor grava não muda"*) — e o travou.
+
+**A lição de instrumento, com todas as letras**: **o gate do `PUT` do editor do I1 (`f5260ec`, 2026-09-29) gravou byte a
+byte, em 4 dos 5 casos (as duas Cifras, a Letra, a Partitura), um corpo com `difficulty: ""` que o servidor recusava
+desde 2025-07-08** (`tests/gates/fixtures/editor-put-antes.json`). O `fetch` falso do gate devolve 200 a qualquer corpo
+(`tests/gates/i1-editor-put.test.tsx:117-122`); o aceite do I1 roda sem `POST` real (I1-D37). **O gate provou que o editor
+manda o mesmo corpo que mandava antes — e esse corpo nunca chegava ao banco.** "Não mudou" não é "funciona" quando o lado
+que diz se funciona está simulado. Pela D0-D19, o primeiro commit da implementação conserta o instrumento (o gate valida o
+corpo pelo esquema real da rota, como o M0 fez) — div. 1157.
+
+**O cruzamento** (a consulta 3, `instrumentos/m1-consulta-3.sql`, provada no Postgres local — `m1-prova-local-3.txt`):
+**21 contents têm `annotations`** (a chave que só o editor do site grava): Cifra 4, Letra 16, Partitura 1, Tab 0. **20 dos
+21 têm a dificuldade preenchida** — o que a 1152 prevê. **Um** tem a dificuldade nula: uma **Cifra, `updated_at`
+2026-08-09 14:48:06 UTC**. **Não é um salvar do editor**: é a **sonda da Fase D do ux-audit** (o dia da execução ao vivo
+contra prod, `1c87aa9`), item 32 — às 14:46 UTC o instrumento, sem achar o canvas de anotação no editor da Cifra, gravou
+a anotação **direto na API**, com o corpo `{ id, content_data }`, **sem dificuldade**, e mediu `probe_put_annotation_status:
+200` (`tests/ux-audit/fase-d/g-viewer.spec.ts:140-163`; `docs/ux/fase-d/data/item-32.json`). Sem `difficulty` no corpo, a
+rota não o valida — por isso passou. **Nenhuma linha mostra o editor salvando com a dificuldade nula: a data da 1152 fica
+de pé.** (O rastro da sonda — uma anotação com texto do instrumento numa Cifra da conta de audit — vai com a limpeza do
+`content_data` no D, div. 1159.)
+
+De passagem: entre a consulta 2 e a 3 as Letras com `annotations` passaram de 15 a 16, com 0 de dificuldade nula — um
+salvar do editor entre as duas corridas, com a dificuldade preenchida.
+
+---
+
+## 10. A recomendação, fechada com o M0 e o M1
+
+- **O 1a basta. O caminho 3 não entra**: nenhuma Tab, em conta nenhuma, tem `measures` (M1, consulta 1) — não há edição
+  presa a recuperar, e o `measures` nunca foi gravado em prod.
+- **A div. 1149 entra** (D0-D13, confirmada no M0): a Tab vai sempre com a chave `tablature` no corpo, do lado do editor
+  (`content-editor.tsx`, fora do núcleo do G-back). No dado: **5 Tabs** com `content_data` nulo e sem arquivo (consulta 3)
+  são as que hoje não salvam por ela.
+- **A div. 1152 entra, para todo tipo** (D0-D19): o editor manda `null` quando a dificuldade está vazia; **alcança 158 de
+  196 contents (81 %)**; o esquema da rota não muda. É o único campo com o defeito (§9.5).
+- **O gate do `PUT` do editor valida o corpo pelo esquema real da rota** (D0-D19) — o conserto do instrumento é o
+  **commit 1** da implementação, e ele **reprova na `main`** (os 4 casos com `difficulty: ""`). Os casos que mudam de
+  corpo de propósito (a dificuldade nula como `null`; a Tab como texto; o título fabricado da D0-D14) entram como **par
+  declarado** (regra 14).
+- **O painel** (D0-D17): a composição do editor de Letra, com a tipografia da tab; erratas de faixa e de frase no
+  `erratas.json`; o `EDIT-tab` remedido no G-faixa.
+- **Fica fora** (D0-D20): a 1147 (segundo da fila do D), a Tab criada do zero (1148), o `updated_at` do favoritar, a
+  Cifra — **e o desenho da 1149 na Cifra** (5 Cifras com `content_data` nulo, div. 1156), que a D0-D3 deixa fora; vai ao
+  D, salvo decisão em contrário do Marcel.
+- **A ordem da implementação** (uma PR, D0-D9): commit 1 — os gates entrando reprovados (o do `PUT` validando pelo esquema
+  real; o da D-0, *"o que o editor grava, os leitores mostram"*); commit 2 — o conserto (o painel, a `tablature` sempre,
+  a dificuldade `null`, os nomes fabricados do editor), com os pares; commit 3 — o G-faixa do `EDIT-tab` remedido e as
+  erratas da folha; docs. A prova em prod (M2) depois do merge, no AVD com a conta de audit (D0-D10).
+
+---
+
+## 11. As divergências deste commit — 1152 a 1159
+
+| div. | origem | o quê | destino |
+|---|---|---|---|
+| **1152** | A | **Todo salvar no editor de um content com `difficulty: null` dá 400** (`difficulty`, *"Invalid enum value … received ''"*): o editor normaliza `null → ""` (`content-editor.tsx:42`, `:59`) e o esquema aceita `null`, não `""` (`lib/api-schemas.ts:150`). Qualquer tipo. O gate do `PUT` não o via (o `fetch` falso devolve 200) `[medido: m0-editor.txt, 5 de 5]` | Q12; a consulta (2) do M1 mede o alcance |
+| **1153** | D | **A div. 1151 era maior**: nome real de autor em **29 arquivos, 419 linhas** fora de `docs/`, e em **5 folhas** do `DESIGN-I1` (158 linhas; sha registrado). A fixture do G-faixa do editor pareia com a folha 6 — trocar o nome exige errata, não reescrita | §9.3; Q11 |
+| **1154** | T | **O `include` do projeto `web` do vitest (`**/*.{test,spec}.?(c\|m)[jt]s?(x)`, `vitest.config.mts:7`, `:43`) coleta teste em qualquer pasta, `docs/` inclusive**: a N4-D117 (*"instrumento sob `docs/` fica fora de CI"*) só vale para instrumento sem sufixo `.test`/`.spec`. Hoje nenhum arquivo de `docs/` casa (`git ls-files docs \| grep -E '\.(test\|spec)\.'` → exit 1) | o M0 usa `.medir.tsx` e config própria; registrada para o `LOGS-OCTAVIA.md` no encerramento do bloco |
+| **1155** | A | **5 Tabs com `content_data` nulo e sem arquivo**, numa conta a identificar, todas com o mesmo `updated_at` (2025-06-02 14:46:09.465166) — o desenho de uma carga inicial; nenhum leitor as mostra (`no-body`), e o editor não as salva (a 1149) `[medido: m1-saida-marcel.txt]` | **Bloco D**, como achado (D0-D18…D20); a 1149 consertada na D-0 as deixa salváveis |
+| **1156** | A | **O desenho da 1149 alcança a Cifra**: o `content_data: null` passa pelo esquema e cai no contrato com o tipo da linha — uma Cifra (ou Letra) sem `content_data` não salva no editor. No dado: **5 Cifras** com `content_data` nulo (2 sem arquivo, 3 escaneadas), 0 Letras `[medido: campos-nulos.txt; m1-saida-marcel.txt]` | **fora da D-0** pela D0-D3 (a Cifra fica fora); resto do D, salvo decisão do Marcel |
+| **1157** | T | **O gate do `PUT` do editor do I1 travou, byte a byte, 4 corpos que o servidor recusava** (`difficulty: ""`, recusado desde 2025-07-08): o `fetch` falso devolve 200 a qualquer corpo. Escondeu a 1152 e a 1149 | **defeito de instrumento** (D0-D19): o conserto é o **commit 1** da implementação — o gate valida pelo esquema real da rota; candidata a regra no `LOGS-OCTAVIA.md` no encerramento |
+| **1158** | T | **A coluna `principal` da consulta 1 dependia de o Marcel colar o uid certo** no lugar de `<UID_PRINCIPAL>`; saiu `true` em 5 linhas que o N4 não reconhece na principal | identificação **não conferida**; nenhuma conclusão depende dela (§9.2). Instrumento que pede substituição à mão devolve o que foi colado — da próxima vez, devolver o `user_id` truncado e conferir contra o N4 |
+| **1159** | A | **A sonda da Fase D (2026-08-09, item 32) gravou em prod** uma anotação com texto do instrumento numa Cifra da conta de audit, direto na API — é a única linha com `annotations` e dificuldade nula, e não é um salvar do editor | rastro de audit em prod: vai com a limpeza do `content_data` no D (D0-D8) |
+
+**Contagem** (1152–1159): 8 — P 0 · D 1 · A 4 · T 3. **Na PR, 1145–1159: 15** — P 0 · D 4 · A 8 · T 3. A próxima livre é a **1160**.
+
+**Extras deste commit, declarados**: o M0 roda a rota real com banco simulado (o prompt pedia o corpo, o status e a
+mensagem — a rota é a única fonte deles); o segundo eixo (`difficulty` nula × preenchida), que isolou a 1149 da 1152; a
+consulta (2) do M1, por tipo, além da (1) pedida; o Postgres local descartável, criado e apagado no scratchpad.
+
+---
+
+## 12. A segunda rodada do aval — D0-D16…D20 `[Marcel, 2026-10-08]`
+
+| # | decisão | o que mudou neste commit |
+|---|---|---|
+| **D0-D16** | (Q13) **A remoção de `../octavia-d0`: forçada** — `git worktree remove --force ../octavia-d0` e `git branch -D d0/precheck` (a branch local sem commit próprio) | feita (§12.1) |
+| **D0-D17** | (Q10) **Sem desenho novo**: o painel do 1a reaproveita a composição do editor de Letra, com a tipografia da tab (mono, a entrelinha de tab, rolagem horizontal sem quebra); a folha `EDIT-tab` ganha as erratas de faixa e de frase no `erratas.json` | §8.1; §10 |
+| **D0-D18** | (Q11) **Os nomes reais**: na D-0 trocam-se só os das fixtures do editor; o resto (as 419 linhas em 29 arquivos e as 5 folhas com sha) vai ao **Bloco D como item nomeado**, com a lista no anexo (`fixtures-nomes-reais.txt`) | §9.3 |
+| **D0-D19** | (Q12) **A div. 1152 entra na D-0, para todo tipo**: o conserto é **no editor** (o campo vazio vai `null`, não `""`; o esquema da rota não se afrouxa — se o conserto no editor não bastar, parar e perguntar); e **o gate do `PUT` do editor passa a validar o corpo pelo esquema real da rota**, como o M0 — defeito de instrumento, conserto no **primeiro commit** da implementação | §9.5 (só a dificuldade; `null` aceito — o conserto no editor basta); §9.6 (div. 1157); §10 |
+| **D0-D20** | **A D-0 faz o editor do site voltar a salvar**: a Tab editável como texto (1a), a `tablature` sempre presente no corpo de uma Tab (1149), a dificuldade vazia como `null` (1152). Fora: o título em *Informações* (1147, segundo da fila do D), a Tab criada do zero, o `updated_at` do favoritar, a Cifra | o resumo no topo do documento; §10 |
+
+### 12.1 A remoção de `../octavia-d0` `[medido]`
+
+```
+$ git worktree remove --force ../octavia-d0
+[exit 0]
+$ git branch -D d0/precheck
+Deleted branch d0/precheck (was 69fd3c2).
+$ git worktree list
+/Users/marcelviana/projects/octavia                  69fd3c2 [main]
+/Users/marcelviana/projects/octavia-d0-precheck      6cde4d3 [d0/precheck-fase-a]
+/Users/marcelviana/projects/octavia-n4-encerramento  638dc30 [n4/encerramento]
+$ git branch    (as linhas do D-0)
++ d0/precheck-fase-a
+```
+
+A branch local `d0/precheck` sumiu; o remoto `d0/precheck` é o desta PR (empurrado de `d0/precheck-fase-a`).
+
+### 12.2 Para o Bloco D — os itens que este pre-check nomeia
+
+| # | item | origem |
+|---|---|---|
+| 1 | o título digitado em *Informações* que não chega à coluna, nos editores da Tab e da Cifra — **segundo da fila do D** | div. 1147; D0-D11 |
+| 2 | a Tab criada do zero (`tablature: ""`): o core diz texto de comprimento 0, o site o vazio | div. 1148; D0-D12 |
+| 3 | o `measures` e a poluição do `content_data` — a limpeza (nenhum `measures` em prod hoje, M1) | D0-D8; `I1-ENCERRAMENTO.md` §10.1 item 1 |
+| 4 | as 5 Tabs com `content_data` nulo e sem arquivo, numa conta a identificar | div. 1155 |
+| 5 | o desenho da 1149 na Cifra (5 Cifras com `content_data` nulo) | div. 1156 |
+| 6 | os nomes reais em fixture fora do editor: 29 arquivos, 419 linhas, e as 5 folhas com sha (a troca exige errata da folha, superfície por superfície) | div. 1153; D0-D18 |
+| 7 | o rastro da sonda da Fase D em prod (a anotação na Cifra da audit) | div. 1159 |
+| 8 | o `updated_at` do favoritar, **amarrado à N4-D91** | D0-D2 |
+

@@ -1,0 +1,78 @@
+# D-0 pre-check, D0-D14 — onde o grep acha nome de AUTOR real em fixture (rastro; main 69fd3c2).
+# Só arquivo, linha e contagem: o texto da linha NÃO entra (não se espalha mais o nome).
+# A lista de autores saiu do inventário de todo valor 'artist:' fora de docs/ (o 1º comando), separando à mão os
+# reais dos fabricados ('Banda da fixture', 'Teste de régua', 'Compositor anônimo', 'Duo Manacá'…). O título de
+# obra real aparece na MESMA linha do autor nas fixtures lidas; título sem autor na linha não é achado por este grep.
+
+$ git grep -h -oE "artist...: '<valor>'" -- ':!docs/**' ':!*.md' ':!.audit/**' | sort | uniq -c   (só a contagem de valores distintos)
+      39
+
+$ git grep -c -E '<os 20 autores reais>' -- ':!docs/**' ':!*.md' ':!.audit/**'
+components/setlists/__tests__/servidor-falso.ts:5
+hooks/__tests__/use-setlist-data.test.tsx:1
+hooks/__tests__/useMetadataForm.test.ts:1
+lib/__tests__/contract-content.test.ts:2
+lib/test-utils/supabase-mock-factory.ts:2
+packages/core/src/search.test.ts:3
+packages/core/src/song.test.ts:2
+scripts/gates-web/g-faixa-conteudo.ts:1
+scripts/gates-web/g-faixa-editor-exemplos.ts:1
+scripts/gates-web/g-faixa-lista.ts:3
+scripts/gates-web/g-faixa-setlists.ts:5
+scripts/gates-web/g-faixa-upload.ts:2
+scripts/ux-audit/seed.ts:29
+tests/gates-web/esperado/4-content-lista.json:30
+tests/gates-web/esperado/5-content-visualizacao.json:4
+tests/gates-web/esperado/6-content-editor.json:4
+tests/gates-web/esperado/7-upload.json:12
+tests/gates-web/esperado/8-setlists.json:110
+tests/gates-web/medicoes/add-content.json:16
+tests/gates-web/medicoes/content-edit.json:10
+tests/gates-web/medicoes/content.json:2
+tests/gates-web/medicoes/library.json:24
+tests/gates-web/medicoes/setlists.json:142
+tests/gates/fixtures/editor-put-antes.json:1
+tests/gates/fixtures/upload-post-antes.json:2
+tests/gates/i1-editor-put.test.tsx:1
+tests/gates/i1-tab-acordes.test.tsx:1
+tests/gates/i1-upload-post.test.tsx:2
+tests/ux-audit/harvest-populated.spec.ts:1
+total de linhas: 419
+
+$ git grep -c -E '<os 20>' -- docs/ux/DESIGN-I1   (as folhas: sha256 em DESIGN-I1/SHA256SUMS — não se reescrevem, CLAUDE.md)
+docs/ux/DESIGN-I1/4-content-lista/telas.html:30
+docs/ux/DESIGN-I1/5-content-visualizacao/telas.html:4
+docs/ux/DESIGN-I1/6-content-editor/telas.html:2
+docs/ux/DESIGN-I1/7-upload/telas.html:12
+docs/ux/DESIGN-I1/8-setlists/telas.html:110
+
+$ git grep -n -E '<os 20>' -- <fora de docs> | cut -d: -f1,2   (arquivo:linha)
+components/setlists/__tests__/servidor-falso.ts: 16,17,18,19,21
+hooks/__tests__/use-setlist-data.test.tsx: 109
+hooks/__tests__/useMetadataForm.test.ts: 21
+lib/__tests__/contract-content.test.ts: 102,200
+lib/test-utils/supabase-mock-factory.ts: 298,309
+packages/core/src/search.test.ts: 27,28,39
+packages/core/src/song.test.ts: 8,26
+scripts/gates-web/g-faixa-conteudo.ts: 66
+scripts/gates-web/g-faixa-editor-exemplos.ts: 23
+scripts/gates-web/g-faixa-lista.ts: 23,26,28
+scripts/gates-web/g-faixa-setlists.ts: 30,31,32,33,42
+scripts/gates-web/g-faixa-upload.ts: 142,143
+scripts/ux-audit/seed.ts: 132,133,134,135,138,139,140,141,143,144,145,146,147,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171
+tests/gates-web/esperado/4-content-lista.json: 8124,8529,8799,9395,9800,10070,10938,11343,11613,12479,12884,13154,13752,14238,14508,15104,15590,15860,16485,16890,17160,17783,18188,18458,22812,23217,23487,24191,24596,24866
+tests/gates-web/esperado/5-content-visualizacao.json: 2787,3518,10005,10628
+tests/gates-web/esperado/6-content-editor.json: 15753,15780,17780,17807
+tests/gates-web/esperado/7-upload.json: 19140,19221,19979,20060,20820,20901,21659,21740,22554,22635,23447,23528
+tests/gates-web/esperado/8-setlists.json: 750,885,1020,1155,2102,2237,2372,2507,7104,7239,7374,7509,8807,8942,9077,9212,10512,10647,10782,10917,12242,12377,12512,12647,13974,14109,14244,14379,15677,15812,15947,16082,17382,17517,17652,17787,19166,19301,19436,19571,20952,21087,21222,21357,22412,22547,22682,22817,23874,24009,24144,24279,25361,25496,25631,25766,29346,29481,29616,29751,30102,31076,31211,31346,31481,31832,32808,32943,33078,33213,34349,34484,34619,34754,35892,36027,36162,36297,37433,37568,37703,37838,38976,39111,39246,39381,39732,40706,40841,40976,41111,41462,42438,42573,42708,42843,43248,44222,44357,44492,44627,45032,46062,46197,46332,46467,47468,47603,47738,47873
+tests/gates-web/medicoes/add-content.json: 55926,56007,56765,56846,58791,58872,59630,59711,62853,62934,63692,63773,67083,67164,67976,68057
+tests/gates-web/medicoes/content-edit.json: 45629,45656,47656,47683,77884,78289,78559,79182,79587,79857
+tests/gates-web/medicoes/content.json: 11514,12245
+tests/gates-web/medicoes/library.json: 7539,7944,8214,8810,9215,9485,13875,14280,14550,15416,15821,16091,19698,20184,20454,21050,21536,21806,33958,34363,34633,35337,35742,36012
+tests/gates-web/medicoes/setlists.json: 36397,36532,36667,36802,37749,37884,38019,38154,47203,47338,47473,47608,48906,49041,49176,49311,55675,55810,55945,56080,57405,57540,57675,57810,64124,64259,64394,64529,65827,65962,66097,66232,72752,72887,73022,73157,74536,74671,74806,74941,80450,80585,80720,80855,81910,82045,82180,82315,87578,87713,87848,87983,89065,89200,89335,89470,97997,98132,98267,98402,98753,99727,99862,99997,100132,100483,105824,105959,106094,106229,107365,107500,107635,107770,113270,113405,113540,113675,114811,114946,115081,115216,121577,121712,121847,121982,122333,123307,123442,123577,123712,124063,130421,130556,130691,130826,131231,132205,132340,132475,132610,133015,137975,138110,138245,138380,139381,139516,139651,139786,145721,145856,145991,146126,147424,147559,147694,147829,154115,154250,154385,154520,155818,155953,156088,156223,162743,162878,163013,163148,164527,164662,164797,164932,170600,170735,170870,171005,172141,172276,172411,172546
+tests/gates/fixtures/editor-put-antes.json: 5
+tests/gates/fixtures/upload-post-antes.json: 15,16
+tests/gates/i1-editor-put.test.tsx: 88
+tests/gates/i1-tab-acordes.test.tsx: 28
+tests/gates/i1-upload-post.test.tsx: 140,141
+tests/ux-audit/harvest-populated.spec.ts: 180

@@ -1,0 +1,19 @@
+# D-0 pre-check, M1, consulta 3 — provada num Postgres 17.11 local descartável (initdb no scratchpad, socket local, sem rede),
+# com as fixtures fabricadas m1-fixture-local.sql + m1-fixture-local-3.sql. Rastro.
+$ psql -f instrumentos/m1-fixture-local.sql -f instrumentos/m1-fixture-local-3.sql
+[exit 0]
+$ psql -f instrumentos/m1-consulta-3.sql
+ content_type | com_annotations | annotations_e_dificuldade_nula |      mais_antigo       |      mais_recente      | destes_desde_2025_07_08 | content_data_nulo | content_data_nulo_sem_arquivo 
+--------------+-----------------+--------------------------------+------------------------+------------------------+-------------------------+-------------------+-------------------------------
+ Chords       |               1 |                              0 |                        |                        |                       0 |                 0 |                             0
+ Lyrics       |               3 |                              2 | 2025-07-05 07:00:00-03 | 2026-09-21 07:00:00-03 |                       1 |                 1 |                             1
+ Tab          |               2 |                              0 |                        |                        |                       0 |                 1 |                             0
+(3 rows)
+
+[exit 0]
+$ (a mesma saída) | grep -c MARCADOR    — tem de dar 0
+0
+[exit 1 — grep sem casamento = 1]
+$ (controle positivo) select title ... | grep -c MARCADOR    — tem de dar 1
+1
+[exit 0]

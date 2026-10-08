@@ -1,0 +1,29 @@
+# D-0 pre-check, M1 — a consulta provada num Postgres 17.11 local descartável (initdb no scratchpad, socket local, sem rede),
+# com a fixture fabricada m1-fixture-local.sql. <UID_PRINCIPAL> trocado por 'uid-principal' só aqui. Rastro.
+$ psql -f instrumentos/m1-fixture-local.sql
+[exit 0]
+$ psql -f instrumentos/m1-consulta.sql   (com <UID_PRINCIPAL> → uid-principal)
+   id8    | principal |             chaves             | tipo_tablature | len_tablature | tem_measures | measures_eh_exemplo | tem_arquivo | dificuldade_nula |       updated_at       
+----------+-----------+--------------------------------+----------------+---------------+--------------+---------------------+-------------+------------------+------------------------
+ 79ea21f7 | f         | tablature                      | array          |               | f            |                     | f           | t                | 2026-10-06 07:00:00-03
+ c62d6a9a | f         | null                           |                |               |              |                     | t           | t                | 2026-10-05 07:00:00-03
+ 7782dc79 | f         | tablature                      | string         |             0 | f            |                     | f           | t                | 2026-10-04 07:00:00-03
+ 0d699806 | f         | annotations,measures,tablature | string         |            14 | t            | f                   | f           | f                | 2026-10-03 07:00:00-03
+ cf56fc37 | t         | annotations,measures,tablature | string         |            14 | t            | t                   | f           | f                | 2026-10-02 07:00:00-03
+ 3fdebe02 | t         | tablature                      | string         |            17 | f            |                     | f           | t                | 2026-10-01 07:00:00-03
+(6 rows)
+
+ content_type | total | dificuldade_nula | salvas_pelo_editor | ultima_salva_pelo_editor 
+--------------+-------+------------------+--------------------+--------------------------
+ Chords       |     1 |                0 |                  1 | 2026-10-06 09:00:00-03
+ Lyrics       |     1 |                1 |                  0 | 
+ Tab          |     6 |                4 |                  2 | 2026-10-03 07:00:00-03
+(3 rows)
+
+[exit 0]
+$ (a mesma saída) | grep -c MARCADOR    — tem de dar 0: nenhum texto da fixture sai
+0
+[exit 1 — grep sem casamento = 1]
+$ (controle positivo) select title from content limit 1 | grep -c MARCADOR    — tem de dar 1: o grep acha texto quando sai
+1
+[exit 0]
