@@ -49,13 +49,21 @@ const estadoInicial = (content: any) => ({
 })
 
 /**
- * O corpo do `PUT` de antes, sem o `updated_at` (que o salvar põe no fim, como antes). D-0 — três mudanças, de
+ * As anotações da linha (D0-D23, div. 1168): o editor parte do `annotations` que a linha tem — antes, o estado nascia
+ * `[]` e todo salvar o zerava. Sem a chave, `[]`, como sempre (o objeto que vai no corpo ganha `annotations: []`).
+ */
+const anotacoesDaLinha = (content: any) =>
+  content.content_data && "annotations" in content.content_data ? content.content_data.annotations : []
+
+/**
+ * O corpo do `PUT` de antes, sem o `updated_at` (que o salvar põe no fim, como antes). D-0 — quatro mudanças, de
  * propósito (pares declarados em `tests/gates/i1-editor-put.test.tsx`):
  * - a dificuldade vazia vai `null`, não `""` (D0-D19; div. 1152 — o esquema da rota aceita `null` e recusa `""`);
  * - o `content_data` nulo da linha que nenhum editor de tipo tocou vai `null`, como estava (D0-D22): a Tab de upload e a
  *   Cifra escaneada salvam por *Detalhes* sem virar objeto (a escaneada segue arquivo para o palco, N4-D49);
  * - quando o `content_data` vai como objeto, a chave do tipo vai sempre: a `tablature` da Tab (D0-D13, div. 1149) e o
- *   `chords` da Cifra (D0-D21, div. 1156) — `""` se a linha não a tinha; o contrato de escrita a exige.
+ *   `chords` da Cifra (D0-D21, div. 1156) — `""` se a linha não a tinha; o contrato de escrita a exige;
+ * - o `annotations` é o da linha, não `[]` (D0-D23 — `anotacoesDaLinha`).
  */
 function corpoDoPut(editedContent: any, annotations: any[], contentType: string, dadosNulos: boolean) {
   const tipo = normalizeContentType(contentType)
@@ -86,11 +94,11 @@ function corpoDoPut(editedContent: any, annotations: any[], contentType: string,
 
 export function ContentEditor({ content, onSave, onCancel, salvando = false, falhaAoSalvar = null }: ContentEditorProps) {
   const [editedContent, setEditedContent] = useState(() => estadoInicial(content))
-  // o `annotations` de antes: estado local que nada escreve — vai `[]` no corpo, como antes (herança D, §1.2)
-  const [annotations] = useState<any[]>([])
+  // o `annotations`: estado local que nada escreve; parte do que a linha tem (D0-D23) — vai no corpo como veio
+  const [annotations] = useState<any[]>(() => anotacoesDaLinha(content))
   const [falhaDoArquivo, setFalhaDoArquivo] = useState<FalhaDaTela | null>(null)
   const dadosNulos = content.content_data == null
-  const inicial = useMemo(() => JSON.stringify(corpoDoPut(estadoInicial(content), [], content.content_type, content.content_data == null)), [content])
+  const inicial = useMemo(() => JSON.stringify(corpoDoPut(estadoInicial(content), anotacoesDaLinha(content), content.content_type, content.content_data == null)), [content])
   const alterado = JSON.stringify(corpoDoPut(editedContent, annotations, content.content_type, dadosNulos)) !== inicial
 
   const handleSave = () => {

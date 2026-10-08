@@ -110,6 +110,13 @@ const CASOS: Caso[] = [
     editar: async () => { await mudar(campo('campo-tablatura'), (v) => `${v}\nG|---0-------0---0-------0---|`) },
   },
   {
+    // D-0 (D0-D23): uma linha COM anotação — o corpo da main a zerava
+    nome: 'letra com anotações',
+    content: { ...base, id: ID(6), title: 'Batch três', artist: null, content_type: 'Lyrics', difficulty: 'Beginner',
+      content_data: { lyrics: 'Primeira estrofe da música três', annotations: [{ id: 1, texto: 'anotação do CN', pos: { x: 10, y: 20 } }] } },
+    editar: async () => { await mudar(campo('campo-notas'), () => 'nota do CN') },
+  },
+  {
     nome: 'partitura (PDF)',
     content: { ...base, id: ID(5), title: 'Partitura de 12 páginas', artist: 'Compositor anônimo', content_type: 'Sheet',
       file_url: 'https://cn.supabase.co/storage/v1/object/public/content-files/cn-partitura.pdf', content_data: null },
@@ -135,6 +142,8 @@ const PARES: Par[] = [
     razao: 'D0-D6: a edição vai à tablature, a chave que os leitores leem (antes ela viajava intacta e a edição ia a measures)' },
   { caso: 'tab (tablatura em texto, sem compassos)', chave: 'content_data.measures', velho: EXEMPLO_EDITADO, novo: AUSENTE,
     razao: 'D0-D7: o editor de compassos e o compasso de exemplo saíram — o exemplo não se grava mais (a linha não tinha measures)' },
+  { caso: 'letra com anotações', chave: 'content_data.annotations', velho: [], novo: [{ id: 1, texto: 'anotação do CN', pos: { x: 10, y: 20 } }],
+    razao: 'D0-D23 (div. 1168): o editor parte do annotations que a linha tem — a main o zerava em todo salvar' },
   { caso: 'partitura (PDF)', chave: 'difficulty', velho: '', novo: null, razao: DIF },
   { caso: 'partitura (PDF)', chave: 'content_data', velho: { annotations: [] }, novo: null,
     razao: 'D0-D22: o content_data nulo que nenhum editor de tipo tocou vai null, como estava na linha' },
