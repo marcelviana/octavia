@@ -1,102 +1,52 @@
 "use client"
 
 /**
- * O editor de tab (I1-PR-11; folha 6, `EDIT-tab`; decisão 7 do aval): Informações (com a Afinação) · Tablatura (cada
- * compasso num painel como a folha — contorno `line`, mono 22, `lineHeight.tab`, rola na horizontal — com as SEIS
- * cordas editáveis, uma por campo, como antes; *Duplicar* e *Remover compasso* ficam) · Prévia. O ESTADO e o que cada
- * mudança devolve são os de antes, linha a linha; a tab sem `measures` segue abrindo com o compasso-fixture (dado —
- * herança D, div. 776). As *Tablature Tips* saíram (nota da folha).
+ * O editor de tab (I1-PR-11; folha 6, `EDIT-tab`; D-0): Informações (com a Afinação) · Tablatura · Prévia. A
+ * TABLATURA é texto (D0-D6, D0-D17): um painel só, aberto com a `tablature` do content (a lista, linhas juntas por
+ * `"\n"`, como o leitor do site; sem ela, vazio) e gravando a `tablature` — a chave que o site, o palco e a busca leem.
+ * O editor de compassos e o compasso de exemplo saíram (D0-D7): o exemplo era GRAVADO na primeira mudança e nenhum
+ * leitor lia `measures`. O `measures` já gravado não se lê nem se toca (D0-D8): viaja intacto no `content` que cada
+ * mudança devolve. O que cada mudança devolve é o de antes (`{ ...content, ...tabData }` — a poluição do
+ * `content_data` é Bloco D), com a `tablature` no lugar dos compassos. As *Tablature Tips* saíram (nota da folha).
  */
 import { useState, useEffect } from "react"
 import { Informacoes } from "@/components/editors/informacoes"
-import { CompassoDaTab, PreviaDaTab, TablaturaDaTab } from "@/components/editors/partes-da-tab"
+import { PreviaDaTab, TablaturaDaTab } from "@/components/editors/partes-da-tab"
+import { textoDaTab } from "@/components/content/corpo-de-texto"
 
 interface TabEditorProps {
   content: any
   onChange: (content: any) => void
 }
 
-// o compasso-fixture de antes: VALOR gravado quando a tab não tem `measures` (div. 776, herança D)
-const compassoFixture = () => [
-  { id: 1, strings: ["E|--0--3--0--2--0--|", "B|--1--1--1--1--1--|", "G|--0--0--0--0--0--|", "D|--2--2--2--2--2--|", "A|--3-------------|", "E|----------------|"] },
-]
+const dadosDaTab = (content: any) => ({
+  title: content.title || "",
+  artist: content.artist || "",
+  tuning: content.tuning || "Standard (EADGBE)",
+  capo: content.capo || "",
+  bpm: content.bpm || "",
+})
 
 export function TabEditor({ content, onChange }: TabEditorProps) {
-  const [tabData, setTabData] = useState({
-    title: content.title || "",
-    artist: content.artist || "",
-    tuning: content.tuning || "Standard (EADGBE)",
-    capo: content.capo || "",
-    bpm: content.bpm || "",
-    measures: content.measures || compassoFixture(),
-  })
+  const [tabData, setTabData] = useState(() => dadosDaTab(content))
 
   // Update state when content props change
   useEffect(() => {
-    setTabData({
-      title: content.title || "",
-      artist: content.artist || "",
-      tuning: content.tuning || "Standard (EADGBE)",
-      capo: content.capo || "",
-      bpm: content.bpm || "",
-      measures: content.measures || compassoFixture(),
-    })
+    setTabData(dadosDaTab(content))
   }, [content])
-
-  const stringNames = ["E", "B", "G", "D", "A", "E"]
 
   const updateTabData = (newData: any) => {
     setTabData(newData)
     onChange({ ...content, ...newData })
   }
 
-  const addMeasure = () => {
-    const newMeasure = { id: Date.now(), strings: stringNames.map((name) => `${name}|----------------|`) }
-    updateTabData({ ...tabData, measures: [...tabData.measures, newMeasure] })
-  }
-
-  const removeMeasure = (measureId: number) => {
-    updateTabData({ ...tabData, measures: tabData.measures.filter((measure: any) => measure.id !== measureId) })
-  }
-
-  const updateMeasureString = (measureId: number, stringIndex: number, value: string) => {
-    updateTabData({
-      ...tabData,
-      measures: tabData.measures.map((measure: any) =>
-        measure.id === measureId
-          ? { ...measure, strings: measure.strings.map((str: string, idx: number) => (idx === stringIndex ? value : str)) }
-          : measure,
-      ),
-    })
-  }
-
-  const duplicateMeasure = (measureId: number) => {
-    const measureToDuplicate = tabData.measures.find((m: any) => m.id === measureId)
-    if (measureToDuplicate) {
-      const newMeasure = { ...measureToDuplicate, id: Date.now() }
-      const measureIndex = tabData.measures.findIndex((m: any) => m.id === measureId)
-      const newMeasures = [...tabData.measures]
-      newMeasures.splice(measureIndex + 1, 0, newMeasure)
-      updateTabData({ ...tabData, measures: newMeasures })
-    }
-  }
-
   return (
     <div className="flex flex-col gap-espaco-xl min-w-0">
       <Informacoes dados={tabData} onMudar={(campo, valor) => updateTabData({ ...tabData, [campo]: valor })} />
-      <TablaturaDaTab onAdicionar={addMeasure}>
-        {tabData.measures.map((measure: any, i: number) => (
-          <CompassoDaTab
-            key={measure.id}
-            numero={i + 1}
-            cordas={measure.strings}
-            podeRemover={tabData.measures.length > 1}
-            onCorda={(idx, valor) => updateMeasureString(measure.id, idx, valor)}
-            onDuplicar={() => duplicateMeasure(measure.id)}
-            onRemover={() => removeMeasure(measure.id)}
-          />
-        ))}
-      </TablaturaDaTab>
+      <TablaturaDaTab
+        texto={textoDaTab({ tablature: content.tablature }) ?? ""}
+        onMudar={(tablature) => updateTabData({ ...tabData, tablature })}
+      />
       <PreviaDaTab dados={tabData} />
     </div>
   )

@@ -5,7 +5,8 @@
  * fabricado) e pela pré-verificação sem sessão (`docs/ux/I1-PR11-anexos/pre-verificacao/`).
  *
  * O Tom é a letra (*C*), como é gravado (decisão 9; a folha escreve *Dó* — I1-E20). Tab e letra levam o título e o
- * artista DELES (a folha copiou em *Detalhes* os da cifra — decisão 13: "sem par").
+ * artista DELES (a folha copiou em *Detalhes* os da cifra — decisão 13: "sem par"); os da tab são fabricados desde a
+ * D-0 (D0-D18 — a folha escreve o nome de uma obra real: o valor dentro da caixa sai "sem par", o campo pareia pela âncora).
  */
 const T = '2026-09-10T15:00:00Z'
 const base = {
@@ -19,12 +20,13 @@ export const EXEMPLOS_EDITOR = {
     ...base, id: 'g-faixa', title: 'Linha de 120 colunas', artist: 'Teste de régua', content_type: 'Chords', key: 'C', bpm: 96,
     content_data: { chords: 'C7M      G7\nLa la la, la la lá', sections: [{ id: 1, name: 'Verso curto — controle', chords: 'C7M G7', lyrics: 'La la la, la la lá' }] },
   },
+  // D-0: o título e o autor fabricados (D0-D18); a tab é TEXTO (D0-D6) — as seis linhas do compasso que a folha desenha,
+  // na `tablature`, sem `measures` (o editor de compassos saiu, D0-D7)
   tab: {
-    ...base, id: 'g-faixa', title: 'Trenzinho do caipira', artist: 'Villa-Lobos', content_type: 'Tab', bpm: 72,
+    ...base, id: 'g-faixa', title: 'Tab de régua D0', artist: 'Autor fabricado', content_type: 'Tab', bpm: 72,
     content_data: {
-      tablature: 'e|-------0-----------0-------|',
-      measures: [{ id: 1, strings: ['e|-------0-----------0-------|', 'B|-----1---1-------1---1-----|', 'G|---0-------0---0-------0---|',
-        'D|---------------------------|', 'A|-3-------------------------|', 'E|---------------|-----------|'] }],
+      tablature: ['e|-------0-----------0-------|', 'B|-----1---1-------1---1-----|', 'G|---0-------0---0-------0---|',
+        'D|---------------------------|', 'A|-3-------------------------|', 'E|---------------|-----------|'].join('\n'),
     },
   },
   letra: {

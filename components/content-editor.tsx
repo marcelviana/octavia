@@ -7,7 +7,8 @@
  * corpo. Contêiner `web.conteiner`, margem `web.margem`, respiro `space.xxl`.
  *
  * O ESTADO (`editedContent`) e o CORPO do `PUT` são os de antes, linha a linha — gate byte a byte em
- * `tests/gates/i1-editor-put.test.tsx`. Duas coisas mudaram, decididas no aval: *alterações não salvas* e o *Salvar*
+ * `tests/gates/i1-editor-put.test.tsx`, que desde a D-0 passa o corpo pela rota real (div. 1157) —, salvo as três
+ * mudanças da D-0 (`corpoDoPut`). Duas coisas mudaram, decididas no aval: *alterações não salvas* e o *Salvar*
  * ativo quando o corpo do `PUT` (sem o `updated_at`) difere do corpo de abertura (decisão 2; antes o estado normalizado
  * — `null → ""` — contra a linha crua marcava alteração ao abrir, div. 772); e o *Salvar* inativo durante o envio
  * (decisão 5 — um clique duplo não manda dois `PUT`). O *Compasso* segue fora do corpo (div. 771, herança D).
@@ -47,8 +48,18 @@ const estadoInicial = (content: any) => ({
   content_data: content.content_data || {},
 })
 
-/** O corpo do `PUT` de antes, sem o `updated_at` (que o salvar põe no fim, como antes). */
-function corpoDoPut(editedContent: any, annotations: any[], contentType: string) {
+/**
+ * O corpo do `PUT` de antes, sem o `updated_at` (que o salvar põe no fim, como antes). D-0 — três mudanças, de
+ * propósito (pares declarados em `tests/gates/i1-editor-put.test.tsx`):
+ * - a dificuldade vazia vai `null`, não `""` (D0-D19; div. 1152 — o esquema da rota aceita `null` e recusa `""`);
+ * - o `content_data` nulo da linha que nenhum editor de tipo tocou vai `null`, como estava (D0-D22): a Tab de upload e a
+ *   Cifra escaneada salvam por *Detalhes* sem virar objeto (a escaneada segue arquivo para o palco, N4-D49);
+ * - quando o `content_data` vai como objeto, a chave do tipo vai sempre: a `tablature` da Tab (D0-D13, div. 1149) e o
+ *   `chords` da Cifra (D0-D21, div. 1156) — `""` se a linha não a tinha; o contrato de escrita a exige.
+ */
+function corpoDoPut(editedContent: any, annotations: any[], contentType: string, dadosNulos: boolean) {
+  const tipo = normalizeContentType(contentType)
+  const dados = editedContent.content_data
   return {
     title: editedContent.title,
     artist: editedContent.artist,
@@ -56,18 +67,19 @@ function corpoDoPut(editedContent: any, annotations: any[], contentType: string)
     genre: editedContent.genre,
     key: editedContent.key,
     bpm: editedContent.bpm ? Number.parseInt(editedContent.bpm) : null,
-    difficulty: editedContent.difficulty,
+    difficulty: editedContent.difficulty || null,
     tags: editedContent.tags,
     notes: editedContent.notes,
     is_favorite: editedContent.is_favorite,
     is_public: editedContent.is_public,
-    content_data: {
-      ...editedContent.content_data,
+    content_data: dadosNulos && Object.keys(dados).length === 0 ? null : {
+      ...dados,
       annotations,
       // Store editor-specific data
-      ...(normalizeContentType(contentType) === ContentType.CHORDS && editedContent.sections && { sections: editedContent.sections }),
-      ...(normalizeContentType(contentType) === ContentType.LYRICS && editedContent.lyrics && { lyrics: editedContent.lyrics }),
-      ...(normalizeContentType(contentType) === ContentType.TAB && editedContent.measures && { measures: editedContent.measures }),
+      ...(tipo === ContentType.CHORDS && editedContent.sections && { sections: editedContent.sections }),
+      ...(tipo === ContentType.LYRICS && editedContent.lyrics && { lyrics: editedContent.lyrics }),
+      ...(tipo === ContentType.TAB && dados.tablature === undefined && { tablature: "" }),
+      ...(tipo === ContentType.CHORDS && dados.chords === undefined && { chords: "" }),
     },
   }
 }
@@ -77,12 +89,13 @@ export function ContentEditor({ content, onSave, onCancel, salvando = false, fal
   // o `annotations` de antes: estado local que nada escreve — vai `[]` no corpo, como antes (herança D, §1.2)
   const [annotations] = useState<any[]>([])
   const [falhaDoArquivo, setFalhaDoArquivo] = useState<FalhaDaTela | null>(null)
-  const inicial = useMemo(() => JSON.stringify(corpoDoPut(estadoInicial(content), [], content.content_type)), [content])
-  const alterado = JSON.stringify(corpoDoPut(editedContent, annotations, content.content_type)) !== inicial
+  const dadosNulos = content.content_data == null
+  const inicial = useMemo(() => JSON.stringify(corpoDoPut(estadoInicial(content), [], content.content_type, content.content_data == null)), [content])
+  const alterado = JSON.stringify(corpoDoPut(editedContent, annotations, content.content_type, dadosNulos)) !== inicial
 
   const handleSave = () => {
     if (salvando) return
-    const updatedContent = { ...corpoDoPut(editedContent, annotations, content.content_type), updated_at: new Date().toISOString() }
+    const updatedContent = { ...corpoDoPut(editedContent, annotations, content.content_type, dadosNulos), updated_at: new Date().toISOString() }
     onSave(updatedContent)
   }
 
