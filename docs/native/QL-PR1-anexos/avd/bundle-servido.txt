@@ -1,0 +1,5 @@
+# regra 13 — o bundle SERVIDO, antes de qualquer abertura do app (19:11:47)
+grep -c 'leitor-${z}' → 1
+grep -c 'zoomSteps.map' → 1
+grep -c 'localhost:8788' → 1
+grep -c 'octavia.rocks' → 0

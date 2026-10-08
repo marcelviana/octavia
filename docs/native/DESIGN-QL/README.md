@@ -138,6 +138,17 @@ par de 50 em A, que recua para a coluna 18** (no 26 cairia dentro do `F#m7(11)`,
 **As primeiras a conferir na PR-1**: a largura do caractere nos zooms 18, 26, 32 e 40 (QL-D34), que decide qual das duas
 contas de colunas vale.
 
+> **Errata de ponteiro — QL-E2 (medida), QL-PR1, 2026-10-08** (QL-D34, QL-R21, A-QL-6; `docs/native/QL-PR1-anexos/medida-por-zoom.txt`,
+> `[medido]` no AVD `octavia_tab32` pela régua de desenvolvimento, tokens `leitor-18` … `leitor-40`). As duas linhas
+> *estimadas* da tabela acima — **caractere por zoom** e **colunas nos outros zooms** — dão lugar à medida. **O caractere**:
+> **18 → 10,93 · 22 → 13,33 · 26 → 15,73 · 32 → 19,20 · 40 → 24,00 dp** (100 caracteres; o 22 igual ao da N4-PR8; régua ×
+> dump igual onde o texto cabe na tela). **As colunas de C e de B**: **C 98 · 80 · 68 · 55 · 44** e **B 59 · 48 · 41 · 33 ·
+> 26** (18 · 22 · 26 · 32 · 40) — **vale a conta da folha** (a escala linear) nas dez células; a do pre-check (o pixel
+> arredondado) erra em quatro (C 18/26/32, B 18). V em C no 22: 55, como estava. **A não foi medida** (o celular é do N5): a
+> coluna de A fica estimada, com a leitura que os cinco números sugerem no anexo `[hipótese]`. O recuo de 2 colunas no 40
+> mede 48,0 dp (a folha dizia 48,5: Δ −0,5, abaixo dos 4 dp). Nenhuma moldura normativa muda (QL-D34). O texto da tabela
+> acima não foi reescrito.
+
 ## 5 · A conferência da folha antes de congelar `[medido]`
 
 Instrumento: [`../DESIGN-QL-anexos/instrumentos/conferir.mjs`](../DESIGN-QL-anexos/instrumentos/conferir.mjs); saída verbatim
@@ -224,6 +235,9 @@ dizia; **medida**; **leitura**):
 corte que cairia dentro do `F#m7(11)` (colunas 23–30) *"recua para a coluna 22"*. A R2 manda recuar até o primeiro ponto
 que não parte **nem um acorde nem uma palavra** — e a 22 partiria *conta*. O corte vai para a 18, antes de *conta*.
 **Comportamento.** Errata de ponteiro no `QL-BRIEF.md` §5.2. *(As erratas seguintes começam na QL-E2.)*
+
+**QL-E2 — o caractere e as colunas fora do 22, medidos** (QL-PR1; QL-D34). **Medida.** A errata de ponteiro do §4: vale a
+conta da folha em C e B; A segue estimada até o N5. *(A próxima é a QL-E3.)*
 
 **O que não é errata**: as colunas fora do 22 (O1) ficam com as **duas** contas (QL-D34), sem vencedor até a PR-1 medir; o
 respiro em A (O2) fica o do brief (QL-D35); a O6 da folha não procede (div. 1197).

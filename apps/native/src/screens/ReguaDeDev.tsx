@@ -29,7 +29,7 @@
 import { useEffect, useState } from 'react'
 import { Linking, ScrollView, StyleSheet, Text, View, type LayoutChangeEvent, type TextStyle } from 'react-native'
 import { log } from '../log'
-import { dark, font, lineHeight, size, tracking, zoomDefault } from '../theme'
+import { dark, font, lineHeight, size, tracking, zoomDefault, zoomSteps } from '../theme'
 
 /** Token de estilo → o estilo de texto do app, com a origem ao lado. */
 const ESTILOS: Record<string, TextStyle> = {
@@ -88,6 +88,16 @@ const ESTILOS: Record<string, TextStyle> = {
   'view-valor': { fontFamily: font.ui, fontSize: size.button },
   'view-notas': { fontFamily: font.ui, fontSize: size.body, lineHeight: size.body * lineHeight.text },
   leitor: { fontFamily: font.mono, fontSize: zoomDefault, lineHeight: zoomDefault * lineHeight.text },
+  /**
+   * QL-PR1 (QL-D34, QL-R21, A-QL-6) — o LEITOR EM CADA ZOOM: `leitor-18`, `leitor-22`, `leitor-26`, `leitor-32`,
+   * `leitor-40`, o mesmo estilo de `leitor` (o `estiloDoLeitor` do `Leitor.tsx`: mono no tamanho do zoom, a entrelinha do
+   * texto) em cada passo do `zoomSteps`. Mede a largura de um caractere da mono por zoom — o divisor das colunas da
+   * quebra (QL-D13). Só o 22 estava medido (13,33 dp, N4-PR8); os outros eram estimativa (DESIGN-QL §4). **Instrumento de
+   * desenvolvimento**, como o resto deste arquivo: nenhum token do pacote de identidade novo, nenhuma tela.
+   */
+  ...Object.fromEntries(
+    zoomSteps.map((z) => [`leitor-${z}`, { fontFamily: font.mono, fontSize: z, lineHeight: z * lineHeight.text }]),
+  ),
 }
 
 interface Pedido {

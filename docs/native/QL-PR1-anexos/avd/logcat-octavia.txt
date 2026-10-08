@@ -1,0 +1,5 @@
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net offline
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: sync skip reason=offline
+OCTAVIA: prefetch plan n=0 reason=library
