@@ -1,0 +1,128 @@
+{
+ "Chords": {
+  "musicas": 6,
+  "com_corpo": 6,
+  "linhas": 33,
+  "a26": {
+   "m": 3,
+   "l": 6
+  },
+  "a48": {
+   "m": 2,
+   "l": 2
+  },
+  "a55": {
+   "m": 2,
+   "l": 2
+  },
+  "a80": {
+   "m": 0,
+   "l": 0
+  },
+  "maior": 70,
+  "tab_char": 1,
+  "cr": 1,
+  "nfd": 0,
+  "acordes": 9,
+  "pares": 7,
+  "pares_a26": 3,
+  "pares_a48": 2,
+  "maior_par": 70
+ },
+ "Lyrics": {
+  "musicas": 6,
+  "com_corpo": 5,
+  "linhas": 19,
+  "a26": {
+   "m": 4,
+   "l": 8
+  },
+  "a48": {
+   "m": 1,
+   "l": 3
+  },
+  "a55": {
+   "m": 1,
+   "l": 2
+  },
+  "a80": {
+   "m": 1,
+   "l": 1
+  },
+  "maior": 81,
+  "tab_char": 0,
+  "cr": 0,
+  "nfd": 1,
+  "acordes": 1,
+  "pares": 1,
+  "pares_a26": 1,
+  "pares_a48": 0,
+  "maior_par": 36
+ },
+ "Sheet": {
+  "musicas": 2,
+  "com_corpo": 0,
+  "linhas": 0,
+  "a26": {
+   "m": 0,
+   "l": 0
+  },
+  "a48": {
+   "m": 0,
+   "l": 0
+  },
+  "a55": {
+   "m": 0,
+   "l": 0
+  },
+  "a80": {
+   "m": 0,
+   "l": 0
+  },
+  "maior": null,
+  "tab_char": 0,
+  "cr": 0,
+  "nfd": 0,
+  "acordes": 0,
+  "pares": 0,
+  "pares_a26": 0,
+  "pares_a48": 0,
+  "maior_par": null
+ },
+ "Tab": {
+  "musicas": 3,
+  "com_corpo": 3,
+  "linhas": 8,
+  "a26": {
+   "m": 2,
+   "l": 4
+  },
+  "a48": {
+   "m": 1,
+   "l": 1
+  },
+  "a55": {
+   "m": 1,
+   "l": 1
+  },
+  "a80": {
+   "m": 1,
+   "l": 1
+  },
+  "maior": 93,
+  "tab_char": 0,
+  "cr": 0,
+  "nfd": 0,
+  "acordes": 0,
+  "pares": 0,
+  "pares_a26": 0,
+  "pares_a48": 0,
+  "maior_par": null
+ },
+ "notas": {
+  "com_notas": 2,
+  "maior": 100,
+  "maior_linha": 73,
+  "mais_de_uma_linha": 1
+ }
+}

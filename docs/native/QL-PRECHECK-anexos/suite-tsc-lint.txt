@@ -1,0 +1,30 @@
+$ pnpm test
+     ✓ a RELEITURA tem o mesmo prazo: 2xx com o `GET` mudo vira `ok-nao-relido`  612ms
+     ✓ o prazo da releitura é o do CORE (20 s), e vale também no `reopen`  40136ms
+
+ Test Files  140 passed | 3 skipped (143)
+      Tests  1706 passed | 59 skipped (1765)
+   Start at  14:15:27
+   Duration  62.39s (transform 6.40s, setup 17.99s, import 11.41s, tests 129.82s, environment 72.92s)
+
+
+$ npx tsc --noEmit -p .
+exit 0
+$ npx tsc --noEmit -p packages/core
+exit 0
+$ npx tsc --noEmit -p packages/identidade
+exit 0
+$ npx tsc --noEmit -p apps/native
+exit 2
+
+$ pnpm lint
+> pnpm exec next lint
+
+✔ No ESLint warnings or errors
+
+# Nota: a forma acima ('-p apps/native' DA RAIZ) deu exit 2 — 35 erros TS2488 em apps/native/test/*.tsx (iterar NodeListOf/HTMLCollection; a causa da diferença entre as duas formas não foi medida). A forma dos encerramentos (N4-ENCERRAMENTO-anexos/gates.txt:392) roda DE DENTRO de cada pacote:
+$ pnpm exec tsc --noEmit -p . && echo raiz 0; (cd packages/core && pnpm exec tsc --noEmit && echo core 0); (cd packages/identidade && pnpm exec tsc --noEmit && echo identidade 0); (cd apps/native && pnpm exec tsc --noEmit && echo nativo 0)
+raiz 0
+core 0
+identidade 0
+nativo 0

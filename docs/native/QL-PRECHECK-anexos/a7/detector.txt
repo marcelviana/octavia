@@ -1,0 +1,70 @@
+# A7 — o detector mudou-nativo em toda corrida pull_request do native.yml desde o merge da W4-b2 (2026-09-23T20:00Z)
+# colunas: run · branch · criada · head · android-debug-apk · a 1ª linha de porquê do detector (stderr)
+$ gh run list --workflow native.yml --created '>=2026-09-23T20:00:00Z' --limit 200 · para cada pull_request: gh run view <id> --json jobs · gh run view <id> --log | grep mudou-nativo
+35913908759	w4b/ci	2026-09-23T20:08:05Z	06dd5ca	skipped	mudou-nativo	Run sh apps/native/scripts/mudou-nativo.sh "$ACAO" "$ANTES" HEAD >> "$GITHUB_OUTPUT"	2026-09-23T20:08:15.2705030Z último APK desta PR: success. Desde o push anterior (0f55d1e6a44ec476798c9ef72c592415e1b53441..HEAD):
+35915316392	w4b/ci	2026-09-23T20:20:50Z	231a194	skipped	mudou-nativo	Run sh apps/native/scripts/mudou-nativo.sh "$ACAO" "$ANTES" HEAD >> "$GITHUB_OUTPUT"	2026-09-23T20:20:58.9800283Z último APK desta PR: success. Desde o push anterior (06dd5ca7d6159ad9bde2ad522495227b5be1a589..HEAD):
+35917173769	w4b/ci	2026-09-23T20:37:16Z	bcb3898	skipped	mudou-nativo	Run sh apps/native/scripts/mudou-nativo.sh "$ACAO" "$ANTES" HEAD >> "$GITHUB_OUTPUT"	2026-09-23T20:37:25.7296515Z último APK desta PR: success. Desde o push anterior (231a1945f1365790d87fb88a529d6ef34b66db64..HEAD):
+35927579912	w4b/palco	2026-09-23T22:18:18Z	7ab865c	success	ação 'opened' sem push anterior ancestral (div. 353, padrão seguro): roda
+35927852903	w4b/palco	2026-09-23T22:21:10Z	0a28628	success	último APK desta PR: 'in_progress', não success (div. 360): roda
+35933529421	w4b/palco	2026-09-23T23:25:31Z	11d8e60	skipped	último APK desta PR: success. Desde o push anterior (0a28628d07835b56a8dce47c15e5d51ba79f0d02..HEAD):
+36059092056	n3/pr1-gate	2026-09-24T21:04:33Z	d5cf416	success	ação 'opened' sem push anterior ancestral (div. 353, padrão seguro): roda
+36060647546	n3/pr1-gate	2026-09-24T21:18:42Z	6e229b3	skipped	último APK desta PR: success. Desde o push anterior (d5cf4164de26bead779a24c50c687ddaaf822245..HEAD):
+36077809965	n3/pr2-s1	2026-09-25T00:30:01Z	46d47af	success	ação 'opened' sem push anterior ancestral (div. 353, padrão seguro): roda
+36078862300	n3/pr2-s1	2026-09-25T00:43:43Z	33ded27	skipped	último APK desta PR: success. Desde o push anterior (46d47af7e801b8a9aea7f213baf3ad1a8c829d89..HEAD):
+36149790518	n3/pr3-s2	2026-09-25T14:47:01Z	5c4d94f	success	ação 'opened' sem push anterior ancestral (div. 353, padrão seguro): roda
+36154109883	n3/pr3-s2	2026-09-25T15:25:52Z	7a564c1	skipped	último APK desta PR: success. Desde o push anterior (5c4d94f070ce90a18e574ae8dd2bc52df8837bfc..HEAD):
+36165365239	n3/pr4-reordenar-folha	2026-09-25T17:09:46Z	b2c0d92	success	ação 'opened' sem push anterior ancestral (div. 353, padrão seguro): roda
+36169017564	n3/pr4-reordenar-folha	2026-09-25T17:44:33Z	78aaf2b	skipped	último APK desta PR: success. Desde o push anterior (b2c0d92c57ce463c8e05b4749b89d72f1c118cd0..HEAD):
+36179065634	n3/pr5-palco-provas	2026-09-25T19:20:24Z	b407611	success	ação 'opened' sem push anterior ancestral (div. 353, padrão seguro): roda
+36180580700	n3/pr5-palco-provas	2026-09-25T19:35:08Z	cf3ff3c	skipped	último APK desta PR: success. Desde o push anterior (b407611c483f938d9089aa9ddc34332cee8b6047..HEAD):
+36199314490	n3/pr6-aceite	2026-09-25T23:01:22Z	e283000	success	ação 'opened' sem push anterior ancestral (div. 353, padrão seguro): roda
+36200310999	n3/pr6-aceite	2026-09-25T23:15:47Z	4992667	skipped	último APK desta PR: success. Desde o push anterior (e283000dd12251b77a849d948d72a0a2010abefe..HEAD):
+36240343744	n3/pr6c-s5	2026-09-26T11:55:53Z	3acee67	success	ação 'opened' sem push anterior ancestral (div. 353, padrão seguro): roda
+36334712031	i1/pr4-identidade	2026-09-27T16:50:23Z	08cdf6b	success	ação 'opened' sem push anterior ancestral (div. 353, padrão seguro): roda
+36335505455	i1/pr4-identidade	2026-09-27T17:03:26Z	59b78de	skipped	mudou-nativo	Run sh apps/native/scripts/mudou-nativo.sh "$ACAO" "$ANTES" HEAD >> "$GITHUB_OUTPUT"	2026-09-27T17:03:36.5016088Z último APK desta PR: success. Desde o push anterior (08cdf6bef21ab5583f91d1b4627073ef1b598471..HEAD):
+36335728634	i1/pr4-identidade	2026-09-27T17:07:02Z	86f1eb3	skipped	último APK desta PR: success. Desde o push anterior (59b78de7bb5bbfae617787e72abea3988d43e270..HEAD):
+36357168753	i1/pr6-auth	2026-09-27T22:59:51Z	f87b639	success	último APK desta PR: 'inexistente', não success (div. 360): roda
+36418112130	i1/pr6-auth	2026-09-28T11:50:57Z	ec48262	skipped	último APK desta PR: success. Desde o push anterior (f87b6395f419f0e880f27adbed533f8e64fe3d62..HEAD):
+36420311749	i1/pr6-auth	2026-09-28T12:12:09Z	e45a566	skipped	último APK desta PR: success. Desde o push anterior (ec48262e5a14e7e2bc850bb9ec201ae36d9c3439..HEAD):
+36430505341	i1/pr6-auth	2026-09-28T13:42:22Z	7b6fc20	skipped	último APK desta PR: success. Desde o push anterior (e45a5665ec091b1a3229eb6de92e6f71909d2eb4..HEAD):
+36430842417	i1/pr6-auth	2026-09-28T13:45:07Z	c4e1bd6	skipped	último APK desta PR: success. Desde o push anterior (7b6fc20fae4be3d77816ff3bdd32ceb0ad297e28..HEAD):
+36458680620	i1/pr9-content-lista	2026-09-28T17:31:05Z	ed85f23	success	ação 'opened' sem push anterior ancestral (div. 353, padrão seguro): roda
+36462867415	i1/pr9-content-lista	2026-09-28T18:06:33Z	b496342	skipped	último APK desta PR: success. Desde o push anterior (ed85f237904691d8189294d27861cfed299570d4..HEAD):
+36469768806	i1/pr9-content-lista	2026-09-28T19:05:16Z	2587cf1	success	último APK desta PR: 'inexistente', não success (div. 360): roda
+36912615247	n4/pr2-leitor	2026-10-01T19:12:52Z	dae7009	success	ação 'opened' sem push anterior ancestral (div. 353, padrão seguro): roda
+36913708176	n4/pr2-leitor	2026-10-01T19:21:40Z	050980e	success	último APK desta PR: 'in_progress', não success (div. 360): roda
+36934701645	n4/pr2-leitor	2026-10-01T22:22:54Z	9001913	skipped	último APK desta PR: success. Desde o push anterior (050980e13a0b021e4155e870b1a250f23be245c1..HEAD):
+37136605039	n4/pr3-frases	2026-10-03T16:22:24Z	5d96a70	success	ação 'opened' sem push anterior ancestral (div. 353, padrão seguro): roda
+37154736628	n4/pr3-frases	2026-10-03T21:20:08Z	d0012e7	success	último APK desta PR: success. Desde o push anterior (5d96a70c73c7b538111210fbc8548e0b19330361..HEAD):
+37203072129	n4/pr3-frases	2026-10-04T12:43:11Z	a5eed4c	skipped	último APK desta PR: success. Desde o push anterior (d0012e7f56f96e3ac0fd98f539c26c8528f41267..HEAD):
+37205700725	n4/pr4-identidade	2026-10-04T13:27:48Z	a267e6e	success	ação 'opened' sem push anterior ancestral (div. 353, padrão seguro): roda
+37216289073	n4/pr4-identidade	2026-10-04T16:18:36Z	54ce0d1	success	último APK desta PR: success. Desde o push anterior (a267e6eb3aa8fb9dc61e19a5b9d625928d04bb00..HEAD):
+37225705334	n4/pr4-identidade	2026-10-04T18:46:14Z	b83f51a	skipped	último APK desta PR: success. Desde o push anterior (54ce0d1054f81d96532863df3555c051346bf83a..HEAD):
+37235047533	n4/pr5-core-biblioteca	2026-10-04T21:10:58Z	f5fb36d	success	ação 'opened' sem push anterior ancestral (div. 353, padrão seguro): roda
+37237295115	n4/pr5-core-biblioteca	2026-10-04T21:44:18Z	e33801e	skipped	último APK desta PR: success. Desde o push anterior (f5fb36df910a6b9cea316d3fe3a689b2a906e441..HEAD):
+37241704858	n4/pr5-core-biblioteca	2026-10-04T22:53:09Z	5e3bcdd	success	último APK desta PR: success. Desde o push anterior (e33801e74f5ca2e0791c2c1176f40c85483fffe4..HEAD):
+37242640601	n4/pr5-core-biblioteca	2026-10-04T23:08:08Z	b6ebde7	skipped	último APK desta PR: success. Desde o push anterior (5e3bcdd8058f326d4661f7127972fde790976e9d..HEAD):
+37248763758	n4/pr6-palco-avulso	2026-10-05T00:45:44Z	c8e5554	success	ação 'opened' sem push anterior ancestral (div. 353, padrão seguro): roda
+37477639277	n4/pr6-palco-avulso	2026-10-06T14:16:54Z	26ed2b8	skipped	último APK desta PR: success. Desde o push anterior (c8e5554a5b84575e2d557ae60350cea877e1cfa6..HEAD):
+37486711171	n4/pr7-biblioteca	2026-10-06T15:20:46Z	2a095a7	success	ação 'opened' sem push anterior ancestral (div. 353, padrão seguro): roda
+37497253727	n4/pr7-biblioteca	2026-10-06T16:38:11Z	105b98d	success	último APK desta PR: success. Desde o push anterior (2a095a78da20dc474c3437df8b564f2865facf20..HEAD):
+37497318382	n4/pr7-biblioteca	2026-10-06T16:38:40Z	b941a13	success	último APK desta PR: 'in_progress', não success (div. 360): roda
+37511640474	n4/pr7-biblioteca	2026-10-06T18:28:57Z	8aa319c	skipped	último APK desta PR: success. Desde o push anterior (b941a13ac93567c89c41f65337d68d339814d091..HEAD):
+37515639309	n4/pr7-biblioteca	2026-10-06T19:00:12Z	6d2a605	skipped	último APK desta PR: success. Desde o push anterior (8aa319ce7477e04846415c9fd1f1624b38a5453c..HEAD):
+37516257639	n4/pr7-biblioteca	2026-10-06T19:04:56Z	d0b4aaf	skipped	último APK desta PR: success. Desde o push anterior (6d2a6050c256315f9ef3b0e10cb38f51147a3fc8..HEAD):
+37517539551	n4/pr7-biblioteca	2026-10-06T19:15:05Z	92ed8ab	skipped	último APK desta PR: success. Desde o push anterior (d0b4aaf781454ec43b49da5af367d73da9c72175..HEAD):
+37542247683	n4/pr8-visualizacao	2026-10-06T22:42:13Z	aa1a7c4	success	ação 'opened' sem push anterior ancestral (div. 353, padrão seguro): roda
+37614961030	n4/pr8-visualizacao	2026-10-07T11:34:12Z	d88679d	success	último APK desta PR: success. Desde o push anterior (aa1a7c433f792720912a6246debd6539bfbe0773..HEAD):
+37616668248	n4/pr8-visualizacao	2026-10-07T11:49:09Z	2daf89b	skipped	último APK desta PR: success. Desde o push anterior (d88679dfa44c6ee516b0a8bae48eccc819631b45..HEAD):
+37618112090	n4/pr8-visualizacao	2026-10-07T12:01:47Z	5ad9703	success	último APK desta PR: 'inexistente', não success (div. 360): roda
+37619616990	n4/pr8-visualizacao	2026-10-07T12:14:44Z	7d0b4f4	skipped	último APK desta PR: success. Desde o push anterior (5ad9703e29580fa0dceb0b9340719c1ac82eaf6a..HEAD):
+37625875787	n4/pr9-aceite	2026-10-07T13:06:01Z	6af916d	success	ação 'opened' sem push anterior ancestral (div. 353, padrão seguro): roda
+37631556721	n4/pr9-aceite	2026-10-07T13:49:15Z	527cf93	success	último APK desta PR: success. Desde o push anterior (6af916d45853072c747d4e5aeca83a91ed2d0012..HEAD):
+37645019729	n4/pr9-aceite	2026-10-07T15:34:38Z	6d9634e	skipped	último APK desta PR: success. Desde o push anterior (527cf93bacabceabe88130386a00a549b68293de..HEAD):
+37667600905	n4/pr9-aceite	2026-10-07T18:32:20Z	59ab852	skipped	último APK desta PR: success. Desde o push anterior (6d9634e8b5790d37f578e2ddbba3df284af40795..HEAD):
+
+# contagem (pela linha inteira):
+  37 último APK desta PR: success
+  18 ação 'opened'
+  3 'in_progress'
+  3 'inexistente'
