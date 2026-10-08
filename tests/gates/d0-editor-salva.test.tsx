@@ -20,7 +20,8 @@
  *       `measures` gravado (D0-D8);
  *   (f) o compasso de exemplo não existe em lugar nenhum do código do site (D0-D7);
  *   (g) o editor não apaga o que não conhece: a chave que nenhum editor de tipo edita, num `content_data` não nulo, volta
- *       no corpo e na linha gravada com o mesmo valor, nos quatro tipos (a Partitura com a chave legada `file`).
+ *       no corpo e na linha gravada com o mesmo valor, nos quatro tipos (a Partitura com a chave legada `file`);
+ *   (h) as anotações (D0-D23): o `annotations` da linha volta igual; `[]` fica `[]`; sem a chave, o objeto ganha `[]`.
  *
  * Sobre a `main` (gate-first, regra 30) ele REPROVA: (a) nos 4 casos de dificuldade nula; (b) e (c) pelo contrato de
  * escrita; (d), (e) e (f) porque não há painel de texto e o exemplo está no `tab-editor.tsx`. Dado fabricado: nenhum
@@ -235,6 +236,37 @@ describe('D-0 — o editor do site salva, e o que salva os leitores mostram', ()
       console.log(`  (g) ${tipo}: chaves que nenhum editor edita ${desconhecidas.length} (${desconhecidas.join(', ')}) · no corpo ${desconhecidas.filter((k) => k in corpo).length}`)
       for (const k of desconhecidas) expect(JSON.stringify(corpo[k]), `a chave ${k} perdeu-se ou mudou no corpo`).toBe(JSON.stringify(antes[k]))
       for (const k of desconhecidas) expect(JSON.stringify((dados(gravada()) ?? {})[k]), `a chave ${k} na linha gravada`).toBe(JSON.stringify(antes[k]))
+    }, 20_000)
+  }
+
+  // (h) as anotações (D0-D23, div. 1168): o editor não zera o `annotations` da linha. Para cada tipo, uma linha com
+  // anotação, *Notas* em *Detalhes*, salvar → o `annotations` volta IGUAL no corpo e na linha gravada. E as duas bordas,
+  // que já passavam e seguem passando: a linha com `annotations: []` volta `[]`; a linha SEM a chave, com `content_data`
+  // objeto, ganha `annotations: []` (o comportamento de sempre — o editor acrescenta a chave quando o objeto vai).
+  const ANOTACOES = [{ id: 1, texto: 'anotação fabricada D0', pos: { x: 10, y: 20 } }]
+  const BASE_H: Record<string, { content_data: Record<string, unknown>; file_url: string | null }> = {
+    Lyrics: { content_data: { lyrics: 'Primeira linha fabricada D0' }, file_url: null },
+    Chords: { content_data: { chords: 'C  G\nLa la D0' }, file_url: null },
+    Tab: { content_data: { tablature: TAB }, file_url: null },
+    Sheet: { content_data: { file: 'd0-legado-fabricado.pdf' }, file_url: PDF },
+  }
+  const BORDAS: [string, Record<string, unknown>, unknown][] = [
+    ['com anotação', { annotations: ANOTACOES }, ANOTACOES],
+    ['com annotations: []', { annotations: [] }, []],
+    ['sem a chave annotations', {}, []],
+  ]
+  for (const tipo of Object.keys(BASE_H)) for (const [nome, extra, esperado] of BORDAS) {
+    it(`(h) ${tipo} · ${nome} · Notas em Detalhes → o annotations no corpo = ${JSON.stringify(esperado).slice(0, 20)}`, async () => {
+      const linha = { ...base, id: novoId(), content_type: tipo, difficulty: 'Beginner', file_url: BASE_H[tipo].file_url,
+        content_data: { ...BASE_H[tipo].content_data, ...extra } }
+      await abrir(linha)
+      await mudar('campo-notas', 'nota fabricada D0')
+      const s = await salvar()
+      expect(s.status, `a rota recusou: ${s.motivo}`).toBe(200)
+      const corpo = dados(s.corpo) ?? {}
+      console.log(`  (h) ${tipo} · ${nome}: na linha ${JSON.stringify((linha.content_data as Record<string, unknown>).annotations)} · no corpo ${JSON.stringify(corpo.annotations)}`)
+      expect(JSON.stringify(corpo.annotations), 'o annotations no corpo').toBe(JSON.stringify(esperado))
+      expect(JSON.stringify((dados(gravada()) ?? {}).annotations), 'o annotations na linha gravada').toBe(JSON.stringify(esperado))
     }, 20_000)
   }
 
