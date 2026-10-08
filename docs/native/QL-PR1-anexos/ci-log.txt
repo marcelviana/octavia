@@ -1,0 +1,134 @@
+# QL-PR1 — o log do CI (gh run view <id> --log, filtrado; cores tiradas). Head f91fbc1.
+# job build — run 37853131932, job 113570839974 (ci.yml), pass 4m30s
+
+## passo 'Test — a suíte, e com ela os gates embrulhados': o gate da quebra, o bloco inteiro
+2026-10-08T22:24:55.1334165Z stdout | tests/gates/ql-quebra.test.ts > gate da quebra (QL-PR1) — as regras do corte, a invariância e a medida > reprova exatamente a lista de ql-quebra-reprovados.txt
+2026-10-08T22:24:55.1336935Z gate da quebra — casos 23 · checagens 46 ((i) 17 · (ii) 23 · (iii) 6) · passam 0 · reprovam 46
+2026-10-08T22:24:55.1338654Z   (i  ) REPROVA · (ii) REPROVA  letra-80             Lyrics 80 col · QL-C-S3-letra-escuro
+2026-10-08T22:24:55.1340005Z         (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+2026-10-08T22:24:55.1341354Z   (i  ) REPROVA · (ii) REPROVA  letra-55             Lyrics 55 col · QL-C-V-letra-escuro
+2026-10-08T22:24:55.1342650Z         (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+2026-10-08T22:24:55.1344067Z   (i  ) REPROVA · (ii) REPROVA  letra-48             Lyrics 48 col · QL-B-S3-letra-escuro
+2026-10-08T22:24:55.1345246Z         (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+2026-10-08T22:24:55.1346333Z   (i  ) REPROVA · (ii) REPROVA  letra-26             Lyrics 26 col · QL-A-S3-letra-escuro
+2026-10-08T22:24:55.1347353Z         (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+2026-10-08T22:24:55.1349119Z   (i  ) REPROVA · (ii) REPROVA  letra-14             Lyrics 14 col · QL-A-S3-notas-longa-escuro
+2026-10-08T22:24:55.1350200Z         (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+2026-10-08T22:24:55.1351311Z   (i  ) REPROVA · (ii) REPROVA  cifra-80             Chords 80 col · QL-C-S3-cifra-escuro
+2026-10-08T22:24:55.1352731Z         (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+2026-10-08T22:24:55.1353750Z   (i  ) REPROVA · (ii) REPROVA  cifra-55             Chords 55 col · QL-C-V-cifra-escuro
+2026-10-08T22:24:55.1355331Z         (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+2026-10-08T22:24:55.1356376Z   (i  ) REPROVA · (ii) REPROVA  cifra-48             Chords 48 col · QL-B-S3-cifra-escuro
+2026-10-08T22:24:55.1357205Z         (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+2026-10-08T22:24:55.1358056Z   (i  ) REPROVA · (ii) REPROVA  cifra-26             Chords 26 col · QL-A-S3-cifra-escuro
+2026-10-08T22:24:55.1358725Z         (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+2026-10-08T22:24:55.1360654Z   (i  ) REPROVA · (ii) REPROVA  cifra-14             Chords 14 col · EST-QL-A-S3-cifra-zoom40-sem-saida-escuro
+2026-10-08T22:24:55.1361822Z         (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+2026-10-08T22:24:55.1363114Z   (i  ) REPROVA · (ii) REPROVA  tab-80               Tab    80 col · QL-C-S3-tab… — conferência §13: "78 colunas, 6 linhas"
+2026-10-08T22:24:55.1364216Z         (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+2026-10-08T22:24:55.1365240Z   (i  ) REPROVA · (ii) REPROVA  tab-55               Tab    55 col · QL-C-V-tab… — conferência §13: "78 colunas, 6 linhas"
+2026-10-08T22:24:55.1366131Z         (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+2026-10-08T22:24:55.1367129Z   (i  ) REPROVA · (ii) REPROVA  tab-48               Tab    48 col · QL-B-S3-tab… — conferência §13: "78 colunas, 6 linhas"
+2026-10-08T22:24:55.1368552Z         (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+2026-10-08T22:24:55.1369776Z   (i  ) REPROVA · (ii) REPROVA  tab-26               Tab    26 col · QL-A-S3-tab… — conferência §13: "78 colunas, 6 linhas"
+2026-10-08T22:24:55.1370860Z         (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+2026-10-08T22:24:55.1371967Z   (i  ) REPROVA · (ii) REPROVA  tab-14               Tab    14 col · derivado: R4 (nenhuma moldura de Tab em 14)
+2026-10-08T22:24:55.1373035Z         (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+2026-10-08T22:24:55.1374032Z   (i  ) REPROVA · (ii) REPROVA  quase-acorde-14      Chords 14 col · derivado: R1 + R4
+2026-10-08T22:24:55.1374982Z         (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+2026-10-08T22:24:55.1376073Z   (i  ) REPROVA · (ii) REPROVA  cifra-como-letra-26  Lyrics 26 col · derivado: R1 sobre o texto do §5.2
+2026-10-08T22:24:55.1377477Z         (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+2026-10-08T22:24:55.1378790Z   (iii) REPROVA · (ii) REPROVA  tabulacao-16         Lyrics 16 col · derivado: QL-D24
+2026-10-08T22:24:55.1379791Z         (iii) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+2026-10-08T22:24:55.1380788Z   (iii) REPROVA · (ii) REPROVA  tabulacao-14         Lyrics 14 col · derivado: QL-D24
+2026-10-08T22:24:55.1381825Z         (iii) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+2026-10-08T22:24:55.1382841Z   (iii) REPROVA · (ii) REPROVA  cr-50                Lyrics 50 col · derivado: QL-D24
+2026-10-08T22:24:55.1383852Z         (iii) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+2026-10-08T22:24:55.1385138Z   (iii) REPROVA · (ii) REPROVA  cr-48                Lyrics 48 col · derivado: QL-D24 + o corte do QL-B-S3-letra-escuro
+2026-10-08T22:24:55.1386241Z         (iii) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+2026-10-08T22:24:55.1387256Z   (iii) REPROVA · (ii) REPROVA  combinante-50        Lyrics 50 col · derivado: QL-D24
+2026-10-08T22:24:55.1388483Z         (iii) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+2026-10-08T22:24:55.1389718Z   (iii) REPROVA · (ii) REPROVA  combinante-48        Lyrics 48 col · derivado: QL-D24 + o corte do QL-B-S3-letra-escuro
+2026-10-08T22:24:55.1391218Z         (iii) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+2026-10-08T22:24:55.1392022Z lista esperada (46) · reprovados (46)
+2026-10-08T22:24:55.1392764Z gate da quebra: reprova exatamente a lista esperada (46) ✓
+2026-10-08T22:24:55.1393184Z 
+2026-10-08T22:24:55.1394041Z  ✓  web  tests/gates/ql-quebra.test.ts (2 tests) 7ms
+
+## os outros três, no mesmo passo (as linhas ✓ do arquivo)
+2026-10-08T22:24:10.1656561Z  ✓  native  apps/native/test/texto-logico.test.ts (2 tests) 9ms
+2026-10-08T22:24:30.7194118Z  ✓  native-tela  apps/native/test/g-par-visualizacao.test.tsx (2 tests) 288ms
+2026-10-08T22:24:33.6391252Z  ✓  native-tela  apps/native/test/duplo-colunas.test.tsx (7 tests) 59ms
+2026-10-08T22:24:55.1394041Z  ✓  web  tests/gates/ql-quebra.test.ts (2 tests) 7ms
+2026-10-08T22:24:30.5858536Z G-par da visualização [C (a coluna de V, 55)] — itens 17 · pares 10 · iguais 10 · diferentes 0 · fora do par 7 · retrato do site 10
+2026-10-08T22:24:30.5860499Z   o leitor quebra: não (até a PR-3) · linhas do par acima da coluna: 0 · continuações vistas em V: 0
+2026-10-08T22:24:30.5906824Z G-par da visualização: zero diferenças ✓
+2026-10-08T22:24:30.7155226Z G-par da visualização [26 colunas (o duplo com colunas, QL-PR1)] — itens 17 · pares 10 · iguais 10 · diferentes 0 · fora do par 7 · retrato do site 10
+2026-10-08T22:24:30.7157813Z   o leitor quebra: não (até a PR-3) · linhas do par acima da coluna: 6 · continuações vistas em V: 0
+2026-10-08T22:24:30.7192212Z G-par da visualização: zero diferenças ✓
+
+## o resumo da suíte nos dois passos
+Test — a suíte, e com ela os gates embrulhados (W3, div. 129)	2026-10-08T22:25:21.6382269Z  Test Files  143 passed | 3 skipped (146)
+Test — a suíte, e com ela os gates embrulhados (W3, div. 129)	2026-10-08T22:25:21.6386827Z       Tests  1718 passed | 59 skipped (1777)
+Test coverage	2026-10-08T22:26:51.7943227Z  Test Files  143 passed | 3 skipped (146)
+Test coverage	2026-10-08T22:26:51.7949742Z       Tests  1718 passed | 59 skipped (1777)
+
+# job gates-nativos — run 37853131817, job 113570839964 (gates.yml), pass 13s
+As declarações — o bloco ```gates do corpo da PR (W4-b2, H3)	2026-10-08T22:23:23.9608005Z echo "declarações ($(grep -c . "$RUNNER_TEMP/decl" || true) linhas):"
+As declarações — o bloco ```gates do corpo da PR (W4-b2, H3)	2026-10-08T22:23:25.8222961Z declarações (3 linhas):
+As declarações — o bloco ```gates do corpo da PR (W4-b2, H3)	2026-10-08T22:23:25.8232925Z   g1a: packages/core/src/quebra.ts
+As declarações — o bloco ```gates do corpo da PR (W4-b2, H3)	2026-10-08T22:23:25.8233226Z   g1a: packages/core/src/index.ts
+As declarações — o bloco ```gates do corpo da PR (W4-b2, H3)	2026-10-08T22:23:25.8233649Z   g1a: apps/native/src/screens/ReguaDeDev.tsx
+G1a/G1b — invariância de comportamento e de decisão	﻿2026-10-08T22:23:25.8275581Z ##[group]Run sh apps/native/scripts/g1.sh "$BASE" WORKTREE
+G1a/G1b — invariância de comportamento e de decisão	2026-10-08T22:23:25.8275917Z sh apps/native/scripts/g1.sh "$BASE" WORKTREE
+G1a/G1b — invariância de comportamento e de decisão	2026-10-08T22:23:25.8334333Z shell: /usr/bin/bash -e {0}
+G1a/G1b — invariância de comportamento e de decisão	2026-10-08T22:23:25.8334565Z env:
+G1a/G1b — invariância de comportamento e de decisão	2026-10-08T22:23:25.8334757Z   BASE: d0d0639f14f63e0eaa95e430bdefca34c8c63e0a
+G1a/G1b — invariância de comportamento e de decisão	2026-10-08T22:23:25.8335014Z   GATES_DECL: /home/runner/work/_temp/decl
+G1a/G1b — invariância de comportamento e de decisão	2026-10-08T22:23:25.8335236Z ##[endgroup]
+G1a/G1b — invariância de comportamento e de decisão	2026-10-08T22:23:25.8434136Z declarações: do corpo da PR (GATES_DECL=/home/runner/work/_temp/decl)
+G1a/G1b — invariância de comportamento e de decisão	2026-10-08T22:23:25.8552773Z base=d0d0639f14f63e0eaa95e430bdefca34c8c63e0a head=WORKTREE
+G1a/G1b — invariância de comportamento e de decisão	2026-10-08T22:23:25.8565588Z G1a — diff vazio em 61 arquivos DERIVADOS de apps/native + packages/core/src
+G1a/G1b — invariância de comportamento e de decisão	2026-10-08T22:23:25.8566713Z       escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+G1a/G1b — invariância de comportamento e de decisão	2026-10-08T22:23:25.8567500Z       menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+G1a/G1b — invariância de comportamento e de decisão	2026-10-08T22:23:25.8567956Z       EXCEÇÕES DECLARADAS (o escopo desta PR):
+G1a/G1b — invariância de comportamento e de decisão	2026-10-08T22:23:25.8575533Z         packages/core/src/quebra.ts
+G1a/G1b — invariância de comportamento e de decisão	2026-10-08T22:23:25.8575869Z         packages/core/src/index.ts
+G1a/G1b — invariância de comportamento e de decisão	2026-10-08T22:23:25.8576197Z         apps/native/src/screens/ReguaDeDev.tsx
+G1a/G1b — invariância de comportamento e de decisão	2026-10-08T22:23:25.8645792Z   G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+G1a/G1b — invariância de comportamento e de decisão	2026-10-08T22:23:25.8904091Z G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+G1a/G1b — invariância de comportamento e de decisão	2026-10-08T22:23:25.8904817Z       PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+G1a/G1b — invariância de comportamento e de decisão	2026-10-08T22:23:25.8905587Z         (nenhum — nenhuma asserção do core pode mudar nesta PR)
+G1a/G1b — invariância de comportamento e de decisão	2026-10-08T22:23:25.8906026Z   G1b: só adição ✓
+G2/G3 — testIDs antes ⊆ depois, linhas de log com errata declarada	﻿2026-10-08T22:23:25.8946782Z ##[group]Run sh apps/native/scripts/g2g3.sh "$BASE" WORKTREE
+G2/G3 — testIDs antes ⊆ depois, linhas de log com errata declarada	2026-10-08T22:23:25.8947169Z sh apps/native/scripts/g2g3.sh "$BASE" WORKTREE
+G2/G3 — testIDs antes ⊆ depois, linhas de log com errata declarada	2026-10-08T22:23:25.9003880Z shell: /usr/bin/bash -e {0}
+G2/G3 — testIDs antes ⊆ depois, linhas de log com errata declarada	2026-10-08T22:23:25.9004086Z env:
+G2/G3 — testIDs antes ⊆ depois, linhas de log com errata declarada	2026-10-08T22:23:25.9004277Z   BASE: d0d0639f14f63e0eaa95e430bdefca34c8c63e0a
+G2/G3 — testIDs antes ⊆ depois, linhas de log com errata declarada	2026-10-08T22:23:25.9004537Z   GATES_DECL: /home/runner/work/_temp/decl
+G2/G3 — testIDs antes ⊆ depois, linhas de log com errata declarada	2026-10-08T22:23:25.9004752Z ##[endgroup]
+G2/G3 — testIDs antes ⊆ depois, linhas de log com errata declarada	2026-10-08T22:23:27.1164024Z G2 — testIDs  antes=121  depois=121
+G2/G3 — testIDs antes ⊆ depois, linhas de log com errata declarada	2026-10-08T22:23:27.1171728Z   G2: antes ⊆ depois ✓
+G2/G3 — testIDs antes ⊆ depois, linhas de log com errata declarada	2026-10-08T22:23:27.1202050Z G3 — declarações: do corpo da PR (GATES_DECL=/home/runner/work/_temp/decl)
+G2/G3 — testIDs antes ⊆ depois, linhas de log com errata declarada	2026-10-08T22:23:27.1223297Z G3 — linhas log( antes=70  depois=70
+G2/G3 — testIDs antes ⊆ depois, linhas de log com errata declarada	2026-10-08T22:23:27.1223977Z       ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+G2/G3 — testIDs antes ⊆ depois, linhas de log com errata declarada	2026-10-08T22:23:27.1224453Z         (nenhuma)
+G2/G3 — testIDs antes ⊆ depois, linhas de log com errata declarada	2026-10-08T22:23:27.1224903Z       REMOÇÕES DECLARADAS (linha → REMOVIDA: razão; N2-D34):
+G2/G3 — testIDs antes ⊆ depois, linhas de log com errata declarada	2026-10-08T22:23:27.1225309Z         (nenhuma)
+G2/G3 — testIDs antes ⊆ depois, linhas de log com errata declarada	2026-10-08T22:23:27.1225741Z       — nenhuma linha de log pode sumir nesta PR
+G2/G3 — testIDs antes ⊆ depois, linhas de log com errata declarada	2026-10-08T22:23:27.1301253Z   G3: nenhuma linha sumiu ✓
+Congelados — shasum -c dos SHA256SUMS do DESIGN-V1, do DESIGN-N2, do DESIGN-N3, do DESIGN-N4 e do DESIGN-QL	2026-10-08T22:23:27.1474527Z == docs/native/DESIGN-V1
+Congelados — shasum -c dos SHA256SUMS do DESIGN-V1, do DESIGN-N2, do DESIGN-N3, do DESIGN-N4 e do DESIGN-QL	2026-10-08T22:23:27.2484432Z telas.html: OK
+Congelados — shasum -c dos SHA256SUMS do DESIGN-V1, do DESIGN-N2, do DESIGN-N3, do DESIGN-N4 e do DESIGN-QL	2026-10-08T22:23:27.2501262Z icones.html: OK
+Congelados — shasum -c dos SHA256SUMS do DESIGN-V1, do DESIGN-N2, do DESIGN-N3, do DESIGN-N4 e do DESIGN-QL	2026-10-08T22:23:27.2529868Z telas.pdf: OK
+Congelados — shasum -c dos SHA256SUMS do DESIGN-V1, do DESIGN-N2, do DESIGN-N3, do DESIGN-N4 e do DESIGN-QL	2026-10-08T22:23:27.2536843Z == docs/native/DESIGN-N2
+Congelados — shasum -c dos SHA256SUMS do DESIGN-V1, do DESIGN-N2, do DESIGN-N3, do DESIGN-N4 e do DESIGN-QL	2026-10-08T22:23:27.2692203Z telas.html: OK
+Congelados — shasum -c dos SHA256SUMS do DESIGN-V1, do DESIGN-N2, do DESIGN-N3, do DESIGN-N4 e do DESIGN-QL	2026-10-08T22:23:27.2727227Z telas.pdf: OK
+Congelados — shasum -c dos SHA256SUMS do DESIGN-V1, do DESIGN-N2, do DESIGN-N3, do DESIGN-N4 e do DESIGN-QL	2026-10-08T22:23:27.2732327Z == docs/native/DESIGN-N3
+Congelados — shasum -c dos SHA256SUMS do DESIGN-V1, do DESIGN-N2, do DESIGN-N3, do DESIGN-N4 e do DESIGN-QL	2026-10-08T22:23:27.2887727Z telas.html: OK
+Congelados — shasum -c dos SHA256SUMS do DESIGN-V1, do DESIGN-N2, do DESIGN-N3, do DESIGN-N4 e do DESIGN-QL	2026-10-08T22:23:27.2928459Z telas.pdf: OK
+Congelados — shasum -c dos SHA256SUMS do DESIGN-V1, do DESIGN-N2, do DESIGN-N3, do DESIGN-N4 e do DESIGN-QL	2026-10-08T22:23:27.2933609Z == docs/native/DESIGN-N4
+Congelados — shasum -c dos SHA256SUMS do DESIGN-V1, do DESIGN-N2, do DESIGN-N3, do DESIGN-N4 e do DESIGN-QL	2026-10-08T22:23:27.3145885Z telas.html: OK
+Congelados — shasum -c dos SHA256SUMS do DESIGN-V1, do DESIGN-N2, do DESIGN-N3, do DESIGN-N4 e do DESIGN-QL	2026-10-08T22:23:27.3163469Z icones.html: OK
+Congelados — shasum -c dos SHA256SUMS do DESIGN-V1, do DESIGN-N2, do DESIGN-N3, do DESIGN-N4 e do DESIGN-QL	2026-10-08T22:23:27.3169286Z == docs/native/DESIGN-QL
+Congelados — shasum -c dos SHA256SUMS do DESIGN-V1, do DESIGN-N2, do DESIGN-N3, do DESIGN-N4 e do DESIGN-QL	2026-10-08T22:23:27.3329984Z telas.html: OK

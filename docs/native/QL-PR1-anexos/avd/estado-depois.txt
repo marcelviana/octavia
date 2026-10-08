@@ -12,5 +12,5 @@ ping:
   connect: Network is unreachable
 
 # o snapshot default_boot depois de desligar (subido com -no-snapshot-save)
-Sep 24 14:00:20 2026 881129137 /Users/marcelviana/.android/avd/octavia_tab32.avd/snapshots/default_boot/ram.bin
-Oct  8 19:10:53 2026 1138 /Users/marcelviana/.android/avd/octavia_tab32.avd/snapshots/default_boot/snapshot.pb
+Sep 24 14:00:20 2026 881129137 ~/.android/avd/octavia_tab32.avd/snapshots/default_boot/ram.bin
+Oct  8 19:10:53 2026 1138 ~/.android/avd/octavia_tab32.avd/snapshots/default_boot/snapshot.pb

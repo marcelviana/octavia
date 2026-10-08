@@ -1,0 +1,178 @@
+
+ RUN  v4.0.16 <árvore ../octavia-ql-pr1>
+
+stdout | tests/gates/ql-quebra.test.ts > gate da quebra (QL-PR1) — as regras do corte, a invariância e a medida > reprova exatamente a lista de ql-quebra-reprovados.txt
+gate da quebra — casos 23 · checagens 46 ((i) 17 · (ii) 23 · (iii) 6) · passam 0 · reprovam 46
+  (i  ) REPROVA · (ii) REPROVA  letra-80             Lyrics 80 col · QL-C-S3-letra-escuro
+        (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+  (i  ) REPROVA · (ii) REPROVA  letra-55             Lyrics 55 col · QL-C-V-letra-escuro
+        (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+  (i  ) REPROVA · (ii) REPROVA  letra-48             Lyrics 48 col · QL-B-S3-letra-escuro
+        (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+  (i  ) REPROVA · (ii) REPROVA  letra-26             Lyrics 26 col · QL-A-S3-letra-escuro
+        (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+  (i  ) REPROVA · (ii) REPROVA  letra-14             Lyrics 14 col · QL-A-S3-notas-longa-escuro
+        (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+  (i  ) REPROVA · (ii) REPROVA  cifra-80             Chords 80 col · QL-C-S3-cifra-escuro
+        (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+  (i  ) REPROVA · (ii) REPROVA  cifra-55             Chords 55 col · QL-C-V-cifra-escuro
+        (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+  (i  ) REPROVA · (ii) REPROVA  cifra-48             Chords 48 col · QL-B-S3-cifra-escuro
+        (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+  (i  ) REPROVA · (ii) REPROVA  cifra-26             Chords 26 col · QL-A-S3-cifra-escuro
+        (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+  (i  ) REPROVA · (ii) REPROVA  cifra-14             Chords 14 col · EST-QL-A-S3-cifra-zoom40-sem-saida-escuro
+        (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+  (i  ) REPROVA · (ii) REPROVA  tab-80               Tab    80 col · QL-C-S3-tab… — conferência §13: "78 colunas, 6 linhas"
+        (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+  (i  ) REPROVA · (ii) REPROVA  tab-55               Tab    55 col · QL-C-V-tab… — conferência §13: "78 colunas, 6 linhas"
+        (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+  (i  ) REPROVA · (ii) REPROVA  tab-48               Tab    48 col · QL-B-S3-tab… — conferência §13: "78 colunas, 6 linhas"
+        (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+  (i  ) REPROVA · (ii) REPROVA  tab-26               Tab    26 col · QL-A-S3-tab… — conferência §13: "78 colunas, 6 linhas"
+        (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+  (i  ) REPROVA · (ii) REPROVA  tab-14               Tab    14 col · derivado: R4 (nenhuma moldura de Tab em 14)
+        (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+  (i  ) REPROVA · (ii) REPROVA  quase-acorde-14      Chords 14 col · derivado: R1 + R4
+        (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+  (i  ) REPROVA · (ii) REPROVA  cifra-como-letra-26  Lyrics 26 col · derivado: R1 sobre o texto do §5.2
+        (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+  (iii) REPROVA · (ii) REPROVA  tabulacao-16         Lyrics 16 col · derivado: QL-D24
+        (iii) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+  (iii) REPROVA · (ii) REPROVA  tabulacao-14         Lyrics 14 col · derivado: QL-D24
+        (iii) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+  (iii) REPROVA · (ii) REPROVA  cr-50                Lyrics 50 col · derivado: QL-D24
+        (iii) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+  (iii) REPROVA · (ii) REPROVA  cr-48                Lyrics 48 col · derivado: QL-D24 + o corte do QL-B-S3-letra-escuro
+        (iii) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+  (iii) REPROVA · (ii) REPROVA  combinante-50        Lyrics 50 col · derivado: QL-D24
+        (iii) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+  (iii) REPROVA · (ii) REPROVA  combinante-48        Lyrics 48 col · derivado: QL-D24 + o corte do QL-B-S3-letra-escuro
+        (iii) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+lista esperada (0) · reprovados (46)
+  ✗ reprovação NÃO DECLARADA: i:letra-80
+  ✗ reprovação NÃO DECLARADA: ii:letra-80
+  ✗ reprovação NÃO DECLARADA: i:letra-55
+  ✗ reprovação NÃO DECLARADA: ii:letra-55
+  ✗ reprovação NÃO DECLARADA: i:letra-48
+  ✗ reprovação NÃO DECLARADA: ii:letra-48
+  ✗ reprovação NÃO DECLARADA: i:letra-26
+  ✗ reprovação NÃO DECLARADA: ii:letra-26
+  ✗ reprovação NÃO DECLARADA: i:letra-14
+  ✗ reprovação NÃO DECLARADA: ii:letra-14
+  ✗ reprovação NÃO DECLARADA: i:cifra-80
+  ✗ reprovação NÃO DECLARADA: ii:cifra-80
+  ✗ reprovação NÃO DECLARADA: i:cifra-55
+  ✗ reprovação NÃO DECLARADA: ii:cifra-55
+  ✗ reprovação NÃO DECLARADA: i:cifra-48
+  ✗ reprovação NÃO DECLARADA: ii:cifra-48
+  ✗ reprovação NÃO DECLARADA: i:cifra-26
+  ✗ reprovação NÃO DECLARADA: ii:cifra-26
+  ✗ reprovação NÃO DECLARADA: i:cifra-14
+  ✗ reprovação NÃO DECLARADA: ii:cifra-14
+  ✗ reprovação NÃO DECLARADA: i:tab-80
+  ✗ reprovação NÃO DECLARADA: ii:tab-80
+  ✗ reprovação NÃO DECLARADA: i:tab-55
+  ✗ reprovação NÃO DECLARADA: ii:tab-55
+  ✗ reprovação NÃO DECLARADA: i:tab-48
+  ✗ reprovação NÃO DECLARADA: ii:tab-48
+  ✗ reprovação NÃO DECLARADA: i:tab-26
+  ✗ reprovação NÃO DECLARADA: ii:tab-26
+  ✗ reprovação NÃO DECLARADA: i:tab-14
+  ✗ reprovação NÃO DECLARADA: ii:tab-14
+  ✗ reprovação NÃO DECLARADA: i:quase-acorde-14
+  ✗ reprovação NÃO DECLARADA: ii:quase-acorde-14
+  ✗ reprovação NÃO DECLARADA: i:cifra-como-letra-26
+  ✗ reprovação NÃO DECLARADA: ii:cifra-como-letra-26
+  ✗ reprovação NÃO DECLARADA: iii:tabulacao-16
+  ✗ reprovação NÃO DECLARADA: ii:tabulacao-16
+  ✗ reprovação NÃO DECLARADA: iii:tabulacao-14
+  ✗ reprovação NÃO DECLARADA: ii:tabulacao-14
+  ✗ reprovação NÃO DECLARADA: iii:cr-50
+  ✗ reprovação NÃO DECLARADA: ii:cr-50
+  ✗ reprovação NÃO DECLARADA: iii:cr-48
+  ✗ reprovação NÃO DECLARADA: ii:cr-48
+  ✗ reprovação NÃO DECLARADA: iii:combinante-50
+  ✗ reprovação NÃO DECLARADA: ii:combinante-50
+  ✗ reprovação NÃO DECLARADA: iii:combinante-48
+  ✗ reprovação NÃO DECLARADA: ii:combinante-48
+gate da quebra: ✗
+
+ ❯  web  tests/gates/ql-quebra.test.ts (2 tests | 1 failed) 14ms
+     × reprova exatamente a lista de ql-quebra-reprovados.txt 10ms
+     ✓ QL-D13: a quebra não entra no bodyOf nem na busca (content-contract.ts e search.ts não importam ./quebra) 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   web  tests/gates/ql-quebra.test.ts > gate da quebra (QL-PR1) — as regras do corte, a invariância e a medida > reprova exatamente a lista de ql-quebra-reprovados.txt
+AssertionError: reprovação NÃO DECLARADA: expected [ 'i:letra-80', 'ii:letra-80', …(44) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "i:letra-80",
++   "ii:letra-80",
++   "i:letra-55",
++   "ii:letra-55",
++   "i:letra-48",
++   "ii:letra-48",
++   "i:letra-26",
++   "ii:letra-26",
++   "i:letra-14",
++   "ii:letra-14",
++   "i:cifra-80",
++   "ii:cifra-80",
++   "i:cifra-55",
++   "ii:cifra-55",
++   "i:cifra-48",
++   "ii:cifra-48",
++   "i:cifra-26",
++   "ii:cifra-26",
++   "i:cifra-14",
++   "ii:cifra-14",
++   "i:tab-80",
++   "ii:tab-80",
++   "i:tab-55",
++   "ii:tab-55",
++   "i:tab-48",
++   "ii:tab-48",
++   "i:tab-26",
++   "ii:tab-26",
++   "i:tab-14",
++   "ii:tab-14",
++   "i:quase-acorde-14",
++   "ii:quase-acorde-14",
++   "i:cifra-como-letra-26",
++   "ii:cifra-como-letra-26",
++   "iii:tabulacao-16",
++   "ii:tabulacao-16",
++   "iii:tabulacao-14",
++   "ii:tabulacao-14",
++   "iii:cr-50",
++   "ii:cr-50",
++   "iii:cr-48",
++   "ii:cr-48",
++   "iii:combinante-50",
++   "ii:combinante-50",
++   "iii:combinante-48",
++   "ii:combinante-48",
++ ]
+
+ ❯ tests/gates/ql-quebra.test.ts:146:55
+    144|     expect(fx.casos.length, 'gate sem casos: não mediu nada (regra 4)'…
+    145|     expect(new Set(fx.casos.map((c) => c.id)).size, 'ids de caso repet…
+    146|     expect(naoDeclaradas, 'reprovação NÃO DECLARADA').toEqual([])
+       |                                                       ^
+    147|     expect(orfas, 'declaração ÓRFÃ').toEqual([])
+    148|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  18:56:41
+   Duration  778ms (transform 71ms, setup 221ms, import 22ms, tests 14ms, environment 413ms)
+

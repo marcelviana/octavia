@@ -141,7 +141,7 @@ nativas** (regra 36), e o Tab repousa com o release e volta a ele no fim de todo
 | A-QL-3 | `\t`, `\r` e acento combinante: os três casos que só medem | Vitest no core | — | QL-R9 |
 | A-QL-4 | a errata do T1-R31 e do T1-R25 no `PRD-TELA-1.md`, com R2, a reserva por linha e o aceite novo | o diff da PR-1 | — | QL-R20 |
 | A-QL-5 | os três instrumentos comparam o texto lógico; cada um com CN que reprova uma quebra que muda o texto; o duplo do `native-tela` com colunas (o G-par de V **vê** a quebra) | os CN, colados | — | QL-R19 |
-| A-QL-6 | a largura do caractere nos cinco zooms, no AVD e no Tab (a régua por zoom); qual conta de colunas vale | a régua e o dump | — | QL-R21 |
+| A-QL-6 | a largura do caractere nos cinco zooms, no AVD e no Tab (a régua por zoom); qual conta de colunas vale — *(QL-D40, QL-PR1: **fechado no AVD**, vale a conta da folha em C e B, QL-E2, `QL-PR1-anexos/medida-por-zoom.txt`; **o Tab na PR-3**)* | a régua e o dump | — | QL-R21 |
 | A-QL-7 | o `DESIGN-QL` no `shasum -c` do CI | o job verde; o CN (um byte trocado reprova) | — | QL-R22 |
 | A-QL-8 | **G-inv**: a B5 34 de 34 idênticos; a B3 12 de 18 idênticos e os **6 dumps de Letra em par** (`g-inv-par`: só o declarado mudou) | `g-inv.sh`, `g-inv-par.mjs` | — | QL-R11 |
 | A-QL-9 | **G-N3** e **G-par** verdes com o texto lógico; o G-par do core sem mudança | `g-n3.mjs`; Vitest | — | QL-R19 |
@@ -181,6 +181,8 @@ A função pura (R1–R4, o recuo, a reserva por linha, a medida dos três carac
 O `Leitor.tsx` desenha as linhas visuais; as duas medidas no app; a Letra e a Cifra deixam de rolar para o lado, a Tab
 continua; a **errata em par dos 6 dumps de Letra da B3**, com a **B5 byte a byte**; a **âncora** (QL-D18). O aceite no AVD
 e no Tab, e os julgamentos do Marcel da QL-D27. *Aceites*: A-QL-8…A-QL-16.
+*(QL-D40, aval da QL-PR1: a PR-3 também **mede a largura do caractere nos cinco zooms no Tab S6**, compara com a tabela do
+AVD da PR-1 e acusa a diferença antes de qualquer tela depender do número — fecha o A-QL-6 no Tab.)*
 
 ### PR-4 — as notas no palco
 

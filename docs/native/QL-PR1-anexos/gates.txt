@@ -1,0 +1,181 @@
+# QL-PR1 — os gates locais sobre a PR (head f91fbc1, base d0d0639), 2026-10-08 19:19
+
+## o bloco ```gates do corpo da PR, extraído (gates-decl.sh)
+g1a: packages/core/src/quebra.ts
+g1a: packages/core/src/index.ts
+g1a: apps/native/src/screens/ReguaDeDev.tsx
+
+## G1a/G1b
+declarações: do corpo da PR (GATES_DECL=<scratchpad>/decl)
+base=d0d0639f14f63e0eaa95e430bdefca34c8c63e0a head=HEAD
+G1a — diff vazio em 61 arquivos DERIVADOS de apps/native + packages/core/src
+      escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+      EXCEÇÕES DECLARADAS (o escopo desta PR):
+        packages/core/src/quebra.ts
+        packages/core/src/index.ts
+        apps/native/src/screens/ReguaDeDev.tsx
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+      PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+        (nenhum — nenhuma asserção do core pode mudar nesta PR)
+  G1b: só adição ✓
+exit 0
+
+## G2/G3
+G2 — testIDs  antes=121  depois=121
+  G2: antes ⊆ depois ✓
+G3 — declarações: do corpo da PR (GATES_DECL=<scratchpad>/decl)
+G3 — linhas log( antes=70  depois=70
+      ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+        (nenhuma)
+      REMOÇÕES DECLARADAS (linha → REMOVIDA: razão; N2-D34):
+        (nenhuma)
+      — nenhuma linha de log pode sumir nesta PR
+  G3: nenhuma linha sumiu ✓
+
+## shasum -c dos congelados (o passo do gates.yml)
+== docs/native/DESIGN-V1
+telas.html: OK
+icones.html: OK
+telas.pdf: OK
+== docs/native/DESIGN-N2
+telas.html: OK
+telas.pdf: OK
+== docs/native/DESIGN-N3
+telas.html: OK
+telas.pdf: OK
+== docs/native/DESIGN-N4
+telas.html: OK
+icones.html: OK
+== docs/native/DESIGN-QL
+telas.html: OK
+exit 0
+
+# CN: uma cópia do DESIGN-QL com UM byte trocado no telas.html ("rodada" → "Rodada", no <title>), fora da árvore
+telas.html: FAILED
+
+## G-N3 da PR sobre os 42 dumps de retrato da N4-PR9 (dumps-g-inv) × B5-baseline + B3-referencia-paisagem, com os rolados
+G-N3 — 32 par(es) (paisagem × faixa); medidas: docs/native/DESIGN-N3/medidas.json (tolerância 4 dp)
+(e) TEXTO QUE SOME — REPROVA: 0
+NOME ACESSÍVEL — o texto está no content-desc do nó de mesmo resource-id (N3-D17); não reprova, não soma ao (e): 8
+ROLAGEM — o texto está no dump rolado do mesmo estado; não reprova, não soma ao (e): 6
+QUEBRA — o corpo da faixa é uma quebra do texto lógico do corpo da paisagem (QL-D16); não reprova, não soma ao (e): 0
+(b) CORTE — nó que sai da janela útil ou encosta na borda lateral, NOVO contra a paisagem — REPROVA: 0
+G-N3: (e)=0 · (b)=0 · nome-acessível=8 · rolagem=6 · quebra=0 ✓ (d′ e 4 dp não reprovam: triagem e errata)
+
+## o mesmo com o g-n3.mjs da main: a diferença inteira (diff main → PR)
+121a122,123
+> QUEBRA — o corpo da faixa é uma quebra do texto lógico do corpo da paisagem (QL-D16); não reprova, não soma ao (e): 0
+> 
+124c126
+< G-N3: (e)=0 · (b)=0 · nome-acessível=8 · rolagem=6 ✓ (d′ e 4 dp não reprovam: triagem e errata)
+---
+> G-N3: (e)=0 · (b)=0 · nome-acessível=8 · rolagem=6 · quebra=0 ✓ (d′ e 4 dp não reprovam: triagem e errata)
+
+## os gates do site (o bloco ```gates-web vazio)
+## G-back
+## (i) arquivo do núcleo que mudou
+  ✓ nenhum — diff vazio no núcleo
+## (ii) arquivo novo no alcance (derivação do HEAD fora do congelado)
+  ✓ nenhum
+## (iii) declaração órfã (gback: de arquivo que não mudou)
+  ✓ nenhuma
+
+G-back: PASSA
+exit 0
+## G-palco
+## 4. TEXTO — referência a rota/arquivo morto
+  ✓ nenhum
+
+G-palco: PASSA — 0 ocorrências
+## shasum DESIGN-I1
+conferencia/conferir.mjs: OK
+conferencia/matriz-x-estados.tsv: OK
+conferencia/saida.txt: OK
+## G-tok
+## (ii) arquivos redesenhados — scripts/gates-web/g-tok-arquivos.txt
+  arquivos: 133 · literais de identidade acusados: 0 · toasts: 0 · imports de ui: 0 · textos examinados: 33 · isentos de inglês (scripts/gates-web/g-tok-sem-ingles.txt): 1 · vocabulário: 133 · isenções: 9 · strings de .ts examinadas (div. 828): 490 · frases isentas (scripts/gates-web/g-tok-frases-isentas.txt): 5 de 5 entradas
+
+G-tok: PASSA
+## G-tok cobertura
+  arquivos de tela: 129 · na lista: 129 · excluídos: 0 · FORA: 0 · da lista que não são de tela (informa): 4
+
+G-tok (cobertura): PASSA
+## G-faixa veredito
+  · verify-email · AUTH-verify-reenviar-excecao: INALCANÇÁVEL (declarado) — o contexto não lança: o catch da tela não se alcança [hipótese] (I1-E1, div. 640)
+
+G-faixa: PASSA
+
+## a suíte inteira
+stderr | tests/security/auth-penetration-testing.test.ts > Authentication and Authorization Penetration Tests > Authentication Bypass Attempts > should prevent session fixation attacks
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A03:2021 – Injection Attacks > should prevent LDAP injection
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A03:2021 – Injection Attacks > should prevent LDAP injection
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A03:2021 – Injection Attacks > should prevent LDAP injection
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A07:2021 – Identification and Authentication Failures > should prevent credential stuffing attacks
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A07:2021 – Identification and Authentication Failures > should prevent credential stuffing attacks
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A07:2021 – Identification and Authentication Failures > should prevent credential stuffing attacks
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A07:2021 – Identification and Authentication Failures > should prevent session fixation
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A07:2021 – Identification and Authentication Failures > should implement account lockout after failed attempts
+stderr | tests/security/owasp-top10-penetration.test.ts > OWASP Top 10 Security Penetration Tests > A08:2021 – Software and Data Integrity Failures > should verify API response integrity
+stdout | tests/security/token-blacklist-concurrency.test.ts > Token Blacklisting Concurrency Tests > Database Consistency Under Load > should handle database failures gracefully
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject or pass-through XSS payloads literally (never silently mutate)
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > XSS Prevention > should reject XSS payloads in user profile updates
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Path Traversal Prevention > should reject path traversal attempts in file operations
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Prototype Pollution Prevention > should prevent prototype pollution in content data
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Prototype Pollution Prevention > should prevent prototype pollution in content data
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Prototype Pollution Prevention > should prevent prototype pollution in content data
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Prototype Pollution Prevention > should prevent prototype pollution in content data
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Large Payload Protection > should reject oversized payloads
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Unicode and Encoding Attacks > should handle Unicode-encoded attacks
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Unicode and Encoding Attacks > should handle Unicode-encoded attacks
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Unicode and Encoding Attacks > should handle Unicode-encoded attacks
+stderr | tests/security/api-validation.security.test.ts > API Validation Security Tests > Unicode and Encoding Attacks > should handle Unicode-encoded attacks
+ Test Files  143 passed | 3 skipped (146)
+      Tests  1718 passed | 59 skipped (1777)
+
+## os gates novos e os tocados, um a um (--reporter=verbose)
+ ✓  native  apps/native/test/texto-logico.test.ts > texto lógico (QL-PR1) — o desenho vale como o texto quando é uma quebra dele > CP: toda saída esperada do gate da quebra é quebra do seu texto; o desenho sem quebra é o próprio texto 7ms
+ ✓  native  apps/native/test/texto-logico.test.ts > texto lógico (QL-PR1) — o desenho vale como o texto quando é uma quebra dele > CN: a quebra que muda o texto é recusada 1ms
+ ✓  native-tela  apps/native/test/duplo-colunas.test.tsx > o duplo do native-tela recebe colunas (QL-PR1) > desligado (o padrão): nenhum onLayout — o comportamento de antes 32ms
+ ✓  native-tela  apps/native/test/duplo-colunas.test.tsx > o duplo do native-tela recebe colunas (QL-PR1) > __colunas(80, 22): o leitor de mentira chega às colunas pedidas 14ms
+ ✓  native-tela  apps/native/test/duplo-colunas.test.tsx > o duplo do native-tela recebe colunas (QL-PR1) > __colunas(55, 22): o leitor de mentira chega às colunas pedidas 3ms
+ ✓  native-tela  apps/native/test/duplo-colunas.test.tsx > o duplo do native-tela recebe colunas (QL-PR1) > __colunas(48, 22): o leitor de mentira chega às colunas pedidas 3ms
+ ✓  native-tela  apps/native/test/duplo-colunas.test.tsx > o duplo do native-tela recebe colunas (QL-PR1) > __colunas(26, 22): o leitor de mentira chega às colunas pedidas 4ms
+ ✓  native-tela  apps/native/test/duplo-colunas.test.tsx > o duplo do native-tela recebe colunas (QL-PR1) > __colunas(26, 40): o leitor de mentira chega às colunas pedidas 3ms
+ ✓  native-tela  apps/native/test/duplo-colunas.test.tsx > o duplo do native-tela recebe colunas (QL-PR1) > __colunas(14, 40): o leitor de mentira chega às colunas pedidas 1ms
+ ✓  web  tests/gates/ql-quebra.test.ts > gate da quebra (QL-PR1) — as regras do corte, a invariância e a medida > reprova exatamente a lista de ql-quebra-reprovados.txt 5ms
+ ✓  web  tests/gates/ql-quebra.test.ts > gate da quebra (QL-PR1) — as regras do corte, a invariância e a medida > QL-D13: a quebra não entra no bodyOf nem na busca (content-contract.ts e search.ts não importam ./quebra) 1ms
+ ✓  web  tests/gates/n4-g-par.test.tsx > G-par (N4-PR1) — o mesmo content, o mesmo texto no web e no nativo > reprova exatamente a lista de g-par-reprovados.txt 46ms
+ ✓  web  tests/gates/n4-g-par.test.tsx > G-par (N4-PR1) — o mesmo content, o mesmo texto no web e no nativo > o retrato do site (N4-PR8): g-par-site.json é o que o site mostra, item a item do par 14ms
+ ✓  native-tela  apps/native/test/g-par-visualizacao.test.tsx > G-par da visualização (N4-PR8) — o nó corpo de V mostra o que o site mostra > cada item do par: V igual ao retrato do site pelo texto lógico — C (a coluna de V, 55) 108ms
+ ✓  native-tela  apps/native/test/g-par-visualizacao.test.tsx > G-par da visualização (N4-PR8) — o nó corpo de V mostra o que o site mostra > cada item do par: V igual ao retrato do site pelo texto lógico — 26 colunas (o duplo com colunas, QL-PR1) 74ms
+ Test Files  5 passed (5)
+      Tests  15 passed (15)
+
+## tsc e lint
+tsc raiz: 0
+tsc core: 0
+tsc identidade: 0
+tsc nativo (de dentro do pacote): 0
+lint: ✔ No ESLint warnings or errors
+
+## os CN que já existiam do G-N3, com o g-n3.mjs da PR (a linha final de cada um)
+cn-n3pr1: cn-n3pr1: todos os controles como esperado ✓ · linhas com ✗ no fim: 1 (G-inv: REPROVA ✗ )
+cn-n3pr3: cn-n3pr3: todos os controles como esperado ✓ · linhas com ✗ no fim: 0 ()
+cn-n3pr6c: cn-n3pr6c: todos os controles como esperado ✓ · linhas com ✗ no fim: 0 ()
