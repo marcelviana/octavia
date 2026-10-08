@@ -1,0 +1,31 @@
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-d0-pr1
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > cifra em texto (a forma de hoje da cifra)
+PUT do editor · cifra em texto (a forma de hoje da cifra): corpo 1032 B · rota 200
+  par · cifra em texto (a forma de hoje da cifra): chaves que mudaram 1 · pares declarados 1 · não declaradas 0 · órfãos 0
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > cifra em seções
+PUT do editor · cifra em seções: corpo 980 B · rota 200
+  par · cifra em seções: chaves que mudaram 1 · pares declarados 1 · não declaradas 0 · órfãos 0
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > letra
+PUT do editor · letra: corpo 788 B · rota 200
+  par · letra: chaves que mudaram 1 · pares declarados 1 · não declaradas 0 · órfãos 0
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > tab (tablatura em texto, sem compassos)
+PUT do editor · tab (tablatura em texto, sem compassos): corpo 940 B · rota 200
+  par · tab (tablatura em texto, sem compassos): chaves que mudaram 2 · pares declarados 2 · não declaradas 0 · órfãos 0
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > partitura (PDF)
+PUT do editor · partitura (PDF): corpo 298 B · rota 200
+  par · partitura (PDF): chaves que mudaram 2 · pares declarados 2 · não declaradas 0 · órfãos 0
+
+ ✓  web  tests/gates/i1-editor-put.test.tsx (7 tests | 1 skipped) 675ms
+     ✓ cifra em texto (a forma de hoje da cifra)  333ms
+
+ Test Files  1 passed (1)
+      Tests  6 passed | 1 skipped (7)
+   Start at  09:15:35
+   Duration  1.43s (transform 284ms, setup 176ms, import 209ms, tests 675ms, environment 280ms)
+

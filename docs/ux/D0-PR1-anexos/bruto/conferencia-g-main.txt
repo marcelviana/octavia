@@ -1,0 +1,35 @@
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-d0-pr1
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (g) Lyrics · uma chave desconhecida no content_data · Notas em Detalhes → a chave volta no corpo, igual
+  rota 200 · corpo 427 B · content_data {3 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (g) Lyrics · uma chave desconhecida no content_data · Notas em Detalhes → a chave volta no corpo, igual
+  (g) Lyrics: chaves que nenhum editor edita 1 (chave_d0_desconhecida) · no corpo 1
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (g) Chords · uma chave desconhecida no content_data · Notas em Detalhes → a chave volta no corpo, igual
+  rota 200 · corpo 414 B · content_data {3 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (g) Chords · uma chave desconhecida no content_data · Notas em Detalhes → a chave volta no corpo, igual
+  (g) Chords: chaves que nenhum editor edita 1 (chave_d0_desconhecida) · no corpo 1
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (g) Tab · uma chave desconhecida no content_data · Notas em Detalhes → a chave volta no corpo, igual
+  rota 200 · corpo 427 B · content_data {3 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (g) Tab · uma chave desconhecida no content_data · Notas em Detalhes → a chave volta no corpo, igual
+  (g) Tab: chaves que nenhum editor edita 1 (chave_d0_desconhecida) · no corpo 1
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (g) Sheet · uma chave desconhecida no content_data · Notas em Detalhes → a chave volta no corpo, igual
+  rota 200 · corpo 421 B · content_data {3 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (g) Sheet · uma chave desconhecida no content_data · Notas em Detalhes → a chave volta no corpo, igual
+  (g) Sheet: chaves que nenhum editor edita 2 (file, chave_d0_desconhecida) · no corpo 2
+
+ ✓  web  tests/gates/d0-editor-salva.test.tsx (23 tests | 19 skipped) 600ms
+     ✓ (g) Lyrics · uma chave desconhecida no content_data · Notas em Detalhes → a chave volta no corpo, igual  314ms
+
+ Test Files  1 passed (1)
+      Tests  4 passed | 19 skipped (23)
+   Start at  09:45:59
+   Duration  1.35s (transform 276ms, setup 171ms, import 211ms, tests 600ms, environment 280ms)
+

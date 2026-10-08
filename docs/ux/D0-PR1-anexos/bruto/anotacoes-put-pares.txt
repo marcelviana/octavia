@@ -1,0 +1,35 @@
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-d0-pr1
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > cifra em texto (a forma de hoje da cifra)
+PUT do editor · cifra em texto (a forma de hoje da cifra): corpo 1032 B · rota 200
+  par · cifra em texto (a forma de hoje da cifra): chaves que mudaram 1 · pares declarados 1 · não declaradas 0 · órfãos 0
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > cifra em seções
+PUT do editor · cifra em seções: corpo 980 B · rota 200
+  par · cifra em seções: chaves que mudaram 1 · pares declarados 1 · não declaradas 0 · órfãos 0
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > letra
+PUT do editor · letra: corpo 788 B · rota 200
+  par · letra: chaves que mudaram 1 · pares declarados 1 · não declaradas 0 · órfãos 0
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > tab (tablatura em texto, sem compassos)
+PUT do editor · tab (tablatura em texto, sem compassos): corpo 940 B · rota 200
+  par · tab (tablatura em texto, sem compassos): chaves que mudaram 2 · pares declarados 2 · não declaradas 0 · órfãos 0
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > letra com anotações
+PUT do editor · letra com anotações: corpo 385 B · rota 200
+  par · letra com anotações: chaves que mudaram 1 · pares declarados 1 · não declaradas 0 · órfãos 0
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > partitura (PDF)
+PUT do editor · partitura (PDF): corpo 298 B · rota 200
+  par · partitura (PDF): chaves que mudaram 2 · pares declarados 2 · não declaradas 0 · órfãos 0
+
+ ✓  web  tests/gates/i1-editor-put.test.tsx (8 tests | 1 skipped) 728ms
+     ✓ cifra em texto (a forma de hoje da cifra)  318ms
+
+ Test Files  1 passed (1)
+      Tests  7 passed | 1 skipped (8)
+   Start at  10:06:07
+   Duration  1.46s (transform 255ms, setup 172ms, import 193ms, tests 728ms, environment 276ms)
+

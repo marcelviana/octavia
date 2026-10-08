@@ -1,0 +1,26 @@
+G-faixa · rodada 2026-10-08T12:23:05.178Z · base http://localhost:3000 · saída ../../../../private/tmp/claude-501/-Users-marcelviana-projects-octavia/b9394dd3-3106-4599-8ffb-ee29670563a0/scratchpad/gfaixa-antes
+G-faixa · perfil com sessão ativa
+
+Running 3 tests using 1 worker
+
+G-faixa · content-edit · EDIT-tab · 1138: começa
+G-faixa · content-edit · EDIT-tab · 1138: preparado em 6499 ms
+G-faixa · content-edit · base-tab · 1138: começa
+G-faixa · content-edit · base-tab · 1138: preparado em 3356 ms
+  ✓  1 [C-1138] › scripts/gates-web/g-faixa-medir.ts:122:7 › content-edit (13.0s)
+G-faixa · content-edit · EDIT-tab · 711: começa
+G-faixa · content-edit · EDIT-tab · 711: preparado em 3544 ms
+G-faixa · content-edit · base-tab · 711: começa
+G-faixa · content-edit · base-tab · 711: preparado em 3331 ms
+  ✓  2 [B-711] › scripts/gates-web/g-faixa-medir.ts:122:7 › content-edit (10.1s)
+G-faixa · content-edit · EDIT-tab · 411: começa
+G-faixa · content-edit · EDIT-tab · 411: preparado em 3571 ms
+G-faixa · content-edit · base-tab · 411: começa
+G-faixa · content-edit · base-tab · 411: preparado em 3452 ms
+  ✓  3 [A-411] › scripts/gates-web/g-faixa-medir.ts:122:7 › content-edit (9.9s)
+G-faixa · content-edit · 411: (e)=0 · (b)=0 · (d′)=2 · errata candidata=0 · quebra por dado=0 · saídas: nome-acessível=0 rolagem=0 (faixa A)
+G-faixa · content-edit · 711: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · quebra por dado=0 · saídas: nome-acessível=0 rolagem=0
+G-faixa · content-edit · 1138: (e)=0 · (b)=0 · (d′)=0 · errata candidata=0 · quebra por dado=0 · saídas: nome-acessível=0 rolagem=0
+G-faixa · gravado: content-edit.json → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/b9394dd3-3106-4599-8ffb-ee29670563a0/scratchpad/gfaixa-antes
+
+  3 passed (40.2s)

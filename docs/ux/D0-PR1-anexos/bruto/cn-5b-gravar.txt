@@ -1,0 +1,115 @@
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-d0-pr1
+
+stderr | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > cifra em texto (a forma de hoje da cifra)
+Error in updateContent: Error: Validation failed
+    at updateContent (/Users/marcelviana/projects/octavia-d0-pr1/lib/content-service.ts:554:27)
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at handleSave (/Users/marcelviana/projects/octavia-d0-pr1/components/content-edit-page-client.tsx:35:7) {
+  status: 400
+}
+
+stderr | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > cifra em texto (a forma de hoje da cifra)
+Editor: falha ao salvar Error: Validation failed
+    at updateContent (/Users/marcelviana/projects/octavia-d0-pr1/lib/content-service.ts:554:27)
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at handleSave (/Users/marcelviana/projects/octavia-d0-pr1/components/content-edit-page-client.tsx:35:7) {
+  status: 400
+}
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > cifra em texto (a forma de hoje da cifra)
+PUT do editor · cifra em texto (a forma de hoje da cifra): corpo 1030 B · rota 400 VALIDATION_ERROR · difficulty: Invalid enum value. Expected 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert', received ''
+
+stderr | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > cifra em seções
+Error in updateContent: Error: Validation failed
+    at updateContent (/Users/marcelviana/projects/octavia-d0-pr1/lib/content-service.ts:554:27)
+    at handleSave (/Users/marcelviana/projects/octavia-d0-pr1/components/content-edit-page-client.tsx:35:7) {
+  status: 400
+}
+
+stderr | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > cifra em seções
+Editor: falha ao salvar Error: Validation failed
+    at updateContent (/Users/marcelviana/projects/octavia-d0-pr1/lib/content-service.ts:554:27)
+    at handleSave (/Users/marcelviana/projects/octavia-d0-pr1/components/content-edit-page-client.tsx:35:7) {
+  status: 400
+}
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > cifra em seções
+PUT do editor · cifra em seções: corpo 978 B · rota 400 VALIDATION_ERROR · difficulty: Invalid enum value. Expected 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert', received ''
+
+stderr | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > letra
+Error in updateContent: Error: Validation failed
+    at updateContent (/Users/marcelviana/projects/octavia-d0-pr1/lib/content-service.ts:554:27)
+    at handleSave (/Users/marcelviana/projects/octavia-d0-pr1/components/content-edit-page-client.tsx:35:7) {
+  status: 400
+}
+
+stderr | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > letra
+Editor: falha ao salvar Error: Validation failed
+    at updateContent (/Users/marcelviana/projects/octavia-d0-pr1/lib/content-service.ts:554:27)
+    at handleSave (/Users/marcelviana/projects/octavia-d0-pr1/components/content-edit-page-client.tsx:35:7) {
+  status: 400
+}
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > letra
+PUT do editor · letra: corpo 786 B · rota 400 VALIDATION_ERROR · difficulty: Invalid enum value. Expected 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert', received ''
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > tab (tablatura em texto, sem compassos)
+PUT do editor · tab (tablatura em texto, sem compassos): corpo 940 B · rota 200
+
+stderr | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > partitura (PDF)
+Error in updateContent: Error: Validation failed
+    at updateContent (/Users/marcelviana/projects/octavia-d0-pr1/lib/content-service.ts:554:27)
+    at handleSave (/Users/marcelviana/projects/octavia-d0-pr1/components/content-edit-page-client.tsx:35:7) {
+  status: 400
+}
+
+stderr | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > partitura (PDF)
+Editor: falha ao salvar Error: Validation failed
+    at updateContent (/Users/marcelviana/projects/octavia-d0-pr1/lib/content-service.ts:554:27)
+    at handleSave (/Users/marcelviana/projects/octavia-d0-pr1/components/content-edit-page-client.tsx:35:7) {
+  status: 400
+}
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > partitura (PDF)
+PUT do editor · partitura (PDF): corpo 296 B · rota 400 VALIDATION_ERROR · difficulty: Invalid enum value. Expected 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert', received ''
+
+ ❯  web  tests/gates/i1-editor-put.test.tsx (7 tests | 4 failed) 504ms
+     × cifra em texto (a forma de hoje da cifra) 312ms
+     × cifra em seções 46ms
+     × letra 39ms
+     ✓ tab (tablatura em texto, sem compassos) 76ms
+     × partitura (PDF) 28ms
+     ✓ nenhum par fora dos casos (órfão de caso) 1ms
+     ✓ grava o depois (CN_GRAVAR=1, D-0 commit 2, só com a rota dizendo 200) 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   web  tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > cifra em texto (a forma de hoje da cifra)
+ FAIL   web  tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > cifra em seções
+ FAIL   web  tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > letra
+ FAIL   web  tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > partitura (PDF)
+AssertionError: o servidor recusou o corpo: 400 VALIDATION_ERROR · difficulty: Invalid enum value. Expected 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert', received '': expected 400 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 400
+
+ ❯ tests/gates/i1-editor-put.test.tsx:180:82
+    178|       console.log(`PUT do editor · ${c.nome}: corpo ${corpo.length} B …
+    179|       // D-0 (div. 1157): primeiro o servidor aceita — e nada que ele …
+    180|       expect(resposta.status, `o servidor recusou o corpo: ${motivo(re…
+       |                                                                                  ^
+    181|       gravados[c.nome] = corpo
+    182|       if (process.env.CN_GRAVAR) return
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed | 3 passed (7)
+   Start at  09:18:25
+   Duration  1.27s (transform 285ms, setup 182ms, import 216ms, tests 504ms, environment 274ms)
+

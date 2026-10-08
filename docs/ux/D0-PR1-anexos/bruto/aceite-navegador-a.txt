@@ -1,0 +1,7 @@
+  Lyrics sem dificuldade · Notas em Detalhes: PUT 1 (parado no navegador) · difficulty=null · content_data={lyrics,annotations} · 200 (esquema e contrato aceitam)
+  Chords sem dificuldade · Notas em Detalhes: PUT 1 (parado no navegador) · difficulty=null · content_data={chords,annotations} · 200 (esquema e contrato aceitam)
+  Tab sem dificuldade · Notas em Detalhes: PUT 1 (parado no navegador) · difficulty=null · content_data={tablature,annotations} · 200 (esquema e contrato aceitam)
+  Sheet sem dificuldade · Notas em Detalhes: PUT 1 (parado no navegador) · difficulty=null · content_data=null · 200 (esquema e contrato aceitam)
+  Tab: o painel abre com 23 car. · = a tablature da linha: true
+  Tab · o texto editado no painel: PUT 1 (parado no navegador) · difficulty=null · content_data={tablature,user_id,artist,album,bpm,capo,difficulty,genre,is_favorite,is_public,key,notes,tags,thumbnail_url,time_signature,tuning,created_at,updated_at,file_url,id,title,content_type,content_data,annotations} · 200 (esquema e contrato aceitam)
+  requests a /api/*: 20 · escritas barradas: 0 · prod abortados: 0

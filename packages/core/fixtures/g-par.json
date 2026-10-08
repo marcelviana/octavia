@@ -99,6 +99,13 @@
       "content_type": "Lyrics",
       "file_url": null,
       "content_data": { "content_data": { "lyrics": "Primeira estrofe do teste do G-par" }, "annotations": [] }
+    },
+    {
+      "id": "tab-editada-no-site",
+      "nota": "D-0 (D0-D6, div. 1157): a Tab como o editor do site a GRAVA depois de editar o texto no painel — o content_data do corpo do PUT, byte a byte o que o tests/gates/d0-editor-salva.test.tsx (d) exige (a tablature editada no topo, a poluição do editor — a linha inteira, o content_data velho aninhado, annotations — herança D). Os dois leitores têm de mostrar a tablature editada",
+      "content_type": "Tab",
+      "file_url": null,
+      "content_data": {"tablature": "e|--1--3--5--|\nB|--3--1--0--|\nG|--2--2--2--|", "user_id": "cn-user", "title": "Tab de régua D0", "artist": "Autor fabricado", "album": "", "bpm": "", "capo": "", "difficulty": "Beginner", "genre": "", "is_favorite": false, "is_public": false, "key": "", "notes": "", "tags": [], "thumbnail_url": null, "time_signature": "4/4", "tuning": "Standard (EADGBE)", "created_at": "2026-10-08T12:00:00.000Z", "updated_at": "2026-10-08T12:00:00.000Z", "file_url": null, "id": "00000000-0000-4000-8000-0000000000d4", "content_type": "Tab", "content_data": {"tablature": "e|--1--3--|\nB|--3--1--|"}, "annotations": []}
     }
   ],
   "fora_do_par": [

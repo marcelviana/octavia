@@ -40,6 +40,11 @@ const TMP = process.env.G_FAIXA_TMP as string
  */
 const ESTADOS_SO = process.env.G_FAIXA_ESTADOS?.split(',').map((s) => s.trim()).filter(Boolean)
 const PROD = BASE.hostname === 'octavia.rocks' || BASE.hostname.endsWith('.octavia.rocks')
+/**
+ * D-0-PR1: `G_FAIXA_CAPTURAS=<pasta>` grava, além da medição, a captura da página inteira de cada estado medido
+ * (`<estado>-<largura>.png`) — o antes × depois da tela por estado (o molde do I1). Opcional; não muda a medição.
+ */
+const CAPTURAS = process.env.G_FAIXA_CAPTURAS
 
 interface LinhaReq { n: number; ms: number; metodo: string; caminho: string; status: string; fim: string }
 
@@ -174,6 +179,7 @@ for (const sup of selecionadas()) {
         }
         console.log(`G-faixa · ${sup.id} · ${id} · ${largura}: preparado em ${Date.now() - t} ms`)
         const m = await p.evaluate(coletar, null)
+        if (CAPTURAS) { fs.mkdirSync(CAPTURAS, { recursive: true }); await p.screenshot({ path: path.join(CAPTURAS, `${id}-${largura}.png`), fullPage: true }) }
         const medicao = { url: sup.rota, viewport: m.viewport, doc: m.doc, nos: paraJson(m.nos, sup.publica) }
         estados[id] = { medicao }
         // I1-PR11: a folha pode ser POR ESTADO (o `LIB-salvo` da folha 4, medido pelo fluxo do editor)

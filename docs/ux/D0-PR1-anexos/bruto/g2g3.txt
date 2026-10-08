@@ -1,0 +1,10 @@
+G2 — testIDs  antes=121  depois=121
+  G2: antes ⊆ depois ✓
+G3 — declarações: as listas locais deste script (sem GATES_DECL — rodada à mão)
+G3 — linhas log( antes=70  depois=70
+      ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+        (nenhuma)
+      REMOÇÕES DECLARADAS (linha → REMOVIDA: razão; N2-D34):
+        (nenhuma)
+      — nenhuma linha de log pode sumir nesta PR
+  G3: nenhuma linha sumiu ✓

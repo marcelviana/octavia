@@ -1,0 +1,22 @@
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-d0-pr1
+
+stdout | tests/gates/sonda-abrir.test.tsx > sonda descartável — abrir com anotação, sem mudar > Lyrics
+  SONDA Lyrics: Salvar ativo ao abrir = false
+
+stdout | tests/gates/sonda-abrir.test.tsx > sonda descartável — abrir com anotação, sem mudar > Chords
+  SONDA Chords: Salvar ativo ao abrir = false
+
+stdout | tests/gates/sonda-abrir.test.tsx > sonda descartável — abrir com anotação, sem mudar > Tab
+  SONDA Tab: Salvar ativo ao abrir = false
+
+stdout | tests/gates/sonda-abrir.test.tsx > sonda descartável — abrir com anotação, sem mudar > Sheet
+  SONDA Sheet: Salvar ativo ao abrir = false
+
+ ✓  web  tests/gates/sonda-abrir.test.tsx (4 tests) 269ms
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  10:06:31
+   Duration  993ms (transform 222ms, setup 171ms, import 188ms, tests 269ms, environment 277ms)
+

@@ -1,0 +1,119 @@
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-d0-pr1
+
+stdout | docs/ux/D0-PR1-anexos/instrumentos/m0-depois.medir.tsx > D-0 M0 — o editor de Tab, medido > R1 título em Detalhes (Tab de lote, sem measures) · difficulty=null
+== R1 título em Detalhes (Tab de lote, sem measures) · difficulty=null
+   Salvar ativo: true
+   corpo: chaves do topo = album,artist,bpm,content_data,difficulty,genre,id,is_favorite,is_public,key,notes,tags,title,updated_at
+   corpo: chaves do content_data (2) = annotations,tablature
+   measures: ausente
+   tablature: len 8, igual à da linha: true
+   title do topo = "Título novo D0" · content_data.title = undefined
+   rota: status 200
+
+stdout | docs/ux/D0-PR1-anexos/instrumentos/m0-depois.medir.tsx > D-0 M0 — o editor de Tab, medido > R2 título em Informações do editor de tab · difficulty=null
+== R2 título em Informações do editor de tab · difficulty=null
+   Salvar ativo: true
+   corpo: chaves do topo = album,artist,bpm,content_data,difficulty,genre,id,is_favorite,is_public,key,notes,tags,title,updated_at
+   corpo: chaves do content_data (24) = album,annotations,artist,bpm,capo,content_data,content_type,created_at,difficulty,file_url,genre,id,is_favorite,is_public,key,notes,tablature,tags,thumbnail_url,time_signature,title,tuning,updated_at,user_id
+   measures: ausente
+   tablature: len 8, igual à da linha: true
+   title do topo = "Tab de régua D0" · content_data.title = "Título novo D0"
+   rota: status 200
+
+stdout | docs/ux/D0-PR1-anexos/instrumentos/m0-depois.medir.tsx > D-0 M0 — o editor de Tab, medido > R3 o painel de texto (era: uma corda do compasso) · difficulty=null
+== R3 o painel de texto (era: uma corda do compasso) · difficulty=null
+   Salvar ativo: true
+   corpo: chaves do topo = album,artist,bpm,content_data,difficulty,genre,id,is_favorite,is_public,key,notes,tags,title,updated_at
+   corpo: chaves do content_data (24) = album,annotations,artist,bpm,capo,content_data,content_type,created_at,difficulty,file_url,genre,id,is_favorite,is_public,key,notes,tablature,tags,thumbnail_url,time_signature,title,tuning,updated_at,user_id
+   measures: ausente
+   tablature: len 17, igual à da linha: false
+   title do topo = "Tab de régua D0" · content_data.title = "Tab de régua D0"
+   rota: status 200
+
+stdout | docs/ux/D0-PR1-anexos/instrumentos/m0-depois.medir.tsx > D-0 M0 — o editor de Tab, medido > R4 abrir sem mudar nada · difficulty=null
+== R4 abrir sem mudar nada · difficulty=null
+   Salvar ativo: false
+
+stdout | docs/ux/D0-PR1-anexos/instrumentos/m0-depois.medir.tsx > D-0 M0 — o editor de Tab, medido > R5 Tab na forma do upload (content_data null, file_url), título em Detalhes · difficulty=null
+== R5 Tab na forma do upload (content_data null, file_url), título em Detalhes · difficulty=null
+   Salvar ativo: true
+   corpo: chaves do topo = album,artist,bpm,content_data,difficulty,genre,id,is_favorite,is_public,key,notes,tags,title,updated_at
+   corpo: content_data = null
+   measures: ausente
+   tablature: ausente
+   title do topo = "Título novo D0" · content_data.title = undefined
+   rota: status 200
+
+stdout | docs/ux/D0-PR1-anexos/instrumentos/m0-depois.medir.tsx > D-0 M0 — o editor de Tab, medido > R6 Tab na forma do upload, o painel de texto (era: uma corda) · difficulty=null
+== R6 Tab na forma do upload, o painel de texto (era: uma corda) · difficulty=null
+   Salvar ativo: true
+   corpo: chaves do topo = album,artist,bpm,content_data,difficulty,genre,id,is_favorite,is_public,key,notes,tags,title,updated_at
+   corpo: chaves do content_data (24) = album,annotations,artist,bpm,capo,content_data,content_type,created_at,difficulty,file_url,genre,id,is_favorite,is_public,key,notes,tablature,tags,thumbnail_url,time_signature,title,tuning,updated_at,user_id
+   measures: ausente
+   tablature: len 9, igual à da linha: false
+   title do topo = "Tab de régua D0" · content_data.title = "Tab de régua D0"
+   rota: status 200
+
+stdout | docs/ux/D0-PR1-anexos/instrumentos/m0-depois.medir.tsx > D-0 M0 — o editor de Tab, medido > R1 título em Detalhes (Tab de lote, sem measures) · difficulty="Beginner"
+== R1 título em Detalhes (Tab de lote, sem measures) · difficulty="Beginner"
+   Salvar ativo: true
+   corpo: chaves do topo = album,artist,bpm,content_data,difficulty,genre,id,is_favorite,is_public,key,notes,tags,title,updated_at
+   corpo: chaves do content_data (2) = annotations,tablature
+   measures: ausente
+   tablature: len 8, igual à da linha: true
+   title do topo = "Título novo D0" · content_data.title = undefined
+   rota: status 200
+
+stdout | docs/ux/D0-PR1-anexos/instrumentos/m0-depois.medir.tsx > D-0 M0 — o editor de Tab, medido > R2 título em Informações do editor de tab · difficulty="Beginner"
+== R2 título em Informações do editor de tab · difficulty="Beginner"
+   Salvar ativo: true
+   corpo: chaves do topo = album,artist,bpm,content_data,difficulty,genre,id,is_favorite,is_public,key,notes,tags,title,updated_at
+   corpo: chaves do content_data (24) = album,annotations,artist,bpm,capo,content_data,content_type,created_at,difficulty,file_url,genre,id,is_favorite,is_public,key,notes,tablature,tags,thumbnail_url,time_signature,title,tuning,updated_at,user_id
+   measures: ausente
+   tablature: len 8, igual à da linha: true
+   title do topo = "Tab de régua D0" · content_data.title = "Título novo D0"
+   rota: status 200
+
+stdout | docs/ux/D0-PR1-anexos/instrumentos/m0-depois.medir.tsx > D-0 M0 — o editor de Tab, medido > R3 o painel de texto (era: uma corda do compasso) · difficulty="Beginner"
+== R3 o painel de texto (era: uma corda do compasso) · difficulty="Beginner"
+   Salvar ativo: true
+   corpo: chaves do topo = album,artist,bpm,content_data,difficulty,genre,id,is_favorite,is_public,key,notes,tags,title,updated_at
+   corpo: chaves do content_data (24) = album,annotations,artist,bpm,capo,content_data,content_type,created_at,difficulty,file_url,genre,id,is_favorite,is_public,key,notes,tablature,tags,thumbnail_url,time_signature,title,tuning,updated_at,user_id
+   measures: ausente
+   tablature: len 17, igual à da linha: false
+   title do topo = "Tab de régua D0" · content_data.title = "Tab de régua D0"
+   rota: status 200
+
+stdout | docs/ux/D0-PR1-anexos/instrumentos/m0-depois.medir.tsx > D-0 M0 — o editor de Tab, medido > R4 abrir sem mudar nada · difficulty="Beginner"
+== R4 abrir sem mudar nada · difficulty="Beginner"
+   Salvar ativo: false
+
+stdout | docs/ux/D0-PR1-anexos/instrumentos/m0-depois.medir.tsx > D-0 M0 — o editor de Tab, medido > R5 Tab na forma do upload (content_data null, file_url), título em Detalhes · difficulty="Beginner"
+== R5 Tab na forma do upload (content_data null, file_url), título em Detalhes · difficulty="Beginner"
+   Salvar ativo: true
+   corpo: chaves do topo = album,artist,bpm,content_data,difficulty,genre,id,is_favorite,is_public,key,notes,tags,title,updated_at
+   corpo: content_data = null
+   measures: ausente
+   tablature: ausente
+   title do topo = "Título novo D0" · content_data.title = undefined
+   rota: status 200
+
+stdout | docs/ux/D0-PR1-anexos/instrumentos/m0-depois.medir.tsx > D-0 M0 — o editor de Tab, medido > R6 Tab na forma do upload, o painel de texto (era: uma corda) · difficulty="Beginner"
+== R6 Tab na forma do upload, o painel de texto (era: uma corda) · difficulty="Beginner"
+   Salvar ativo: true
+   corpo: chaves do topo = album,artist,bpm,content_data,difficulty,genre,id,is_favorite,is_public,key,notes,tags,title,updated_at
+   corpo: chaves do content_data (24) = album,annotations,artist,bpm,capo,content_data,content_type,created_at,difficulty,file_url,genre,id,is_favorite,is_public,key,notes,tablature,tags,thumbnail_url,time_signature,title,tuning,updated_at,user_id
+   measures: ausente
+   tablature: len 9, igual à da linha: false
+   title do topo = "Tab de régua D0" · content_data.title = "Tab de régua D0"
+   rota: status 200
+
+ ✓ docs/ux/D0-PR1-anexos/instrumentos/m0-depois.medir.tsx (12 tests) 1747ms
+     ✓ R1 título em Detalhes (Tab de lote, sem measures) · difficulty=null  346ms
+
+ Test Files  1 passed (1)
+      Tests  12 passed (12)
+   Start at  09:34:02
+   Duration  2.73s (transform 297ms, setup 193ms, import 283ms, tests 1.75s, environment 304ms)
+

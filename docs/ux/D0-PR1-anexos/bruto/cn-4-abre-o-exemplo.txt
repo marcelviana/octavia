@@ -1,0 +1,204 @@
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-d0-pr1
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > cifra em texto (a forma de hoje da cifra)
+PUT do editor · cifra em texto (a forma de hoje da cifra): corpo 1032 B · rota 200
+  par · cifra em texto (a forma de hoje da cifra): chaves que mudaram 1 · pares declarados 1 · não declaradas 0 · órfãos 0
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (a) Lyrics · dificuldade null · uma nota em Detalhes → 200
+  rota 200 · corpo 347 B · content_data {2 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (a) Lyrics · dificuldade "Intermediate" · uma nota em Detalhes → 200
+  rota 200 · corpo 357 B · content_data {2 chaves}
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > cifra em seções
+PUT do editor · cifra em seções: corpo 980 B · rota 200
+  par · cifra em seções: chaves que mudaram 1 · pares declarados 1 · não declaradas 0 · órfãos 0
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > letra
+PUT do editor · letra: corpo 788 B · rota 200
+  par · letra: chaves que mudaram 1 · pares declarados 1 · não declaradas 0 · órfãos 0
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (a) Chords · dificuldade null · uma nota em Detalhes → 200
+  rota 200 · corpo 334 B · content_data {2 chaves}
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > tab (tablatura em texto, sem compassos)
+PUT do editor · tab (tablatura em texto, sem compassos): corpo 1006 B · rota 200
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (a) Chords · dificuldade "Intermediate" · uma nota em Detalhes → 200
+  rota 200 · corpo 344 B · content_data {2 chaves}
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > partitura (PDF)
+PUT do editor · partitura (PDF): corpo 298 B · rota 200
+  par · partitura (PDF): chaves que mudaram 2 · pares declarados 2 · não declaradas 0 · órfãos 0
+
+ ❯  web  tests/gates/i1-editor-put.test.tsx (7 tests | 1 failed | 1 skipped) 634ms
+     ✓ cifra em texto (a forma de hoje da cifra) 292ms
+     ✓ cifra em seções 98ms
+     ✓ letra 86ms
+     × tab (tablatura em texto, sem compassos) 84ms
+     ✓ partitura (PDF) 73ms
+     ✓ nenhum par fora dos casos (órfão de caso) 1ms
+     ↓ grava o depois (CN_GRAVAR=1, D-0 commit 2, só com a rota dizendo 200)
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (a) Tab · dificuldade null · uma nota em Detalhes → 200
+  rota 200 · corpo 347 B · content_data {2 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (a) Tab · dificuldade "Intermediate" · uma nota em Detalhes → 200
+  rota 200 · corpo 357 B · content_data {2 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (a) Sheet · dificuldade null · uma nota em Detalhes → 200
+  rota 200 · corpo 294 B · content_data null
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (a) Sheet · dificuldade "Intermediate" · uma nota em Detalhes → 200
+  rota 200 · corpo 304 B · content_data null
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (b) Tab de upload · Detalhes → 200, e o content_data nulo fica nulo (D0-D22)
+  rota 200 · corpo 282 B · content_data null
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (b) Tab de upload · Informações do editor de tab → 200, com a tablature no corpo (D0-D13)
+  rota 200 · corpo 854 B · content_data {24 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (b) Tab de upload · o painel de texto → 200, com o texto digitado
+  rota 200 · corpo 901 B · content_data {24 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (c) Cifra com content_data nulo, sem arquivo · Detalhes → 200, nulo fica nulo
+  rota 200 · corpo 302 B · content_data null
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (c) Cifra escaneada (content_data nulo + PDF) · Detalhes → 200, e o palco segue abrindo o arquivo
+  rota 200 · corpo 302 B · content_data null
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (c) Cifra com content_data nulo · uma seção editada → 200, com a chave chords no corpo
+  rota 200 · corpo 842 B · content_data {25 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (f) o compasso de exemplo não existe em lugar nenhum do código do site
+  (f) arquivos do site lidos: 180 · cordas do exemplo procuradas: 6 · achados: 6
+    ✗ components/tab-editor.tsx: E|--0--3--0--2--0--|
+    ✗ components/tab-editor.tsx: B|--1--1--1--1--1--|
+    ✗ components/tab-editor.tsx: G|--0--0--0--0--0--|
+    ✗ components/tab-editor.tsx: D|--2--2--2--2--2--|
+    ✗ components/tab-editor.tsx: A|--3-------------|
+    ✗ components/tab-editor.tsx: E|----------------|
+
+ ❯  web  tests/gates/d0-editor-salva.test.tsx (19 tests | 5 failed) 1587ms
+     ✓ (a) Lyrics · dificuldade null · uma nota em Detalhes → 200 292ms
+     ✓ (a) Lyrics · dificuldade "Intermediate" · uma nota em Detalhes → 200 88ms
+     ✓ (a) Chords · dificuldade null · uma nota em Detalhes → 200 115ms
+     ✓ (a) Chords · dificuldade "Intermediate" · uma nota em Detalhes → 200 98ms
+     ✓ (a) Tab · dificuldade null · uma nota em Detalhes → 200 85ms
+     ✓ (a) Tab · dificuldade "Intermediate" · uma nota em Detalhes → 200 83ms
+     ✓ (a) Sheet · dificuldade null · uma nota em Detalhes → 200 80ms
+     ✓ (a) Sheet · dificuldade "Intermediate" · uma nota em Detalhes → 200 77ms
+     ✓ (b) Tab de upload · Detalhes → 200, e o content_data nulo fica nulo (D0-D22) 82ms
+     ✓ (b) Tab de upload · Informações do editor de tab → 200, com a tablature no corpo (D0-D13) 79ms
+     ✓ (b) Tab de upload · o painel de texto → 200, com o texto digitado 82ms
+     ✓ (c) Cifra com content_data nulo, sem arquivo · Detalhes → 200, nulo fica nulo 95ms
+     ✓ (c) Cifra escaneada (content_data nulo + PDF) · Detalhes → 200, e o palco segue abrindo o arquivo 112ms
+     ✓ (c) Cifra com content_data nulo · uma seção editada → 200, com a chave chords no corpo 97ms
+     × (d) Tab · editar o texto e salvar → a tablature editada, nos dois leitores, = o item tab-editada-no-site do G-par 25ms
+     × (e) classe 1 · sem measures: abre a tablature; salvar não apaga nem altera o measures 14ms
+     × (e) classe 2 · measures = o exemplo: abre a tablature; salvar não apaga nem altera o measures 19ms
+     × (e) classe 3 · measures ≠ o exemplo: abre a tablature; salvar não apaga nem altera o measures 16ms
+     × (f) o compasso de exemplo não existe em lugar nenhum do código do site 47ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   web  tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (d) Tab · editar o texto e salvar → a tablature editada, nos dois leitores, = o item tab-editada-no-site do G-par
+AssertionError: o editor abre a tablatura: expected 'E|--0--3--0--2--0--|\nB|--1--1--1--1-…' to be 'e|--1--3--|\nB|--3--1--|' // Object.is equality
+
+- Expected
++ Received
+
+- e|--1--3--|
+- B|--3--1--|
++ E|--0--3--0--2--0--|
++ B|--1--1--1--1--1--|
++ G|--0--0--0--0--0--|
++ D|--2--2--2--2--2--|
++ A|--3-------------|
++ E|----------------|
+
+ ❯ tests/gates/d0-editor-salva.test.tsx:179:50
+    177|     await abrir(linha)
+    178|     const p = await painelDaTab()
+    179|     expect(p.value, 'o editor abre a tablatura').toBe(TAB)
+       |                                                  ^
+    180|     fireEvent.change(p, { target: { value: TAB_EDITADA } })
+    181|     const s = await salvar()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL   web  tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (e) classe 1 · sem measures: abre a tablature; salvar não apaga nem altera o measures
+ FAIL   web  tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (e) classe 2 · measures = o exemplo: abre a tablature; salvar não apaga nem altera o measures
+ FAIL   web  tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (e) classe 3 · measures ≠ o exemplo: abre a tablature; salvar não apaga nem altera o measures
+AssertionError: o que o editor mostra ao abrir é a tablature: expected 'E|--0--3--0--2--0--|\nB|--1--1--1--1-…' to be 'e|--1--3--|\nB|--3--1--|' // Object.is equality
+
+- Expected
++ Received
+
+- e|--1--3--|
+- B|--3--1--|
++ E|--0--3--0--2--0--|
++ B|--1--1--1--1--1--|
++ G|--0--0--0--0--0--|
++ D|--2--2--2--2--2--|
++ A|--3-------------|
++ E|----------------|
+
+ ❯ tests/gates/d0-editor-salva.test.tsx:201:71
+    199|       await abrir({ ...base, id: novoId(), content_type: 'Tab', diffic…
+    200|       const p = await painelDaTab()
+    201|       expect(p.value, 'o que o editor mostra ao abrir é a tablature').…
+       |                                                                       ^
+    202|       fireEvent.change(p, { target: { value: TAB_EDITADA } })
+    203|       const s = await salvar()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL   web  tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (f) o compasso de exemplo não existe em lugar nenhum do código do site
+AssertionError: expected [ …(6) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "components/tab-editor.tsx: E|--0--3--0--2--0--|",
++   "components/tab-editor.tsx: B|--1--1--1--1--1--|",
++   "components/tab-editor.tsx: G|--0--0--0--0--0--|",
++   "components/tab-editor.tsx: D|--2--2--2--2--2--|",
++   "components/tab-editor.tsx: A|--3-------------|",
++   "components/tab-editor.tsx: E|----------------|",
++ ]
+
+ ❯ tests/gates/d0-editor-salva.test.tsx:224:21
+    222|     for (const a of achados) console.log(`    ✗ ${a}`)
+    223|     expect(arquivos.length, 'nenhum arquivo lido: não mediu nada (regr…
+    224|     expect(achados).toEqual([])
+       |                     ^
+    225|   })
+    226| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL   web  tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > tab (tablatura em texto, sem compassos)
+AssertionError: o corpo do editor = o depois, byte a byte: expected '{"id":"00000000-0000-4000-8000-000000…' to be '{"id":"00000000-0000-4000-8000-000000…' // Object.is equality
+
+Expected: "{"id":"00000000-0000-4000-8000-000000000004","title":"Tab de régua D0","artist":"Autor fabricado","album":"","genre":"","key":"","bpm":null,"difficulty":"Advanced","tags":[],"notes":"","is_favorite":false,"is_public":false,"content_data":{"tablature":"e|-------0-----------0-------|\nB|-----1---1-------1---1-----|\nG|---0-------0---0-------0---|","user_id":"cn-user","artist":"Autor fabricado","album":"","bpm":"","capo":"","difficulty":"Advanced","genre":"","is_favorite":false,"is_public":false,"key":"","notes":"","tags":[],"thumbnail_url":null,"time_signature":"4/4","tuning":"Standard (EADGBE)","created_at":"2026-09-10T15:00:00.000Z","updated_at":"2026-09-10T15:00:00.000Z","file_url":null,"id":"00000000-0000-4000-8000-000000000004","title":"Tab de régua D0","content_type":"Tab","content_data":{"tablature":"e|-------0-----------0-------|\nB|-----1---1-------1---1-----|"},"annotations":[]},"updated_at":"2026-09-29T12:00:00.000Z"}"
+Received: "{"id":"00000000-0000-4000-8000-000000000004","title":"Tab de régua D0","artist":"Autor fabricado","album":"","genre":"","key":"","bpm":null,"difficulty":"Advanced","tags":[],"notes":"","is_favorite":false,"is_public":false,"content_data":{"tablature":"E|--0--3--0--2--0--|\nB|--1--1--1--1--1--|\nG|--0--0--0--0--0--|\nD|--2--2--2--2--2--|\nA|--3-------------|\nE|----------------|\nG|---0-------0---0-------0---|","user_id":"cn-user","artist":"Autor fabricado","album":"","bpm":"","capo":"","difficulty":"Advanced","genre":"","is_favorite":false,"is_public":false,"key":"","notes":"","tags":[],"thumbnail_url":null,"time_signature":"4/4","tuning":"Standard (EADGBE)","created_at":"2026-09-10T15:00:00.000Z","updated_at":"2026-09-10T15:00:00.000Z","file_url":null,"id":"00000000-0000-4000-8000-000000000004","title":"Tab de régua D0","content_type":"Tab","content_data":{"tablature":"e|-------0-----------0-------|\nB|-----1---1-------1---1-----|"},"annotations":[]},"updated_at":"2026-09-29T12:00:00.000Z"}"
+
+ ❯ tests/gates/i1-editor-put.test.tsx:184:66
+    182|       if (process.env.CN_GRAVAR) return
+    183|       const depois = JSON.parse(fs.readFileSync(DEPOIS, 'utf8')) as Re…
+    184|       expect(corpo, 'o corpo do editor = o depois, byte a byte').toBe(…
+       |                                                                  ^
+    185|       // o par: o antes × o depois mudam EXATAMENTE nas chaves declara…
+    186|       const antes = JSON.parse(fs.readFileSync(ANTES, 'utf8')) as Reco…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  6 failed | 19 passed | 1 skipped (26)
+   Start at  09:18:11
+   Duration  2.42s (transform 524ms, setup 406ms, import 450ms, tests 2.22s, environment 620ms)
+

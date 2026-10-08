@@ -260,6 +260,13 @@ e, com o desenho novo, acha as três formas velhas — cifra (42× nas folhas 4,
 implementação usa o `d` do catálogo"*) e não vira achado. O G-faixa mede caixa e não vê a troca; a prova no site é **por
 imagem**, antes × depois (N4-D75; `docs/native/N4-PR4-anexos/README.md` §4).
 
+**Da D-0** `[D0-D6, D0-D7, D0-D17 — Marcel, 2026-10-07 e 2026-10-08; entram no commit 3 da D-0-PR1]` — mesmas colunas:
+
+| id | o que a folha mostra | o que vale | onde se aplica | div. | efeito |
+|---|---|---|---|---|---|
+| **I1-E33** | o bloco *Tablatura* com **um compasso por painel** (contorno `line`, mono 22, `lineHeight.tab`), as **seis cordas** como campos, *Adicionar compasso* no bloco e *Duplicar*/*Remover* no compasso (`README-design.md:247`; a folha desenha *"o compasso 1 com a tablatura do content"*, div. 776) | **um painel de texto** com a `tablature` do content: a composição do editor de Letra (o `Bloco`, o `Campo` com o rótulo *Tablatura*, o campo de `5 × touch.min`, `resize-y`, contorno `lineInfo`) com a tipografia da tab — mono `zoom.padrao`, `lineHeight.tab`, rolagem horizontal **sem quebra de linha** (N4-D13). Os compassos, as cordas como campos, *Adicionar compasso*, *Duplicar* e *Remover* **deixam de existir** (o editor de compassos saiu, D0-D7). O painel é ≈ 19 px mais baixo que o compasso: em C, *Tablatura* e *Prévia* sobem 15–19 px; em B, onde *Detalhes* empilha abaixo, a coluna inteira sobe ≈ 20 px | `6-content-editor`: `EDIT-tab` (`erratasFaixa`, `n` = 36: 3 em C, 33 em B — o aceite da D-0-PR1) | 1164 (D-0-PR1) | comportamento |
+| **I1-E34** | as frases *Adicionar compasso* e *compasso {n}* (`README-design.md` §5.7) e os nomes acessíveis *Duplicar compasso*, *Remover compasso*, *corda {n} do compasso {m}* (§5.1 acima, I1-PR-11) | **saem** das `frases-editor.ts` com o editor de compassos: texto sem leitor é poda (regra 31) | `6-content-editor`: `EDIT-tab` (`erratasFrase` — registro; nenhuma seção desenha o elemento que sobra) | 1164 (D-0-PR1) | leitura |
+
 ## 3 · O bloco `web` de tokens — insumo da PR-4 (`packages/identidade`)
 
 Exatamente como o `README-design.md` §2.1:

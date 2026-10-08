@@ -1,0 +1,359 @@
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-d0-pr1
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > cifra em texto (a forma de hoje da cifra)
+PUT do editor · cifra em texto (a forma de hoje da cifra): corpo 1032 B · rota 200
+  par · cifra em texto (a forma de hoje da cifra): chaves que mudaram 1 · pares declarados 1 · não declaradas 0 · órfãos 0
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (a) Lyrics · dificuldade null · uma nota em Detalhes → 200
+  rota 200 · corpo 347 B · content_data {2 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (a) Lyrics · dificuldade "Intermediate" · uma nota em Detalhes → 200
+  rota 200 · corpo 357 B · content_data {2 chaves}
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > cifra em seções
+PUT do editor · cifra em seções: corpo 980 B · rota 200
+  par · cifra em seções: chaves que mudaram 1 · pares declarados 1 · não declaradas 0 · órfãos 0
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > letra
+PUT do editor · letra: corpo 788 B · rota 200
+  par · letra: chaves que mudaram 1 · pares declarados 1 · não declaradas 0 · órfãos 0
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (a) Chords · dificuldade null · uma nota em Detalhes → 200
+  rota 200 · corpo 334 B · content_data {2 chaves}
+
+stderr | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > tab (tablatura em texto, sem compassos)
+Error in updateContent: Error: Validation failed
+    at updateContent (/Users/marcelviana/projects/octavia-d0-pr1/lib/content-service.ts:554:27)
+    at handleSave (/Users/marcelviana/projects/octavia-d0-pr1/components/content-edit-page-client.tsx:35:7) {
+  status: 400
+}
+
+stderr | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > tab (tablatura em texto, sem compassos)
+Editor: falha ao salvar Error: Validation failed
+    at updateContent (/Users/marcelviana/projects/octavia-d0-pr1/lib/content-service.ts:554:27)
+    at handleSave (/Users/marcelviana/projects/octavia-d0-pr1/components/content-edit-page-client.tsx:35:7) {
+  status: 400
+}
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > tab (tablatura em texto, sem compassos)
+PUT do editor · tab (tablatura em texto, sem compassos): corpo 831 B · rota 400 VALIDATION_ERROR · content_data.tablature: obrigatória para Tab
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > partitura (PDF)
+PUT do editor · partitura (PDF): corpo 298 B · rota 200
+  par · partitura (PDF): chaves que mudaram 2 · pares declarados 2 · não declaradas 0 · órfãos 0
+
+ ❯  web  tests/gates/i1-editor-put.test.tsx (7 tests | 1 failed | 1 skipped) 595ms
+     ✓ cifra em texto (a forma de hoje da cifra) 294ms
+     ✓ cifra em seções 97ms
+     ✓ letra 92ms
+     × tab (tablatura em texto, sem compassos) 37ms
+     ✓ partitura (PDF) 73ms
+     ✓ nenhum par fora dos casos (órfão de caso) 1ms
+     ↓ grava o depois (CN_GRAVAR=1, D-0 commit 2, só com a rota dizendo 200)
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (a) Chords · dificuldade "Intermediate" · uma nota em Detalhes → 200
+  rota 200 · corpo 344 B · content_data {2 chaves}
+
+stderr | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (a) Tab · dificuldade null · uma nota em Detalhes → 200
+Error in updateContent: Error: Validation failed
+    at updateContent (/Users/marcelviana/projects/octavia-d0-pr1/lib/content-service.ts:554:27)
+    at handleSave (/Users/marcelviana/projects/octavia-d0-pr1/components/content-edit-page-client.tsx:35:7) {
+  status: 400
+}
+
+stderr | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (a) Tab · dificuldade null · uma nota em Detalhes → 200
+Editor: falha ao salvar Error: Validation failed
+    at updateContent (/Users/marcelviana/projects/octavia-d0-pr1/lib/content-service.ts:554:27)
+    at handleSave (/Users/marcelviana/projects/octavia-d0-pr1/components/content-edit-page-client.tsx:35:7) {
+  status: 400
+}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (a) Tab · dificuldade null · uma nota em Detalhes → 200
+  rota 400 VALIDATION_ERROR · content_data.tablature: obrigatória para Tab · corpo 308 B · content_data {1 chaves}
+
+stderr | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (a) Tab · dificuldade "Intermediate" · uma nota em Detalhes → 200
+Error in updateContent: Error: Validation failed
+    at updateContent (/Users/marcelviana/projects/octavia-d0-pr1/lib/content-service.ts:554:27)
+    at handleSave (/Users/marcelviana/projects/octavia-d0-pr1/components/content-edit-page-client.tsx:35:7) {
+  status: 400
+}
+
+stderr | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (a) Tab · dificuldade "Intermediate" · uma nota em Detalhes → 200
+Editor: falha ao salvar Error: Validation failed
+    at updateContent (/Users/marcelviana/projects/octavia-d0-pr1/lib/content-service.ts:554:27)
+    at handleSave (/Users/marcelviana/projects/octavia-d0-pr1/components/content-edit-page-client.tsx:35:7) {
+  status: 400
+}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (a) Tab · dificuldade "Intermediate" · uma nota em Detalhes → 200
+  rota 400 VALIDATION_ERROR · content_data.tablature: obrigatória para Tab · corpo 318 B · content_data {1 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (a) Sheet · dificuldade null · uma nota em Detalhes → 200
+  rota 200 · corpo 294 B · content_data null
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (a) Sheet · dificuldade "Intermediate" · uma nota em Detalhes → 200
+  rota 200 · corpo 304 B · content_data null
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (b) Tab de upload · Detalhes → 200, e o content_data nulo fica nulo (D0-D22)
+  rota 200 · corpo 282 B · content_data null
+
+stderr | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (b) Tab de upload · Informações do editor de tab → 200, com a tablature no corpo (D0-D13)
+Error in updateContent: Error: Validation failed
+    at updateContent (/Users/marcelviana/projects/octavia-d0-pr1/lib/content-service.ts:554:27)
+    at handleSave (/Users/marcelviana/projects/octavia-d0-pr1/components/content-edit-page-client.tsx:35:7) {
+  status: 400
+}
+
+stderr | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (b) Tab de upload · Informações do editor de tab → 200, com a tablature no corpo (D0-D13)
+Editor: falha ao salvar Error: Validation failed
+    at updateContent (/Users/marcelviana/projects/octavia-d0-pr1/lib/content-service.ts:554:27)
+    at handleSave (/Users/marcelviana/projects/octavia-d0-pr1/components/content-edit-page-client.tsx:35:7) {
+  status: 400
+}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (b) Tab de upload · Informações do editor de tab → 200, com a tablature no corpo (D0-D13)
+  rota 400 VALIDATION_ERROR · content_data.tablature: obrigatória para Tab · corpo 839 B · content_data {23 chaves}
+
+stderr | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (b) Tab de upload · o painel de texto → 200, com o texto digitado
+Error in updateContent: Error: Validation failed
+    at updateContent (/Users/marcelviana/projects/octavia-d0-pr1/lib/content-service.ts:554:27)
+    at handleSave (/Users/marcelviana/projects/octavia-d0-pr1/components/content-edit-page-client.tsx:35:7) {
+  status: 400
+}
+
+stderr | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (b) Tab de upload · o painel de texto → 200, com o texto digitado
+Editor: falha ao salvar Error: Validation failed
+    at updateContent (/Users/marcelviana/projects/octavia-d0-pr1/lib/content-service.ts:554:27)
+    at handleSave (/Users/marcelviana/projects/octavia-d0-pr1/components/content-edit-page-client.tsx:35:7) {
+  status: 400
+}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (b) Tab de upload · o painel de texto → 200, com o texto digitado
+  rota 400 VALIDATION_ERROR · content_data.tablature: obrigatória para Tab · corpo 840 B · content_data {23 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (c) Cifra com content_data nulo, sem arquivo · Detalhes → 200, nulo fica nulo
+  rota 200 · corpo 302 B · content_data null
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (c) Cifra escaneada (content_data nulo + PDF) · Detalhes → 200, e o palco segue abrindo o arquivo
+  rota 200 · corpo 302 B · content_data null
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (c) Cifra com content_data nulo · uma seção editada → 200, com a chave chords no corpo
+  rota 200 · corpo 842 B · content_data {25 chaves}
+
+stderr | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (d) Tab · editar o texto e salvar → a tablature editada, nos dois leitores, = o item tab-editada-no-site do G-par
+Error in updateContent: Error: Validation failed
+    at updateContent (/Users/marcelviana/projects/octavia-d0-pr1/lib/content-service.ts:554:27)
+    at handleSave (/Users/marcelviana/projects/octavia-d0-pr1/components/content-edit-page-client.tsx:35:7) {
+  status: 400
+}
+
+stderr | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (d) Tab · editar o texto e salvar → a tablature editada, nos dois leitores, = o item tab-editada-no-site do G-par
+Editor: falha ao salvar Error: Validation failed
+    at updateContent (/Users/marcelviana/projects/octavia-d0-pr1/lib/content-service.ts:554:27)
+    at handleSave (/Users/marcelviana/projects/octavia-d0-pr1/components/content-edit-page-client.tsx:35:7) {
+  status: 400
+}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (d) Tab · editar o texto e salvar → a tablature editada, nos dois leitores, = o item tab-editada-no-site do G-par
+  rota 400 VALIDATION_ERROR · content_data.tablature: obrigatória para Tab · corpo 793 B · content_data {23 chaves}
+
+stderr | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (e) classe 1 · sem measures: abre a tablature; salvar não apaga nem altera o measures
+Error in updateContent: Error: Validation failed
+    at updateContent (/Users/marcelviana/projects/octavia-d0-pr1/lib/content-service.ts:554:27)
+    at handleSave (/Users/marcelviana/projects/octavia-d0-pr1/components/content-edit-page-client.tsx:35:7) {
+  status: 400
+}
+
+stderr | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (e) classe 1 · sem measures: abre a tablature; salvar não apaga nem altera o measures
+Editor: falha ao salvar Error: Validation failed
+    at updateContent (/Users/marcelviana/projects/octavia-d0-pr1/lib/content-service.ts:554:27)
+    at handleSave (/Users/marcelviana/projects/octavia-d0-pr1/components/content-edit-page-client.tsx:35:7) {
+  status: 400
+}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (e) classe 1 · sem measures: abre a tablature; salvar não apaga nem altera o measures
+  rota 400 VALIDATION_ERROR · content_data.tablature: obrigatória para Tab · corpo 793 B · content_data {23 chaves}
+
+stderr | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (e) classe 2 · measures = o exemplo: abre a tablature; salvar não apaga nem altera o measures
+Error in updateContent: Error: Validation failed
+    at updateContent (/Users/marcelviana/projects/octavia-d0-pr1/lib/content-service.ts:554:27)
+    at handleSave (/Users/marcelviana/projects/octavia-d0-pr1/components/content-edit-page-client.tsx:35:7) {
+  status: 400
+}
+
+stderr | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (e) classe 2 · measures = o exemplo: abre a tablature; salvar não apaga nem altera o measures
+Editor: falha ao salvar Error: Validation failed
+    at updateContent (/Users/marcelviana/projects/octavia-d0-pr1/lib/content-service.ts:554:27)
+    at handleSave (/Users/marcelviana/projects/octavia-d0-pr1/components/content-edit-page-client.tsx:35:7) {
+  status: 400
+}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (e) classe 2 · measures = o exemplo: abre a tablature; salvar não apaga nem altera o measures
+  rota 400 VALIDATION_ERROR · content_data.tablature: obrigatória para Tab · corpo 1133 B · content_data {24 chaves}
+
+stderr | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (e) classe 3 · measures ≠ o exemplo: abre a tablature; salvar não apaga nem altera o measures
+Error in updateContent: Error: Validation failed
+    at updateContent (/Users/marcelviana/projects/octavia-d0-pr1/lib/content-service.ts:554:27)
+    at handleSave (/Users/marcelviana/projects/octavia-d0-pr1/components/content-edit-page-client.tsx:35:7) {
+  status: 400
+}
+
+stderr | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (e) classe 3 · measures ≠ o exemplo: abre a tablature; salvar não apaga nem altera o measures
+Editor: falha ao salvar Error: Validation failed
+    at updateContent (/Users/marcelviana/projects/octavia-d0-pr1/lib/content-service.ts:554:27)
+    at handleSave (/Users/marcelviana/projects/octavia-d0-pr1/components/content-edit-page-client.tsx:35:7) {
+  status: 400
+}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (e) classe 3 · measures ≠ o exemplo: abre a tablature; salvar não apaga nem altera o measures
+  rota 400 VALIDATION_ERROR · content_data.tablature: obrigatória para Tab · corpo 909 B · content_data {24 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (f) o compasso de exemplo não existe em lugar nenhum do código do site
+  (f) arquivos do site lidos: 180 · cordas do exemplo procuradas: 6 · achados: 0
+
+ ❯  web  tests/gates/d0-editor-salva.test.tsx (19 tests | 8 failed) 1532ms
+     ✓ (a) Lyrics · dificuldade null · uma nota em Detalhes → 200  301ms
+     ✓ (a) Lyrics · dificuldade "Intermediate" · uma nota em Detalhes → 200 90ms
+     ✓ (a) Chords · dificuldade null · uma nota em Detalhes → 200 118ms
+     ✓ (a) Chords · dificuldade "Intermediate" · uma nota em Detalhes → 200 100ms
+     × (a) Tab · dificuldade null · uma nota em Detalhes → 200 46ms
+     × (a) Tab · dificuldade "Intermediate" · uma nota em Detalhes → 200 34ms
+     ✓ (a) Sheet · dificuldade null · uma nota em Detalhes → 200 77ms
+     ✓ (a) Sheet · dificuldade "Intermediate" · uma nota em Detalhes → 200 84ms
+     ✓ (b) Tab de upload · Detalhes → 200, e o content_data nulo fica nulo (D0-D22) 83ms
+     × (b) Tab de upload · Informações do editor de tab → 200, com a tablature no corpo (D0-D13) 32ms
+     × (b) Tab de upload · o painel de texto → 200, com o texto digitado 26ms
+     ✓ (c) Cifra com content_data nulo, sem arquivo · Detalhes → 200, nulo fica nulo 89ms
+     ✓ (c) Cifra escaneada (content_data nulo + PDF) · Detalhes → 200, e o palco segue abrindo o arquivo 98ms
+     ✓ (c) Cifra com content_data nulo · uma seção editada → 200, com a chave chords no corpo 99ms
+     × (d) Tab · editar o texto e salvar → a tablature editada, nos dois leitores, = o item tab-editada-no-site do G-par 30ms
+     × (e) classe 1 · sem measures: abre a tablature; salvar não apaga nem altera o measures 27ms
+     × (e) classe 2 · measures = o exemplo: abre a tablature; salvar não apaga nem altera o measures 99ms
+     × (e) classe 3 · measures ≠ o exemplo: abre a tablature; salvar não apaga nem altera o measures 49ms
+     ✓ (f) o compasso de exemplo não existe em lugar nenhum do código do site 47ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 9 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   web  tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (a) Tab · dificuldade null · uma nota em Detalhes → 200
+ FAIL   web  tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (a) Tab · dificuldade "Intermediate" · uma nota em Detalhes → 200
+AssertionError: a rota recusou: 400 VALIDATION_ERROR · content_data.tablature: obrigatória para Tab: expected 400 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 400
+
+ ❯ tests/gates/d0-editor-salva.test.tsx:120:55
+    118|       await mudar('campo-notas', 'nota fabricada D0')
+    119|       const s = await salvar()
+    120|       expect(s.status, `a rota recusou: ${s.motivo}`).toBe(200)
+       |                                                       ^
+    121|       expect(s.corpo.difficulty, 'a dificuldade vazia vai null (D0-D19…
+    122|     }, 20_000)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/9]⎯
+
+ FAIL   web  tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (b) Tab de upload · Informações do editor de tab → 200, com a tablature no corpo (D0-D13)
+AssertionError: a rota recusou: 400 VALIDATION_ERROR · content_data.tablature: obrigatória para Tab: expected 400 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 400
+
+ ❯ tests/gates/d0-editor-salva.test.tsx:138:53
+    136|     await mudar('campo-info-titulo', 'Título novo D0')
+    137|     const s = await salvar()
+    138|     expect(s.status, `a rota recusou: ${s.motivo}`).toBe(200)
+       |                                                     ^
+    139|     expect(typeof dados(s.corpo)?.tablature, 'a tablature vai sempre q…
+    140|   }, 20_000)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/9]⎯
+
+ FAIL   web  tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (b) Tab de upload · o painel de texto → 200, com o texto digitado
+AssertionError: a rota recusou: 400 VALIDATION_ERROR · content_data.tablature: obrigatória para Tab: expected 400 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 400
+
+ ❯ tests/gates/d0-editor-salva.test.tsx:145:53
+    143|     fireEvent.change(await painelDaTab(), { target: { value: TAB_EDITA…
+    144|     const s = await salvar()
+    145|     expect(s.status, `a rota recusou: ${s.motivo}`).toBe(200)
+       |                                                     ^
+    146|     expect(dados(s.corpo)?.tablature).toBe(TAB_EDITADA)
+    147|   }, 20_000)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/9]⎯
+
+ FAIL   web  tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (d) Tab · editar o texto e salvar → a tablature editada, nos dois leitores, = o item tab-editada-no-site do G-par
+AssertionError: a rota recusou: 400 VALIDATION_ERROR · content_data.tablature: obrigatória para Tab: expected 400 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 400
+
+ ❯ tests/gates/d0-editor-salva.test.tsx:182:53
+    180|     fireEvent.change(p, { target: { value: TAB_EDITADA } })
+    181|     const s = await salvar()
+    182|     expect(s.status, `a rota recusou: ${s.motivo}`).toBe(200)
+       |                                                     ^
+    183|     expect(dados(s.corpo)?.tablature, 'o corpo leva a tablature editad…
+    184|     const g = dados(gravada())
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/9]⎯
+
+ FAIL   web  tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (e) classe 1 · sem measures: abre a tablature; salvar não apaga nem altera o measures
+ FAIL   web  tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (e) classe 2 · measures = o exemplo: abre a tablature; salvar não apaga nem altera o measures
+ FAIL   web  tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (e) classe 3 · measures ≠ o exemplo: abre a tablature; salvar não apaga nem altera o measures
+AssertionError: a rota recusou: 400 VALIDATION_ERROR · content_data.tablature: obrigatória para Tab: expected 400 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 400
+
+ ❯ tests/gates/d0-editor-salva.test.tsx:204:55
+    202|       fireEvent.change(p, { target: { value: TAB_EDITADA } })
+    203|       const s = await salvar()
+    204|       expect(s.status, `a rota recusou: ${s.motivo}`).toBe(200)
+       |                                                       ^
+    205|       const g = dados(gravada()) ?? {}
+    206|       expect(g.tablature).toBe(TAB_EDITADA)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/9]⎯
+
+ FAIL   web  tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > tab (tablatura em texto, sem compassos)
+AssertionError: o servidor recusou o corpo: 400 VALIDATION_ERROR · content_data.tablature: obrigatória para Tab: expected 400 to be 200 // Object.is equality
+
+- Expected
++ Received
+
+- 200
++ 400
+
+ ❯ tests/gates/i1-editor-put.test.tsx:180:82
+    178|       console.log(`PUT do editor · ${c.nome}: corpo ${corpo.length} B …
+    179|       // D-0 (div. 1157): primeiro o servidor aceita — e nada que ele …
+    180|       expect(resposta.status, `o servidor recusou o corpo: ${motivo(re…
+       |                                                                                  ^
+    181|       gravados[c.nome] = corpo
+    182|       if (process.env.CN_GRAVAR) return
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/9]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  9 failed | 16 passed | 1 skipped (26)
+   Start at  09:18:08
+   Duration  2.45s (transform 551ms, setup 423ms, import 491ms, tests 2.13s, environment 731ms)
+
