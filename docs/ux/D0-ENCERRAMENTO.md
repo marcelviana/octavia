@@ -14,7 +14,7 @@ ou o anexo onde está; onde a prosa daqui e a fonte divergirem, vale a fonte. Ne
   ([`D0-ENCERRAMENTO-anexos/gates/`](D0-ENCERRAMENTO-anexos/gates/)).
 - **Convenção**: `[medido]` = comando + saída literal nesta sessão (no anexo); `[lido]` = tirado do documento citado. As
   contagens de decisões e divergências são `[medido]` por `grep` (§3, §4).
-- **Divergências desta PR**: **1170–1173** (§10).
+- **Divergências desta PR**: **1170–1174** (§10).
 
 > **"(i) salvou · (ii) salvou"** — o Marcel, em octavia.rocks, na conta de audit, depois do deploy (M2, 2026-10-08). E o
 > palco do AVD mostrou a Tab que ele editou no site: 59 caracteres, `sha12` `9b51694daeac`, sem nenhum arquivo do tablet
@@ -113,8 +113,8 @@ A 9 · D 6 · P 2 · T 8
 |---|---|---|---|---|---|---|---|
 | pre-check | 1145–1159 | 0 | 4 | 8 | 3 | 15 | `D0-PRECHECK.md` §11: *"P 0 · D 4 · A 8 · T 3"* ✓ |
 | PR-1 | 1160–1169 | 2 | 2 | 1 | 5 | 10 | `D0-PR1-anexos/README.md` §8: *"P 2 · D 2 · A 1 · T 5"* ✓ |
-| encerramento (esta PR) | 1170–1173 | 2 | 1 | 0 | 1 | 4 | §10 |
-| **D-0** | | **4** | **7** | **9** | **9** | **29** | |
+| encerramento (esta PR) | 1170–1174 | 2 | 1 | 0 | 2 | 5 | §10 |
+| **D-0** | | **4** | **7** | **9** | **10** | **30** | |
 
 As contagens declaradas batem com a coluna nas duas PRs.
 
@@ -246,7 +246,7 @@ cumpri-la.
 **Q5 — a Tab `D0 descartável` e a nota `D0`** na conta de audit: (a) **o Marcel apaga** (regra 12); (b) ficam como
 fixture de prova. **Recomendo (a).**
 
-## 10. Divergências desta PR — 1170 a 1173
+## 10. Divergências desta PR — 1170 a 1174
 
 | div. | origem | o quê | destino |
 |---|---|---|---|
@@ -254,8 +254,9 @@ fixture de prova. **Recomendo (a).**
 | **1171** | P | O prompt lista *"as 5 Tabs e as 5 Cifras com `content_data` nulo e sem arquivo"*: o M1 mediu **5 Cifras nulas, 2 sem arquivo** (3 escaneadas); e o desenho da 1149 na Cifra (o salvar) foi **fechado** pela D0-D21/D22 | §8.2 item 6: as 5 Tabs e as 2 Cifras sem arquivo |
 | **1172** | D | A div. 1154 tinha destino *"registrada para o `LOGS-OCTAVIA.md` no encerramento do bloco"* (`D0-PRECHECK.md` §11); o prompt a põe no W5 | W5 (§8.3), pergunta Q3 |
 | **1173** | T | O bruto do M2 deixado na árvore da PR-1 tinha só o estado, o logcat e a captura: **as duas medições do M2** (o cache e o nó `corpo` do palco, comprimento e `sha12`) foram impressas na sessão e não gravadas em arquivo | transcritas, com os comandos, no `D0-ENCERRAMENTO-anexos/m2/README.md` (extra declarado no commit 1) |
+| **1174** | T | O bruto do veredito do G-faixa (`D0-ENCERRAMENTO-anexos/gates/gfaixa.txt`) entrou no commit 2 com **12 ocorrências do título e do autor reais** da folha 6 — o mesmo caso que a PR-1 tratou no anexo dela; a conferência veio depois do push | trocadas pelo marcador em commit novo (`924195c`), sem push forçado; o commit 2 as tem no histórico da branch (o repositório já as tem nas folhas e fixtures — §8.2 item 7) |
 
-**Contagem**: 4 — P 2 · D 1 · T 1. **A próxima livre é a 1174.**
+**Contagem**: 5 — P 2 · D 1 · T 2. **A próxima livre é a 1175.**
 
 ## 11. Erratas de ponteiro — neste commit
 
