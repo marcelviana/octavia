@@ -520,6 +520,9 @@ desde a N4-PR5 o tablet protege a estrela de regredir durante um sync comparando
 devolveu com o da linha que o sync leu (`packages/core/src/favoritar.ts:181-210`, `naoRegredir`); se o favoritar parar
 de mexer no `updated_at`, essa proteção deixa de funcionar — **os dois mudam juntos**. O **item 2** fica no D (D0-D3).)*
 
+*(Errata de ponteiro do encerramento da D-0, 2026-10-08 — `docs/ux/D0-ENCERRAMENTO.md` §8: o **item 1** está **fechado**
+pela D-0 (#368, D0-D6). Os itens 2 e 3 seguem no D, na ordem do §8.2 de lá — o 3 amarrado à N4-D91.)*
+
 ### 10.5 W5 (instrumento)
 
 | # | item | origem |
@@ -791,3 +794,11 @@ do §10.4). A Cifra fica fora (D0-D3). A ordem: **D-0 → quebra de linha → re
 parte (D0-D4). *Como* consertar a Tab — o editor gravar onde os leitores leem, ou os leitores lerem o que o editor grava —
 não estava decidido: é a pergunta do pre-check (D0-D5). Onde o §15.1 diz *"estancar a gravação"* com a Tab **e** o
 `updated_at`, vale esta errata.
+
+**Errata de ponteiro — a D-0 encerrada** (2026-10-08; `docs/ux/D0-ENCERRAMENTO.md`), sem reescrever o §15.1, a N4-D116
+nem a errata acima: a PR D-0 do §15.1 **foi feita e entregou mais do que estancar a Tab** — o editor do site volta a salvar
+(D0-D20): a Tab como texto, a dificuldade vazia como `null` (158 de 196 contents eram recusados), a Tab de upload e a Cifra
+com `content_data` nulo, e as anotações mantidas. #367 e #368; prova em prod no AVD. O tablet e o release não mudaram. **A
+ordem que segue** é a da N4-D109 com a D0-D4: **quebra de linha → resto do D → N5 → identidade → iOS**; o W5 à parte —
+confirmada no aval do encerramento da D-0 (D0-D25), com a div. 1147 primeira do resto do D.
+

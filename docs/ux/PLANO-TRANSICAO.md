@@ -1520,3 +1520,12 @@ automaticamente.
 > leitor vê; o `updated_at` do favoritar **fica no resto do D**, e só muda junto com a proteção da estrela da N4-D91. A
 > ordem passa a ser **D-0 → quebra de linha → resto do D → N5 → identidade → iOS**; o **W5** à parte. Fonte:
 > `docs/ux/D0-PRECHECK.md` §0 (D0-D1…D5); errata de ponteiro no `N4-ENCERRAMENTO.md` (fim do §15 e nota do §10.4).
+
+> **Nota do encerramento da D-0 (2026-10-08)** — sem reescrever a nota acima. **D-0 encerrada** (aval D0-D24…D28) — o
+> editor do site volta a salvar: a Tab editada como texto chega a todos os leitores; a dificuldade vazia vai `null` (158 de
+> 196 contents eram recusados desde 2025-07-08); a Tab de upload e a Cifra com `content_data` nulo salvam; salvar não apaga
+> o que o músico não editou (#367, #368; `docs/ux/D0-ENCERRAMENTO.md`). O tablet não mudou. **A ordem que segue**:
+> **quebra de linha → resto do D → N5 → identidade → iOS**; o **W5** à parte. No resto do D, o primeiro é o título digitado
+> em *Informações* que não chega à coluna (div. 1147) — e o pre-check do D trata a aba *Informações* inteira, com os
+> campos que o site não grava (D0-D25); o `updated_at` do favoritar segue amarrado à N4-D91.
+

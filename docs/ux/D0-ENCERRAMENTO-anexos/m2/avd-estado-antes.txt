@@ -1,0 +1,8 @@
+2026-10-08 11:03:55
+airplane=1 wifi=0 data=0
+stay_on=1 accel=1 user_rot=0
+reverse: 
+connect: Network is unreachable
+    versionName=0.0.1
+    lastUpdateTime=2026-09-24 14:00:01
+    pkgFlags=[ DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]

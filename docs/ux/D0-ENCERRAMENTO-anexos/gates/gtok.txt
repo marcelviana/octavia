@@ -1,0 +1,19 @@
+## (i) a folha — conferir.mjs × erratas.json
+  ✓ I1-E1 (estado) cobre 2
+  ✓ I1-E2 (estado) cobre 1
+  ✓ I1-E2 (estado) cobre 2
+  ✓ I1-E15 (estado) cobre 4
+  ✓ I1-E3 (forma) cobre 1
+  ✓ I1-E4 (inventario-sem-px) cobre 6
+  ✓ I1-E5 (declaracao) cobre 8
+  ✓ I1-E6 (forma) cobre 1
+  ✓ decisao-588 (nome-icone) cobre 1
+  ✓ decisao-589 (forma) cobre 1
+  ✓ I1-E32 (forma) cobre 1
+  ✓ I1-E32 (forma) cobre 1
+  ✓ I1-E32 (forma) cobre 1
+  achados do conferir: 29 · cobertos: 29 · descobertos: 0 · erratas: 10 · órfãs: 0
+## (ii) arquivos redesenhados — scripts/gates-web/g-tok-arquivos.txt
+  arquivos: 133 · literais de identidade acusados: 0 · toasts: 0 · imports de ui: 0 · textos examinados: 33 · isentos de inglês (scripts/gates-web/g-tok-sem-ingles.txt): 1 · vocabulário: 133 · isenções: 9 · strings de .ts examinadas (div. 828): 490 · frases isentas (scripts/gates-web/g-tok-frases-isentas.txt): 5 de 5 entradas
+
+G-tok: PASSA

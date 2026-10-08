@@ -1,0 +1,20 @@
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=67
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=1015
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=266
+OCTAVIA: cache write kind=setlists n=3 invalidated=1
+OCTAVIA: cache write kind=content n=70 invalidated=4
+OCTAVIA: sync ok setlists=3 content=70 pages=1 t=1347
+OCTAVIA: prefetch plan n=2 reason=library
+OCTAVIA: file src=download name=1786295884124-ux-audit-fase-d-offline.pdf bytes=888 total=888 ms=547
+OCTAVIA: file src=download name=1786295844475-ux-audit-fase-d-cifra.pdf bytes=1117 total=1117 ms=567
+OCTAVIA: prefetch promote n=1
+OCTAVIA: file src=disk name=1786218427769-ux-audit-partitura-1p.pdf bytes=20821
+OCTAVIA: keepawake on
+OCTAVIA: prefetch plan n=0 reason=demand
