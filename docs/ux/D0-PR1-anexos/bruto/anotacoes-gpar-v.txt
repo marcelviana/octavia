@@ -1,0 +1,33 @@
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-d0-pr1
+
+stdout | apps/native/test/g-par-visualizacao.test.tsx > G-par da visualização (N4-PR8) — o nó corpo de V mostra o que o site mostra > cada item do par: V igual ao retrato do site, byte a byte
+G-par da visualização — itens 17 · pares 10 · iguais 10 · diferentes 0 · fora do par 7 · retrato do site 10
+  IGUAL     letra                        site=texto(108)       V=texto(108)
+  IGUAL     cifra-texto                  site=texto(48)        V=texto(48)
+  IGUAL     tab-texto                    site=texto(92)        V=texto(92)
+  IGUAL     partitura-pdf                site=arquivo(79)      V=arquivo(79)
+  IGUAL     letra-poluida-editor         site=texto(44)        V=texto(44)
+  IGUAL     cifra-secoes-acordes-vazios  site=texto(123)       V=texto(123)
+  IGUAL     cifra-secoes-completas       site=texto(39)        V=texto(39)
+  IGUAL     cifra-duas-secoes            site=texto(97)        V=texto(97)
+  IGUAL     so-aninhado                  site=sem-corpo        V=sem-corpo
+  IGUAL     tab-editada-no-site          site=texto(44)        V=texto(44)
+
+fora do par (7) — impressos e contados, não reprovam:
+  cifra-em-lista               V=sem-corpo        — chords como lista de {name, diagram, fingering} — só o web lê; a B2 não achou no dado real (0 de 63) → Bloco D
+  cifra-com-progression        V=texto(4)         — progression ({seção: acordes}) ao lado do chords — só o web a mostra; a B2 não achou no dado real → Bloco D
+  tab-em-lista                 V=sem-corpo        — tablature como lista de linhas — só o web lê; a B2 achou as 2 Tabs com tablature string → Bloco D
+  partitura-com-notation       V=sem-corpo        — Partitura sem arquivo com notation em texto — só o web a mostra; a B2 achou a única Partitura com arquivo (.pdf) → Bloco D
+  tipo-legado                  V=sem-corpo        — content_type legado ('Guitar Tab') que o normalizeContentType do web aceita — o core não; a B2 achou os 63 nos quatro tipos do enum → Bloco D
+  tipo-fora-do-enum            V=sem-corpo        — tipo fora do enum (nem dos quatro, nem apelido legado — a forma do pre-check, A12): o web o mostra como Letra (normalizeContentType cai em LYRICS), o core declara unknown-type; o que vale é o do core (N4-D47); a B2 achou os 63 no contrato → Bloco D
+  cifra-escaneada              V=arquivo(77)      — Cifra escaneada (content_data nulo com file_url): o web mostra o vazio do painel ('nenhuma cifra' — o ChordDisplay não mostra arquivo), o core a trata como arquivo e o palco mostra o PDF; vale o comportamento do core (N4-D49); nenhum item da conta principal está nesse caso (B2: as 3 Cifras com content_data) → Bloco D
+G-par da visualização: zero diferenças ✓
+
+ ✓  native-tela  apps/native/test/g-par-visualizacao.test.tsx (1 test) 93ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  10:06:49
+   Duration  882ms (transform 247ms, setup 0ms, import 424ms, tests 93ms, environment 278ms)
+

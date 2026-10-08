@@ -1,0 +1,11 @@
+
+ RUN  v4.0.16 /private/tmp/claude-501/-Users-marcelviana-projects-octavia/460e8656-818f-457e-8bb6-3788390fce45/scratchpad/wt-main
+
+ ✓  web  tests/gates/i1-editor-put.test.tsx (7 tests) 729ms
+     ✓ cifra em texto (a forma de hoje da cifra)  309ms
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  10:05:48
+   Duration  1.63s (transform 311ms, setup 214ms, import 228ms, tests 729ms, environment 350ms)
+

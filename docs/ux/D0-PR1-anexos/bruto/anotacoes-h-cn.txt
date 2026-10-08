@@ -1,0 +1,268 @@
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-d0-pr1
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > cifra em texto (a forma de hoje da cifra)
+PUT do editor · cifra em texto (a forma de hoje da cifra): corpo 1032 B · rota 200
+  par · cifra em texto (a forma de hoje da cifra): chaves que mudaram 1 · pares declarados 1 · não declaradas 0 · órfãos 0
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (a) Lyrics · dificuldade null · uma nota em Detalhes → 200
+  rota 200 · corpo 347 B · content_data {2 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (a) Lyrics · dificuldade "Intermediate" · uma nota em Detalhes → 200
+  rota 200 · corpo 357 B · content_data {2 chaves}
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > cifra em seções
+PUT do editor · cifra em seções: corpo 980 B · rota 200
+  par · cifra em seções: chaves que mudaram 1 · pares declarados 1 · não declaradas 0 · órfãos 0
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > letra
+PUT do editor · letra: corpo 788 B · rota 200
+  par · letra: chaves que mudaram 1 · pares declarados 1 · não declaradas 0 · órfãos 0
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (a) Chords · dificuldade null · uma nota em Detalhes → 200
+  rota 200 · corpo 334 B · content_data {2 chaves}
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > tab (tablatura em texto, sem compassos)
+PUT do editor · tab (tablatura em texto, sem compassos): corpo 940 B · rota 200
+  par · tab (tablatura em texto, sem compassos): chaves que mudaram 2 · pares declarados 2 · não declaradas 0 · órfãos 0
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (a) Chords · dificuldade "Intermediate" · uma nota em Detalhes → 200
+  rota 200 · corpo 344 B · content_data {2 chaves}
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > letra com anotações
+PUT do editor · letra com anotações: corpo 330 B · rota 200
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (a) Tab · dificuldade null · uma nota em Detalhes → 200
+  rota 200 · corpo 347 B · content_data {2 chaves}
+
+stdout | tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > partitura (PDF)
+PUT do editor · partitura (PDF): corpo 298 B · rota 200
+  par · partitura (PDF): chaves que mudaram 2 · pares declarados 2 · não declaradas 0 · órfãos 0
+
+ ❯  web  tests/gates/i1-editor-put.test.tsx (8 tests | 1 failed | 1 skipped) 673ms
+     ✓ cifra em texto (a forma de hoje da cifra) 266ms
+     ✓ cifra em seções 94ms
+     ✓ letra 87ms
+     ✓ tab (tablatura em texto, sem compassos) 77ms
+     × letra com anotações 74ms
+     ✓ partitura (PDF) 74ms
+     ✓ nenhum par fora dos casos (órfão de caso) 0ms
+     ↓ grava o depois (CN_GRAVAR=1, D-0 commit 2, só com a rota dizendo 200)
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (a) Tab · dificuldade "Intermediate" · uma nota em Detalhes → 200
+  rota 200 · corpo 357 B · content_data {2 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (a) Sheet · dificuldade null · uma nota em Detalhes → 200
+  rota 200 · corpo 294 B · content_data null
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (a) Sheet · dificuldade "Intermediate" · uma nota em Detalhes → 200
+  rota 200 · corpo 304 B · content_data null
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (b) Tab de upload · Detalhes → 200, e o content_data nulo fica nulo (D0-D22)
+  rota 200 · corpo 282 B · content_data null
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (b) Tab de upload · Informações do editor de tab → 200, com a tablature no corpo (D0-D13)
+  rota 200 · corpo 854 B · content_data {24 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (b) Tab de upload · o painel de texto → 200, com o texto digitado
+  rota 200 · corpo 901 B · content_data {24 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (c) Cifra com content_data nulo, sem arquivo · Detalhes → 200, nulo fica nulo
+  rota 200 · corpo 302 B · content_data null
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (c) Cifra escaneada (content_data nulo + PDF) · Detalhes → 200, e o palco segue abrindo o arquivo
+  rota 200 · corpo 302 B · content_data null
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (c) Cifra com content_data nulo · uma seção editada → 200, com a chave chords no corpo
+  rota 200 · corpo 842 B · content_data {25 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (d) Tab · editar o texto e salvar → a tablature editada, nos dois leitores, = o item tab-editada-no-site do G-par
+  rota 200 · corpo 854 B · content_data {24 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (e) classe 1 · sem measures: abre a tablature; salvar não apaga nem altera o measures
+  rota 200 · corpo 854 B · content_data {24 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (e) classe 2 · measures = o exemplo: abre a tablature; salvar não apaga nem altera o measures
+  rota 200 · corpo 1194 B · content_data {25 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (e) classe 3 · measures ≠ o exemplo: abre a tablature; salvar não apaga nem altera o measures
+  rota 200 · corpo 970 B · content_data {25 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (g) Lyrics · uma chave desconhecida no content_data · Notas em Detalhes → a chave volta no corpo, igual
+  rota 200 · corpo 427 B · content_data {3 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (g) Lyrics · uma chave desconhecida no content_data · Notas em Detalhes → a chave volta no corpo, igual
+  (g) Lyrics: chaves que nenhum editor edita 1 (chave_d0_desconhecida) · no corpo 1
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (g) Chords · uma chave desconhecida no content_data · Notas em Detalhes → a chave volta no corpo, igual
+  rota 200 · corpo 414 B · content_data {3 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (g) Chords · uma chave desconhecida no content_data · Notas em Detalhes → a chave volta no corpo, igual
+  (g) Chords: chaves que nenhum editor edita 1 (chave_d0_desconhecida) · no corpo 1
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (g) Tab · uma chave desconhecida no content_data · Notas em Detalhes → a chave volta no corpo, igual
+  rota 200 · corpo 427 B · content_data {3 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (g) Tab · uma chave desconhecida no content_data · Notas em Detalhes → a chave volta no corpo, igual
+  (g) Tab: chaves que nenhum editor edita 1 (chave_d0_desconhecida) · no corpo 1
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (g) Sheet · uma chave desconhecida no content_data · Notas em Detalhes → a chave volta no corpo, igual
+  rota 200 · corpo 421 B · content_data {3 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (g) Sheet · uma chave desconhecida no content_data · Notas em Detalhes → a chave volta no corpo, igual
+  (g) Sheet: chaves que nenhum editor edita 2 (file, chave_d0_desconhecida) · no corpo 2
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (h) Lyrics · com anotação · Notas em Detalhes → o annotations no corpo = [{"id":1,"texto":"an
+  rota 200 · corpo 353 B · content_data {2 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (h) Lyrics · com anotação · Notas em Detalhes → o annotations no corpo = [{"id":1,"texto":"an
+  (h) Lyrics · com anotação: na linha [{"id":1,"texto":"anotação fabricada D0","pos":{"x":10,"y":20}}] · no corpo []
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (h) Lyrics · com annotations: [] · Notas em Detalhes → o annotations no corpo = []
+  rota 200 · corpo 353 B · content_data {2 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (h) Lyrics · com annotations: [] · Notas em Detalhes → o annotations no corpo = []
+  (h) Lyrics · com annotations: []: na linha [] · no corpo []
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (h) Lyrics · sem a chave annotations · Notas em Detalhes → o annotations no corpo = []
+  rota 200 · corpo 353 B · content_data {2 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (h) Lyrics · sem a chave annotations · Notas em Detalhes → o annotations no corpo = []
+  (h) Lyrics · sem a chave annotations: na linha undefined · no corpo []
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (h) Chords · com anotação · Notas em Detalhes → o annotations no corpo = [{"id":1,"texto":"an
+  rota 200 · corpo 340 B · content_data {2 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (h) Chords · com anotação · Notas em Detalhes → o annotations no corpo = [{"id":1,"texto":"an
+  (h) Chords · com anotação: na linha [{"id":1,"texto":"anotação fabricada D0","pos":{"x":10,"y":20}}] · no corpo []
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (h) Chords · com annotations: [] · Notas em Detalhes → o annotations no corpo = []
+  rota 200 · corpo 340 B · content_data {2 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (h) Chords · com annotations: [] · Notas em Detalhes → o annotations no corpo = []
+  (h) Chords · com annotations: []: na linha [] · no corpo []
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (h) Chords · sem a chave annotations · Notas em Detalhes → o annotations no corpo = []
+  rota 200 · corpo 340 B · content_data {2 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (h) Chords · sem a chave annotations · Notas em Detalhes → o annotations no corpo = []
+  (h) Chords · sem a chave annotations: na linha undefined · no corpo []
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (h) Tab · com anotação · Notas em Detalhes → o annotations no corpo = [{"id":1,"texto":"an
+  rota 200 · corpo 353 B · content_data {2 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (h) Tab · com anotação · Notas em Detalhes → o annotations no corpo = [{"id":1,"texto":"an
+  (h) Tab · com anotação: na linha [{"id":1,"texto":"anotação fabricada D0","pos":{"x":10,"y":20}}] · no corpo []
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (h) Tab · com annotations: [] · Notas em Detalhes → o annotations no corpo = []
+  rota 200 · corpo 353 B · content_data {2 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (h) Tab · com annotations: [] · Notas em Detalhes → o annotations no corpo = []
+  (h) Tab · com annotations: []: na linha [] · no corpo []
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (h) Tab · sem a chave annotations · Notas em Detalhes → o annotations no corpo = []
+  rota 200 · corpo 353 B · content_data {2 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (h) Tab · sem a chave annotations · Notas em Detalhes → o annotations no corpo = []
+  (h) Tab · sem a chave annotations: na linha undefined · no corpo []
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (h) Sheet · com anotação · Notas em Detalhes → o annotations no corpo = [{"id":1,"texto":"an
+  rota 200 · corpo 347 B · content_data {2 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (h) Sheet · com anotação · Notas em Detalhes → o annotations no corpo = [{"id":1,"texto":"an
+  (h) Sheet · com anotação: na linha [{"id":1,"texto":"anotação fabricada D0","pos":{"x":10,"y":20}}] · no corpo []
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (h) Sheet · com annotations: [] · Notas em Detalhes → o annotations no corpo = []
+  rota 200 · corpo 347 B · content_data {2 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (h) Sheet · com annotations: [] · Notas em Detalhes → o annotations no corpo = []
+  (h) Sheet · com annotations: []: na linha [] · no corpo []
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (h) Sheet · sem a chave annotations · Notas em Detalhes → o annotations no corpo = []
+  rota 200 · corpo 347 B · content_data {2 chaves}
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (h) Sheet · sem a chave annotations · Notas em Detalhes → o annotations no corpo = []
+  (h) Sheet · sem a chave annotations: na linha undefined · no corpo []
+
+stdout | tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (f) o compasso de exemplo não existe em lugar nenhum do código do site
+  (f) arquivos do site lidos: 180 · cordas do exemplo procuradas: 6 · achados: 0
+
+ ❯  web  tests/gates/d0-editor-salva.test.tsx (35 tests | 4 failed) 3129ms
+     ✓ (a) Lyrics · dificuldade null · uma nota em Detalhes → 200 273ms
+     ✓ (a) Lyrics · dificuldade "Intermediate" · uma nota em Detalhes → 200 82ms
+     ✓ (a) Chords · dificuldade null · uma nota em Detalhes → 200 110ms
+     ✓ (a) Chords · dificuldade "Intermediate" · uma nota em Detalhes → 200 97ms
+     ✓ (a) Tab · dificuldade null · uma nota em Detalhes → 200 80ms
+     ✓ (a) Tab · dificuldade "Intermediate" · uma nota em Detalhes → 200 78ms
+     ✓ (a) Sheet · dificuldade null · uma nota em Detalhes → 200 79ms
+     ✓ (a) Sheet · dificuldade "Intermediate" · uma nota em Detalhes → 200 78ms
+     ✓ (b) Tab de upload · Detalhes → 200, e o content_data nulo fica nulo (D0-D22) 81ms
+     ✓ (b) Tab de upload · Informações do editor de tab → 200, com a tablature no corpo (D0-D13) 79ms
+     ✓ (b) Tab de upload · o painel de texto → 200, com o texto digitado 78ms
+     ✓ (c) Cifra com content_data nulo, sem arquivo · Detalhes → 200, nulo fica nulo 97ms
+     ✓ (c) Cifra escaneada (content_data nulo + PDF) · Detalhes → 200, e o palco segue abrindo o arquivo 97ms
+     ✓ (c) Cifra com content_data nulo · uma seção editada → 200, com a chave chords no corpo 94ms
+     ✓ (d) Tab · editar o texto e salvar → a tablature editada, nos dois leitores, = o item tab-editada-no-site do G-par 78ms
+     ✓ (e) classe 1 · sem measures: abre a tablature; salvar não apaga nem altera o measures 77ms
+     ✓ (e) classe 2 · measures = o exemplo: abre a tablature; salvar não apaga nem altera o measures 76ms
+     ✓ (e) classe 3 · measures ≠ o exemplo: abre a tablature; salvar não apaga nem altera o measures 79ms
+     ✓ (g) Lyrics · uma chave desconhecida no content_data · Notas em Detalhes → a chave volta no corpo, igual 76ms
+     ✓ (g) Chords · uma chave desconhecida no content_data · Notas em Detalhes → a chave volta no corpo, igual 95ms
+     ✓ (g) Tab · uma chave desconhecida no content_data · Notas em Detalhes → a chave volta no corpo, igual 77ms
+     ✓ (g) Sheet · uma chave desconhecida no content_data · Notas em Detalhes → a chave volta no corpo, igual 76ms
+     × (h) Lyrics · com anotação · Notas em Detalhes → o annotations no corpo = [{"id":1,"texto":"an 82ms
+     ✓ (h) Lyrics · com annotations: [] · Notas em Detalhes → o annotations no corpo = [] 81ms
+     ✓ (h) Lyrics · sem a chave annotations · Notas em Detalhes → o annotations no corpo = [] 77ms
+     × (h) Chords · com anotação · Notas em Detalhes → o annotations no corpo = [{"id":1,"texto":"an 101ms
+     ✓ (h) Chords · com annotations: [] · Notas em Detalhes → o annotations no corpo = [] 97ms
+     ✓ (h) Chords · sem a chave annotations · Notas em Detalhes → o annotations no corpo = [] 93ms
+     × (h) Tab · com anotação · Notas em Detalhes → o annotations no corpo = [{"id":1,"texto":"an 77ms
+     ✓ (h) Tab · com annotations: [] · Notas em Detalhes → o annotations no corpo = [] 77ms
+     ✓ (h) Tab · sem a chave annotations · Notas em Detalhes → o annotations no corpo = [] 75ms
+     × (h) Sheet · com anotação · Notas em Detalhes → o annotations no corpo = [{"id":1,"texto":"an 77ms
+     ✓ (h) Sheet · com annotations: [] · Notas em Detalhes → o annotations no corpo = [] 80ms
+     ✓ (h) Sheet · sem a chave annotations · Notas em Detalhes → o annotations no corpo = [] 76ms
+     ✓ (f) o compasso de exemplo não existe em lugar nenhum do código do site 97ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   web  tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (h) Lyrics · com anotação · Notas em Detalhes → o annotations no corpo = [{"id":1,"texto":"an
+ FAIL   web  tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (h) Chords · com anotação · Notas em Detalhes → o annotations no corpo = [{"id":1,"texto":"an
+ FAIL   web  tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (h) Tab · com anotação · Notas em Detalhes → o annotations no corpo = [{"id":1,"texto":"an
+ FAIL   web  tests/gates/d0-editor-salva.test.tsx > D-0 — o editor do site salva, e o que salva os leitores mostram > (h) Sheet · com anotação · Notas em Detalhes → o annotations no corpo = [{"id":1,"texto":"an
+AssertionError: o annotations no corpo: expected '[]' to be '[{"id":1,"texto":"anotação fabricada …' // Object.is equality
+
+Expected: "[{"id":1,"texto":"anotação fabricada D0","pos":{"x":10,"y":20}}]"
+Received: "[]"
+
+ ❯ tests/gates/d0-editor-salva.test.tsx:268:75
+    266|       const corpo = dados(s.corpo) ?? {}
+    267|       console.log(`  (h) ${tipo} · ${nome}: na linha ${JSON.stringify(…
+    268|       expect(JSON.stringify(corpo.annotations), 'o annotations no corp…
+       |                                                                           ^
+    269|       expect(JSON.stringify((dados(gravada()) ?? {}).annotations), 'o …
+    270|     }, 20_000)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL   web  tests/gates/i1-editor-put.test.tsx > I1-PR11 / D-0 — o corpo do PUT do editor: a rota aceita, byte a byte o depois, e o antes × o depois = os pares > letra com anotações
+AssertionError: o corpo do editor = o depois, byte a byte: expected '{"id":"00000000-0000-4000-8000-000000…' to be '{"id":"00000000-0000-4000-8000-000000…' // Object.is equality
+
+Expected: "{"id":"00000000-0000-4000-8000-000000000006","title":"Batch três","artist":"","album":"","genre":"","key":"","bpm":null,"difficulty":"Beginner","tags":[],"notes":"nota do CN","is_favorite":false,"is_public":false,"content_data":{"lyrics":"Primeira estrofe da música três","annotations":[{"id":1,"texto":"anotação do CN","pos":{"x":10,"y":20}}]},"updated_at":"2026-09-29T12:00:00.000Z"}"
+Received: "{"id":"00000000-0000-4000-8000-000000000006","title":"Batch três","artist":"","album":"","genre":"","key":"","bpm":null,"difficulty":"Beginner","tags":[],"notes":"nota do CN","is_favorite":false,"is_public":false,"content_data":{"lyrics":"Primeira estrofe da música três","annotations":[]},"updated_at":"2026-09-29T12:00:00.000Z"}"
+
+ ❯ tests/gates/i1-editor-put.test.tsx:193:66
+    191|       if (process.env.CN_GRAVAR) return
+    192|       const depois = JSON.parse(fs.readFileSync(DEPOIS, 'utf8')) as Re…
+    193|       expect(corpo, 'o corpo do editor = o depois, byte a byte').toBe(…
+       |                                                                  ^
+    194|       // o par: o antes × o depois mudam EXATAMENTE nas chaves declara…
+    195|       const antes = JSON.parse(fs.readFileSync(ANTES, 'utf8')) as Reco…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  5 failed | 37 passed | 1 skipped (43)
+   Start at  10:06:15
+   Duration  3.91s (transform 487ms, setup 364ms, import 429ms, tests 3.80s, environment 584ms)
+

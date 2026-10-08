@@ -19,13 +19,17 @@
 | `08cdca6` | **commit 3** — o `EDIT-tab` remedido no G-faixa e as erratas da folha (§5) |
 | `67e15b6` | docs — este anexo, depois do CI verde |
 | `349b9c5` | **a conferência antes do merge** — o grupo (g) do gate da D-0: o editor não apaga o que não conhece (§13) |
-| (este) | docs — a §13, depois do CI verde |
+| `22c2b2f` | docs — a §13, depois do CI verde |
+| `8c606be` | **as anotações, o teste** — o grupo (h), reprovando (§14) |
+| `fd8c8a5` | **as anotações, o conserto** (D0-D23, §14) |
+| (este) | docs — a §14, depois do CI verde |
 
 ## 1. As decisões desta PR
 
 | # | decisão | origem |
 |---|---|---|
 | **D0-D21** `[Marcel, 2026-10-08]` | A div. 1156 entra na D-0: o salvar de uma Cifra com `content_data` nulo falha pelo mesmo desenho da 1149. A D0-D3 continua valendo para o que excluiu: a inconsistência entre as seções e o `chords` antigo. | o prompt |
+| **D0-D23** `[Marcel, 2026-10-08]` | A div. 1168 se conserta nesta PR: o editor deixa de zerar o `annotations` da linha — salvar não altera o que o músico não editou. | a conferência antes do merge (§13, §14) |
 | **D0-D22** `[Marcel, 2026-10-08]` | **Null fica null**: o `content_data` nulo da linha que nenhum editor de tipo tocou vai `null` no corpo (o dado fica como está). Quando o `content_data` vai como objeto, a chave do tipo vai **sempre** (string; `""` se a linha não a tinha). | pergunta desta sessão, pela div. 1160 |
 
 **Por que a D0-D22** (div. 1160): a premissa da D0-D21 — *"o mesmo conserto a resolve"* — contradiz o repositório. O core
@@ -116,8 +120,9 @@ de cada.
 | tab | `content_data.measures` | o exemplo com uma corda editada → **ausente** | D0-D7: o exemplo não se grava mais (a linha não tinha `measures`) |
 | partitura | `difficulty` | `""` → `null` | D0-D19 |
 | partitura | `content_data` | `{ annotations: [] }` → `null` | D0-D22: o nulo que ninguém editou fica nulo |
+| letra com anotações *(caso novo, §14)* | `content_data.annotations` | `[]` → a anotação da linha | D0-D23: o editor parte do `annotations` que a linha tem |
 
-**7 chaves, 7 pares; não declaradas 0, órfãos 0.** Os 5 corpos: rota **200**. A poluição do `content_data` (a linha
+**8 chaves, 8 pares; não declaradas 0, órfãos 0** (7 até a §14). Os 6 corpos: rota **200**. A poluição do `content_data` (a linha
 inteira dentro dele, `annotations`) é a de antes — herança D, não tocada.
 
 ## 4. As três classes de dado (§8.2 do pre-check) — o que o editor faz agora
@@ -227,7 +232,7 @@ foi apagada no fim e a página nunca entrou em `app/`. **O painel *Tab* mostra 4
 | gate | resultado |
 |---|---|
 | o do `PUT` do editor | 5/5 com a rota em 200; o corpo = o depois; pares 7/7, não declaradas 0, órfãos 0 |
-| o da D-0 | 19/19 (23/23 com o grupo (g), §13) |
+| o da D-0 | 19/19 (23/23 com o grupo (g), §13; 35/35 com o (h), §14) |
 | G-par (site) | `itens 17 · pares comparados 10 · iguais 10 · diferentes 0 · fora do par 7` — `tab-editada-no-site` IGUAL, `texto(44)` × `texto(44)`; retrato do site: 10 itens |
 | G-par da visualização (o tablet, `apps/native/test/g-par-visualizacao.test.tsx`) | `tab-editada-no-site site=texto(44) V=texto(44)` · zero diferenças — **sem arquivo do tablet mudar** |
 | G-faixa | `PASSA` (§5.1) |
@@ -256,7 +261,7 @@ terceiros.
 | **1166** | T | O instrumento do M0 supunha `content_data` objeto; com a D0-D22 o R5 manda `null` e ele quebrava (`Cannot convert undefined or null to object`) | consertado na cópia do instrumento (§6.1) |
 | **1167** | P | O prompt pede *"os quatro roteiros do M0"*; o M0 tem **seis** (R1–R6) × duas dificuldades | rodados os seis (§6.1) |
 
-| **1168** | A | **O editor zera o `annotations` em todo salvar**, nos quatro tipos: o estado (`components/content-editor.tsx:90`) nasce `[]` e nada o escreve, e o corpo o põe depois do espalhamento (`:77`) — uma linha com anotações volta com `annotations: []`. **Já era da `main`** (medido, §13). O que a D-0 muda é o alcance: os salvamentos que davam 400 (div. 1152, 158 de 196) passam a gravar. No dado (M1, consulta 3): 21 contents com a chave; com texto, a sonda da Fase D (div. 1159); os outros 20 não foram lidos por valor | **pergunta ao Marcel** (§13) |
+| **1168** | A | **O editor zera o `annotations` em todo salvar**, nos quatro tipos: o estado (`components/content-editor.tsx:90`) nasce `[]` e nada o escreve, e o corpo o põe depois do espalhamento (`:77`) — uma linha com anotações volta com `annotations: []`. **Já era da `main`** (medido, §13). O que a D-0 muda é o alcance: os salvamentos que davam 400 (div. 1152, 158 de 196) passam a gravar. No dado (M1, consulta 3): 21 contents com a chave; com texto, a sonda da Fase D (div. 1159); os outros 20 não foram lidos por valor | **fechada pela D0-D23** — consertada nesta PR (`fd8c8a5`, §14) |
 | **1169** | T | A primeira rodada do grupo (g) "sobre a `main`" **não trocou os arquivos**: os quatro caminhos foram passados numa variável que o zsh não divide, o `git checkout` falhou e o teste mediu o código da PR. Visto pela saída (`pathspec … did not match`), refeito com os caminhos explícitos | registrado; os dois brutos estão no anexo |
 
 **Contagem** (1160–1169): 10 — P 2 · D 2 · A 1 · T 5. **A próxima livre é a 1170.**
@@ -345,6 +350,38 @@ conhece e a reescreve. Não foi consertado — a pergunta é do Marcel.
 
 **Os gates depois do (g)**: o da D-0, o do `PUT` e o G-par juntos — `31 passed | 1 skipped`; lint limpo. **CI no `349b9c5`:
 8/8 verdes** (`build`, g-back, g-faixa, g-palco, g-tok, gates-nativos, Vercel).
+
+## 14. As anotações — D0-D23 `[medido: bruto/anotacoes-*.txt]`
+
+**(1) O teste primeiro** (`8c606be`) — o grupo (h) do gate da D-0: para cada tipo, *Notas* em *Detalhes* e salvar, em
+três linhas; o `annotations` tem de voltar no corpo **e** na linha gravada:
+
+| linha | esperado | sobre o `22c2b2f` (antes do conserto) | sobre o `fd8c8a5` |
+|---|---|---|---|
+| com anotação (fabricada: `[{ id: 1, texto: "anotação fabricada D0", pos: {…} }]`) | igual à da linha | **✗ ×4** — o corpo leva `[]` | ✓ ×4 |
+| com `annotations: []` | `[]` | ✓ ×4 | ✓ ×4 |
+| sem a chave, `content_data` objeto | `[]` | ✓ ×4 | ✓ ×4 |
+
+**(2) O conserto** (`fd8c8a5`) — `components/content-editor.tsx`, `anotacoesDaLinha`: o estado das anotações parte do
+`annotations` da linha; o corpo de abertura (o que diz se o *Salvar* acende) parte do mesmo valor. **A linha sem a chave
+fica como sempre**: quando o `content_data` vai como objeto, o editor acrescenta `annotations: []`; o `content_data` nulo
+que ninguém editou continua `null` (D0-D22, o grupo (b)/(c) e o R5 do M0). Não houve conflito com o teste. Sonda
+descartável, apagada depois: abrir uma linha com anotação, sem mudar nada → o *Salvar* segue **inativo** nos quatro tipos
+(`bruto/anotacoes-sonda-abrir.txt`).
+
+**(3) Os pares** — o gate do `PUT` ganha o caso **`letra com anotações`** (`difficulty: 'Beginner'`, para o par ser só o da
+anotação). O corpo antigo dele foi **gravado sobre a `origin/main`** numa árvore descartável (`CN_GRAVAR=1`; o corpo saiu com
+`annotations: []` — `bruto/anotacoes-caso-main.txt`) e entrou no `editor-put-antes.json` como uma chave a mais; o depois é o
+deste código. **Os outros 5 casos ficaram byte a byte iguais, no antes e no depois.** O par:
+`content_data.annotations: [] → [ a anotação da linha ] · D0-D23`. O gate: **8 chaves mudaram, 8 declaradas, 0 não
+declaradas, 0 órfãos**; os 6 corpos com a rota em 200.
+
+**(4) Controle negativo** — o estado voltando a nascer `[]`: reprovam **5** (o caso novo do `PUT` e os 4 "com anotação" do
+(h)); restaurado.
+
+**(5) De novo, tudo** — os gates desta PR e o G-par: `44 passed | 1 skipped`; o G-par da visualização (o tablet): zero
+diferenças; a suíte inteira: `Test Files 140 passed | 3 skipped (143)` · `Tests 1706 passed | 59 skipped (1765)`; `tsc` e
+lint limpos; **`git diff --stat a613b1d -- apps/native packages/core/src` → vazio**. CI no `fd8c8a5`: **8/8 verdes**.
 
 ---
 
