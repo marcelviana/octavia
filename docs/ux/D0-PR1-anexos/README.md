@@ -17,7 +17,9 @@
 | `f5e2542` | **commit 2** — o conserto (§3) |
 | `2d90f60` | **extra declarado** — o gravar do gate do `PUT` recusa com caso faltando (div. 1161, §2.3) |
 | `08cdca6` | **commit 3** — o `EDIT-tab` remedido no G-faixa e as erratas da folha (§5) |
-| (este) | docs — este anexo, depois do CI verde |
+| `67e15b6` | docs — este anexo, depois do CI verde |
+| `349b9c5` | **a conferência antes do merge** — o grupo (g) do gate da D-0: o editor não apaga o que não conhece (§13) |
+| (este) | docs — a §13, depois do CI verde |
 
 ## 1. As decisões desta PR
 
@@ -225,7 +227,7 @@ foi apagada no fim e a página nunca entrou em `app/`. **O painel *Tab* mostra 4
 | gate | resultado |
 |---|---|
 | o do `PUT` do editor | 5/5 com a rota em 200; o corpo = o depois; pares 7/7, não declaradas 0, órfãos 0 |
-| o da D-0 | 19/19 |
+| o da D-0 | 19/19 (23/23 com o grupo (g), §13) |
 | G-par (site) | `itens 17 · pares comparados 10 · iguais 10 · diferentes 0 · fora do par 7` — `tab-editada-no-site` IGUAL, `texto(44)` × `texto(44)`; retrato do site: 10 itens |
 | G-par da visualização (o tablet, `apps/native/test/g-par-visualizacao.test.tsx`) | `tab-editada-no-site site=texto(44) V=texto(44)` · zero diferenças — **sem arquivo do tablet mudar** |
 | G-faixa | `PASSA` (§5.1) |
@@ -254,7 +256,10 @@ terceiros.
 | **1166** | T | O instrumento do M0 supunha `content_data` objeto; com a D0-D22 o R5 manda `null` e ele quebrava (`Cannot convert undefined or null to object`) | consertado na cópia do instrumento (§6.1) |
 | **1167** | P | O prompt pede *"os quatro roteiros do M0"*; o M0 tem **seis** (R1–R6) × duas dificuldades | rodados os seis (§6.1) |
 
-**Contagem** (1160–1167): 8 — P 2 · D 2 · A 0 · T 4. **A próxima livre é a 1168.**
+| **1168** | A | **O editor zera o `annotations` em todo salvar**, nos quatro tipos: o estado (`components/content-editor.tsx:90`) nasce `[]` e nada o escreve, e o corpo o põe depois do espalhamento (`:77`) — uma linha com anotações volta com `annotations: []`. **Já era da `main`** (medido, §13). O que a D-0 muda é o alcance: os salvamentos que davam 400 (div. 1152, 158 de 196) passam a gravar. No dado (M1, consulta 3): 21 contents com a chave; com texto, a sonda da Fase D (div. 1159); os outros 20 não foram lidos por valor | **pergunta ao Marcel** (§13) |
+| **1169** | T | A primeira rodada do grupo (g) "sobre a `main`" **não trocou os arquivos**: os quatro caminhos foram passados numa variável que o zsh não divide, o `git checkout` falhou e o teste mediu o código da PR. Visto pela saída (`pathspec … did not match`), refeito com os caminhos explícitos | registrado; os dois brutos estão no anexo |
+
+**Contagem** (1160–1169): 10 — P 2 · D 2 · A 1 · T 5. **A próxima livre é a 1170.**
 
 ## 9. Para o catálogo — a regra proposta (div. 1157)
 
@@ -300,6 +305,46 @@ A última do `docs/native/LOGS-OCTAVIA.md` é a **38**. Proposta, para o encerra
 # G-tok: a lista não cresce; saem 5 frases de components/editors/frases-editor.ts (I1-E34).
 # G-faixa: a regra do veredito não muda; content-edit.json remedido em EDIT-tab e base-tab (I1-E33, n=36).
 ```
+
+## 13. A conferência antes do merge — o editor não apaga o que não conhece
+
+**(1) Por leitura, `arquivo:linha`.** Com o `content_data` da linha **não** nulo, o editor:
+- copia o objeto inteiro para o estado (`components/content-editor.tsx:48`, `content_data: content.content_data || {}`);
+- num salvar só por *Detalhes*, o corpo leva **o mesmo objeto espalhado** (`:76`, `...dados`), mais `annotations` (`:77`),
+  `sections`/`lyrics` quando o estado do topo os tem (`:79-80`, nunca num salvar por *Detalhes*) e a chave do tipo só se
+  faltava (`:81-82`);
+- quando um editor de tipo muda algo, o `handleContentChange` espalha o `content_data` de antes e só então o que voltou
+  (`components/editors/content-type-editor.tsx:34-37`); os editores devolvem `{ ...content, … }`, com o `content_data`
+  espalhado no `content` (`:45`; `tab-editor.tsx:40`, `chord-editor.tsx:40`, `lyrics-editor.tsx:22`). A Partitura não tem
+  editor de tipo: o `SheetMusicDisplay` não chama `onChange` (`:42`).
+- **Resultado esperado: nenhuma chave desconhecida se perde; a única chave que o editor reescreve sem ter editado é o
+  `annotations`** (div. 1168).
+
+**(2) O teste — o grupo (g) do gate da D-0** (`349b9c5`). Uma linha por tipo com a chave fabricada
+`chave_d0_desconhecida` (objeto) e, na Partitura, também a legada `file` (a forma de `docs/native/N4-PRECHECK.md:950`);
+*Notas* em *Detalhes*; salvar. A chave tem de voltar no corpo **e** na linha gravada com o mesmo valor
+`[medido: bruto/conferencia-g-*.txt]`:
+
+| tipo | chaves desconhecidas | sobre a PR | sobre os arquivos do editor da `main` |
+|---|---|---|---|
+| Letra | 1 | ✓ 1 de 1 no corpo, igual | ✓ |
+| Cifra | 1 | ✓ | ✓ |
+| Tab | 1 | ✓ | ✓ |
+| Partitura | 2 (`file`, a fabricada) | ✓ 2 de 2 | ✓ |
+
+**Passa nos quatro: só o teste entra, nenhum conserto.** Não é comportamento novo — a `main` passa igual.
+
+**(3) Controle negativo** — o `corpoDoPut` passando só as chaves de tipo (`lyrics`, `chords`, `tablature`, `sections`):
+**reprovam os 4 casos (g)** (*"a chave chave_d0_desconhecida perdeu-se ou mudou no corpo"*; na Partitura, *"a chave file…"*),
+e com eles o (d) e as classes 2 e 3 do (e) — 7. Desfeito; `git status` só com o teste.
+
+**O `annotations` (div. 1168), medido à parte** por um teste descartável, apagado depois (`bruto/conferencia-sonda-annotations*.txt`):
+uma linha com `annotations: [{ id: 1, texto: "anotação fabricada D0" }]`, *Notas* em *Detalhes*, salvar → **o corpo leva
+`annotations: []`, nos quatro tipos, na PR e na `main`**. Não está no grupo (g) porque não é chave desconhecida: o editor a
+conhece e a reescreve. Não foi consertado — a pergunta é do Marcel.
+
+**Os gates depois do (g)**: o da D-0, o do `PUT` e o G-par juntos — `31 passed | 1 skipped`; lint limpo. **CI no `349b9c5`:
+8/8 verdes** (`build`, g-back, g-faixa, g-palco, g-tok, gates-nativos, Vercel).
 
 ---
 

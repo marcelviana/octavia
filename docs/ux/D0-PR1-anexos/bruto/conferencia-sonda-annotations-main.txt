@@ -1,0 +1,35 @@
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-d0-pr1
+
+stdout | tests/gates/sonda-annotations.test.tsx > sonda descartável — annotations > Lyrics
+  rota 200 · corpo 330 B · content_data {2 chaves}
+
+stdout | tests/gates/sonda-annotations.test.tsx > sonda descartável — annotations > Lyrics
+  SONDA Lyrics: rota 200 · annotations na linha = [{"id":1,"texto":"anotação fabricada D0"}] · no corpo = []
+
+stdout | tests/gates/sonda-annotations.test.tsx > sonda descartável — annotations > Chords
+  rota 200 · corpo 330 B · content_data {2 chaves}
+
+stdout | tests/gates/sonda-annotations.test.tsx > sonda descartável — annotations > Chords
+  SONDA Chords: rota 200 · annotations na linha = [{"id":1,"texto":"anotação fabricada D0"}] · no corpo = []
+
+stdout | tests/gates/sonda-annotations.test.tsx > sonda descartável — annotations > Tab
+  rota 200 · corpo 353 B · content_data {2 chaves}
+
+stdout | tests/gates/sonda-annotations.test.tsx > sonda descartável — annotations > Tab
+  SONDA Tab: rota 200 · annotations na linha = [{"id":1,"texto":"anotação fabricada D0"}] · no corpo = []
+
+stdout | tests/gates/sonda-annotations.test.tsx > sonda descartável — annotations > Sheet
+  rota 200 · corpo 330 B · content_data {2 chaves}
+
+stdout | tests/gates/sonda-annotations.test.tsx > sonda descartável — annotations > Sheet
+  SONDA Sheet: rota 200 · annotations na linha = [{"id":1,"texto":"anotação fabricada D0"}] · no corpo = []
+
+ ✓  web  tests/gates/sonda-annotations.test.tsx (4 tests) 590ms
+     ✓ Lyrics  310ms
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  09:46:16
+   Duration  1.32s (transform 260ms, setup 172ms, import 191ms, tests 590ms, environment 276ms)
+
