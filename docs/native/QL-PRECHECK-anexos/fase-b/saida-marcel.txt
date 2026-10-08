@@ -1,0 +1,28 @@
+# QL pre-check · Fase B — a saída do Marcel no SQL Editor do Supabase, colada verbatim nesta sessão (2026-10-08), uma
+# consulta depois da outra (q1, q2, q3). Nada editado abaixo desta linha de cabeçalho.
+
+## q1-linhas-por-tipo.sql
+
+| conta | tipo   | musicas | com_corpo_de_texto | linhas | musicas_acima_26 | musicas_acima_48 | musicas_acima_55 | musicas_acima_80 | linhas_acima_26 | linhas_acima_48 | linhas_acima_55 | linhas_acima_80 | maior_linha | p95_linha | musicas_com_tab_char | musicas_com_cr | musicas_com_acento_combinante |
+| ----- | ------ | ------- | ------------------ | ------ | ---------------- | ---------------- | ---------------- | ---------------- | --------------- | --------------- | --------------- | --------------- | ----------- | --------- | -------------------- | -------------- | ----------------------------- |
+| xVDJ  | Chords | 3       | 3                  | 109    | 1                | 1                | 0                | 0                | 20              | 1               | 0               | 0               | 50          | 39        | 0                    | 0              | 0                             |
+| xVDJ  | Lyrics | 57      | 57                 | 2646   | 56               | 22               | 11               | 0                | 956             | 89              | 27              | 0               | 77          | 46        | 0                    | 0              | 0                             |
+| xVDJ  | Sheet  | 1       | 0                  | 0      | 0                | 0                | 0                | 0                | 0               | 0               | 0               | 0               | null        | null      | 0                    | 0              | 0                             |
+| xVDJ  | Tab    | 2       | 2                  | 2      | 0                | 0                | 0                | 0                | 0               | 0               | 0               | 0               | 7           | 7         | 0                    | 0              | 0                             |
+
+## q2-cifra-pares.sql
+
+| conta | tipo   | musicas_com_corpo | linhas | linhas_de_acordes | musicas_com_linha_de_acordes | pares | musicas_com_par | pares_acima_26 | pares_acima_48 | pares_acima_55 | pares_acima_80 | linha_de_acordes_do_par_acima_26 | maior_par | linhas_de_acordes_acima_26 | outras_linhas_acima_26 | linhas_quase_acorde | musicas_com_quase_acorde | quase_acima_26 | quase_acima_48 | quase_acima_55 | quase_acima_80 | fracao_quase | linhas_quase_maioria | fracao_quase_maioria |
+| ----- | ------ | ----------------- | ------ | ----------------- | ---------------------------- | ----- | --------------- | -------------- | -------------- | -------------- | -------------- | -------------------------------- | --------- | -------------------------- | ---------------------- | ------------------- | ------------------------ | -------------- | -------------- | -------------- | -------------- | ------------ | -------------------- | -------------------- |
+| xVDJ  | Chords | 3                 | 109    | 46                | 2                            | 46    | 2               | 19             | 1              | 0              | 0              | 3                                | 50        | 3                          | 17                     | 4                   | 1                        | 0              | 0              | 0              | 0              | 0.080        | 4                    | 0.080                |
+| xVDJ  | Lyrics | 57                | 2646   | 0                 | 0                            | 0     | 0               | 0              | 0              | 0              | 0              | 0                                | null      | 0                          | 956                    | 16                  | 7                        | 11             | 3              | 1              | 0              | 1.000        | 0                    | null                 |
+
+## q3-notas.sql
+
+| conta | tipo   | musicas | com_notas | maior_comprimento | mediana_comprimento | mais_linhas | maior_linha | com_linha_acima_26 | com_linha_acima_48 | com_mais_de_uma_linha |
+| ----- | ------ | ------- | --------- | ----------------- | ------------------- | ----------- | ----------- | ------------------ | ------------------ | --------------------- |
+| xVDJ  | Chords | 3       | 0         | null              | null                | null        | null        | 0                  | 0                  | 0                     |
+| xVDJ  | Lyrics | 57      | 0         | null              | null                | null        | null        | 0                  | 0                  | 0                     |
+| xVDJ  | Sheet  | 1       | 0         | null              | null                | null        | null        | 0                  | 0                  | 0                     |
+| xVDJ  | Tab    | 2       | 0         | null              | null                | null        | null        | 0                  | 0                  | 0                     |
+| xVDJ  | todos  | 63      | 0         | null              | null                | null        | null        | 0                  | 0                  | 0                     |

@@ -15,7 +15,8 @@ mock, com a fixture escrita pelo projeto, e as saídas só trazem contagens e co
 | `fase-b/prova-local/gerar-b.mjs` · `fixture-b.json` · `esperado-b.json` | *(commit 2)* a fixture B (a A + linhas que caem e que não caem no critério "quase acorde") e o esperado das duas fixtures | §3.1 |
 | `fase-b/prova-local/saida-psql-a.txt` · `saida-psql-b.txt` | *(commit 2)* as três consultas (a 2 com o acréscimo) nas fixtures A e B | §3.1 |
 | `fase-b/prova-local/conferir-b.py` · `conferir-b.txt` · `conferir-b-cn.txt` | *(commit 2)* a conferência coluna a coluna (343, 0 diferentes; as colunas da Fase A iguais à saída da Fase A) e o controle negativo (as saídas trocadas: 82 diferentes) | §3.1 |
-| `suite-tsc-lint.txt` · `suite-tsc-lint-commit2.txt` | `pnpm test`, os quatro `tsc` e o `pnpm lint` nesta árvore, nos commits 1 e 2 | §4 |
+| `fase-b/saida-marcel.txt` | *(commit 3)* a saída das três consultas no SQL Editor do Supabase, colada pelo Marcel, verbatim | §10 |
+| `suite-tsc-lint.txt` · `suite-tsc-lint-commit2.txt` · `suite-tsc-lint-commit3.txt` | `pnpm test`, os quatro `tsc` e o `pnpm lint` nesta árvore, nos commits 1, 2 e 3 | §4 |
 
 Os scripts daqui são **de anexo** (rodam à mão; fora de CI, lint e typecheck — N4-D117): se um bloco seguinte reaproveitar
 algum, ele sai de `docs/`.
