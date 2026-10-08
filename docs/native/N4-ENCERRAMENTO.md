@@ -651,7 +651,9 @@ As 1136–1138 são da Parte A (`N4-ENCERRAMENTO-anexos/README.md` §10, com o t
 **respondida pela QL-D5** — não sincronizar quando a rede volta com o app aberto é **lacuna**, não comportamento desejado.
 A leitura do pre-check (§A6.1) achou que o PRD da tela 1 já o dizia: o **T1-R13 passo 4** manda repetir o sync *"ao voltar
 do background com > 30 s ausente ou ao recuperar rede"* (`docs/native/PRD-TELA-1.md:158`), nunca implementado (divs. 1180,
-1181). O destino — fatia do QL ou bloco próprio — é a pergunta Q1 daquele pre-check.)*
+1181). O destino — fatia do QL ou bloco próprio — é a pergunta Q1 daquele pre-check.)* *(Acréscimo do aval do pre-check do
+QL, `[Marcel, 2026-10-08]` — `QL-PRECHECK.md` §9: o destino é o **SY**, bloco próprio logo depois do QL e antes do resto
+do D (QL-D12).)*
 
 ---
 

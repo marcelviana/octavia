@@ -12,7 +12,10 @@ mock, com a fixture escrita pelo projeto, e as saídas só trazem contagens e co
 | `fase-b/q1-linhas-por-tipo.sql` · `q2-cifra-pares.sql` · `q3-notas.sql` | as três consultas da Fase B, prontas para o Marcel colar (a conta principal escrita; nada a substituir) | §3 |
 | `fase-b/prova-local/gerar.mjs` | gera a fixture da prova (o `g-par.json` do core + linhas do projeto + uma de outra conta) e o esperado pelo `bodyOf` do core — `npx tsx docs/native/QL-PRECHECK-anexos/fase-b/prova-local/gerar.mjs`, da raiz | §3 |
 | `fase-b/prova-local/fixture.json` · `esperado.json` · `saida-psql.txt` | a fixture, o esperado e a saída das três consultas num Postgres 17.11 local e descartável | §3 |
-| `suite-tsc-lint.txt` | `pnpm test`, os quatro `tsc` e o `pnpm lint` nesta árvore | §4 |
+| `fase-b/prova-local/gerar-b.mjs` · `fixture-b.json` · `esperado-b.json` | *(commit 2)* a fixture B (a A + linhas que caem e que não caem no critério "quase acorde") e o esperado das duas fixtures | §3.1 |
+| `fase-b/prova-local/saida-psql-a.txt` · `saida-psql-b.txt` | *(commit 2)* as três consultas (a 2 com o acréscimo) nas fixtures A e B | §3.1 |
+| `fase-b/prova-local/conferir-b.py` · `conferir-b.txt` · `conferir-b-cn.txt` | *(commit 2)* a conferência coluna a coluna (343, 0 diferentes; as colunas da Fase A iguais à saída da Fase A) e o controle negativo (as saídas trocadas: 82 diferentes) | §3.1 |
+| `suite-tsc-lint.txt` · `suite-tsc-lint-commit2.txt` | `pnpm test`, os quatro `tsc` e o `pnpm lint` nesta árvore, nos commits 1 e 2 | §4 |
 
 Os scripts daqui são **de anexo** (rodam à mão; fora de CI, lint e typecheck — N4-D117): se um bloco seguinte reaproveitar
 algum, ele sai de `docs/`.

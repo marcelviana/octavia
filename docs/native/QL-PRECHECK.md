@@ -9,7 +9,7 @@ registra (§6).
 - **Convenção**: `[medido]` = comando + saída literal desta sessão (no anexo); `[lido]` = do arquivo citado, com caminho e
   linha; `[hipótese]` = o resto.
 - **Anexos**: [`QL-PRECHECK-anexos/`](QL-PRECHECK-anexos/README.md).
-- **Divergências deste commit**: **1175–1187** (§6). A faixa foi conferida na coluna `[medido]`:
+- **Divergências**: **1175–1187** no commit 1 (Fase A) e **1188–1189** no commit 2 (o aval, §9) — §6. A faixa foi conferida na coluna `[medido]`:
   `git grep -nE '^\| \*\*(11[0-9]{2}|12[0-9]{2})\*\*' -- docs`, filtrando ≥ 1170 → só **1170–1174** (`D0-ENCERRAMENTO.md`);
   nenhum número ≥ 1175 em prosa (`git grep -nE "div(s)?\. ?(117[5-9]|11[89][0-9]|12[0-9]{2})" -- docs` → vazio). A
   primeira livre era a **1175**, como diz o `D0-ENCERRAMENTO.md` §10.
@@ -451,7 +451,7 @@ régua por zoom, que é código (PR-1). Nenhum aparelho foi tocado nesta sessão
 | consulta | mede |
 |---|---|
 | **1** — linhas por tipo | por tipo: músicas, com corpo de texto, linhas; **músicas e linhas acima de 26, 48, 55 e 80** colunas; a maior linha e o p95; e quantas têm `\t`, `\r` e acento combinante (os riscos da A2) |
-| **2** — a Cifra e o par | em Cifra e em Letra: **linhas de acordes** (heurística declarada no cabeçalho), **pares** (acordes + letra logo abaixo), **pares acima de 26, 48, 55 e 80**, o maior par, e as linhas de acordes e as outras acima de 26 |
+| **2** — a Cifra e o par | em Cifra e em Letra: **linhas de acordes** (heurística declarada no cabeçalho), **pares** (acordes + letra logo abaixo), **pares acima de 26, 48, 55 e 80**, o maior par, e as linhas de acordes e as outras acima de 26; desde o commit 2, as **linhas quase acorde** (§3.1) |
 | **3** — as notas | por tipo e no total: músicas com notas, o maior comprimento, a mediana, a maior linha, quantas têm linha acima de 26 e de 48, quantas têm mais de uma linha |
 
 **A prova local** `[medido: fase-b/prova-local/]`: as três rodaram num Postgres 17.11 **descartável, local** (no
@@ -462,6 +462,35 @@ calculado pelo **`bodyOf` do core** e a mesma heurística em JavaScript (`espera
 80 · maior 70 · 1 com `\t` · 1 com `\r` · 9 linhas de acordes · 7 pares · 3 acima de 26 · maior par 70; na Letra 6 · 5 · 19 ·
 4/8 · 1/3 · 1/2 · 1/1 · maior 81 · 1 com acento combinante · 1 par; na Tab 3 · 3 · 8 · 2/4 · 1/1 · 1/1 · 1/1 · maior 93; as
 notas 2 · maior 100 · maior linha 73 · 1 com mais de uma linha. A linha da outra conta ficou fora.
+
+### 3.1 O acréscimo à consulta 2 — as linhas "quase acorde" (QL-D14, QL-D20; commit 2)
+
+A consulta 2 ganhou, por tipo (Cifra e Letra), as **linhas quase acorde**: as que a heurística **recusa** mas têm ao
+menos um token que é acorde por ela. O critério e os exemplos estão no cabeçalho do
+[`q2-cifra-pares.sql`](QL-PRECHECK-anexos/fase-b/q2-cifra-pares.sql) — entram *"Intro: Am7(9)  E"*, *"A  E  fim"*,
+*"Refrão  C  G"*; não entram *"Am  F  C  G  (2x)"* (já é linha de acordes, div. 1188), *"Eu vou cantar"* e a linha vazia.
+Colunas novas: `linhas_quase_acorde`, `musicas_com_quase_acorde`, `quase_acima_26/48/55/80` (linhas), `fracao_quase` =
+quase ÷ (acorde + quase). **Extra declarado** (div. 1189): o critério conta toda linha de letra com o artigo "A" ou a
+conjunção "E" soltos, então a consulta devolve também `linhas_quase_maioria` (acordes + separadores ≥ metade dos tokens:
+*"A  E  fim"* entra, *"A noite chega"* não) e `fracao_quase_maioria`. As colunas da Fase A não mudaram de definição: as
+linhas de acordes e os pares saem da mesma contagem de tokens.
+
+**A prova local** `[medido: fase-b/prova-local/]` — o Postgres 17.11 descartável de novo (subido, provado, parado e
+apagado), em **duas fixtures**: a **A** (a da Fase A, intacta) e a **B** (a A + duas músicas do projeto com linhas que
+caem e que não caem no critério, `gerar-b.mjs` → `fixture-b.json`). O esperado das duas sai do `bodyOf` do core e do
+mesmo critério em JavaScript (`esperado-b.json`); o `conferir-b.py` compara coluna a coluna:
+
+```
+conferidas 343 · diferentes 0 ✓
+```
+
+— as três consultas nas duas fixtures, **e as colunas da Fase A na fixture A iguais, célula a célula, à saída da Fase A**
+(`saida-psql.txt`): **o critério novo não muda nenhum número da prova da Fase A**. O controle negativo (as saídas A e B
+trocadas de nome) reprova: `conferidas 343 · diferentes 82 ✗` (`conferir-b-cn.txt`). Os números do acréscimo, na
+fixture B: Cifra **6** linhas quase acorde em **3** músicas · **2** acima de 26 · **2** acima de 48 · **1** acima de 55 ·
+0 acima de 80 · fração **0,375** · maioria **3**, fração **0,231**; Letra **2** em **1** música · fração **0,667** · maioria
+**1**, fração **0,5**. Na fixture A, a Cifra já tinha **2** quase acorde (fração **0,182**; maioria 1, **0,1**) — uma delas
+é *"A noite da fixture"*, o caso da div. 1189.
 
 **Depois do aval**: o Marcel cola as três, e a saída entra **verbatim** num commit próprio
 (`QL-PRECHECK-anexos/fase-b/saida-marcel.txt`), com a leitura no documento.
@@ -489,35 +518,42 @@ notas 2 · maior 100 · maior linha 73 · 1 com mais de uma linha. A linha da ou
 D**, com o escopo do A6.5: o T1-R13 passo 4 (rede volta; segundo plano > 30 s), **voo único**, **a foto da música aberta**
 (o texto não muda no meio), o CN da janela da `naoRegredir`, e o release com a regra 38 (c)/(d) remedida; (b) fatia do
 QL; (c) depois do resto do D. **Recomendo (a).** E um nome para ele (sugestão: **SY**).
+→ **Respondida: QL-D12** (§9).
 
 **Q2 — a forma da QL-D3.** A leitura sustenta: (1) um **reconhecedor de linha de acordes** no core, por heurística
 declarada, com a Fase B medindo quantas linhas e pares ele acha; (2) o par cortado **na mesma coluna**, com o corte
 recuado ao começo do acorde que atravessaria a coluna — o alinhamento da continuação é desenho; (3) **onde vale**: só na
 Cifra, ou também na Letra com cifra digitada. **Recomendo**: (1) e (2) como estão; (3) **decidir depois da Fase B** — se
 a consulta 2 achar pares na Letra, o par vale para os dois tipos (o músico não escolhe o tipo pensando no palco).
+→ **Respondida: QL-D14** (§9).
 
 **Q3 — onde vive a quebra (A2).** (a) **função pura no core por colunas**, o app medindo a largura da coluna e a de um
 caractere no zoom corrente; (b) a quebra nativa do `Text`; (c) medir cada linha no RN. **Recomendo (a)** — é a única que
 tem gate puro, faz o par da Cifra e dá ao iOS a mesma quebra.
+→ **Respondida: QL-D13** (§9).
 
 **Q4 — a errata do PRD da tela 1** (div. 1186). O T1-R31 manda *"zoom sem re-quebra"* e o aceite dele é a Cifra de 120
 colunas **numa linha**; o T1-R25 manda Letra e Cifra como `pre`. O QL contradiz os dois para a Letra e a Cifra (a Tab
 fica). (a) **errata dos dois no PR-1**, com a razão (o PERF-10 era a re-quebra do navegador destruindo o alinhamento da
 cifra — o que o par da QL-D3 resolve) e o aceite novo; (b) outra forma. **Recomendo (a).**
+→ **Respondida: QL-D15** (§9).
 
 **Q5 — os instrumentos que leem o nó desenhado (A8, div. 1185).** O G-par de V, o (e) do G-N3 e o comprimento/`sha12` do
 `corpo` veem a quebra se ela mudar o texto do nó. (a) **o PR-1 faz a errata dos três instrumentos** para comparar o
 **texto lógico** (as linhas visuais juntadas sem as continuações), dá colunas ao duplo do `native-tela` (senão o G-par de V
 passa cego), e prova cada um com CN; (b) desenhar a quebra sem mudar o texto do nó. **Recomendo (a)** — (b) prende o
 desenho da continuação ao que o `uiautomator` expõe.
+→ **Respondida: QL-D16** (§9).
 
 **Q6 — as corridas 124 e 146 (A7).** (a) **W5**: é disparo a mais (2 em 61), com a hipótese do lado cego registrada
 para medir; (b) conserto na PR-1 do QL. **Recomendo (a)** — a QL-D10 manda ao W5 quando é só disparo a mais.
+→ **Respondida: QL-D17** (§9).
 
 **Q7 — a posição ao girar e ao mudar o zoom.** Com a quebra, o `y` em pixel deixa de apontar o mesmo trecho (A1.4). (a)
 **âncora na primeira linha lógica visível**, recalculada a cada mudança de colunas, no PR-3, com o caso no aceite
 (girar no meio de uma Letra longa); (b) voltar ao topo. **Recomendo (a)** — voltar ao topo no meio da música é o que o
 requisito do Marcel proíbe no sync (A6.2).
+→ **Respondida: QL-D18** (§9).
 
 **Q8 — o fatiamento (QL-D8).** **Confirmado, com quatro ajustes**: (1) a **PR-1 gates** também traz a errata do T1-R31/R25
 (Q4), a errata dos três instrumentos (Q5) e o CN da medida do caractere; (2) a **PR-3 o leitor** traz a errata em par dos
@@ -525,17 +561,20 @@ requisito do Marcel proíbe no sync (A6.2).
 da PR-3 se o desenho as puser no corpo, em mono (decisão do desenho, não deste pre-check); (4) a Fase B roda **antes do
 brief**, porque os números dela (pares, `\t`, acento combinante) são entrada do desenho. Ordem: **Fase B → brief e
 desenho → PR-1 → PR-2 → PR-3 → PR-4 → encerramento com release**.
+→ **Respondida: QL-D19** (§9).
 
 **Q9 — a Fase B.** As três consultas do §3, coladas pelo Marcel, com a saída verbatim num commit próprio. **Recomendo
 rodar como estão.**
+→ **Respondida: QL-D20** (§9).
 
 **Q10 — a A9** (a fixture no AVD) **não rodou**; o "antes" do desenho são os PNGs e dumps já commitados (§A9). (a)
 **aceitar**; (b) rodar antes do brief. **Recomendo (a)**; a largura do caractere nos outros zooms se mede no PR-1, com o
 token de régua.
+→ **Respondida: QL-D21** (§9).
 
 ---
 
-## 6. Divergências deste commit — 1175 a 1187
+## 6. Divergências desta PR — 1175 a 1189
 
 Origem: **P** premissa do prompt · **D** documento anterior · **A** ambiente, dado real ou defeito do produto · **T**
 toolchain/aparato · **X** terceiros (`N4-PRECHECK.md:603-604`; `D0-PRECHECK.md` §4).
@@ -555,9 +594,12 @@ toolchain/aparato · **X** terceiros (`N4-PRECHECK.md:603-604`; `D0-PRECHECK.md`
 | **1185** | P | QL-D7 (iv): *"o G-par verde, porque a quebra não toca o contrato de leitura"* — vale para a metade do core; **a metade de V lê o `textContent` do nó `corpo` desenhado** (`g-par-visualizacao.test.tsx:73-74`) e reprova se o texto do nó mudar; e no jsdom, sem `onLayout`, o duplo nunca quebraria — o G-par de V passaria **cego** | A8.2; Q5 |
 | **1186** | D | **O recorte contradiz o PRD da tela 1 sem citá-lo**: o T1-R31 (*"zoom … sem re-quebra de linha"*, aceite: *"cifra com linha de 120 colunas … mantém cada linha em uma linha"*) e o T1-R25 (*"Lyrics, Chords-texto e Tab … como texto monoespaçado/`pre`"*) — `PRD-TELA-1.md:215-216`, `:236-237` | Q4: errata do PRD no PR-1 |
 | **1187** | T | `npx tsc --noEmit -p apps/native` **da raiz** dá exit 2 (35 × TS2488 em `apps/native/test/*.tsx`); **de dentro do pacote** — a forma dos encerramentos (`N4-ENCERRAMENTO-anexos/gates.txt:392`) — dá 0. A causa da diferença não foi medida | registrado; a forma de dentro vale |
+| **1188** | P | *(commit 2)* O prompt do aval dá *"Am  F  C  G  (2x)"* como exemplo de linha **quase acorde**; pela heurística da Fase A ela **é linha de acordes** — o `(2x)` é separador (`\([0-9]+x\)`, `q2-cifra-pares.sql`) | o critério fica o do prompt; a linha entra no cabeçalho da consulta 2 como exemplo de que **não** entra (§3.1) |
+| **1189** | P | *(commit 2)* O critério "quase acorde" (recusada pela heurística, com ao menos um token acorde) conta **toda linha de letra com o artigo "A" ou a conjunção "E" soltos** — *"A noite chega"*, *"E o dia"*: os dois são acordes pelo token. A fração quase ÷ (acorde + quase) sai inflada pelo português | o critério fica como pedido; **extra declarado**: a coluna *quase acorde, maioria* (acordes + separadores ≥ metade dos tokens) e a fração dela (§3.1) |
 
-**Contagem** `[medido: a coluna]`: **13 — P 5 · D 3 · A 3 · T 2** (P: 1175, 1177, 1178, 1179, 1185 · D: 1176, 1181, 1186 ·
-A: 1180, 1182, 1183 · T: 1184, 1187). **A próxima livre é a 1188.**
+**Contagem** `[medido: a coluna]`: commit 1, **13 — P 5 · D 3 · A 3 · T 2** (P: 1175, 1177, 1178, 1179, 1185 · D: 1176, 1181,
+1186 · A: 1180, 1182, 1183 · T: 1184, 1187); commit 2, **2 — P 2** (1188, 1189). **A PR: 15 — P 7 · D 3 · A 3 · T 2. A
+próxima livre é a 1190.**
 
 ---
 
@@ -569,6 +611,12 @@ No molde das existentes, sem reescrever texto:
   passo 4 e a div. 1181.
 - **`docs/ux/PLANO-TRANSICAO.md`**, na "Sequência": a nota da abertura do QL.
 
+**No commit 2** (o aval, §9):
+- **`docs/ux/PLANO-TRANSICAO.md`**, depois da nota da abertura do QL: o **SY** como bloco próprio e a fila nova (QL-D12).
+- **`docs/native/N4-ENCERRAMENTO.md`** §13, na nota do commit 1 sobre a div. 1143: o destino é o **SY** (QL-D12).
+- **`docs/ux/D0-ENCERRAMENTO.md`** §8.2, depois da tabela: o item 3 depende do que o SY deixar escrito sobre a
+  `naoRegredir` e o critério do `reconcile` (A6.3; QL-D12).
+
 ## 8. Os blocos de declaração da PR, verbatim
 
 ```gates
@@ -578,3 +626,23 @@ No molde das existentes, sem reescrever texto:
 ```gates-web
 # só docs — QL pre-check: nenhum arquivo do núcleo do G-back tocado; nenhuma linha de código.
 ```
+
+---
+
+## 9. O aval da Fase A — QL-D12…QL-D21 `[Marcel, 2026-10-08]`
+
+**O commit 2 aplicou o aval.** As dez perguntas do §5, na ordem do que decidem; o texto da decisão é este (o "→
+Respondida" de cada pergunta aponta para cá).
+
+| # | pergunta | decisão | o que mudou nesta PR (commit 2) |
+|---|---|---|---|
+| **QL-D12** | Q1 | **A sincronização automática vira bloco próprio, chamado SY, logo depois do QL e antes do resto do D.** O escopo é o do A6.5: o T1-R13 passo 4 (a rede volta; a volta do segundo plano depois de 30 s), o **voo único**, **a foto da música aberta** (o texto não muda no meio de uma música), a prova da janela da `naoRegredir` (div. 1183), e o release com a regra 38 (c) e (d) remedida (N4-D115). Se haverá aviso de "versão nova" no palco, decide o pre-check do SY. **A fila passa a ser: QL → SY → resto do D → N5 → identidade → iOS**, com o W5 à parte. | erratas de ponteiro no `PLANO-TRANSICAO.md`, no `N4-ENCERRAMENTO.md` §13 e no `D0-ENCERRAMENTO.md` §8.2 (§7) |
+| **QL-D13** | Q3 | **A quebra é uma função pura no `packages/core`, por número de colunas.** O app mede a largura da coluna e a de um caractere no zoom corrente, e divide. A função **não** entra no `bodyOf`: a busca segue indexando o texto lógico. | — |
+| **QL-D14** | Q2 | **A forma da Cifra:** (1) um reconhecedor de linha de acordes no core, por heurística declarada; (2) o par cortado na mesma coluna, recuando o corte ao começo do acorde que atravessaria; o alinhamento da continuação é desenho; (3) se o par vale também na Letra com cifra digitada, decide-se depois da Fase B. **Acréscimo do aval: a regra de reserva quando a heurística erra.** A consulta 2 passa a contar também as linhas que *parecem* acorde mas a heurística recusa. A regra de reserva se decide junto com o desenho, com esses números. A candidata registrada: a Cifra em que a heurística não tem certeza não quebra e mantém a rolagem lateral de hoje. | a consulta 2 com as linhas quase acorde e a prova local (§3.1); divs. 1188, 1189 |
+| **QL-D15** | Q4 | **A errata do T1-R31 e do T1-R25 entra na PR-1**, com a razão (o par resolve o PERF-10) e um aceite novo: *"a Cifra de 120 colunas quebrada com o acorde sobre a sílaba"* no lugar de *"numa linha"*. A errata registra também a reserva da QL-D14. A Tab segue sem quebra. | — (PR-1) |
+| **QL-D16** | Q5 | **A PR-1 corrige os três instrumentos que leem o nó desenhado** (o G-par de V, o (e) do G-N3, e o comprimento com `sha12` do `corpo`) para comparar o **texto lógico**. Cada um prova com controle negativo que reprova uma quebra que muda o texto. O duplo do `native-tela` recebe colunas, para o G-par de V não passar sem ver a quebra (div. 1185). | — (PR-1) |
+| **QL-D17** | Q6 | **As corridas 124 e 146 vão ao W5**, como disparo a mais (div. 1184). A hipótese do lado cego fica registrada para medir lá (o detector imprimir a lista que a API devolveu). | — |
+| **QL-D18** | Q7 | **A âncora é a primeira linha lógica visível**, recalculada a cada mudança de colunas (giro e zoom), na PR-3. O aceite inclui girar o tablet no meio de uma Letra longa. | — (PR-3) |
+| **QL-D19** | Q8 | **O fatiamento, confirmado com os quatro ajustes:** Fase B → brief e desenho → **PR-1** (gates; a errata do PRD, QL-D15; a errata dos três instrumentos, QL-D16; o controle negativo da medida do caractere) → **PR-2** (a quebra no core) → **PR-3** (o leitor no palco e em V; a errata em par dos 6 dumps de Letra da B3, com a B5 byte a byte; a âncora, QL-D18) → **PR-4** (as notas no palco; podem entrar na PR-3 se o desenho as puser em mono no corpo) → **encerramento com release** (QL-D9). | — |
+| **QL-D20** | Q9 | **A Fase B roda com as três consultas**, mais o acréscimo da QL-D14 na consulta 2, provado no Postgres local antes de o Marcel colar. | §3.1 |
+| **QL-D21** | Q10 | **A A9 fica sem rodar.** O "antes" do desenho são os PNGs e dumps já commitados; a largura do caractere nos outros zooms se mede na PR-1. | — |

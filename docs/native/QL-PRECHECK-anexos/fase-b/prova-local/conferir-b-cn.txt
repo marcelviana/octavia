@@ -1,0 +1,4 @@
+# CN do conferir-b.py: as saídas A e B trocadas de nome — tem de reprovar
+  ✗ Fase A q3 Lyrics musicas psql 6 esperado 7
+  ✗ Fase A q3 todos musicas psql 17 esperado 19
+conferidas 343 · diferentes 82 ✗

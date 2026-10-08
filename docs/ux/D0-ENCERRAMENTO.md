@@ -209,6 +209,12 @@ Tiradas do `D0-PRECHECK.md` §12.2, do `D0-PR1-anexos/README.md` e das listas do
 | 7 | **os nomes reais em fixture e nas folhas**: 419 linhas em 29 arquivos e as 5 folhas com sha (a troca exige errata da folha, superfície por superfície); inclui a cópia da folha 6 que a medição do `content-edit.json` guarda | divs. 1153, 1165; D0-D18; `D0-PRECHECK-anexos/fixtures-nomes-reais.txt` |
 | 8 | **o que o I1 e o N4 já tinham deixado** e a D-0 não tocou: I1 §10.1 itens 1 (a poluição), 2 (os campos que não se salvam), 3 (2ª metade, *"Verse 1"*/*"Content"*, div. 784), 4–14 e 16; N4 §10.4 itens 4–7 | `I1-ENCERRAMENTO.md` §10.1; `N4-ENCERRAMENTO.md` §10.4 |
 
+*(Errata de ponteiro do aval do pre-check do QL, `[Marcel, 2026-10-08]` — `docs/native/QL-PRECHECK.md` §9, QL-D12: o
+**item 3** (o `updated_at` mexido pelo favoritar) passa a depender também do **SY**, o bloco da sincronização automática,
+que vem antes do resto do D. O pre-check do QL leu que, se o favoritar parar de mexer no `updated_at`, a `naoRegredir` vira
+nada **e** o `reconcileByUpdatedAt` deixa de ver o favorito feito no site (`QL-PRECHECK.md` §A6.3); o SY deixa escrito o
+que a `naoRegredir` e o critério do `reconcile` exigem, e o item 3 muda os três juntos, a partir disso.)*
+
 ### 8.3 W5 (instrumento)
 
 | # | item | origem |

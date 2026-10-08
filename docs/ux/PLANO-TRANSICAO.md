@@ -1535,3 +1535,9 @@ automaticamente.
 > das corridas do APK fora do filtro. A ordem não muda: **QL → resto do D → N5 → identidade → iOS**; o **W5** à parte. O
 > **sync automático** do tablet foi registrado como **lacuna** (QL-D5, a div. 1143) — já era o T1-R13 passo 4 do PRD da
 > tela 1 —, e o pre-check propõe para ele **um bloco próprio, logo depois do QL e antes do resto do D** (a decisão é do aval).
+
+> **Nota do aval do pre-check do QL (2026-10-08)** — sem reescrever a nota acima. A sincronização automática do tablet vira
+> **bloco próprio, o SY** (QL-D12 `[Marcel, 2026-10-08]`, `docs/native/QL-PRECHECK.md` §9): o T1-R13 passo 4 (a rede volta;
+> a volta do segundo plano depois de 30 s), o voo único, a foto da música aberta (o texto não muda no meio de uma música),
+> a prova da janela da `naoRegredir` e o release com a regra 38 (c)/(d) remedida. **A fila passa a ser: QL → SY → resto do
+> D → N5 → identidade → iOS**; o **W5** à parte.
