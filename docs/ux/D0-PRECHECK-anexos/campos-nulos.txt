@@ -1,0 +1,28 @@
+# D-0 pre-check, §9.5 — os campos do editor com a coluna null, contra o esquema real (rastro; local; 0 requisições)
+# $ npx tsx docs/ux/D0-PRECHECK-anexos/instrumentos/campos-nulos.ts
+title        manda ""                 → RECUSADO · title: String must contain at least 1 character(s)
+              (content-editor.tsx:36 (title || "") — a coluna é NOT NULL: inalcançável a partir de null)
+artist       manda ""                 → ACEITO
+              (content-editor.tsx:37 (artist || ""))
+album        manda ""                 → ACEITO
+              (content-editor.tsx:38 (album || ""))
+genre        manda ""                 → ACEITO
+              (content-editor.tsx:39 (genre || ""))
+key          manda ""                 → ACEITO
+              (content-editor.tsx:40 (key || ""))
+bpm          manda null               → ACEITO
+              (content-editor.tsx:41 (bpm || "") e :58 (bpm ? parseInt : null) → null)
+difficulty   manda ""                 → RECUSADO · difficulty: Invalid enum value. Expected 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert', received ''
+              (content-editor.tsx:42 (difficulty || ""))
+tags         manda []                 → ACEITO
+              (content-editor.tsx:43 (tags || []))
+notes        manda ""                 → ACEITO
+              (content-editor.tsx:44 (notes || ""))
+is_favorite  manda false              → ACEITO
+              (content-editor.tsx:45 (is_favorite || false))
+is_public    manda false              → ACEITO
+              (content-editor.tsx:46 (is_public || false))
+content_data manda {"annotations":[]} → ACEITO
+              (content-editor.tsx:47 (content_data || {}) e :64-71 — o tipo vem da linha (a 1149, à parte))
+
+difficulty   manda null              → ACEITO   (o conserto da D0-D19 no editor)

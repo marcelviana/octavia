@@ -1514,3 +1514,9 @@ automaticamente.
 > ativa** na `main` (a Tab vai para `measures`, que nenhum leitor lê; todo `PUT` do favorito mexe no `updated_at`), e o
 > encerramento propõe uma **PR D-0** só para estancá-la **antes** da quebra de linha, com o resto do D na posição aprovada
 > (`N4-ENCERRAMENTO.md` §15.1).
+
+> **Nota do pre-check da D-0 (2026-10-07)** — sem reescrever a nota acima. O Marcel decidiu o *"em aberto"*
+> `[Marcel, 2026-10-07]`: a **D-0 existe** e vem antes da quebra de linha, **só para a Tab** editada no site que nenhum
+> leitor vê; o `updated_at` do favoritar **fica no resto do D**, e só muda junto com a proteção da estrela da N4-D91. A
+> ordem passa a ser **D-0 → quebra de linha → resto do D → N5 → identidade → iOS**; o **W5** à parte. Fonte:
+> `docs/ux/D0-PRECHECK.md` §0 (D0-D1…D5); errata de ponteiro no `N4-ENCERRAMENTO.md` (fim do §15 e nota do §10.4).

@@ -1,0 +1,14 @@
+# D-0 pre-check — os dois leitores da Tab sobre formas fabricadas (rastro; main 69fd3c2; 0 requisições)
+# $ npx tsx docs/ux/D0-PRECHECK-anexos/instrumentos/leitores-tab.ts
+criada do zero        {tablature:""}
+   core: {"ok":true,"body":"text"} corpo=len 0 | site: null (o vazio do painel)
+lote                  {tablature:"e|--1--|"}
+   core: {"ok":true,"body":"text"} corpo=len 8 | site: len 8
+editada no site       {tablature:"e|--1--|", measures:[exemplo]}
+   core: {"ok":true,"body":"text"} corpo=len 8 | site: len 8
+do zero + editada     {tablature:"", measures:[exemplo]}
+   core: {"ok":true,"body":"text"} corpo=len 0 | site: null (o vazio do painel)
+upload                null
+   core: {"ok":false,"reason":"no-body"} corpo=null | site: null (o vazio do painel)
+só measures           {measures:[exemplo]}
+   core: {"ok":false,"reason":"no-key"} corpo=null | site: null (o vazio do painel)

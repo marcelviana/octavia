@@ -1,0 +1,36 @@
+# D-0 pre-check, M1 — a saída das três consultas, como o console do Supabase devolveu ao Marcel (2026-10-08). Rastro.
+# Rodadas pelo Marcel, só leitura; nenhum texto, título ou artista. O id vem truncado a 8 caracteres.
+# ATENÇÃO (D0-D18…D20, 2026-10-08): a coluna `principal` da consulta 1 NÃO está conferida — o uid colado no lugar de
+# <UID_PRINCIPAL> parece não ser o da conta principal (ver D0-PRECHECK.md §9.2).
+
+## Consulta 1 — por Tab (instrumentos/m1-consulta.sql, parte 1)
+| id8      | principal | chaves    | tipo_tablature | len_tablature | tem_measures | measures_eh_exemplo | tem_arquivo | dificuldade_nula | updated_at                    |
+| c40a3784 | false     | tablature | string         | 353           | false        | null                | false       | false            | 2026-08-08 19:47:04.992+00    |
+| 253e73c8 | false     | tablature | string         | 353           | false        | null                | false       | true             | 2026-08-08 19:47:04.035+00    |
+| 4cc7cd86 | false     | tablature | string         | 353           | false        | null                | false       | false            | 2026-08-08 19:47:03.509+00    |
+| 2abf142b | false     | tablature | string         | 353           | false        | null                | false       | true             | 2026-08-08 19:47:02.985+00    |
+| 1c8f02ef | false     | tablature | string         | 353           | false        | null                | false       | false            | 2026-08-08 19:47:02.497+00    |
+| 2fec1220 | false     | tablature | string         | 353           | false        | null                | false       | false            | 2026-08-08 19:46:55.905+00    |
+| 4b3306b8 | false     | tablature | string         | 353           | false        | null                | false       | false            | 2026-08-08 19:46:55.423+00    |
+| f0d57e35 | false     | tablature | string         | 353           | false        | null                | false       | true             | 2026-08-08 19:46:53.898+00    |
+| 2f929c31 | false     | tablature | string         | 7             | false        | null                | false       | true             | 2025-07-07 18:05:44.196+00    |
+| 8c487b48 | false     | tablature | string         | 7             | false        | null                | false       | true             | 2025-07-07 12:45:52.265+00    |
+| 1fe9b46f | true      | null      | null           | null          | null         | null                | false       | false            | 2025-06-02 14:46:09.465166+00 |
+| e9e4e597 | true      | null      | null           | null          | null         | null                | false       | false            | 2025-06-02 14:46:09.465166+00 |
+| 0ce8a57b | true      | null      | null           | null          | null         | null                | false       | false            | 2025-06-02 14:46:09.465166+00 |
+| 1404fe61 | true      | null      | null           | null          | null         | null                | false       | false            | 2025-06-02 14:46:09.465166+00 |
+| 85fe6571 | true      | null      | null           | null          | null         | null                | false       | false            | 2025-06-02 14:46:09.465166+00 |
+
+## Consulta 2 — por tipo (instrumentos/m1-consulta.sql, parte 2)
+| content_type | total | dificuldade_nula | salvas_pelo_editor | ultima_salva_pelo_editor   |
+| Chords       | 26    | 20               | 4                  | 2026-10-01 22:10:56.13+00  |
+| Lyrics       | 148   | 129              | 15                 | 2026-09-21 09:56:00.512+00 |
+| Sheet        | 7     | 4                | 1                  | 2025-07-07 19:02:10.891+00 |
+| Tab          | 15    | 5                | 0                  | null                       |
+
+## Consulta 3 — o cruzamento (instrumentos/m1-consulta-3.sql)
+| content_type | com_annotations | annotations_e_dificuldade_nula | mais_antigo               | mais_recente              | destes_desde_2025_07_08 | content_data_nulo | content_data_nulo_sem_arquivo |
+| Chords       | 4               | 1                              | 2026-08-09 14:48:06.88+00 | 2026-08-09 14:48:06.88+00 | 1                       | 5                 | 2                             |
+| Lyrics       | 16              | 0                              | null                      | null                      | 0                       | 0                 | 0                             |
+| Sheet        | 1               | 0                              | null                      | null                      | 0                       | 4                 | 2                             |
+| Tab          | 0               | 0                              | null                      | null                      | 0                       | 5                 | 5                             |
