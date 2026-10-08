@@ -1,0 +1,130 @@
+# D-0 pre-check — Fase A, o bruto das leituras estáticas (rastro; árvore ../octavia-d0-precheck, main 69fd3c2)
+# Nenhuma requisição, nenhum aparelho. Os textos de tab que aparecem são do projeto (o compasso-fixture do editor e a
+# tablatura-fixture do gate) — CLAUDE.md, 'o que a regra NÃO alcança'.
+
+$ git rev-parse --short HEAD
+69fd3c2
+[exit 0]
+
+## A4 — quem lê measures e quem lê tablature, fora de teste
+
+$ git grep -n 'measures' -- ':!*.test.*' ':!**/__tests__/**' ':!docs/**' ':!tests/**' ':!*.json' ':!*.md' | grep -v '^components/tab-editor.tsx'
+components/content-editor.tsx:70:      ...(normalizeContentType(contentType) === ContentType.TAB && editedContent.measures && { measures: editedContent.measures }),
+scripts/gates-web/g-faixa-editor-exemplos.ts:26:      measures: [{ id: 1, strings: ['e|-------0-----------0-------|', 'B|-----1---1-------1---1-----|', 'G|---0-------0---0-------0---|',
+[exit 0]
+
+$ git grep -c 'measures' -- components/tab-editor.tsx
+components/tab-editor.tsx:13
+[exit 0]
+
+$ git grep -n 'tablature' -- packages/core/src components/content lib apps/native/src ':!*.test.*' ':!**/__tests__/**'
+components/content/corpo-de-texto.ts:8: * `progression` ({seção: acordes}); letra — `lyrics` (+ `chords`, lista ou texto); tab — `tablature` (lista ou
+components/content/corpo-de-texto.ts:60:  const l = lista(d?.tablature)
+components/content/corpo-de-texto.ts:62:  return texto(d?.tablature)
+lib/content-data-contract.ts:20:export type ContentDataKey = 'lyrics' | 'chords' | 'tablature'
+lib/content-data-contract.ts:25:  [ContentType.TAB]: 'tablature',
+packages/core/src/content-contract.ts:27: *     `progression`, o `chords` em lista sem seções, a `tablature` em lista, a
+packages/core/src/content-contract.ts:40:  Tab: 'tablature',
+[exit 0]
+
+$ git grep -n 'bodyOf(' -- apps/native/src packages/core/src ':!*.test.*' ':!**/__tests__/**'
+apps/native/src/screens/StageScreen.tsx:308:  const corpo = content !== null ? bodyOf(content.content_type, content.content_data) : null
+apps/native/src/screens/VisualizacaoScreen.tsx:417:        corpo={bodyOf(content.content_type, content.content_data)}
+packages/core/src/content-contract.ts:129:export function bodyOf(type: string, data: Record<string, unknown> | null): string | null {
+packages/core/src/search.ts:42:      body: normalizeForSearch(bodyOf(content.content_type, content.content_data) ?? ''),
+[exit 0]
+
+$ sed -n 75p app/api/content/route.ts
+        `title.ilike.%${sanitizedSearch}%,artist.ilike.%${sanitizedSearch}%,album.ilike.%${sanitizedSearch}%`
+[exit 0]
+
+## A3 — o que os criadores gravam em content_data
+
+$ sed -n 32p components/content-creator.tsx
+    onContentCreated({ type: tipo, content: { [CONTENT_TYPE_KEYS[tipo]]: "" }, title: title.trim() })
+[exit 0]
+
+$ sed -n 56p components/batch-preview.tsx
+          content_data: { [CONTENT_TYPE_KEYS[contentType]]: song.body.trim() },
+[exit 0]
+
+$ sed -n 170p hooks/useAddContentLogic.ts; sed -n 43,45p components/add-content/DetailsStep.tsx
+            content_data: song.body,
+  if (songs.length > 0) {
+    return (
+      <BatchPreview
+[exit 0]
+
+$ sed -n 188p app/api/content/route.ts
+      content_data: validatedData.content_data ?? null,
+[exit 0]
+
+## A1 — o gate do PUT do editor: o caso da Tab (chaves do corpo gravado; measures = o exemplo com UMA corda editada)
+
+$ python3 -c "import json;d=json.load(open('tests/gates/fixtures/editor-put-antes.json'));b=json.loads(d['tab (tablatura em texto, sem compassos)']);cd=b['content_data'];print('chaves do topo:',sorted(b));print('chaves do content_data:',sorted(cd));print('tablature igual à de entrada:',cd['tablature']=='e|-------0-----------0-------|\nB|-----1---1-------1---1-----|');print('measures:',len(cd['measures']),'compasso(s);',[len(m['strings']) for m in cd['measures']],'cordas; corda 1 =',cd['measures'][0]['strings'][0]);print('content_data.tuning =',cd['tuning'],'| topo tem tuning?','tuning' in b)"
+chaves do topo: ['album', 'artist', 'bpm', 'content_data', 'difficulty', 'genre', 'id', 'is_favorite', 'is_public', 'key', 'notes', 'tags', 'title', 'updated_at']
+chaves do content_data: ['album', 'annotations', 'artist', 'bpm', 'capo', 'content_data', 'content_type', 'created_at', 'difficulty', 'file_url', 'genre', 'id', 'is_favorite', 'is_public', 'key', 'measures', 'notes', 'tablature', 'tags', 'thumbnail_url', 'time_signature', 'title', 'tuning', 'updated_at', 'user_id']
+tablature igual à de entrada: True
+measures: 1 compasso(s); [6] cordas; corda 1 = E|--0--3--0--2--0--5|
+content_data.tuning = Standard (EADGBE) | topo tem tuning? False
+[exit 0]
+
+## A8 — o núcleo do G-back e a lista do G-tok
+
+$ grep -n 'content-data-contract\|api/content/route\|types/content\|api-schemas\|tab-editor\|content-editor\|corpo-de-texto\|content-contract' scripts/gates-web/g-back-nucleo.txt
+7:app/api/content/route.ts
+19:lib/api-schemas.ts
+21:lib/content-data-contract.ts
+41:types/content.ts
+[exit 0]
+
+$ grep -n 'tab-editor\|partes-da-tab\|informacoes\|frases-editor\|content-editor\|corpo-de-texto\|TabDisplay' scripts/gates-web/g-tok-arquivos.txt
+69:components/content-viewer/TabDisplay.tsx
+74:components/content/corpo-de-texto.ts
+80:# I1-PR11 — superfície 6, content editor (folha 6-content-editor): /content/[id]/edit.
+86:components/content-editor.tsx
+89:components/tab-editor.tsx
+93:components/editors/frases-editor.ts
+96:components/editors/informacoes.tsx
+98:components/editors/partes-da-tab.tsx
+[exit 0]
+
+$ python3 -c "import json,re;s=open('tests/gates-web/medicoes/content-edit.json').read();print(sorted(set(re.findall(r'EDIT-[a-z-]+',s))))"
+['EDIT-carregando', 'EDIT-carregando-auth', 'EDIT-carregando-editor', 'EDIT-cifra', 'EDIT-erro-auth', 'EDIT-erro-limite', 'EDIT-erro-rede', 'EDIT-erro-servidor', 'EDIT-letra', 'EDIT-salvando', 'EDIT-salvar-erro', 'EDIT-sem-mudancas', 'EDIT-sem-usuario', 'EDIT-tab']
+[exit 0]
+
+$ python3 -c "import json;f=json.load(open('packages/core/fixtures/g-par.json'));print('par',len(f['par']),'· fora',len(f['fora_do_par']));[print(k,i['id'],i['content_type'],sorted(i['content_data']) if isinstance(i['content_data'],dict) else i['content_data']) for k in ('par','fora_do_par') for i in f[k] if 'Tab' in i['content_type']]"
+par 9 · fora 7
+par tab-texto Tab ['tablature']
+fora_do_par tab-em-lista Tab ['tablature']
+fora_do_par tipo-legado Guitar Tab ['tablature']
+[exit 0]
+
+$ grep -vc '^#\|^$' packages/core/fixtures/g-par-reprovados.txt
+0
+[exit 1]
+
+$ sed -n 1,3p .github/workflows/native.yml
+# N0-PR2 (N0-PRECHECK C4-2): build verificável do nativo por PR — APK de debug local, sem EAS, sem segredo.
+# Só roda quando o nativo muda (filtro de paths); PRs de web ou de core não o executam.
+# Recorte da N1-PR8 (decisão do Marcel, 2026-09-10, N1-h3): `packages/core/**` e
+[exit 0]
+
+## Fase B — o dado das 2 Tabs da conta principal JÁ lido em 2026-10-01 (N4-PR0, cache do Tab; só chaves)
+
+$ sed -n 87p docs/native/N4-PRECHECK-anexos/b1-b4-biblioteca-principal.txt
+B1 por tipo: {"Chords":3,"Lyrics":57,"Sheet":1,"Tab":2}
+[exit 0]
+
+$ sed -n 91p docs/native/N4-PRECHECK-anexos/b1-b4-biblioteca-principal.txt | python3 -c "import sys,json;l=sys.stdin.read();d=json.loads(l[l.index('{'):]);[print(v,'×',k) for k,v in d.items() if k.startswith('Tab')]"
+2 × Tab:[tablature=string]
+[exit 0]
+
+$ sed -n 1p docs/native/N4-PRECHECK-anexos/b1-b4-biblioteca-principal.txt
+# B1 — a biblioteca da conta principal, pelo cache do Tab S6 depois de um sync de leitura (N4-PR0 commit 2, 2026-10-01; rastro)
+[exit 0]
+
+## A1 — o editor de tab e a tablature (o editor nunca cita a chave)
+
+$ git grep -n 'tablature' -- components/tab-editor.tsx components/editors/ components/content-editor.tsx
+[exit 1]

@@ -514,6 +514,12 @@ que vale daqui em diante; a troca está escrita também no `CI-FAIXA.md`.
 (*"O nome padrão da seção"* que o prompt deste encerramento listava aqui **não é herança do N4**: é o
 `I1-ENCERRAMENTO.md` §10.1 item 3, div. 784, que a N4-D40 cita *"sem item novo"* — div. 1141.)
 
+*(Errata de ponteiro do pre-check da D-0, `[Marcel, 2026-10-07]` — `docs/ux/D0-PRECHECK.md` §0: o **item 1** sai da
+fila do D e vira a **D-0**, antes da quebra de linha (D0-D1). O **item 3** fica no D (D0-D2), **amarrado à N4-D91**:
+desde a N4-PR5 o tablet protege a estrela de regredir durante um sync comparando o `updated_at` da linha que o `PUT`
+devolveu com o da linha que o sync leu (`packages/core/src/favoritar.ts:181-210`, `naoRegredir`); se o favoritar parar
+de mexer no `updated_at`, essa proteção deixa de funcionar — **os dois mudam juntos**. O **item 2** fica no D (D0-D3).)*
+
 ### 10.5 W5 (instrumento)
 
 | # | item | origem |
@@ -778,3 +784,10 @@ passa de 12m20,5s a **12m30s**, e o IQR de 1m43s a **2m03,2s**.
 | **N4-D116** | **a justificativa da ordem do D estava errada** ("atrasaria o N5": nas duas ordens o N5 vem depois da quebra e do D) — corrigida aqui e no `PLANO-TRANSICAO.md`; e a pergunta decisiva, com evidência: a gravação errada continua ativa? **Sim** (a Tab e o `updated_at`) → a **PR D-0** proposta no §15.1, **para o Marcel decidir** | §15.1; `PLANO-TRANSICAO.md` |
 | **N4-D117** | **instrumento executável sob `docs/` fica fora de CI, lint e typecheck; reaproveitado em outro bloco, sai de `docs/`**; os atuais não se movem | §13 (a 1144) |
 
+**Errata de ponteiro — a D-0** `[Marcel, 2026-10-07]` (`docs/ux/D0-PRECHECK.md` §0, D0-D1…D5), sem reescrever o §15.1 nem
+a N4-D116: a PR D-0 proposta no §15.1 **existe** e vem **antes** da quebra de linha, mas cuida **só da Tab** (D0-D1). O
+`updated_at` do favoritar **não entra** nela: fica no resto do Bloco D, amarrado à N4-D91 (D0-D2; a nota depois da tabela
+do §10.4). A Cifra fica fora (D0-D3). A ordem: **D-0 → quebra de linha → resto do D → N5 → identidade → iOS**; o W5 à
+parte (D0-D4). *Como* consertar a Tab — o editor gravar onde os leitores leem, ou os leitores lerem o que o editor grava —
+não estava decidido: é a pergunta do pre-check (D0-D5). Onde o §15.1 diz *"estancar a gravação"* com a Tab **e** o
+`updated_at`, vale esta errata.
