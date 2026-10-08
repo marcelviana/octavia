@@ -1,0 +1,476 @@
+{
+  "_leia": [
+    "Gate (i)/(ii)/(iii) da quebra — bloco QL, PR-1 (packages/core/src/quebra.test.ts). Texto do projeto (QL-BRIEF.md §5), nenhuma obra de terceiro.",
+    "esperado = as linhas visuais (o campo `texto`), na ordem do desenho. `fonte` = a moldura da folha congelada (docs/native/DESIGN-QL/telas.html, os nós [data-vl] da moldura; a linha vazia é o &nbsp;) ou `derivado:` quando a folha não tem o caso.",
+    "gate i = as regras do corte (A-QL-1); iii = a medida do \\t, do \\r e do acento combinante (A-QL-3); o (ii), a invariância (A-QL-2), roda sobre TODOS os casos."
+  ],
+  "textos": {
+    "letra": "Acendi a lanterna do quintal e\nQuando a maré da fixture sobe devagar pelo cais lá\no vento assobia baixinho\n\nCada passo que eu dou na areia fria deixa um rastro de sal e\ne a cidade inteira dorme enquanto o barco da fixture segue sem pressa pro mar\nô ô ô",
+    "cifra": "Intro: Am  E\n\nAm            F              C\nDobrei a esquina da fixture, e\nAm                    F#m7(11)        G          C\nCada janela acesa conta uma história de quem passa\n\nRefrão\nAm  F  C  G\nE a noite inteira cabe numa canção de exemplo",
+    "tab": "e|-----0-----0---------0-----0---------0-----0---------0-----0---------0-----|\nB|---1---1-----1-----1---1-----1-----1---1-----1-----1---1-----1-----1---1---|\nG|-2-------2-------2-------2-------2-------2-------2-------2-------2-------2-|\nD|---------------------------------------------------------------------------|\nA|-3---------3-----3---------3-----3---------3-----3---------3-----3---------|\nE|---------------------------------------------------------------------------|",
+    "quase-acorde": "Intro: Am  E  F#m7(11)  G\nCada janela acesa conta uma história",
+    "tabulacao": "ab\tcd ef gh",
+    "cr": "Quando a maré da fixture sobe devagar pelo cais lá\r\no vento assobia baixinho\r",
+    "combinante": "Quando a mare\u0301 da fixture sobe devagar pelo cais la\u0301"
+  },
+  "casos": [
+    {
+      "id": "letra-80",
+      "gate": "i",
+      "regra": "R1, R3",
+      "tipo": "Lyrics",
+      "texto": "letra",
+      "colunas": 80,
+      "fonte": "QL-C-S3-letra-escuro",
+      "esperado": [
+        "Acendi a lanterna do quintal e",
+        "Quando a maré da fixture sobe devagar pelo cais lá",
+        "o vento assobia baixinho",
+        "",
+        "Cada passo que eu dou na areia fria deixa um rastro de sal e",
+        "e a cidade inteira dorme enquanto o barco da fixture segue sem pressa pro mar",
+        "ô ô ô"
+      ]
+    },
+    {
+      "id": "letra-55",
+      "gate": "i",
+      "regra": "R1, R3",
+      "tipo": "Lyrics",
+      "texto": "letra",
+      "colunas": 55,
+      "fonte": "QL-C-V-letra-escuro",
+      "esperado": [
+        "Acendi a lanterna do quintal e",
+        "Quando a maré da fixture sobe devagar pelo cais lá",
+        "o vento assobia baixinho",
+        "",
+        "Cada passo que eu dou na areia fria deixa um rastro de",
+        "  sal e",
+        "e a cidade inteira dorme enquanto o barco da fixture",
+        "  segue sem pressa pro mar",
+        "ô ô ô"
+      ]
+    },
+    {
+      "id": "letra-48",
+      "gate": "i",
+      "regra": "R1, R3",
+      "tipo": "Lyrics",
+      "texto": "letra",
+      "colunas": 48,
+      "fonte": "QL-B-S3-letra-escuro",
+      "esperado": [
+        "Acendi a lanterna do quintal e",
+        "Quando a maré da fixture sobe devagar pelo cais",
+        "  lá",
+        "o vento assobia baixinho",
+        "",
+        "Cada passo que eu dou na areia fria deixa um",
+        "  rastro de sal e",
+        "e a cidade inteira dorme enquanto o barco da",
+        "  fixture segue sem pressa pro mar",
+        "ô ô ô"
+      ]
+    },
+    {
+      "id": "letra-26",
+      "gate": "i",
+      "regra": "R1, R3",
+      "tipo": "Lyrics",
+      "texto": "letra",
+      "colunas": 26,
+      "fonte": "QL-A-S3-letra-escuro",
+      "esperado": [
+        "Acendi a lanterna do",
+        "  quintal e",
+        "Quando a maré da fixture",
+        "  sobe devagar pelo cais",
+        "  lá",
+        "o vento assobia baixinho",
+        "",
+        "Cada passo que eu dou na",
+        "  areia fria deixa um",
+        "  rastro de sal e",
+        "e a cidade inteira dorme",
+        "  enquanto o barco da",
+        "  fixture segue sem pressa",
+        "  pro mar",
+        "ô ô ô"
+      ]
+    },
+    {
+      "id": "letra-14",
+      "gate": "i",
+      "regra": "R1, R3",
+      "tipo": "Lyrics",
+      "texto": "letra",
+      "colunas": 14,
+      "fonte": "QL-A-S3-notas-longa-escuro",
+      "esperado": [
+        "Acendi a",
+        "  lanterna do",
+        "  quintal e",
+        "Quando a maré",
+        "  da fixture",
+        "  sobe devagar",
+        "  pelo cais lá",
+        "o vento",
+        "  assobia",
+        "  baixinho",
+        "",
+        "Cada passo que",
+        "  eu dou na",
+        "  areia fria",
+        "  deixa um",
+        "  rastro de",
+        "  sal e",
+        "e a cidade",
+        "  inteira",
+        "  dorme",
+        "  enquanto o",
+        "  barco da",
+        "  fixture",
+        "  segue sem",
+        "  pressa pro",
+        "  mar",
+        "ô ô ô"
+      ]
+    },
+    {
+      "id": "cifra-80",
+      "gate": "i",
+      "regra": "R2, R3, R4 (o par, a progressão, a quase acorde)",
+      "tipo": "Chords",
+      "texto": "cifra",
+      "colunas": 80,
+      "fonte": "QL-C-S3-cifra-escuro",
+      "esperado": [
+        "Intro: Am  E",
+        "",
+        "Am            F              C",
+        "Dobrei a esquina da fixture, e",
+        "Am                    F#m7(11)        G          C",
+        "Cada janela acesa conta uma história de quem passa",
+        "",
+        "Refrão",
+        "Am  F  C  G",
+        "E a noite inteira cabe numa canção de exemplo"
+      ]
+    },
+    {
+      "id": "cifra-55",
+      "gate": "i",
+      "regra": "R2, R3, R4 (o par, a progressão, a quase acorde)",
+      "tipo": "Chords",
+      "texto": "cifra",
+      "colunas": 55,
+      "fonte": "QL-C-V-cifra-escuro",
+      "esperado": [
+        "Intro: Am  E",
+        "",
+        "Am            F              C",
+        "Dobrei a esquina da fixture, e",
+        "Am                    F#m7(11)        G          C",
+        "Cada janela acesa conta uma história de quem passa",
+        "",
+        "Refrão",
+        "Am  F  C  G",
+        "E a noite inteira cabe numa canção de exemplo"
+      ]
+    },
+    {
+      "id": "cifra-48",
+      "gate": "i",
+      "regra": "R2, R3, R4 (o par, a progressão, a quase acorde)",
+      "tipo": "Chords",
+      "texto": "cifra",
+      "colunas": 48,
+      "fonte": "QL-B-S3-cifra-escuro",
+      "esperado": [
+        "Intro: Am  E",
+        "",
+        "Am            F              C",
+        "Dobrei a esquina da fixture, e",
+        "Am                    F#m7(11)        G",
+        "Cada janela acesa conta uma história de quem",
+        "      C",
+        "  passa",
+        "",
+        "Refrão",
+        "Am  F  C  G",
+        "E a noite inteira cabe numa canção de exemplo"
+      ]
+    },
+    {
+      "id": "cifra-26",
+      "gate": "i",
+      "regra": "R2, R3, R4 (o par, a progressão, a quase acorde)",
+      "tipo": "Chords",
+      "texto": "cifra",
+      "colunas": 26,
+      "fonte": "QL-A-S3-cifra-escuro",
+      "esperado": [
+        "Intro: Am  E",
+        "",
+        "Am            F",
+        "Dobrei a esquina da",
+        "           C",
+        "  fixture, e",
+        "Am",
+        "Cada janela acesa",
+        "      F#m7(11)        G",
+        "  conta uma história de",
+        "           C",
+        "  quem passa",
+        "",
+        "Refrão",
+        "Am  F  C  G",
+        "E a noite inteira cabe",
+        "  numa canção de exemplo"
+      ]
+    },
+    {
+      "id": "cifra-14",
+      "gate": "i",
+      "regra": "R2, R3, R4 (o par, a progressão, a quase acorde)",
+      "tipo": "Chords",
+      "texto": "cifra",
+      "colunas": 14,
+      "fonte": "EST-QL-A-S3-cifra-zoom40-sem-saida-escuro",
+      "esperado": [
+        "Intro: Am  E",
+        "",
+        "Am",
+        "Dobrei a",
+        "       F",
+        "  esquina da",
+        "           C",
+        "  fixture, e",
+        "Am",
+        "Cada janela",
+        "  acesa",
+        "      F#m7(11)",
+        "  conta uma hi",
+        "          G",
+        "  stória de",
+        "           C",
+        "  quem passa",
+        "",
+        "Refrão",
+        "Am  F  C",
+        "E a noite",
+        "  G",
+        "  inteira cabe",
+        "  numa canção",
+        "  de exemplo"
+      ]
+    },
+    {
+      "id": "tab-80",
+      "gate": "i",
+      "regra": "R4 (a Tab não quebra)",
+      "tipo": "Tab",
+      "texto": "tab",
+      "colunas": 80,
+      "fonte": "QL-C-S3-tab… — conferência §13: \"78 colunas, 6 linhas\"",
+      "esperado": [
+        "e|-----0-----0---------0-----0---------0-----0---------0-----0---------0-----|",
+        "B|---1---1-----1-----1---1-----1-----1---1-----1-----1---1-----1-----1---1---|",
+        "G|-2-------2-------2-------2-------2-------2-------2-------2-------2-------2-|",
+        "D|---------------------------------------------------------------------------|",
+        "A|-3---------3-----3---------3-----3---------3-----3---------3-----3---------|",
+        "E|---------------------------------------------------------------------------|"
+      ]
+    },
+    {
+      "id": "tab-55",
+      "gate": "i",
+      "regra": "R4 (a Tab não quebra)",
+      "tipo": "Tab",
+      "texto": "tab",
+      "colunas": 55,
+      "fonte": "QL-C-V-tab… — conferência §13: \"78 colunas, 6 linhas\"",
+      "esperado": [
+        "e|-----0-----0---------0-----0---------0-----0---------0-----0---------0-----|",
+        "B|---1---1-----1-----1---1-----1-----1---1-----1-----1---1-----1-----1---1---|",
+        "G|-2-------2-------2-------2-------2-------2-------2-------2-------2-------2-|",
+        "D|---------------------------------------------------------------------------|",
+        "A|-3---------3-----3---------3-----3---------3-----3---------3-----3---------|",
+        "E|---------------------------------------------------------------------------|"
+      ]
+    },
+    {
+      "id": "tab-48",
+      "gate": "i",
+      "regra": "R4 (a Tab não quebra)",
+      "tipo": "Tab",
+      "texto": "tab",
+      "colunas": 48,
+      "fonte": "QL-B-S3-tab… — conferência §13: \"78 colunas, 6 linhas\"",
+      "esperado": [
+        "e|-----0-----0---------0-----0---------0-----0---------0-----0---------0-----|",
+        "B|---1---1-----1-----1---1-----1-----1---1-----1-----1---1-----1-----1---1---|",
+        "G|-2-------2-------2-------2-------2-------2-------2-------2-------2-------2-|",
+        "D|---------------------------------------------------------------------------|",
+        "A|-3---------3-----3---------3-----3---------3-----3---------3-----3---------|",
+        "E|---------------------------------------------------------------------------|"
+      ]
+    },
+    {
+      "id": "tab-26",
+      "gate": "i",
+      "regra": "R4 (a Tab não quebra)",
+      "tipo": "Tab",
+      "texto": "tab",
+      "colunas": 26,
+      "fonte": "QL-A-S3-tab… — conferência §13: \"78 colunas, 6 linhas\"",
+      "esperado": [
+        "e|-----0-----0---------0-----0---------0-----0---------0-----0---------0-----|",
+        "B|---1---1-----1-----1---1-----1-----1---1-----1-----1---1-----1-----1---1---|",
+        "G|-2-------2-------2-------2-------2-------2-------2-------2-------2-------2-|",
+        "D|---------------------------------------------------------------------------|",
+        "A|-3---------3-----3---------3-----3---------3-----3---------3-----3---------|",
+        "E|---------------------------------------------------------------------------|"
+      ]
+    },
+    {
+      "id": "tab-14",
+      "gate": "i",
+      "regra": "R4 (a Tab não quebra)",
+      "tipo": "Tab",
+      "texto": "tab",
+      "colunas": 14,
+      "fonte": "derivado: R4 (nenhuma moldura de Tab em 14)",
+      "esperado": [
+        "e|-----0-----0---------0-----0---------0-----0---------0-----0---------0-----|",
+        "B|---1---1-----1-----1---1-----1-----1---1-----1-----1---1-----1-----1---1---|",
+        "G|-2-------2-------2-------2-------2-------2-------2-------2-------2-------2-|",
+        "D|---------------------------------------------------------------------------|",
+        "A|-3---------3-----3---------3-----3---------3-----3---------3-----3---------|",
+        "E|---------------------------------------------------------------------------|"
+      ]
+    },
+    {
+      "id": "quase-acorde-14",
+      "gate": "i",
+      "regra": "R4 (a quase acorde quebra como letra, fora do par)",
+      "tipo": "Chords",
+      "texto": "quase-acorde",
+      "colunas": 14,
+      "fonte": "derivado: R1 + R4",
+      "esperado": [
+        "Intro: Am  E",
+        "  F#m7(11)  G",
+        "Cada janela",
+        "  acesa conta",
+        "  uma história"
+      ]
+    },
+    {
+      "id": "cifra-como-letra-26",
+      "gate": "i",
+      "regra": "QL-D22 (o par só na Cifra: a Letra quebra como letra)",
+      "tipo": "Lyrics",
+      "texto": "cifra",
+      "colunas": 26,
+      "fonte": "derivado: R1 sobre o texto do §5.2",
+      "esperado": [
+        "Intro: Am  E",
+        "",
+        "Am            F",
+        "  C",
+        "Dobrei a esquina da",
+        "  fixture, e",
+        "Am",
+        "  F#m7(11)        G",
+        "  C",
+        "Cada janela acesa conta",
+        "  uma história de quem",
+        "  passa",
+        "",
+        "Refrão",
+        "Am  F  C  G",
+        "E a noite inteira cabe",
+        "  numa canção de exemplo"
+      ]
+    },
+    {
+      "id": "tabulacao-16",
+      "gate": "iii",
+      "regra": "QL-D24 (o \\t até a próxima múltipla de 8: 16 colunas, cabe)",
+      "tipo": "Lyrics",
+      "texto": "tabulacao",
+      "colunas": 16,
+      "fonte": "derivado: QL-D24",
+      "esperado": [
+        "ab\tcd ef gh"
+      ]
+    },
+    {
+      "id": "tabulacao-14",
+      "gate": "iii",
+      "regra": "QL-D24 (16 colunas não cabem em 14; com o \\t valendo 1 seriam 11)",
+      "tipo": "Lyrics",
+      "texto": "tabulacao",
+      "colunas": 14,
+      "fonte": "derivado: QL-D24",
+      "esperado": [
+        "ab\tcd ef",
+        "  gh"
+      ]
+    },
+    {
+      "id": "cr-50",
+      "gate": "iii",
+      "regra": "QL-D24 (o \\r do fim conta 0: 50 colunas, cabe)",
+      "tipo": "Lyrics",
+      "texto": "cr",
+      "colunas": 50,
+      "fonte": "derivado: QL-D24",
+      "esperado": [
+        "Quando a maré da fixture sobe devagar pelo cais lá\r",
+        "o vento assobia baixinho\r"
+      ]
+    },
+    {
+      "id": "cr-48",
+      "gate": "iii",
+      "regra": "QL-D24 (o \\r fica no último pedaço)",
+      "tipo": "Lyrics",
+      "texto": "cr",
+      "colunas": 48,
+      "fonte": "derivado: QL-D24 + o corte do QL-B-S3-letra-escuro",
+      "esperado": [
+        "Quando a maré da fixture sobe devagar pelo cais",
+        "  lá\r",
+        "o vento assobia baixinho\r"
+      ]
+    },
+    {
+      "id": "combinante-50",
+      "gate": "iii",
+      "regra": "QL-D24 (o acento combinante conta 0: 50 colunas em 52 unidades, cabe)",
+      "tipo": "Lyrics",
+      "texto": "combinante",
+      "colunas": 50,
+      "fonte": "derivado: QL-D24",
+      "esperado": [
+        "Quando a mare\u0301 da fixture sobe devagar pelo cais la\u0301"
+      ]
+    },
+    {
+      "id": "combinante-48",
+      "gate": "iii",
+      "regra": "QL-D24 (o corte do QL-B-S3-letra-escuro, com o texto sem normalizar)",
+      "tipo": "Lyrics",
+      "texto": "combinante",
+      "colunas": 48,
+      "fonte": "derivado: QL-D24 + o corte do QL-B-S3-letra-escuro",
+      "esperado": [
+        "Quando a mare\u0301 da fixture sobe devagar pelo cais",
+        "  la\u0301"
+      ]
+    }
+  ]
+}
