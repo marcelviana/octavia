@@ -219,13 +219,16 @@ export function logicasDasVisuais(corpo: string, linhas: LinhaVisual[] | null): 
 }
 
 /**
- * A linha lógica no topo da rolagem `y`: a da primeira linha visual com algum pedaço à vista. No conteúdo a linha visual
- * `v` ocupa `[32 + v × entrelinha, 32 + (v + 1) × entrelinha)` — o respiro de 32 em cima, e cada linha do `Text` com a
- * entrelinha do estilo.
+ * A linha lógica no topo da rolagem `y`: a da linha visual que está NA MARCA de 32 — a 32 do topo da rolagem, onde a
+ * âncora põe o começo dela (`yDaLogica`). No conteúdo a linha visual `v` ocupa `[32 + v × entrelinha, 32 + (v + 1) ×
+ * entrelinha)` — o respiro de 32 em cima, e cada linha do `Text` com a entrelinha do estilo —, então a da marca é a de
+ * `⌊y ÷ entrelinha⌋`. A linha de cima, que aparece no respiro, não é o topo: com ela, cada giro recuava uma linha (o
+ * achado do aparelho, QL-PR3). Meio dp de folga: a rolagem do aparelho é inteira em px, e o arredondamento não pode
+ * trocar a linha.
  */
 export function logicaNoTopo(logicas: readonly number[], y: number, entrelinha: number): number {
   if (logicas.length === 0) return 0
-  const v = Math.max(0, Math.floor((y - RESPIRO) / entrelinha))
+  const v = Math.max(0, Math.floor((y + 0.5) / entrelinha))
   return logicas[Math.min(v, logicas.length - 1)]!
 }
 
