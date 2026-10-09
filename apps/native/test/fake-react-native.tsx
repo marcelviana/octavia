@@ -20,7 +20,7 @@
  * foi nesta série. O que ele mede é o que o DOM sabe dizer: qual nó existe,
  * com que id, com que texto, ativo ou inativo, e o que acontece ao toque.
  */
-import { createElement, forwardRef, useImperativeHandle, type ReactNode } from 'react'
+import { createElement, forwardRef, isValidElement, useImperativeHandle, useLayoutEffect, type ReactNode } from 'react'
 
 /** `StyleSheet.create` é identidade; `flatten` achata arrays e nulos. */
 function achatar(estilo: unknown): Record<string, unknown> {
@@ -55,6 +55,8 @@ interface PropsComuns {
   source?: unknown
   /** N2-PR5 — o que o `PanResponder` deste duplo põe nos `panHandlers`. */
   __pan?: ConfigDoArrasto
+  /** QL-PR1 — o duplo só o chama depois de `__colunas(…)` (ver `medida`, mais abaixo). */
+  onLayout?: (e: EventoDeLayout) => void
 }
 
 /**
@@ -124,6 +126,7 @@ function atributos(p: PropsComuns): Record<string, unknown> {
 function primitivo(tag: string, nome: string) {
   const C = forwardRef<unknown, PropsComuns>((p, ref) => {
     if (p.__pan !== undefined && p.testID !== undefined) arrastos.set(p.testID, p.__pan)
+    useMedida(p, nome === 'Text')
     return createElement(tag, { ...atributos(p), ref }, p.children as ReactNode)
   })
   C.displayName = nome
@@ -139,6 +142,7 @@ export const Text = primitivo('span', 'Text')
  * existem para que a tela não precise perguntar se existem.
  */
 export const ScrollView = forwardRef<unknown, PropsComuns & { scrollEnabled?: boolean; horizontal?: boolean }>((p, ref) => {
+  useMedida(p, false)
   useImperativeHandle(ref, () => ({
     scrollTo: (): void => undefined,
     measureInWindow: (cb: (x: number, y: number, w: number, h: number) => void): void => cb(0, 152, 1138, 475),
@@ -299,6 +303,54 @@ export const Keyboard = { dismiss: (): void => undefined }
  * fim. Nada aqui resolve geometria: só a largura que o `faixaDe()` lê.
  */
 const C_PADRAO = { width: 1138, height: 627, scale: 1, fontScale: 1 }
+
+/**
+ * QL-PR1 (QL-D16, div. 1185) — o duplo RECEBE COLUNAS. A quebra (QL) vai depender de duas medidas que o app tira do
+ * `onLayout`: a largura da coluna do leitor e a de um caractere da mono no zoom corrente (QL-D13). Até aqui o duplo
+ * nunca chamava `onLayout`: no `jsdom` o leitor nunca teria colunas, nunca quebraria, e o G-par de V passaria **sem ver
+ * a quebra** — o instrumento com escopo menor do que parece.
+ *
+ * `__colunas(n, zoom?)` LIGA a medida: daí em diante todo primitivo com `onLayout` o recebe uma vez, na montagem —
+ *   - um `Text`: largura = colunas do texto × `caractereDoDuplo(fontSize)`, altura = linhas × entrelinha;
+ *   - uma `View` ou `ScrollView`: a largura de `n` colunas no `zoom` (22 se omitido) mais o respiro do corpo de 2 × 32
+ *     (`leitor.conteudoPad`) — com meia coluna de folga, para o `⌊…⌋` do app dar `n` e não `n − 1` por arredondamento;
+ *     altura = a da janela.
+ * `__colunas()` DESLIGA. **Desligada é o padrão**, e é o comportamento de antes: nenhum teste anterior recebe
+ * `onLayout` (o palco, o fim e o reordenar têm `onLayout` e nada neles muda).
+ *
+ * O que isto NÃO é: geometria (o APARATO, "O que o `native-tela` prova"). O caractere do duplo é a escala linear da
+ * medida do zoom 22 (13,33 dp, `N4-PR8-anexos/regua-avd.txt`) — a largura de verdade em cada zoom é a da régua no
+ * aparelho (`QL-PR1-anexos`, A-QL-6). O que importa aqui é que a coluna e o caractere venham da MESMA conta: o app
+ * divide um pelo outro e chega a `n`.
+ */
+export interface EventoDeLayout {
+  nativeEvent: { layout: { x: number; y: number; width: number; height: number } }
+}
+export const caractereDoDuplo = (fontSize: number): number => (1333.3 / 100) * (fontSize / 22)
+const RESPIRO_DO_CORPO = 2 * 32
+let medida: { largura: number } | null = null
+export function __colunas(n?: number, zoom = 22): void {
+  medida = n === undefined ? null : { largura: (n + 0.5) * caractereDoDuplo(zoom) + RESPIRO_DO_CORPO }
+}
+function textoDe(filhos: ReactNode): string {
+  if (typeof filhos === 'string' || typeof filhos === 'number') return String(filhos)
+  if (Array.isArray(filhos)) return filhos.map(textoDe).join('')
+  if (isValidElement(filhos)) return textoDe((filhos.props as { children?: ReactNode }).children)
+  return ''
+}
+function useMedida(p: PropsComuns, ehTexto: boolean): void {
+  const ligada = medida
+  useLayoutEffect(() => {
+    if (ligada === null || p.onLayout === undefined) return
+    const est = achatar(p.style)
+    const fonte = typeof est.fontSize === 'number' ? est.fontSize : 14
+    const linhas = textoDe(p.children).split('\n')
+    const width = ehTexto ? Math.max(...linhas.map((l) => l.length)) * caractereDoDuplo(fonte) : ligada.largura
+    const height = ehTexto ? linhas.length * (typeof est.lineHeight === 'number' ? est.lineHeight : fonte * 1.55) : janela.height
+    p.onLayout({ nativeEvent: { layout: { x: 0, y: 0, width, height } } })
+    // uma vez, na montagem — como o primeiro `onLayout` do RN
+  }, [])
+}
 let janela = C_PADRAO
 export function __janela(width?: number, height?: number): void {
   janela = width === undefined || height === undefined ? C_PADRAO : { ...C_PADRAO, width, height }

@@ -74,6 +74,16 @@
  *                   do pre-check, e o CT-N3 do `cn-n3pr1.sh` exige a contagem
  *                   igual à do `B3-inventario.jsonl`.
  *
+ * O CORPO QUEBRADO, QL-PR1 (QL-D16; div. 1185). Com a quebra de linha (QL) o nó `corpo` do palco deixa de ter o
+ * texto da música e passa a ter as LINHAS VISUAIS — em C (80 colunas) e em B (48) linhas diferentes do MESMO texto.
+ * Comparado byte a byte, o (e) contaria o corpo da paisagem como texto que some da faixa. O corpo passa a se comparar
+ * pelo TEXTO LÓGICO (`texto-logico.mjs`, `ehQuebraDe`): as linhas desenhadas sob o `corpo` da faixa valem como o texto
+ * do `corpo` da paisagem quando são uma QUEBRA dele — só o recuo de 2 e espaço entre os pedaços mudam; uma letra
+ * trocada, uma palavra a menos ou uma linha fora de ordem é (e). Contagem PRÓPRIA (`quebra=n`, os dumps em que o corpo
+ * quebrou e valeu), que não reprova e não soma ao (e). **A paisagem é a referência lógica**: a base congelada
+ * (`B3-referencia-paisagem/`, pré-QL) tem o corpo sem quebra; o texto lógico não se reconstrói só do desenho
+ * (div. 1199), então um par em que a PAISAGEM também está quebrada só passa se as duas forem iguais.
+ *
  * PAREAMENTO. O nome do dump é afirmação (caso 23): `<PREFIXO>-<tela>-<estado>-
  * <aparelho>[-<orientação>].xml`. A chave do par é `<tela>-<estado>` + o tipo de
  * aparelho. O celular (`phone`) não tem paisagem de tablet própria no pre-check
@@ -100,6 +110,7 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { basename, join } from 'node:path'
 import { createHash } from 'node:crypto'
+import { ehQuebraDe } from './texto-logico.mjs'
 
 const PKG = 'rocks.octavia.app'
 /** As mesmas fronteiras do `apps/native/src/faixa.ts` (T3-R1): A < 700 · B 700–960 · C > 960. */
@@ -199,7 +210,9 @@ function medir(arquivo) {
     const borda = (n.b[0] <= 0.5 || n.b[2] >= tela[2] - 0.5) && larg(n.b) < larg(tela) - 1
     if ((sob && alt(n.b) < alt(tela) - 1) || borda) cortes.push({ no: sigB(n), onde: sob ? 'sob barra' : 'borda lateral', b: n.b.map(r1) })
   }
-  return { arquivo, tela, janela, app, textos, cortes }
+  // QL-PR1: as linhas desenhadas sob o `corpo` — cada TextView sob o id é um bloco de texto, partido no `\n`
+  const linhasDoCorpo = app.filter((n) => n.cls === 'TextView' && idAcima(n) === 'corpo').flatMap((n) => n.text.split('\n'))
+  return { arquivo, tela, janela, app, textos, cortes, linhasDoCorpo }
 }
 
 // ---- pareamento -------------------------------------------------------------
@@ -268,6 +281,7 @@ function rotuloVisivel(n, nomeAcessivel) {
 }
 
 const E = []
+const QB = []
 const NA = []
 const RO = []
 const roladosUsados = new Set()
@@ -282,8 +296,13 @@ for (const { ref, f } of pares) {
   if (larg(antes.tela) <= alt(antes.tela)) { console.log(`  ✗ a referência não está em paisagem (raiz ${antes.tela.map(r1)}): ${basename(ref)}`); process.exitCode = 1 }
   const fx = faixaDe(larg(agora.tela))
   const cabe = (t) => t.b[3] - antes.janela[1] <= agora.janela[3] - agora.janela[1]
+  // QL-PR1: o corpo da faixa é uma quebra do corpo da paisagem?
+  const corpoPai = antes.linhasDoCorpo.join('\n')
+  const qb = antes.linhasDoCorpo.length > 0 && agora.linhasDoCorpo.length > 0 ? ehQuebraDe(agora.linhasDoCorpo, corpoPai) : null
+  if (qb !== null && qb.ok && qb.continuacoes > 0) QB.push({ nome, continuacoes: qb.continuacoes, linhas: agora.linhasDoCorpo.length, logicas: qb.linhasLogicas })
   for (const t of antes.textos) {
     if (!cabe(t) || vivos.test(t.text) || agora.textos.some((u) => u.text === t.text)) continue
+    if (t.rid === 'corpo' && qb !== null && qb.ok) continue
     if (t.rid && agora.app.some((n) => n.id === t.rid && n.cd === t.text && rotuloVisivel(n, t.text))) { NA.push({ nome, no: t.s, rid: t.rid }); continue }
     const k = chave(f)
     const rol = rolados.get(`${k.estado}|${k.aparelho}|${k.orient}`)
@@ -341,6 +360,9 @@ if (roladosUsados.size) {
   for (const r of [...roladosUsados].sort()) console.log(`    ${createHash('sha256').update(readFileSync(r)).digest('hex').slice(0, 12)}  ${basename(r)}`)
 }
 console.log('')
+console.log(`QUEBRA — o corpo da faixa é uma quebra do texto lógico do corpo da paisagem (QL-D16); não reprova, não soma ao (e): ${QB.length}`)
+for (const x of QB) console.log(`  ${x.nome}: ${x.linhas} linhas desenhadas de ${x.logicas} lógicas · ${x.continuacoes} continuações`)
+console.log('')
 console.log(`(b) CORTE — nó que sai da janela útil ou encosta na borda lateral, NOVO contra a paisagem — REPROVA: ${B.length}`)
 const bPorDump = new Map()
 for (const x of B) bPorDump.set(x.nome, [...(bPorDump.get(x.nome) ?? []), x])
@@ -349,5 +371,5 @@ for (const [n, xs] of bPorDump) {
   for (const x of xs) console.log(`    ${x.no} ${x.onde} [${x.b.join(', ')}]`)
 }
 console.log('')
-if (E.length > 0 || B.length > 0) { console.log(`G-N3: REPROVA ✗ — (e)=${E.length} em ${porDump.size} dump(s) · (b)=${B.length} em ${bPorDump.size} dump(s) · nome-acessível=${NA.length} · rolagem=${RO.length}`); process.exitCode = 1 }
-else if (process.exitCode !== 1) console.log(`G-N3: (e)=0 · (b)=0 · nome-acessível=${NA.length} · rolagem=${RO.length} ✓ (d′ e 4 dp não reprovam: triagem e errata)`)
+if (E.length > 0 || B.length > 0) { console.log(`G-N3: REPROVA ✗ — (e)=${E.length} em ${porDump.size} dump(s) · (b)=${B.length} em ${bPorDump.size} dump(s) · nome-acessível=${NA.length} · rolagem=${RO.length} · quebra=${QB.length}`); process.exitCode = 1 }
+else if (process.exitCode !== 1) console.log(`G-N3: (e)=0 · (b)=0 · nome-acessível=${NA.length} · rolagem=${RO.length} · quebra=${QB.length} ✓ (d′ e 4 dp não reprovam: triagem e errata)`)

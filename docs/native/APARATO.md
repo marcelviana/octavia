@@ -53,6 +53,9 @@ esta página no mesmo commit (regra 9 do `LOGS-OCTAVIA.md`, aplicada aqui).
   prova (b)** junto de **5/5 local** e do **`diff` mostrando que a PR não toca o caminho** —
   nunca sozinho, e nunca um segundo rerun. (c) se conserta em commit NOVO, gate primeiro se
   for gate; o commit de docs só sobe com tudo verde e ganha a divergência.
+- **`VAR=x função` no `sh` do macOS deixa a variável valendo depois da função** (o `/bin/sh` é o bash em modo POSIX;
+  QL-PR1, div. 1203): num arnês que chama uma função de shell com uma variável de ambiente na frente, o valor vaza para as
+  chamadas seguintes. Use `export VAR=x; função; unset VAR`. Num COMANDO (`VAR=x pnpm …`) não vaza.
 - **Cabo do Tab**: se o Tab não aparece nem como `unauthorized`, veja se o macOS o
   enxerga (`system_profiler SPUSBHostDataType`). Na W4-b3 o primeiro cabo só carregava.
 
@@ -419,6 +422,12 @@ adb -s <serial> shell am start -a android.intent.action.VIEW \
 - Largura de **botão** = texto + o "chrome" do próprio botão, medido no dump
   (botão − texto). Na faixa de S2 e no picker o chrome é 69,8–70,2 dp.
 - Em lote: `N3-PR1-anexos/instrumentos/regua.py <serial> <lista.tsv>` (token, TAB, texto).
+- **O leitor em cada zoom** (QL-PR1, QL-D34): os tokens `leitor-18`, `leitor-22`, `leitor-26`, `leitor-32` e `leitor-40` (o
+  `estiloDoLeitor` em cada passo do `zoomSteps`; o `leitor` da N4-PR8 é o 22). A largura de um caractere da mono em cada
+  zoom, medida no AVD: 10,93 · 13,33 · 15,73 · 19,20 · 24,00 dp (`QL-PR1-anexos/medida-por-zoom.txt`). Em lote e **sem
+  limpar o logcat** entre as medidas (regra 36): `QL-PR1-anexos/instrumentos/regua-zoom.py <serial> <dir>` — o `regua.py`
+  do N3 limpa o buffer a cada linha e não serve numa rodada que conta quedas. O texto de 100 caracteres passa da tela a
+  partir do 22: o dump o recorta na janela (1137,8 dp), e o controle régua × dump vale só no texto que cabe.
 - Funciona em qualquer tela, inclusive no S0 sem sessão: a régua é a camada de
   cima da raiz do app.
 
@@ -466,3 +475,9 @@ sistema, a pilha HTTP do Android (div. 257) e a **`Navigation` real**, que não
 roda no duplo (div. 334: o mapeamento entre telas só se prova no aparelho).
 `N2-PR3-anexos/aparato.md` §6.1; div. 249. **O aceite no aparelho não se
 dispensa por CN verde** — e a regra 15: a tela vence o log.
+
+**O duplo dá colunas, quando se pede** (QL-PR1, QL-D16, div. 1185): `__colunas(n, zoom?)` do `fake-react-native.tsx`
+liga o `onLayout` — todo primitivo com `onLayout` o recebe uma vez, na montagem: a `View` com a largura de `n` colunas
+mais o respiro de 2 × 32, o `Text` com as colunas do texto × o caractere do duplo (a escala linear do 22). `__colunas()`
+desliga; **desligado é o padrão** e é o comportamento de antes (o palco, o fim e o reordenar têm `onLayout`). Não é
+geometria: é a mesma conta dos dois lados, para o leitor chegar a `n`. O G-par de V roda com ele em 26 colunas.

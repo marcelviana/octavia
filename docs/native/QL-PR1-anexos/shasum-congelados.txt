@@ -1,0 +1,22 @@
+# o passo do gates.yml, sobre a árvore da PR
+== docs/native/DESIGN-V1
+telas.html: OK
+icones.html: OK
+telas.pdf: OK
+== docs/native/DESIGN-N2
+telas.html: OK
+telas.pdf: OK
+== docs/native/DESIGN-N3
+telas.html: OK
+telas.pdf: OK
+== docs/native/DESIGN-N4
+telas.html: OK
+icones.html: OK
+== docs/native/DESIGN-QL
+telas.html: OK
+exit 0
+
+# CN: uma cópia do DESIGN-QL com UM byte trocado no telas.html ("rodada" → "Rodada", no <title>), fora da árvore
+telas.html: FAILED
+shasum: WARNING: 1 computed checksum did NOT match
+exit 1

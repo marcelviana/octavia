@@ -1,0 +1,50 @@
+# Gate da quebra (tests/gates/ql-quebra.test.ts) — o que DEVE reprovar hoje, uma checagem por linha: <gate>:<caso>.
+# QL-PR1: `quebrar` é só o contrato e lança — todas as 46 checagens reprovam: (i) 17, (iii) 6, (ii) 23.
+# A PR-2 (a quebra no core) esvazia esta lista; vazia, o gate exige zero reprovações. Reprovação fora daqui e
+# declaração que passa reprovam o teste (regra 14).
+i:letra-80
+i:letra-55
+i:letra-48
+i:letra-26
+i:letra-14
+i:cifra-80
+i:cifra-55
+i:cifra-48
+i:cifra-26
+i:cifra-14
+i:tab-80
+i:tab-55
+i:tab-48
+i:tab-26
+i:tab-14
+i:quase-acorde-14
+i:cifra-como-letra-26
+iii:tabulacao-16
+iii:tabulacao-14
+iii:cr-50
+iii:cr-48
+iii:combinante-50
+iii:combinante-48
+ii:letra-80
+ii:letra-55
+ii:letra-48
+ii:letra-26
+ii:letra-14
+ii:cifra-80
+ii:cifra-55
+ii:cifra-48
+ii:cifra-26
+ii:cifra-14
+ii:tab-80
+ii:tab-55
+ii:tab-48
+ii:tab-26
+ii:tab-14
+ii:quase-acorde-14
+ii:cifra-como-letra-26
+ii:tabulacao-16
+ii:tabulacao-14
+ii:cr-50
+ii:cr-48
+ii:combinante-50
+ii:combinante-48

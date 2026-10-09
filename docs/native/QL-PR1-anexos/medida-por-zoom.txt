@@ -1,0 +1,23 @@
+# QL-PR1 · A-QL-6 · a largura de um caractere da mono (IBM Plex Mono 400) em cada zoom — AVD octavia_tab32 (fator 2,25)
+# fonte: avd/regua-zoom.txt (as linhas `regua` verbatim). caractere = w(100 caracteres) ÷ 100; conferido com w(10) ÷ 10.
+# colunas = ⌊largura do corpo ÷ caractere⌋; corpo: palco C 1073,8 · palco/V B 647,1 · V C 733,8 dp (QL-PRECHECK A1.3; N4-E12)
+
+zoom |  w(100) |  w(10) | caractere dp | px (×2,25) | C 1073,8 | B 647,1 | V-C 733,8 | folha C/B | pre-check C/B
+  18 |  1093.3 |  109.3 |      10.9330 |      24.60 |       98 |      59 |         — | 98/59 ✓ | 100/60 ✗
+  22 |  1333.3 |  133.3 |      13.3330 |      30.00 |       80 |      48 |        55 | 80/48 ✓ | 80/48 ✓
+  26 |  1573.3 |  157.3 |      15.7330 |      35.40 |       68 |      41 |         — | 68/41 ✓ | 69/41 ✗
+  32 |  1920.0 |  192.0 |      19.2000 |      43.20 |       55 |      33 |         — | 55/33 ✓ | 56/33 ✗
+  40 |  2400.0 |  240.0 |      24.0000 |      54.00 |       44 |      26 |         — | 44/26 ✓ | 44/26 ✓
+
+controle: `leitor` (o token da N4-PR8, o 22) w(100)=1333.3 = `leitor-22` 1333.3 (e = os 1333,3 da N4-PR8)
+
+# A leitura dos cinco números [hipótese, que os cinco fecham]: o avanço da IBM Plex Mono é 600/1000 do tamanho, e o que se
+# arredonda ao pixel inteiro é o TAMANHO DA FONTE em px (zoom × 2,25), não o avanço — 18 → 40,5 → 41 px → 24,6 px ·
+# 22 → 49,5 → 50 → 30,0 · 26 → 58,5 → 59 → 35,4 · 32 → 72 → 43,2 · 40 → 90 → 54,0. A hipótese do pre-check (o AVANÇO
+# arredondado ao pixel: 24, 30, 35, 43, 54 px) não fecha no 18, no 26 e no 32 — e era ela que dava as colunas do pre-check.
+#
+# A (o celular, fator 2,625) NÃO foi medido (o octavia_phone não entra nesta PR; A é do N5). Pela mesma leitura
+# [hipótese, derivada]: 18 → 47,25 → 47 px → 28,2 px = 10,743 dp → 32 colunas · 22 → 58 → 34,8 = 13,257 → 26 ·
+# 26 → 68 → 40,8 = 15,543 → 22 · 32 → 84 → 50,4 = 19,2 → 18 · 40 → 105 → 63,0 = 24,0 → 14 (corpo de 347,4 dp).
+# Contra a folha (31 · 26 · 22 · 17 · 14) e o pre-check (32 · 26 · 22 · 18 · 14): a leitura daria o pre-check em A —
+# a confirmar no aparelho do N5, não aqui.
