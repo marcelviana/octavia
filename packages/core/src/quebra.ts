@@ -77,3 +77,12 @@ export function quebrar(texto: string, tipo: string, colunas: number): LinhaVisu
   void colunas
   throw new Error('quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2')
 }
+
+/**
+ * A linha é de acordes (a heurística da Fase B, `QL-PRECHECK-anexos/fase-b/q2-cifra-pares.sql`) — QL-PR2, commit 1: só a
+ * assinatura, para os testes de borda (`quebra.test.ts`) entrarem reprovados. A lógica vem com a de `quebrar`.
+ */
+export function ehLinhaDeAcordes(linha: string): boolean {
+  void linha
+  throw new Error('ehLinhaDeAcordes: só a assinatura no commit 1 da QL-PR2 — a lógica vem com a de quebrar')
+}
