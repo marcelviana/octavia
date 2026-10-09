@@ -28,7 +28,7 @@
  * continuam navegando MÚSICA, não página — errata do design (D-1 / A14):
  * quem vira página é o deslize sobre o documento.
  */
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import {
   Pressable,
   ScrollView,
@@ -37,6 +37,8 @@ import {
   View,
   useWindowDimensions,
   type LayoutChangeEvent,
+  type NativeScrollEvent,
+  type NativeSyntheticEvent,
 } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake'
@@ -85,7 +87,13 @@ import {
   PlaceholderDoLeitor,
   S3eDoLeitor,
   estiloDoLeitor,
+  inicioDoBloco,
   leitor,
+  linhasDoLeitor,
+  logicaNoTopo,
+  logicasDasVisuais,
+  useColunasDoLeitor,
+  yDaLogica,
   type EstadoDoArquivoDoLeitor,
 } from './Leitor'
 
@@ -127,6 +135,9 @@ const TAG_PALCO = 'octavia-palco'
 
 /** Quanto tempo o motivo de um controle inerte fica na linha acima da barra. */
 const MOTIVO_MS = 2500
+
+/** QL-PR3 — quanto tempo o pedido da âncora espera o conteúdo novo assentar (`onContentSizeChange`). */
+const ANCORA_MS = 1000
 
 /** A dica de gesto do PDF (S3d) — a linha acima da barra, como no design. */
 const DICA_PDF = 'pinça para zoom · arraste para mover · deslize para virar a página'
@@ -289,6 +300,10 @@ export function StageScreen({
 
   const scroll = useRef<ScrollView | null>(null)
   const y = useRef(0)
+  /** QL-PR3 — a rolagem vista (o `onScroll`, a mão ou a rolagem automática): de onde a âncora parte. */
+  const yVisto = useRef(0)
+  /** QL-PR3 — a rolagem que a âncora pediu, reaplicada quando o conteúdo novo assenta (`onContentSizeChange`). */
+  const alvoDaAncora = useRef<number | null>(null)
   const frame = useRef<number | null>(null)
   const pedidoEm = useRef(0)
   const primeiroFrame = useRef(true)
@@ -357,6 +372,8 @@ export function StageScreen({
     setRodando(false)
     setMotivoVisivel(null)
     y.current = 0
+    yVisto.current = 0
+    alvoDaAncora.current = null
     scroll.current?.scrollTo({ y: 0, animated: false })
     if (navegouEm.current > 0 && setlist !== null) {
       log(
@@ -522,6 +539,57 @@ export function StageScreen({
   // N4-PR8: o estilo do corpo é o do leitor compartilhado (`Leitor.tsx`) — o mesmo objeto de antes.
   const estiloTexto = estiloDoLeitor(content?.content_type ?? null, zoom, cor)
 
+  /**
+   * QL-PR3 — a quebra (QL-R10). As colunas vêm do contêiner do corpo (o `ScrollView` vertical, com o respiro de 32 por
+   * dentro) e do caractere medido nos cinco zooms de uma vez, na montagem (o passo de zoom já o encontra). Até as duas
+   * medidas existirem, e na Tab, o corpo é o de hoje (QL-D43, R4).
+   */
+  const tipo = content?.content_type ?? null
+  const { colunas, aoMedirContainer, medidor } = useColunasDoLeitor(tipo, zoom, zoomSteps, cor)
+  const linhas = useMemo(() => linhasDoLeitor(corpo, tipo, colunas), [corpo, tipo, colunas])
+  const entrelinha = estiloTexto.lineHeight ?? zoom
+  const logicas = useMemo(() => (corpo === null ? [] : logicasDasVisuais(corpo, linhas)), [corpo, linhas])
+
+  /**
+   * QL-PR3 — A ÂNCORA (QL-D18, QL-D37; QL-R13). Quando o desenho do MESMO corpo muda — o giro (C ↔ B) e o zoom mudam as
+   * colunas e a entrelinha —, a linha lógica que estava no topo volta ao topo: o começo dela a 32 da barra (na Cifra, o
+   * par a partir da linha de acordes). A rolagem automática continua daí (`y`). A troca de música não ancora: volta ao
+   * topo, como sempre (o efeito acima). A Tab não quebra e não ancora (R4).
+   */
+  const chaveDoCorpo = `${posicao}|${content?.id ?? ''}`
+  const desenhoAnterior = useRef<{ chave: string; logicas: readonly number[]; entrelinha: number } | null>(null)
+  useLayoutEffect(() => {
+    const anterior = desenhoAnterior.current
+    desenhoAnterior.current = { chave: chaveDoCorpo, logicas, entrelinha }
+    if (anterior === null || anterior.chave !== chaveDoCorpo || corpo === null || tipo === 'Tab') return
+    const igual =
+      anterior.entrelinha === entrelinha &&
+      anterior.logicas.length === logicas.length &&
+      anterior.logicas.every((l, i) => l === logicas[i])
+    if (igual) return
+    const logica = inicioDoBloco(corpo, tipo, logicaNoTopo(anterior.logicas, yVisto.current, anterior.entrelinha))
+    const alvo = yDaLogica(logicas, logica, entrelinha)
+    y.current = alvo
+    yVisto.current = alvo
+    alvoDaAncora.current = alvo
+    scroll.current?.scrollTo({ y: alvo, animated: false })
+    // o conteúdo novo assenta no `onContentSizeChange`; se ele não mudar de tamanho, o pedido acima já valeu
+    const t = setTimeout(() => {
+      if (alvoDaAncora.current === alvo) alvoDaAncora.current = null
+    }, ANCORA_MS)
+    return () => clearTimeout(t)
+  }, [chaveDoCorpo, logicas, entrelinha, corpo, tipo])
+
+  const aoRolar = useCallback((e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    yVisto.current = e.nativeEvent.contentOffset.y
+  }, [])
+  const aoMudarConteudo = useCallback(() => {
+    const alvo = alvoDaAncora.current
+    if (alvo === null) return
+    alvoDaAncora.current = null
+    scroll.current?.scrollTo({ y: alvo, animated: false })
+  }, [])
+
   const motivo =
     content === null
       ? MOTIVO.ausente
@@ -628,17 +696,28 @@ export function StageScreen({
             onBaixar={() => void buscarArquivo(urlArquivo, true)}
           />
         ) : (
-          <ScrollView ref={scroll} style={leitor.conteudo} contentContainerStyle={leitor.conteudoPad}>
+          <ScrollView
+            ref={scroll}
+            style={leitor.conteudo}
+            contentContainerStyle={leitor.conteudoPad}
+            onLayout={aoMedirContainer}
+            onScroll={aoRolar}
+            scrollEventThrottle={16}
+            onContentSizeChange={aoMudarConteudo}
+          >
             {motivo !== undefined ? (
               <PlaceholderDoLeitor testID="placeholder" titulo={motivo.titulo} apoio={motivo.apoio} cor={cor} />
             ) : (
-              // O ScrollView horizontal é o que impede a re-quebra da linha
-              // longa em qualquer zoom (T1-R25/R31 — provado no spike). N4-PR8:
-              // o corpo é o do leitor compartilhado, que a visualização também usa.
-              <CorpoDoLeitor corpo={corpo} estilo={estiloTexto} testID="corpo" />
+              // N4-PR8: o corpo é o do leitor compartilhado, que a visualização também usa. QL-PR3: nas linhas
+              // visuais da quebra, quando há colunas; a Tab (e o corpo antes das medidas) como antes, rolando para o
+              // lado (`Leitor.tsx`).
+              <CorpoDoLeitor corpo={corpo} tipo={tipo} linhas={linhas} colunas={colunas} estilo={estiloTexto} testID="corpo" />
             )}
           </ScrollView>
         )}
+
+        {/* QL-PR3: o medidor do caractere, fora da tela, até os cinco zooms estarem medidos (só para texto que quebra). */}
+        {corpo !== null && tipo !== 'Tab' ? medidor : null}
 
         {linha !== null ? (
           <Text style={[styles.dica, { color: cor.muted }]} testID="linha-motivo">

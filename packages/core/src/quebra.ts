@@ -143,6 +143,17 @@ function largura(c: Celula, col: number): number {
   return c.tipo === 'tab' ? 8 - (col % 8) : c.tipo === 'zero' ? 0 : 1
 }
 
+/**
+ * A LARGURA DESENHADA de uma linha visual, em colunas — a medida acima, da coluna 0 (o recuo da continuação é texto da
+ * linha visual, então o `\t` conta da coluna desenhada, QL-D47). QL-PR3: o leitor a usa para achar a linha que passa
+ * da coluna (a exceção da QL-D45, que rola para o lado só nessa linha); toda outra linha de `quebrar` cabe por ela.
+ */
+export function colunasDesenhadas(linha: string): number {
+  let col = 0
+  for (const c of celulas(linha)) col += largura(c, col)
+  return col
+}
+
 /** As colunas das células `k..n-1` desenhadas a partir da coluna `d0`: onde cada uma começa e termina (índice `j - k`). */
 function colunasDe(cl: Celula[], k: number, d0: number): { c0: number[]; c1: number[] } {
   const c0: number[] = []
