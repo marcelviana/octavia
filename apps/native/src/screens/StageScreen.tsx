@@ -558,10 +558,13 @@ export function StageScreen({
    * QL-PR4 — AS NOTAS DA MÚSICA (QL-D30…QL-D32; QL-R14, QL-R15). No topo do corpo de texto, antes da letra, dentro da
    * rolagem; recolhidas ou abertas pelo estado LEMBRADO (`preferencias.ts`, QL-D39: o mesmo em toda música, gravado no
    * aparelho). Sem nota, nada (a vazia e a só de espaço já são `null` no core). A nota da POSIÇÃO continua na barra.
-   * Só no corpo de texto: o S3d/S3e (o arquivo) e os placeholders não têm a rolagem do corpo (div. 1230).
+   * QL-D58 (div. 1230): também quando o corpo não é texto — no item sem corpo, dentro da rolagem, acima do placeholder;
+   * no arquivo (o PDF, o baixando, o S3e) e no formato, num bloco fixo no topo da área, acima dele (`comNotasFixas`).
    */
   const notas = content !== null ? notasDaVisualizacao(content) : null
-  const comNotas = notas !== null && motivoDoCorpo === undefined && corpo !== null && urlArquivo === null
+  const comNotas = notas !== null && content !== null
+  /** As notas fora da rolagem do corpo: o arquivo e o formato não estão numa rolagem (o PDF tem a dele). */
+  const notasFixas = comNotas && urlArquivo !== null
   const recolhidas = useNotasRecolhidas()
   const alternarNotas = useCallback(() => void definirNotasRecolhidas(!recolhidas), [recolhidas])
 
@@ -611,7 +614,7 @@ export function StageScreen({
   )
   const reguaNaTela = (): { topo: number; larguraDoMeio: number } | null =>
     comNotas && meio !== null && medidaDasNotas !== null && medidaDasNotas.chave === chaveDoCorpo
-      ? { topo: medidaDasNotas.topo - yDaRolagem.current, larguraDoMeio: meio.largura }
+      ? { topo: medidaDasNotas.topo - (notasFixas ? 0 : yDaRolagem.current), larguraDoMeio: meio.largura }
       : null
   const tocarBorda = (lado: 'voltar' | 'avancar') => (e: GestureResponderEvent) => {
     const x = lado === 'voltar' ? e.nativeEvent.locationX : (meio?.largura ?? 0) - larguraBorda + e.nativeEvent.locationX
@@ -664,6 +667,22 @@ export function StageScreen({
     </>
   )
 
+  // QL-PR4 — as notas da música (QL-D30; QL-D58): o mesmo bloco na rolagem do texto e no topo da área do arquivo
+  const notasEl =
+    notas !== null ? (
+      <NotasDoPalco notas={notas} recolhidas={recolhidas} onAlternar={alternarNotas} zoom={zoom} cor={cor} onLayout={medirNotas} />
+    ) : null
+  /** QL-D58 — o arquivo e o formato com as notas acima; sem nota, o nó de hoje, sem invólucro. */
+  const comNotasFixas = (el: React.JSX.Element): React.JSX.Element =>
+    notasFixas ? (
+      <View style={styles.comNotas}>
+        <View style={styles.notasFixas}>{notasEl}</View>
+        {el}
+      </View>
+    ) : (
+      el
+    )
+
   // N4-R16 — no avulso SEM hospedeira não há nome de setlist: em C o título (`flex: 1`) ganha a largura dele; em B a
   // linha 1 fica com `AVULSA` e um espaçador no lugar do nome, para a página, a nota e o ponto de sem rede ficarem
   // à direita, onde estão no palco com setlist (N3-B-S3). Nada mais da barra muda.
@@ -699,14 +718,17 @@ export function StageScreen({
 
       <View style={styles.meio} onLayout={medirMeio}>
         {formato && urlArquivo !== null ? (
+          comNotasFixas(
           <FormatoDoLeitor
             nome={fileNameFromUrl(urlArquivo)}
             tipo={TIPO[content?.content_type ?? ''] ?? 'arquivo'}
             bytes={knownBytes(urlArquivo)}
             cor={cor}
             testID="s3-formato"
-          />
+          />,
+          )
         ) : urlArquivo !== null ? (
+          comNotasFixas(
           <Arquivo
             estado={arquivo}
             titulo={content?.title ?? ''}
@@ -722,7 +744,8 @@ export function StageScreen({
               setPagina({ n: atual, total })
             }}
             onBaixar={() => void buscarArquivo(urlArquivo, true)}
-          />
+          />,
+          )
         ) : (
           <ScrollView
             ref={scroll}
@@ -735,9 +758,7 @@ export function StageScreen({
             onScrollBeginDrag={ancora.aoArrastar}
           >
             {/* QL-PR4: as notas da música no topo do corpo, antes da letra (`NotasDoPalco.tsx`); sem nota, nada. */}
-            {comNotas && notas !== null ? (
-              <NotasDoPalco notas={notas} recolhidas={recolhidas} onAlternar={alternarNotas} zoom={zoom} cor={cor} onLayout={medirNotas} />
-            ) : null}
+            {comNotas && !notasFixas ? notasEl : null}
             {motivo !== undefined ? (
               <PlaceholderDoLeitor testID="placeholder" titulo={motivo.titulo} apoio={motivo.apoio} cor={cor} />
             ) : (
@@ -1074,6 +1095,9 @@ const styles = StyleSheet.create({
   pontoOffline: { width: 8, height: 8, borderRadius: 4, backgroundColor: dark.offline },
   paginaTexto: { fontFamily: font.mono, fontSize: size.label },
   meio: { flex: 1 },
+  // QL-D58: a coluna do arquivo com as notas no topo (o respiro do corpo dos lados e em cima); o arquivo fica com o resto
+  comNotas: { flex: 1 },
+  notasFixas: { paddingHorizontal: space.xxl, paddingTop: space.xxl },
   dica: { textAlign: 'center', fontFamily: font.ui, fontSize: size.label, paddingVertical: space.sm },
   erro: { fontFamily: font.ui, fontSize: size.label, textAlign: 'center', maxWidth: 560 },
   botaoBaixar: {
