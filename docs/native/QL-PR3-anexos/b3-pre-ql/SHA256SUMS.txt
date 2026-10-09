@@ -1,0 +1,6 @@
+f8e18747289db38a2300bc2f119a87100314ae6e91b1b8de043cec3a55277754  REF-S3-S3a-letra-1a-avd-pai.xml
+f1ff4f9990dfe8b098fbe31bed0c16fd08bd9f33461604a135a5e789ae1ef32a  REF-S3-S3a-letra-1a-tab-pai.xml
+7d807b075071e9a1af32120ebd56c5258755a53febc9ae5cf9471a23184ebe0d  REF-S3-titulo-longo-avd-pai.xml
+7ef79457f780ef09ed25a11094c7568fe980317bb1f61fc65c36b08283d1b512  REF-S3-titulo-longo-tab-pai.xml
+d0efa7d96cac70d6fcffc0c5b0d94f7e995e82d5cf949b1840e3bdc0ba68e29b  REF-S3-ultima-avd-pai.xml
+f8190fa124a6f88418d933622d125816ebcc3543445c95b1b62b460ce3c57965  REF-S3-ultima-tab-pai.xml
