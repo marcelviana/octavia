@@ -1,0 +1,14 @@
+alvo: rocks.octavia.app (samsung SM-T865) · React Native Bridgeless [C++ connection] · módulo quebra.ts = __r(741)
+Hermes: true · 250829098.0.17 · Bytecode 98 · Build Release
+fixtures: Letra sha12 6aa6914ce90f · Cifra sha12 2355a509052d (o custo.ts: 6aa6914ce90f · 2355a509052d)
+
+texto  colunas  linhas visuais  mediana (ms)  máximo (ms)  1ª rodada (ms)  — 100 rodadas, no Hermes do aparelho
+Letra       80              50         1.616       12.580          12.580
+Letra       48              52         1.620        1.945           1.651
+Letra       26              86         1.890        2.272           1.898
+Letra       14             151         2.463        2.777           2.715
+Cifra       80              40         1.598        3.937           3.937
+Cifra       48              41         1.618        2.291           1.970
+Cifra       26              71         2.059        2.707           2.603
+Cifra       14             129         2.683        3.215           2.767
+nenhum número passa de 16 ms

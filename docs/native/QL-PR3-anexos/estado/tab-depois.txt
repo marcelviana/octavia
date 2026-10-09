@@ -1,0 +1,16 @@
+2026-10-09 12:45:36
+global stay_on_while_plugged_in=0
+system accelerometer_rotation=1
+system user_rotation=0
+global airplane_mode_on=0
+global wifi_on=1
+global mobile_data=1
+reverse: []
+    versionCode=1 minSdk=24 targetSdk=36
+    versionName=0.0.1
+    lastUpdateTime=2026-10-09 12:45:36
+    pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+rtt min/avg/max/mdev = 20.987/24.015/27.043/3.028 ms
+pm path: /data/app/~~4Jwmke-_clbvkl7AYEEloQ==/rocks.octavia.app-Uq7yGWAbSqHf02T-iNynBQ==/base.apk
+instalado: 070187bf6a5931072afac3f76112905eab732df22d22ad7044048ec70a658e91 105194421 B
+release-cf58f7f.apk: 070187bf6a5931072afac3f76112905eab732df22d22ad7044048ec70a658e91 105194421 B

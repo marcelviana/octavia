@@ -1,0 +1,10 @@
+08:50:20 avião=0 (emulator-5554)
+QL3D-S1-setlists-avd-pai mCurrentRotation=ROTATION_0 png=227340 xml=40520 179ed0d01bb5
+08:50:53 avião=1 (emulator-5554)
+QL3D-S1-aviso-sem-rede-avd-pai mCurrentRotation=ROTATION_0 png=257174 xml=42982 018ee101e1f1
+08:51:31 avião=0 (emulator-5554)
+08:51:32 mock modo=500-pagina-1 vazio=False
+espera 27s para o cache ter 1 min
+QL3D-S1-S1e-falha-com-cache-avd-pai mCurrentRotation=ROTATION_0 png=255066 xml=44543 dd1e04be3f52
+08:52:35 mock modo=normal vazio=False
+capturas=3

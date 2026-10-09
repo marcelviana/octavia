@@ -45,7 +45,9 @@ ponto não existe, a palavra pode partir, mas o acorde nunca** (o corte vai para
 *(QL-D45, aval da QL-PR2: **o acorde nunca parte, também na linha de acordes sozinha** — a da Cifra sem letra embaixo,
 que quebra como letra (QL-R6): um acorde maior que a coluna fica inteiro e a linha passa da coluna, como no par. Na Letra
 a linha de acordes quebra como letra, acorde e tudo (QL-R7). Na prática não acontece: a coluna mínima é 14 e o maior
-acorde do dado real tem 8 caracteres.)* *Aceite*: A-QL-1.
+acorde do dado real tem 8 caracteres.)* *(**QL-D48** `[Marcel, 2026-10-09]`, QL-PR3: **a QL-D45 vale só na Cifra.** Na
+Letra, uma linha com acordes digitados quebra como letra (QL-D22), e um acorde maior que a coluna parte como qualquer
+palavra longa, pela R1 — o comportamento que a PR-2 implementou e fixou em teste.)* *Aceite*: A-QL-1.
 
 **QL-R5 — R3, a continuação** `[QL-D29; folha §1]`. Cada pedaço depois do primeiro começa com **2 colunas de recuo**, sem
 glifo; a coluna útil da continuação é colunas − 2. No par, as duas continuações têm o mesmo recuo, e os espaços que sobram
@@ -56,7 +58,8 @@ acordes vazio não ocupa linha. *Aceite*: A-QL-1, A-QL-10.
 certeza como de acordes (a **quase acorde**, *"Intro: Am  E"*) **não forma par** e quebra como letra, se precisar. A
 **progressão de uma seção** (*"Am  F  C  G"*) faz par com a linha de letra de baixo. *Aceite*: A-QL-1.
 
-**QL-R7 — O par só na Cifra** `[QL-D22]`. A Letra quebra **sempre** como letra, mesmo com um acorde digitado. *Aceite*:
+**QL-R7 — O par só na Cifra** `[QL-D22; QL-D48]`. A Letra quebra **sempre** como letra, mesmo com um acorde digitado — e
+o acorde maior que a coluna parte como palavra longa (R1): o "acorde nunca parte" da QL-D45 é só da Cifra. *Aceite*:
 A-QL-1.
 
 **QL-R8 — A Tab não quebra** `[QL-D2; QL-D37]`. Rola para o lado, como hoje, com as 6 linhas e as colunas intactas, em toda
@@ -145,7 +148,7 @@ nativas** (regra 36), e o Tab repousa com o release e volta a ele no fim de todo
 | A-QL-3 | `\t`, `\r` e acento combinante: os três casos que só medem | Vitest no core | — | QL-R9 |
 | A-QL-4 | a errata do T1-R31 e do T1-R25 no `PRD-TELA-1.md`, com R2, a reserva por linha e o aceite novo | o diff da PR-1 | — | QL-R20 |
 | A-QL-5 | os três instrumentos comparam o texto lógico; cada um com CN que reprova uma quebra que muda o texto; o duplo do `native-tela` com colunas (o G-par de V **vê** a quebra) | os CN, colados | — | QL-R19 |
-| A-QL-6 | a largura do caractere nos cinco zooms, no AVD e no Tab (a régua por zoom); qual conta de colunas vale — *(QL-D40, QL-PR1: **fechado no AVD**, vale a conta da folha em C e B, QL-E2, `QL-PR1-anexos/medida-por-zoom.txt`; **o Tab na PR-3**)* | a régua e o dump | — | QL-R21 |
+| A-QL-6 | a largura do caractere nos cinco zooms, no AVD e no Tab (a régua por zoom); qual conta de colunas vale — *(QL-D40, QL-PR1: **fechado no AVD**, vale a conta da folha em C e B, QL-E2, `QL-PR1-anexos/medida-por-zoom.txt`; **o Tab na PR-3** — QL-PR3: **fechado no Tab**, igual ao AVD nos cinco zooms, `QL-PR3-anexos/medidas/regua-tab/`)* | a régua e o dump | — | QL-R21 |
 | A-QL-7 | o `DESIGN-QL` no `shasum -c` do CI | o job verde; o CN (um byte trocado reprova) | — | QL-R22 |
 | A-QL-8 | **G-inv**: a B5 34 de 34 idênticos; a B3 12 de 18 idênticos e os **6 dumps de Letra em par** (`g-inv-par`: só o declarado mudou) | `g-inv.sh`, `g-inv-par.mjs` | — | QL-R11 |
 | A-QL-9 | **G-N3** e **G-par** verdes com o texto lógico; o G-par do core sem mudança | `g-n3.mjs`; Vitest | — | QL-R19 |

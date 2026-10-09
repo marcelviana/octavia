@@ -1,0 +1,79 @@
+
+ RUN  v4.0.16 /private/tmp/claude-501/-Users-marcelviana-projects-octavia/3cfa44b0-bc80-40fb-9f95-7b0acd9b1709/scratchpad/arvore-4a0bf8a
+
+ ❯  native-tela  apps/native/test/leitor-quebra.test.tsx (28 tests | 2 failed) 1059ms
+     ✓ colunasDoLeitor: ⌊(contêiner − 2 × 32) ÷ caractere⌋, e null sem medida ou fora do domínio (inteiro > 2) 13ms
+     ✓ linhasDoLeitor: null sem colunas, sem corpo e na Tab — o corpo aparece como hoje 13ms
+     ✓ o palco não cai e mostra o corpo como hoje — a largura ainda não medida (nenhum onLayout) 56ms
+     ✓ o palco não cai e mostra o corpo como hoje — o contêiner medido em 0 30ms
+     ✓ o palco não cai e mostra o corpo como hoje — o contêiner medido só com o respiro (64) 33ms
+     ✓ o palco não cai e mostra o corpo como hoje — 2 colunas (fora do domínio) 31ms
+     ✓ o palco não cai e mostra o corpo como hoje — 0 colunas 36ms
+     ✓ V não cai e mostra o corpo como hoje — a largura ainda não medida (nenhum onLayout) 28ms
+     ✓ V não cai e mostra o corpo como hoje — o contêiner medido em 0 29ms
+     ✓ V não cai e mostra o corpo como hoje — o contêiner medido só com o respiro (64) 28ms
+     ✓ V não cai e mostra o corpo como hoje — 2 colunas (fora do domínio) 30ms
+     ✓ V não cai e mostra o corpo como hoje — 0 colunas 28ms
+     ✓ o palco em B (48 colunas): toda linha cabe, há continuações, e o desenho é uma quebra do texto — num nó só 35ms
+     ✓ o palco deitado, zoom 22 (80 colunas): a Letra de 77 colunas sai IGUAL à de hoje, no mesmo nó (A-QL-16) 32ms
+     ✓ a Tab não quebra (QL-R8): o texto inteiro, no mesmo nó, rolando para o lado, mesmo em 26 colunas 31ms
+     ✓ a Cifra em 26 colunas: o par recuado, o acorde sobre a sílaba (ehQuebraDe confere o mesmo começo) 33ms
+     ✓ o zoom refaz as colunas: B no zoom 22 (48) → três passos → zoom 40 (26) 46ms
+     ✓ V em C (55 colunas) e em B (48): o corpo quebrado, num nó só 46ms
+     ✓ a linha de acordes sozinha: só ela numa rolagem horizontal; o resto em texto que não rola 30ms
+     ✓ no par: o pedaço de acordes e o de letra que passam da coluna rolam JUNTOS (o acorde fica sobre a sílaba) 30ms
+     ✓ na Letra a mesma linha quebra como letra (QL-D22): nada rola, um nó só 29ms
+     × logicaNoTopo: a linha visual que está NA MARCA de 32 (a do respiro, onde a âncora põe o começo), e a lógica dela 16ms
+     × a âncora não deriva (o achado do aparelho): ancorar de novo, sem mudar nada, fica na mesma linha lógica 12ms
+     ✓ yDaLogica: a rolagem que põe a 1ª linha visual da lógica a 32 do topo (o respiro), e 0 para a primeira 11ms
+     ✓ inicioDoBloco: na Cifra, a letra de um par ancora na linha de acordes de cima; na Letra, não 11ms
+     ✓ o giro C → B, nas contas: a lógica do topo em 80 colunas volta ao topo em 48 12ms
+     ✓ o palco num passo de zoom: com a continuação da lógica 10 no topo, a rolagem pedida põe o começo da 10 a 32 51ms
+     ✓ a troca de música não ancora: volta ao topo (0), como hoje 45ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   native-tela  apps/native/test/leitor-quebra.test.tsx > QL-D18 / QL-R13 — a âncora: o começo da linha lógica do topo volta ao topo, a 32 da barra > logicaNoTopo: a linha visual que está NA MARCA de 32 (a do respiro, onde a âncora põe o começo), e a lógica dela
+AssertionError: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ apps/native/test/leitor-quebra.test.tsx:310:53
+    308|     expect(L.logicaNoTopo(logicas, lh22 - 1, lh22)).toBe(0)
+    309|     expect(L.logicaNoTopo(logicas, lh22, lh22)).toBe(0) // a 2ª linha …
+    310|     expect(L.logicaNoTopo(logicas, 2 * lh22, lh22)).toBe(1)
+       |                                                     ^
+    311|     expect(L.logicaNoTopo(logicas, 4 * lh22 + 3, lh22)).toBe(2)
+    312|     expect(L.logicaNoTopo(logicas, 10_000, lh22)).toBe(3)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL   native-tela  apps/native/test/leitor-quebra.test.tsx > QL-D18 / QL-R13 — a âncora: o começo da linha lógica do topo volta ao topo, a 32 da barra > a âncora não deriva (o achado do aparelho): ancorar de novo, sem mudar nada, fica na mesma linha lógica
+AssertionError: 80 col, entrelinha 27.900000000000002, lógica 1: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ apps/native/test/leitor-quebra.test.tsx:322:101
+    320|           // a rolagem em px de 2,25 (a rolagem do aparelho é inteira …
+    321|           const y = Math.round(L.yDaLogica(logicas, logica, lh) * 2.25…
+    322|           expect(L.logicaNoTopo(logicas, y, lh), `${cols} col, entreli…
+       |                                                                                                     ^
+    323|         }
+    324|       }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 26 passed (28)
+   Start at  11:44:25
+   Duration  2.35s (transform 371ms, setup 0ms, import 391ms, tests 1.06s, environment 786ms)
+

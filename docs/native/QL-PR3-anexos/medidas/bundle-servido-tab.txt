@@ -1,0 +1,4 @@
+localhost:8788 1
+octavia.rocks 0
+y + 0.5 1
+useColunasDoLeitor 13

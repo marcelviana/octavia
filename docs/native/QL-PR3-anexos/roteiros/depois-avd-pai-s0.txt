@@ -1,0 +1,10 @@
+09:01:39 mock modo=401 vazio=False
+09:01:59 mock modo=normal vazio=False
+QL3D-S0-login-avd-pai mCurrentRotation=ROTATION_0 png=112452 xml=14552 4b1358d4c509
+09:02:28 avião=1 (emulator-5554)
+09:02:32 toque 'email' @ 1857,639 (emulator-5554)
+09:02:37 toque 'senha' @ 1857,801 (emulator-5554)
+09:02:43 toque 'entrar' @ 1820,1004 (emulator-5554)
+QL3D-S0-erro-avd-pai mCurrentRotation=ROTATION_0 png=127315 xml=16608 92586f5172e0
+09:03:05 avião=0 (emulator-5554)
+capturas=2 falhas=0

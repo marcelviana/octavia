@@ -1,0 +1,16 @@
+== CN do par do corpo quebrado (g-inv-par.mjs) — alvo: QL3D-S3-S3a-letra-1a-avd-pai.xml
+CP   nenhum defeito — espera passa: exit 0 · ok
+      ✓ S3-S3a-letra-1a-avd-pai: fora do corpo (e de 2 ancestral(is) que o abraça(m)) byte a byte iguais · o corpo é uma quebra do texto (49 lógicas, 1 continuações) · caixa [72,270][2488,1249] → [72,270][2322,1249] — QL-R11 — a Letra de 110 colunas
+CN-1 outro nó muda de caixa (o zoom-mais desce 1 px) — espera reprova: exit 1 · ok
+      ✗ S3-S3a-letra-1a-avd-pai: DIFERENTES fora do corpo — 1ª diferença, linha 65:
+CN-2 uma letra trocada no corpo — espera reprova: exit 1 · ok
+      ✗ S3-S3a-letra-1a-avd-pai: o corpo novo NÃO é uma quebra do velho: as 50 linhas desenhadas não são uma quebra das 49 linhas lógicas — QL-R11 — a Letra de 110 colunas da fixture quebra em 80 colunas no palco deitado, zoom 22 (QL-PR3)
+CN-3 duas linhas do corpo fora de ordem — espera reprova: exit 1 · ok
+      ✗ S3-S3a-letra-1a-avd-pai: o corpo novo NÃO é uma quebra do velho: as 50 linhas desenhadas não são uma quebra das 49 linhas lógicas — QL-R11 — a Letra de 110 colunas da fixture quebra em 80 colunas no palco deitado, zoom 22 (QL-PR3)
+CN-4 o canto esquerdo do corpo anda 1 px — espera reprova: exit 1 · ok
+      ✗ S3-S3a-letra-1a-avd-pai: o 1º ancestral do corpo mudou de caixa sem abraçar o corpo novo: [72,270][2488,1249] → [72,270][2322,1249] — QL-R11 — a Letra de 110 colunas da fixture quebra em 80 colunas no palco deitado, zoom 22 (QL-PR3)
+CN-5 a janela da rolagem horizontal muda de caixa — espera reprova: exit 1 · ok
+      ✗ S3-S3a-letra-1a-avd-pai: o 2º ancestral do corpo mudou de caixa sem abraçar o corpo novo: [72,270][2488,1249] → [72,270][2458,1249] — QL-R11 — a Letra de 110 colunas da fixture quebra em 80 colunas no palco deitado, zoom 22 (QL-PR3)
+CN-6 o corpo largo de novo (a direita passa da base) — espera reprova: exit 1 · ok
+      ✗ S3-S3a-letra-1a-avd-pai: o 1º ancestral do corpo mudou de caixa sem abraçar o corpo novo: [72,270][2488,1249] → [72,270][2322,1249] — QL-R11 — a Letra de 110 colunas da fixture quebra em 80 colunas no palco deitado, zoom 22 (QL-PR3)
+== todos os controles como esperado ✓

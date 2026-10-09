@@ -1,0 +1,21 @@
+== G-back
+g-back.sh: GATES_WEB_DECL aponta para arquivo inexistente: /dev/null
+uso: sh scripts/gates-web/g-back.sh <base> <head|WORKTREE>   (da raiz do repositório)
+== G-palco
+
+G-palco: PASSA — 0 ocorrências
+== G-tok
+  arquivos: 133 · literais de identidade acusados: 0 · toasts: 0 · imports de ui: 0 · textos examinados: 33 · isentos de inglês (scripts/gates-web/g-tok-sem-ingles.txt): 1 · vocabulário: 133 · isenções: 9 · strings de .ts examinadas (div. 828): 490 · frases isentas (scripts/gates-web/g-tok-frases-isentas.txt): 5 de 5 entradas
+
+G-tok: PASSA
+== G-tok cobertura
+
+G-tok (cobertura): PASSA
+== G-faixa
+
+G-faixa: PASSA
+== DESIGN-I1
+14
+  ✓ nenhuma
+
+G-back: PASSA

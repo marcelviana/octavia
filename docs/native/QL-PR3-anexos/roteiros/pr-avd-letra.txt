@@ -1,0 +1,19 @@
+== letra 09:05:49
+09:06:18 toque 'song-1' @ 658,580 (emulator-5554)
+QL3Q-S3-letra-z22-avd-pai mCurrentRotation=ROTATION_0 png=262405 xml=25395 1a4497d7a32f
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 0 continuações ✓
+09:06:33 toque 'zoom-mais' @ 497,1358 (emulator-5554)
+09:06:37 toque 'zoom-mais' @ 497,1358 (emulator-5554)
+09:06:40 toque 'zoom-mais' @ 497,1358 (emulator-5554)
+QL3Q-S3-letra-z40-avd-pai mCurrentRotation=ROTATION_0 png=219190 xml=25431 6a3b92209560
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 6 continuações ✓
+09:07:52 sem S1 em 60 s — o deep link de novo
+09:08:15 toque 'song-1' @ 800,580 (emulator-5554)
+QL3Q-S3-letra-z22-avd-ret mCurrentRotation=ROTATION_90 png=362782 xml=25407 decdfe7d0fc5
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 2 continuações ✓
+09:08:31 toque 'zoom-mais' @ 497,2318 (emulator-5554)
+09:08:34 toque 'zoom-mais' @ 497,2318 (emulator-5554)
+09:08:37 toque 'zoom-mais' @ 497,2318 (emulator-5554)
+QL3Q-S3-letra-z40-avd-ret mCurrentRotation=ROTATION_90 png=245286 xml=25611 f25a754a275c
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 36 continuações ✓
+capturas=4 falhas=0

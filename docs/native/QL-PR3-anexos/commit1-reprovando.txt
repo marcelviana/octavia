@@ -1,0 +1,518 @@
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-ql-pr3
+
+ ❯  core  packages/core/src/quebra.test.ts (49 tests | 2 failed) 72ms
+     ✓ entra: "Am  F  C  G" 1ms
+     ✓ entra: "Am            F              C" 0ms
+     ✓ entra: "Am                    F#m7(11)        G          C" 0ms
+     ✓ entra: "C  |  G  x2" 0ms
+     ✓ entra: "Am  F  C  G  (2x)" 0ms
+     ✓ entra: "D/F#  Gsus4  Bb" 0ms
+     ✓ entra: "F#m7(11)" 0ms
+     ✓ entra: "   Am   " 0ms
+     ✓ entra: "Am\tF" 0ms
+     ✓ não entra: "Intro: Am  E" 0ms
+     ✓ não entra: "Intro: Am  E  F#m7(11)  G" 0ms
+     ✓ não entra: "A noite chega" 0ms
+     ✓ não entra: "E o dia" 0ms
+     ✓ não entra: "Refrão" 0ms
+     ✓ não entra: "x2" 0ms
+     ✓ não entra: "|  :" 0ms
+     ✓ não entra: "" 0ms
+     ✓ não entra: "    " 0ms
+     ✓ não entra: "Cada janela acesa" 0ms
+     ✓ texto vazio: uma linha visual vazia, em todo tipo (contrato, item 3: a linha vazia tem uma, "") 1ms
+     ✓ linha vazia no meio: fica, como linha visual vazia (contrato, item 3) 0ms
+     ✓ a última linha sem \n e com \n: as linhas lógicas são as do split — o \n do fim abre uma linha vazia 0ms
+     ✓ só espaços que cabem: ficam como estão (R1: nada a cortar) 0ms
+     ✓ só espaços maiores que a coluna: uma linha vazia (R1: o espaço do corte sai; R3: os do começo do resto também) 0ms
+     ✓ espaços no fim: ficam quando cabem; quando não, saem (o fim da linha não passa da coluna) 0ms
+     ✓ o recuo do autor que cabe fica (nada manda tirar espaço do começo da primeira linha) 0ms
+     ✓ a palavra do tamanho exato da coluna cabe; com uma letra a mais, parte na última coluna (R1) 0ms
+     ✓ 3 colunas, o mínimo: a continuação tem 1 coluna útil, e toda palavra de 2 parte (R1, R3) 0ms
+     ✓ o acento combinante não se separa da letra quando a palavra parte (QL-D24: ele conta 0 e pertence à letra) 0ms
+     ✓ o emoji (par substituto) conta 1 e não se parte (contrato: todo outro caractere conta 1) 0ms
+     ✓ o \r fora do fim da linha conta 1 (QL-D24: só o do fim conta 0) 0ms
+     ✓ a linha de acordes sem letra embaixo não tem par e quebra como letra (R4: o par é com a linha de baixo) 0ms
+     ✓ duas linhas de acordes seguidas: a primeira quebra como letra, a segunda faz par com a letra (R4) 0ms
+     ✓ a letra mais curta que os acordes: depois que ela acaba, o resto dos acordes segue sozinho (R2, R3) 0ms
+     ✓ QL-D43 (Q1) — colunas fora do domínio do contrato (inteiro > 2): RangeError, em todo tipo; a proteção é da tela 0ms
+     ✓ QL-D44 (Q2a) — a linha de acordes que começa depois da coluna: o primeiro pedaço de acordes, vazio, ocupa linha ("") 0ms
+     ✓ QL-D44 (Q2b) — no par, o pedaço de letra só de espaço numa continuação não ocupa linha 0ms
+     ✓ QL-D44 (Q2c) — o recuo do autor maior que a coluna: uma linha vazia, e a palavra na continuação 0ms
+     ✓ QL-D45 (Q3a) — no par, o acorde maior que a coluna não parte: o pedaço passa da coluna até o fim dele 0ms
+     ✓ QL-D45 (Q3b) — fora do par (a linha de acordes sozinha, na Cifra), o acorde maior que a coluna fica inteiro 0ms
+     ✓ QL-D45 — na Letra a linha de acordes quebra como letra (QL-D22): o acorde maior que a coluna parte (R1) 0ms
+     ✓ QL-D45 (Q3c) — o \t mais largo que a coluna fica sozinho numa linha (para a função andar) 0ms
+     ✓ QL-D46 (Q4) — o \r do fim não impede a linha de acordes (o texto colado com CRLF forma par) 0ms
+     ✓ QL-D47 (Q5) — o \t da continuação conta a partir da coluna desenhada (o recuo de 2) 0ms
+     ✓ a invariância vale em todo número de colunas de 3 a 90 23ms
+     ✓ toda linha visual cabe na coluna, de 10 colunas em diante (a Tab fora: ela não quebra) 38ms
+     ✓ a Tab sai igual ao texto, linha a linha, em todo número de colunas 1ms
+     × conta pontos de código, o 	 até a múltipla de 8, o  do fim e o acento combinante como 0 3ms
+     × toda linha visual de quebrar cabe na coluna por esta medida, com \t e acento — e a do acorde maior que ela passa (QL-D45) 0ms
+stdout | apps/native/test/g-par-visualizacao.test.tsx > G-par da visualização (N4-PR8) — o nó corpo de V mostra o que o site mostra > cada item do par: V igual ao retrato do site pelo texto lógico — C (a coluna de V, 55)
+G-par da visualização [C (a coluna de V, 55)] — itens 17 · pares 10 · iguais 10 · diferentes 0 · fora do par 7 · retrato do site 10
+  o leitor quebra: sim (PR-3) · linhas do par acima da coluna: 0 · continuações vistas em V: 0
+  IGUAL     letra                        site=texto(108)       V=texto(108; 5 linhas)
+  IGUAL     cifra-texto                  site=texto(48)        V=texto(48; 4 linhas)
+  IGUAL     tab-texto                    site=texto(92)        V=texto(92; 3 linhas)
+  IGUAL     partitura-pdf                site=arquivo(79)      V=arquivo(79)
+  IGUAL     letra-poluida-editor         site=texto(44)        V=texto(44; 3 linhas)
+  IGUAL     cifra-secoes-acordes-vazios  site=texto(123)       V=texto(123; 4 linhas)
+  IGUAL     cifra-secoes-completas       site=texto(39)        V=texto(39; 3 linhas)
+  IGUAL     cifra-duas-secoes            site=texto(97)        V=texto(97; 7 linhas)
+  IGUAL     so-aninhado                  site=sem-corpo        V=sem-corpo
+  IGUAL     tab-editada-no-site          site=texto(44)        V=texto(44; 3 linhas)
+
+fora do par (7) — impressos e contados, não reprovam:
+  cifra-em-lista               V=sem-corpo        — chords como lista de {name, diagram, fingering} — só o web lê; a B2 não achou no dado real (0 de 63) → Bloco D
+  cifra-com-progression        V=texto(4; 1 linhas) — progression ({seção: acordes}) ao lado do chords — só o web a mostra; a B2 não achou no dado real → Bloco D
+  tab-em-lista                 V=sem-corpo        — tablature como lista de linhas — só o web lê; a B2 achou as 2 Tabs com tablature string → Bloco D
+  partitura-com-notation       V=sem-corpo        — Partitura sem arquivo com notation em texto — só o web a mostra; a B2 achou a única Partitura com arquivo (.pdf) → Bloco D
+  tipo-legado                  V=sem-corpo        — content_type legado ('Guitar Tab') que o normalizeContentType do web aceita — o core não; a B2 achou os 63 nos quatro tipos do enum → Bloco D
+  tipo-fora-do-enum            V=sem-corpo        — tipo fora do enum (nem dos quatro, nem apelido legado — a forma do pre-check, A12): o web o mostra como Letra (normalizeContentType cai em LYRICS), o core declara unknown-type; o que vale é o do core (N4-D47); a B2 achou os 63 no contrato → Bloco D
+  cifra-escaneada              V=arquivo(77)      — Cifra escaneada (content_data nulo com file_url): o web mostra o vazio do painel ('nenhuma cifra' — o ChordDisplay não mostra arquivo), o core a trata como arquivo e o palco mostra o PDF; vale o comportamento do core (N4-D49); nenhum item da conta principal está nesse caso (B2: as 3 Cifras com content_data) → Bloco D
+G-par da visualização: zero diferenças ✓
+
+stdout | apps/native/test/g-par-visualizacao.test.tsx > G-par da visualização (N4-PR8) — o nó corpo de V mostra o que o site mostra > cada item do par: V igual ao retrato do site pelo texto lógico — 26 colunas (o duplo com colunas, QL-PR1)
+G-par da visualização [26 colunas (o duplo com colunas, QL-PR1)] — itens 17 · pares 10 · iguais 10 · diferentes 0 · fora do par 7 · retrato do site 10
+  o leitor quebra: sim (PR-3) · linhas do par acima da coluna: 6 · continuações vistas em V: 0
+  IGUAL     letra                        site=texto(108)       V=texto(108; 5 linhas) · 2 linha(s) acima de 26
+  IGUAL     cifra-texto                  site=texto(48)        V=texto(48; 4 linhas)
+  IGUAL     tab-texto                    site=texto(92)        V=texto(92; 3 linhas)
+  IGUAL     partitura-pdf                site=arquivo(79)      V=arquivo(79)
+  IGUAL     letra-poluida-editor         site=texto(44)        V=texto(44; 3 linhas) · 1 linha(s) acima de 26
+  IGUAL     cifra-secoes-acordes-vazios  site=texto(123)       V=texto(123; 4 linhas) · 3 linha(s) acima de 26
+  IGUAL     cifra-secoes-completas       site=texto(39)        V=texto(39; 3 linhas)
+  IGUAL     cifra-duas-secoes            site=texto(97)        V=texto(97; 7 linhas)
+  IGUAL     so-aninhado                  site=sem-corpo        V=sem-corpo
+  IGUAL     tab-editada-no-site          site=texto(44)        V=texto(44; 3 linhas)
+
+fora do par (7) — impressos e contados, não reprovam:
+  cifra-em-lista               V=sem-corpo        — chords como lista de {name, diagram, fingering} — só o web lê; a B2 não achou no dado real (0 de 63) → Bloco D
+  cifra-com-progression        V=texto(4; 1 linhas) — progression ({seção: acordes}) ao lado do chords — só o web a mostra; a B2 não achou no dado real → Bloco D
+  tab-em-lista                 V=sem-corpo        — tablature como lista de linhas — só o web lê; a B2 achou as 2 Tabs com tablature string → Bloco D
+  partitura-com-notation       V=sem-corpo        — Partitura sem arquivo com notation em texto — só o web a mostra; a B2 achou a única Partitura com arquivo (.pdf) → Bloco D
+  tipo-legado                  V=sem-corpo        — content_type legado ('Guitar Tab') que o normalizeContentType do web aceita — o core não; a B2 achou os 63 nos quatro tipos do enum → Bloco D
+  tipo-fora-do-enum            V=sem-corpo        — tipo fora do enum (nem dos quatro, nem apelido legado — a forma do pre-check, A12): o web o mostra como Letra (normalizeContentType cai em LYRICS), o core declara unknown-type; o que vale é o do core (N4-D47); a B2 achou os 63 no contrato → Bloco D
+  cifra-escaneada              V=arquivo(77)      — Cifra escaneada (content_data nulo com file_url): o web mostra o vazio do painel ('nenhuma cifra' — o ChordDisplay não mostra arquivo), o core a trata como arquivo e o palco mostra o PDF; vale o comportamento do core (N4-D49); nenhum item da conta principal está nesse caso (B2: as 3 Cifras com content_data) → Bloco D
+G-par da visualização: zero diferenças ✓
+
+ ❯  native-tela  apps/native/test/g-par-visualizacao.test.tsx (2 tests | 1 failed) 159ms
+     ✓ cada item do par: V igual ao retrato do site pelo texto lógico — C (a coluna de V, 55) 89ms
+     × cada item do par: V igual ao retrato do site pelo texto lógico — 26 colunas (o duplo com colunas, QL-PR1) 69ms
+ ❯  native-tela  apps/native/test/leitor-quebra.test.tsx (27 tests | 14 failed) 861ms
+     × colunasDoLeitor: ⌊(contêiner − 2 × 32) ÷ caractere⌋, e null sem medida ou fora do domínio (inteiro > 2) 15ms
+     × linhasDoLeitor: null sem colunas, sem corpo e na Tab — o corpo aparece como hoje 12ms
+     ✓ o palco não cai e mostra o corpo como hoje — a largura ainda não medida (nenhum onLayout) 50ms
+     ✓ o palco não cai e mostra o corpo como hoje — o contêiner medido em 0 31ms
+     ✓ o palco não cai e mostra o corpo como hoje — o contêiner medido só com o respiro (64) 32ms
+     ✓ o palco não cai e mostra o corpo como hoje — 2 colunas (fora do domínio) 28ms
+     ✓ o palco não cai e mostra o corpo como hoje — 0 colunas 31ms
+     ✓ V não cai e mostra o corpo como hoje — a largura ainda não medida (nenhum onLayout) 29ms
+     ✓ V não cai e mostra o corpo como hoje — o contêiner medido em 0 28ms
+     ✓ V não cai e mostra o corpo como hoje — o contêiner medido só com o respiro (64) 27ms
+     ✓ V não cai e mostra o corpo como hoje — 2 colunas (fora do domínio) 29ms
+     ✓ V não cai e mostra o corpo como hoje — 0 colunas 26ms
+     × o palco em B (48 colunas): toda linha cabe, há continuações, e o desenho é uma quebra do texto — num nó só 35ms
+     ✓ o palco deitado, zoom 22 (80 colunas): a Letra de 77 colunas sai IGUAL à de hoje, no mesmo nó (A-QL-16) 36ms
+     ✓ a Tab não quebra (QL-R8): o texto inteiro, no mesmo nó, rolando para o lado, mesmo em 26 colunas 36ms
+     × a Cifra em 26 colunas: o par recuado, o acorde sobre a sílaba (ehQuebraDe confere o mesmo começo) 32ms
+     × o zoom refaz as colunas: B no zoom 22 (48) → três passos → zoom 40 (26) 44ms
+     × V em C (55 colunas) e em B (48): o corpo quebrado, num nó só 32ms
+     × a linha de acordes sozinha: só ela numa rolagem horizontal; o resto em texto que não rola 38ms
+     × no par: o pedaço de acordes e o de letra que passam da coluna rolam JUNTOS (o acorde fica sobre a sílaba) 33ms
+     × na Letra a mesma linha quebra como letra (QL-D22): nada rola, um nó só 33ms
+     × logicaNoTopo: a linha visual que cobre o topo da rolagem (o respiro de 32 conta), e a lógica dela 13ms
+     × yDaLogica: a rolagem que põe a 1ª linha visual da lógica a 32 do topo (o respiro), e 0 para a primeira 13ms
+     × inicioDoBloco: na Cifra, a letra de um par ancora na linha de acordes de cima; na Letra, não 10ms
+     × o giro C → B, nas contas: a lógica do topo em 80 colunas volta ao topo em 48 13ms
+     × o palco num passo de zoom: com a continuação da lógica 10 no topo, a rolagem pedida põe o começo da 10 a 32 36ms
+     ✓ a troca de música não ancora: volta ao topo (0), como hoje 55ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 17 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   native-tela  apps/native/test/g-par-visualizacao.test.tsx > G-par da visualização (N4-PR8) — o nó corpo de V mostra o que o site mostra > cada item do par: V igual ao retrato do site pelo texto lógico — 26 colunas (o duplo com colunas, QL-PR1)
+AssertionError: linha acima da coluna e V sem continuação: o leitor não viu as colunas do duplo: expected [ 'letra', …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "letra",
++   "letra-poluida-editor",
++   "cifra-secoes-acordes-vazios",
++ ]
+
+ ❯ apps/native/test/g-par-visualizacao.test.tsx:194:107
+    192|     expect(diferentes, 'V diferente do site').toEqual([])
+    193|     if (!O_LEITOR_QUEBRA) expect(continuacoes, 'V quebrou o corpo sem …
+    194|     else expect(cegos, 'linha acima da coluna e V sem continuação: o l…
+       |                                                                                                           ^
+    195|   })
+    196| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/17]⎯
+
+ FAIL   native-tela  apps/native/test/leitor-quebra.test.tsx > QL-D43 — a proteção: quebrar só com as duas medidas feitas e as colunas no domínio > colunasDoLeitor: ⌊(contêiner − 2 × 32) ÷ caractere⌋, e null sem medida ou fora do domínio (inteiro > 2)
+TypeError: L.colunasDoLeitor is not a function
+ ❯ apps/native/test/leitor-quebra.test.tsx:140:14
+    138|   it('colunasDoLeitor: ⌊(contêiner − 2 × 32) ÷ caractere⌋, e null sem …
+    139|     const c22 = 1333.3 / 100
+    140|     expect(L.colunasDoLeitor(1137.8, c22)).toBe(80)
+       |              ^
+    141|     expect(L.colunasDoLeitor(711.1, c22)).toBe(48)
+    142|     expect(L.colunasDoLeitor(797.8, c22)).toBe(55)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/17]⎯
+
+ FAIL   native-tela  apps/native/test/leitor-quebra.test.tsx > QL-D43 — a proteção: quebrar só com as duas medidas feitas e as colunas no domínio > linhasDoLeitor: null sem colunas, sem corpo e na Tab — o corpo aparece como hoje
+TypeError: L.linhasDoLeitor is not a function
+ ❯ apps/native/test/leitor-quebra.test.tsx:161:14
+    159| 
+    160|   it('linhasDoLeitor: null sem colunas, sem corpo e na Tab — o corpo a…
+    161|     expect(L.linhasDoLeitor(LETRA_LONGA, 'Lyrics', null)).toBeNull()
+       |              ^
+    162|     expect(L.linhasDoLeitor(null, 'Lyrics', 48)).toBeNull()
+    163|     expect(L.linhasDoLeitor(TAB, 'Tab', 26)).toBeNull()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/17]⎯
+
+ FAIL   native-tela  apps/native/test/leitor-quebra.test.tsx > QL-R10 — o corpo quebrado no duplo, no palco e em V > o palco em B (48 colunas): toda linha cabe, há continuações, e o desenho é uma quebra do texto — num nó só
+AssertionError: expected 0 to be greater than 0
+ ❯ apps/native/test/leitor-quebra.test.tsx:202:28
+    200|     const r = ehQuebraDe(linhas, LETRA_LONGA)
+    201|     expect(r.ok, r.motivo ?? '').toBe(true)
+    202|     expect(r.continuacoes).toBeGreaterThan(0)
+       |                            ^
+    203|     for (const l of linhas) expect(colunasDesenhadas(l), JSON.stringif…
+    204|     expect(linhas).toEqual(quebrar(LETRA_LONGA, 'Lyrics', 48).map((l) …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/17]⎯
+
+ FAIL   native-tela  apps/native/test/leitor-quebra.test.tsx > QL-R10 — o corpo quebrado no duplo, no palco e em V > a Cifra em 26 colunas: o par recuado, o acorde sobre a sílaba (ehQuebraDe confere o mesmo começo)
+AssertionError: expected 0 to be greater than 0
+ ❯ apps/native/test/leitor-quebra.test.tsx:227:28
+    225|     const r = ehQuebraDe(linhasDoCorpo(), CIFRA)
+    226|     expect(r.ok, r.motivo ?? '').toBe(true)
+    227|     expect(r.continuacoes).toBeGreaterThan(0)
+       |                            ^
+    228|     expect(linhasDoCorpo()).toEqual(quebrar(CIFRA, 'Chords', 26).map((…
+    229|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/17]⎯
+
+ FAIL   native-tela  apps/native/test/leitor-quebra.test.tsx > QL-R10 — o corpo quebrado no duplo, no palco e em V > o zoom refaz as colunas: B no zoom 22 (48) → três passos → zoom 40 (26)
+AssertionError: expected [ …(30) ] to deeply equal [ …(56) ]
+
+- Expected
++ Received
+
+  [
+-   "linha0 linha0 linha0 linha0 linha0 linha0 linha0",
+-   "  linha0 linha0 linha0 linha0 linha0 linha0",
+-   "  linha0 linha0 linha",
++   "linha0 linha0 linha0 linha0 linha0 linha0 linha0 linha0 linha0 linha0 linha0 linha0 linha0 linha0 linha0 linha",
+    "curta1 curta1 curta1 curta1 cu",
+-   "linha2 linha2 linha2 linha2 linha2 linha2 linha2",
+-   "  linha2 linha2 linha2 linha2 linha2 linha2",
+-   "  linha2 linha2 linha",
++   "linha2 linha2 linha2 linha2 linha2 linha2 linha2 linha2 linha2 linha2 linha2 linha2 linha2 linha2 linha2 linha",
+    "curta3 curta3 curta3 curta3 cu",
+-   "linha4 linha4 linha4 linha4 linha4 linha4 linha4",
+-   "  linha4 linha4 linha4 linha4 linha4 linha4",
+-   "  linha4 linha4 linha",
++   "linha4 linha4 linha4 linha4 linha4 linha4 linha4 linha4 linha4 linha4 linha4 linha4 linha4 linha4 linha4 linha",
+    "curta5 curta5 curta5 curta5 cu",
+    "",
+    "curta7 curta7 curta7 curta7 cu",
+-   "linha8 linha8 linha8 linha8 linha8 linha8 linha8",
+-   "  linha8 linha8 linha8 linha8 linha8 linha8",
+-   "  linha8 linha8 linha",
++   "linha8 linha8 linha8 linha8 linha8 linha8 linha8 linha8 linha8 linha8 linha8 linha8 linha8 linha8 linha8 linha",
+    "curta9 curta9 curta9 curta9 cu",
+-   "linha10 linha10 linha10 linha10 linha10 linha10",
+-   "  linha10 linha10 linha10 linha10 linha10",
+-   "  linha10 linha10 linha1",
++   "linha10 linha10 linha10 linha10 linha10 linha10 linha10 linha10 linha10 linha10 linha10 linha10 linha10 linha1",
+    "curta11 curta11 curta11 curta1",
+-   "linha12 linha12 linha12 linha12 linha12 linha12",
+-   "  linha12 linha12 linha12 linha12 linha12",
+-   "  linha12 linha12 linha1",
++   "linha12 linha12 linha12 linha12 linha12 linha12 linha12 linha12 linha12 linha12 linha12 linha12 linha12 linha1",
+    "",
+-   "linha14 linha14 linha14 linha14 linha14 linha14",
+-   "  linha14 linha14 linha14 linha14 linha14",
+-   "  linha14 linha14 linha1",
++   "linha14 linha14 linha14 linha14 linha14 linha14 linha14 linha14 linha14 linha14 linha14 linha14 linha14 linha1",
+    "curta15 curta15 curta15 curta1",
+-   "linha16 linha16 linha16 linha16 linha16 linha16",
+-   "  linha16 linha16 linha16 linha16 linha16",
+-   "  linha16 linha16 linha1",
++   "linha16 linha16 linha16 linha16 linha16 linha16 linha16 linha16 linha16 linha16 linha16 linha16 linha16 linha1",
+    "curta17 curta17 curta17 curta1",
+-   "linha18 linha18 linha18 linha18 linha18 linha18",
+-   "  linha18 linha18 linha18 linha18 linha18",
+-   "  linha18 linha18 linha1",
++   "linha18 linha18 linha18 linha18 linha18 linha18 linha18 linha18 linha18 linha18 linha18 linha18 linha18 linha1",
+    "curta19 curta19 curta19 curta1",
+    "",
+    "curta21 curta21 curta21 curta2",
+-   "linha22 linha22 linha22 linha22 linha22 linha22",
+-   "  linha22 linha22 linha22 linha22 linha22",
+-   "  linha22 linha22 linha2",
++   "linha22 linha22 linha22 linha22 linha22 linha22 linha22 linha22 linha22 linha22 linha22 linha22 linha22 linha2",
+    "curta23 curta23 curta23 curta2",
+-   "linha24 linha24 linha24 linha24 linha24 linha24",
+-   "  linha24 linha24 linha24 linha24 linha24",
+-   "  linha24 linha24 linha2",
++   "linha24 linha24 linha24 linha24 linha24 linha24 linha24 linha24 linha24 linha24 linha24 linha24 linha24 linha2",
+    "curta25 curta25 curta25 curta2",
+-   "linha26 linha26 linha26 linha26 linha26 linha26",
+-   "  linha26 linha26 linha26 linha26 linha26",
+-   "  linha26 linha26 linha2",
++   "linha26 linha26 linha26 linha26 linha26 linha26 linha26 linha26 linha26 linha26 linha26 linha26 linha26 linha2",
+    "",
+-   "linha28 linha28 linha28 linha28 linha28 linha28",
+-   "  linha28 linha28 linha28 linha28 linha28",
+-   "  linha28 linha28 linha2",
++   "linha28 linha28 linha28 linha28 linha28 linha28 linha28 linha28 linha28 linha28 linha28 linha28 linha28 linha2",
+    "curta29 curta29 curta29 curta2",
+  ]
+
+ ❯ apps/native/test/leitor-quebra.test.tsx:235:29
+    233|     __colunas(48)
+    234|     await palco(conteudo('l1', 'Lyrics', LETRA_LONGA))
+    235|     expect(linhasDoCorpo()).toEqual(quebrar(LETRA_LONGA, 'Lyrics', 48)…
+       |                             ^
+    236|     for (let i = 0; i < 3; i++) await tocar('zoom-mais')
+    237|     expect(linhasDoCorpo()).toEqual(quebrar(LETRA_LONGA, 'Lyrics', 26)…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/17]⎯
+
+ FAIL   native-tela  apps/native/test/leitor-quebra.test.tsx > QL-R10 — o corpo quebrado no duplo, no palco e em V > V em C (55 colunas) e em B (48): o corpo quebrado, num nó só
+AssertionError: expected [ …(30) ] to deeply equal [ …(56) ]
+
+- Expected
++ Received
+
+  [
+-   "linha0 linha0 linha0 linha0 linha0 linha0 linha0 linha0",
+-   "  linha0 linha0 linha0 linha0 linha0 linha0 linha0",
+-   "  linha",
++   "linha0 linha0 linha0 linha0 linha0 linha0 linha0 linha0 linha0 linha0 linha0 linha0 linha0 linha0 linha0 linha",
+    "curta1 curta1 curta1 curta1 cu",
+-   "linha2 linha2 linha2 linha2 linha2 linha2 linha2 linha2",
+-   "  linha2 linha2 linha2 linha2 linha2 linha2 linha2",
+-   "  linha",
++   "linha2 linha2 linha2 linha2 linha2 linha2 linha2 linha2 linha2 linha2 linha2 linha2 linha2 linha2 linha2 linha",
+    "curta3 curta3 curta3 curta3 cu",
+-   "linha4 linha4 linha4 linha4 linha4 linha4 linha4 linha4",
+-   "  linha4 linha4 linha4 linha4 linha4 linha4 linha4",
+-   "  linha",
++   "linha4 linha4 linha4 linha4 linha4 linha4 linha4 linha4 linha4 linha4 linha4 linha4 linha4 linha4 linha4 linha",
+    "curta5 curta5 curta5 curta5 cu",
+    "",
+    "curta7 curta7 curta7 curta7 cu",
+-   "linha8 linha8 linha8 linha8 linha8 linha8 linha8 linha8",
+-   "  linha8 linha8 linha8 linha8 linha8 linha8 linha8",
+-   "  linha",
++   "linha8 linha8 linha8 linha8 linha8 linha8 linha8 linha8 linha8 linha8 linha8 linha8 linha8 linha8 linha8 linha",
+    "curta9 curta9 curta9 curta9 cu",
+-   "linha10 linha10 linha10 linha10 linha10 linha10 linha10",
+-   "  linha10 linha10 linha10 linha10 linha10 linha10",
+-   "  linha1",
++   "linha10 linha10 linha10 linha10 linha10 linha10 linha10 linha10 linha10 linha10 linha10 linha10 linha10 linha1",
+    "curta11 curta11 curta11 curta1",
+-   "linha12 linha12 linha12 linha12 linha12 linha12 linha12",
+-   "  linha12 linha12 linha12 linha12 linha12 linha12",
+-   "  linha1",
++   "linha12 linha12 linha12 linha12 linha12 linha12 linha12 linha12 linha12 linha12 linha12 linha12 linha12 linha1",
+    "",
+-   "linha14 linha14 linha14 linha14 linha14 linha14 linha14",
+-   "  linha14 linha14 linha14 linha14 linha14 linha14",
+-   "  linha1",
++   "linha14 linha14 linha14 linha14 linha14 linha14 linha14 linha14 linha14 linha14 linha14 linha14 linha14 linha1",
+    "curta15 curta15 curta15 curta1",
+-   "linha16 linha16 linha16 linha16 linha16 linha16 linha16",
+-   "  linha16 linha16 linha16 linha16 linha16 linha16",
+-   "  linha1",
++   "linha16 linha16 linha16 linha16 linha16 linha16 linha16 linha16 linha16 linha16 linha16 linha16 linha16 linha1",
+    "curta17 curta17 curta17 curta1",
+-   "linha18 linha18 linha18 linha18 linha18 linha18 linha18",
+-   "  linha18 linha18 linha18 linha18 linha18 linha18",
+-   "  linha1",
++   "linha18 linha18 linha18 linha18 linha18 linha18 linha18 linha18 linha18 linha18 linha18 linha18 linha18 linha1",
+    "curta19 curta19 curta19 curta1",
+    "",
+    "curta21 curta21 curta21 curta2",
+-   "linha22 linha22 linha22 linha22 linha22 linha22 linha22",
+-   "  linha22 linha22 linha22 linha22 linha22 linha22",
+-   "  linha2",
++   "linha22 linha22 linha22 linha22 linha22 linha22 linha22 linha22 linha22 linha22 linha22 linha22 linha22 linha2",
+    "curta23 curta23 curta23 curta2",
+-   "linha24 linha24 linha24 linha24 linha24 linha24 linha24",
+-   "  linha24 linha24 linha24 linha24 linha24 linha24",
+-   "  linha2",
++   "linha24 linha24 linha24 linha24 linha24 linha24 linha24 linha24 linha24 linha24 linha24 linha24 linha24 linha2",
+    "curta25 curta25 curta25 curta2",
+-   "linha26 linha26 linha26 linha26 linha26 linha26 linha26",
+-   "  linha26 linha26 linha26 linha26 linha26 linha26",
+-   "  linha2",
++   "linha26 linha26 linha26 linha26 linha26 linha26 linha26 linha26 linha26 linha26 linha26 linha26 linha26 linha2",
+    "",
+-   "linha28 linha28 linha28 linha28 linha28 linha28 linha28",
+-   "  linha28 linha28 linha28 linha28 linha28 linha28",
+-   "  linha2",
++   "linha28 linha28 linha28 linha28 linha28 linha28 linha28 linha28 linha28 linha28 linha28 linha28 linha28 linha2",
+    "curta29 curta29 curta29 curta2",
+  ]
+
+ ❯ apps/native/test/leitor-quebra.test.tsx:243:29
+    241|     __colunas(55)
+    242|     await visualizacao(conteudo('l1', 'Lyrics', LETRA_LONGA))
+    243|     expect(linhasDoCorpo()).toEqual(quebrar(LETRA_LONGA, 'Lyrics', 55)…
+       |                             ^
+    244|     expect(corpoNumNoSo()).toBe(true)
+    245|     desmontar()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/17]⎯
+
+ FAIL   native-tela  apps/native/test/leitor-quebra.test.tsx > QL-D45 — a linha da Cifra com o acorde maior que a coluna rola para o lado, só ela > a linha de acordes sozinha: só ela numa rolagem horizontal; o resto em texto que não rola
+AssertionError: com a exceção o corpo é um contêiner de grupos: expected 'SPAN' to be 'DIV' // Object.is equality
+
+Expected: "DIV"
+Received: "SPAN"
+
+ ❯ grupos apps/native/test/leitor-quebra.test.tsx:259:77
+    257|   function grupos(): { linhas: string[]; rola: boolean }[] {
+    258|     const corpo = exige('corpo')
+    259|     expect(corpo.tagName, 'com a exceção o corpo é um contêiner de gru…
+       |                                                                             ^
+    260|     return [...corpo.children].map((g) => {
+    261|       const rola = g.getAttribute('data-horizontal') === 'true'
+ ❯ apps/native/test/leitor-quebra.test.tsx:271:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/17]⎯
+
+ FAIL   native-tela  apps/native/test/leitor-quebra.test.tsx > QL-D45 — a linha da Cifra com o acorde maior que a coluna rola para o lado, só ela > no par: o pedaço de acordes e o de letra que passam da coluna rolam JUNTOS (o acorde fica sobre a sílaba)
+AssertionError: com a exceção o corpo é um contêiner de grupos: expected 'SPAN' to be 'DIV' // Object.is equality
+
+Expected: "DIV"
+Received: "SPAN"
+
+ ❯ grupos apps/native/test/leitor-quebra.test.tsx:259:77
+    257|   function grupos(): { linhas: string[]; rola: boolean }[] {
+    258|     const corpo = exige('corpo')
+    259|     expect(corpo.tagName, 'com a exceção o corpo é um contêiner de gru…
+       |                                                                             ^
+    260|     return [...corpo.children].map((g) => {
+    261|       const rola = g.getAttribute('data-horizontal') === 'true'
+ ❯ apps/native/test/leitor-quebra.test.tsx:283:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/17]⎯
+
+ FAIL   native-tela  apps/native/test/leitor-quebra.test.tsx > QL-D45 — a linha da Cifra com o acorde maior que a coluna rola para o lado, só ela > na Letra a mesma linha quebra como letra (QL-D22): nada rola, um nó só
+TypeError: colunasDesenhadas is not a function
+ ❯ apps/native/test/leitor-quebra.test.tsx:296:45
+    294|     await palco(conteudo('l2', 'Lyrics', t))
+    295|     expect(corpoNumNoSo()).toBe(true)
+    296|     for (const l of linhasDoCorpo()) expect(colunasDesenhadas(l)).toBe…
+       |                                             ^
+    297|   })
+    298| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/17]⎯
+
+ FAIL   native-tela  apps/native/test/leitor-quebra.test.tsx > QL-D18 / QL-R13 — a âncora: o começo da linha lógica do topo volta ao topo, a 32 da barra > logicaNoTopo: a linha visual que cobre o topo da rolagem (o respiro de 32 conta), e a lógica dela
+TypeError: L.logicaNoTopo is not a function
+ ❯ apps/native/test/leitor-quebra.test.tsx:307:14
+    305|   it('logicaNoTopo: a linha visual que cobre o topo da rolagem (o resp…
+    306|     const logicas = [0, 0, 1, 2, 2, 2, 3]
+    307|     expect(L.logicaNoTopo(logicas, 0, lh22)).toBe(0)
+       |              ^
+    308|     expect(L.logicaNoTopo(logicas, 32 + lh22 - 0.5, lh22)).toBe(0)
+    309|     expect(L.logicaNoTopo(logicas, 32 + lh22, lh22)).toBe(0) // a 2ª l…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/17]⎯
+
+ FAIL   native-tela  apps/native/test/leitor-quebra.test.tsx > QL-D18 / QL-R13 — a âncora: o começo da linha lógica do topo volta ao topo, a 32 da barra > yDaLogica: a rolagem que põe a 1ª linha visual da lógica a 32 do topo (o respiro), e 0 para a primeira
+TypeError: L.yDaLogica is not a function
+ ❯ apps/native/test/leitor-quebra.test.tsx:317:14
+    315|   it('yDaLogica: a rolagem que põe a 1ª linha visual da lógica a 32 do…
+    316|     const logicas = [0, 0, 1, 2, 2, 2, 3]
+    317|     expect(L.yDaLogica(logicas, 0, lh22)).toBe(0)
+       |              ^
+    318|     expect(L.yDaLogica(logicas, 2, lh22)).toBeCloseTo(3 * lh22)
+    319|     expect(L.yDaLogica(logicas, 3, lh22)).toBeCloseTo(6 * lh22)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/17]⎯
+
+ FAIL   native-tela  apps/native/test/leitor-quebra.test.tsx > QL-D18 / QL-R13 — a âncora: o começo da linha lógica do topo volta ao topo, a 32 da barra > inicioDoBloco: na Cifra, a letra de um par ancora na linha de acordes de cima; na Letra, não
+TypeError: L.inicioDoBloco is not a function
+ ❯ apps/native/test/leitor-quebra.test.tsx:323:14
+    321| 
+    322|   it('inicioDoBloco: na Cifra, a letra de um par ancora na linha de ac…
+    323|     expect(L.inicioDoBloco(CIFRA, 'Chords', 2)).toBe(1)
+       |              ^
+    324|     expect(L.inicioDoBloco(CIFRA, 'Chords', 5)).toBe(4)
+    325|     expect(L.inicioDoBloco(CIFRA, 'Chords', 1)).toBe(1)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/17]⎯
+
+ FAIL   native-tela  apps/native/test/leitor-quebra.test.tsx > QL-D18 / QL-R13 — a âncora: o começo da linha lógica do topo volta ao topo, a 32 da barra > o giro C → B, nas contas: a lógica do topo em 80 colunas volta ao topo em 48
+TypeError: L.logicasDasVisuais is not a function
+ ❯ apps/native/test/leitor-quebra.test.tsx:330:20
+    328| 
+    329|   it('o giro C → B, nas contas: a lógica do topo em 80 colunas volta a…
+    330|     const em80 = L.logicasDasVisuais(LETRA_LONGA, quebrar(LETRA_LONGA,…
+       |                    ^
+    331|     const em48 = L.logicasDasVisuais(LETRA_LONGA, quebrar(LETRA_LONGA,…
+    332|     const v = em80.indexOf(10) + 1 // a continuação da linha lógica 10…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/17]⎯
+
+ FAIL   native-tela  apps/native/test/leitor-quebra.test.tsx > QL-D18 / QL-R13 — a âncora: o começo da linha lógica do topo volta ao topo, a 32 da barra > o palco num passo de zoom: com a continuação da lógica 10 no topo, a rolagem pedida põe o começo da 10 a 32
+TypeError: L.logicasDasVisuais is not a function
+ ❯ apps/native/test/leitor-quebra.test.tsx:343:20
+    341|     __colunas(48)
+    342|     await palco(conteudo('l1', 'Lyrics', LETRA_LONGA))
+    343|     const em48 = L.logicasDasVisuais(LETRA_LONGA, quebrar(LETRA_LONGA,…
+       |                    ^
+    344|     __rolar(32 + (em48.indexOf(10) + 1) * lh22 + 4)
+    345|     __limparRolagens()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/17]⎯
+
+ FAIL   core  packages/core/src/quebra.test.ts > QL-PR3 — colunasDesenhadas: a largura de uma linha visual, a medida do QL-D24 > conta pontos de código, o 	 até a múltipla de 8, o  do fim e o acento combinante como 0
+TypeError: (0 , __vite_ssr_import_2__.colunasDesenhadas) is not a function
+ ❯ packages/core/src/quebra.test.ts:292:12
+    290| describe('QL-PR3 — colunasDesenhadas: a largura de uma linha visual, a…
+    291|   it('conta pontos de código, o \t até a múltipla de 8, o \r do fim e …
+    292|     expect(colunasDesenhadas('')).toBe(0)
+       |            ^
+    293|     expect(colunasDesenhadas('abc')).toBe(3)
+    294|     expect(colunasDesenhadas('ab\tcd')).toBe(10)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/17]⎯
+
+ FAIL   core  packages/core/src/quebra.test.ts > QL-PR3 — colunasDesenhadas: a largura de uma linha visual, a medida do QL-D24 > toda linha visual de quebrar cabe na coluna por esta medida, com \t e acento — e a do acorde maior que ela passa (QL-D45)
+TypeError: (0 , __vite_ssr_import_2__.colunasDesenhadas) is not a function
+ ❯ packages/core/src/quebra.test.ts:305:59
+    303|     const letra = 'ab\tcd ef gh ij kl mn op\ncafe\u0301 cafe\u0301 caf…
+    304|     for (let c = 8; c <= 26; c++) {
+    305|       for (const l of quebrar(letra, 'Lyrics', c)) expect(colunasDesen…
+       |                                                           ^
+    306|     }
+    307|     // a linha de acordes sozinha (seguida de linha vazia), com o acor…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/17]⎯
+
+
+ Test Files  3 failed (3)
+      Tests  17 failed | 61 passed (78)
+   Start at  07:51:01
+   Duration  1.51s (transform 370ms, setup 0ms, import 589ms, tests 1.09s, environment 645ms)
+

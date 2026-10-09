@@ -1,0 +1,8 @@
+G-inv — invariante C (T3-R2): bounds em dp, nó a nó
+  base:  /private/tmp/claude-501/-Users-marcelviana-projects-octavia/3cfa44b0-bc80-40fb-9f95-7b0acd9b1709/scratchpad/ql3/a16t/main
+  novos: /private/tmp/claude-501/-Users-marcelviana-projects-octavia/3cfa44b0-bc80-40fb-9f95-7b0acd9b1709/scratchpad/ql3/a16t/pr
+  ✓ S3-cifra-z22-tab-pai: idêntico (66 nós)
+  ✓ S3-letra-z22-tab-pai: idêntico (66 nós)
+G-inv: 2 de 2 idênticos
+G-inv: IDÊNTICO EM DP ✓
+Tab: o nó corpo da Letra de 77 byte a byte igual ao da main

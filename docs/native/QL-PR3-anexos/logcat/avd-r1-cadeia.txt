@@ -1,0 +1,1817 @@
+10-09 08:39:53.707 21445 21445 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:39:53.751 21445 21445 I AndroidRuntime: Using default boot image
+10-09 08:39:53.751 21445 21445 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:39:53.752 21445 21445 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:39:54.427 21445 21445 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:39:55.701 21445 21445 D AndroidRuntime: Shutting down VM
+10-09 08:39:57.931 21469 21469 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:39:57.936 21469 21469 I AndroidRuntime: Using default boot image
+10-09 08:39:57.936 21469 21469 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:39:57.944 21469 21469 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:39:58.261 21469 21469 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:39:59.584 21469 21469 D AndroidRuntime: Shutting down VM
+10-09 08:40:01.257 21378 21486 I ReactNativeJS: OCTAVIA: faixa=C w=1137.8 h=711.1
+10-09 08:40:01.266 21378 21486 I ReactNativeJS: OCTAVIA: net online
+10-09 08:40:01.813 21536 21536 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:40:01.818 21536 21536 I AndroidRuntime: Using default boot image
+10-09 08:40:01.818 21536 21536 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:40:01.818 21536 21536 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:40:01.992 21536 21536 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:40:02.157 21378 21486 I ReactNativeJS: OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+10-09 08:40:02.357 21378 21486 I ReactNativeJS: OCTAVIA: sync start
+10-09 08:40:02.362 21378 21486 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 08:40:02.384 21378 21486 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=25
+10-09 08:40:02.390 21378 21486 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 08:40:02.413 21378 21486 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=23
+10-09 08:40:02.431 21378 21486 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=3 invalidated=3
+10-09 08:40:02.439 21378 21486 I ReactNativeJS: OCTAVIA: cache write kind=content n=12 invalidated=12
+10-09 08:40:02.439 21378 21486 I ReactNativeJS: OCTAVIA: sync ok setlists=3 content=12 pages=1 t=83
+10-09 08:40:02.444 21378 21486 I ReactNativeJS: OCTAVIA: prefetch plan n=3 reason=library
+10-09 08:40:02.618 21378 21486 I ReactNativeJS: OCTAVIA: file src=download name=partitura-1p.pdf bytes=643 total=643 ms=145
+10-09 08:40:02.637 21378 21486 I ReactNativeJS: OCTAVIA: file src=download name=partitura-12p.pdf bytes=4198 total=4198 ms=177
+10-09 08:40:02.671 21378 21486 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:40:03.952 21536 21536 D AndroidRuntime: Shutting down VM
+10-09 08:40:07.918 21575 21575 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:40:07.923 21575 21575 I AndroidRuntime: Using default boot image
+10-09 08:40:07.923 21575 21575 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:40:07.923 21575 21575 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:40:07.981 21575 21575 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:40:09.105 21575 21575 D AndroidRuntime: Shutting down VM
+10-09 08:40:10.125 21378 21486 I ReactNativeJS: OCTAVIA: index open
+10-09 08:40:12.083 21603 21603 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:40:12.085 21603 21603 I AndroidRuntime: Using default boot image
+10-09 08:40:12.085 21603 21603 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:40:12.085 21603 21603 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:40:12.161 21603 21603 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:40:13.312 21603 21603 D AndroidRuntime: Shutting down VM
+10-09 08:40:14.233 21624 21624 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:40:14.235 21624 21624 I AndroidRuntime: Using default boot image
+10-09 08:40:14.235 21624 21624 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:40:14.235 21624 21624 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:40:14.295 21624 21624 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:40:15.471 21624 21624 D AndroidRuntime: Shutting down VM
+10-09 08:40:16.432 21378 21486 I ReactNativeJS: OCTAVIA: index jump n=1
+10-09 08:40:17.095 21378 21486 I ReactNativeJS: OCTAVIA: keepawake on
+10-09 08:40:17.103 21378 21486 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=demand
+10-09 08:40:17.152 21378 21486 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:40:22.611 21668 21668 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:40:22.618 21668 21668 I AndroidRuntime: Using default boot image
+10-09 08:40:22.618 21668 21668 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:40:22.619 21668 21668 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:40:22.785 21668 21668 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:40:23.867 21668 21668 D AndroidRuntime: Shutting down VM
+10-09 08:40:25.300 21691 21691 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:40:25.305 21691 21691 I AndroidRuntime: Using default boot image
+10-09 08:40:25.306 21691 21691 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:40:25.306 21691 21691 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:40:25.482 21691 21691 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:40:26.644 21691 21691 D AndroidRuntime: Shutting down VM
+10-09 08:40:28.484 21717 21717 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:40:28.488 21717 21717 I AndroidRuntime: Using default boot image
+10-09 08:40:28.488 21717 21717 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:40:28.489 21717 21717 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:40:28.627 21717 21717 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:40:29.740 21717 21717 D AndroidRuntime: Shutting down VM
+10-09 08:40:31.421 21378 21486 I ReactNativeJS: OCTAVIA: index open
+10-09 08:40:31.422 21378 21486 I ReactNativeJS: OCTAVIA: keepawake off
+10-09 08:40:35.766 21772 21772 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:40:35.768 21772 21772 I AndroidRuntime: Using default boot image
+10-09 08:40:35.768 21772 21772 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:40:35.768 21772 21772 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:40:35.830 21772 21772 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:40:36.956 21772 21772 D AndroidRuntime: Shutting down VM
+10-09 08:40:38.120 21797 21797 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:40:38.125 21797 21797 I AndroidRuntime: Using default boot image
+10-09 08:40:38.125 21797 21797 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:40:38.125 21797 21797 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:40:38.279 21797 21797 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:40:39.481 21797 21797 D AndroidRuntime: Shutting down VM
+10-09 08:40:41.488 21378 21486 I ReactNativeJS: OCTAVIA: keepawake on
+10-09 08:40:41.492 21378 21486 I ReactNativeJS: OCTAVIA: stage restore n=1/8
+10-09 08:40:43.568 21829 21829 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:40:43.572 21829 21829 I AndroidRuntime: Using default boot image
+10-09 08:40:43.572 21829 21829 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:40:43.573 21829 21829 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:40:43.747 21829 21829 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:40:44.830 21829 21829 D AndroidRuntime: Shutting down VM
+10-09 08:40:46.441 21378 21486 I ReactNativeJS: OCTAVIA: nav n=2/8 setlist=00000001 t=643
+10-09 08:40:46.455 21378 21486 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=demand
+10-09 08:40:46.514 21378 21486 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:40:52.008 21874 21874 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:40:52.014 21874 21874 I AndroidRuntime: Using default boot image
+10-09 08:40:52.014 21874 21874 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:40:52.014 21874 21874 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:40:52.184 21874 21874 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:40:53.286 21874 21874 D AndroidRuntime: Shutting down VM
+10-09 08:40:54.429 21897 21897 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:40:54.434 21897 21897 I AndroidRuntime: Using default boot image
+10-09 08:40:54.435 21897 21897 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:40:54.435 21897 21897 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:40:54.600 21897 21897 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:40:55.713 21897 21897 D AndroidRuntime: Shutting down VM
+10-09 08:40:57.519 21927 21927 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:40:57.524 21927 21927 I AndroidRuntime: Using default boot image
+10-09 08:40:57.524 21927 21927 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:40:57.524 21927 21927 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:40:57.666 21927 21927 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:40:58.747 21927 21927 D AndroidRuntime: Shutting down VM
+10-09 08:40:59.713 21378 21486 I ReactNativeJS: OCTAVIA: theme=light
+10-09 08:41:04.762 21971 21971 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:41:04.765 21971 21971 I AndroidRuntime: Using default boot image
+10-09 08:41:04.765 21971 21971 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:41:04.766 21971 21971 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:41:04.878 21971 21971 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:41:05.985 21971 21971 D AndroidRuntime: Shutting down VM
+10-09 08:41:07.138 22005 22005 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:41:07.144 22005 22005 I AndroidRuntime: Using default boot image
+10-09 08:41:07.144 22005 22005 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:41:07.144 22005 22005 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:41:07.315 22005 22005 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:41:08.423 22005 22005 D AndroidRuntime: Shutting down VM
+10-09 08:41:10.120 22033 22033 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:41:10.124 22033 22033 I AndroidRuntime: Using default boot image
+10-09 08:41:10.124 22033 22033 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:41:10.124 22033 22033 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:41:10.254 22033 22033 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:41:11.350 22033 22033 D AndroidRuntime: Shutting down VM
+10-09 08:41:12.347 21378 21486 I ReactNativeJS: OCTAVIA: theme=dark
+10-09 08:41:13.419 22061 22061 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:41:13.423 22061 22061 I AndroidRuntime: Using default boot image
+10-09 08:41:13.423 22061 22061 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:41:13.423 22061 22061 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:41:13.506 22061 22061 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:41:14.556 22061 22061 D AndroidRuntime: Shutting down VM
+10-09 08:41:15.513 21378 21486 I ReactNativeJS: OCTAVIA: nav n=3/8 setlist=00000001 t=49
+10-09 08:41:15.524 21378 21486 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=demand
+10-09 08:41:15.557 21378 21486 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:41:18.549 22089 22089 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:41:18.553 22089 22089 I AndroidRuntime: Using default boot image
+10-09 08:41:18.553 22089 22089 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:41:18.554 22089 22089 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:41:18.652 22089 22089 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:41:19.702 22089 22089 D AndroidRuntime: Shutting down VM
+10-09 08:41:21.201 21378 21486 I ReactNativeJS: OCTAVIA: autoscroll on t=589
+10-09 08:41:25.764 22131 22131 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:41:25.768 22131 22131 I AndroidRuntime: Using default boot image
+10-09 08:41:25.769 22131 22131 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:41:25.769 22131 22131 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:41:25.864 22131 22131 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:41:35.968 22131 22131 D AndroidRuntime: Shutting down VM
+10-09 08:41:37.942 22271 22271 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:41:37.970 22271 22271 I AndroidRuntime: Using default boot image
+10-09 08:41:37.971 22271 22271 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:41:37.971 22271 22271 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:41:38.245 22271 22271 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:41:40.127 22271 22271 D AndroidRuntime: Shutting down VM
+10-09 08:41:42.354 22301 22301 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:41:42.365 22301 22301 I AndroidRuntime: Using default boot image
+10-09 08:41:42.365 22301 22301 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:41:42.365 22301 22301 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:41:42.603 22301 22301 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:41:43.701 22301 22301 D AndroidRuntime: Shutting down VM
+10-09 08:41:44.663 21378 21486 I ReactNativeJS: OCTAVIA: autoscroll off t=0
+10-09 08:41:45.728 22329 22329 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:41:45.731 22329 22329 I AndroidRuntime: Using default boot image
+10-09 08:41:45.731 22329 22329 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:41:45.731 22329 22329 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:41:45.791 22329 22329 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:41:46.832 22329 22329 D AndroidRuntime: Shutting down VM
+10-09 08:41:47.762 21378 21486 I ReactNativeJS: OCTAVIA: nav n=4/8 setlist=00000001 t=35
+10-09 08:41:47.778 21378 21486 I ReactNativeJS: OCTAVIA: file src=disk name=partitura-12p.pdf bytes=4198
+10-09 08:41:47.783 21378 21486 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=demand
+10-09 08:41:47.825 21378 21486 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:41:48.011 21378 21486 I ReactNativeJS: OCTAVIA: pdf-render pages=12 src=disk
+10-09 08:41:48.031 21378 21486 I ReactNativeJS: OCTAVIA: pdf-page n=1/12
+10-09 08:41:57.275 22378 22378 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:41:57.284 22378 22378 I AndroidRuntime: Using default boot image
+10-09 08:41:57.284 22378 22378 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:41:57.284 22378 22378 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:41:57.584 22378 22378 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:41:58.707 22378 22378 D AndroidRuntime: Shutting down VM
+10-09 08:41:59.980 22401 22401 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:41:59.985 22401 22401 I AndroidRuntime: Using default boot image
+10-09 08:41:59.985 22401 22401 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:41:59.986 22401 22401 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:42:00.254 22401 22401 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:42:01.401 22401 22401 D AndroidRuntime: Shutting down VM
+10-09 08:42:04.067 21378 21486 I ReactNativeJS: OCTAVIA: net offline
+10-09 08:42:05.488 20943 20943 I AndroidRuntime: VM exiting with result code 0, cleanup skipped.
+10-09 08:42:05.655   551  1736 I ActivityManager: Process com.android.bluetooth (pid 20943) has died: fg  SVC 
+10-09 08:42:06.468 21378 21486 I ReactNativeJS: OCTAVIA: file src=disk name=partitura-12p.pdf bytes=4198
+10-09 08:42:07.987 22475 22475 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:42:08.067 22475 22475 I AndroidRuntime: Using default boot image
+10-09 08:42:08.068 22475 22475 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:42:08.068 22475 22475 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:42:08.932 22475 22475 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:42:10.207 22475 22475 D AndroidRuntime: Shutting down VM
+10-09 08:42:12.122 21378 21486 I ReactNativeJS: OCTAVIA: nav n=5/8 setlist=00000001 t=793
+10-09 08:42:12.137 21378 21486 I ReactNativeJS: OCTAVIA: placeholder kind=file-missing name=nao-existe.pdf
+10-09 08:42:17.390 22522 22522 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:42:17.393 22522 22522 I AndroidRuntime: Using default boot image
+10-09 08:42:17.393 22522 22522 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:42:17.393 22522 22522 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:42:17.468 22522 22522 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:42:18.542 22522 22522 D AndroidRuntime: Shutting down VM
+10-09 08:42:19.695 22545 22545 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:42:19.699 22545 22545 I AndroidRuntime: Using default boot image
+10-09 08:42:19.699 22545 22545 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:42:19.699 22545 22545 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:42:19.903 22545 22545 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:42:21.053 22545 22545 D AndroidRuntime: Shutting down VM
+10-09 08:42:31.039 21378 21486 I ReactNativeJS: OCTAVIA: net online
+10-09 08:42:32.169 22700 22700 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:42:32.388 22700 22700 I AndroidRuntime: Using default boot image
+10-09 08:42:32.388 22700 22700 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:42:32.388 22700 22700 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:42:33.495 21378 21486 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=demand
+10-09 08:42:33.735 21378 21486 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:42:33.736 21378 21486 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:42:33.864 22700 22700 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:42:35.684 22700 22700 D AndroidRuntime: Shutting down VM
+10-09 08:42:37.455 21378 21486 I ReactNativeJS: OCTAVIA: nav n=6/8 setlist=00000001 t=684
+10-09 08:42:37.463 21378 21486 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=demand
+10-09 08:42:37.498 21378 21486 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:42:44.627 22798 22798 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:42:44.765 22798 22798 I AndroidRuntime: Using default boot image
+10-09 08:42:44.766 22798 22798 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:42:44.766 22798 22798 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:42:45.274 22798 22798 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:42:46.503 22798 22798 D AndroidRuntime: Shutting down VM
+10-09 08:42:47.824 22822 22822 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:42:47.830 22822 22822 I AndroidRuntime: Using default boot image
+10-09 08:42:47.831 22822 22822 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:42:47.831 22822 22822 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:42:48.040 22822 22822 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:42:49.389 22822 22822 D AndroidRuntime: Shutting down VM
+10-09 08:42:52.665 22848 22848 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:42:52.668 22848 22848 I AndroidRuntime: Using default boot image
+10-09 08:42:52.668 22848 22848 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:42:52.668 22848 22848 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:42:52.753 22848 22848 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:42:53.868 22848 22848 D AndroidRuntime: Shutting down VM
+10-09 08:42:55.697 21378 21486 I ReactNativeJS: OCTAVIA: nav n=7/8 setlist=00000001 t=667
+10-09 08:42:55.717 21378 21486 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=demand
+10-09 08:42:55.745 21378 21486 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:42:58.102 22879 22879 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:42:58.107 22879 22879 I AndroidRuntime: Using default boot image
+10-09 08:42:58.108 22879 22879 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:42:58.108 22879 22879 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:42:58.244 22879 22879 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:42:59.288 22879 22879 D AndroidRuntime: Shutting down VM
+10-09 08:43:00.788 21378 21486 I ReactNativeJS: OCTAVIA: nav n=8/8 setlist=00000001 t=608
+10-09 08:43:00.798 21378 21486 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=demand
+10-09 08:43:00.822 21378 21486 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:43:06.305 22925 22925 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:43:06.311 22925 22925 I AndroidRuntime: Using default boot image
+10-09 08:43:06.311 22925 22925 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:43:06.311 22925 22925 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:43:06.458 22925 22925 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:43:07.551 22925 22925 D AndroidRuntime: Shutting down VM
+10-09 08:43:08.761 22948 22948 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:43:08.768 22948 22948 I AndroidRuntime: Using default boot image
+10-09 08:43:08.768 22948 22948 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:43:08.768 22948 22948 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:43:08.982 22948 22948 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:43:10.079 22948 22948 D AndroidRuntime: Shutting down VM
+10-09 08:43:11.950 22975 22975 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:43:11.955 22975 22975 I AndroidRuntime: Using default boot image
+10-09 08:43:11.955 22975 22975 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:43:11.955 22975 22975 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:43:12.148 22975 22975 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:43:13.257 22975 22975 D AndroidRuntime: Shutting down VM
+10-09 08:43:14.265 21378 21486 I ReactNativeJS: OCTAVIA: end-of-setlist n=8
+10-09 08:43:14.939 21378 21486 I ReactNativeJS: OCTAVIA: keepawake off
+10-09 08:43:20.375 23022 23022 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:43:20.381 23022 23022 I AndroidRuntime: Using default boot image
+10-09 08:43:20.381 23022 23022 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:43:20.381 23022 23022 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:43:20.610 23022 23022 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:43:21.706 23022 23022 D AndroidRuntime: Shutting down VM
+10-09 08:43:22.824 23045 23045 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:43:22.836 23045 23045 I AndroidRuntime: Using default boot image
+10-09 08:43:22.836 23045 23045 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:43:22.836 23045 23045 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:43:23.007 23045 23045 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:43:24.105 23045 23045 D AndroidRuntime: Shutting down VM
+10-09 08:43:31.704 23135 23135 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:43:31.717 23135 23135 I AndroidRuntime: Using default boot image
+10-09 08:43:31.719 23135 23135 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:43:31.719 23135 23135 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:43:32.189 23135 23135 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:43:34.433 23135 23135 D AndroidRuntime: Shutting down VM
+10-09 08:43:36.542 23197 23197 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:43:36.555 23197 23197 I AndroidRuntime: Using default boot image
+10-09 08:43:36.557 23197 23197 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:43:36.557 23197 23197 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:43:36.658 23087 23169 I ReactNativeJS: OCTAVIA: faixa=C w=1137.8 h=711.1
+10-09 08:43:36.692 23087 23169 I ReactNativeJS: OCTAVIA: net online
+10-09 08:43:36.840 23197 23197 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:43:37.530 23087 23169 I ReactNativeJS: OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+10-09 08:43:38.126 23087 23169 I ReactNativeJS: OCTAVIA: cache hit kind=setlists n=3
+10-09 08:43:38.127 23087 23169 I ReactNativeJS: OCTAVIA: cache hit kind=content n=12
+10-09 08:43:38.187 23087 23169 I ReactNativeJS: OCTAVIA: sync start
+10-09 08:43:38.204 23087 23169 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 08:43:38.388 23197 23197 D AndroidRuntime: Shutting down VM
+10-09 08:43:38.560 23087 23169 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=361
+10-09 08:43:38.579 23087 23169 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 08:43:38.663 23087 23169 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=85
+10-09 08:43:38.727 23087 23169 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=0 invalidated=3
+10-09 08:43:38.757 23087 23169 I ReactNativeJS: OCTAVIA: cache write kind=content n=12 invalidated=0
+10-09 08:43:38.761 23087 23169 I ReactNativeJS: OCTAVIA: sync ok setlists=0 content=12 pages=1 t=574
+10-09 08:43:38.805 23087 23169 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=library
+10-09 08:43:39.307 23087 23169 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:43:42.482 23233 23233 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:43:42.487 23233 23233 I AndroidRuntime: Using default boot image
+10-09 08:43:42.487 23233 23233 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:43:42.488 23233 23233 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:43:42.649 23233 23233 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:43:44.051 23233 23233 D AndroidRuntime: Shutting down VM
+10-09 08:43:48.327 23269 23269 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:43:48.332 23269 23269 I AndroidRuntime: Using default boot image
+10-09 08:43:48.332 23269 23269 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:43:48.332 23269 23269 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:43:48.476 23269 23269 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:43:49.607 23269 23269 D AndroidRuntime: Shutting down VM
+10-09 08:43:50.767 23293 23293 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:43:50.773 23293 23293 I AndroidRuntime: Using default boot image
+10-09 08:43:50.774 23293 23293 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:43:50.774 23293 23293 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:43:50.912 23293 23293 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:43:52.035 23293 23293 D AndroidRuntime: Shutting down VM
+10-09 08:43:59.425 23385 23385 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:43:59.435 23385 23385 I AndroidRuntime: Using default boot image
+10-09 08:43:59.437 23385 23385 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:43:59.441 23385 23385 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:43:59.753 23385 23385 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:44:00.789 23385 23385 D AndroidRuntime: Shutting down VM
+10-09 08:44:03.999 23332 23415 I ReactNativeJS: OCTAVIA: faixa=C w=1137.8 h=711.1
+10-09 08:44:04.052 23332 23415 I ReactNativeJS: OCTAVIA: net online
+10-09 08:44:04.755 23332 23415 I ReactNativeJS: OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+10-09 08:44:08.540 23523 23523 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:44:08.546 23523 23523 I AndroidRuntime: Using default boot image
+10-09 08:44:08.546 23523 23523 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:44:08.546 23523 23523 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:44:08.787 23523 23523 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:44:10.892 23523 23523 D AndroidRuntime: Shutting down VM
+10-09 08:44:12.617 23465 23545 I ReactNativeJS: OCTAVIA: faixa=C w=1137.8 h=711.1
+10-09 08:44:12.654 23465 23545 I ReactNativeJS: OCTAVIA: net online
+10-09 08:44:13.030 23575 23575 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:44:13.040 23575 23575 I AndroidRuntime: Using default boot image
+10-09 08:44:13.040 23575 23575 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:44:13.040 23575 23575 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:44:13.289 23575 23575 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:44:13.481 23465 23545 I ReactNativeJS: OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+10-09 08:44:14.104 23465 23545 I ReactNativeJS: OCTAVIA: cache hit kind=setlists n=0
+10-09 08:44:14.104 23465 23545 I ReactNativeJS: OCTAVIA: cache hit kind=content n=12
+10-09 08:44:14.341 23465 23545 I ReactNativeJS: OCTAVIA: sync start
+10-09 08:44:14.372 23465 23545 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 08:44:14.465 23465 23545 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=102
+10-09 08:44:14.481 23465 23545 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 08:44:14.530 23465 23545 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=54
+10-09 08:44:14.571 23465 23545 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=3 invalidated=3
+10-09 08:44:14.585 23465 23545 I ReactNativeJS: OCTAVIA: cache write kind=content n=12 invalidated=0
+10-09 08:44:14.586 23465 23545 I ReactNativeJS: OCTAVIA: sync ok setlists=3 content=12 pages=1 t=244
+10-09 08:44:14.612 23465 23545 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=library
+10-09 08:44:15.258 23465 23545 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:44:16.762 23575 23575 D AndroidRuntime: Shutting down VM
+10-09 08:44:20.825 23612 23612 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:44:20.833 23612 23612 I AndroidRuntime: Using default boot image
+10-09 08:44:20.833 23612 23612 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:44:20.833 23612 23612 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:44:21.007 23612 23612 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:44:22.248 23612 23612 D AndroidRuntime: Shutting down VM
+10-09 08:44:23.971 23465 23545 I ReactNativeJS: OCTAVIA: index open
+10-09 08:44:25.344 23640 23640 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:44:25.347 23640 23640 I AndroidRuntime: Using default boot image
+10-09 08:44:25.347 23640 23640 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:44:25.347 23640 23640 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:44:25.410 23640 23640 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:44:26.526 23640 23640 D AndroidRuntime: Shutting down VM
+10-09 08:44:30.503 23676 23676 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:44:30.508 23676 23676 I AndroidRuntime: Using default boot image
+10-09 08:44:30.509 23676 23676 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:44:30.665 23676 23676 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:44:31.884 23676 23676 D AndroidRuntime: Shutting down VM
+10-09 08:44:33.100 23699 23699 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:44:33.110 23699 23699 I AndroidRuntime: Using default boot image
+10-09 08:44:33.110 23699 23699 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:44:33.110 23699 23699 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:44:33.283 23699 23699 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:44:34.500 23699 23699 D AndroidRuntime: Shutting down VM
+10-09 08:44:37.177 23465 23545 I ReactNativeJS: OCTAVIA: net offline
+10-09 08:44:38.152 22585 22585 I AndroidRuntime: VM exiting with result code 0, cleanup skipped.
+10-09 08:44:38.227   551  4506 I ActivityManager: Process com.android.bluetooth (pid 22585) has died: fg  SVC 
+10-09 08:44:40.828 23763 23763 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:44:40.847 23763 23763 I AndroidRuntime: Using default boot image
+10-09 08:44:40.847 23763 23763 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:44:40.848 23763 23763 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:44:41.364 23763 23763 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:44:42.927 23763 23763 D AndroidRuntime: Shutting down VM
+10-09 08:44:47.935 23803 23803 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:44:47.939 23803 23803 I AndroidRuntime: Using default boot image
+10-09 08:44:47.939 23803 23803 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:44:47.939 23803 23803 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:44:48.089 23803 23803 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:44:49.357 23803 23803 D AndroidRuntime: Shutting down VM
+10-09 08:44:50.527 23827 23827 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:44:50.534 23827 23827 I AndroidRuntime: Using default boot image
+10-09 08:44:50.534 23827 23827 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:44:50.535 23827 23827 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:44:50.721 23827 23827 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:44:52.041 23827 23827 D AndroidRuntime: Shutting down VM
+10-09 08:44:59.085 23465 23545 I ReactNativeJS: OCTAVIA: net online
+10-09 08:45:06.988 24058 24058 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:45:07.059 24058 24058 I AndroidRuntime: Using default boot image
+10-09 08:45:07.059 24058 24058 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:45:07.060 24058 24058 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:45:07.803 24058 24058 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:45:08.905 24058 24058 D AndroidRuntime: Shutting down VM
+10-09 08:45:11.071 24123 24123 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:45:11.077 24123 24123 I AndroidRuntime: Using default boot image
+10-09 08:45:11.077 24123 24123 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:45:11.077 24123 24123 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:45:11.305 24123 24123 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:45:12.170 24014 24097 I ReactNativeJS: OCTAVIA: faixa=C w=1137.8 h=711.1
+10-09 08:45:12.232 24014 24097 I ReactNativeJS: OCTAVIA: net online
+10-09 08:45:13.157 24014 24097 I ReactNativeJS: OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+10-09 08:45:13.737 24014 24097 I ReactNativeJS: OCTAVIA: cache hit kind=setlists n=3
+10-09 08:45:13.738 24014 24097 I ReactNativeJS: OCTAVIA: cache hit kind=content n=12
+10-09 08:45:13.801 24123 24123 D AndroidRuntime: Shutting down VM
+10-09 08:45:14.404 24014 24097 I ReactNativeJS: OCTAVIA: sync start
+10-09 08:45:14.420 24014 24097 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 08:45:14.569 24014 24097 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=161
+10-09 08:45:14.596 24014 24097 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 08:45:14.732 24014 24097 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=138
+10-09 08:45:14.857 24014 24097 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=3 invalidated=0
+10-09 08:45:14.873 24014 24097 I ReactNativeJS: OCTAVIA: cache write kind=content n=12 invalidated=0
+10-09 08:45:14.874 24014 24097 I ReactNativeJS: OCTAVIA: sync ok setlists=3 content=12 pages=1 t=469
+10-09 08:45:14.921 24014 24097 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=library
+10-09 08:45:15.137 24014 24097 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:45:15.984 24156 24156 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:45:15.992 24156 24156 I AndroidRuntime: Using default boot image
+10-09 08:45:15.992 24156 24156 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:45:15.992 24156 24156 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:45:16.237 24156 24156 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:45:17.555 24156 24156 D AndroidRuntime: Shutting down VM
+10-09 08:45:21.640 24177 24177 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:45:21.646 24177 24177 I AndroidRuntime: Using default boot image
+10-09 08:45:21.646 24177 24177 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:45:21.647 24177 24177 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:45:21.807 24177 24177 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:45:23.129 24177 24177 D AndroidRuntime: Shutting down VM
+10-09 08:45:24.948 24014 24097 I ReactNativeJS: OCTAVIA: index open
+10-09 08:45:26.233 24205 24205 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:45:26.235 24205 24205 I AndroidRuntime: Using default boot image
+10-09 08:45:26.235 24205 24205 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:45:26.235 24205 24205 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:45:26.292 24205 24205 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:45:27.404 24205 24205 D AndroidRuntime: Shutting down VM
+10-09 08:45:28.331 24226 24226 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:45:28.333 24226 24226 I AndroidRuntime: Using default boot image
+10-09 08:45:28.333 24226 24226 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:45:28.333 24226 24226 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:45:28.390 24226 24226 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:45:29.499 24226 24226 D AndroidRuntime: Shutting down VM
+10-09 08:45:35.636 24268 24268 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:45:35.638 24268 24268 I AndroidRuntime: Using default boot image
+10-09 08:45:35.638 24268 24268 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:45:35.638 24268 24268 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:45:35.701 24268 24268 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:45:36.910 24268 24268 D AndroidRuntime: Shutting down VM
+10-09 08:45:38.081 24291 24291 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:45:38.093 24291 24291 I AndroidRuntime: Using default boot image
+10-09 08:45:38.093 24291 24291 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:45:38.093 24291 24291 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:45:38.333 24291 24291 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:45:39.613 24291 24291 D AndroidRuntime: Shutting down VM
+10-09 08:45:41.564 24319 24319 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:45:41.570 24319 24319 I AndroidRuntime: Using default boot image
+10-09 08:45:41.570 24319 24319 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:45:41.570 24319 24319 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:45:41.753 24319 24319 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:45:42.892 24319 24319 D AndroidRuntime: Shutting down VM
+10-09 08:45:48.473 24449 24449 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:45:48.476 24449 24449 I AndroidRuntime: Using default boot image
+10-09 08:45:48.476 24449 24449 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:45:48.476 24449 24449 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:45:48.539 24449 24449 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:45:48.674 24360 24428 I ReactNativeJS: OCTAVIA: faixa=C w=1137.8 h=711.1
+10-09 08:45:48.681 24360 24428 I ReactNativeJS: OCTAVIA: net online
+10-09 08:45:49.120 24360 24428 I ReactNativeJS: OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+10-09 08:45:49.244 24360 24428 I ReactNativeJS: OCTAVIA: cache hit kind=setlists n=3
+10-09 08:45:49.244 24360 24428 I ReactNativeJS: OCTAVIA: cache hit kind=content n=12
+10-09 08:45:49.342 24360 24428 I ReactNativeJS: OCTAVIA: sync start
+10-09 08:45:49.345 24360 24428 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 08:45:49.367 24360 24428 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=23
+10-09 08:45:49.372 24360 24428 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 08:45:49.393 24360 24428 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=21
+10-09 08:45:49.406 24360 24428 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=3 invalidated=0
+10-09 08:45:49.413 24360 24428 I ReactNativeJS: OCTAVIA: cache write kind=content n=12 invalidated=0
+10-09 08:45:49.413 24360 24428 I ReactNativeJS: OCTAVIA: sync ok setlists=3 content=12 pages=1 t=72
+10-09 08:45:49.423 24360 24428 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=library
+10-09 08:45:49.471 24360 24428 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:46:31.831   551  3582 I ActivityManager: Process com.google.android.apps.messaging (pid 20205) has died: fg  TRNB
+10-09 08:46:34.746 24449 24449 D AndroidRuntime: Shutting down VM
+10-09 08:46:40.125 24527 24527 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:46:40.156 24527 24527 I AndroidRuntime: Using default boot image
+10-09 08:46:40.157 24527 24527 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:46:40.157 24527 24527 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:46:40.577 24527 24527 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:46:41.868 24527 24527 D AndroidRuntime: Shutting down VM
+10-09 08:46:43.611 24360 24428 I ReactNativeJS: OCTAVIA: index open
+10-09 08:46:44.964 24579 24579 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:46:44.967 24579 24579 I AndroidRuntime: Using default boot image
+10-09 08:46:44.967 24579 24579 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:46:44.967 24579 24579 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:46:45.034 24579 24579 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:46:46.128 24579 24579 D AndroidRuntime: Shutting down VM
+10-09 08:46:47.073 24601 24601 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:46:47.076 24601 24601 I AndroidRuntime: Using default boot image
+10-09 08:46:47.076 24601 24601 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:46:47.076 24601 24601 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:46:47.144 24601 24601 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:46:48.228 24601 24601 D AndroidRuntime: Shutting down VM
+10-09 08:46:55.132 24674 24674 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:46:55.134 24674 24674 I AndroidRuntime: Using default boot image
+10-09 08:46:55.134 24674 24674 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:46:55.134 24674 24674 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:46:55.221 24674 24674 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:46:56.311 24674 24674 D AndroidRuntime: Shutting down VM
+10-09 08:46:57.481 24706 24706 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:46:57.487 24706 24706 I AndroidRuntime: Using default boot image
+10-09 08:46:57.487 24706 24706 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:46:57.488 24706 24706 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:46:57.649 24706 24706 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:46:58.714 24706 24706 D AndroidRuntime: Shutting down VM
+10-09 08:47:00.680 24731 24731 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:47:00.687 24731 24731 I AndroidRuntime: Using default boot image
+10-09 08:47:00.688 24731 24731 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:47:00.688 24731 24731 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:47:00.888 24731 24731 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:47:02.001 24731 24731 D AndroidRuntime: Shutting down VM
+10-09 08:47:10.011 24787 24787 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:47:10.015 24787 24787 I AndroidRuntime: Using default boot image
+10-09 08:47:10.015 24787 24787 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:47:10.015 24787 24787 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:47:10.242 24787 24787 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:47:11.472 24787 24787 D AndroidRuntime: Shutting down VM
+10-09 08:47:12.682 24810 24810 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:47:12.688 24810 24810 I AndroidRuntime: Using default boot image
+10-09 08:47:12.688 24810 24810 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:47:12.689 24810 24810 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:47:12.869 24810 24810 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:47:14.127 24810 24810 D AndroidRuntime: Shutting down VM
+10-09 08:47:16.012 24836 24836 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:47:16.017 24836 24836 I AndroidRuntime: Using default boot image
+10-09 08:47:16.017 24836 24836 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:47:16.017 24836 24836 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:47:16.221 24836 24836 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:47:17.451 24836 24836 D AndroidRuntime: Shutting down VM
+10-09 08:47:23.019 24965 24965 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:47:23.021 24965 24965 I AndroidRuntime: Using default boot image
+10-09 08:47:23.021 24965 24965 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:47:23.022 24965 24965 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:47:23.088 24965 24965 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:47:23.272 24880 24944 I ReactNativeJS: OCTAVIA: faixa=C w=1137.8 h=711.1
+10-09 08:47:23.329 24880 24944 I ReactNativeJS: OCTAVIA: net online
+10-09 08:47:23.808 24880 24944 I ReactNativeJS: OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+10-09 08:47:23.981 24880 24944 I ReactNativeJS: OCTAVIA: cache hit kind=setlists n=3
+10-09 08:47:23.982 24880 24944 I ReactNativeJS: OCTAVIA: cache hit kind=content n=12
+10-09 08:47:24.102 24880 24944 I ReactNativeJS: OCTAVIA: sync start
+10-09 08:47:24.106 24880 24944 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 08:47:24.127 24880 24944 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=23
+10-09 08:47:24.132 24880 24944 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 08:47:24.166 24880 24944 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=34
+10-09 08:47:24.184 24880 24944 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=3 invalidated=0
+10-09 08:47:24.189 24880 24944 I ReactNativeJS: OCTAVIA: cache write kind=content n=12 invalidated=0
+10-09 08:47:24.189 24880 24944 I ReactNativeJS: OCTAVIA: sync ok setlists=3 content=12 pages=1 t=87
+10-09 08:47:24.200 24880 24944 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=library
+10-09 08:47:24.245 24880 24944 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:47:25.600 24965 24965 D AndroidRuntime: Shutting down VM
+10-09 08:47:29.669 24999 24999 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:47:29.681 24999 24999 I AndroidRuntime: Using default boot image
+10-09 08:47:29.681 24999 24999 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:47:29.681 24999 24999 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:47:29.868 24999 24999 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:47:31.120 24999 24999 D AndroidRuntime: Shutting down VM
+10-09 08:47:38.027 25052 25052 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:47:38.029 25052 25052 I AndroidRuntime: Using default boot image
+10-09 08:47:38.029 25052 25052 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:47:38.029 25052 25052 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:47:38.084 25052 25052 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:47:39.180 25052 25052 D AndroidRuntime: Shutting down VM
+10-09 08:47:40.375 25075 25075 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:47:40.381 25075 25075 I AndroidRuntime: Using default boot image
+10-09 08:47:40.381 25075 25075 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:47:40.381 25075 25075 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:47:40.583 25075 25075 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:47:41.674 25075 25075 D AndroidRuntime: Shutting down VM
+10-09 08:47:43.559 25101 25101 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:47:43.565 25101 25101 I AndroidRuntime: Using default boot image
+10-09 08:47:43.565 25101 25101 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:47:43.565 25101 25101 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:47:43.766 25101 25101 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:47:44.869 25101 25101 D AndroidRuntime: Shutting down VM
+10-09 08:47:47.143 25129 25129 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:47:47.145 25129 25129 I AndroidRuntime: Using default boot image
+10-09 08:47:47.145 25129 25129 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:47:47.146 25129 25129 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:47:47.210 25129 25129 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:47:48.289 25129 25129 D AndroidRuntime: Shutting down VM
+10-09 08:47:49.288 24880 24944 I ReactNativeJS: OCTAVIA: index open
+10-09 08:47:51.260 25155 25155 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:47:51.263 25155 25155 I AndroidRuntime: Using default boot image
+10-09 08:47:51.263 25155 25155 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:47:51.263 25155 25155 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:47:51.326 25155 25155 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:47:52.433 25155 25155 D AndroidRuntime: Shutting down VM
+10-09 08:47:53.353 25177 25177 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:47:53.355 25177 25177 I AndroidRuntime: Using default boot image
+10-09 08:47:53.355 25177 25177 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:47:53.355 25177 25177 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:47:53.410 25177 25177 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:47:54.524 25177 25177 D AndroidRuntime: Shutting down VM
+10-09 08:47:57.555 25208 25208 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:47:57.557 25208 25208 I AndroidRuntime: Using default boot image
+10-09 08:47:57.557 25208 25208 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:47:57.558 25208 25208 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:47:57.620 25208 25208 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:47:58.655 25208 25208 D AndroidRuntime: Shutting down VM
+10-09 08:48:01.792  1304  6090 W libc    : Access denied finding property "ro.hardware.chipname"
+10-09 08:48:04.283 25349 25349 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:48:04.284 25349 25349 I AndroidRuntime: Using default boot image
+10-09 08:48:04.284 25349 25349 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:48:04.285 25349 25349 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:48:04.360 25349 25349 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:48:05.388 25349 25349 D AndroidRuntime: Shutting down VM
+10-09 08:48:10.651 25392 25392 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:48:10.662 25392 25392 I AndroidRuntime: Using default boot image
+10-09 08:48:10.663 25392 25392 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:48:10.663 25392 25392 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:48:10.835 25392 25392 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:48:11.900 25392 25392 D AndroidRuntime: Shutting down VM
+10-09 08:48:13.005 25415 25415 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:48:13.011 25415 25415 I AndroidRuntime: Using default boot image
+10-09 08:48:13.011 25415 25415 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:48:13.011 25415 25415 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:48:13.171 25415 25415 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:48:14.251 25415 25415 D AndroidRuntime: Shutting down VM
+10-09 08:48:16.031 25441 25441 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:48:16.035 25441 25441 I AndroidRuntime: Using default boot image
+10-09 08:48:16.036 25441 25441 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:48:16.036 25441 25441 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:48:16.190 25441 25441 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:48:17.237 25441 25441 D AndroidRuntime: Shutting down VM
+10-09 08:48:24.437 25569 25569 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:48:24.439 25569 25569 I AndroidRuntime: Using default boot image
+10-09 08:48:24.439 25569 25569 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:48:24.439 25569 25569 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:48:24.456 25482 25547 I ReactNativeJS: OCTAVIA: faixa=C w=1137.8 h=711.1
+10-09 08:48:24.464 25482 25547 I ReactNativeJS: OCTAVIA: net online
+10-09 08:48:24.509 25569 25569 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:48:24.997 25482 25547 I ReactNativeJS: OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+10-09 08:48:25.472 25482 25547 I ReactNativeJS: OCTAVIA: cache hit kind=setlists n=3
+10-09 08:48:25.473 25482 25547 I ReactNativeJS: OCTAVIA: cache hit kind=content n=12
+10-09 08:48:25.550 25482 25547 I ReactNativeJS: OCTAVIA: sync start
+10-09 08:48:25.568 25482 25547 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 08:48:25.913 25482 25547 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=359
+10-09 08:48:25.932 25482 25547 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 08:48:25.995 25482 25547 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=65
+10-09 08:48:26.034 25482 25547 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=3 invalidated=0
+10-09 08:48:26.053 25482 25547 I ReactNativeJS: OCTAVIA: cache write kind=content n=12 invalidated=0
+10-09 08:48:26.053 25482 25547 I ReactNativeJS: OCTAVIA: sync ok setlists=3 content=12 pages=1 t=513
+10-09 08:48:26.075 25482 25547 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=library
+10-09 08:48:26.227 25482 25547 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:48:27.636 25569 25569 D AndroidRuntime: Shutting down VM
+10-09 08:48:31.791 25601 25601 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:48:31.798 25601 25601 I AndroidRuntime: Using default boot image
+10-09 08:48:31.798 25601 25601 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:48:31.798 25601 25601 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:48:31.947 25601 25601 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:48:33.184 25601 25601 D AndroidRuntime: Shutting down VM
+10-09 08:48:36.242 25632 25632 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:48:36.245 25632 25632 I AndroidRuntime: Using default boot image
+10-09 08:48:36.245 25632 25632 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:48:36.245 25632 25632 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:48:36.302 25632 25632 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:48:37.356 25632 25632 D AndroidRuntime: Shutting down VM
+10-09 08:48:42.257 25675 25675 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:48:42.260 25675 25675 I AndroidRuntime: Using default boot image
+10-09 08:48:42.260 25675 25675 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:48:42.260 25675 25675 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:48:42.334 25675 25675 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:48:43.363 25675 25675 D AndroidRuntime: Shutting down VM
+10-09 08:48:44.852 25482 25547 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 08:48:44.891 25482 25547 I ReactNativeJS: OCTAVIA: api status=500 path=/api/setlists n=1 ms=39
+10-09 08:48:44.899 25482 25547 I ReactNativeJS: OCTAVIA: write op=create setlist=- items=- status=500 code=INTERNAL_ERROR ms=46
+10-09 08:48:44.902 25482 25547 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 08:48:44.942 25482 25547 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=39
+10-09 08:48:44.947 25482 25547 I ReactNativeJS: OCTAVIA: resync kind=setlists reason=reopen op=- status=200 setlists=3 ms=45
+10-09 08:48:44.955 25482 25547 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=3 invalidated=0
+10-09 08:48:44.964 25482 25547 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=library
+10-09 08:48:45.007 25482 25547 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:48:47.326 25707 25707 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:48:47.329 25707 25707 I AndroidRuntime: Using default boot image
+10-09 08:48:47.329 25707 25707 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:48:47.329 25707 25707 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:48:47.386 25707 25707 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:48:48.427 25707 25707 D AndroidRuntime: Shutting down VM
+10-09 08:48:52.429 25743 25743 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:48:52.436 25743 25743 I AndroidRuntime: Using default boot image
+10-09 08:48:52.436 25743 25743 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:48:52.436 25743 25743 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:48:52.595 25743 25743 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:48:53.645 25743 25743 D AndroidRuntime: Shutting down VM
+10-09 08:48:54.729 25766 25766 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:48:54.735 25766 25766 I AndroidRuntime: Using default boot image
+10-09 08:48:54.735 25766 25766 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:48:54.736 25766 25766 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:48:54.916 25766 25766 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:48:56.005 25766 25766 D AndroidRuntime: Shutting down VM
+10-09 08:48:58.066 25794 25794 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:48:58.073 25794 25794 I AndroidRuntime: Using default boot image
+10-09 08:48:58.073 25794 25794 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:48:58.073 25794 25794 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:48:58.252 25794 25794 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:48:59.297 25794 25794 D AndroidRuntime: Shutting down VM
+10-09 08:49:06.367 25836 25900 I ReactNativeJS: OCTAVIA: faixa=C w=1137.8 h=711.1
+10-09 08:49:06.373 25836 25900 I ReactNativeJS: OCTAVIA: net online
+10-09 08:49:06.441 25923 25923 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:49:06.444 25923 25923 I AndroidRuntime: Using default boot image
+10-09 08:49:06.444 25923 25923 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:49:06.444 25923 25923 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:49:06.507 25923 25923 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:49:06.876 25836 25900 I ReactNativeJS: OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+10-09 08:49:07.100 25836 25900 I ReactNativeJS: OCTAVIA: cache hit kind=setlists n=3
+10-09 08:49:07.104 25836 25900 I ReactNativeJS: OCTAVIA: cache hit kind=content n=12
+10-09 08:49:07.497 25836 25900 I ReactNativeJS: OCTAVIA: sync start
+10-09 08:49:07.507 25836 25900 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 08:49:07.604 25836 25900 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=102
+10-09 08:49:07.613 25836 25900 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 08:49:07.676 25836 25900 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=64
+10-09 08:49:07.705 25836 25900 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=3 invalidated=0
+10-09 08:49:07.720 25836 25900 I ReactNativeJS: OCTAVIA: cache write kind=content n=12 invalidated=0
+10-09 08:49:07.721 25836 25900 I ReactNativeJS: OCTAVIA: sync ok setlists=3 content=12 pages=1 t=223
+10-09 08:49:07.747 25836 25900 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=library
+10-09 08:49:07.912 25836 25900 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:49:09.533 25923 25923 D AndroidRuntime: Shutting down VM
+10-09 08:49:13.615 25954 25954 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:49:13.625 25954 25954 I AndroidRuntime: Using default boot image
+10-09 08:49:13.625 25954 25954 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:49:13.625 25954 25954 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:49:13.820 25954 25954 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:49:15.086 25954 25954 D AndroidRuntime: Shutting down VM
+10-09 08:49:16.813 25836 25900 I ReactNativeJS: OCTAVIA: index open
+10-09 08:49:18.185 25982 25982 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:49:18.188 25982 25982 I AndroidRuntime: Using default boot image
+10-09 08:49:18.188 25982 25982 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:49:18.188 25982 25982 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:49:18.244 25982 25982 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:49:19.412 25982 25982 D AndroidRuntime: Shutting down VM
+10-09 08:49:20.334 26003 26003 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:49:20.336 26003 26003 I AndroidRuntime: Using default boot image
+10-09 08:49:20.336 26003 26003 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:49:20.336 26003 26003 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:49:20.392 26003 26003 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:49:21.481 26003 26003 D AndroidRuntime: Shutting down VM
+10-09 08:49:27.442 26048 26048 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:49:27.445 26048 26048 I AndroidRuntime: Using default boot image
+10-09 08:49:27.445 26048 26048 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:49:27.445 26048 26048 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:49:27.502 26048 26048 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:49:28.535 26048 26048 D AndroidRuntime: Shutting down VM
+10-09 08:49:29.680 26070 26070 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:49:29.690 26070 26070 I AndroidRuntime: Using default boot image
+10-09 08:49:29.690 26070 26070 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:49:29.691 26070 26070 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:49:29.842 26070 26070 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:49:30.921 26070 26070 D AndroidRuntime: Shutting down VM
+10-09 08:49:32.795 26098 26098 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:49:32.804 26098 26098 I AndroidRuntime: Using default boot image
+10-09 08:49:32.804 26098 26098 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:49:32.804 26098 26098 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:49:32.972 26098 26098 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:49:34.039 26098 26098 D AndroidRuntime: Shutting down VM
+10-09 08:49:39.312 26138 26201 I ReactNativeJS: OCTAVIA: faixa=C w=1137.8 h=711.1
+10-09 08:49:39.329 26138 26201 I ReactNativeJS: OCTAVIA: net online
+10-09 08:49:39.524 26229 26229 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:49:39.526 26229 26229 I AndroidRuntime: Using default boot image
+10-09 08:49:39.526 26229 26229 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:49:39.526 26229 26229 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:49:39.592 26229 26229 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:49:39.753 26138 26201 I ReactNativeJS: OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+10-09 08:49:39.858 26138 26201 I ReactNativeJS: OCTAVIA: cache hit kind=setlists n=3
+10-09 08:49:39.858 26138 26201 I ReactNativeJS: OCTAVIA: cache hit kind=content n=12
+10-09 08:49:39.963 26138 26201 I ReactNativeJS: OCTAVIA: sync start
+10-09 08:49:39.967 26138 26201 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 08:49:39.993 26138 26201 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=29
+10-09 08:49:40.001 26138 26201 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 08:49:40.036 26138 26201 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=37
+10-09 08:49:40.057 26138 26201 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=3 invalidated=0
+10-09 08:49:40.068 26138 26201 I ReactNativeJS: OCTAVIA: cache write kind=content n=12 invalidated=0
+10-09 08:49:40.068 26138 26201 I ReactNativeJS: OCTAVIA: sync ok setlists=3 content=12 pages=1 t=106
+10-09 08:49:40.076 26138 26201 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=library
+10-09 08:49:40.132 26138 26201 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:49:41.362 26229 26229 D AndroidRuntime: Shutting down VM
+10-09 08:49:45.435 26260 26260 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:49:45.441 26260 26260 I AndroidRuntime: Using default boot image
+10-09 08:49:45.441 26260 26260 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:49:45.441 26260 26260 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:49:45.638 26260 26260 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:49:46.952 26260 26260 D AndroidRuntime: Shutting down VM
+10-09 08:49:53.011 26303 26303 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:49:53.013 26303 26303 I AndroidRuntime: Using default boot image
+10-09 08:49:53.013 26303 26303 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:49:53.013 26303 26303 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:49:53.085 26303 26303 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:49:54.202 26303 26303 D AndroidRuntime: Shutting down VM
+10-09 08:49:55.316 26326 26326 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:49:55.325 26326 26326 I AndroidRuntime: Using default boot image
+10-09 08:49:55.325 26326 26326 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:49:55.325 26326 26326 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:49:55.524 26326 26326 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:49:56.868 26326 26326 D AndroidRuntime: Shutting down VM
+10-09 08:49:58.811 26353 26353 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:49:58.817 26353 26353 I AndroidRuntime: Using default boot image
+10-09 08:49:58.817 26353 26353 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:49:58.817 26353 26353 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:49:58.995 26353 26353 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:50:00.270 26353 26353 D AndroidRuntime: Shutting down VM
+10-09 08:50:21.639 26456 26456 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:50:21.649 26456 26456 I AndroidRuntime: Using default boot image
+10-09 08:50:21.649 26456 26456 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:50:21.652 26456 26456 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:50:22.024 26456 26456 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:50:23.455 26456 26456 D AndroidRuntime: Shutting down VM
+10-09 08:50:25.681 26508 26508 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:50:25.687 26508 26508 I AndroidRuntime: Using default boot image
+10-09 08:50:25.687 26508 26508 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:50:25.687 26508 26508 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:50:25.903 26508 26508 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:50:27.021 26508 26508 D AndroidRuntime: Shutting down VM
+10-09 08:50:28.469 26410 26494 I ReactNativeJS: OCTAVIA: faixa=C w=1137.8 h=711.1
+10-09 08:50:28.514 26410 26494 I ReactNativeJS: OCTAVIA: net online
+10-09 08:50:29.192 26545 26545 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:50:29.204 26545 26545 I AndroidRuntime: Using default boot image
+10-09 08:50:29.204 26545 26545 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:50:29.205 26545 26545 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:50:29.416 26410 26494 I ReactNativeJS: OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+10-09 08:50:29.535 26545 26545 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:50:30.231 26410 26494 I ReactNativeJS: OCTAVIA: cache hit kind=setlists n=3
+10-09 08:50:30.232 26410 26494 I ReactNativeJS: OCTAVIA: cache hit kind=content n=12
+10-09 08:50:30.325 26410 26494 I ReactNativeJS: OCTAVIA: sync start
+10-09 08:50:30.366 26410 26494 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 08:50:30.847 26410 26494 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=499
+10-09 08:50:30.876 26410 26494 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 08:50:30.952 26410 26494 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=79
+10-09 08:50:31.025 26410 26494 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=3 invalidated=0
+10-09 08:50:31.060 26410 26494 I ReactNativeJS: OCTAVIA: cache write kind=content n=12 invalidated=0
+10-09 08:50:31.061 26410 26494 I ReactNativeJS: OCTAVIA: sync ok setlists=3 content=12 pages=1 t=735
+10-09 08:50:31.110 26410 26494 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=library
+10-09 08:50:31.312 26410 26494 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:50:32.860 26545 26545 D AndroidRuntime: Shutting down VM
+10-09 08:50:40.155 26587 26587 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:50:40.164 26587 26587 I AndroidRuntime: Using default boot image
+10-09 08:50:40.164 26587 26587 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:50:40.165 26587 26587 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:50:40.367 26587 26587 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:50:41.616 26587 26587 D AndroidRuntime: Shutting down VM
+10-09 08:50:42.759 26610 26610 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:50:42.764 26610 26610 I AndroidRuntime: Using default boot image
+10-09 08:50:42.764 26610 26610 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:50:42.764 26610 26610 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:50:42.930 26610 26610 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:50:44.176 26610 26610 D AndroidRuntime: Shutting down VM
+10-09 08:50:46.832 26410 26494 I ReactNativeJS: OCTAVIA: net offline
+10-09 08:50:47.898 23865 23865 I AndroidRuntime: VM exiting with result code 0, cleanup skipped.
+10-09 08:50:47.951   551  4496 I ActivityManager: Process com.android.bluetooth (pid 23865) has died: fg  SVC 
+10-09 08:50:55.743 26745 26745 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:50:55.804 26745 26745 I AndroidRuntime: Using default boot image
+10-09 08:50:55.804 26745 26745 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:50:55.804 26745 26745 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:50:56.127 26745 26745 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:50:57.716 26745 26745 D AndroidRuntime: Shutting down VM
+10-09 08:50:59.461 26702 26762 I ReactNativeJS: OCTAVIA: faixa=C w=1137.8 h=711.1
+10-09 08:50:59.487 26702 26762 I ReactNativeJS: OCTAVIA: net offline
+10-09 08:50:59.652 26702 26762 I ReactNativeJS: OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+10-09 08:50:59.926 26808 26808 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:50:59.933 26808 26808 I AndroidRuntime: Using default boot image
+10-09 08:50:59.934 26808 26808 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:50:59.934 26808 26808 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:51:00.361 26808 26808 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:51:00.547 26702 26762 I ReactNativeJS: OCTAVIA: cache hit kind=setlists n=3
+10-09 08:51:00.548 26702 26762 I ReactNativeJS: OCTAVIA: cache hit kind=content n=12
+10-09 08:51:00.637 26702 26762 I ReactNativeJS: OCTAVIA: sync skip reason=offline
+10-09 08:51:00.671 26702 26762 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=library
+10-09 08:51:01.065 26702 26762 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:51:02.652 26808 26808 D AndroidRuntime: Shutting down VM
+10-09 08:51:06.816 26833 26833 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:51:06.851 26833 26833 I AndroidRuntime: Using default boot image
+10-09 08:51:06.852 26833 26833 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:51:06.852 26833 26833 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:51:07.020 26833 26833 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:51:08.254 26833 26833 D AndroidRuntime: Shutting down VM
+10-09 08:51:09.295 26854 26854 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:51:09.300 26854 26854 I AndroidRuntime: Using default boot image
+10-09 08:51:09.300 26854 26854 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:51:09.300 26854 26854 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:51:09.454 26854 26854 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:51:10.640 26854 26854 D AndroidRuntime: Shutting down VM
+10-09 08:51:14.981 26894 26894 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:51:14.989 26894 26894 I AndroidRuntime: Using default boot image
+10-09 08:51:14.989 26894 26894 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:51:14.989 26894 26894 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:51:15.148 26894 26894 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:51:16.336 26894 26894 D AndroidRuntime: Shutting down VM
+10-09 08:51:17.483 26917 26917 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:51:17.491 26917 26917 I AndroidRuntime: Using default boot image
+10-09 08:51:17.491 26917 26917 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:51:17.491 26917 26917 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:51:17.652 26917 26917 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:51:18.867 26917 26917 D AndroidRuntime: Shutting down VM
+10-09 08:51:23.806 26702 26762 I ReactNativeJS: OCTAVIA: net online
+10-09 08:52:00.452 27135 27135 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:52:00.521 27135 27135 I AndroidRuntime: Using default boot image
+10-09 08:52:00.521 27135 27135 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:52:00.521 27135 27135 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:52:01.352 27135 27135 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:52:04.304 27135 27135 D AndroidRuntime: Shutting down VM
+10-09 08:52:06.562 27215 27215 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:52:06.569 27215 27215 I AndroidRuntime: Using default boot image
+10-09 08:52:06.569 27215 27215 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:52:06.570 27215 27215 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:52:06.857 27215 27215 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:52:07.342 27105 27191 I ReactNativeJS: OCTAVIA: faixa=C w=1137.8 h=711.1
+10-09 08:52:07.398 27105 27191 I ReactNativeJS: OCTAVIA: net online
+10-09 08:52:08.434 27105 27191 I ReactNativeJS: OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+10-09 08:52:08.791 27215 27215 D AndroidRuntime: Shutting down VM
+10-09 08:52:09.285 27105 27191 I ReactNativeJS: OCTAVIA: cache hit kind=setlists n=3
+10-09 08:52:09.287 27105 27191 I ReactNativeJS: OCTAVIA: cache hit kind=content n=12
+10-09 08:52:09.392 27105 27191 I ReactNativeJS: OCTAVIA: sync start
+10-09 08:52:09.408 27105 27191 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 08:52:09.828 27105 27191 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=427
+10-09 08:52:09.848 27105 27191 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 08:52:09.900 27105 27191 I ReactNativeJS: OCTAVIA: api status=500 path=/api/content n=1 ms=53
+10-09 08:52:09.917 27105 27191 I ReactNativeJS: OCTAVIA: sync fail stage=content page=1 code=INTERNAL_ERROR status=500
+10-09 08:52:09.952 27105 27191 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=library
+10-09 08:52:10.187 27105 27191 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:52:11.019 27249 27249 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:52:11.027 27249 27249 I AndroidRuntime: Using default boot image
+10-09 08:52:11.027 27249 27249 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:52:11.027 27249 27249 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:52:11.299 27249 27249 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:52:12.620 27249 27249 D AndroidRuntime: Shutting down VM
+10-09 08:52:23.462 27285 27285 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:52:23.471 27285 27285 I AndroidRuntime: Using default boot image
+10-09 08:52:23.471 27285 27285 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:52:23.472 27285 27285 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:52:23.693 27285 27285 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:52:24.983 27285 27285 D AndroidRuntime: Shutting down VM
+10-09 08:52:26.265 27324 27324 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:52:26.274 27324 27324 I AndroidRuntime: Using default boot image
+10-09 08:52:26.275 27324 27324 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:52:26.275 27324 27324 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:52:26.456 27324 27324 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:52:27.789 27324 27324 D AndroidRuntime: Shutting down VM
+10-09 08:52:35.573 27394 27394 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:52:35.643 27394 27394 I AndroidRuntime: Using default boot image
+10-09 08:52:35.643 27394 27394 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:52:35.643 27394 27394 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:52:35.960 27394 27394 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:52:37.656 27394 27394 D AndroidRuntime: Shutting down VM
+10-09 08:52:41.189 27364 27447 I ReactNativeJS: OCTAVIA: faixa=B w=711.1 h=1137.8
+10-09 08:52:41.238 27364 27447 I ReactNativeJS: OCTAVIA: net online
+10-09 08:52:41.870 27483 27483 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:52:41.876 27483 27483 I AndroidRuntime: Using default boot image
+10-09 08:52:41.877 27483 27483 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:52:41.877 27483 27483 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:52:42.140 27364 27447 I ReactNativeJS: OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+10-09 08:52:42.177 27483 27483 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:52:42.687 27364 27447 I ReactNativeJS: OCTAVIA: cache hit kind=setlists n=3
+10-09 08:52:42.688 27364 27447 I ReactNativeJS: OCTAVIA: cache hit kind=content n=12
+10-09 08:52:43.035 27364 27447 I ReactNativeJS: OCTAVIA: sync start
+10-09 08:52:43.045 27364 27447 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 08:52:43.112 27364 27447 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=72
+10-09 08:52:43.124 27364 27447 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 08:52:43.214 27364 27447 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=91
+10-09 08:52:43.293 27364 27447 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=3 invalidated=0
+10-09 08:52:43.312 27364 27447 I ReactNativeJS: OCTAVIA: cache write kind=content n=12 invalidated=0
+10-09 08:52:43.313 27364 27447 I ReactNativeJS: OCTAVIA: sync ok setlists=3 content=12 pages=1 t=278
+10-09 08:52:43.341 27364 27447 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=library
+10-09 08:52:43.680 27364 27447 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:52:45.256 27483 27483 D AndroidRuntime: Shutting down VM
+10-09 08:52:47.050 27364 27447 I ReactNativeJS: OCTAVIA: index open
+10-09 08:52:48.357 27518 27518 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:52:48.361 27518 27518 I AndroidRuntime: Using default boot image
+10-09 08:52:48.361 27518 27518 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:52:48.361 27518 27518 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:52:48.435 27518 27518 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:52:49.564 27518 27518 D AndroidRuntime: Shutting down VM
+10-09 08:52:50.491 27539 27539 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:52:50.493 27539 27539 I AndroidRuntime: Using default boot image
+10-09 08:52:50.493 27539 27539 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:52:50.493 27539 27539 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:52:50.542 27539 27539 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:52:51.657 27539 27539 D AndroidRuntime: Shutting down VM
+10-09 08:52:52.579 27364 27447 I ReactNativeJS: OCTAVIA: index jump n=1
+10-09 08:52:53.210 27364 27447 I ReactNativeJS: OCTAVIA: keepawake on
+10-09 08:52:53.218 27364 27447 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=demand
+10-09 08:52:53.260 27364 27447 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:52:58.633 27584 27584 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:52:58.635 27584 27584 I AndroidRuntime: Using default boot image
+10-09 08:52:58.635 27584 27584 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:52:58.635 27584 27584 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:52:58.686 27584 27584 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:52:59.810 27584 27584 D AndroidRuntime: Shutting down VM
+10-09 08:53:01.062 27607 27607 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:53:01.071 27607 27607 I AndroidRuntime: Using default boot image
+10-09 08:53:01.071 27607 27607 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:53:01.072 27607 27607 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:53:01.334 27607 27607 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:53:02.492 27607 27607 D AndroidRuntime: Shutting down VM
+10-09 08:53:04.838 27633 27633 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:53:04.844 27633 27633 I AndroidRuntime: Using default boot image
+10-09 08:53:04.844 27633 27633 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:53:04.844 27633 27633 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:53:05.069 27633 27633 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:53:06.272 27633 27633 D AndroidRuntime: Shutting down VM
+10-09 08:53:08.024 27364 27447 I ReactNativeJS: OCTAVIA: index open
+10-09 08:53:08.025 27364 27447 I ReactNativeJS: OCTAVIA: keepawake off
+10-09 08:53:12.584 27676 27676 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:53:12.588 27676 27676 I AndroidRuntime: Using default boot image
+10-09 08:53:12.588 27676 27676 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:53:12.588 27676 27676 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:53:12.649 27676 27676 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:53:13.722 27676 27676 D AndroidRuntime: Shutting down VM
+10-09 08:53:14.686 27700 27700 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:53:14.688 27700 27700 I AndroidRuntime: Using default boot image
+10-09 08:53:14.688 27700 27700 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:53:14.688 27700 27700 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:53:14.843 27700 27700 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:53:16.212 27700 27700 D AndroidRuntime: Shutting down VM
+10-09 08:53:18.559 27727 27727 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:53:18.566 27727 27727 I AndroidRuntime: Using default boot image
+10-09 08:53:18.566 27727 27727 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:53:18.566 27727 27727 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:53:18.806 27727 27727 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:53:20.060 27727 27727 D AndroidRuntime: Shutting down VM
+10-09 08:53:21.244 27748 27748 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:53:21.254 27748 27748 I AndroidRuntime: Using default boot image
+10-09 08:53:21.255 27748 27748 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:53:21.255 27748 27748 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:53:21.501 27748 27748 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:53:22.890 27748 27748 D AndroidRuntime: Shutting down VM
+10-09 08:53:32.370 27799 27799 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:53:32.408 27799 27799 I AndroidRuntime: Using default boot image
+10-09 08:53:32.408 27799 27799 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:53:32.409 27799 27799 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:53:32.699 27799 27799 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:53:34.174 27799 27799 D AndroidRuntime: Shutting down VM
+10-09 08:53:35.371 27823 27823 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:53:35.383 27823 27823 I AndroidRuntime: Using default boot image
+10-09 08:53:35.383 27823 27823 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:53:35.383 27823 27823 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:53:35.647 27823 27823 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:53:37.009 27823 27823 D AndroidRuntime: Shutting down VM
+10-09 08:53:43.906 27866 27866 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:53:43.913 27866 27866 I AndroidRuntime: Using default boot image
+10-09 08:53:43.913 27866 27866 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:53:43.913 27866 27866 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:53:44.099 27866 27866 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:53:45.301 27866 27866 D AndroidRuntime: Shutting down VM
+10-09 08:53:46.358 27887 27887 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:53:46.367 27887 27887 I AndroidRuntime: Using default boot image
+10-09 08:53:46.367 27887 27887 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:53:46.367 27887 27887 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:53:46.520 27887 27887 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:53:47.738 27887 27887 D AndroidRuntime: Shutting down VM
+10-09 08:53:48.788 27364 27447 I ReactNativeJS: OCTAVIA: keepawake on
+10-09 08:53:48.789 27364 27447 I ReactNativeJS: OCTAVIA: stage restore n=1/8
+10-09 08:53:50.892 27914 27914 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:53:50.905 27914 27914 I AndroidRuntime: Using default boot image
+10-09 08:53:50.905 27914 27914 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:53:50.905 27914 27914 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:53:51.117 27914 27914 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:53:52.253 27914 27914 D AndroidRuntime: Shutting down VM
+10-09 08:53:53.369 27364 27447 I ReactNativeJS: OCTAVIA: nav n=2/8 setlist=00000001 t=145
+10-09 08:53:53.380 27364 27447 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=demand
+10-09 08:53:53.404 27364 27447 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:53:59.270 27960 27960 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:53:59.272 27960 27960 I AndroidRuntime: Using default boot image
+10-09 08:53:59.272 27960 27960 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:53:59.272 27960 27960 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:53:59.334 27960 27960 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:54:00.423 27960 27960 D AndroidRuntime: Shutting down VM
+10-09 08:54:01.566 27983 27983 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:54:01.570 27983 27983 I AndroidRuntime: Using default boot image
+10-09 08:54:01.570 27983 27983 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:54:01.571 27983 27983 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:54:01.774 27983 27983 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:54:02.905 27983 27983 D AndroidRuntime: Shutting down VM
+10-09 08:54:04.791 28010 28010 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:54:04.798 28010 28010 I AndroidRuntime: Using default boot image
+10-09 08:54:04.798 28010 28010 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:54:04.799 28010 28010 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:54:05.015 28010 28010 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:54:06.211 28010 28010 D AndroidRuntime: Shutting down VM
+10-09 08:54:07.228 27364 27447 I ReactNativeJS: OCTAVIA: theme=light
+10-09 08:54:12.245 28055 28055 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:54:12.247 28055 28055 I AndroidRuntime: Using default boot image
+10-09 08:54:12.247 28055 28055 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:54:12.247 28055 28055 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:54:12.302 28055 28055 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:54:13.343 28055 28055 D AndroidRuntime: Shutting down VM
+10-09 08:54:14.453 28079 28079 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:54:14.463 28079 28079 I AndroidRuntime: Using default boot image
+10-09 08:54:14.463 28079 28079 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:54:14.463 28079 28079 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:54:14.676 28079 28079 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:54:15.821 28079 28079 D AndroidRuntime: Shutting down VM
+10-09 08:54:17.767 28106 28106 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:54:17.772 28106 28106 I AndroidRuntime: Using default boot image
+10-09 08:54:17.772 28106 28106 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:54:17.773 28106 28106 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:54:17.955 28106 28106 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:54:19.092 28106 28106 D AndroidRuntime: Shutting down VM
+10-09 08:54:20.063 27364 27447 I ReactNativeJS: OCTAVIA: theme=dark
+10-09 08:54:21.137 28134 28134 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:54:21.139 28134 28134 I AndroidRuntime: Using default boot image
+10-09 08:54:21.139 28134 28134 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:54:21.139 28134 28134 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:54:21.210 28134 28134 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:54:22.265 28134 28134 D AndroidRuntime: Shutting down VM
+10-09 08:54:23.179 27364 27447 I ReactNativeJS: OCTAVIA: nav n=3/8 setlist=00000001 t=19
+10-09 08:54:23.183 27364 27447 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=demand
+10-09 08:54:23.209 27364 27447 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:54:26.236 28165 28165 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:54:26.238 28165 28165 I AndroidRuntime: Using default boot image
+10-09 08:54:26.238 28165 28165 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:54:26.238 28165 28165 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:54:26.292 28165 28165 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:54:27.330 28165 28165 D AndroidRuntime: Shutting down VM
+10-09 08:54:28.255 27364 27447 I ReactNativeJS: OCTAVIA: autoscroll on t=28
+10-09 08:54:33.242 28207 28207 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:54:33.245 28207 28207 I AndroidRuntime: Using default boot image
+10-09 08:54:33.245 28207 28207 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:54:33.246 28207 28207 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:54:33.317 28207 28207 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:54:38.687 28207 28207 D AndroidRuntime: Shutting down VM
+10-09 08:54:39.851 28230 28230 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:54:39.858 28230 28230 I AndroidRuntime: Using default boot image
+10-09 08:54:39.858 28230 28230 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:54:39.858 28230 28230 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:54:40.078 28230 28230 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:54:41.272 28230 28230 D AndroidRuntime: Shutting down VM
+10-09 08:54:43.136 28258 28258 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:54:43.142 28258 28258 I AndroidRuntime: Using default boot image
+10-09 08:54:43.142 28258 28258 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:54:43.142 28258 28258 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:54:43.319 28258 28258 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:54:44.398 28258 28258 D AndroidRuntime: Shutting down VM
+10-09 08:54:45.405 27364 27447 I ReactNativeJS: OCTAVIA: autoscroll off t=0
+10-09 08:54:46.454 28288 28288 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:54:46.456 28288 28288 I AndroidRuntime: Using default boot image
+10-09 08:54:46.456 28288 28288 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:54:46.456 28288 28288 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:54:46.511 28288 28288 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:54:47.546 28288 28288 D AndroidRuntime: Shutting down VM
+10-09 08:54:48.451 27364 27447 I ReactNativeJS: OCTAVIA: nav n=4/8 setlist=00000001 t=23
+10-09 08:54:48.462 27364 27447 I ReactNativeJS: OCTAVIA: file src=disk name=partitura-12p.pdf bytes=4198
+10-09 08:54:48.467 27364 27447 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=demand
+10-09 08:54:48.502 27364 27447 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:54:48.678 27364 27447 I ReactNativeJS: OCTAVIA: pdf-render pages=12 src=disk
+10-09 08:54:48.712 27364 27447 I ReactNativeJS: OCTAVIA: pdf-page n=1/12
+10-09 08:54:57.661 28335 28335 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:54:57.672 28335 28335 I AndroidRuntime: Using default boot image
+10-09 08:54:57.673 28335 28335 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:54:57.673 28335 28335 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:54:57.947 28335 28335 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:54:59.039 28335 28335 D AndroidRuntime: Shutting down VM
+10-09 08:55:00.177 28358 28358 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:55:00.182 28358 28358 I AndroidRuntime: Using default boot image
+10-09 08:55:00.182 28358 28358 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:55:00.183 28358 28358 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:55:00.383 28358 28358 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:55:01.519 28358 28358 D AndroidRuntime: Shutting down VM
+10-09 08:55:04.275 27364 27447 I ReactNativeJS: OCTAVIA: net offline
+10-09 08:55:05.747 27364 27447 I ReactNativeJS: OCTAVIA: file src=disk name=partitura-12p.pdf bytes=4198
+10-09 08:55:05.787 26948 26948 I AndroidRuntime: VM exiting with result code 0, cleanup skipped.
+10-09 08:55:05.932   551  3440 I ActivityManager: Process com.android.bluetooth (pid 26948) has died: fg  SVC 
+10-09 08:55:08.205 28430 28430 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:55:08.268 28430 28430 I AndroidRuntime: Using default boot image
+10-09 08:55:08.268 28430 28430 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:55:08.269 28430 28430 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:55:08.851 28430 28430 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:55:10.029 28430 28430 D AndroidRuntime: Shutting down VM
+10-09 08:55:11.225 27364 27447 I ReactNativeJS: OCTAVIA: nav n=5/8 setlist=00000001 t=145
+10-09 08:55:11.235 27364 27447 I ReactNativeJS: OCTAVIA: placeholder kind=file-missing name=nao-existe.pdf
+10-09 08:55:17.170 28476 28476 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:55:17.173 28476 28476 I AndroidRuntime: Using default boot image
+10-09 08:55:17.173 28476 28476 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:55:17.173 28476 28476 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:55:17.229 28476 28476 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:55:18.303 28476 28476 D AndroidRuntime: Shutting down VM
+10-09 08:55:19.452 28499 28499 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:55:19.460 28499 28499 I AndroidRuntime: Using default boot image
+10-09 08:55:19.460 28499 28499 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:55:19.460 28499 28499 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:55:19.674 28499 28499 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:55:20.849 28499 28499 D AndroidRuntime: Shutting down VM
+10-09 08:55:26.485 27364 27447 I ReactNativeJS: OCTAVIA: net online
+10-09 08:55:27.921 27364 27447 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=demand
+10-09 08:55:28.075 27364 27447 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:55:28.100 27364 27447 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:55:31.391 28651 28651 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:55:31.441 28651 28651 I AndroidRuntime: Using default boot image
+10-09 08:55:31.442 28651 28651 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:55:31.442 28651 28651 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:55:32.066 28651 28651 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:55:33.256 28651 28651 D AndroidRuntime: Shutting down VM
+10-09 08:55:34.446 27364 27447 I ReactNativeJS: OCTAVIA: nav n=6/8 setlist=00000001 t=120
+10-09 08:55:34.453 27364 27447 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=demand
+10-09 08:55:34.474 27364 27447 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:55:40.429 28697 28697 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:55:40.431 28697 28697 I AndroidRuntime: Using default boot image
+10-09 08:55:40.431 28697 28697 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:55:40.431 28697 28697 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:55:40.497 28697 28697 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:55:41.609 28697 28697 D AndroidRuntime: Shutting down VM
+10-09 08:55:42.913 28720 28720 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:55:42.947 28720 28720 I AndroidRuntime: Using default boot image
+10-09 08:55:42.947 28720 28720 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:55:42.948 28720 28720 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:55:43.247 28720 28720 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:55:44.363 28720 28720 D AndroidRuntime: Shutting down VM
+10-09 08:55:46.751 28747 28747 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:55:46.756 28747 28747 I AndroidRuntime: Using default boot image
+10-09 08:55:46.757 28747 28747 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:55:46.757 28747 28747 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:55:46.952 28747 28747 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:55:48.036 28747 28747 D AndroidRuntime: Shutting down VM
+10-09 08:55:49.077 27364 27447 I ReactNativeJS: OCTAVIA: nav n=7/8 setlist=00000001 t=57
+10-09 08:55:49.083 27364 27447 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=demand
+10-09 08:55:49.114 27364 27447 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:55:52.100 28776 28776 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:55:52.102 28776 28776 I AndroidRuntime: Using default boot image
+10-09 08:55:52.102 28776 28776 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:55:52.103 28776 28776 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:55:52.159 28776 28776 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:55:53.195 28776 28776 D AndroidRuntime: Shutting down VM
+10-09 08:55:54.144 27364 27447 I ReactNativeJS: OCTAVIA: nav n=8/8 setlist=00000001 t=47
+10-09 08:55:54.148 27364 27447 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=demand
+10-09 08:55:54.163 27364 27447 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:56:00.113 28820 28820 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:56:00.115 28820 28820 I AndroidRuntime: Using default boot image
+10-09 08:56:00.115 28820 28820 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:56:00.115 28820 28820 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:56:00.182 28820 28820 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:56:01.236 28820 28820 D AndroidRuntime: Shutting down VM
+10-09 08:56:02.217 28844 28844 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:56:02.220 28844 28844 I AndroidRuntime: Using default boot image
+10-09 08:56:02.220 28844 28844 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:56:02.220 28844 28844 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:56:02.290 28844 28844 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:56:03.339 28844 28844 D AndroidRuntime: Shutting down VM
+10-09 08:56:04.549 28890 28890 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:56:04.551 28890 28890 I AndroidRuntime: Using default boot image
+10-09 08:56:04.551 28890 28890 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:56:04.551 28890 28890 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:56:04.616 28890 28890 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:56:05.664 28890 28890 D AndroidRuntime: Shutting down VM
+10-09 08:56:06.564 27364 27447 I ReactNativeJS: OCTAVIA: end-of-setlist n=8
+10-09 08:56:06.630 27364 27447 I ReactNativeJS: OCTAVIA: keepawake off
+10-09 08:56:12.579 28937 28937 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:56:12.582 28937 28937 I AndroidRuntime: Using default boot image
+10-09 08:56:12.582 28937 28937 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:56:12.582 28937 28937 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:56:12.650 28937 28937 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:56:13.687 28937 28937 D AndroidRuntime: Shutting down VM
+10-09 08:56:14.874 28963 28963 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:56:14.882 28963 28963 I AndroidRuntime: Using default boot image
+10-09 08:56:14.882 28963 28963 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:56:14.884 28963 28963 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:56:15.135 28963 28963 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:56:16.274 28963 28963 D AndroidRuntime: Shutting down VM
+10-09 08:56:22.043 29067 29067 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:56:22.091 29067 29067 I AndroidRuntime: Using default boot image
+10-09 08:56:22.091 29067 29067 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:56:22.092 29067 29067 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:56:22.617 29067 29067 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:56:23.806 29067 29067 D AndroidRuntime: Shutting down VM
+10-09 08:56:26.204 29131 29131 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:56:26.225 29131 29131 I AndroidRuntime: Using default boot image
+10-09 08:56:26.226 29131 29131 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:56:26.226 29131 29131 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:56:26.668 29131 29131 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:56:27.770 29131 29131 D AndroidRuntime: Shutting down VM
+10-09 08:56:29.904 29172 29172 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:56:29.911 29172 29172 I AndroidRuntime: Using default boot image
+10-09 08:56:29.911 29172 29172 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:56:29.911 29172 29172 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:56:30.201 29172 29172 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:56:31.415 29172 29172 D AndroidRuntime: Shutting down VM
+10-09 08:56:32.681 29008 29149 I ReactNativeJS: OCTAVIA: faixa=B w=711.1 h=1137.8
+10-09 08:56:32.760 29008 29149 I ReactNativeJS: OCTAVIA: net online
+10-09 08:56:33.795 29008 29149 I ReactNativeJS: OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+10-09 08:56:33.795 29203 29203 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:56:33.812 29203 29203 I AndroidRuntime: Using default boot image
+10-09 08:56:33.812 29203 29203 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:56:33.812 29203 29203 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:56:34.148 29203 29203 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:56:34.967 29008 29149 I ReactNativeJS: OCTAVIA: cache hit kind=setlists n=3
+10-09 08:56:34.972 29008 29149 I ReactNativeJS: OCTAVIA: cache hit kind=content n=12
+10-09 08:56:35.044 29008 29149 I ReactNativeJS: OCTAVIA: sync start
+10-09 08:56:35.059 29008 29149 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 08:56:37.738 29008 29149 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=2677
+10-09 08:56:38.109 29008 29149 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 08:56:38.631 29008 29149 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=563
+10-09 08:56:38.977 29008 29149 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=3 invalidated=0
+10-09 08:56:39.041 29008 29149 I ReactNativeJS: OCTAVIA: cache write kind=content n=12 invalidated=0
+10-09 08:56:39.043 29008 29149 I ReactNativeJS: OCTAVIA: sync ok setlists=3 content=12 pages=1 t=3999
+10-09 08:56:39.150 29008 29149 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=library
+10-09 08:56:40.164 29008 29149 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:56:40.511 29203 29203 D AndroidRuntime: Shutting down VM
+10-09 08:56:41.361   551   709 I ActivityManager: Process com.google.android.apps.messaging (pid 24494) has died: prev LAST
+10-09 08:56:44.712 29230 29230 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:56:44.723 29230 29230 I AndroidRuntime: Using default boot image
+10-09 08:56:44.723 29230 29230 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:56:44.723 29230 29230 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:56:44.997 29230 29230 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:56:46.392 29230 29230 D AndroidRuntime: Shutting down VM
+10-09 08:56:47.553 29008 29149 I ReactNativeJS: OCTAVIA: index open
+10-09 08:56:49.450 29260 29260 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:56:49.452 29260 29260 I AndroidRuntime: Using default boot image
+10-09 08:56:49.452 29260 29260 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:56:49.452 29260 29260 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:56:49.528 29260 29260 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:56:50.636 29260 29260 D AndroidRuntime: Shutting down VM
+10-09 08:56:54.524 29296 29296 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:56:54.527 29296 29296 I AndroidRuntime: Using default boot image
+10-09 08:56:54.527 29296 29296 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:56:54.527 29296 29296 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:56:54.593 29296 29296 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:56:55.863 29296 29296 D AndroidRuntime: Shutting down VM
+10-09 08:56:58.909 29319 29319 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:56:58.932 29319 29319 I AndroidRuntime: Using default boot image
+10-09 08:56:58.934 29319 29319 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:56:58.935 29319 29319 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:56:59.620 29319 29319 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:57:01.228 29319 29319 D AndroidRuntime: Shutting down VM
+10-09 08:57:03.538 29345 29345 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:57:03.545 29345 29345 I AndroidRuntime: Using default boot image
+10-09 08:57:03.545 29345 29345 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:57:03.545 29345 29345 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:57:03.782 29345 29345 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:57:05.223 29345 29345 D AndroidRuntime: Shutting down VM
+10-09 08:57:06.367 29366 29366 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:57:06.376 29366 29366 I AndroidRuntime: Using default boot image
+10-09 08:57:06.376 29366 29366 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:57:06.376 29366 29366 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:57:06.768 29366 29366 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:57:08.051 29366 29366 D AndroidRuntime: Shutting down VM
+10-09 08:57:17.493 29414 29414 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:57:17.501 29414 29414 I AndroidRuntime: Using default boot image
+10-09 08:57:17.501 29414 29414 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:57:17.501 29414 29414 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:57:17.704 29414 29414 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:57:19.125 29414 29414 D AndroidRuntime: Shutting down VM
+10-09 08:57:20.273 29437 29437 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:57:20.282 29437 29437 I AndroidRuntime: Using default boot image
+10-09 08:57:20.282 29437 29437 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:57:20.282 29437 29437 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:57:20.492 29437 29437 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:57:21.941 29437 29437 D AndroidRuntime: Shutting down VM
+10-09 08:57:29.621 29480 29480 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:57:29.629 29480 29480 I AndroidRuntime: Using default boot image
+10-09 08:57:29.629 29480 29480 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:57:29.629 29480 29480 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:57:29.930 29480 29480 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:57:31.192 29480 29480 D AndroidRuntime: Shutting down VM
+10-09 08:57:32.301 29502 29502 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:57:32.313 29502 29502 I AndroidRuntime: Using default boot image
+10-09 08:57:32.313 29502 29502 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:57:32.314 29502 29502 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:57:32.602 29502 29502 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:57:33.808 29502 29502 D AndroidRuntime: Shutting down VM
+10-09 08:57:35.955 29008 29149 I ReactNativeJS: OCTAVIA: net offline
+10-09 08:57:37.125 28536 28536 I AndroidRuntime: VM exiting with result code 0, cleanup skipped.
+10-09 08:57:37.181   551  4492 I ActivityManager: Process com.android.bluetooth (pid 28536) has died: fg  SVC 
+10-09 08:57:40.088 29590 29590 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:57:40.133 29590 29590 I AndroidRuntime: Using default boot image
+10-09 08:57:40.133 29590 29590 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:57:40.134 29590 29590 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:57:40.747 29590 29590 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:57:42.045 29590 29590 D AndroidRuntime: Shutting down VM
+10-09 08:57:46.442 29636 29636 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:57:46.453 29636 29636 I AndroidRuntime: Using default boot image
+10-09 08:57:46.453 29636 29636 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:57:46.453 29636 29636 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:57:46.650 29636 29636 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:57:47.996 29636 29636 D AndroidRuntime: Shutting down VM
+10-09 08:57:49.202 29659 29659 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:57:49.208 29659 29659 I AndroidRuntime: Using default boot image
+10-09 08:57:49.209 29659 29659 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:57:49.209 29659 29659 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:57:49.400 29659 29659 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:57:50.686 29659 29659 D AndroidRuntime: Shutting down VM
+10-09 08:57:52.813 29687 29687 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:57:52.817 29687 29687 I AndroidRuntime: Using default boot image
+10-09 08:57:52.818 29687 29687 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:57:52.818 29687 29687 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:57:53.013 29687 29687 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:57:54.583 29687 29687 D AndroidRuntime: Shutting down VM
+10-09 08:57:55.650 29734 29734 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:57:55.661 29734 29734 I AndroidRuntime: Using default boot image
+10-09 08:57:55.661 29734 29734 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:57:55.661 29734 29734 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:57:55.885 29734 29734 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:57:57.185 29734 29734 D AndroidRuntime: Shutting down VM
+10-09 08:58:06.321 29782 29782 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:58:06.332 29782 29782 I AndroidRuntime: Using default boot image
+10-09 08:58:06.332 29782 29782 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:58:06.332 29782 29782 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:58:06.504 29782 29782 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:58:07.763 29782 29782 D AndroidRuntime: Shutting down VM
+10-09 08:58:08.950 29805 29805 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:58:08.958 29805 29805 I AndroidRuntime: Using default boot image
+10-09 08:58:08.958 29805 29805 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:58:08.959 29805 29805 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:58:09.202 29805 29805 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:58:10.481 29805 29805 D AndroidRuntime: Shutting down VM
+10-09 08:58:18.133 29846 29846 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:58:18.139 29846 29846 I AndroidRuntime: Using default boot image
+10-09 08:58:18.139 29846 29846 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:58:18.139 29846 29846 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:58:18.374 29846 29846 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:58:19.636 29846 29846 D AndroidRuntime: Shutting down VM
+10-09 08:58:20.794 29868 29868 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:58:20.802 29868 29868 I AndroidRuntime: Using default boot image
+10-09 08:58:20.802 29868 29868 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:58:20.802 29868 29868 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:58:21.028 29868 29868 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:58:22.332 29868 29868 D AndroidRuntime: Shutting down VM
+10-09 08:58:27.268 29008 29149 I ReactNativeJS: OCTAVIA: net online
+10-09 08:58:35.281 30061 30061 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:58:35.341 30061 30061 I AndroidRuntime: Using default boot image
+10-09 08:58:35.342 30061 30061 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:58:35.342 30061 30061 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:58:36.003 30061 30061 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:58:37.640 30061 30061 D AndroidRuntime: Shutting down VM
+10-09 08:58:39.868 30128 30128 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:58:39.880 30128 30128 I AndroidRuntime: Using default boot image
+10-09 08:58:39.880 30128 30128 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:58:39.881 30128 30128 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:58:40.240 30128 30128 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:58:41.385 30128 30128 D AndroidRuntime: Shutting down VM
+10-09 08:58:42.768 30035 30113 I ReactNativeJS: OCTAVIA: faixa=B w=711.1 h=1137.8
+10-09 08:58:42.836 30035 30113 I ReactNativeJS: OCTAVIA: net online
+10-09 08:58:43.508 30169 30169 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:58:43.516 30169 30169 I AndroidRuntime: Using default boot image
+10-09 08:58:43.516 30169 30169 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:58:43.516 30169 30169 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:58:43.835 30169 30169 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:58:43.853 30035 30113 I ReactNativeJS: OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+10-09 08:58:44.635 30035 30113 I ReactNativeJS: OCTAVIA: cache hit kind=setlists n=3
+10-09 08:58:44.635 30035 30113 I ReactNativeJS: OCTAVIA: cache hit kind=content n=12
+10-09 08:58:44.733 30035 30113 I ReactNativeJS: OCTAVIA: sync start
+10-09 08:58:44.765 30035 30113 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 08:58:45.180 30035 30113 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=443
+10-09 08:58:45.210 30035 30113 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 08:58:45.365 30035 30113 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=155
+10-09 08:58:45.415 30035 30113 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=3 invalidated=0
+10-09 08:58:45.440 30035 30113 I ReactNativeJS: OCTAVIA: cache write kind=content n=12 invalidated=0
+10-09 08:58:45.440 30035 30113 I ReactNativeJS: OCTAVIA: sync ok setlists=3 content=12 pages=1 t=708
+10-09 08:58:45.473 30035 30113 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=library
+10-09 08:58:45.668 30035 30113 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 08:58:47.365 30169 30169 D AndroidRuntime: Shutting down VM
+10-09 08:58:51.501 30195 30195 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:58:51.515 30195 30195 I AndroidRuntime: Using default boot image
+10-09 08:58:51.515 30195 30195 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:58:51.515 30195 30195 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:58:51.693 30195 30195 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:58:53.036 30195 30195 D AndroidRuntime: Shutting down VM
+10-09 08:58:54.386 30035 30113 I ReactNativeJS: OCTAVIA: index open
+10-09 08:58:56.194 30223 30223 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:58:56.197 30223 30223 I AndroidRuntime: Using default boot image
+10-09 08:58:56.197 30223 30223 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:58:56.197 30223 30223 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:58:56.280 30223 30223 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:58:57.403 30223 30223 D AndroidRuntime: Shutting down VM
+10-09 08:58:58.308 30246 30246 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:58:58.311 30246 30246 I AndroidRuntime: Using default boot image
+10-09 08:58:58.311 30246 30246 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:58:58.311 30246 30246 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:58:58.375 30246 30246 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:58:59.465 30246 30246 D AndroidRuntime: Shutting down VM
+10-09 08:59:06.262 30311 30311 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:59:06.264 30311 30311 I AndroidRuntime: Using default boot image
+10-09 08:59:06.264 30311 30311 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:59:06.265 30311 30311 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:59:06.331 30311 30311 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:59:07.378 30311 30311 D AndroidRuntime: Shutting down VM
+10-09 08:59:08.559 30334 30334 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:59:08.566 30334 30334 I AndroidRuntime: Using default boot image
+10-09 08:59:08.566 30334 30334 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:59:08.566 30334 30334 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:59:08.747 30334 30334 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:59:09.870 30334 30334 D AndroidRuntime: Shutting down VM
+10-09 08:59:11.981 30362 30362 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:59:11.991 30362 30362 I AndroidRuntime: Using default boot image
+10-09 08:59:11.991 30362 30362 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:59:11.991 30362 30362 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:59:12.199 30362 30362 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:59:13.299 30362 30362 D AndroidRuntime: Shutting down VM
+10-09 08:59:14.337 30383 30383 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:59:14.342 30383 30383 I AndroidRuntime: Using default boot image
+10-09 08:59:14.342 30383 30383 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:59:14.342 30383 30383 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:59:14.561 30383 30383 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:59:15.735 30383 30383 D AndroidRuntime: Shutting down VM
+10-09 08:59:23.646 30437 30437 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:59:23.648 30437 30437 I AndroidRuntime: Using default boot image
+10-09 08:59:23.648 30437 30437 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:59:23.648 30437 30437 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:59:23.709 30437 30437 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:59:25.337 30437 30437 D AndroidRuntime: Shutting down VM
+10-09 08:59:26.692 30460 30460 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:59:26.706 30460 30460 I AndroidRuntime: Using default boot image
+10-09 08:59:26.706 30460 30460 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:59:26.706 30460 30460 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:59:26.928 30460 30460 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:59:28.362 30460 30460 D AndroidRuntime: Shutting down VM
+10-09 08:59:30.536 30486 30486 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:59:30.543 30486 30486 I AndroidRuntime: Using default boot image
+10-09 08:59:30.544 30486 30486 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:59:30.544 30486 30486 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:59:30.809 30486 30486 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:59:32.271 30486 30486 D AndroidRuntime: Shutting down VM
+10-09 08:59:33.433 30507 30507 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:59:33.441 30507 30507 I AndroidRuntime: Using default boot image
+10-09 08:59:33.441 30507 30507 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:59:33.441 30507 30507 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:59:33.711 30507 30507 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:59:35.324 30507 30507 D AndroidRuntime: Shutting down VM
+10-09 08:59:44.571 30556 30556 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:59:44.580 30556 30556 I AndroidRuntime: Using default boot image
+10-09 08:59:44.580 30556 30556 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:59:44.580 30556 30556 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:59:44.834 30556 30556 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:59:46.273 30556 30556 D AndroidRuntime: Shutting down VM
+10-09 08:59:47.488 30579 30579 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:59:47.497 30579 30579 I AndroidRuntime: Using default boot image
+10-09 08:59:47.497 30579 30579 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:59:47.499 30579 30579 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:59:47.733 30579 30579 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:59:49.257 30579 30579 D AndroidRuntime: Shutting down VM
+10-09 08:59:56.983 30623 30623 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:59:56.991 30623 30623 I AndroidRuntime: Using default boot image
+10-09 08:59:56.992 30623 30623 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:59:56.992 30623 30623 W libc    : Access denied finding property "odsign.verification.success"
+10-09 08:59:57.248 30623 30623 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 08:59:58.868 30623 30623 D AndroidRuntime: Shutting down VM
+10-09 08:59:59.944 30645 30645 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 08:59:59.950 30645 30645 I AndroidRuntime: Using default boot image
+10-09 08:59:59.950 30645 30645 I AndroidRuntime: Leaving lock profiling enabled
+10-09 08:59:59.950 30645 30645 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:00:00.257 30645 30645 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:00:01.601 30645 30645 D AndroidRuntime: Shutting down VM
+10-09 09:00:02.728 30683 30683 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:00:02.737 30683 30683 I AndroidRuntime: Using default boot image
+10-09 09:00:02.737 30683 30683 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:00:02.737 30683 30683 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:00:02.945 30683 30683 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:00:04.330 30683 30683 D AndroidRuntime: Shutting down VM
+10-09 09:00:09.902 30810 30810 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:00:09.906 30810 30810 I AndroidRuntime: Using default boot image
+10-09 09:00:09.906 30810 30810 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:00:09.906 30810 30810 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:00:09.975 30724 30789 I ReactNativeJS: OCTAVIA: faixa=B w=711.1 h=1137.8
+10-09 09:00:09.982 30724 30789 I ReactNativeJS: OCTAVIA: net online
+10-09 09:00:09.990 30810 30810 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:00:10.484 30724 30789 I ReactNativeJS: OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+10-09 09:00:10.606 30724 30789 I ReactNativeJS: OCTAVIA: cache hit kind=setlists n=3
+10-09 09:00:10.607 30724 30789 I ReactNativeJS: OCTAVIA: cache hit kind=content n=12
+10-09 09:00:10.697 30724 30789 I ReactNativeJS: OCTAVIA: sync start
+10-09 09:00:10.701 30724 30789 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 09:00:10.723 30724 30789 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=23
+10-09 09:00:10.730 30724 30789 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 09:00:10.760 30724 30789 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=30
+10-09 09:00:10.770 30724 30789 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=3 invalidated=0
+10-09 09:00:10.774 30724 30789 I ReactNativeJS: OCTAVIA: cache write kind=content n=12 invalidated=0
+10-09 09:00:10.775 30724 30789 I ReactNativeJS: OCTAVIA: sync ok setlists=3 content=12 pages=1 t=78
+10-09 09:00:10.782 30724 30789 I ReactNativeJS: OCTAVIA: prefetch plan n=1 reason=library
+10-09 09:00:10.819 30724 30789 I ReactNativeJS: OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+10-09 09:00:12.001 30810 30810 D AndroidRuntime: Shutting down VM
+10-09 09:00:16.048 30843 30843 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:00:16.054 30843 30843 I AndroidRuntime: Using default boot image
+10-09 09:00:16.054 30843 30843 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:00:16.054 30843 30843 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:00:16.264 30843 30843 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:00:17.593 30843 30843 D AndroidRuntime: Shutting down VM
+10-09 09:00:20.652 30873 30873 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:00:20.654 30873 30873 I AndroidRuntime: Using default boot image
+10-09 09:00:20.654 30873 30873 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:00:20.654 30873 30873 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:00:20.732 30873 30873 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:00:21.872 30873 30873 D AndroidRuntime: Shutting down VM
+10-09 09:00:22.790 30894 30894 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:00:22.792 30894 30894 I AndroidRuntime: Using default boot image
+10-09 09:00:22.792 30894 30894 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:00:22.792 30894 30894 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:00:22.844 30894 30894 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:00:23.979 30894 30894 D AndroidRuntime: Shutting down VM
+10-09 09:00:24.942 30724 30789 I ReactNativeJS: OCTAVIA: keepawake on
+10-09 09:00:24.948 30724 30789 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+10-09 09:00:27.940 30921 30921 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:00:27.942 30921 30921 I AndroidRuntime: Using default boot image
+10-09 09:00:27.943 30921 30921 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:00:27.943 30921 30921 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:00:28.000 30921 30921 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:00:29.036 30921 30921 D AndroidRuntime: Shutting down VM
+10-09 09:00:29.943 30942 30942 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:00:29.945 30942 30942 I AndroidRuntime: Using default boot image
+10-09 09:00:29.945 30942 30942 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:00:29.945 30942 30942 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:00:29.999 30942 30942 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:00:31.041 30942 30942 D AndroidRuntime: Shutting down VM
+10-09 09:00:31.970 30724 30789 I ReactNativeJS: OCTAVIA: keepawake off
+10-09 09:00:34.010 30971 30971 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:00:34.015 30971 30971 I AndroidRuntime: Using default boot image
+10-09 09:00:34.015 30971 30971 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:00:34.015 30971 30971 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:00:34.085 30971 30971 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:00:35.131 30971 30971 D AndroidRuntime: Shutting down VM
+10-09 09:00:39.903 31012 31012 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:00:39.905 31012 31012 I AndroidRuntime: Using default boot image
+10-09 09:00:39.905 31012 31012 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:00:39.905 31012 31012 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:00:39.971 31012 31012 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:00:41.007 31012 31012 D AndroidRuntime: Shutting down VM
+10-09 09:00:41.983 31035 31035 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:00:41.985 31035 31035 I AndroidRuntime: Using default boot image
+10-09 09:00:41.985 31035 31035 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:00:41.986 31035 31035 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:00:42.042 31035 31035 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:00:43.071 31035 31035 D AndroidRuntime: Shutting down VM
+10-09 09:00:44.237 31062 31062 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:00:44.239 31062 31062 I AndroidRuntime: Using default boot image
+10-09 09:00:44.239 31062 31062 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:00:44.239 31062 31062 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:00:44.294 31062 31062 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:00:45.324 31062 31062 D AndroidRuntime: Shutting down VM
+10-09 09:00:46.290 31083 31083 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:00:46.322 31083 31083 I AndroidRuntime: Using default boot image
+10-09 09:00:46.322 31083 31083 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:00:46.322 31083 31083 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:00:46.431 31083 31083 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:00:47.455 31083 31083 D AndroidRuntime: Shutting down VM
+10-09 09:00:49.708 30724 30789 I ReactNativeJS: OCTAVIA: search q=1 n=12 in-setlist=0
+10-09 09:00:49.750 30724 30789 I ReactNativeJS: OCTAVIA: search q=4 n=9 in-setlist=0
+10-09 09:00:49.822 30724 30789 I ReactNativeJS: OCTAVIA: search q=5 n=9 in-setlist=0
+10-09 09:00:49.848 30724 30789 I ReactNativeJS: OCTAVIA: search q=6 n=9 in-setlist=0
+10-09 09:00:55.216 31137 31137 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:00:55.218 31137 31137 I AndroidRuntime: Using default boot image
+10-09 09:00:55.218 31137 31137 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:00:55.218 31137 31137 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:00:55.293 31137 31137 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:00:56.453 31137 31137 D AndroidRuntime: Shutting down VM
+10-09 09:00:57.621 31163 31163 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:00:57.634 31163 31163 I AndroidRuntime: Using default boot image
+10-09 09:00:57.635 31163 31163 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:00:57.635 31163 31163 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:00:57.883 31163 31163 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:00:59.133 31163 31163 D AndroidRuntime: Shutting down VM
+10-09 09:01:01.173 31190 31190 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:01:01.178 31190 31190 I AndroidRuntime: Using default boot image
+10-09 09:01:01.178 31190 31190 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:01:01.178 31190 31190 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:01:01.439 31190 31190 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:01:02.624 31190 31190 D AndroidRuntime: Shutting down VM
+10-09 09:01:03.710 31211 31211 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:01:03.720 31211 31211 I AndroidRuntime: Using default boot image
+10-09 09:01:03.720 31211 31211 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:01:03.721 31211 31211 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:01:03.913 31211 31211 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:01:05.203 31211 31211 D AndroidRuntime: Shutting down VM
+10-09 09:01:14.238 31262 31262 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:01:14.247 31262 31262 I AndroidRuntime: Using default boot image
+10-09 09:01:14.247 31262 31262 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:01:14.247 31262 31262 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:01:14.444 31262 31262 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:01:15.699 31262 31262 D AndroidRuntime: Shutting down VM
+10-09 09:01:16.903 31285 31285 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:01:16.911 31285 31285 I AndroidRuntime: Using default boot image
+10-09 09:01:16.911 31285 31285 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:01:16.911 31285 31285 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:01:17.123 31285 31285 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:01:18.430 31285 31285 D AndroidRuntime: Shutting down VM
+10-09 09:01:25.905 31327 31327 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:01:25.914 31327 31327 I AndroidRuntime: Using default boot image
+10-09 09:01:25.914 31327 31327 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:01:25.915 31327 31327 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:01:26.158 31327 31327 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:01:27.372 31327 31327 D AndroidRuntime: Shutting down VM
+10-09 09:01:28.470 31349 31349 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:01:28.479 31349 31349 I AndroidRuntime: Using default boot image
+10-09 09:01:28.479 31349 31349 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:01:28.479 31349 31349 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:01:28.708 31349 31349 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:01:29.909 31349 31349 D AndroidRuntime: Shutting down VM
+10-09 09:01:30.972 31370 31370 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:01:30.979 31370 31370 I AndroidRuntime: Using default boot image
+10-09 09:01:30.979 31370 31370 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:01:30.980 31370 31370 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:01:31.186 31370 31370 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:01:32.359 31370 31370 D AndroidRuntime: Shutting down VM
+10-09 09:01:33.489 30724 30789 I ReactNativeJS: OCTAVIA: keepawake on
+10-09 09:01:39.497 31413 31468 I ReactNativeJS: OCTAVIA: faixa=B w=711.1 h=1137.8
+10-09 09:01:39.503 31413 31468 I ReactNativeJS: OCTAVIA: net online
+10-09 09:01:40.048 31413 31468 I ReactNativeJS: OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+10-09 09:01:40.203 31413 31468 I ReactNativeJS: OCTAVIA: cache hit kind=setlists n=3
+10-09 09:01:40.203 31413 31468 I ReactNativeJS: OCTAVIA: cache hit kind=content n=12
+10-09 09:01:40.214 31413 31468 I ReactNativeJS: OCTAVIA: sync start
+10-09 09:01:40.218 31413 31468 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 09:01:40.304 31413 31468 I ReactNativeJS: OCTAVIA: auth refresh=forced
+10-09 09:01:40.622 31413 31468 I ReactNativeJS: OCTAVIA: auth-failure
+10-09 09:01:40.630 31413 31468 I ReactNativeJS: OCTAVIA: login-screen
+10-09 09:01:40.630 31413 31468 I ReactNativeJS: OCTAVIA: api status=401 path=/api/setlists n=2 ms=414
+10-09 09:01:40.673 31413 31468 I ReactNativeJS: OCTAVIA: sync fail stage=setlists page=1 code=AUTH_REQUIRED status=401
+10-09 09:01:40.676 31413 31468 I ReactNativeJS: OCTAVIA: prefetch plan n=3 reason=library
+10-09 09:01:40.684 31413 31468 I ReactNativeJS: OCTAVIA: download-error files: sem uid — setFilesUser não foi chamado
+10-09 09:01:40.684 31413 31468 I ReactNativeJS: OCTAVIA: download-error files: sem uid — setFilesUser não foi chamado
+10-09 09:01:40.685 31413 31468 I ReactNativeJS: OCTAVIA: download-error files: sem uid — setFilesUser não foi chamado
+10-09 09:01:50.445 31413 31468 I ReactNativeJS: OCTAVIA: faixa=C w=1137.8 h=711.1
+10-09 09:01:51.935 31520 31520 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:01:51.945 31520 31520 I AndroidRuntime: Using default boot image
+10-09 09:01:51.946 31520 31520 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:01:51.946 31520 31520 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:01:52.177 31520 31520 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:01:53.389 31520 31520 D AndroidRuntime: Shutting down VM
+10-09 09:02:05.397 31556 31614 I ReactNativeJS: OCTAVIA: faixa=C w=1137.8 h=711.1
+10-09 09:02:05.482 31556 31614 I ReactNativeJS: OCTAVIA: net online
+10-09 09:02:05.577 31556 31614 I ReactNativeJS: OCTAVIA: login-screen
+10-09 09:02:09.635 31651 31651 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:02:09.648 31651 31651 I AndroidRuntime: Using default boot image
+10-09 09:02:09.648 31651 31651 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:02:09.649 31651 31651 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:02:09.973 31651 31651 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:02:11.184 31651 31651 D AndroidRuntime: Shutting down VM
+10-09 09:02:15.800 31687 31687 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:02:15.806 31687 31687 I AndroidRuntime: Using default boot image
+10-09 09:02:15.806 31687 31687 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:02:15.806 31687 31687 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:02:15.993 31687 31687 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:02:17.138 31687 31687 D AndroidRuntime: Shutting down VM
+10-09 09:02:18.335 31710 31710 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:02:18.345 31710 31710 I AndroidRuntime: Using default boot image
+10-09 09:02:18.345 31710 31710 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:02:18.346 31710 31710 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:02:18.534 31710 31710 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:02:19.640 31710 31710 D AndroidRuntime: Shutting down VM
+10-09 09:02:22.433 31556 31614 I ReactNativeJS: OCTAVIA: net offline
+10-09 09:02:23.863 29895 29895 I AndroidRuntime: VM exiting with result code 0, cleanup skipped.
+10-09 09:02:23.952   551  3582 I ActivityManager: Process com.android.bluetooth (pid 29895) has died: fg  SVC 
+10-09 09:02:25.955 31775 31775 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:02:26.002 31775 31775 I AndroidRuntime: Using default boot image
+10-09 09:02:26.002 31775 31775 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:02:26.002 31775 31775 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:02:26.652 31775 31775 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:02:27.820 31775 31775 D AndroidRuntime: Shutting down VM
+10-09 09:02:32.297 31811 31811 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:02:32.301 31811 31811 I AndroidRuntime: Using default boot image
+10-09 09:02:32.301 31811 31811 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:02:32.301 31811 31811 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:02:32.363 31811 31811 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:02:33.416 31811 31811 D AndroidRuntime: Shutting down VM
+10-09 09:02:38.315 31852 31852 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:02:38.317 31852 31852 I AndroidRuntime: Using default boot image
+10-09 09:02:38.317 31852 31852 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:02:38.317 31852 31852 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:02:38.371 31852 31852 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:02:39.407 31852 31852 D AndroidRuntime: Shutting down VM
+10-09 09:02:40.391 31556 31614 I ReactNativeJS: OCTAVIA: login-error code=auth/network-request-failed
+10-09 09:02:44.392 31882 31882 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:02:44.395 31882 31882 I AndroidRuntime: Using default boot image
+10-09 09:02:44.395 31882 31882 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:02:44.395 31882 31882 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:02:44.469 31882 31882 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:02:45.515 31882 31882 D AndroidRuntime: Shutting down VM
+10-09 09:02:49.477 31920 31920 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:02:49.489 31920 31920 I AndroidRuntime: Using default boot image
+10-09 09:02:49.489 31920 31920 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:02:49.490 31920 31920 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:02:49.695 31920 31920 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:02:50.829 31920 31920 D AndroidRuntime: Shutting down VM
+10-09 09:02:52.008 31943 31943 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:02:52.016 31943 31943 I AndroidRuntime: Using default boot image
+10-09 09:02:52.016 31943 31943 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:02:52.017 31943 31943 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:02:52.178 31943 31943 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:02:53.257 31943 31943 D AndroidRuntime: Shutting down VM
+10-09 09:02:58.136 31556 31614 I ReactNativeJS: OCTAVIA: net online
+10-09 09:03:08.835 32115 32115 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 09:03:08.907 32115 32115 I AndroidRuntime: Using default boot image
+10-09 09:03:08.907 32115 32115 I AndroidRuntime: Leaving lock profiling enabled
+10-09 09:03:08.907 32115 32115 W libc    : Access denied finding property "odsign.verification.success"
+10-09 09:03:09.441 32115 32115 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 09:03:10.591 32115 32115 D AndroidRuntime: Shutting down VM

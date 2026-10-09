@@ -2,12 +2,15 @@
 # QL-PR3 — os controles negativos do par do CORPO QUEBRADO no `g-inv-par.mjs` (regra 4: um CN que passa é tão
 # suspeito quanto um gate que nunca acusa; regra 33). Instrumento de anexo (fora de CI, N4-D117).
 #
-#   cn-g-inv-par-corpo.sh <dir-dos-dumps-novos>        (da raiz; os dumps NÃO são tocados: o CN trabalha em cópias)
+#   cn-g-inv-par-corpo.sh <dir-dos-dumps-novos> [<dir-da-base>]   (da raiz; os dumps NÃO são tocados: o CN trabalha em cópias)
+#
+# A base padrão é a B3 da árvore; depois da errata em par ela já é a nova, e o par se mede contra a VELHA: passe-a (por
+# exemplo, extraída da `main` de antes da errata, `git show ffd8f31:…`).
 #
 # Para cada defeito, uma cópia temporária dos dumps novos com o defeito plantado num dos seis de Letra, e o
 # `g-inv-par.mjs` da árvore contra a B3: o CP (sem defeito) tem de passar; cada CN tem de reprovar, pela razão certa.
 set -u
-B3=docs/native/N3-PRECHECK-anexos/B3-referencia-paisagem
+B3=${2:-docs/native/N3-PRECHECK-anexos/B3-referencia-paisagem}
 NOVOS=$1
 ALVO=$(ls "$NOVOS"/*-S3-S3a-letra-1a-*-pai.xml | head -1)
 [ -n "$ALVO" ] || { echo "sem o dump novo da S3a-letra-1a em $NOVOS" >&2; exit 2; }
