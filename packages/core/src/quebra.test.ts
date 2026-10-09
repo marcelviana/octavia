@@ -6,9 +6,8 @@
  *
  * Três grupos:
  *   - DERIVADOS: o comportamento sai de R1–R4, do QL-D24 ou do contrato de `quebra.ts` (QL-D41) — o porquê no título;
- *   - PROVISÓRIOS: R1–R4 não decidem; a função faz o que o título diz, e a escolha é PERGUNTA ao Marcel
- *     (`docs/native/QL-PR2-anexos/README.md` §3, Q1…Q5). O teste fixa o provisório para que a resposta, qualquer que
- *     seja, apareça como mudança de teste — nunca como mudança silenciosa;
+ *   - DECIDIDOS: R1–R4 não decidiam; foram as perguntas Q1…Q5 da PR-2, e o aval do Marcel (QL-D43…QL-D47,
+ *     `docs/native/QL-PR2-anexos/README.md` §11) as decidiu. Eram os PROVISÓRIOS da PR-2; viraram definitivos;
  *   - A VARREDURA: a invariância em todo número de colunas de 3 a 90, nos textos do gate e nos daqui, e a largura de
  *     toda linha visual dentro da coluna (de 10 em diante — abaixo disso o `F#m7(11)` é maior que a coluna, Q3).
  *
@@ -161,45 +160,54 @@ describe('as bordas DERIVADAS — de R1–R4, do QL-D24 e do contrato (QL-D41)',
   })
 })
 
-describe('as bordas PROVISÓRIAS — R1–R4 não decidem; pergunta ao Marcel (QL-PR2-anexos §3)', () => {
-  it('Q1 — colunas fora do domínio do contrato (inteiro > 2): RangeError, em todo tipo', () => {
+describe('as bordas DECIDIDAS no aval da PR-2 — QL-D43…QL-D47 (QL-PR2-anexos §11)', () => {
+  it('QL-D43 (Q1) — colunas fora do domínio do contrato (inteiro > 2): RangeError, em todo tipo; a proteção é da tela', () => {
     for (const c of [2, 1, 0, -1, 2.5, Number.NaN, Number.POSITIVE_INFINITY]) {
       for (const tipo of ['Lyrics', 'Chords', 'Tab']) expect(() => quebrar('a', tipo, c), `${tipo} ${c}`).toThrow(RangeError)
     }
   })
 
-  it('Q2a — a linha de acordes que começa depois da coluna: o primeiro pedaço de acordes, vazio, ocupa linha ("")', () => {
+  it('QL-D44 (Q2a) — a linha de acordes que começa depois da coluna: o primeiro pedaço de acordes, vazio, ocupa linha ("")', () => {
     const t = ' '.repeat(20) + 'C\nEu vou cantar a canção de exemplo'
     expect(textos(t, 'Chords', 14)).toEqual(['', 'Eu vou cantar', '        C', '  a canção de', '  exemplo'])
   })
 
-  it('Q2b — no par, o pedaço de letra só de espaço numa continuação não ocupa linha', () => {
+  it('QL-D44 (Q2b) — no par, o pedaço de letra só de espaço numa continuação não ocupa linha', () => {
     const t = 'C  D  E  F  G  A  B  C  D  E  F  G\nEu' + ' '.repeat(30) + 'sim'
     expect(textos(t, 'Chords', 14)).toEqual(['C  D  E  F  G', 'Eu', '  A  B  C  D', '  E  F  G', '       sim'])
   })
 
-  it('Q2c — o recuo do autor maior que a coluna: uma linha vazia, e a palavra na continuação', () => {
+  it('QL-D44 (Q2c) — o recuo do autor maior que a coluna: uma linha vazia, e a palavra na continuação', () => {
     expect(textos(' '.repeat(20) + 'palavra', 'Lyrics', 14)).toEqual(['', '  palavra'])
   })
 
-  it('Q3a — no par, o acorde maior que a coluna não parte: o pedaço passa da coluna até o fim dele', () => {
+  it('QL-D45 (Q3a) — no par, o acorde maior que a coluna não parte: o pedaço passa da coluna até o fim dele', () => {
     expect(textos('F#m7(11)/G#\nCada janela acesa', 'Chords', 8)).toEqual(['F#m7(11)/G#', 'Cada janela', '  acesa'])
   })
 
-  it('Q3b — fora do par (a linha de acordes sozinha), o acorde maior que a coluna parte como palavra (R1)', () => {
-    expect(textos('F#m7(11)/G#', 'Chords', 8)).toEqual(['F#m7(11)', '  /G#'])
+  // QL-D45 (Q3b): o teste provisório da PR-2 fixava o acorde PARTINDO fora do par (R1: `F#m7(11)` · `  /G#`). O aval o
+  // recusou — a R2 se estende à linha de acordes sozinha: o acorde nunca parte. O provisório saiu; este o substitui.
+  it('QL-D45 (Q3b) — fora do par (a linha de acordes sozinha, na Cifra), o acorde maior que a coluna fica inteiro', () => {
+    expect(textos('F#m7(11)/G#', 'Chords', 8)).toEqual(['F#m7(11)/G#'])
+    expect(textos('F#m7(11)/G#  Am', 'Chords', 8)).toEqual(['F#m7(11)/G#', '  Am'])
+    expect(textos('Am  F#m7(11)/G#', 'Chords', 8)).toEqual(['Am', '  F#m7(11)/G#'])
+    expect(textos('F#m7(11)/G#\n\nCada janela', 'Chords', 8)).toEqual(['F#m7(11)/G#', '', 'Cada', '  janela'])
   })
 
-  it('Q3c — o \\t mais largo que a coluna fica sozinho numa linha (para a função andar)', () => {
+  it('QL-D45 — na Letra a linha de acordes quebra como letra (QL-D22): o acorde maior que a coluna parte (R1)', () => {
+    expect(textos('F#m7(11)/G#', 'Lyrics', 8)).toEqual(['F#m7(11)', '  /G#'])
+  })
+
+  it('QL-D45 (Q3c) — o \\t mais largo que a coluna fica sozinho numa linha (para a função andar)', () => {
     expect(textos('abc\tdef', 'Lyrics', 4)).toEqual(['abc', '  \t', '  de', '  f'])
   })
 
-  it('Q4 — o \\r do fim não impede a linha de acordes (o texto colado com CRLF forma par)', () => {
+  it('QL-D46 (Q4) — o \\r do fim não impede a linha de acordes (o texto colado com CRLF forma par)', () => {
     expect(ehLinhaDeAcordes('Am            F\r')).toBe(true)
     expect(textos('Am            F\r\nEu vou cantar a canção\r', 'Chords', 14)).toEqual(['Am', 'Eu vou cantar', '  F\r', '  a canção\r'])
   })
 
-  it('Q5 — o \\t da continuação conta a partir da coluna desenhada (o recuo de 2)', () => {
+  it('QL-D47 (Q5) — o \\t da continuação conta a partir da coluna desenhada (o recuo de 2)', () => {
     // contado da linha lógica, o `ij\tk` ocuparia 10 colunas e não caberia em 9; desenhado, ocupa 9
     expect(textos('abcdefgh ij\tk', 'Lyrics', 9)).toEqual(['abcdefgh', '  ij\tk'])
   })
@@ -242,15 +250,19 @@ describe('a varredura — a invariância em 3…90 colunas e a largura dentro da
     ['Tab', 'e|-----0-----0---|\nB|---1---1-----1-|'],
   ]
 
+  // QL-D45: a linha de acordes sozinha com um acorde de 11 colunas — passa da coluna abaixo de 11, de propósito; por
+  // isso entra só na invariância, não na conferência da largura
+  const ACORDE_LONGO: [string, string][] = [['Chords', 'F#m7(11)/G#  Am  F\n\nAm  F#m7(11)/G#\nCada janela acesa']]
+
   it('a invariância vale em todo número de colunas de 3 a 90', () => {
     let rodadas = 0
-    for (const [tipo, t] of TEXTOS) {
+    for (const [tipo, t] of [...TEXTOS, ...ACORDE_LONGO]) {
       for (let c = 3; c <= 90; c++) {
         expect(invariancia(t, quebrar(t, tipo, c)), `${tipo} em ${c}`).toBeNull()
         rodadas++
       }
     }
-    expect(rodadas).toBe(TEXTOS.length * 88)
+    expect(rodadas).toBe((TEXTOS.length + ACORDE_LONGO.length) * 88)
   })
 
   it('toda linha visual cabe na coluna, de 10 colunas em diante (a Tab fora: ela não quebra)', () => {
