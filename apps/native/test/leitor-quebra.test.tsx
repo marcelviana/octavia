@@ -366,6 +366,42 @@ describe('QL-D18 / QL-R13 — a âncora: o começo da linha lógica do topo volt
     expect(caractereDoDuplo(26) * 41).toBeLessThanOrEqual(711.1 - 64)
   })
 
+  it('o pedido da âncora se reaplica até a rolagem chegar ao alvo (o achado do Tab), e para quando chega', async () => {
+    // no Tab o primeiro pedido caiu no conteúdo VELHO e ficou cortado pelo tamanho dele; o duplo não rola, então o palco
+    // não vê a rolagem chegar e tem de pedir de novo; quando ela chega (o `onScroll` no alvo), ele para
+    __janela(B.w, B.h)
+    __colunas(48)
+    await palco(conteudo('l1', 'Lyrics', LETRA_LONGA))
+    const em48 = L.logicasDasVisuais(LETRA_LONGA, quebrar(LETRA_LONGA, 'Lyrics', 48))
+    __rolar((em48.indexOf(10) + 1) * lh22 + 4)
+    __limparRolagens()
+    await tocar('zoom-mais')
+    await assentar(350)
+    const alvo = L.yDaLogica(L.logicasDasVisuais(LETRA_LONGA, quebrar(LETRA_LONGA, 'Lyrics', 41)), 10, 26 * 1.55)
+    const pedidos = __rolagens().filter((y) => Math.abs(y - alvo) < 0.01)
+    expect(pedidos.length, 'o palco pediu a rolagem da âncora uma vez só').toBeGreaterThanOrEqual(3)
+    __rolar(alvo)
+    await assentar(50)
+    const ate = __rolagens().length
+    await assentar(400)
+    expect(__rolagens().length, 'a rolagem chegou ao alvo e o palco continuou pedindo').toBe(ate)
+  })
+
+  it('duas mudanças seguidas antes de a rolagem chegar ancoram na MESMA lógica (o zoom duas vezes)', async () => {
+    __janela(B.w, B.h)
+    __colunas(48)
+    await palco(conteudo('l1', 'Lyrics', LETRA_LONGA))
+    const em48 = L.logicasDasVisuais(LETRA_LONGA, quebrar(LETRA_LONGA, 'Lyrics', 48))
+    __rolar((em48.indexOf(10) + 1) * lh22 + 4)
+    __limparRolagens()
+    await tocar('zoom-mais')
+    await tocar('zoom-mais') // 26 → 32 sem o onScroll do primeiro pedido
+    await assentar(50)
+    const em33 = L.logicasDasVisuais(LETRA_LONGA, quebrar(LETRA_LONGA, 'Lyrics', 33))
+    const pedidas = __rolagens()
+    expect(pedidas[pedidas.length - 1]).toBeCloseTo(L.yDaLogica(em33, 10, 32 * 1.55))
+  })
+
   it('a troca de música não ancora: volta ao topo (0), como hoje', async () => {
     __janela(B.w, B.h)
     __colunas(48)
