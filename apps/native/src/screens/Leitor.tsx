@@ -185,7 +185,9 @@ export function CorpoDoLeitor({
     const grupos = gruposDoCorpo(corpo, tipo, linhas, colunas)
     if (grupos.some((g) => g.rola)) {
       return (
-        <View testID={testID}>
+        // `collapsable={false}`: sem ele o Android põe os grupos como IRMÃOS do nó `corpo` no `uiautomator dump` (o
+        // `corpo` sai folha), e os instrumentos que leem o texto sob o id não acham nada (o achado do aparelho, QL-PR3)
+        <View testID={testID} collapsable={false}>
           {grupos.map((g, k) =>
             g.rola ? (
               <ScrollView key={k} horizontal showsHorizontalScrollIndicator={false}>
