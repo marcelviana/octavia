@@ -19,6 +19,10 @@
  * reprovar mora em `packages/core/fixtures/ql-quebra-reprovados.txt`; reprovação fora da lista (`NÃO DECLARADA`) e
  * declaração que passa (`ÓRFÃ`) reprovam o teste (regra 14). Na PR-1 `quebrar` é só o contrato e lança: a lista tem
  * todas as checagens. **A PR-2 esvazia a lista** — com ela vazia, o gate exige zero reprovações, sem mudar o gate.
+ * LISTA VAZIA FIXA (QL-PR2, no molde do G-par, N4-D50): desde a PR-2 a lista VAZIA é condição do gate — qualquer
+ * linha em `ql-quebra-reprovados.txt` reprova, mesmo a de uma checagem que de fato reprova: reprovação declarada não
+ * é mais aceita. A não declarada e a órfã continuam impressas, para dizer o que a linha é. As expectativas (os casos
+ * da fixture) não mudaram.
  *
  * E um gate ESTRUTURAL que já passa (QL-D13; QL-R1): a quebra não entra no `bodyOf` nem na busca — o
  * `content-contract.ts` e o `search.ts` não importam `./quebra`.
@@ -137,7 +141,12 @@ describe('gate da quebra (QL-PR1) — as regras do corte, a invariância e a med
         `lista esperada (${esperados.length}) · reprovados (${reprovados.length})`,
         ...naoDeclaradas.map((k) => `  ✗ reprovação NÃO DECLARADA: ${k}`),
         ...orfas.map((k) => `  ✗ declaração ÓRFÃ: ${k} (${checagens.has(k) ? 'passa' : 'não existe na fixture'})`),
-        naoDeclaradas.length + orfas.length === 0 ? `gate da quebra: reprova exatamente a lista esperada (${esperados.length}) ✓` : 'gate da quebra: ✗',
+        ...(esperados.length
+          ? [`  ✗ LISTA NÃO VAZIA (${esperados.length}): desde a PR-2 (a quebra no core) reprovação declarada não é mais aceita — ql-quebra-reprovados.txt tem de estar vazio`]
+          : []),
+        naoDeclaradas.length + orfas.length + esperados.length === 0
+          ? 'gate da quebra: zero reprovações, lista vazia (QL-PR2) ✓'
+          : 'gate da quebra: ✗',
       ].join('\n'),
     )
 
@@ -145,6 +154,7 @@ describe('gate da quebra (QL-PR1) — as regras do corte, a invariância e a med
     expect(new Set(fx.casos.map((c) => c.id)).size, 'ids de caso repetidos').toBe(fx.casos.length)
     expect(naoDeclaradas, 'reprovação NÃO DECLARADA').toEqual([])
     expect(orfas, 'declaração ÓRFÃ').toEqual([])
+    expect(esperados, 'lista não vazia: desde a PR-2 (a quebra no core) reprovação declarada não é mais aceita').toEqual([])
   })
 
   it('QL-D13: a quebra não entra no bodyOf nem na busca (content-contract.ts e search.ts não importam ./quebra)', () => {
