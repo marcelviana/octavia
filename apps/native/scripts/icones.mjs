@@ -134,6 +134,21 @@
  * "em andamento" é o inerte com o arco de 42 em volta — o arco é da tela, não
  * do ícone, e o gate o separa pela `viewBox`.
  */
+/**
+ * QL-PR4 — A FOLHA DO QL COMO FONTE DA DIVISA (QL-D31; catálogo 41 → 42)
+ *
+ * O `DESIGN-QL/telas.html` traz a amostra `QL-divisa-amostra` (seção 3): a
+ * divisa ao lado da estrela e do ▶ do N4, nos dois temas, em 20, 24 e 4 ×. A
+ * divisa é UM registro com dois estados, o mesmo traço espelhado — como a
+ * estrela: `normal` é a ABERTA (para cima; o toque recolhe) e `ativo` a
+ * RECOLHIDA (para baixo; o toque abre). A regra 8, abaixo, cobra as oito
+ * células de 20 e 24 (aberta · recolhida × escuro · claro) pelo desenho
+ * efetivo, como a regra 7 — a geometria, o preenchimento e o traço da família
+ * em cada tamanho —, e as dezoito molduras de notas (`QL-*-S3-notas-*`): cada
+ * uma desenha UMA divisa, no estado da moldura (abertas e longa → aberta;
+ * recolhidas → recolhida). O 4 × é ampliação de leitura, não tamanho do
+ * catálogo, e fica fora da cobrança.
+ */
 import { readFileSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -144,6 +159,7 @@ const ANEXO_D = join(RAIZ, 'docs/native/V1-PR3-PRECHECK-anexos/V1-PR3-D-icones-3
 const TELAS = join(RAIZ, 'docs/native/DESIGN-V1/telas.html')
 const TELAS_N2 = join(RAIZ, 'docs/native/DESIGN-N2/telas.html')
 const TELAS_N4 = join(RAIZ, 'docs/native/DESIGN-N4/telas.html')
+const TELAS_QL = join(RAIZ, 'docs/native/DESIGN-QL/telas.html')
 const MAPA = process.argv[2] ?? join(RAIZ, 'packages/identidade/src/icones.ts')
 
 /**
@@ -255,6 +271,18 @@ const EM20_N4 = {
  * geometria contra a folha e o traço contra `TRACO_FAMILIA` nesses tamanhos.
  */
 const TRACO_N4D86 = { de: 'markup da folha: 1,8 em 24 e 28', para: 'TRACO da família (1,75 · 2)', razao: 'N4-D86 — "em 24 e 28 escalam com o traço do catálogo"' }
+
+/**
+ * DESIGN-QL, `QL-divisa-amostra` (QL-D31): o rótulo da célula → o nome no mapa
+ * e o estado que ela desenha. Lista FECHADA, como a `REGISTROS_N4`. É UM
+ * registro novo (o 42º).
+ */
+const REGISTROS_QL = {
+  'divisa · aberta': { nome: 'divisa', estado: 'normal' },
+  'divisa · recolhida': { nome: 'divisa', estado: 'ativo' },
+}
+/** As molduras de notas (QL-D30): o estado delas → o estado da divisa que desenham. */
+const DIVISA_DAS_MOLDURAS = { abertas: 'normal', longa: 'normal', recolhidas: 'ativo' }
 
 /** "última sincronização" → `ultima-sincronizacao`; "zoom −" → `zoom-menos`; "n.º de músicas" → `n-de-musicas`. */
 function chave(nomeDaTabela) {
@@ -419,6 +447,31 @@ function linhasN4() {
   return out
 }
 
+/**
+ * QL-PR4 — as células da divisa na amostra `QL-divisa-amostra` do `DESIGN-QL/telas.html`: `{ rotulo, tamanho, svg }`
+ * (a célula de 4 × tem outra caixa e não casa — ver o cabeçalho); e as molduras `QL-*-S3-notas-*`, cada uma com os
+ * `<svg>` de divisa que desenha.
+ */
+function divisasQL() {
+  const t = telas(TELAS_QL)
+  const ini = t.indexOf('id="QL-divisa-amostra"')
+  if (ini === -1) throw new Error(`sem a amostra "QL-divisa-amostra" em ${TELAS_QL}`)
+  const secao = t.slice(ini, t.indexOf('id="QL-', ini + 30))
+  const celulas = []
+  for (const [, svg, rotulo] of secao.matchAll(/<div style="height:96px[^>]*>(<svg [\s\S]*?<\/svg>)<\/div><div [^>]*>([^<]+)<\/div>/g)) {
+    const m = /^(divisa · (?:aberta|recolhida)) · (\d+)$/.exec(rotulo.trim())
+    if (m !== null) celulas.push({ rotulo: m[1], tamanho: +m[2], svg })
+  }
+  const molduras = []
+  for (const [, id, estado, corpo] of t.matchAll(/<div id="(QL-[ABC]-S3-notas-(abertas|recolhidas|longa)-(?:escuro|claro))"([\s\S]*?)(?=<div id="(?:QL|EST)-)/g)) {
+    const svgs = [...corpo.matchAll(/<svg [\s\S]*?<\/svg>/g)].map((x) => x[0]).filter((x) => DIVISAS_D.some((d) => x.includes(`d="${d}"`)))
+    molduras.push({ id, estado, svgs })
+  }
+  return { celulas, molduras }
+}
+/** Os dois `d` da divisa na folha (aberta, recolhida) — o que acha a divisa numa moldura. */
+const DIVISAS_D = ['M5.5 15.25L12 8.75l6.5 6.5', 'M5.5 8.75L12 15.25l6.5-6.5']
+
 const acusacoes = []
 const acusar = (s) => { acusacoes.push(s); console.log(`  ACUSADO ${s}`) }
 /** O pendente que ainda não existe: grita, não reprova (ver o cabeçalho). */
@@ -429,7 +482,8 @@ const avisar = (s) => { avisos.push(s); console.log(`  AVISO ${s}`) }
 const tabela = nomesDa64()
 const nomesN2 = Object.values(REGISTROS_N2).flat()
 const nomesN4Novos = [...new Set(Object.values(REGISTROS_N4).filter((r) => !r.tipo).map((r) => r.nome))]
-const esperados = new Set([...tabela, ...FORA_DO_CATALOGO, ...nomesN2, ...nomesN4Novos])
+const nomesQL = [...new Set(Object.values(REGISTROS_QL).map((r) => r.nome))]
+const esperados = new Set([...tabela, ...FORA_DO_CATALOGO, ...nomesN2, ...nomesN4Novos, ...nomesQL])
 const anexo = readFileSync(ANEXO_D, 'utf8')
 const registros = [...anexo.matchAll(/^### (\S+)  ·  .+?  ·  \d+ dp\n(<svg[\s\S]*?<\/svg>)/gm)]
 const doAnexo = new Set(registros.flatMap(([, , svg]) => [...assinaturasSvg(svg)]))
@@ -515,6 +569,8 @@ for (const [nome, ass] of normalDoMapa) {
   if (anexoPorNome.has(nome)) continue
   // Os seis do DESIGN-N4 (os quatro trocados e os dois novos) são cobrados na regra 7.
   if (nome in TROCAS_N4 || nomesN4Novos.includes(nome)) continue
+  // A divisa do DESIGN-QL é cobrada na regra 8.
+  if (nomesQL.includes(nome)) continue
   for (const a of ass) {
     if (!doAnexo.has(a)) acusar(`${MAPA} [desenho] 'normal' de "${nome}" não está no anexo D: ${a}`)
   }
@@ -623,16 +679,16 @@ for (const [nome, doRegistro] of anexoPorNome) {
  */
 const n4 = linhasN4()
 let n4Cobradas = 0
-const comparar = (rotulo, nome, tamanho, estado, svg, trocaTraco) => {
-  n4Cobradas++
+const comparar = (rotulo, nome, tamanho, estado, svg, trocaTraco, fonte = { arq: TELAS_N4, rot: 'N4' }) => {
+  if (fonte.rot === 'N4') n4Cobradas++
   const folha = efetivoDaFolha(svg)
-  if (folha.largura !== tamanho) acusar(`${TELAS_N4} [N4] ${rotulo}: a célula desenha ${folha.largura} dp, esperado ${tamanho}`)
+  if (folha.largura !== tamanho) acusar(`${fonte.arq} [${fonte.rot}] ${rotulo}: a célula desenha ${folha.largura} dp, esperado ${tamanho}`)
   let esperado = folha.prims
   if (trocaTraco) esperado = esperado.map((p) => p.replace(/^traco [\d.]+/, `traco ${TRACO_FAMILIA[tamanho]}`))
   const mapa = efetivoDoMapa(nome, tamanho, estado)
-  if (mapa === null) { acusar(`${MAPA} [N4] ${rotulo}: "${nome}" não tem o estado '${estado}' que a folha desenha`); return }
+  if (mapa === null) { acusar(`${MAPA} [${fonte.rot}] ${rotulo}: "${nome}" não tem o estado '${estado}' que a folha desenha`); return }
   const igual = mapa.length === esperado.length && mapa.every((p, i) => p === esperado[i])
-  if (!igual) acusar(`${MAPA} [N4] ${rotulo}: "${nome}" ${estado} @${tamanho} ≠ folha\n      folha: ${esperado.join(' ‖ ')}\n      mapa:  ${mapa.join(' ‖ ')}`)
+  if (!igual) acusar(`${MAPA} [${fonte.rot}] ${rotulo}: "${nome}" ${estado} @${tamanho} ≠ folha\n      folha: ${esperado.join(' ‖ ')}\n      mapa:  ${mapa.join(' ‖ ')}`)
 }
 for (const [id, reg] of Object.entries(REGISTROS_N4)) {
   const cel = n4.get(id)
@@ -663,13 +719,38 @@ for (const [id, reg] of Object.entries(REGISTROS_N4)) {
   }
 }
 
+// ---- 8. a divisa do DESIGN-QL (QL-D31): as oito células da amostra e as dezoito molduras de notas
+/**
+ * A amostra: cada célula de 20 e 24 contra o que o `Icone.tsx` desenha, pela `comparar` da regra 7 (geometria,
+ * preenchimento e traço efetivo, na ordem) — a aberta é o `normal`, a recolhida o `ativo`. As molduras: cada
+ * `QL-*-S3-notas-*` desenha UMA divisa, de 20, no estado dela (abertas e longa → aberta; recolhidas → recolhida).
+ */
+const FONTE_QL = { arq: TELAS_QL, rot: 'QL' }
+const ql = divisasQL()
+let qlCelulas = 0
+for (const c of ql.celulas) {
+  const reg = REGISTROS_QL[c.rotulo]
+  qlCelulas++
+  comparar(`${c.rotulo} · ${c.tamanho}`, reg.nome, c.tamanho, reg.estado, c.svg, false, FONTE_QL)
+}
+if (qlCelulas !== 8) acusar(`${TELAS_QL} [QL] a amostra da divisa tem ${qlCelulas} células de 20 e 24, esperado 8 (aberta · recolhida × 20 · 24 × escuro · claro)`)
+let qlMolduras = 0
+for (const m of ql.molduras) {
+  qlMolduras++
+  if (m.svgs.length !== 1) { acusar(`${TELAS_QL} [QL] ${m.id}: ${m.svgs.length} divisas, esperado 1`); continue }
+  comparar(`${m.id}`, 'divisa', 20, DIVISA_DAS_MOLDURAS[m.estado], m.svgs[0], false, FONTE_QL)
+}
+if (qlMolduras !== 18) acusar(`${TELAS_QL} [QL] ${qlMolduras} molduras de notas, esperado 18 (abertas · recolhidas · longa × C · B · A × escuro · claro)`)
+
 const novosN4 = Object.values(REGISTROS_N4).filter((r) => r.novo).length
-const totalRegistros = registros.length + registrosN2.size + novosN4
-console.log(`  §6.4: ${tabela.length} linhas → ${new Set(tabela).size} nomes distintos, + ${FORA_DO_CATALOGO.length} fora do catálogo + ${nomesN2.length} da tela 2 + ${nomesN4Novos.length} do N4 = ${esperados.size} esperados`)
-console.log(`  anexo D: ${registros.length} registros (V1) + ${registrosN2.size} (DESIGN-N2, E17) + ${novosN4} (DESIGN-N4, N4-D76) = ${totalRegistros} registros · ${doAnexo.size} elementos distintos no do V1`)
-if (totalRegistros !== 41) acusar(`[N4-D76] o catálogo tem ${totalRegistros} registros e a N4-D76 declara 41`)
+const novosQL = nomesQL.length
+const totalRegistros = registros.length + registrosN2.size + novosN4 + novosQL
+console.log(`  §6.4: ${tabela.length} linhas → ${new Set(tabela).size} nomes distintos, + ${FORA_DO_CATALOGO.length} fora do catálogo + ${nomesN2.length} da tela 2 + ${nomesN4Novos.length} do N4 + ${nomesQL.length} do QL = ${esperados.size} esperados`)
+console.log(`  anexo D: ${registros.length} registros (V1) + ${registrosN2.size} (DESIGN-N2, E17) + ${novosN4} (DESIGN-N4, N4-D76) + ${novosQL} (DESIGN-QL, QL-D31) = ${totalRegistros} registros · ${doAnexo.size} elementos distintos no do V1`)
+if (totalRegistros !== 42) acusar(`[QL-D31] o catálogo tem ${totalRegistros} registros e a QL-D31 declara 42`)
 console.log(`  DESIGN-N4: ${n4.size}/${Object.keys(REGISTROS_N4).length} linhas P-I achadas · ${n4Cobradas} células cobradas · trocas em par: ${Object.keys(TROCAS_N4).length} (${[...velhoN4.values()].reduce((a, s) => a + s.size, 0)} elementos velhos cobrados ausentes)`)
 console.log(`  pares do N4: em20 ${Object.keys(EM20_N4).length} (${EM20_N4.tab.de} → ${EM20_N4.tab.para}) · traço em 24/28: ${TRACO_N4D86.de} → ${TRACO_N4D86.para}`)
+console.log(`  DESIGN-QL (QL-D31): a divisa — ${qlCelulas} células da amostra cobradas · ${qlMolduras} molduras de notas, cada uma com a divisa no estado dela`)
 console.log(`  tela 2 (E17): ${n2Cobrados}/${anexoPorNome.size} nomes já no mapa e cobrados · ${PENDENTES.length} declarados pendentes`)
 console.log(`  mapa: ${nomes.length} nomes · ${doMapa.size} elementos distintos · ${normalDoMapa.size} com 'normal'`)
 console.log(`  hex cravado: ${(src.match(/#[0-9A-Fa-f]{6}\b/g) ?? []).length} · tinta por token: ${(src.match(/tinta: '/g) ?? []).length}`)

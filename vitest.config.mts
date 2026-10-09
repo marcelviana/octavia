@@ -143,6 +143,8 @@ export default defineConfig({
             ),
             // N3-PR5: o palco (`StageScreen`) importa o PDF nativo, com JSX em `.js`.
             'react-native-pdf': path.resolve(__dirname, 'apps/native/test/fake-react-native-pdf.tsx'),
+            // QL-PR4 (QL-D39): o palco lembra as notas recolhidas no aparelho (`preferencias.ts`); o de verdade é nativo.
+            '@react-native-async-storage/async-storage': path.resolve(__dirname, 'apps/native/test/fake-async-storage.ts'),
           },
         },
       },

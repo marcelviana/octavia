@@ -36,7 +36,7 @@ interface PropsComuns {
   accessibilityRole?: string
   accessibilityLabel?: string
   accessibilityHint?: string
-  accessibilityState?: { disabled?: boolean; selected?: boolean }
+  accessibilityState?: { disabled?: boolean; selected?: boolean; expanded?: boolean }
   numberOfLines?: number
   /**
    * Sem assinatura de índice (`[k: string]: unknown`), que foi a primeira
@@ -117,6 +117,8 @@ function atributos(p: PropsComuns): Record<string, unknown> {
     'aria-label': p.accessibilityLabel,
     'data-hint': p.accessibilityHint,
     'data-disabled': p.accessibilityState?.disabled === true ? 'true' : undefined,
+    // QL-PR4: o estado expandido que o sistema anuncia (a régua das notas, QL-D31) — `aria-expanded` no DOM
+    'aria-expanded': p.accessibilityState?.expanded === undefined ? undefined : String(p.accessibilityState.expanded),
     'data-numberoflines': p.numberOfLines,
   }
   for (const k of Object.keys(fora)) if (fora[k] === undefined) delete fora[k]
@@ -393,8 +395,29 @@ function textoDe(filhos: ReactNode): string {
   if (isValidElement(filhos)) return textoDe((filhos.props as { children?: ReactNode }).children)
   return ''
 }
+/**
+ * QL-PR4 — o `onLayout` de um nó pelo `testID`, com a geometria que o TESTE dá (`__medir`). O de cima sai uma vez, na
+ * montagem, com `y = 0` e a altura da janela; a âncora com as notas acima do corpo (e com os *Detalhes* acima do corpo
+ * de V em B) precisa de onde o corpo COMEÇA — o `y` e a altura de um nó —, que só o aparelho mede. Aqui não se mede:
+ * o teste entrega o número, e o que se prova é a conta que a tela faz com ele. Vale com a medida desligada também.
+ */
+const medidoresPorId = new Map<string, (e: EventoDeLayout) => void>()
+export function __medir(testID: string, layout: { x?: number; y: number; width?: number; height: number }): void {
+  const f = medidoresPorId.get(testID)
+  if (f === undefined) throw new Error(`__medir: nenhum nó "${testID}" com onLayout montado`)
+  f({ nativeEvent: { layout: { x: layout.x ?? 0, y: layout.y, width: layout.width ?? janela.width, height: layout.height } } })
+}
 function useMedida(p: PropsComuns, ehTexto: boolean): void {
   const ligada = medida
+  const id = p.testID
+  const aoMedir = p.onLayout
+  useLayoutEffect(() => {
+    if (id === undefined || aoMedir === undefined) return
+    medidoresPorId.set(id, aoMedir)
+    return () => {
+      if (medidoresPorId.get(id) === aoMedir) medidoresPorId.delete(id)
+    }
+  }, [id, aoMedir])
   useLayoutEffect(() => {
     if (ligada === null || p.onLayout === undefined) return
     const est = achatar(p.style)

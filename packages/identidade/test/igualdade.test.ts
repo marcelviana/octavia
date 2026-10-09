@@ -46,6 +46,7 @@ const base = reviver(JSON.parse(readFileSync(join(__dirname, 'linha-de-base.json
   icones: unknown
   paresIconesN4: { pares: Record<string, { velho: unknown; novo: unknown; razao: string }> }
   paresTokensN4: { pares: { caminho: string; velho: unknown; novo: unknown; razao: string }[] }
+  paresIconesQL: { pares: Record<string, { velho: unknown; novo: unknown; razao: string }> }
 }
 
 /**
@@ -170,16 +171,26 @@ describe('pacote ≡ linha de base (em dp)', () => {
    * linha de base (ou `null`, nome novo), e o pacote tem de ter o novo. Os
    * outros 39 nomes continuam cobrados contra a linha de base, intocados.
    */
-  it('ícones: os 43 da linha de base com os seis pares do N4 aplicados — 45 nomes, e nenhum visto (div. 588, decisão (b))', () => {
+  /**
+   * QL-PR4 — a divisa (QL-D31) entra pelo mesmo mecanismo: um par a mais (`paresIconesQL`, velho `null` — nome
+   * novo), aplicado DEPOIS dos do N4. A linha de base continua sem ser regravada.
+   */
+  it('ícones: os 43 da linha de base com os seis pares do N4 e o do QL aplicados — 46 nomes, e nenhum visto (div. 588, decisão (b))', () => {
     const esperado: Record<string, unknown> = { ...(base.icones as Record<string, unknown>) }
     for (const [nome, par] of Object.entries(base.paresIconesN4.pares)) {
       expect(par.velho ?? undefined, `o velho do par "${nome}" é o da linha de base`).toStrictEqual(esperado[nome])
       expect(par.razao, `o par "${nome}" tem razão`).toMatch(/N4-D\d+/)
       esperado[nome] = par.novo
     }
+    for (const [nome, par] of Object.entries(base.paresIconesQL.pares)) {
+      expect(par.velho ?? undefined, `o velho do par "${nome}" é o da linha de base com o N4 aplicado`).toStrictEqual(esperado[nome])
+      expect(par.razao, `o par "${nome}" tem razão`).toMatch(/QL-D\d+/)
+      esperado[nome] = par.novo
+    }
     expect(Object.keys(base.paresIconesN4.pares)).toStrictEqual(['letra', 'cifra', 'tab', 'partitura', 'estrela', 'tocar'])
+    expect(Object.keys(base.paresIconesQL.pares)).toStrictEqual(['divisa'])
     expect(identidade.desenhos).toStrictEqual(esperado)
-    expect(identidade.nomesIcones).toHaveLength(45)
+    expect(identidade.nomesIcones).toHaveLength(46)
     expect(identidade.nomesIcones).not.toContain('visto')
   })
 
