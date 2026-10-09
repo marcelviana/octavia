@@ -1,0 +1,99 @@
+# QL-PR2 — os gates locais sobre a PR (head 5d517d1, base 827141a), 2026-10-09 06:28
+
+## o bloco ```gates do corpo da PR, extraído (gates-decl.sh)
+g1a: packages/core/src/quebra.ts
+
+## G1a/G1b
+declarações: do corpo da PR (GATES_DECL=<scratchpad>/decl)
+base=827141adb91f29cf22e2dae9c12d3a686f207e29 head=WORKTREE
+G1a — diff vazio em 63 arquivos DERIVADOS de apps/native + packages/core/src
+      escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+      EXCEÇÕES DECLARADAS (o escopo desta PR):
+        packages/core/src/quebra.ts
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+      PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+        (nenhum — nenhuma asserção do core pode mudar nesta PR)
+  G1b: só adição ✓
+exit 0
+
+## G2/G3
+G2 — testIDs  antes=121  depois=121
+  G2: antes ⊆ depois ✓
+G3 — declarações: do corpo da PR (GATES_DECL=<scratchpad>/decl)
+G3 — linhas log( antes=70  depois=70
+      ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+        (nenhuma)
+      REMOÇÕES DECLARADAS (linha → REMOVIDA: razão; N2-D34):
+        (nenhuma)
+      — nenhuma linha de log pode sumir nesta PR
+  G3: nenhuma linha sumiu ✓
+exit 0
+
+## shasum -c dos congelados (o passo do gates.yml)
+== docs/native/DESIGN-V1
+telas.html: OK
+icones.html: OK
+telas.pdf: OK
+== docs/native/DESIGN-N2
+telas.html: OK
+telas.pdf: OK
+== docs/native/DESIGN-N3
+telas.html: OK
+telas.pdf: OK
+== docs/native/DESIGN-N4
+telas.html: OK
+icones.html: OK
+== docs/native/DESIGN-QL
+telas.html: OK
+exit 0
+
+## os gates do site (o bloco ```gates-web vazio)
+declarações: 0 linhas
+## G-back
+G-back — base 827141a · head WORKTREE
+núcleo: congelado 39 · derivação BASE 39 · HEAD 39 · união 40
+declarações gback: 0 caminho(s)
+
+## (i) arquivo do núcleo que mudou
+  ✓ nenhum — diff vazio no núcleo
+## (ii) arquivo novo no alcance (derivação do HEAD fora do congelado)
+  ✓ nenhum
+## (iii) declaração órfã (gback: de arquivo que não mudou)
+  ✓ nenhuma
+
+G-back: PASSA
+## G-palco
+## 4. TEXTO — referência a rota/arquivo morto
+  ✓ nenhum
+
+G-palco: PASSA — 0 ocorrências
+## shasum DESIGN-I1
+0-linha-de-aviso/telas.html: OK
+1-auth/telas.html: OK
+2-landing/telas.html: OK
+3-privacy-policy/telas.html: OK
+4-content-lista/telas.html: OK
+5-content-visualizacao/telas.html: OK
+6-content-editor/telas.html: OK
+7-upload/telas.html: OK
+8-setlists/telas.html: OK
+README-design.md: OK
+README.md: OK
+conferencia/conferir.mjs: OK
+conferencia/matriz-x-estados.tsv: OK
+conferencia/saida.txt: OK
+## G-tok
+## (ii) arquivos redesenhados — scripts/gates-web/g-tok-arquivos.txt
+  arquivos: 133 · literais de identidade acusados: 0 · toasts: 0 · imports de ui: 0 · textos examinados: 33 · isentos de inglês (scripts/gates-web/g-tok-sem-ingles.txt): 1 · vocabulário: 133 · isenções: 9 · strings de .ts examinadas (div. 828): 490 · frases isentas (scripts/gates-web/g-tok-frases-isentas.txt): 5 de 5 entradas
+
+G-tok: PASSA
+## G-tok cobertura
+  arquivos de tela: 129 · na lista: 129 · excluídos: 0 · FORA: 0 · da lista que não são de tela (informa): 4
+
+G-tok (cobertura): PASSA
+## G-faixa veredito
+  · verify-email · AUTH-verify-reenviar-excecao: INALCANÇÁVEL (declarado) — o contexto não lança: o catch da tela não se alcança [hipótese] (I1-E1, div. 640)
+
+G-faixa: PASSA

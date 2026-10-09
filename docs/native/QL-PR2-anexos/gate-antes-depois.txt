@@ -1,0 +1,65 @@
+# QL-PR2 — o gate da quebra e os extras do core, ANTES (o commit 1, 23f22ab) e DEPOIS (o commit 2, 5d517d1)
+# comando: pnpm exec vitest run tests/gates/ql-quebra.test.ts packages/core/src/quebra.test.ts (sem as cores)
+
+== 23f22ab (test(ql): QL-PR2 — os casos de borda da quebra, entrando reprovados)
+ ❯  core  packages/core/src/quebra.test.ts (46 tests | 46 failed) 10ms
+gate da quebra — casos 23 · checagens 46 ((i) 17 · (ii) 23 · (iii) 6) · passam 0 · reprovam 46
+  (i  ) REPROVA · (ii) REPROVA  letra-80             Lyrics 80 col · QL-C-S3-letra-escuro
+  (i  ) REPROVA · (ii) REPROVA  letra-55             Lyrics 55 col · QL-C-V-letra-escuro
+  (i  ) REPROVA · (ii) REPROVA  letra-48             Lyrics 48 col · QL-B-S3-letra-escuro
+  (i  ) REPROVA · (ii) REPROVA  letra-26             Lyrics 26 col · QL-A-S3-letra-escuro
+  (i  ) REPROVA · (ii) REPROVA  letra-14             Lyrics 14 col · QL-A-S3-notas-longa-escuro
+  (i  ) REPROVA · (ii) REPROVA  cifra-80             Chords 80 col · QL-C-S3-cifra-escuro
+  (i  ) REPROVA · (ii) REPROVA  cifra-55             Chords 55 col · QL-C-V-cifra-escuro
+  (i  ) REPROVA · (ii) REPROVA  cifra-48             Chords 48 col · QL-B-S3-cifra-escuro
+  (i  ) REPROVA · (ii) REPROVA  cifra-26             Chords 26 col · QL-A-S3-cifra-escuro
+  (i  ) REPROVA · (ii) REPROVA  cifra-14             Chords 14 col · EST-QL-A-S3-cifra-zoom40-sem-saida-escuro
+  (i  ) REPROVA · (ii) REPROVA  tab-80               Tab    80 col · QL-C-S3-tab… — conferência §13: "78 colunas, 6 linhas"
+  (i  ) REPROVA · (ii) REPROVA  tab-55               Tab    55 col · QL-C-V-tab… — conferência §13: "78 colunas, 6 linhas"
+  (i  ) REPROVA · (ii) REPROVA  tab-48               Tab    48 col · QL-B-S3-tab… — conferência §13: "78 colunas, 6 linhas"
+  (i  ) REPROVA · (ii) REPROVA  tab-26               Tab    26 col · QL-A-S3-tab… — conferência §13: "78 colunas, 6 linhas"
+  (i  ) REPROVA · (ii) REPROVA  tab-14               Tab    14 col · derivado: R4 (nenhuma moldura de Tab em 14)
+  (i  ) REPROVA · (ii) REPROVA  quase-acorde-14      Chords 14 col · derivado: R1 + R4
+  (i  ) REPROVA · (ii) REPROVA  cifra-como-letra-26  Lyrics 26 col · derivado: R1 sobre o texto do §5.2
+  (iii) REPROVA · (ii) REPROVA  tabulacao-16         Lyrics 16 col · derivado: QL-D24
+  (iii) REPROVA · (ii) REPROVA  tabulacao-14         Lyrics 14 col · derivado: QL-D24
+  (iii) REPROVA · (ii) REPROVA  cr-50                Lyrics 50 col · derivado: QL-D24
+  (iii) REPROVA · (ii) REPROVA  cr-48                Lyrics 48 col · derivado: QL-D24 + o corte do QL-B-S3-letra-escuro
+  (iii) REPROVA · (ii) REPROVA  combinante-50        Lyrics 50 col · derivado: QL-D24
+  (iii) REPROVA · (ii) REPROVA  combinante-48        Lyrics 48 col · derivado: QL-D24 + o corte do QL-B-S3-letra-escuro
+lista esperada (46) · reprovados (46)
+gate da quebra: reprova exatamente a lista esperada (46) ✓
+ ✓  web  tests/gates/ql-quebra.test.ts (2 tests) 5ms
+⎯⎯⎯⎯⎯⎯ Failed Tests 46 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  46 failed | 2 passed (48)
+
+== 5d517d1 (feat(ql): QL-PR2 — a quebra no core (R1–R4, a medida do QL-D24))
+ ✓  core  packages/core/src/quebra.test.ts (46 tests) 65ms
+gate da quebra — casos 23 · checagens 46 ((i) 17 · (ii) 23 · (iii) 6) · passam 46 · reprovam 0
+  (i  ) passa   · (ii) passa    letra-80             Lyrics 80 col · QL-C-S3-letra-escuro
+  (i  ) passa   · (ii) passa    letra-55             Lyrics 55 col · QL-C-V-letra-escuro
+  (i  ) passa   · (ii) passa    letra-48             Lyrics 48 col · QL-B-S3-letra-escuro
+  (i  ) passa   · (ii) passa    letra-26             Lyrics 26 col · QL-A-S3-letra-escuro
+  (i  ) passa   · (ii) passa    letra-14             Lyrics 14 col · QL-A-S3-notas-longa-escuro
+  (i  ) passa   · (ii) passa    cifra-80             Chords 80 col · QL-C-S3-cifra-escuro
+  (i  ) passa   · (ii) passa    cifra-55             Chords 55 col · QL-C-V-cifra-escuro
+  (i  ) passa   · (ii) passa    cifra-48             Chords 48 col · QL-B-S3-cifra-escuro
+  (i  ) passa   · (ii) passa    cifra-26             Chords 26 col · QL-A-S3-cifra-escuro
+  (i  ) passa   · (ii) passa    cifra-14             Chords 14 col · EST-QL-A-S3-cifra-zoom40-sem-saida-escuro
+  (i  ) passa   · (ii) passa    tab-80               Tab    80 col · QL-C-S3-tab… — conferência §13: "78 colunas, 6 linhas"
+  (i  ) passa   · (ii) passa    tab-55               Tab    55 col · QL-C-V-tab… — conferência §13: "78 colunas, 6 linhas"
+  (i  ) passa   · (ii) passa    tab-48               Tab    48 col · QL-B-S3-tab… — conferência §13: "78 colunas, 6 linhas"
+  (i  ) passa   · (ii) passa    tab-26               Tab    26 col · QL-A-S3-tab… — conferência §13: "78 colunas, 6 linhas"
+  (i  ) passa   · (ii) passa    tab-14               Tab    14 col · derivado: R4 (nenhuma moldura de Tab em 14)
+  (i  ) passa   · (ii) passa    quase-acorde-14      Chords 14 col · derivado: R1 + R4
+  (i  ) passa   · (ii) passa    cifra-como-letra-26  Lyrics 26 col · derivado: R1 sobre o texto do §5.2
+  (iii) passa   · (ii) passa    tabulacao-16         Lyrics 16 col · derivado: QL-D24
+  (iii) passa   · (ii) passa    tabulacao-14         Lyrics 14 col · derivado: QL-D24
+  (iii) passa   · (ii) passa    cr-50                Lyrics 50 col · derivado: QL-D24
+  (iii) passa   · (ii) passa    cr-48                Lyrics 48 col · derivado: QL-D24 + o corte do QL-B-S3-letra-escuro
+  (iii) passa   · (ii) passa    combinante-50        Lyrics 50 col · derivado: QL-D24
+  (iii) passa   · (ii) passa    combinante-48        Lyrics 48 col · derivado: QL-D24 + o corte do QL-B-S3-letra-escuro
+lista esperada (0) · reprovados (0)
+gate da quebra: zero reprovações, lista vazia (QL-PR2) ✓
+ ✓  web  tests/gates/ql-quebra.test.ts (2 tests) 7ms
+      Tests  48 passed (48)
