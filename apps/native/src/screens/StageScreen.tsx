@@ -28,18 +28,8 @@
  * continuam navegando MÚSICA, não página — errata do design (D-1 / A14):
  * quem vira página é o deslize sobre o documento.
  */
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
-import {
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-  useWindowDimensions,
-  type LayoutChangeEvent,
-  type NativeScrollEvent,
-  type NativeSyntheticEvent,
-} from 'react-native'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions, type LayoutChangeEvent } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake'
 import {
@@ -52,6 +42,7 @@ import {
   isValidContent,
   nextPosition,
   nomeDoVoltarDoAvulso,
+  notasDaVisualizacao,
   paginaDe,
   prevPosition,
   resolveSong,
@@ -63,6 +54,7 @@ import { ensureFile, fileNameFromUrl, fraseDaFalha, hasFile, knownBytes } from '
 import { Icone, type EstadoIcone } from '../icones/Icone'
 import type { NomeIcone } from '../icones/dados'
 import { log } from '../log'
+import { definirNotasRecolhidas, useNotasRecolhidas } from '../preferencias'
 import { prefetchDemanda } from '../prefetch'
 import {
   bar,
@@ -87,15 +79,14 @@ import {
   PlaceholderDoLeitor,
   S3eDoLeitor,
   estiloDoLeitor,
-  inicioDoBloco,
   leitor,
   linhasDoLeitor,
-  logicaNoTopo,
   logicasDasVisuais,
+  useAncora,
   useColunasDoLeitor,
-  yDaLogica,
   type EstadoDoArquivoDoLeitor,
 } from './Leitor'
+import { NotasDoPalco } from './NotasDoPalco'
 
 export interface StageScreenProps {
   /**
@@ -135,11 +126,6 @@ const TAG_PALCO = 'octavia-palco'
 
 /** Quanto tempo o motivo de um controle inerte fica na linha acima da barra. */
 const MOTIVO_MS = 2500
-
-/** QL-PR3 — o pedido da âncora se reaplica a cada `ANCORA_INTERVALO_MS` até a rolagem chegar, no máximo
- * `ANCORA_TENTATIVAS` vezes (1,5 s): o bastante para o conteúdo novo assentar no Tab, que é o mais lento medido. */
-const ANCORA_INTERVALO_MS = 100
-const ANCORA_TENTATIVAS = 15
 
 /** A dica de gesto do PDF (S3d) — a linha acima da barra, como no design. */
 const DICA_PDF = 'pinça para zoom · arraste para mover · deslize para virar a página'
@@ -302,16 +288,8 @@ export function StageScreen({
 
   const scroll = useRef<ScrollView | null>(null)
   const y = useRef(0)
-  /** QL-PR3 — a rolagem vista (o `onScroll`, a mão ou a rolagem automática): de onde a âncora parte. */
-  const yVisto = useRef(0)
-  /**
-   * QL-PR3 — o pedido da âncora em curso: a rolagem pedida e a lógica que ela põe no topo. Fica de pé até a rolagem
-   * VISTA chegar ao alvo: o primeiro `scrollTo` pode cair no conteúdo velho e ser cortado pelo tamanho dele (medido no
-   * Tab), então o palco o reaplica (`ANCORA_INTERVALO_MS`, até `ANCORA_TENTATIVAS` vezes) e também quando o conteúdo
-   * novo assenta (`onContentSizeChange`). Uma segunda mudança com o pedido de pé ancora na MESMA lógica.
-   */
-  const alvoDaAncora = useRef<{ y: number; logica: number } | null>(null)
-  const tentativaDaAncora = useRef<ReturnType<typeof setTimeout> | null>(null)
+  /** QL-PR4 — a troca de música zera a âncora (o gancho `useAncora`, declarado mais abaixo, onde o desenho já existe). */
+  const zerarAncora = useRef<() => void>(() => undefined)
   const frame = useRef<number | null>(null)
   const pedidoEm = useRef(0)
   const primeiroFrame = useRef(true)
@@ -375,14 +353,20 @@ export function StageScreen({
    */
   const formato = urlArquivo !== null && !ehFormatoQueOAppMostra(urlArquivo)
 
+  /** O placeholder do corpo de texto (o item inválido, a música ausente) — nunca tela vazia (T1-R26). */
+  const motivoDoCorpo =
+    content === null
+      ? MOTIVO.ausente
+      : validade !== null && !validade.ok
+        ? MOTIVO[validade.reason]
+        : undefined
+
   useEffect(() => {
     pararScroll()
     setRodando(false)
     setMotivoVisivel(null)
     y.current = 0
-    yVisto.current = 0
-    alvoDaAncora.current = null
-    if (tentativaDaAncora.current !== null) clearTimeout(tentativaDaAncora.current)
+    zerarAncora.current()
     scroll.current?.scrollTo({ y: 0, animated: false })
     if (navegouEm.current > 0 && setlist !== null) {
       log(
@@ -560,73 +544,42 @@ export function StageScreen({
   const logicas = useMemo(() => (corpo === null ? [] : logicasDasVisuais(corpo, linhas)), [corpo, linhas])
 
   /**
-   * QL-PR3 — A ÂNCORA (QL-D18, QL-D37; QL-R13). Quando o desenho do MESMO corpo muda — o giro (C ↔ B) e o zoom mudam as
-   * colunas e a entrelinha —, a linha lógica que estava no topo volta ao topo: o começo dela a 32 da barra (na Cifra, o
-   * par a partir da linha de acordes). A rolagem automática continua daí (`y`). A troca de música não ancora: volta ao
-   * topo, como sempre (o efeito acima). A Tab não quebra e não ancora (R4).
+   * QL-PR4 — AS NOTAS DA MÚSICA (QL-D30…QL-D32; QL-R14, QL-R15). No topo do corpo de texto, antes da letra, dentro da
+   * rolagem; recolhidas ou abertas pelo estado LEMBRADO (`preferencias.ts`, QL-D39: o mesmo em toda música, gravado no
+   * aparelho). Sem nota, nada (a vazia e a só de espaço já são `null` no core). A nota da POSIÇÃO continua na barra.
+   * Só no corpo de texto: o S3d/S3e (o arquivo) e os placeholders não têm a rolagem do corpo (div. 1230).
+   */
+  const notas = content !== null ? notasDaVisualizacao(content) : null
+  const comNotas = notas !== null && motivoDoCorpo === undefined && corpo !== null && urlArquivo === null
+  const recolhidas = useNotasRecolhidas()
+  const alternarNotas = useCallback(() => void definirNotasRecolhidas(!recolhidas), [recolhidas])
+
+  /**
+   * QL-PR3/QL-PR4 — A ÂNCORA (QL-D18, QL-D37; QL-R13), pelo gancho do leitor (`useAncora`). Quando o desenho do MESMO
+   * corpo muda — o giro (C ↔ B) e o zoom mudam as colunas e a entrelinha —, a linha lógica que estava na marca de 32
+   * volta a ela, sem sinal de rearranjo. Com as notas no topo do corpo, a conta soma ONDE O CORPO COMEÇA: o bloco das
+   * notas na rolagem (o `y` e a altura do `onLayout`) mais os 24 até a letra, menos o respiro — `inicio`. Até as notas
+   * serem medidas para ESTA música, `null`: a âncora espera. Com a marca ainda nas notas, ou nada rolado, o topo (QL-D52).
+   * A rolagem automática continua do ponto ancorado (`y`). A troca de música não ancora: volta ao topo. A Tab não ancora.
    */
   const chaveDoCorpo = `${posicao}|${content?.id ?? ''}`
-  const desenhoAnterior = useRef<{ chave: string; logicas: readonly number[]; entrelinha: number } | null>(null)
-  const pedirAncora = useCallback((alvo: number, tentativa: number) => {
-    const pedido = alvoDaAncora.current
-    if (pedido === null || pedido.y !== alvo) return
-    if (tentativa > 0 && Math.abs(yVisto.current - alvo) <= 1) {
-      alvoDaAncora.current = null
-      return
-    }
-    scroll.current?.scrollTo({ y: alvo, animated: false })
-    if (tentativa >= ANCORA_TENTATIVAS) {
-      alvoDaAncora.current = null
-      return
-    }
-    tentativaDaAncora.current = setTimeout(() => pedirAncora(alvo, tentativa + 1), ANCORA_INTERVALO_MS)
-  }, [])
-  useLayoutEffect(() => {
-    const anterior = desenhoAnterior.current
-    desenhoAnterior.current = { chave: chaveDoCorpo, logicas, entrelinha }
-    if (anterior === null || anterior.chave !== chaveDoCorpo || corpo === null || tipo === 'Tab') return
-    const igual =
-      anterior.entrelinha === entrelinha &&
-      anterior.logicas.length === logicas.length &&
-      anterior.logicas.every((l, i) => l === logicas[i])
-    if (igual) return
-    const pendente = alvoDaAncora.current
-    const logica = pendente !== null ? pendente.logica : inicioDoBloco(corpo, tipo, logicaNoTopo(anterior.logicas, yVisto.current, anterior.entrelinha))
-    const alvo = yDaLogica(logicas, logica, entrelinha)
-    y.current = alvo
-    alvoDaAncora.current = { y: alvo, logica }
-    if (tentativaDaAncora.current !== null) clearTimeout(tentativaDaAncora.current)
-    pedirAncora(alvo, 0)
-  }, [chaveDoCorpo, logicas, entrelinha, corpo, tipo, pedirAncora])
-  useEffect(
-    () => () => {
-      if (tentativaDaAncora.current !== null) clearTimeout(tentativaDaAncora.current)
+  const [medidaDasNotas, setMedidaDasNotas] = useState<{ chave: string; inicio: number } | null>(null)
+  const medirNotas = useCallback(
+    (e: LayoutChangeEvent) => {
+      const { y: topo, height } = e.nativeEvent.layout
+      const ini = topo + height + space.xl - space.xxl
+      setMedidaDasNotas((m) => (m !== null && m.chave === chaveDoCorpo && Math.abs(m.inicio - ini) < 0.01 ? m : { chave: chaveDoCorpo, inicio: ini }))
     },
-    [],
+    [chaveDoCorpo],
   )
+  const inicio = !comNotas ? 0 : medidaDasNotas !== null && medidaDasNotas.chave === chaveDoCorpo ? medidaDasNotas.inicio : null
+  const ancorar = useCallback((alvo: number) => {
+    y.current = alvo
+  }, [])
+  const ancora = useAncora(scroll, { chave: chaveDoCorpo, corpo, tipo, logicas, entrelinha, inicio }, ancorar)
+  zerarAncora.current = ancora.zerar
 
-  const aoRolar = useCallback((e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    yVisto.current = e.nativeEvent.contentOffset.y
-    // a rolagem chegou ao alvo da âncora: o pedido termina
-    const pedido = alvoDaAncora.current
-    if (pedido !== null && Math.abs(yVisto.current - pedido.y) <= 1) alvoDaAncora.current = null
-  }, [])
-  const aoMudarConteudo = useCallback(() => {
-    const pedido = alvoDaAncora.current
-    if (pedido !== null) scroll.current?.scrollTo({ y: pedido.y, animated: false })
-  }, [])
-  // o dedo na rolagem: o músico toma conta, e o pedido da âncora sai
-  const aoArrastar = useCallback(() => {
-    alvoDaAncora.current = null
-    if (tentativaDaAncora.current !== null) clearTimeout(tentativaDaAncora.current)
-  }, [])
-
-  const motivo =
-    content === null
-      ? MOTIVO.ausente
-      : validade !== null && !validade.ok
-        ? MOTIVO[validade.reason]
-        : undefined
+  const motivo = motivoDoCorpo
 
   // A linha acima da barra: o motivo revelado por um toque, senão a dica de
   // gesto do PDF (só no S3d, e só com o arquivo pronto), senão nada.
@@ -732,11 +685,15 @@ export function StageScreen({
             style={leitor.conteudo}
             contentContainerStyle={leitor.conteudoPad}
             onLayout={aoMedirContainer}
-            onScroll={aoRolar}
+            onScroll={ancora.aoRolar}
             scrollEventThrottle={16}
-            onContentSizeChange={aoMudarConteudo}
-            onScrollBeginDrag={aoArrastar}
+            onContentSizeChange={ancora.aoMudarConteudo}
+            onScrollBeginDrag={ancora.aoArrastar}
           >
+            {/* QL-PR4: as notas da música no topo do corpo, antes da letra (`NotasDoPalco.tsx`); sem nota, nada. */}
+            {comNotas && notas !== null ? (
+              <NotasDoPalco notas={notas} recolhidas={recolhidas} onAlternar={alternarNotas} zoom={zoom} cor={cor} onLayout={medirNotas} />
+            ) : null}
             {motivo !== undefined ? (
               <PlaceholderDoLeitor testID="placeholder" titulo={motivo.titulo} apoio={motivo.apoio} cor={cor} />
             ) : (

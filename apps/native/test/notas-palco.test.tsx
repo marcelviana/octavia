@@ -149,7 +149,6 @@ describe('QL-R14 — as notas da música no topo do corpo', () => {
     __janela(B.w, B.h)
     __colunas(26)
     await palco(propsDo([conteudo('n1', LETRA_LONGA, NOTA)]))
-    for (let i = 0; i < 3; i++) await tocar('zoom-mais')
     const longa = NOTA.split('\n')[2]!
     expect(longa.length).toBeGreaterThan(26)
     expect(paragrafos()[2]).toBe(longa)
@@ -514,6 +513,9 @@ describe('QL-D49 — a âncora em V, ao girar (C ↔ B, 55 ↔ 48 colunas)', () 
     await rerender(elementoV(c))
     __medir('view-leitor', { y: 300, width: larguraB, height: 3000 })
     await assentar(50)
+    // o giro É uma mudança de desenho: V pede a rolagem — e o pedido é o topo, não o corpo (sem esta linha, V sem
+    // âncora nenhuma passava aqui por não pedir nada)
+    expect(__rolagens().length, 'V não ancorou o giro').toBeGreaterThan(0)
     expect(__rolagens().every((y) => y === 0), JSON.stringify(__rolagens())).toBe(true)
   })
 })
