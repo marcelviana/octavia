@@ -1,0 +1,24 @@
+$ node scripts/icones.mjs <cópia: sem-divisa>
+  ACUSADO sem-divisa.ts [nome] falta no mapa: "divisa" (§6.4)
+  ACUSADO sem-divisa.ts [QL] divisa · aberta · 20: "divisa" não tem o estado 'normal' que a folha desenha
+  ACUSADO sem-divisa.ts [QL] divisa · recolhida · 20: "divisa" não tem o estado 'ativo' que a folha desenha
+  ACUSADO sem-divisa.ts [QL] divisa · aberta · 24: "divisa" não tem o estado 'normal' que a folha desenha
+  acusações: 27 · avisos: 0
+exit=1
+
+$ node scripts/icones.mjs <cópia: fora-do-catalogo>
+  ACUSADO fora-do-catalogo.ts [nome] sobra no mapa: "seta-dupla" (não está na §6.4)
+  ACUSADO fora-do-catalogo.ts [desenho] 'normal' de "seta-dupla" não está no anexo D: d M6 9l6-6 6 6M6 21l6-6 6 6
+  acusações: 2 · avisos: 0
+exit=1
+
+$ node scripts/icones.mjs <cópia: divisa-trocada>
+  ACUSADO divisa-trocada.ts [QL] divisa · aberta · 20: "divisa" normal @20 ≠ folha
+  ACUSADO divisa-trocada.ts [QL] divisa · recolhida · 20: "divisa" ativo @20 ≠ folha
+  ACUSADO divisa-trocada.ts [QL] divisa · aberta · 24: "divisa" normal @24 ≠ folha
+  ACUSADO divisa-trocada.ts [QL] divisa · recolhida · 24: "divisa" ativo @24 ≠ folha
+  acusações: 26 · avisos: 0
+exit=1
+
+$ node scripts/icones.mjs ../../packages/identidade/src/icones.ts   # o mapa real
+  acusações: 0 · avisos: 0

@@ -95,6 +95,10 @@ zoom —, o **começo da linha lógica** que estava no topo volta ao topo, **a 3
 **rolando com a letra**, em **Manrope 16 × zoom ÷ 22**, entrelinha 1,55, sob a régua *notas da música* (mono 12) e fechadas
 por um fio `line`; 8 entre parágrafos, 24 antes da letra. Quebram pela mesma função (R1). **Música sem nota não mostra
 nada, nem a régua.** A nota **da posição** continua na barra de cima. *Aceite*: A-QL-17.
+*(QL-PR4, div. 1229: "quebram pela mesma função (R1)" é a REGRA R1 — cortar na palavra —, não o `quebrar` do core, que conta
+colunas de mono: as notas são Manrope, e a quebra pela palavra é a do texto de UI da plataforma, como a folha escreve
+(*"uma linha longa quebra pela palavra, como qualquer texto de UI"*). A régua: a de V, 48 em todo zoom — QL-D53, QL-E3.
+Só no corpo de TEXTO (a Letra, a Cifra, a Tab): o arquivo e os placeholders não têm a rolagem do corpo — div. 1230.)*
 
 **QL-R15 — Recolher e abrir** `[QL-D30; QL-D31]`. **Abertas por padrão**; um toque na régua (**48 de altura**) recolhe ou
 abre. A **divisa** de 20 em `muted`, na ponta direita da régua, mostra o estado (aberta para cima, recolhida para baixo). O
@@ -154,7 +158,7 @@ nativas** (regra 36), e o Tab repousa com o release e volta a ele no fim de todo
 | A-QL-9 | **G-N3** e **G-par** verdes com o texto lógico; o G-par do core sem mudança | `g-n3.mjs`; Vitest | — | QL-R19 |
 | A-QL-10 | o corpo em C e B pelas molduras: colunas, recuo de 2, o par sobre a sílaba, as tintas nos dois temas (> 4 dp = errata) | dumps de C e B; capturas | — | QL-R5, R10, R12 |
 | A-QL-11 | a Tab rola em toda faixa e zoom, 6 linhas intactas | dumps | — | QL-R8 |
-| A-QL-12 | **a âncora**: girar o tablet no meio de uma Letra longa, e um passo de zoom, põem o começo da linha lógica do topo a 32 da barra — *(QL-D50, aval da QL-PR3: medida de novo no AVD com o código final, a rolagem medida igual à prevista (±0,5 px) e a lógica esperada no topo nos três passos, `QL-PR3-anexos/README.md` §16.1; QL-D49: **em V também, ao girar**, na PR-4)* | dumps antes/depois; a rolagem medida (`uiautomator events`) contra a prevista | **julga no Tab** (PR-3) | QL-R13 |
+| A-QL-12 | **a âncora**: girar o tablet no meio de uma Letra longa, e um passo de zoom, põem o começo da linha lógica do topo a 32 da barra — *(QL-D50, aval da QL-PR3: medida de novo no AVD com o código final, a rolagem medida igual à prevista (±0,5 px) e a lógica esperada no topo nos três passos, `QL-PR3-anexos/README.md` §16.1; QL-D49: **em V também, ao girar**, na PR-4)* *(QL-PR4: a conta soma o que está acima do corpo — as notas no palco, os *Detalhes* de V em B —, e com a marca ainda acima do corpo, ou nada rolado, o topo (QL-D52); medida nos dois aparelhos com as notas abertas e recolhidas e em V, `QL-PR4-anexos/README.md` §4)* | dumps antes/depois; a rolagem medida (`uiautomator events`) contra a prevista | **julga no Tab** (PR-3) | QL-R13 |
 | A-QL-13 | **o tablet em pé, no zoom padrão** — a letra quebrada se lê no palco? | o executor escolhe as músicas **pelo comprimento das linhas, sem ler o texto**, e diz quais pelo id8 | **julga** (PR-3 e encerramento) | QL-D27 (1) |
 | A-QL-14 | **o tablet deitado, no zoom 40** | idem | **julga** (PR-3 e encerramento) | QL-D27 (2) |
 | A-QL-15 | **uma das 11 Letras que quebram em V em C** | idem | **julga** (PR-3 e encerramento) | QL-D27 (3) |
@@ -198,6 +202,10 @@ até lá o corpo aparece como hoje; um teste prova que o palco e V não caem com
 (`QL-PR2-anexos/instrumentos/custo.ts`) e os mesmos quatro números de colunas (80, 48, 26, 14).)*
 
 ### PR-4 — as notas no palco
+
+*(**QL-D54** `[Marcel, 2026-10-09]`, a QL-PR4 parada no julgamento do toque: as bordas de 15 % do palco ficam por cima da
+régua das notas — o toque na divisa avança a música. **Parar e redesenhar**: a navegação por ícone se decide antes, num
+bloco com desenho; a PR-4 volta depois, com o A-QL-19 e o "antes" do Tab. `QL-PR4-anexos/README.md`.)*
 
 *(Aval da QL-PR3 — a PR-4 ganha dois itens:* **(1)** *a **âncora em V** (QL-D49): ao girar (C ↔ B, 55 ↔ 48 colunas), a primeira
 linha lógica visível vai para o topo, a 32 do começo do corpo, sem sinal; em V em B, contada a partir do começo do corpo

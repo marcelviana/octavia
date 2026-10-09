@@ -1,0 +1,7 @@
+2026-10-09 16:30:04
+bundle da árvore da main ( 7446626 B)
+  grep -c 'localhost:8788': 1
+  grep -c 'octavia.rocks': 0
+  grep -c 'notas-regua': 0
+  grep -c 'octavia:palco:notas-recolhidas': 0
+  grep -c 'logicaNaMarca': 0

@@ -504,3 +504,17 @@ geometria: é a mesma conta dos dois lados, para o leitor chegar a `n`. O G-par 
   `node_modules` deixa (div. 1221). O Metro diz *"unsupported debugging client"* no console e segue.
 - **O anel do logcat do Tab (5 MiB) gira numa rodada longa** (div. 1223): a contagem de quedas se completa pelo `dropbox` do Tab
   (`dumpsys dropbox | grep <data>`: `data_app_crash`, `data_app_native_crash`, `SYSTEM_TOMBSTONE`), que cobre a sessão inteira.
+
+## As notas no palco (QL-PR4)
+
+- **O mock sobe ANTES da cadeia** (div. 1236): a `cadeia.sh` só refaz os túneis; quem sobe o mock é o arnês, em alguns
+  estados. Sem o mock de pé, a primeira abertura do app (com o cache já fora pela receita) vê *"sem conexão"* — nenhum pedido
+  sai, mas a base começa errada. `aceite.py servidor <porta> normal <setlists> <content>` primeiro, conferido por `curl`.
+- **O começo do corpo** (a âncora com as notas, `QL-PR4-anexos/instrumentos/ancora4.ts`): com a rolagem no topo, o topo do
+  `corpo` menos o da rolagem menos 72 px no palco; **em V em B, o `y` do `view-leitor` + 2,25 px** — a borda de 1 dp não é
+  inteira em px, e o topo do `corpo` no dump a arredonda (div. 1238).
+- **O S1e do Tab depois do avião** (div. 1239): o Wi-Fi do Tab pode não ter voltado quando o roteiro captura; e o S1e isolado
+  mostra a hora do último sync (*"há N min"*). Refazer pelo caminho do Tab, `S1 S1e`, com o `ping` respondendo antes.
+- **As bordas de 15 % ficam por cima das notas** (div. 1233): um toque de arnês na régua pelo centro do nó não as encontra;
+  o dedo nas pontas, sim.
+

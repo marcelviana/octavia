@@ -1,0 +1,22 @@
+$ git diff --stat origin/main HEAD -- app components lib public styles middleware.ts next.config.* tailwind.config.*
+(vazio = nenhum arquivo do site tocado)
+
+$ git diff --stat origin/main HEAD -- packages/identidade
+ packages/identidade/src/icones.ts           | 12 +++++++++++-
+ packages/identidade/test/igualdade.test.ts  | 15 +++++++++++++--
+ packages/identidade/test/linha-de-base.json | 21 +++++++++++++++++++++
+ 3 files changed, 45 insertions(+), 3 deletions(-)
+
+$ git grep -n "divisa" -- app components lib   # quem no site pede a divisa
+exit=1 (1 = ninguém)
+
+$ git grep -nE "Record<NomeIcone|in NomeIcone|keyof typeof desenhos|nomesIcones" -- app components lib   # mapa exaustivo por nome no site
+exit=1
+
+$ node packages/identidade/scripts/gerar-css.mjs (para um arquivo à parte) e sha256 contra o commitado
+gerar-css.mjs
+$ shasum -a 256 app/styles/identidade.css   # antes
+1857944a436b5e3c6ab269011355d94cb317b9de8e3a0557f43fa21c7eb984c9  app/styles/identidade.css
+$ pnpm exec tsx packages/identidade/scripts/gerar-css.mjs && shasum -a 256 app/styles/identidade.css && git diff --exit-code app/styles/identidade.css
+1857944a436b5e3c6ab269011355d94cb317b9de8e3a0557f43fa21c7eb984c9  app/styles/identidade.css
+git diff exit=0 (0 = o CSS do site byte a byte igual)

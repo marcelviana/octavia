@@ -1,0 +1,22 @@
+$ sh scripts/gates-web/g-back.sh origin/main HEAD
+## (iii) declaração órfã (gback: de arquivo que não mudou)
+  ✓ nenhuma
+
+G-back: PASSA
+$ sh scripts/gates-web/g-palco.sh
+
+G-palco: PASSA — 0 ocorrências
+$ (cd docs/ux/DESIGN-I1 && shasum -a 256 -c SHA256SUMS) | tail -1
+14
+$ node scripts/gates-web/g-tok.mjs
+  arquivos: 133 · literais de identidade acusados: 0 · toasts: 0 · imports de ui: 0 · textos examinados: 33 · isentos de inglês (scripts/gates-web/g-tok-sem-ingles.txt): 1 · vocabulário: 133 · isenções: 9 · strings de .ts examinadas (div. 828): 490 · frases isentas (scripts/gates-web/g-tok-frases-isentas.txt): 5 de 5 entradas
+
+G-tok: PASSA
+$ node scripts/gates-web/g-tok-cobertura.mjs
+
+G-tok (cobertura): PASSA
+$ vitest css.test
+      Tests  4 passed (4)
+$ node scripts/gates-web/g-faixa-veredito.mjs tests/gates-web/medicoes
+
+G-faixa: PASSA

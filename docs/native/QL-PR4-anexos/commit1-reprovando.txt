@@ -1,0 +1,31 @@
+$ git rev-parse HEAD  # a main, com os testes do commit 1 por cima (sem o código)
+4078c6474f83f2e0b1536a11ce528e32ac0f06a7
+$ npx vitest run apps/native/test/notas-palco.test.tsx apps/native/test/notas-reabrir.test.tsx packages/identidade/test/igualdade.test.ts apps/native/test/gates.test.ts
+ FAIL   native-tela  apps/native/test/notas-palco.test.tsx [ apps/native/test/notas-palco.test.tsx ]
+Error: Failed to resolve import "../src/preferencias" from "apps/native/test/notas-palco.test.tsx". Does the file exist?
+ FAIL   native-tela  apps/native/test/notas-reabrir.test.tsx [ apps/native/test/notas-reabrir.test.tsx ]
+Error: Failed to resolve import "../src/preferencias" from "apps/native/test/notas-reabrir.test.tsx". Does the file exist?
+ FAIL   identidade  packages/identidade/test/igualdade.test.ts > pacote ≡ linha de base (em dp) > ícones: os 43 da linha de base com os seis pares do N4 e o do QL aplicados — 46 nomes, e nenhum visto (div. 588, decisão (b))
+AssertionError: expected { 'auto-scroll': { …(3) }, …(44) } to strictly equal { 'auto-scroll': { …(3) }, …(45) }
+ FAIL   native  apps/native/test/gates.test.ts > gate:icones — o mapa contra as fontes congeladas > o mapa real PASSA — exit 0, zero acusações
+AssertionError: 
+ FAIL   native  apps/native/test/gates.test.ts > gate:icones — o mapa contra as fontes congeladas > a divisa (QL-D31): 42 registros, 8 células da amostra e 18 molduras de notas cobradas, zero acusações
+AssertionError: 
+ FAIL   native  apps/native/test/gates.test.ts > gate:icones — o mapa contra as fontes congeladas > PENDENTES vazia: zero avisos, 6/6 nomes da tela 2 cobrados, e o gate passa
+AssertionError: 
+ Test Files  4 failed (4)
+      Tests  4 failed | 43 passed (47)
+
+$ (cd apps/native && node scripts/icones.mjs ../../packages/identidade/src/icones.ts); echo exit=$?
+  §6.4: 34 linhas → 33 nomes distintos, + 4 fora do catálogo + 6 da tela 2 + 2 do N4 + 1 do QL = 46 esperados
+  anexo D: 34 registros (V1) + 5 (DESIGN-N2, E17) + 2 (DESIGN-N4, N4-D76) + 1 (DESIGN-QL, QL-D31) = 42 registros · 68 elementos distintos no do V1
+  DESIGN-N4: 7/7 linhas P-I achadas · 49 células cobradas · trocas em par: 4 (12 elementos velhos cobrados ausentes)
+  pares do N4: em20 4 (DESIGN-V1/telas.html · tab@20 de quatro cordas (§6.3) → P-I11 em 20, traço 1,8) · traço em 24/28: markup da folha: 1,8 em 24 e 28 → TRACO da família (1,75 · 2)
+  DESIGN-QL (QL-D31): a divisa — 8 células da amostra cobradas · 18 molduras de notas, cada uma com a divisa no estado dela
+  tela 2 (E17): 6/6 nomes já no mapa e cobrados · 0 declarados pendentes
+  mapa: 45 nomes · 96 elementos distintos · 45 com 'normal'
+  hex cravado: 0 · tinta por token: 6
+  §6.3 → T1 (N4-D69): tab em20 3 linhas · normal 3 linhas · a tab@20 de quatro cordas do telas.html (o velho do par): achada
+  fora do catálogo: 4/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  acusações: 27 · avisos: 0
+exit=1

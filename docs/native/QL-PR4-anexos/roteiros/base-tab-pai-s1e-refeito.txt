@@ -1,0 +1,4 @@
+17:03:48 mock modo=500-pagina-1 vazio=False
+QL4B-S1-S1e-falha-com-cache-tab-pai mCurrentRotation=ROTATION_90 png=270451 xml=44885 cc9a65c8ea39
+17:04:13 mock modo=normal vazio=False
+capturas=1 falhas=0

@@ -1,0 +1,160 @@
+== medidas 15:47:58
+15:48:33 toque 'song-1' @ 658,580 (emulator-5554)
+   [C] notas (o bloco) [32.0,112.0][1105.8,275.6] 1073.8 × 163.6
+   [C] a régua (o alvo) [32.0,112.0][1105.8,160.0] 1073.8 × 48.0 · content-desc='notas da música'
+      TextView         [32.0,126.7][165.3,144.9] 133.3 × 18.2
+      ViewGroup        [177.3,135.6][1073.8,136.4] 896.4 × 0.9
+      SvgView          [1085.8,126.2][1105.8,146.2] 20.0 × 20.0
+      GroupView        [1090.2,133.3][1101.3,139.1] 11.1 × 5.8
+      PathView         [1090.2,133.3][1101.3,139.1] 11.1 × 5.8
+      parágrafo [32.0,164.0][1106.2,188.9] 1074.2 × 24.9 · 10 caracteres
+      parágrafo [32.0,196.9][1106.2,221.8] 1074.2 × 24.9 · 60 caracteres
+      parágrafo [32.0,229.8][1106.2,254.7] 1074.2 × 24.9 · 90 caracteres
+   [C] o corpo começa 179.6 dp abaixo do respiro (o bloco + 24 − 8)
+15:49:21 toque 'song-1' @ 800,580 (emulator-5554)
+   [B] notas (o bloco) [32.0,136.0][679.1,324.4] 647.1 × 188.4
+   [B] a régua (o alvo) [32.0,136.0][679.1,184.0] 647.1 × 48.0 · content-desc='notas da música'
+      TextView         [32.0,150.7][165.3,168.9] 133.3 × 18.2
+      ViewGroup        [177.3,159.6][647.1,160.4] 469.8 × 0.9
+      SvgView          [659.1,150.2][679.1,170.2] 20.0 × 20.0
+      GroupView        [663.6,157.3][674.7,163.1] 11.1 × 5.8
+      PathView         [663.6,157.3][674.7,163.1] 11.1 × 5.8
+      parágrafo [32.0,188.0][679.1,212.9] 647.1 × 24.9 · 10 caracteres
+      parágrafo [32.0,220.9][679.1,245.8] 647.1 × 24.9 · 60 caracteres
+      parágrafo [32.0,253.8][679.1,303.6] 647.1 × 49.8 · 90 caracteres
+   [B] o corpo começa 204.4 dp abaixo do respiro (o bloco + 24 − 8)
+== notas 15:49:35
+15:50:08 toque 'song-1' @ 658,580 (emulator-5554)
+QL4Q-S3-notas-abertas-escuro-avd-pai mCurrentRotation=ROTATION_0 png=253886 xml=29178 1e22fa702bfe
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 0 continuações ✓
+15:50:29 toque 'notas-regua' @ 1280,306 (emulator-5554)
+QL4Q-S3-notas-recolhidas-escuro-avd-pai mCurrentRotation=ROTATION_0 png=238088 xml=27715 bd2857d6d344
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 0 continuações ✓
+15:50:43 toque 'tema' @ 682,1358 (emulator-5554)
+QL4Q-S3-notas-recolhidas-claro-avd-pai mCurrentRotation=ROTATION_0 png=238399 xml=27389 ddb8db5aa08f
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 0 continuações ✓
+15:50:56 toque 'notas-regua' @ 1280,306 (emulator-5554)
+QL4Q-S3-notas-abertas-claro-avd-pai mCurrentRotation=ROTATION_0 png=252683 xml=28852 87c37131de55
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 0 continuações ✓
+15:51:10 toque 'tema' @ 682,1358 (emulator-5554)
+15:51:14 toque 'zoom-mais' @ 497,1358 (emulator-5554)
+15:51:18 toque 'zoom-mais' @ 497,1358 (emulator-5554)
+15:51:22 toque 'zoom-mais' @ 497,1358 (emulator-5554)
+QL4Q-S3-notas-longa-z40-escuro-avd-pai mCurrentRotation=ROTATION_0 png=221367 xml=29214 d7c87f3d0d7a
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 6 continuações ✓
+15:52:05 toque 'song-1' @ 800,580 (emulator-5554)
+QL4Q-S3-notas-abertas-escuro-avd-ret mCurrentRotation=ROTATION_90 png=361469 xml=29190 a44dae5f5bf0
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 2 continuações ✓
+15:52:26 toque 'notas-regua' @ 800,360 (emulator-5554)
+QL4Q-S3-notas-recolhidas-escuro-avd-ret mCurrentRotation=ROTATION_90 png=346525 xml=27727 b9150f044351
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 2 continuações ✓
+15:52:40 toque 'tema' @ 682,2318 (emulator-5554)
+QL4Q-S3-notas-recolhidas-claro-avd-ret mCurrentRotation=ROTATION_90 png=348127 xml=27401 130a35b3a1d0
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 2 continuações ✓
+15:52:54 toque 'notas-regua' @ 800,360 (emulator-5554)
+QL4Q-S3-notas-abertas-claro-avd-ret mCurrentRotation=ROTATION_90 png=361497 xml=28864 5a4a521785ad
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 2 continuações ✓
+15:53:07 toque 'tema' @ 682,2318 (emulator-5554)
+15:53:11 toque 'zoom-mais' @ 497,2318 (emulator-5554)
+15:53:15 toque 'zoom-mais' @ 497,2318 (emulator-5554)
+15:53:19 toque 'zoom-mais' @ 497,2318 (emulator-5554)
+QL4Q-S3-notas-longa-z40-escuro-avd-ret mCurrentRotation=ROTATION_90 png=278892 xml=29399 ac39921240c1
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 36 continuações ✓
+== semnota 15:53:29
+15:54:03 toque 'song-2' @ 1902,580 (emulator-5554)
+   sem nota [pai]: nós das notas presentes: nenhum
+QL4Q-S3-sem-nota-avd-pai mCurrentRotation=ROTATION_0 png=187716 xml=25045 2c84a26d15c3
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1241 sha12=2355a509052d = referência · 0 continuações ✓
+15:54:54 toque 'song-2' @ 800,859 (emulator-5554)
+   sem nota [ret]: nós das notas presentes: nenhum
+QL4Q-S3-sem-nota-avd-ret mCurrentRotation=ROTATION_90 png=261336 xml=25051 4686fee93b7a
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=1241 sha12=2355a509052d = referência · 1 continuações ✓
+== avulso 15:55:11
+15:55:36 toque 'buscar' @ 2295,188 (emulator-5554)
+15:55:46 toque 'lib-campo' @ 1397,152 (emulator-5554)
+15:55:55 toque 'Ver “Lanterna da fixture”' @ 1280,797 (emulator-5554)
+15:56:04 toque 'view-tocar' pelo canto @ 2404,198
+   avulso: a barra diz AVULSA? True · as notas: True
+QL4Q-S3-avulso-notas-avd-pai mCurrentRotation=ROTATION_0 png=249111 xml=26516 80ef78886982
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 0 continuações ✓
+== reabrir 15:56:21
+15:56:53 toque 'song-1' @ 658,580 (emulator-5554)
+15:57:05 toque 'notas-regua' @ 1280,306 (emulator-5554)
+15:57:12 toque 'zoom-mais' @ 497,1358 (emulator-5554)
+15:57:16 toque 'zoom-mais' @ 497,1358 (emulator-5554)
+15:57:20 toque 'tema' @ 682,1358 (emulator-5554)
+QL4Q-S3-reabrir-antes-do-kill-avd-pai mCurrentRotation=ROTATION_0 png=246540 xml=27401 bf520f2d67c3
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 2 continuações ✓
+15:57:28 force-stop e abrir de novo (o ir_s1 do palco)
+15:57:58 toque 'song-1' @ 658,580 (emulator-5554)
+   depois de reabrir: régua presente · o texto das notas recolhido
+QL4Q-S3-reabrir-depois-avd-pai mCurrentRotation=ROTATION_0 png=238360 xml=27715 bd2857d6d344
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 0 continuações ✓
+15:58:20 toque 'notas-regua' @ 1280,306 (emulator-5554)
+QL4Q-S3-reabrir-aberta-de-novo-avd-pai mCurrentRotation=ROTATION_0 png=254137 xml=29178 1e22fa702bfe
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 0 continuações ✓
+== ancora 15:58:31
+15:59:00 toque 'song-3' @ 800,1138 (emulator-5554)
+15:59:21 toque 'zoom-mais' @ 497,1358 (emulator-5554)
+   o começo do corpo [B22, notas abertas]: 460 px (204.44 dp) · corpo [72, 784, 1512, 2209] · rolagem [0, 252, 1600, 2209]
+   o começo do corpo [C22, notas abertas]: 404 px (179.56 dp) · corpo [72, 674, 2382, 1249] · rolagem [0, 198, 2560, 1249]
+   o começo do corpo [C26, notas abertas]: 434 px (192.89 dp) · corpo [72, 704, 2480, 1249] · rolagem [0, 198, 2560, 1249]
+   o começo do corpo [B26, notas abertas]: 500 px (222.22 dp) · corpo [72, 824, 1524, 2209] · rolagem [0, 252, 1600, 2209]
+16:00:06 toque 'song-3' @ 800,1138 (emulator-5554)
+QL4Q-S3-ancora-abertas-antes-avd-ret mCurrentRotation=ROTATION_90 png=324638 xml=29193 6f7e77edb7f2
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 48 continuações ✓
+QL4Q-S3-ancora-abertas-giro-avd-pai mCurrentRotation=ROTATION_0 png=254431 xml=28905 9d4e5660d60c
+   corpo-logico: o desenho é o próprio texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 0 continuações ✓
+16:00:54 toque 'zoom-mais' @ 497,1358 (emulator-5554)
+QL4Q-S3-ancora-abertas-zoom-avd-pai mCurrentRotation=ROTATION_0 png=272786 xml=29001 992a2276fd92
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 16 continuações ✓
+QL4Q-S3-ancora-abertas-volta-avd-ret mCurrentRotation=ROTATION_90 png=366608 xml=29295 5fe68dd71ef4
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 65 continuações ✓
+16:01:23 toque 'auto-scroll' @ 128,2318 (emulator-5554)
+16:01:27 toque 'auto-scroll' @ 128,2318 (emulator-5554)
+16:02:03 toque 'song-3' @ 800,1138 (emulator-5554)
+QL4Q-S3-ancora-nas-notas-antes-avd-ret mCurrentRotation=ROTATION_90 png=345461 xml=32976 2c26d29541cb
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 48 continuações ✓
+QL4Q-S3-ancora-nas-notas-giro-avd-pai mCurrentRotation=ROTATION_0 png=255377 xml=32688 4b2511fcb702
+   corpo-logico: o desenho é o próprio texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 0 continuações ✓
+16:03:18 toque 'song-3' @ 800,1138 (emulator-5554)
+16:03:30 toque 'notas-regua' @ 800,360 (emulator-5554)
+16:03:45 toque 'zoom-mais' @ 497,1358 (emulator-5554)
+   o começo do corpo [B22, notas recolhidas]: 164 px (72.89 dp) · corpo [72, 488, 1512, 2209] · rolagem [0, 252, 1600, 2209]
+   o começo do corpo [C22, notas recolhidas]: 164 px (72.89 dp) · corpo [72, 434, 2382, 1249] · rolagem [0, 198, 2560, 1249]
+   o começo do corpo [C26, notas recolhidas]: 164 px (72.89 dp) · corpo [72, 434, 2480, 1249] · rolagem [0, 198, 2560, 1249]
+   o começo do corpo [B26, notas recolhidas]: 164 px (72.89 dp) · corpo [72, 488, 1524, 2209] · rolagem [0, 252, 1600, 2209]
+16:04:23 toque 'song-3' @ 800,1138 (emulator-5554)
+QL4Q-S3-ancora-recolhidas-antes-avd-ret mCurrentRotation=ROTATION_90 png=333251 xml=29193 2babd6cb3c37
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 48 continuações ✓
+QL4Q-S3-ancora-recolhidas-giro-avd-pai mCurrentRotation=ROTATION_0 png=264334 xml=28905 2d332ef53481
+   corpo-logico: o desenho é o próprio texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 0 continuações ✓
+16:05:12 toque 'zoom-mais' @ 497,1358 (emulator-5554)
+QL4Q-S3-ancora-recolhidas-zoom-avd-pai mCurrentRotation=ROTATION_0 png=273971 xml=29001 dd18b2290c16
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 16 continuações ✓
+QL4Q-S3-ancora-recolhidas-volta-avd-ret mCurrentRotation=ROTATION_90 png=379113 xml=29295 db0eebae4e2e
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 65 continuações ✓
+16:05:42 toque 'auto-scroll' @ 128,2318 (emulator-5554)
+16:05:46 toque 'auto-scroll' @ 128,2318 (emulator-5554)
+== ancorav 16:05:49
+16:06:09 toque 'buscar' @ 1335,281 (emulator-5554)
+16:06:18 toque 'lib-campo' @ 917,152 (emulator-5554)
+16:06:27 toque 'Ver “Letra longa da fixture”' @ 800,590 (emulator-5554)
+   V: o começo do corpo em B 461 px (204.89 dp; corpo [72, 785, 1512, 2425] · rolagem [0, 252, 1600, 2425]) · em C 0 px
+16:07:00 toque 'buscar' @ 2295,188 (emulator-5554)
+16:07:09 toque 'lib-campo' @ 1397,152 (emulator-5554)
+16:07:17 toque 'Ver “Letra longa da fixture”' @ 1280,590 (emulator-5554)
+QL4Q-V-ancora-antes-avd-pai mCurrentRotation=ROTATION_0 png=314582 xml=25597 9c99362979f2
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 32 continuações ✓
+QL4Q-V-ancora-giro-B-avd-ret mCurrentRotation=ROTATION_90 png=340564 xml=23176 b8ddd0fb09d1
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 48 continuações ✓
+QL4Q-V-ancora-volta-C-avd-pai mCurrentRotation=ROTATION_0 png=314329 xml=25597 9c99362979f2
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 32 continuações ✓
+16:08:41 toque 'buscar' @ 1335,281 (emulator-5554)
+16:08:49 toque 'lib-campo' @ 917,152 (emulator-5554)
+16:08:58 toque 'Ver “Letra longa da fixture”' @ 800,590 (emulator-5554)
+QL4Q-V-ancora-detalhes-antes-avd-ret mCurrentRotation=ROTATION_90 png=369580 xml=25368 2202717d9b1a
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 48 continuações ✓
+QL4Q-V-ancora-detalhes-giro-avd-pai mCurrentRotation=ROTATION_0 png=320014 xml=25597 f559cd657e00
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 32 continuações ✓
+capturas=31 falhas=0

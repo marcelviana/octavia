@@ -1,0 +1,7 @@
+2026-10-09 15:22:30
+bundle da árvore da PR ( 7467149 B)
+  grep -c 'localhost:8788': 1
+  grep -c 'octavia.rocks': 0
+  grep -c 'notas-regua': 1
+  grep -c 'octavia:palco:notas-recolhidas': 2
+  grep -c 'logicaNaMarca': 4

@@ -82,6 +82,8 @@ são a QL-D37; o congelamento é a QL-D38.
 | **QL-D37** | **As respostas da folha que viram regra:** a âncora põe o começo da linha lógica no topo, a 32 da barra, sem sinal de rearranjo; **só a Tab rola para o lado**; no escuro e no claro do palco só as tintas trocam (o par em `text`; nas notas, o texto em `text`, o rótulo em `muted` e o fio em `line`). Nas molduras com setlist, a nota da posição aparece na barra de cima, ao lado das notas da música no corpo, com o texto inventado. |
 | **QL-D38** | **Congela-se o arquivo único offline**, como `DESIGN-QL/telas.html`, com sha. Os geradores do designer ficam fora do repositório. |
 | **QL-D39** | `[Marcel, 2026-10-08]` — o aval do congelamento, a Q1 do §8. **O estado recolhido das notas é lembrado de verdade** — gravado no aparelho; ao reabrir o app ou o palco, volta como estava. **O zoom e o tema seguem como hoje** (estado do palco, T1-R31 e T1-R32 intactos). É a primeira preferência do app gravada no aparelho fora do Firebase: a PR-4 declara a chave, prova com teste (gravar, reabrir, ler) e declara a mudança nos gates que a contam. *(Fica ao lado da QL-D33, cujo texto não muda.)* |
+| **QL-D52** | `[Marcel, 2026-10-09]` — a QL-PR4, a pergunta da âncora com algo acima do corpo (a folha não diz). **Quando o giro ou o zoom acontece com a marca de 32 ainda DENTRO das notas** (no palco) — **ou dentro dos *Detalhes*** (em V em B) —, **ou com nada rolado, a rolagem volta ao topo**: as notas (ou os *Detalhes*) começam do topo de novo. Fora disso, a conta é a da QL-D37 somada a altura do que está acima do corpo. *(`QL-PR4-anexos/README.md` §1.)* |
+| **QL-D53** | `[Marcel, 2026-10-09]` — a QL-PR4, a régua das notas no palco. **Vale a régua de V** (o rótulo com `tracking.display`, nenhum token novo) **e 48 de altura em todo zoom**, como a QL-D30 escreve. A folha desenhou o rótulo com 0,2 em (144 dp contra 133,2) e, no zoom 40, a régua com 62 (herdou a entrelinha do corpo): errata de medida **QL-E3** (§6). |
 
 ### 3.1 As regras do corte — o resumo da seção 1 da folha `[lido: o texto renderizado]`
 
@@ -238,6 +240,13 @@ que não parte **nem um acorde nem uma palavra** — e a 22 partiria *conta*. O 
 
 **QL-E2 — o caractere e as colunas fora do 22, medidos** (QL-PR1; QL-D34). **Medida.** A errata de ponteiro do §4: vale a
 conta da folha em C e B; A segue estimada até o N5. *(A próxima é a QL-E3.)*
+
+**QL-E3 — a régua das notas: a de V, 48 em todo zoom** (QL-PR4; **QL-D53**). **Medida.** As molduras `QL-*-S3-notas-*`
+desenham o rótulo *notas da música* em mono 12 com espaçamento de 0,2 em (2,4 dp; o rótulo mede **144 dp**) e, nas
+`*-notas-longa-*` (zoom 40), a régua com **62** de altura — o rótulo herda a entrelinha do corpo no zoom 40. Vale a régua de
+V, com o espaçamento `tracking.display` (0,14; o rótulo mede **133,3 dp** no dump, AVD e Tab — Δ −10,7) e a altura do alvo,
+**48 em todo zoom** (Δ −14 no zoom 40). Nenhuma moldura se edita; a errata prevalece. `QL-PR4-anexos/README.md` §2.
+*(A próxima é a QL-E4.)*
 
 **O que não é errata**: as colunas fora do 22 (O1) ficam com as **duas** contas (QL-D34), sem vencedor até a PR-1 medir; o
 respiro em A (O2) fica o do brief (QL-D35); a O6 da folha não procede (div. 1197).

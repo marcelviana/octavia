@@ -1,0 +1,11 @@
+$ # CN: o VisualizacaoScreen.tsx da main (sem âncora), o resto da PR — com o 4º caso fortalecido
+ FAIL   native-tela  apps/native/test/notas-palco.test.tsx > QL-D49 — a âncora em V, ao girar (C ↔ B, 55 ↔ 48 colunas) > C → B: a lógica da marca em 55 colunas volta à marca em 48, contada a partir do começo do corpo na rolagem com os Detalhes
+AssertionError: V não pediu rolagem nenhuma: expected 0 to be greater than 0
+ FAIL   native-tela  apps/native/test/notas-palco.test.tsx > QL-D49 — a âncora em V, ao girar (C ↔ B, 55 ↔ 48 colunas) > B → C: a lógica da marca (contada depois dos Detalhes) volta à marca no leitor de C, que começa no topo
+AssertionError: expected 0 to be greater than 0
+ FAIL   native-tela  apps/native/test/notas-palco.test.tsx > QL-D49 — a âncora em V, ao girar (C ↔ B, 55 ↔ 48 colunas) > QL-D52 em V: com a marca nos Detalhes (B), o giro para C volta ao topo
+AssertionError: expected 0 to be greater than 0
+ FAIL   native-tela  apps/native/test/notas-palco.test.tsx > QL-D49 — a âncora em V, ao girar (C ↔ B, 55 ↔ 48 colunas) > abrir V sem rolar e girar para B: os Detalhes continuam à vista (o topo)
+AssertionError: V não ancorou o giro: expected 0 to be greater than 0
+ Test Files  1 failed (1)
+      Tests  4 failed | 28 skipped (32)

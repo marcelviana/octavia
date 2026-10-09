@@ -1,0 +1,42 @@
+$ pnpm exec tsx docs/native/QL-PR4-anexos/instrumentos/ancora4.ts docs/native/QL-PR4-anexos/eventos/QL4Q-ancora-abertas-tab
+a âncora no aparelho — QL4Q-ancora-abertas-tab-<passo>.txt · fator 2.25 px/dp · "Letra longa da fixture" (107 linhas lógicas)
+  antes    B 48 col · zoom 22 · início 460 px: ScrollY medido 6335 px (122 eventos) · na marca: a lógica 53
+  giro-C   C 80 col · zoom 22 · início 404 px: ScrollY medido 4394 px (1 eventos) · na marca: a lógica 53 · PREVISTO 4393.7 px (a lógica 53 a 32 do topo, o corpo começando 179.56 dp abaixo do respiro) → igual (Δ 0.3)
+  zoom-26  C 68 col · zoom 26 · início 434 px: ScrollY medido 5875 px (3 eventos) · na marca: a lógica 53 · PREVISTO 5874.5 px (a lógica 53 a 32 do topo, o corpo começando 192.89 dp abaixo do respiro) → igual (Δ 0.5)
+  volta-B  B 41 col · zoom 26 · início 500 px: ScrollY medido 8117 px (1 eventos) · na marca: a lógica 53 · PREVISTO 8116.7 px (a lógica 53 a 32 do topo, o corpo começando 222.22 dp abaixo do respiro) → igual (Δ 0.3)
+  auto     a rolagem automática: 91 eventos · de 8119 a 8598 px · o ponto ancorado 8117.0 px → parte dele e só desce ✓
+âncora: a rolagem medida é a prevista em todo passo ✓
+exit=0
+
+$ pnpm exec tsx docs/native/QL-PR4-anexos/instrumentos/ancora4.ts docs/native/QL-PR4-anexos/eventos/QL4Q-ancora-recolhidas-tab
+a âncora no aparelho — QL4Q-ancora-recolhidas-tab-<passo>.txt · fator 2.25 px/dp · "Letra longa da fixture" (107 linhas lógicas)
+  antes    B 48 col · zoom 22 · início 164 px: ScrollY medido 6349 px (125 eventos) · na marca: a lógica 56
+  giro-C   C 80 col · zoom 22 · início 164 px: ScrollY medido 4384 px (1 eventos) · na marca: a lógica 56 · PREVISTO 4383.9 px (a lógica 56 a 32 do topo, o corpo começando 72.89 dp abaixo do respiro) → igual (Δ 0.1)
+  zoom-26  C 68 col · zoom 26 · início 164 px: ScrollY medido 5967 px (2 eventos) · na marca: a lógica 56 · PREVISTO 5967.2 px (a lógica 56 a 32 do topo, o corpo começando 72.89 dp abaixo do respiro) → igual (Δ 0.2)
+  volta-B  B 41 col · zoom 26 · início 164 px: ScrollY medido 8143 px (1 eventos) · na marca: a lógica 56 · PREVISTO 8143.4 px (a lógica 56 a 32 do topo, o corpo começando 72.89 dp abaixo do respiro) → igual (Δ 0.4)
+  auto     a rolagem automática: 91 eventos · de 8159 a 8629 px · o ponto ancorado 8143.0 px → parte dele e só desce ✓
+âncora: a rolagem medida é a prevista em todo passo ✓
+exit=0
+
+$ pnpm exec tsx docs/native/QL-PR4-anexos/instrumentos/ancora4.ts docs/native/QL-PR4-anexos/eventos/QL4Q-ancora-nas-notas-tab
+a âncora no aparelho — QL4Q-ancora-nas-notas-tab-<passo>.txt · fator 2.25 px/dp · "Letra longa da fixture" (107 linhas lógicas)
+  antes    B 48 col · zoom 22 · início 460 px: ScrollY medido 219 px (41 eventos) · na marca: acima do corpo (o topo)
+  giro-C   C 80 col · zoom 22 · início 404 px: ScrollY medido 0 px (1 eventos) · na marca: acima do corpo (o topo) · PREVISTO 0.0 px (a marca acima do corpo (ou nada rolado) → o TOPO (QL-D52)) → igual (Δ 0.0)
+âncora: a rolagem medida é a prevista em todo passo ✓
+exit=0
+
+$ pnpm exec tsx docs/native/QL-PR4-anexos/instrumentos/ancora4.ts docs/native/QL-PR4-anexos/eventos/QL4Q-ancorav-tab
+a âncora no aparelho — QL4Q-ancorav-tab-<passo>.txt · fator 2.25 px/dp · "Letra longa da fixture" (107 linhas lógicas)
+  antes    C 55 col · zoom 22 · início 0 px: ScrollY medido 4583 px (143 eventos) · na marca: a lógica 46
+  giro-B   B 48 col · zoom 22 · início 461.25 px: ScrollY medido 5448 px (2 eventos) · na marca: a lógica 46 · PREVISTO 5448.4 px (a lógica 46 a 32 do topo, o corpo começando 205.00 dp abaixo do respiro) → igual (Δ 0.4)
+  volta-C  C 55 col · zoom 22 · início 0 px: ScrollY medido 4450 px (1 eventos) · na marca: a lógica 46 · PREVISTO 4450.1 px (a lógica 46 a 32 do topo, o corpo começando 0.00 dp abaixo do respiro) → igual (Δ 0.1)
+âncora: a rolagem medida é a prevista em todo passo ✓
+exit=0
+
+$ pnpm exec tsx docs/native/QL-PR4-anexos/instrumentos/ancora4.ts docs/native/QL-PR4-anexos/eventos/QL4Q-ancorav-detalhes-tab
+a âncora no aparelho — QL4Q-ancorav-detalhes-tab-<passo>.txt · fator 2.25 px/dp · "Letra longa da fixture" (107 linhas lógicas)
+  antes    B 48 col · zoom 22 · início 461.25 px: ScrollY medido 221 px (40 eventos) · na marca: acima do corpo (o topo)
+  giro-C   C 55 col · zoom 22 · início 0 px: ScrollY 0 (sem evento: a rolagem não se moveu) · na marca: acima do corpo (o topo) · PREVISTO 0.0 px (a marca acima do corpo (ou nada rolado) → o TOPO (QL-D52)) → igual (Δ 0.0)
+âncora: a rolagem medida é a prevista em todo passo ✓
+exit=0
+
