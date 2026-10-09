@@ -436,6 +436,8 @@ toolchain/aparato · **X** terceiros.
 
 ## 14. Perguntas ao Marcel
 
+→ **Respondidas no aval (§16): QL-D49 (V ancora, na PR-4) e QL-D50 (a âncora de novo no AVD, feita).** O texto abaixo fica como registro da pergunta.
+
 1. **V ancora?** (div. 1225) Hoje só o palco ancora. Em V o giro também troca as colunas (55 ↔ 48); em C o leitor é uma rolagem
    própria (a conta do palco valeria), em B ele divide a rolagem com os *Detalhes* (outra conta). Proposta: V ancorar só o
    corpo em C ↔ B pela mesma regra, numa PR seguinte, ou deixar como está.
@@ -455,6 +457,55 @@ toolchain/aparato · **X** terceiros.
 | agentes | **0** |
 | temporários | no scratchpad da sessão: as fixtures geradas, os bundles baixados, os logcats brutos, os eventos brutos; a árvore `../octavia-ql-pr3-main` removida |
 | perguntas ao Marcel nesta sessão | o avião × mock, a ida do Tab, o destravar, o extra do G-N3, a queda nativa, os quatro julgamentos |
+
+## 16. O aval — QL-D49…QL-D51 `[Marcel, 2026-10-09]`
+
+As duas perguntas do §14 respondidas, e uma decisão a mais:
+
+| # | decisão | o que mudou nesta PR |
+|---|---|---|
+| **QL-D49** | (pergunta 1, div. 1225) **V também ancora ao girar** (C ↔ B, 55 ↔ 48 colunas): a primeira linha lógica visível vai para o topo, a 32 do começo do corpo, sem sinal. **Entra na PR-4**, que já muda a conta da âncora por causa das notas acima do corpo. Em V em B, a âncora conta a partir do começo do corpo **dentro da rolagem que ele divide com os *Detalhes***. A PR-3 não muda. | `QL-REQUISITOS.md`: o A-QL-12 e o escopo da PR-4 |
+| **QL-D50** | (pergunta 2, div. 1226) **A âncora se mede de novo no AVD com o código final**, antes do merge: o giro C → B, o giro B → C e um passo de zoom, no meio da Letra longa, com o mock e o caminho do `APARATO.md`. A rolagem medida tem de bater com a prevista (±0,5 px) e a linha lógica do topo tem de ser a esperada nos três passos. | a medida do §16.1; o `ancora.ts` com o critério de ±0,5 px (div. 1228); `QL-REQUISITOS.md`: o A-QL-12 |
+| **QL-D51** | **O custo de `quebrar` no Hermes se mede de novo no release, no encerramento**, junto com as 100 + 100 aberturas frias (QL-D9). A fixture e as colunas (80, 48, 26, 14) são as mesmas, com mediana e máximo de 100 rodadas. O número desta PR (dev client, §9) fica como está. | `QL-REQUISITOS.md`: o escopo do encerramento |
+
+### 16.1 A âncora no AVD com o código final (QL-D50) `[medido: aval/]`
+
+O código da ponta da branch (`34bca23`; o de `apps/` e `packages/` é o de `0e83c2e`), o bundle servido conferido antes da
+abertura (`aval/bundle-servido.txt`: `localhost:8788` 1 · `octavia.rocks` 0 · `ANCORA_TENTATIVAS` presente). O AVD subido do
+`default_boot` com `-no-snapshot-save`; a receita do cache da sessão de audit (5 caminhos) guardada e tirada por nome antes
+do mock, e regravada md5 a md5 no fim; o rádio ligado só na rodada (div. 418), avião no repouso (`ping` → *Network is
+unreachable*). O roteiro: a Letra longa da fixture do QL em B, rolada até o meio com arrastos; o giro para C; um passo de zoom
+(22 → 26); o giro de volta a B; a rolagem automática. O instrumento é o do §4.5 (`instrumentos/ancora.ts`, agora com ±0,5 px),
+sobre os eventos gravados (`aval/eventos/`):
+
+| passo | colunas · zoom | a linha lógica esperada no topo | a medida | rolagem prevista | rolagem medida | Δ |
+|---|---|---|---|---|---|---|
+| antes | B 48 · 22 | — (a rolada a mão) | **61** (a linha visual 89) | — | 6778 px | — |
+| giro B → C | C 80 · 22 | **61** | **61** — o começo dela (a linha visual 61) | 4603,5 px | 4604 px | 0,5 |
+| zoom 22 → 26 | C 68 · 26 | **61** | **61** (a linha visual 70) | 6256,6 px | 6257 px | 0,4 |
+| giro C → B | B 41 · 26 | **61** | **61** (a linha visual 97) | 8704,8 px | 8705 px | 0,2 |
+| a rolagem automática | — | parte do ponto ancorado | de **8707** a 9063 px, só descendo (o ancorado: 8705) | — | — | — |
+
+**Os três passos batem** — `âncora: a rolagem medida é a prevista em todo passo ✓` (`aval/ancora-avd-final.txt`). As quatro
+capturas passaram pelo `corpo-logico.mjs` (o texto lógico igual à referência, `sha12 d2f9815ddf1f`; 48 · 0 · 16 · 65
+continuações) — `aval/dumps/`, com `SHA256SUMS.txt`. Rodado de novo sobre os eventos gravados com ±0,5 px, o AVD da 1ª medida
+e o Tab do §4.5 também passam.
+
+**As quedas** (regra 36; `aval/quedas.txt`): **Java 0 · nativa 0 · tombstones 0**, em 2 aberturas. **`octavia.rocks`**: 0 no
+bundle e 0 no logcat; as 4 linhas `api` todas `path=/api/…` ao mock (`aval/contagem.txt`). **O AVD**: o fim igual ao lido
+(`aval/avd-antes.txt`, `aval/avd-depois.txt`: `diff` vazio, o `ram.bin` de 2026-09-24 intacto). **O Tab não foi tocado**
+(todo `adb` desta rodada com `-s emulator-5554`).
+
+### 16.2 Divergências do aval — 1227 e 1228
+
+A última usada era a **1226** (§13) `[medido: git grep -nE '^\| \*\*(1[12][0-9]{2})\*\*' -- docs → máximo 1226]`.
+
+| div. | origem | o quê | destino |
+|---|---|---|---|
+| **1227** | T | O `ql.py` abria o arquivo de eventos da âncora antes de o diretório de saída existir: a 1ª corrida da QL-D50, num diretório novo, caiu com `No such file or directory` antes de qualquer captura (nas corridas anteriores o diretório já existia) | o `ql.py` cria a saída ao começar; a medida refeita na mesma subida do AVD |
+| **1228** | T | O critério do `ancora.ts` aceitava até 1,5 px de diferença; a QL-D50 pede ±0,5 px — o instrumento media com folga maior que a decisão | o `ancora.ts` com ±0,5 px; rodado de novo sobre os eventos gravados (a QL-D50, o AVD e o Tab do §4.5): todos passam |
+
+**Contagem** `[medido: a coluna]`: **2 — T 2**. **A próxima livre é a 1229.**
 
 ---
 

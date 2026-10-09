@@ -71,6 +71,7 @@ def node(*a):
 class QL(Vz.Visualizacao):
     def __init__(self, s, saida, prefixo, ap):
         super().__init__(s, saida, prefixo, f"{ap}-pai")
+        os.makedirs(saida, exist_ok=True)  # o arquivo de eventos da âncora abre antes da 1ª captura (o aval, QL-D50)
         self.ap = ap
         self.refs = os.path.join(R.SCR, "refs")
         os.makedirs(self.refs, exist_ok=True)

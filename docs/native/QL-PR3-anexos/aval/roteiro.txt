@@ -1,0 +1,14 @@
+== ancora 14:37:15
+14:37:36 toque 'song-3' @ 800,1138 (emulator-5554)
+QL3F-S3-ancora-antes-avd-ret mCurrentRotation=ROTATION_90 png=330197 xml=29193 609e3411aa56
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 48 continuações ✓
+QL3F-S3-ancora-giro-avd-pai mCurrentRotation=ROTATION_0 png=248517 xml=28905 19a5765739ef
+   corpo-logico: o desenho é o próprio texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 0 continuações ✓
+14:38:22 toque 'zoom-mais' @ 497,1358 (emulator-5554)
+QL3F-S3-ancora-zoom-avd-pai mCurrentRotation=ROTATION_0 png=275360 xml=29001 d0456d0a8b2d
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 16 continuações ✓
+QL3F-S3-ancora-volta-avd-ret mCurrentRotation=ROTATION_90 png=351804 xml=29295 51436a9e58ce
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 65 continuações ✓
+14:38:51 toque 'auto-scroll' @ 128,2318 (emulator-5554)
+14:38:55 toque 'auto-scroll' @ 128,2318 (emulator-5554)
+capturas=4 falhas=0

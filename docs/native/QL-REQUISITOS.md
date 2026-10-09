@@ -154,7 +154,7 @@ nativas** (regra 36), e o Tab repousa com o release e volta a ele no fim de todo
 | A-QL-9 | **G-N3** e **G-par** verdes com o texto lógico; o G-par do core sem mudança | `g-n3.mjs`; Vitest | — | QL-R19 |
 | A-QL-10 | o corpo em C e B pelas molduras: colunas, recuo de 2, o par sobre a sílaba, as tintas nos dois temas (> 4 dp = errata) | dumps de C e B; capturas | — | QL-R5, R10, R12 |
 | A-QL-11 | a Tab rola em toda faixa e zoom, 6 linhas intactas | dumps | — | QL-R8 |
-| A-QL-12 | **a âncora**: girar o tablet no meio de uma Letra longa, e um passo de zoom, põem o começo da linha lógica do topo a 32 da barra | dumps antes/depois | **julga no Tab** (PR-3) | QL-R13 |
+| A-QL-12 | **a âncora**: girar o tablet no meio de uma Letra longa, e um passo de zoom, põem o começo da linha lógica do topo a 32 da barra — *(QL-D50, aval da QL-PR3: medida de novo no AVD com o código final, a rolagem medida igual à prevista (±0,5 px) e a lógica esperada no topo nos três passos, `QL-PR3-anexos/README.md` §16.1; QL-D49: **em V também, ao girar**, na PR-4)* | dumps antes/depois; a rolagem medida (`uiautomator events`) contra a prevista | **julga no Tab** (PR-3) | QL-R13 |
 | A-QL-13 | **o tablet em pé, no zoom padrão** — a letra quebrada se lê no palco? | o executor escolhe as músicas **pelo comprimento das linhas, sem ler o texto**, e diz quais pelo id8 | **julga** (PR-3 e encerramento) | QL-D27 (1) |
 | A-QL-14 | **o tablet deitado, no zoom 40** | idem | **julga** (PR-3 e encerramento) | QL-D27 (2) |
 | A-QL-15 | **uma das 11 Letras que quebram em V em C** | idem | **julga** (PR-3 e encerramento) | QL-D27 (3) |
@@ -199,6 +199,12 @@ até lá o corpo aparece como hoje; um teste prova que o palco e V não caem com
 
 ### PR-4 — as notas no palco
 
+*(Aval da QL-PR3 — a PR-4 ganha dois itens:* **(1)** *a **âncora em V** (QL-D49): ao girar (C ↔ B, 55 ↔ 48 colunas), a primeira
+linha lógica visível vai para o topo, a 32 do começo do corpo, sem sinal; em V em B, contada a partir do começo do corpo
+dentro da rolagem que ele divide com os Detalhes;* **(2)** *a **conta da âncora com as notas acima do corpo**: o `yDaLogica`
+da QL-PR3 supõe o corpo começando no respiro de 32 — com as notas no topo do corpo, a conta soma a altura delas
+(`QL-PR3-anexos/README.md`, a nota do fim).)*
+
 As notas no topo do corpo (QL-D30, D32); recolher e abrir; a **divisa** no catálogo (41 → 42) e no `gate:icones`; o
 **estado lembrado** (QL-D33, QL-D39: gravado no aparelho, a chave declarada, o teste de gravar-reabrir-ler e a mudança
 nos gates que a contam); o julgamento do traço no Tab. *Podem entrar na PR-3* se o desenho as
@@ -209,6 +215,9 @@ A-QL-17…A-QL-19.
 
 O release no Tab com 100 + 100 e as quedas nativas; os julgamentos do Marcel (QL-D27); **a primeira nota de verdade**
 (QL-D26); as corridas do bloco no `CI-FAIXA.md` (regra 22). *Aceites*: A-QL-20, A-QL-21.
+*(QL-D51, aval da QL-PR3: **o custo de `quebrar` no Hermes se mede de novo no release**, junto com as 100 + 100 aberturas
+frias — a mesma fixture do `custo.ts` e as colunas 80, 48, 26 e 14, mediana e máximo de 100 rodadas; o número da QL-PR3 é o
+do dev client e fica como está.)*
 
 ---
 

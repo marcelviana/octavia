@@ -79,7 +79,7 @@ for (const p of passos) {
     const logica = logicaNoTopo(anterior.logicas, anterior.y, anterior.lh)
     const previsto = yDaLogica(logicas, logica, lh)
     const prevPx = previsto * F
-    const ok = Math.abs(prevPx - medido.y) <= 1.5
+    const ok = Math.abs(prevPx - medido.y) <= 0.5 // ±0,5 px: o critério da QL-D50 (o aval da PR-3)
     const inicio = logicas.indexOf(logica) === v
     if (!ok || !inicio) falhas++
     linha += ` · PREVISTO ${prevPx.toFixed(1)} px (a lógica ${logica + 1} a 32 do topo) → ${ok ? 'igual' : 'DIFERENTE'}${inicio ? ' · a 1ª linha visual do topo é o COMEÇO da lógica ✓' : ' · o topo NÃO é o começo da lógica ✗'}`

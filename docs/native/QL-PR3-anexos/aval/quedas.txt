@@ -1,0 +1,2 @@
+quedas do app: java=0 · nativas=0 · (a contagem antiga, a subcadeia FATAL: 3)
+tombstones do app no dropbox: 0
