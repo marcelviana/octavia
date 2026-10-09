@@ -1,0 +1,12 @@
+Letra: linhas 50 · maior 77 · p95 46
+Cifra: linhas 40 · maior 50 · p95 41 · pares 20
+
+texto  colunas  linhas visuais  mediana (ms)  máximo (ms)  — 100 rodadas
+Letra       80              50         0.078        0.778
+Letra       48              52         0.079        0.176
+Letra       26              86         0.070        0.149
+Letra       14             151         0.081        0.139
+Cifra       80              40         0.093        0.683
+Cifra       48              41         0.092        0.220
+Cifra       26              71         0.107        0.218
+Cifra       14             129         0.146        0.295

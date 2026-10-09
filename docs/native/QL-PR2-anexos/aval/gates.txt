@@ -1,0 +1,54 @@
+# QL-PR2 (aval) — os gates locais sobre a PR (head a706ab0, base 827141a), 2026-10-09 06:58
+
+## G1a/G1b
+declarações: do corpo da PR (GATES_DECL=<scratchpad>/decl)
+base=827141adb91f29cf22e2dae9c12d3a686f207e29 head=WORKTREE
+G1a — diff vazio em 63 arquivos DERIVADOS de apps/native + packages/core/src
+      escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+      EXCEÇÕES DECLARADAS (o escopo desta PR):
+        packages/core/src/quebra.ts
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+      PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+        (nenhum — nenhuma asserção do core pode mudar nesta PR)
+  G1b: só adição ✓
+exit 0
+
+## G2/G3
+G2 — testIDs  antes=121  depois=121
+  G2: antes ⊆ depois ✓
+G3 — declarações: do corpo da PR (GATES_DECL=<scratchpad>/decl)
+G3 — linhas log( antes=70  depois=70
+      ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+        (nenhuma)
+      REMOÇÕES DECLARADAS (linha → REMOVIDA: razão; N2-D34):
+        (nenhuma)
+      — nenhuma linha de log pode sumir nesta PR
+  G3: nenhuma linha sumiu ✓
+exit 0
+
+## shasum -c dos congelados
+== docs/native/DESIGN-V1
+telas.html: OK
+icones.html: OK
+telas.pdf: OK
+== docs/native/DESIGN-N2
+telas.html: OK
+telas.pdf: OK
+== docs/native/DESIGN-N3
+telas.html: OK
+telas.pdf: OK
+== docs/native/DESIGN-N4
+telas.html: OK
+icones.html: OK
+== docs/native/DESIGN-QL
+telas.html: OK
+exit 0
+
+## o site
+G-back: PASSA
+G-palco: PASSA — 0 ocorrências
+G-tok: PASSA
+G-tok (cobertura): PASSA
+G-faixa: PASSA

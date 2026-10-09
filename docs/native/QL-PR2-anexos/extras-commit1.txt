@@ -1,0 +1,50 @@
+# QL-PR2, commit 1 (23f22ab): os extras do core contra o contrato que lança — pnpm exec vitest run --project core packages/core/src/quebra.test.ts (sem as cores)
+     × entra: "Am  F  C  G" 2ms
+     × entra: "Am            F              C" 0ms
+     × entra: "Am                    F#m7(11)        G          C" 0ms
+     × entra: "C  |  G  x2" 0ms
+     × entra: "Am  F  C  G  (2x)" 0ms
+     × entra: "D/F#  Gsus4  Bb" 0ms
+     × entra: "F#m7(11)" 0ms
+     × entra: "   Am   " 0ms
+     × entra: "Am\tF" 0ms
+     × não entra: "Intro: Am  E" 0ms
+     × não entra: "Intro: Am  E  F#m7(11)  G" 0ms
+     × não entra: "A noite chega" 0ms
+     × não entra: "E o dia" 0ms
+     × não entra: "Refrão" 0ms
+     × não entra: "x2" 0ms
+     × não entra: "|  :" 0ms
+     × não entra: "" 0ms
+     × não entra: "    " 0ms
+     × não entra: "Cada janela acesa" 0ms
+     × texto vazio: uma linha visual vazia, em todo tipo (contrato, item 3: a linha vazia tem uma, "") 0ms
+     × linha vazia no meio: fica, como linha visual vazia (contrato, item 3) 0ms
+     × a última linha sem \n e com \n: as linhas lógicas são as do split — o \n do fim abre uma linha vazia 0ms
+     × só espaços que cabem: ficam como estão (R1: nada a cortar) 0ms
+     × só espaços maiores que a coluna: uma linha vazia (R1: o espaço do corte sai; R3: os do começo do resto também) 0ms
+     × espaços no fim: ficam quando cabem; quando não, saem (o fim da linha não passa da coluna) 0ms
+     × o recuo do autor que cabe fica (nada manda tirar espaço do começo da primeira linha) 0ms
+     × a palavra do tamanho exato da coluna cabe; com uma letra a mais, parte na última coluna (R1) 0ms
+     × 3 colunas, o mínimo: a continuação tem 1 coluna útil, e toda palavra de 2 parte (R1, R3) 0ms
+     × o acento combinante não se separa da letra quando a palavra parte (QL-D24: ele conta 0 e pertence à letra) 0ms
+     × o emoji (par substituto) conta 1 e não se parte (contrato: todo outro caractere conta 1) 1ms
+     × o \r fora do fim da linha conta 1 (QL-D24: só o do fim conta 0) 0ms
+     × a linha de acordes sem letra embaixo não tem par e quebra como letra (R4: o par é com a linha de baixo) 0ms
+     × duas linhas de acordes seguidas: a primeira quebra como letra, a segunda faz par com a letra (R4) 0ms
+     × a letra mais curta que os acordes: depois que ela acaba, o resto dos acordes segue sozinho (R2, R3) 0ms
+     × Q1 — colunas fora do domínio do contrato (inteiro > 2): RangeError, em todo tipo 1ms
+     × Q2a — a linha de acordes que começa depois da coluna: o primeiro pedaço de acordes, vazio, ocupa linha ("") 0ms
+     × Q2b — no par, o pedaço de letra só de espaço numa continuação não ocupa linha 0ms
+     × Q2c — o recuo do autor maior que a coluna: uma linha vazia, e a palavra na continuação 0ms
+     × Q3a — no par, o acorde maior que a coluna não parte: o pedaço passa da coluna até o fim dele 0ms
+     × Q3b — fora do par (a linha de acordes sozinha), o acorde maior que a coluna parte como palavra (R1) 0ms
+     × Q3c — o \t mais largo que a coluna fica sozinho numa linha (para a função andar) 0ms
+     × Q4 — o \r do fim não impede a linha de acordes (o texto colado com CRLF forma par) 0ms
+     × Q5 — o \t da continuação conta a partir da coluna desenhada (o recuo de 2) 0ms
+     × a invariância vale em todo número de colunas de 3 a 90 0ms
+     × toda linha visual cabe na coluna, de 10 colunas em diante (a Tab fora: ela não quebra) 0ms
+     × a Tab sai igual ao texto, linha a linha, em todo número de colunas 0ms
+⎯⎯⎯⎯⎯⎯ Failed Tests 46 ⎯⎯⎯⎯⎯⎯⎯
+ Test Files  1 failed (1)
+      Tests  46 failed (46)

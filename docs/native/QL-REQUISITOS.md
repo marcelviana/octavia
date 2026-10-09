@@ -41,8 +41,11 @@ pedaços; só parte uma palavra se ela sozinha for maior que a coluna, e aí na 
 **QL-R4 — R2, o par da Cifra** `[QL-D28; QL-D14; QL-E1]`. A linha de acordes e a linha de letra logo abaixo cortam **na
 mesma coluna**; o corte recua até o primeiro ponto que não parte nem um acorde nem uma palavra, nas duas linhas; **se esse
 ponto não existe, a palavra pode partir, mas o acorde nunca** (o corte vai para a última coluna fora de acorde). O par de
-50 do §5.2 do brief recua, em 26 colunas, para a **18** (QL-E1); em 14 colunas, a palavra parte (*hi|stória*). *Aceite*:
-A-QL-1.
+50 do §5.2 do brief recua, em 26 colunas, para a **18** (QL-E1); em 14 colunas, a palavra parte (*hi|stória*).
+*(QL-D45, aval da QL-PR2: **o acorde nunca parte, também na linha de acordes sozinha** — a da Cifra sem letra embaixo,
+que quebra como letra (QL-R6): um acorde maior que a coluna fica inteiro e a linha passa da coluna, como no par. Na Letra
+a linha de acordes quebra como letra, acorde e tudo (QL-R7). Na prática não acontece: a coluna mínima é 14 e o maior
+acorde do dado real tem 8 caracteres.)* *Aceite*: A-QL-1.
 
 **QL-R5 — R3, a continuação** `[QL-D29; folha §1]`. Cada pedaço depois do primeiro começa com **2 colunas de recuo**, sem
 glifo; a coluna útil da continuação é colunas − 2. No par, as duas continuações têm o mesmo recuo, e os espaços que sobram
@@ -57,7 +60,8 @@ certeza como de acordes (a **quase acorde**, *"Intro: Am  E"*) **não forma par*
 A-QL-1.
 
 **QL-R8 — A Tab não quebra** `[QL-D2; QL-D37]`. Rola para o lado, como hoje, com as 6 linhas e as colunas intactas, em toda
-faixa e zoom. **Só a Tab rola para o lado.** *Aceite*: A-QL-1, A-QL-11.
+faixa e zoom. **Só a Tab rola para o lado** — *com uma exceção declarada (QL-D45): a linha de acordes com um acorde maior
+que a coluna passa da coluna, e o excesso aparece pela rolagem lateral, só nessa linha*. *Aceite*: A-QL-1, A-QL-11.
 
 **QL-R9 — Tabulação, `\r` e acento combinante** `[QL-D24]`. A função **mede** sem normalizar o texto: o `\t` conta até a
 próxima coluna múltipla de 8; o `\r` do fim da linha conta 0; o acento combinante conta 0. A invariância (QL-R1) segue
@@ -183,6 +187,12 @@ continua; a **errata em par dos 6 dumps de Letra da B3**, com a **B5 byte a byte
 e no Tab, e os julgamentos do Marcel da QL-D27. *Aceites*: A-QL-8…A-QL-16.
 *(QL-D40, aval da QL-PR1: a PR-3 também **mede a largura do caractere nos cinco zooms no Tab S6**, compara com a tabela do
 AVD da PR-1 e acusa a diferença antes de qualquer tela depender do número — fecha o A-QL-6 no Tab.)*
+*(Aval da QL-PR2, `QL-PR2-anexos/README.md` §11 — a PR-3 ganha três itens:* **(1)** *a proteção da **QL-D43**: `quebrar`
+fica estrita (`RangeError` fora do domínio), e o leitor só a chama depois de medir a largura da coluna e a do caractere —
+até lá o corpo aparece como hoje; um teste prova que o palco e V não caem com a largura em 0 ou ainda não medida;*
+**(2)** *a exceção da **QL-D45** na rolagem lateral: a linha de acordes com acorde maior que a coluna rola, só ela (QL-R8);*
+**(3)** *o **custo de `quebrar` no Hermes, no Tab**, com a mesma fixture inventada da PR-2
+(`QL-PR2-anexos/instrumentos/custo.ts`) e os mesmos quatro números de colunas (80, 48, 26, 14).)*
 
 ### PR-4 — as notas no palco
 

@@ -1,0 +1,30 @@
+# QL-PR2 (aval) — o log do CI, filtrado e sem as cores (gh run view <id> --log). head a706ab0
+
+## ci.yml · build · run 37914635962 — o passo "Test — a suíte, e com ela os gates embrulhados"
+ ✓  core  packages/core/src/quebra.test.ts (47 tests) 281ms
+G-par da visualização: zero diferenças ✓
+G-par da visualização: zero diferenças ✓
+ ✓  native-tela  apps/native/test/g-par-visualizacao.test.tsx (2 tests) 333ms
+lista esperada (0): (vazia)
+ ✓  web  tests/gates/n4-g-par.test.tsx (2 tests) 96ms
+gate da quebra — casos 23 · checagens 46 ((i) 17 · (ii) 23 · (iii) 6) · passam 46 · reprovam 0
+lista esperada (0) · reprovados (0)
+gate da quebra: zero reprovações, lista vazia (QL-PR2) ✓
+ ✓  web  tests/gates/ql-quebra.test.ts (2 tests) 12ms
+ Test Files  144 passed | 3 skipped (147)
+      Tests  1765 passed | 59 skipped (1824)
+
+## gates.yml · gates-nativos · run 37914635858
+  g1a: packages/core/src/quebra.ts
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+  G1b: só adição ✓
+G2 — testIDs  antes=121  depois=121
+  G2: antes ⊆ depois ✓
+G3 — linhas log( antes=70  depois=70
+  G3: nenhuma linha sumiu ✓
+telas.html: OK
+telas.html: OK
+telas.html: OK
+telas.html: OK
+== docs/native/DESIGN-QL
+telas.html: OK

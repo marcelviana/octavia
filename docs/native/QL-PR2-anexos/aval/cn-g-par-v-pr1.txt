@@ -1,0 +1,103 @@
+== CN-V0 a main
+      G-par da visualização [C (a coluna de V, 55)] — itens 17 · pares 10 · iguais 10 · diferentes 0 · fora do par 7 · retrato do site 10
+        o leitor quebra: não (até a PR-3) · linhas do par acima da coluna: 0 · continuações vistas em V: 0
+      G-par da visualização: zero diferenças ✓
+      G-par da visualização [26 colunas (o duplo com colunas, QL-PR1)] — itens 17 · pares 10 · iguais 10 · diferentes 0 · fora do par 7 · retrato do site 10
+        o leitor quebra: não (até a PR-3) · linhas do par acima da coluna: 6 · continuações vistas em V: 0
+      G-par da visualização: zero diferenças ✓
+            Tests  2 passed (2)
+  CN-V0: exit 0 ✓
+  CN-V0: "G-par da visualização: zero diferenças ✓" ✓
+== CN-V1 o leitor quebra, sem a declaração
+      G-par da visualização [C (a coluna de V, 55)] — itens 17 · pares 10 · iguais 10 · diferentes 0 · fora do par 7 · retrato do site 10
+        o leitor quebra: não (até a PR-3) · linhas do par acima da coluna: 0 · continuações vistas em V: 6
+        QUEBRA    letra                        site=texto(108)       V=texto(112; 7 linhas) · 2 continuações
+        QUEBRA    letra-poluida-editor         site=texto(44)        V=texto(46; 4 linhas) · 1 continuações
+        QUEBRA    cifra-secoes-acordes-vazios  site=texto(123)       V=texto(129; 7 linhas) · 3 continuações
+      G-par da visualização: zero diferenças ✓
+      G-par da visualização [26 colunas (o duplo com colunas, QL-PR1)] — itens 17 · pares 10 · iguais 10 · diferentes 0 · fora do par 7 · retrato do site 10
+        o leitor quebra: não (até a PR-3) · linhas do par acima da coluna: 6 · continuações vistas em V: 6
+        QUEBRA    letra                        site=texto(108)       V=texto(112; 7 linhas) · 2 continuações · 2 linha(s) acima de 26
+        QUEBRA    letra-poluida-editor         site=texto(44)        V=texto(46; 4 linhas) · 1 continuações · 1 linha(s) acima de 26
+        QUEBRA    cifra-secoes-acordes-vazios  site=texto(123)       V=texto(129; 7 linhas) · 3 continuações · 3 linha(s) acima de 26
+      G-par da visualização: zero diferenças ✓
+      ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+      AssertionError: V quebrou o corpo sem a declaração O_LEITOR_QUEBRA = true: expected 6 to be +0 // Object.is equality
+            Tests  2 failed (2)
+  CN-V1: exit 1 ✓
+  CN-V1: "V quebrou o corpo sem a declaração" ✓
+== CN-V2 o leitor quebra, com a declaração
+      G-par da visualização [C (a coluna de V, 55)] — itens 17 · pares 10 · iguais 10 · diferentes 0 · fora do par 7 · retrato do site 10
+        o leitor quebra: sim (PR-3) · linhas do par acima da coluna: 0 · continuações vistas em V: 6
+        QUEBRA    letra                        site=texto(108)       V=texto(112; 7 linhas) · 2 continuações
+        QUEBRA    letra-poluida-editor         site=texto(44)        V=texto(46; 4 linhas) · 1 continuações
+        QUEBRA    cifra-secoes-acordes-vazios  site=texto(123)       V=texto(129; 7 linhas) · 3 continuações
+      G-par da visualização: zero diferenças ✓
+      G-par da visualização [26 colunas (o duplo com colunas, QL-PR1)] — itens 17 · pares 10 · iguais 10 · diferentes 0 · fora do par 7 · retrato do site 10
+        o leitor quebra: sim (PR-3) · linhas do par acima da coluna: 6 · continuações vistas em V: 6
+        QUEBRA    letra                        site=texto(108)       V=texto(112; 7 linhas) · 2 continuações · 2 linha(s) acima de 26
+        QUEBRA    letra-poluida-editor         site=texto(44)        V=texto(46; 4 linhas) · 1 continuações · 1 linha(s) acima de 26
+        QUEBRA    cifra-secoes-acordes-vazios  site=texto(123)       V=texto(129; 7 linhas) · 3 continuações · 3 linha(s) acima de 26
+      G-par da visualização: zero diferenças ✓
+            Tests  2 passed (2)
+  CN-V2: exit 0 ✓
+  CN-V2: "G-par da visualização: zero diferenças ✓" ✓
+== CN-V3 a quebra troca uma letra
+      G-par da visualização [C (a coluna de V, 55)] — itens 17 · pares 10 · iguais 4 · diferentes 6 · fora do par 7 · retrato do site 10
+        o leitor quebra: sim (PR-3) · linhas do par acima da coluna: 0 · continuações vistas em V: 0
+        DIFERENTE letra                        site=texto(108)       V=texto(112; 7 linhas)
+        DIFERENTE cifra-texto                  site=texto(48)        V=texto(48; 4 linhas)
+        DIFERENTE letra-poluida-editor         site=texto(44)        V=texto(46; 4 linhas)
+        DIFERENTE cifra-secoes-acordes-vazios  site=texto(123)       V=texto(129; 7 linhas)
+        DIFERENTE cifra-secoes-completas       site=texto(39)        V=texto(39; 3 linhas)
+        DIFERENTE cifra-duas-secoes            site=texto(97)        V=texto(97; 7 linhas)
+      G-par da visualização: ✗ reprova (letra, cifra-texto, letra-poluida-editor, cifra-secoes-acordes-vazios, cifra-secoes-completas, cifra-duas-secoes)
+      G-par da visualização [26 colunas (o duplo com colunas, QL-PR1)] — itens 17 · pares 10 · iguais 4 · diferentes 6 · fora do par 7 · retrato do site 10
+        o leitor quebra: sim (PR-3) · linhas do par acima da coluna: 6 · continuações vistas em V: 0
+        DIFERENTE letra                        site=texto(108)       V=texto(112; 7 linhas) · 2 linha(s) acima de 26
+        DIFERENTE cifra-texto                  site=texto(48)        V=texto(48; 4 linhas)
+        DIFERENTE letra-poluida-editor         site=texto(44)        V=texto(46; 4 linhas) · 1 linha(s) acima de 26
+        DIFERENTE cifra-secoes-acordes-vazios  site=texto(123)       V=texto(129; 7 linhas) · 3 linha(s) acima de 26
+        DIFERENTE cifra-secoes-completas       site=texto(39)        V=texto(39; 3 linhas)
+        DIFERENTE cifra-duas-secoes            site=texto(97)        V=texto(97; 7 linhas)
+      G-par da visualização: ✗ reprova (letra, cifra-texto, letra-poluida-editor, cifra-secoes-acordes-vazios, cifra-secoes-completas, cifra-duas-secoes)
+      ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+      AssertionError: V diferente do site: expected [ 'letra', 'cifra-texto', …(4) ] to deeply equal []
+            Tests  2 failed (2)
+  CN-V3: exit 1 ✓
+  CN-V3: "V diferente do site" ✓
+== CN-V5 o leitor quebra também a Tab
+      G-par da visualização [C (a coluna de V, 55)] — itens 17 · pares 10 · iguais 9 · diferentes 1 · fora do par 7 · retrato do site 10
+        o leitor quebra: sim (PR-3) · linhas do par acima da coluna: 0 · continuações vistas em V: 9
+        QUEBRA    letra                        site=texto(108)       V=texto(112; 7 linhas) · 2 continuações
+        TAB QUEBRADA tab-texto                    site=texto(92)        V=texto(101; 6 linhas) · 3 continuações
+        QUEBRA    letra-poluida-editor         site=texto(44)        V=texto(46; 4 linhas) · 1 continuações
+        QUEBRA    cifra-secoes-acordes-vazios  site=texto(123)       V=texto(129; 7 linhas) · 3 continuações
+      G-par da visualização: ✗ reprova (tab-texto)
+      G-par da visualização [26 colunas (o duplo com colunas, QL-PR1)] — itens 17 · pares 10 · iguais 9 · diferentes 1 · fora do par 7 · retrato do site 10
+        o leitor quebra: sim (PR-3) · linhas do par acima da coluna: 6 · continuações vistas em V: 9
+        QUEBRA    letra                        site=texto(108)       V=texto(112; 7 linhas) · 2 continuações · 2 linha(s) acima de 26
+        TAB QUEBRADA tab-texto                    site=texto(92)        V=texto(101; 6 linhas) · 3 continuações
+        QUEBRA    letra-poluida-editor         site=texto(44)        V=texto(46; 4 linhas) · 1 continuações · 1 linha(s) acima de 26
+        QUEBRA    cifra-secoes-acordes-vazios  site=texto(123)       V=texto(129; 7 linhas) · 3 continuações · 3 linha(s) acima de 26
+      G-par da visualização: ✗ reprova (tab-texto)
+      ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+      AssertionError: V diferente do site: expected [ 'tab-texto' ] to deeply equal []
+            Tests  2 failed (2)
+  CN-V5: exit 1 ✓
+  CN-V5: "TAB QUEBRADA" ✓
+== CN-V4 o leitor não quebra, com a declaração
+      G-par da visualização [C (a coluna de V, 55)] — itens 17 · pares 10 · iguais 10 · diferentes 0 · fora do par 7 · retrato do site 10
+        o leitor quebra: sim (PR-3) · linhas do par acima da coluna: 0 · continuações vistas em V: 0
+      G-par da visualização: zero diferenças ✓
+      G-par da visualização [26 colunas (o duplo com colunas, QL-PR1)] — itens 17 · pares 10 · iguais 10 · diferentes 0 · fora do par 7 · retrato do site 10
+        o leitor quebra: sim (PR-3) · linhas do par acima da coluna: 6 · continuações vistas em V: 0
+      G-par da visualização: zero diferenças ✓
+      ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+      AssertionError: linha acima da coluna e V sem continuação: o leitor não viu as colunas do duplo: expected [ 'letra', …(2) ] to deeply equal []
+            Tests  1 failed | 1 passed (2)
+  CN-V4: exit 1 ✓
+  CN-V4: "o leitor não viu as colunas do duplo" ✓
+== devolvido: git status -- Leitor.tsx g-par-visualizacao.test.tsx
+    (vazio = os dois de volta)
+cn-g-par-v: todos os controles como esperado ✓
