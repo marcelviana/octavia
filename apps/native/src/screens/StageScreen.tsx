@@ -136,8 +136,10 @@ const TAG_PALCO = 'octavia-palco'
 /** Quanto tempo o motivo de um controle inerte fica na linha acima da barra. */
 const MOTIVO_MS = 2500
 
-/** QL-PR3 — quanto tempo o pedido da âncora espera o conteúdo novo assentar (`onContentSizeChange`). */
-const ANCORA_MS = 1000
+/** QL-PR3 — o pedido da âncora se reaplica a cada `ANCORA_INTERVALO_MS` até a rolagem chegar, no máximo
+ * `ANCORA_TENTATIVAS` vezes (1,5 s): o bastante para o conteúdo novo assentar no Tab, que é o mais lento medido. */
+const ANCORA_INTERVALO_MS = 100
+const ANCORA_TENTATIVAS = 15
 
 /** A dica de gesto do PDF (S3d) — a linha acima da barra, como no design. */
 const DICA_PDF = 'pinça para zoom · arraste para mover · deslize para virar a página'
@@ -302,8 +304,14 @@ export function StageScreen({
   const y = useRef(0)
   /** QL-PR3 — a rolagem vista (o `onScroll`, a mão ou a rolagem automática): de onde a âncora parte. */
   const yVisto = useRef(0)
-  /** QL-PR3 — a rolagem que a âncora pediu, reaplicada quando o conteúdo novo assenta (`onContentSizeChange`). */
-  const alvoDaAncora = useRef<number | null>(null)
+  /**
+   * QL-PR3 — o pedido da âncora em curso: a rolagem pedida e a lógica que ela põe no topo. Fica de pé até a rolagem
+   * VISTA chegar ao alvo: o primeiro `scrollTo` pode cair no conteúdo velho e ser cortado pelo tamanho dele (medido no
+   * Tab), então o palco o reaplica (`ANCORA_INTERVALO_MS`, até `ANCORA_TENTATIVAS` vezes) e também quando o conteúdo
+   * novo assenta (`onContentSizeChange`). Uma segunda mudança com o pedido de pé ancora na MESMA lógica.
+   */
+  const alvoDaAncora = useRef<{ y: number; logica: number } | null>(null)
+  const tentativaDaAncora = useRef<ReturnType<typeof setTimeout> | null>(null)
   const frame = useRef<number | null>(null)
   const pedidoEm = useRef(0)
   const primeiroFrame = useRef(true)
@@ -374,6 +382,7 @@ export function StageScreen({
     y.current = 0
     yVisto.current = 0
     alvoDaAncora.current = null
+    if (tentativaDaAncora.current !== null) clearTimeout(tentativaDaAncora.current)
     scroll.current?.scrollTo({ y: 0, animated: false })
     if (navegouEm.current > 0 && setlist !== null) {
       log(
@@ -558,6 +567,20 @@ export function StageScreen({
    */
   const chaveDoCorpo = `${posicao}|${content?.id ?? ''}`
   const desenhoAnterior = useRef<{ chave: string; logicas: readonly number[]; entrelinha: number } | null>(null)
+  const pedirAncora = useCallback((alvo: number, tentativa: number) => {
+    const pedido = alvoDaAncora.current
+    if (pedido === null || pedido.y !== alvo) return
+    if (tentativa > 0 && Math.abs(yVisto.current - alvo) <= 1) {
+      alvoDaAncora.current = null
+      return
+    }
+    scroll.current?.scrollTo({ y: alvo, animated: false })
+    if (tentativa >= ANCORA_TENTATIVAS) {
+      alvoDaAncora.current = null
+      return
+    }
+    tentativaDaAncora.current = setTimeout(() => pedirAncora(alvo, tentativa + 1), ANCORA_INTERVALO_MS)
+  }, [])
   useLayoutEffect(() => {
     const anterior = desenhoAnterior.current
     desenhoAnterior.current = { chave: chaveDoCorpo, logicas, entrelinha }
@@ -567,27 +590,35 @@ export function StageScreen({
       anterior.logicas.length === logicas.length &&
       anterior.logicas.every((l, i) => l === logicas[i])
     if (igual) return
-    const logica = inicioDoBloco(corpo, tipo, logicaNoTopo(anterior.logicas, yVisto.current, anterior.entrelinha))
+    const pendente = alvoDaAncora.current
+    const logica = pendente !== null ? pendente.logica : inicioDoBloco(corpo, tipo, logicaNoTopo(anterior.logicas, yVisto.current, anterior.entrelinha))
     const alvo = yDaLogica(logicas, logica, entrelinha)
     y.current = alvo
-    yVisto.current = alvo
-    alvoDaAncora.current = alvo
-    scroll.current?.scrollTo({ y: alvo, animated: false })
-    // o conteúdo novo assenta no `onContentSizeChange`; se ele não mudar de tamanho, o pedido acima já valeu
-    const t = setTimeout(() => {
-      if (alvoDaAncora.current === alvo) alvoDaAncora.current = null
-    }, ANCORA_MS)
-    return () => clearTimeout(t)
-  }, [chaveDoCorpo, logicas, entrelinha, corpo, tipo])
+    alvoDaAncora.current = { y: alvo, logica }
+    if (tentativaDaAncora.current !== null) clearTimeout(tentativaDaAncora.current)
+    pedirAncora(alvo, 0)
+  }, [chaveDoCorpo, logicas, entrelinha, corpo, tipo, pedirAncora])
+  useEffect(
+    () => () => {
+      if (tentativaDaAncora.current !== null) clearTimeout(tentativaDaAncora.current)
+    },
+    [],
+  )
 
   const aoRolar = useCallback((e: NativeSyntheticEvent<NativeScrollEvent>) => {
     yVisto.current = e.nativeEvent.contentOffset.y
+    // a rolagem chegou ao alvo da âncora: o pedido termina
+    const pedido = alvoDaAncora.current
+    if (pedido !== null && Math.abs(yVisto.current - pedido.y) <= 1) alvoDaAncora.current = null
   }, [])
   const aoMudarConteudo = useCallback(() => {
-    const alvo = alvoDaAncora.current
-    if (alvo === null) return
+    const pedido = alvoDaAncora.current
+    if (pedido !== null) scroll.current?.scrollTo({ y: pedido.y, animated: false })
+  }, [])
+  // o dedo na rolagem: o músico toma conta, e o pedido da âncora sai
+  const aoArrastar = useCallback(() => {
     alvoDaAncora.current = null
-    scroll.current?.scrollTo({ y: alvo, animated: false })
+    if (tentativaDaAncora.current !== null) clearTimeout(tentativaDaAncora.current)
   }, [])
 
   const motivo =
@@ -704,6 +735,7 @@ export function StageScreen({
             onScroll={aoRolar}
             scrollEventThrottle={16}
             onContentSizeChange={aoMudarConteudo}
+            onScrollBeginDrag={aoArrastar}
           >
             {motivo !== undefined ? (
               <PlaceholderDoLeitor testID="placeholder" titulo={motivo.titulo} apoio={motivo.apoio} cor={cor} />

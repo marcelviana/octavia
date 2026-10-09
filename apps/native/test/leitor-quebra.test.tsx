@@ -24,7 +24,7 @@ import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vite
 import { quebrar, type ContentDTO, type SetlistDTO } from '@octavia/core'
 import type { StageScreenProps } from '../src/screens/StageScreen'
 import { __reset } from './fake-expo-file-system'
-import { __colunas, __janela, __larguraCrua, __limparRolagens, __rolagens, __rolar, caractereDoDuplo } from './fake-react-native'
+import { __colunas, __janela, __larguraCrua, __limparRolagens, __rolagemChega, __rolagens, __rolar, caractereDoDuplo } from './fake-react-native'
 import { assentar, desmontar, exige, montar, rerender, tocar } from './tela'
 import { ehQuebraDe } from '../scripts/texto-logico.mjs'
 
@@ -380,7 +380,7 @@ describe('QL-D18 / QL-R13 — a âncora: o começo da linha lógica do topo volt
     const alvo = L.yDaLogica(L.logicasDasVisuais(LETRA_LONGA, quebrar(LETRA_LONGA, 'Lyrics', 41)), 10, 26 * 1.55)
     const pedidos = __rolagens().filter((y) => Math.abs(y - alvo) < 0.01)
     expect(pedidos.length, 'o palco pediu a rolagem da âncora uma vez só').toBeGreaterThanOrEqual(3)
-    __rolar(alvo)
+    __rolagemChega(alvo)
     await assentar(50)
     const ate = __rolagens().length
     await assentar(400)

@@ -151,21 +151,29 @@ interface EventoDeRolagem {
 }
 const rolagensPedidas: number[] = []
 const ouvintesDeRolagem = new Set<(e: EventoDeRolagem) => void>()
+const ouvintesDoDedo = new Set<() => void>()
 export function __rolagens(): number[] {
   return [...rolagensPedidas]
 }
 export function __limparRolagens(): void {
   rolagensPedidas.length = 0
 }
+/** O DEDO rola até `y`: o `onScrollBeginDrag` e depois o `onScroll`, como o RN entrega. */
 export function __rolar(y: number): void {
+  for (const f of ouvintesDoDedo) f()
+  for (const f of ouvintesDeRolagem) f({ nativeEvent: { contentOffset: { x: 0, y } } })
+}
+/** A rolagem CHEGA a `y` sem o dedo (o `scrollTo` que o aparelho cumpriu): só o `onScroll`. */
+export function __rolagemChega(y: number): void {
   for (const f of ouvintesDeRolagem) f({ nativeEvent: { contentOffset: { x: 0, y } } })
 }
 export const ScrollView = forwardRef<
   unknown,
-  PropsComuns & { scrollEnabled?: boolean; horizontal?: boolean; onScroll?: (e: EventoDeRolagem) => void }
+  PropsComuns & { scrollEnabled?: boolean; horizontal?: boolean; onScroll?: (e: EventoDeRolagem) => void; onScrollBeginDrag?: () => void }
 >((p, ref) => {
   useMedida(p, false)
   const onScroll = p.onScroll
+  const onDedo = p.onScrollBeginDrag
   useLayoutEffect(() => {
     if (onScroll === undefined) return
     ouvintesDeRolagem.add(onScroll)
@@ -173,6 +181,13 @@ export const ScrollView = forwardRef<
       ouvintesDeRolagem.delete(onScroll)
     }
   }, [onScroll])
+  useLayoutEffect(() => {
+    if (onDedo === undefined) return
+    ouvintesDoDedo.add(onDedo)
+    return () => {
+      ouvintesDoDedo.delete(onDedo)
+    }
+  }, [onDedo])
   useImperativeHandle(ref, () => ({
     scrollTo: (o?: { y?: number }): void => {
       if (typeof o?.y === 'number') rolagensPedidas.push(o.y)
