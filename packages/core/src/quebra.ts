@@ -39,7 +39,9 @@
  *                                  fora) · `A noite chega` · `E o dia` · `Refrão` · `x2` (só separador) · a linha vazia
  *
  * O PAR (R2, R4): na Cifra, a linha de acordes seguida de uma linha não vazia que não é de acordes. A linha de acordes
- * sem letra embaixo (a última da seção, ou seguida de outra de acordes ou de linha vazia) não tem par e quebra como letra.
+ * sem letra embaixo (a última da seção, ou seguida de outra de acordes ou de linha vazia) não tem par e quebra como letra
+ * — **mas o acorde nunca parte** (QL-D45, o aval da PR-2: a R2 se estende a ela): um acorde maior que a coluna fica
+ * inteiro e a linha passa da coluna, como no par. Na Letra a linha de acordes quebra como letra, acorde e tudo (QL-D22).
  *
  * O que `quebrar` GARANTE (a invariância, QL-R1 / A-QL-2; o gate (ii) de `tests/gates/ql-quebra.test.ts` a confere caso a
  * caso, e `quebra.test.ts` nos casos de borda). Com `L = texto.split('\n')`:
@@ -66,8 +68,8 @@
  * A COLUNA DO `\t` é a da linha DESENHADA: a continuação começa na coluna 2 (o recuo), e a tabulação de uma continuação
  * avança até a próxima múltipla de 8 contada daí — é o que cada linha visual ocupa quando se desenha sozinha.
  *
- * Os casos de borda que R1–R4 não decidem sozinhas têm o comportamento escrito em `quebra.test.ts`, cada um com o porquê,
- * e os que viraram pergunta ao Marcel estão no `docs/native/QL-PR2-anexos/README.md` §3.
+ * Os casos de borda que R1–R4 não decidem sozinhas têm o comportamento escrito em `quebra.test.ts`, cada um com o porquê;
+ * os que viraram pergunta ao Marcel foram decididos no aval da PR-2 (QL-D43…QL-D47, `docs/native/QL-PR2-anexos/README.md`).
  */
 
 /** As colunas de recuo de cada continuação (R3; QL-D29: o recuo de 2, sem glifo). */
@@ -181,7 +183,8 @@ function fimEmColunas(cols: { c1: number[] }, k: number, fim: number, d0: number
 
 // ── R1 · a Letra ───────────────────────────────────────────────────────────────────────────────────────────────────
 
-function cortarLetra(cl: Celula[], w: number): Fatia[] {
+/** `acordeInteiro` (QL-D45): a linha de acordes sozinha, na Cifra — a palavra maior que a coluna não parte. */
+function cortarLetra(cl: Celula[], w: number, acordeInteiro = false): Fatia[] {
   const out: Fatia[] = []
   const n = cl.length
   let k = 0
@@ -206,6 +209,11 @@ function cortarLetra(cl: Celula[], w: number): Fatia[] {
     if (corte > 0) {
       fim = semEspacosNoFim(cl, k, corte)
       prox = depoisDosEspacos(cl, corte + 1)
+    } else if (acordeInteiro) {
+      // QL-D45: o acorde maior que a coluna fica inteiro — o pedaço vai até o fim dele e passa da coluna
+      fim = k + 1
+      while (fim < n && !ehEsp(cl, fim)) fim++
+      prox = depoisDosEspacos(cl, fim)
     } else {
       // a palavra sozinha é maior que a coluna: parte na última coluna (ao menos uma célula, para andar)
       fim = k + 1
@@ -379,8 +387,8 @@ export function quebrar(texto: string, tipo: string, colunas: number): LinhaVisu
       i++
       continue
     }
-    // R1: a Letra (e, fora do par, a linha de acordes e a quase acorde)
-    cortarLetra(cl, colunas).forEach((f, j) => out.push(linhaVisual(linha, cl, i, f, j > 0)))
+    // R1: a Letra (e, fora do par, a linha de acordes — com o acorde inteiro na Cifra, QL-D45 — e a quase acorde)
+    cortarLetra(cl, colunas, tipo === 'Chords' && ehLinhaDeAcordes(linha)).forEach((f, j) => out.push(linhaVisual(linha, cl, i, f, j > 0)))
   }
   return out
 }
