@@ -302,14 +302,27 @@ describe('QL-D45 — a linha da Cifra com o acorde maior que a coluna rola para 
 describe('QL-D18 / QL-R13 — a âncora: o começo da linha lógica do topo volta ao topo, a 32 da barra', () => {
   const lh22 = 22 * 1.55
 
-  it('logicaNoTopo: a linha visual que cobre o topo da rolagem (o respiro de 32 conta), e a lógica dela', () => {
+  it('logicaNoTopo: a linha visual que está NA MARCA de 32 (a do respiro, onde a âncora põe o começo), e a lógica dela', () => {
     const logicas = [0, 0, 1, 2, 2, 2, 3]
     expect(L.logicaNoTopo(logicas, 0, lh22)).toBe(0)
-    expect(L.logicaNoTopo(logicas, 32 + lh22 - 0.5, lh22)).toBe(0)
-    expect(L.logicaNoTopo(logicas, 32 + lh22, lh22)).toBe(0) // a 2ª linha visual: a continuação da lógica 0
-    expect(L.logicaNoTopo(logicas, 32 + 2 * lh22, lh22)).toBe(1)
-    expect(L.logicaNoTopo(logicas, 32 + 4 * lh22 + 3, lh22)).toBe(2)
+    expect(L.logicaNoTopo(logicas, lh22 - 1, lh22)).toBe(0)
+    expect(L.logicaNoTopo(logicas, lh22, lh22)).toBe(0) // a 2ª linha visual na marca: a continuação da lógica 0
+    expect(L.logicaNoTopo(logicas, 2 * lh22, lh22)).toBe(1)
+    expect(L.logicaNoTopo(logicas, 4 * lh22 + 3, lh22)).toBe(2)
     expect(L.logicaNoTopo(logicas, 10_000, lh22)).toBe(3)
+  })
+
+  it('a âncora não deriva (o achado do aparelho): ancorar de novo, sem mudar nada, fica na mesma linha lógica', () => {
+    for (const cols of [80, 48, 41, 26]) {
+      const logicas = L.logicasDasVisuais(LETRA_LONGA, quebrar(LETRA_LONGA, 'Lyrics', cols))
+      for (const lh of [18 * 1.55, lh22, 26 * 1.55, 40 * 1.55]) {
+        for (const logica of new Set(logicas)) {
+          // a rolagem em px de 2,25 (a rolagem do aparelho é inteira em px): o arredondamento não pode trocar a linha
+          const y = Math.round(L.yDaLogica(logicas, logica, lh) * 2.25) / 2.25
+          expect(L.logicaNoTopo(logicas, y, lh), `${cols} col, entrelinha ${lh}, lógica ${logica}`).toBe(logica)
+        }
+      }
+    }
   })
 
   it('yDaLogica: a rolagem que põe a 1ª linha visual da lógica a 32 do topo (o respiro), e 0 para a primeira', () => {
@@ -329,8 +342,8 @@ describe('QL-D18 / QL-R13 — a âncora: o começo da linha lógica do topo volt
   it('o giro C → B, nas contas: a lógica do topo em 80 colunas volta ao topo em 48', () => {
     const em80 = L.logicasDasVisuais(LETRA_LONGA, quebrar(LETRA_LONGA, 'Lyrics', 80))
     const em48 = L.logicasDasVisuais(LETRA_LONGA, quebrar(LETRA_LONGA, 'Lyrics', 48))
-    const v = em80.indexOf(10) + 1 // a continuação da linha lógica 10, no topo
-    const y80 = 32 + v * lh22 + 4
+    const v = em80.indexOf(10) + 1 // a continuação da linha lógica 10, na marca de 32
+    const y80 = v * lh22 + 4
     const logica = L.logicaNoTopo(em80, y80, lh22)
     expect(logica).toBe(10)
     expect(L.yDaLogica(em48, logica, lh22)).toBeCloseTo(em48.indexOf(10) * lh22)
@@ -341,7 +354,7 @@ describe('QL-D18 / QL-R13 — a âncora: o começo da linha lógica do topo volt
     __colunas(48)
     await palco(conteudo('l1', 'Lyrics', LETRA_LONGA))
     const em48 = L.logicasDasVisuais(LETRA_LONGA, quebrar(LETRA_LONGA, 'Lyrics', 48))
-    __rolar(32 + (em48.indexOf(10) + 1) * lh22 + 4)
+    __rolar((em48.indexOf(10) + 1) * lh22 + 4)
     __limparRolagens()
     await tocar('zoom-mais')
     await assentar(10)
