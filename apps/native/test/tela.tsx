@@ -9,6 +9,7 @@
  */
 import { act, type ReactElement } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
+import { __proximoToqueEm } from './fake-react-native'
 
 let raiz: Root | null = null
 let no: HTMLDivElement | null = null
@@ -87,6 +88,12 @@ export function inativo(testID: string): boolean {
 /** Os `d` dos paths dentro deste nó — qual DESENHO foi para a tela. */
 export function paths(testID: string): string[] {
   return [...exige(testID).querySelectorAll('path')].map((p) => p.getAttribute('d') ?? '')
+}
+
+/** QL-PR4 — um toque num ponto do nó (`locationX/Y`, relativos a ele), como o RN o entrega ao `onPress`. */
+export async function tocarEm(testID: string, locationX: number, locationY: number): Promise<void> {
+  __proximoToqueEm(locationX, locationY)
+  await tocar(testID)
 }
 
 export async function tocar(testID: string): Promise<void> {

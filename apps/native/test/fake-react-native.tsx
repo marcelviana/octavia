@@ -222,7 +222,19 @@ export const SafeAreaView = primitivo('div', 'SafeAreaView')
  * cada render. O que os CNs leem é o `data-testid` e o `data-disabled`, que
  * não dependem da tag.
  */
-export const Pressable = forwardRef<unknown, PropsComuns & { onPress?: () => void; disabled?: boolean }>(
+/**
+ * QL-PR4 (QL-D56) — ONDE o toque caiu no `Pressable`: o RN entrega o `onPress` com `nativeEvent.locationX/Y` (relativos ao
+ * próprio nó), e a borda do palco os lê para saber se o toque caiu na régua das notas. O DOM não tem isso; `__tocarEm` diz
+ * a posição do próximo toque, e o `onPress` a recebe (sem `__tocarEm`, 0 · 0 — o que os testes de antes nunca leram).
+ */
+let proximoToque: { locationX: number; locationY: number } | null = null
+export function __proximoToqueEm(locationX: number, locationY: number): void {
+  proximoToque = { locationX, locationY }
+}
+export const Pressable = forwardRef<
+  unknown,
+  PropsComuns & { onPress?: (e: { nativeEvent: { locationX: number; locationY: number } }) => void; disabled?: boolean }
+>(
   (p, ref) =>
     createElement(
       'div',
@@ -234,7 +246,9 @@ export const Pressable = forwardRef<unknown, PropsComuns & { onPress?: () => voi
         // e o ▶ dentro da linha da L, que passa a ser tocável) acionava os dois. O de dentro para a propagação.
         onClick: (e: { stopPropagation: () => void }) => {
           e.stopPropagation()
-          p.onPress?.()
+          const onde = proximoToque ?? { locationX: 0, locationY: 0 }
+          proximoToque = null
+          p.onPress?.({ nativeEvent: onde })
         },
         ref,
       },
