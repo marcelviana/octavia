@@ -141,10 +141,42 @@ export const Text = primitivo('span', 'Text')
  * `measureInWindow` (onde a lista está na tela). Aqui não há rolagem: os dois
  * existem para que a tela não precise perguntar se existem.
  */
-export const ScrollView = forwardRef<unknown, PropsComuns & { scrollEnabled?: boolean; horizontal?: boolean }>((p, ref) => {
+/**
+ * QL-PR3 — a âncora (QL-D18) mexe na rolagem: o duplo REGISTRA cada `scrollTo({ y })` (`__rolagens()`) e deixa o teste
+ * entregar um `onScroll` a toda rolagem que o escuta (`__rolar(y)`), como o RN entrega quando o dedo rola. Não há
+ * rolagem de verdade: é o registro do que a tela PEDIU, e o que a tela ACHA que está na rolagem.
+ */
+interface EventoDeRolagem {
+  nativeEvent: { contentOffset: { x: number; y: number } }
+}
+const rolagensPedidas: number[] = []
+const ouvintesDeRolagem = new Set<(e: EventoDeRolagem) => void>()
+export function __rolagens(): number[] {
+  return [...rolagensPedidas]
+}
+export function __limparRolagens(): void {
+  rolagensPedidas.length = 0
+}
+export function __rolar(y: number): void {
+  for (const f of ouvintesDeRolagem) f({ nativeEvent: { contentOffset: { x: 0, y } } })
+}
+export const ScrollView = forwardRef<
+  unknown,
+  PropsComuns & { scrollEnabled?: boolean; horizontal?: boolean; onScroll?: (e: EventoDeRolagem) => void }
+>((p, ref) => {
   useMedida(p, false)
+  const onScroll = p.onScroll
+  useLayoutEffect(() => {
+    if (onScroll === undefined) return
+    ouvintesDeRolagem.add(onScroll)
+    return () => {
+      ouvintesDeRolagem.delete(onScroll)
+    }
+  }, [onScroll])
   useImperativeHandle(ref, () => ({
-    scrollTo: (): void => undefined,
+    scrollTo: (o?: { y?: number }): void => {
+      if (typeof o?.y === 'number') rolagensPedidas.push(o.y)
+    },
     measureInWindow: (cb: (x: number, y: number, w: number, h: number) => void): void => cb(0, 152, 1138, 475),
   }))
   return createElement(
@@ -331,6 +363,14 @@ const RESPIRO_DO_CORPO = 2 * 32
 let medida: { largura: number } | null = null
 export function __colunas(n?: number, zoom = 22): void {
   medida = n === undefined ? null : { largura: (n + 0.5) * caractereDoDuplo(zoom) + RESPIRO_DO_CORPO }
+}
+/**
+ * QL-PR3 (QL-D43) — a largura CRUA de toda `View`/`ScrollView` com `onLayout`, sem a conta das colunas: `__larguraCrua(0)`
+ * é o contêiner medido com 0 (o primeiro `onLayout` de uma tela que ainda não tem largura). O `Text` continua com a
+ * largura do texto. `__colunas()` desliga as duas.
+ */
+export function __larguraCrua(largura: number): void {
+  medida = { largura }
 }
 function textoDe(filhos: ReactNode): string {
   if (typeof filhos === 'string' || typeof filhos === 'number') return String(filhos)
