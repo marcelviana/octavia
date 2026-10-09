@@ -29,7 +29,18 @@
  * quem vira página é o deslize sobre o documento.
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions, type LayoutChangeEvent } from 'react-native'
+import {
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  useWindowDimensions,
+  type GestureResponderEvent,
+  type LayoutChangeEvent,
+  type NativeScrollEvent,
+  type NativeSyntheticEvent,
+} from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake'
 import {
@@ -86,7 +97,7 @@ import {
   useColunasDoLeitor,
   type EstadoDoArquivoDoLeitor,
 } from './Leitor'
-import { NotasDoPalco } from './NotasDoPalco'
+import { NotasDoPalco, toqueNaRegua } from './NotasDoPalco'
 
 export interface StageScreenProps {
   /**
@@ -563,12 +574,14 @@ export function StageScreen({
    * A rolagem automática continua do ponto ancorado (`y`). A troca de música não ancora: volta ao topo. A Tab não ancora.
    */
   const chaveDoCorpo = `${posicao}|${content?.id ?? ''}`
-  const [medidaDasNotas, setMedidaDasNotas] = useState<{ chave: string; inicio: number } | null>(null)
+  const [medidaDasNotas, setMedidaDasNotas] = useState<{ chave: string; inicio: number; topo: number } | null>(null)
   const medirNotas = useCallback(
     (e: LayoutChangeEvent) => {
       const { y: topo, height } = e.nativeEvent.layout
       const ini = topo + height + space.xl - space.xxl
-      setMedidaDasNotas((m) => (m !== null && m.chave === chaveDoCorpo && Math.abs(m.inicio - ini) < 0.01 ? m : { chave: chaveDoCorpo, inicio: ini }))
+      setMedidaDasNotas((m) =>
+        m !== null && m.chave === chaveDoCorpo && Math.abs(m.inicio - ini) < 0.01 && m.topo === topo ? m : { chave: chaveDoCorpo, inicio: ini, topo },
+      )
     },
     [chaveDoCorpo],
   )
@@ -577,7 +590,38 @@ export function StageScreen({
     y.current = alvo
   }, [])
   const ancora = useAncora(scroll, { chave: chaveDoCorpo, corpo, tipo, logicas, entrelinha, inicio }, ancorar)
-  zerarAncora.current = ancora.zerar
+  zerarAncora.current = () => {
+    ancora.zerar()
+    yDaRolagem.current = 0
+  }
+
+  /**
+   * QL-D56 — a régua das notas fora das bordas de toque (`toqueNaRegua`, `NotasDoPalco.tsx`). A rolagem vista pela régua
+   * (`yDaRolagem`) é a do corpo, que leva as notas com ela: a régua está na tela em `topo do bloco − rolagem`, no sistema do
+   * `meio` (a rolagem começa no topo dele, onde começam as bordas).
+   */
+  const yDaRolagem = useRef(0)
+  const { aoRolar: ancoraAoRolar } = ancora
+  const aoRolarCorpo = useCallback(
+    (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+      yDaRolagem.current = e.nativeEvent.contentOffset.y
+      ancoraAoRolar(e)
+    },
+    [ancoraAoRolar],
+  )
+  const reguaNaTela = (): { topo: number; larguraDoMeio: number } | null =>
+    comNotas && meio !== null && medidaDasNotas !== null && medidaDasNotas.chave === chaveDoCorpo
+      ? { topo: medidaDasNotas.topo - yDaRolagem.current, larguraDoMeio: meio.largura }
+      : null
+  const tocarBorda = (lado: 'voltar' | 'avancar') => (e: GestureResponderEvent) => {
+    const x = lado === 'voltar' ? e.nativeEvent.locationX : (meio?.largura ?? 0) - larguraBorda + e.nativeEvent.locationX
+    if (toqueNaRegua(x, e.nativeEvent.locationY, reguaNaTela())) {
+      alternarNotas()
+      return
+    }
+    if (lado === 'voltar') voltar()
+    else avancar()
+  }
 
   const motivo = motivoDoCorpo
 
@@ -685,7 +729,7 @@ export function StageScreen({
             style={leitor.conteudo}
             contentContainerStyle={leitor.conteudoPad}
             onLayout={aoMedirContainer}
-            onScroll={ancora.aoRolar}
+            onScroll={aoRolarCorpo}
             scrollEventThrottle={16}
             onContentSizeChange={ancora.aoMudarConteudo}
             onScrollBeginDrag={ancora.aoArrastar}
@@ -722,12 +766,12 @@ export function StageScreen({
           <>
             <Pressable
               style={[styles.borda, { width: larguraBorda, height: alturaConteudo, left: 0 }]}
-              onPress={voltar}
+              onPress={tocarBorda('voltar')}
               testID="borda-voltar"
             />
             <Pressable
               style={[styles.borda, { width: larguraBorda, height: alturaConteudo, right: 0 }]}
-              onPress={avancar}
+              onPress={tocarBorda('avancar')}
               testID="borda-avancar"
             />
           </>

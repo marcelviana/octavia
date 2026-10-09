@@ -28,6 +28,24 @@ import { tamanhoDasNotas } from './Leitor'
 
 type Cor = (typeof colors)[ThemeName]
 
+/**
+ * QL-D56 `[Marcel, 2026-10-09]` — NENHUMA BORDA INVISÍVEL DE TOQUE FICA SOBRE UM CONTROLE. As bordas de 15 % do palco
+ * (avançar e voltar às cegas, T1-R27) são `Pressable` desenhados POR CIMA do corpo, e a régua das notas passa por baixo
+ * delas nas duas pontas (o rótulo à esquerda, a divisa à direita — o achado do Tab, div. 1233). A régua fica fora delas
+ * pela ORDEM DE CAPTURA: a borda continua capturando o toque (o mesmo nó, do mesmo tamanho), e o ENTREGA à régua quando
+ * ele cai na faixa dela. `toqueNaRegua` é essa conta: o ponto do toque, no sistema do `meio` (a área entre as barras, onde
+ * as bordas começam em `y` 0), contra a régua na tela — do respiro esquerdo ao direito (32), nos 48 de altura dela.
+ * Sobre o texto (as notas abertas, a letra) e no respiro ao lado, a borda segue valendo.
+ */
+export function toqueNaRegua(
+  x: number,
+  y: number,
+  regua: { topo: number; larguraDoMeio: number } | null,
+): boolean {
+  if (regua === null) return false
+  return y >= regua.topo && y <= regua.topo + touch.min && x >= space.xxl && x <= regua.larguraDoMeio - space.xxl
+}
+
 export interface NotasDoPalcoProps {
   /** As notas da música (já sem a vazia: `notasDaVisualizacao`). */
   notas: string

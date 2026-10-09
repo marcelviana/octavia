@@ -48,8 +48,8 @@ const setlist: SetlistDTO = {
 
 let StageScreen: typeof import('../src/screens/StageScreen').StageScreen
 let P: typeof import('../src/preferencias')
-let onPosicao: ReturnType<typeof vi.fn>
-let onFim: ReturnType<typeof vi.fn>
+let onPosicao: ReturnType<typeof vi.fn<(p: number) => void>>
+let onFim: ReturnType<typeof vi.fn<() => void>>
 
 beforeAll(async () => {
   StageScreen = (await import('../src/screens/StageScreen')).StageScreen
@@ -61,8 +61,8 @@ beforeEach(async () => {
   __limparArmazem()
   await P.definirNotasRecolhidas(false)
   vi.spyOn(console, 'log').mockImplementation(() => undefined)
-  onPosicao = vi.fn()
-  onFim = vi.fn()
+  onPosicao = vi.fn<(p: number) => void>()
+  onFim = vi.fn<() => void>()
 })
 
 afterEach(async () => {
@@ -117,8 +117,8 @@ describe('QL-D56 — a régua das notas fica fora das bordas de toque (o achado 
     await palco(48, B)
     expect(abertas()).toBe(true)
     await tocarEm('borda-avancar', borda(48) - 32 - 10, REGUA.topo + 24) // a divisa: 20 dp antes do respiro direito de 32
-    expect(abertas(), 'o toque na divisa não recolheu as notas').toBe(false)
     naoTrocou()
+    expect(abertas(), 'o toque na divisa não recolheu as notas').toBe(false)
   })
 
   it('B: um toque no RÓTULO (a ponta esquerda, sob a borda de voltar) abre — e não volta', async () => {
@@ -126,8 +126,8 @@ describe('QL-D56 — a régua das notas fica fora das bordas de toque (o achado 
     await palco(48, B)
     expect(abertas()).toBe(false)
     await tocarEm('borda-voltar', 32 + 40, REGUA.topo + 24) // dentro de "NOTAS DA MÚSICA"
-    expect(abertas(), 'o toque no rótulo não abriu as notas').toBe(true)
     naoTrocou()
+    expect(abertas(), 'o toque no rótulo não abriu as notas').toBe(true)
   })
 
   it('B: um toque no MEIO da régua (fora das bordas) recolhe e abre, como sempre', async () => {
@@ -142,6 +142,7 @@ describe('QL-D56 — a régua das notas fica fora das bordas de toque (o achado 
   it('C: as duas pontas, na borda de 15 % de C', async () => {
     await palco(80)
     await tocarEm('borda-avancar', borda(80) - 32 - 10, REGUA.topo + 10)
+    naoTrocou()
     expect(abertas()).toBe(false)
     await tocarEm('borda-voltar', 32 + 5, REGUA.base - 2)
     expect(abertas()).toBe(true)
@@ -151,6 +152,7 @@ describe('QL-D56 — a régua das notas fica fora das bordas de toque (o achado 
   it('nas duas alturas da régua: a linha de cima e a de baixo dos 48 ainda são régua', async () => {
     await palco(48, B)
     await tocarEm('borda-avancar', borda(48) - 40, REGUA.topo + 0.5)
+    naoTrocou()
     expect(abertas()).toBe(false)
     await tocarEm('borda-avancar', borda(48) - 40, REGUA.base - 0.5)
     expect(abertas()).toBe(true)
@@ -187,6 +189,7 @@ describe('QL-D56 — a régua das notas fica fora das bordas de toque (o achado 
     __rolar(20) // a régua em 4…52 na tela
     await assentar(10)
     await tocarEm('borda-avancar', borda(48) - 40, 30)
+    naoTrocou()
     expect(abertas()).toBe(false)
     naoTrocou()
   })
@@ -204,6 +207,7 @@ describe('QL-D56 — a régua das notas fica fora das bordas de toque (o achado 
   it('o estado do toque pela borda é o mesmo estado lembrado (o mesmo das outras músicas)', async () => {
     await palco(48, B)
     await tocarEm('borda-avancar', borda(48) - 40, REGUA.topo + 24)
+    naoTrocou()
     expect(P.notasRecolhidas()).toBe(true)
     expect(exige('notas-regua').getAttribute('aria-expanded')).toBe('false')
   })
