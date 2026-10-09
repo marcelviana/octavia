@@ -1,0 +1,4 @@
+ANCORA_TENTATIVAS 4
+aoArrastar 2
+localhost:8788 1
+octavia.rocks 0

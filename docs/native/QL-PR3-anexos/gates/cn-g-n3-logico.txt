@@ -1,0 +1,19 @@
+== CN do G-N3 com a referência lógica à parte — QL3D-S3-S3a-letra-1a-avd-pai.xml × QL3D-S3-S3a-letra-1a-avd-ret.xml · referência REF-S3-S3a-letra-1a-avd-pai.xml (f8e18747289d)
+CP   a quebra válida (C e B quebrados como o app os desenha) — espera passa: exit 0 · ok
+    G-N3: (e)=0 · (b)=0 · nome-acessível=0 · rolagem=0 · quebra=1 ✓ (d′ e 4 dp não reprovam: triagem e errata)
+CN-1 a mesma palavra perdida em C e em B — espera reprova: exit 1 · ok
+    G-N3: REPROVA ✗ — (e)=1 em 1 dump(s) · (b)=0 em 0 dump(s) · nome-acessível=0 · rolagem=0 · quebra=0
+      QL3D-S3-S3a-letra-1a-avd-ret: 1 — corpo — referência lógica REF-S3-S3a-letra-1a-avd-pai: a paisagem não é uma quebra do corpo pré-QL (as 50 linhas desenhadas não são uma quebra das 49 linhas lógicas)
+CN-2 uma letra trocada só na faixa — espera reprova: exit 1 · ok
+    G-N3: REPROVA ✗ — (e)=1 em 1 dump(s) · (b)=0 em 0 dump(s) · nome-acessível=0 · rolagem=0 · quebra=0
+      QL3D-S3-S3a-letra-1a-avd-ret: 1 — corpo — referência lógica REF-S3-S3a-letra-1a-avd-pai: a faixa não é uma quebra do corpo pré-QL (as 92 linhas desenhadas não são uma quebra das 49 linhas lógicas)
+CN-3a a linha que deveria quebrar e não quebrou (a paisagem pré-QL, a de 110 inteira) — espera reprova: exit 1 · ok
+    G-N3: REPROVA ✗ — (e)=1 em 1 dump(s) · (b)=0 em 0 dump(s) · nome-acessível=0 · rolagem=0 · quebra=0
+      QL3D-S3-S3a-letra-1a-avd-ret: 1 — corpo — referência lógica REF-S3-S3a-letra-1a-avd-pai: na paisagem uma linha passa da coluna (o corpo rola para o lado)
+CN-3b a linha que deveria quebrar e não quebrou na faixa (o corpo até a borda da rolagem) — espera reprova: exit 1 · ok
+    G-N3: REPROVA ✗ — (e)=1 em 1 dump(s) · (b)=0 em 0 dump(s) · nome-acessível=0 · rolagem=0 · quebra=0
+      QL3D-S3-S3a-letra-1a-avd-ret: 1 — corpo — referência lógica REF-S3-S3a-letra-1a-avd-pai: na faixa uma linha passa da coluna (o corpo rola para o lado)
+CN-5 a quebra válida SEM o --logico (o G-N3 de antes da referência à parte) — espera reprova: exit 1 · ok
+    G-N3: REPROVA ✗ — (e)=1 em 1 dump(s) · (b)=0 em 0 dump(s) · nome-acessível=0 · rolagem=0 · quebra=0
+      QL3D-S3-S3a-letra-1a-avd-ret: 1 — corpo
+== todos os controles como esperado ✓

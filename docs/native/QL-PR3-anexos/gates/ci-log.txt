@@ -1,0 +1,38 @@
+# CI da PR #375 sobre 0e83c2e — gh run view --log, filtrado, sem cores (perl)
+## ci.yml · run 37954249789 (job build)
+stdout | apps/native/test/texto-logico.test.ts > texto lógico (QL-PR1) — o desenho vale como o texto quando é uma quebra dele > CP: toda saída esperada do gate da quebra é quebra do seu texto; o desenho sem quebra é o próprio texto
+ ✓  native-tela  apps/native/test/leitor-quebra.test.tsx (30 tests) 1706ms
+stdout | apps/native/test/g-par-visualizacao.test.tsx > G-par da visualização (N4-PR8) — o nó corpo de V mostra o que o site mostra > cada item do par: V igual ao retrato do site pelo texto lógico — C (a coluna de V, 55)
+G-par da visualização [C (a coluna de V, 55)] — itens 17 · pares 10 · iguais 10 · diferentes 0 · fora do par 7 · retrato do site 10
+  o leitor quebra: sim (PR-3) · linhas do par acima da coluna: 0 · continuações vistas em V: 0
+G-par da visualização: zero diferenças ✓
+stdout | apps/native/test/g-par-visualizacao.test.tsx > G-par da visualização (N4-PR8) — o nó corpo de V mostra o que o site mostra > cada item do par: V igual ao retrato do site pelo texto lógico — 26 colunas (o duplo com colunas, QL-PR1)
+G-par da visualização [26 colunas (o duplo com colunas, QL-PR1)] — itens 17 · pares 10 · iguais 10 · diferentes 0 · fora do par 7 · retrato do site 10
+  o leitor quebra: sim (PR-3) · linhas do par acima da coluna: 6 · continuações vistas em V: 6
+G-par da visualização: zero diferenças ✓
+stdout | tests/gates/ql-quebra.test.ts > gate da quebra (QL-PR1) — as regras do corte, a invariância e a medida > reprova exatamente a lista de ql-quebra-reprovados.txt
+gate da quebra — casos 23 · checagens 46 ((i) 17 · (ii) 23 · (iii) 6) · passam 46 · reprovam 0
+gate da quebra: zero reprovações, lista vazia (QL-PR2) ✓
+ Test Files  145 passed | 3 skipped (148)
+      Tests  1797 passed | 59 skipped (1856)
+## gates.yml · run 37954249793 (job gates-nativos)
+  g1a: apps/native/src/screens/Leitor.tsx
+  g1a: apps/native/src/screens/StageScreen.tsx
+  g1a: apps/native/src/screens/VisualizacaoScreen.tsx
+  g1a: packages/core/src/quebra.ts
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+  G1b: só adição ✓
+G2 — testIDs  antes=121  depois=121
+  G2: antes ⊆ depois ✓
+G3 — linhas log( antes=70  depois=70
+  G3: nenhuma linha sumiu ✓
+== docs/native/DESIGN-V1
+telas.html: OK
+== docs/native/DESIGN-N2
+telas.html: OK
+== docs/native/DESIGN-N3
+telas.html: OK
+== docs/native/DESIGN-N4
+telas.html: OK
+== docs/native/DESIGN-QL
+telas.html: OK

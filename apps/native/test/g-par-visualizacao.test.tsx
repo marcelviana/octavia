@@ -39,8 +39,8 @@ import { desmontar, montar } from './tela'
 import { __colunas } from './fake-react-native'
 import { ehQuebraDe } from '../scripts/texto-logico.mjs'
 
-/** O estado do leitor de V: quebra o corpo? `false` até a PR-3 do QL (ver o cabeçalho). */
-const O_LEITOR_QUEBRA = false
+/** O estado do leitor de V: quebra o corpo? `true` desde a PR-3 do QL (ver o cabeçalho). */
+const O_LEITOR_QUEBRA = true
 const COLUNAS_ESTREITAS = 26
 
 // O que a visualização traz consigo: o favoritar (→ a API → o Firebase) e a rede — os duplos de sempre.

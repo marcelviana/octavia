@@ -1,0 +1,7 @@
+a âncora no aparelho — QL3Q-ancora-tab-<passo>.txt · fator 2.25 px/dp · a Letra longa (107 linhas lógicas)
+  antes    B 48 col · zoom 22: ScrollY medido 8415 px (3740.0 dp; 132 eventos) · no topo: a linha visual 110, da lógica 76
+  giro-C   C 80 col · zoom 22: ScrollY medido 5754 px (2557.3 dp; 1 eventos) · no topo: a linha visual 76, da lógica 76 · PREVISTO 5754.4 px (a lógica 76 a 32 do topo) → igual · a 1ª linha visual do topo é o COMEÇO da lógica ✓
+  zoom-26  C 68 col · zoom 26: ScrollY medido 7341 px (3262.7 dp; 2 eventos) · no topo: a linha visual 81, da lógica 70 · PREVISTO 7798.1 px (a lógica 76 a 32 do topo) → DIFERENTE · o topo NÃO é o começo da lógica ✗
+  volta-B  B 41 col · zoom 26: ScrollY medido 9389 px (4172.9 dp; 1 eventos) · no topo: a linha visual 104, da lógica 65 · PREVISTO 10155.6 px (a lógica 70 a 32 do topo) → DIFERENTE · o topo NÃO é o começo da lógica ✗
+  auto     a rolagem automática: 91 eventos · de 10171 a 10637 px · o ponto ancorado 9389.0 px → NÃO parte do ponto ancorado ✗
+âncora: 3 passo(s) fora ✗

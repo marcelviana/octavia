@@ -1,0 +1,38 @@
+== CN-P0 o leitor da PR (nada plantado)
+CN-P0 — espera exit 0: exit 0 · ok
+      o leitor quebra: sim (PR-3) · linhas do par acima da coluna: 0 · continuações vistas em V: 0
+    G-par da visualização: zero diferenças ✓
+      o leitor quebra: sim (PR-3) · linhas do par acima da coluna: 6 · continuações vistas em V: 6
+      QUEBRA    letra                        site=texto(108)       V=texto(112; 7 linhas) · 2 continuações · 2 linha(s) acima de 26
+      QUEBRA    letra-poluida-editor         site=texto(44)        V=texto(46; 4 linhas) · 1 continuações · 1 linha(s) acima de 26
+      QUEBRA    cifra-secoes-acordes-vazios  site=texto(123)       V=texto(129; 7 linhas) · 3 continuações · 3 linha(s) acima de 26
+    G-par da visualização: zero diferenças ✓
+== CN-P1 o leitor ignora as colunas (não quebra)
+CN-P1 — espera exit 1: exit 1 · ok
+      o leitor quebra: sim (PR-3) · linhas do par acima da coluna: 0 · continuações vistas em V: 0
+    G-par da visualização: zero diferenças ✓
+      o leitor quebra: sim (PR-3) · linhas do par acima da coluna: 6 · continuações vistas em V: 0
+    G-par da visualização: zero diferenças ✓
+    AssertionError: linha acima da coluna e V sem continuação: o leitor não viu as colunas do duplo: expected [ 'letra', …(2) ] to deeply equal []
+        193|     if (!O_LEITOR_QUEBRA) expect(continuacoes, 'V quebrou o corpo sem …
+== CN-P2 a quebra troca uma letra
+CN-P2 — espera exit 1: exit 1 · ok
+      o leitor quebra: sim (PR-3) · linhas do par acima da coluna: 0 · continuações vistas em V: 0
+    G-par da visualização: zero diferenças ✓
+      o leitor quebra: sim (PR-3) · linhas do par acima da coluna: 6 · continuações vistas em V: 0
+      DIFERENTE letra                        site=texto(108)       V=texto(112; 7 linhas) · 2 linha(s) acima de 26
+      DIFERENTE letra-poluida-editor         site=texto(44)        V=texto(46; 4 linhas) · 1 linha(s) acima de 26
+      DIFERENTE cifra-secoes-acordes-vazios  site=texto(123)       V=texto(129; 7 linhas) · 3 linha(s) acima de 26
+    G-par da visualização: ✗ reprova (letra, letra-poluida-editor, cifra-secoes-acordes-vazios)
+    AssertionError: V diferente do site: expected [ 'letra', …(2) ] to deeply equal []
+== CN-P3 o leitor quebra também a Tab
+CN-P3 — espera exit 1: exit 1 · ok
+      o leitor quebra: sim (PR-3) · linhas do par acima da coluna: 0 · continuações vistas em V: 0
+    G-par da visualização: zero diferenças ✓
+      o leitor quebra: sim (PR-3) · linhas do par acima da coluna: 6 · continuações vistas em V: 9
+      QUEBRA    letra                        site=texto(108)       V=texto(112; 7 linhas) · 2 continuações · 2 linha(s) acima de 26
+      TAB QUEBRADA tab-texto                    site=texto(92)        V=texto(101; 6 linhas) · 3 continuações
+      QUEBRA    letra-poluida-editor         site=texto(44)        V=texto(46; 4 linhas) · 1 continuações · 1 linha(s) acima de 26
+      QUEBRA    cifra-secoes-acordes-vazios  site=texto(123)       V=texto(129; 7 linhas) · 3 continuações · 3 linha(s) acima de 26
+    G-par da visualização: ✗ reprova (tab-texto)
+== todos os controles como esperado ✓

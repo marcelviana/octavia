@@ -1,0 +1,10 @@
+11:26:01 avião=0 (RX2N8000F3D)
+QL3D-S1-setlists-tab-pai mCurrentRotation=ROTATION_90 png=241413 xml=40862 47cb51259242
+11:26:25 avião=1 (RX2N8000F3D)
+QL3D-S1-aviso-sem-rede-tab-pai mCurrentRotation=ROTATION_90 png=272460 xml=43324 47923e20b47c
+11:26:57 avião=0 (RX2N8000F3D)
+11:26:58 mock modo=500-pagina-1 vazio=False
+espera 32s para o cache ter 1 min
+QL3D-S1-S1e-falha-com-cache-tab-pai mCurrentRotation=ROTATION_90 png=270610 xml=44885 717423a1ff8a
+11:27:56 mock modo=normal vazio=False
+capturas=3

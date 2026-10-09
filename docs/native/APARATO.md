@@ -481,3 +481,26 @@ liga o `onLayout` — todo primitivo com `onLayout` o recebe uma vez, na montage
 mais o respiro de 2 × 32, o `Text` com as colunas do texto × o caractere do duplo (a escala linear do 22). `__colunas()`
 desliga; **desligado é o padrão** e é o comportamento de antes (o palco, o fim e o reordenar têm `onLayout`). Não é
 geometria: é a mesma conta dos dois lados, para o leitor chegar a `n`. O G-par de V roda com ele em 26 colunas.
+
+## O leitor que quebra (QL-PR3)
+
+- **O G-N3 se chama com a referência lógica à parte** desde a errata em par da B3 (QL-PR3, a decisão do Marcel sobre a
+  div. 1213): `node apps/native/scripts/g-n3.mjs --pai docs/native/N3-PRECHECK-anexos/B5-baseline --pai
+  docs/native/N3-PRECHECK-anexos/B3-referencia-paisagem --logico docs/native/QL-PR3-anexos/b3-pre-ql --faixa <dir> [--rolada
+  <dir>]`. Sem o `--logico`, os 6 pares de Letra da B3 (a paisagem quebrada em 80 colunas) reprovam por construção.
+- **A cadeia da base do G-inv no Tab segue o caminho do Tab** (`roteiro.py … S1 S1_aviso S1e …`, a `cadeia-tab.sh` da N4-PR8),
+  não a passada de S1 do AVD (`passada4-final.py`): a base do Tab foi tirada com o aviso ligado com o app aberto e o S1e logo
+  depois do sync (div. 1220). E a cópia do `roteiro.py` do pre-check precisa da **errata de caminho da N4-PR7** na S4 (o
+  `buscar` abre a biblioteca; a S4 se alcança pelo avulso), além do `ARVORE`/`PORTA`/`ir_s1` (div. 1219) —
+  `QL-PR3-anexos/instrumentos/arnes/roteiro.diff`.
+- **As bordas de 15 % do palco ficam por cima do corpo** e pegam o toque que começa nelas: o arrasto de uma linha do corpo
+  (a exceção da QL-D45, que rola para o lado) começa **no meio da tela** (div. 1218).
+- **O `uiautomator events`** (o `ScrollY` da rolagem em cada evento de acessibilidade — o instrumento da âncora,
+  `QL-PR3-anexos/instrumentos/ancora.ts`) **segura a conexão de automação**: com ele de pé, o `uiautomator dump` seguinte lê o
+  arquivo velho. Roda só durante a mudança medida, e para antes de cada captura (div. 1214).
+- **O inspetor do Metro (CDP)** — para rodar código no Hermes do app sem mudar o app (`QL-PR3-anexos/instrumentos/
+  custo-hermes.mjs`): `ws://127.0.0.1:8081/inspector/debug?…` com o cabeçalho `Origin: http://127.0.0.1:8081` (sem ele, 401; por
+  `localhost`, a sessão fecha no mesmo milissegundo, 1006) — o `WebSocket` do Node não deixa pôr o `Origin`, o pacote `ws` do
+  `node_modules` deixa (div. 1221). O Metro diz *"unsupported debugging client"* no console e segue.
+- **O anel do logcat do Tab (5 MiB) gira numa rodada longa** (div. 1223): a contagem de quedas se completa pelo `dropbox` do Tab
+  (`dumpsys dropbox | grep <data>`: `data_app_crash`, `data_app_native_crash`, `SYSTEM_TOMBSTONE`), que cobre a sessão inteira.

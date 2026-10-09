@@ -31,6 +31,13 @@ cd "$RAIZ" || exit 1
 TMP=$(mktemp -d)
 trap 'rm -rf "$TMP"' EXIT
 A=docs/native/N3-PRECHECK-anexos
+# QL-PR3 — a B3 COMO O PRE-CHECK A CONGELOU. A errata em par da QL-PR3 (regra 33) trocou na B3 os seis dumps de Letra
+# pela Letra quebrada em 80 colunas; este controle mede o G-N3 contra dados do pre-check (o `B3-inventario.jsonl`, os
+# dumps de antes do QL), então a paisagem dele é a B3 com esses seis de volta à forma pré-QL, guardada à parte com sha
+# (`docs/native/QL-PR3-anexos/b3-pre-ql/`). Nada mais muda no controle.
+B3PRE="$TMP/b3-pre-ql"; mkdir -p "$B3PRE"
+cp docs/native/N3-PRECHECK-anexos/B3-referencia-paisagem/*.xml "$B3PRE/"
+cp docs/native/QL-PR3-anexos/b3-pre-ql/*.xml "$B3PRE/"
 FALHOU=0
 confere() {  # confere <nome> <exit-esperado> <exit-obtido>
   if [ "$2" = "$3" ]; then echo "  $1: exit $3 ✓"; else echo "  $1: exit $3, esperado $2 ✗"; FALHOU=1; fi
@@ -76,7 +83,7 @@ mv "$TMP/fora.xml" "$TMP/novos/CP-S1-setlists-tab-pai.xml" 2>/dev/null
 cp "$A/B5-baseline/B5-S1-setlists-tab-pai.xml" "$TMP/novos/CP-S1-setlists-tab-pai.xml"
 
 echo "== G-N3"
-G="node apps/native/scripts/g-n3.mjs --pai $A/B5-baseline --pai $A/B3-referencia-paisagem"
+G="node apps/native/scripts/g-n3.mjs --pai $A/B5-baseline --pai $B3PRE"
 $G --faixa "$A/B2" > "$TMP/b2" 2>&1; confere CN-N1 1 $?
 grep -E '^\(e\)|^\(d′\)|^4 dp|^G-N3:' "$TMP/b2" | sed 's/^/      /'
 $G --faixa "$A/B4" > "$TMP/b4" 2>&1; confere CN-N2 1 $?
@@ -109,7 +116,7 @@ node -e '
   process.exit(dif === 0 && n > 0 ? 0 : 1)' "$A/B3-inventario.jsonl" "$TMP/b2" "$TMP/b4"
 confere CT-N3 0 $?
 mkdir "$TMP/cp"
-for f in "$A"/B5-baseline/*.xml "$A"/B3-referencia-paisagem/*.xml; do cp "$f" "$TMP/cp/CP-$(basename "$f" | cut -d- -f2-)"; done
+for f in "$A"/B5-baseline/*.xml "$B3PRE"/*.xml; do cp "$f" "$TMP/cp/CP-$(basename "$f" | cut -d- -f2-)"; done
 $G --faixa "$TMP/cp" > "$TMP/o" 2>&1; confere CP-N4 0 $?
 grep -E '^G-N3 —|^\(e\)|^\(d′\)|^4 dp|^G-N3:' "$TMP/o" | sed 's/^/      /'
 node apps/native/scripts/g-n3.mjs --pai "$A/B5-baseline" > "$TMP/o" 2>&1; confere CN-N5 2 $?

@@ -16,6 +16,7 @@
  */
 import { describe, expect, it } from 'vitest'
 import { ehLinhaDeAcordes, quebrar, RECUO_DA_CONTINUACAO, type LinhaVisual } from './quebra'
+import { colunasDesenhadas } from './quebra'
 
 /** `null` = a invariância vale; senão, o motivo (a conferência do gate (ii)). */
 function invariancia(texto: string, r: LinhaVisual[]): string | null {
@@ -277,5 +278,36 @@ describe('a varredura — a invariância em 3…90 colunas e a largura dentro da
   it('a Tab sai igual ao texto, linha a linha, em todo número de colunas', () => {
     const tab = TEXTOS.find(([tipo]) => tipo === 'Tab')![1]
     for (let c = 3; c <= 90; c++) expect(quebrar(tab, 'Tab', c).map((l) => l.texto)).toEqual(tab.split('\n'))
+  })
+})
+
+/**
+ * QL-PR3 — a LARGURA DESENHADA de uma linha visual, em colunas (`colunasDesenhadas`). O leitor (`Leitor.tsx`) a usa para
+ * achar a linha que passa da coluna — a exceção da QL-D45, que rola para o lado só nessa linha. É a medida do QL-D24, a
+ * mesma com que `quebrar` corta: o `\t` até a próxima múltipla de 8 contada da coluna DESENHADA (o recuo é texto da
+ * linha visual, QL-D47), o `\r` do fim e o acento combinante contam 0, o resto conta 1 (ponto de código).
+ */
+describe('QL-PR3 — colunasDesenhadas: a largura de uma linha visual, a medida do QL-D24', () => {
+  it('conta pontos de código, o \t até a múltipla de 8, o \r do fim e o acento combinante como 0', () => {
+    expect(colunasDesenhadas('')).toBe(0)
+    expect(colunasDesenhadas('abc')).toBe(3)
+    expect(colunasDesenhadas('ab\tcd')).toBe(10)
+    expect(colunasDesenhadas('  ij\tk')).toBe(9)
+    expect(colunasDesenhadas('abc\r')).toBe(3)
+    expect(colunasDesenhadas('abc\rd')).toBe(5)
+    expect(colunasDesenhadas('cafe\u0301')).toBe(4)
+    expect(colunasDesenhadas('ab😀')).toBe(3)
+  })
+
+  it('toda linha visual de quebrar cabe na coluna por esta medida, com \\t e acento — e a do acorde maior que ela passa (QL-D45)', () => {
+    const letra = 'ab\tcd ef gh ij kl mn op\ncafe\u0301 cafe\u0301 cafe\u0301 cafe\u0301\n  ij\tk lm no pq rs'
+    for (let c = 8; c <= 26; c++) {
+      for (const l of quebrar(letra, 'Lyrics', c)) expect(colunasDesenhadas(l.texto), `${c}: ${JSON.stringify(l.texto)}`).toBeLessThanOrEqual(c)
+    }
+    // a linha de acordes sozinha (seguida de linha vazia), com o acorde de 11 colunas em 8: ele fica inteiro e passa
+    const [primeira, ...resto] = quebrar('F#m7(11)/G#  Am\n', 'Chords', 8)
+    expect(primeira?.texto).toBe('F#m7(11)/G#')
+    expect(colunasDesenhadas(primeira!.texto)).toBe(11)
+    for (const l of resto) expect(colunasDesenhadas(l.texto)).toBeLessThanOrEqual(8)
   })
 })

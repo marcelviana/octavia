@@ -28,7 +28,7 @@
  * continuam navegando MÚSICA, não página — errata do design (D-1 / A14):
  * quem vira página é o deslize sobre o documento.
  */
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import {
   Pressable,
   ScrollView,
@@ -37,6 +37,8 @@ import {
   View,
   useWindowDimensions,
   type LayoutChangeEvent,
+  type NativeScrollEvent,
+  type NativeSyntheticEvent,
 } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake'
@@ -85,7 +87,13 @@ import {
   PlaceholderDoLeitor,
   S3eDoLeitor,
   estiloDoLeitor,
+  inicioDoBloco,
   leitor,
+  linhasDoLeitor,
+  logicaNoTopo,
+  logicasDasVisuais,
+  useColunasDoLeitor,
+  yDaLogica,
   type EstadoDoArquivoDoLeitor,
 } from './Leitor'
 
@@ -127,6 +135,11 @@ const TAG_PALCO = 'octavia-palco'
 
 /** Quanto tempo o motivo de um controle inerte fica na linha acima da barra. */
 const MOTIVO_MS = 2500
+
+/** QL-PR3 — o pedido da âncora se reaplica a cada `ANCORA_INTERVALO_MS` até a rolagem chegar, no máximo
+ * `ANCORA_TENTATIVAS` vezes (1,5 s): o bastante para o conteúdo novo assentar no Tab, que é o mais lento medido. */
+const ANCORA_INTERVALO_MS = 100
+const ANCORA_TENTATIVAS = 15
 
 /** A dica de gesto do PDF (S3d) — a linha acima da barra, como no design. */
 const DICA_PDF = 'pinça para zoom · arraste para mover · deslize para virar a página'
@@ -289,6 +302,16 @@ export function StageScreen({
 
   const scroll = useRef<ScrollView | null>(null)
   const y = useRef(0)
+  /** QL-PR3 — a rolagem vista (o `onScroll`, a mão ou a rolagem automática): de onde a âncora parte. */
+  const yVisto = useRef(0)
+  /**
+   * QL-PR3 — o pedido da âncora em curso: a rolagem pedida e a lógica que ela põe no topo. Fica de pé até a rolagem
+   * VISTA chegar ao alvo: o primeiro `scrollTo` pode cair no conteúdo velho e ser cortado pelo tamanho dele (medido no
+   * Tab), então o palco o reaplica (`ANCORA_INTERVALO_MS`, até `ANCORA_TENTATIVAS` vezes) e também quando o conteúdo
+   * novo assenta (`onContentSizeChange`). Uma segunda mudança com o pedido de pé ancora na MESMA lógica.
+   */
+  const alvoDaAncora = useRef<{ y: number; logica: number } | null>(null)
+  const tentativaDaAncora = useRef<ReturnType<typeof setTimeout> | null>(null)
   const frame = useRef<number | null>(null)
   const pedidoEm = useRef(0)
   const primeiroFrame = useRef(true)
@@ -357,6 +380,9 @@ export function StageScreen({
     setRodando(false)
     setMotivoVisivel(null)
     y.current = 0
+    yVisto.current = 0
+    alvoDaAncora.current = null
+    if (tentativaDaAncora.current !== null) clearTimeout(tentativaDaAncora.current)
     scroll.current?.scrollTo({ y: 0, animated: false })
     if (navegouEm.current > 0 && setlist !== null) {
       log(
@@ -522,6 +548,79 @@ export function StageScreen({
   // N4-PR8: o estilo do corpo é o do leitor compartilhado (`Leitor.tsx`) — o mesmo objeto de antes.
   const estiloTexto = estiloDoLeitor(content?.content_type ?? null, zoom, cor)
 
+  /**
+   * QL-PR3 — a quebra (QL-R10). As colunas vêm do contêiner do corpo (o `ScrollView` vertical, com o respiro de 32 por
+   * dentro) e do caractere medido nos cinco zooms de uma vez, na montagem (o passo de zoom já o encontra). Até as duas
+   * medidas existirem, e na Tab, o corpo é o de hoje (QL-D43, R4).
+   */
+  const tipo = content?.content_type ?? null
+  const { colunas, aoMedirContainer, medidor } = useColunasDoLeitor(tipo, zoom, zoomSteps, cor)
+  const linhas = useMemo(() => linhasDoLeitor(corpo, tipo, colunas), [corpo, tipo, colunas])
+  const entrelinha = estiloTexto.lineHeight ?? zoom
+  const logicas = useMemo(() => (corpo === null ? [] : logicasDasVisuais(corpo, linhas)), [corpo, linhas])
+
+  /**
+   * QL-PR3 — A ÂNCORA (QL-D18, QL-D37; QL-R13). Quando o desenho do MESMO corpo muda — o giro (C ↔ B) e o zoom mudam as
+   * colunas e a entrelinha —, a linha lógica que estava no topo volta ao topo: o começo dela a 32 da barra (na Cifra, o
+   * par a partir da linha de acordes). A rolagem automática continua daí (`y`). A troca de música não ancora: volta ao
+   * topo, como sempre (o efeito acima). A Tab não quebra e não ancora (R4).
+   */
+  const chaveDoCorpo = `${posicao}|${content?.id ?? ''}`
+  const desenhoAnterior = useRef<{ chave: string; logicas: readonly number[]; entrelinha: number } | null>(null)
+  const pedirAncora = useCallback((alvo: number, tentativa: number) => {
+    const pedido = alvoDaAncora.current
+    if (pedido === null || pedido.y !== alvo) return
+    if (tentativa > 0 && Math.abs(yVisto.current - alvo) <= 1) {
+      alvoDaAncora.current = null
+      return
+    }
+    scroll.current?.scrollTo({ y: alvo, animated: false })
+    if (tentativa >= ANCORA_TENTATIVAS) {
+      alvoDaAncora.current = null
+      return
+    }
+    tentativaDaAncora.current = setTimeout(() => pedirAncora(alvo, tentativa + 1), ANCORA_INTERVALO_MS)
+  }, [])
+  useLayoutEffect(() => {
+    const anterior = desenhoAnterior.current
+    desenhoAnterior.current = { chave: chaveDoCorpo, logicas, entrelinha }
+    if (anterior === null || anterior.chave !== chaveDoCorpo || corpo === null || tipo === 'Tab') return
+    const igual =
+      anterior.entrelinha === entrelinha &&
+      anterior.logicas.length === logicas.length &&
+      anterior.logicas.every((l, i) => l === logicas[i])
+    if (igual) return
+    const pendente = alvoDaAncora.current
+    const logica = pendente !== null ? pendente.logica : inicioDoBloco(corpo, tipo, logicaNoTopo(anterior.logicas, yVisto.current, anterior.entrelinha))
+    const alvo = yDaLogica(logicas, logica, entrelinha)
+    y.current = alvo
+    alvoDaAncora.current = { y: alvo, logica }
+    if (tentativaDaAncora.current !== null) clearTimeout(tentativaDaAncora.current)
+    pedirAncora(alvo, 0)
+  }, [chaveDoCorpo, logicas, entrelinha, corpo, tipo, pedirAncora])
+  useEffect(
+    () => () => {
+      if (tentativaDaAncora.current !== null) clearTimeout(tentativaDaAncora.current)
+    },
+    [],
+  )
+
+  const aoRolar = useCallback((e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    yVisto.current = e.nativeEvent.contentOffset.y
+    // a rolagem chegou ao alvo da âncora: o pedido termina
+    const pedido = alvoDaAncora.current
+    if (pedido !== null && Math.abs(yVisto.current - pedido.y) <= 1) alvoDaAncora.current = null
+  }, [])
+  const aoMudarConteudo = useCallback(() => {
+    const pedido = alvoDaAncora.current
+    if (pedido !== null) scroll.current?.scrollTo({ y: pedido.y, animated: false })
+  }, [])
+  // o dedo na rolagem: o músico toma conta, e o pedido da âncora sai
+  const aoArrastar = useCallback(() => {
+    alvoDaAncora.current = null
+    if (tentativaDaAncora.current !== null) clearTimeout(tentativaDaAncora.current)
+  }, [])
+
   const motivo =
     content === null
       ? MOTIVO.ausente
@@ -628,17 +727,29 @@ export function StageScreen({
             onBaixar={() => void buscarArquivo(urlArquivo, true)}
           />
         ) : (
-          <ScrollView ref={scroll} style={leitor.conteudo} contentContainerStyle={leitor.conteudoPad}>
+          <ScrollView
+            ref={scroll}
+            style={leitor.conteudo}
+            contentContainerStyle={leitor.conteudoPad}
+            onLayout={aoMedirContainer}
+            onScroll={aoRolar}
+            scrollEventThrottle={16}
+            onContentSizeChange={aoMudarConteudo}
+            onScrollBeginDrag={aoArrastar}
+          >
             {motivo !== undefined ? (
               <PlaceholderDoLeitor testID="placeholder" titulo={motivo.titulo} apoio={motivo.apoio} cor={cor} />
             ) : (
-              // O ScrollView horizontal é o que impede a re-quebra da linha
-              // longa em qualquer zoom (T1-R25/R31 — provado no spike). N4-PR8:
-              // o corpo é o do leitor compartilhado, que a visualização também usa.
-              <CorpoDoLeitor corpo={corpo} estilo={estiloTexto} testID="corpo" />
+              // N4-PR8: o corpo é o do leitor compartilhado, que a visualização também usa. QL-PR3: nas linhas
+              // visuais da quebra, quando há colunas; a Tab (e o corpo antes das medidas) como antes, rolando para o
+              // lado (`Leitor.tsx`).
+              <CorpoDoLeitor corpo={corpo} tipo={tipo} linhas={linhas} colunas={colunas} estilo={estiloTexto} testID="corpo" />
             )}
           </ScrollView>
         )}
+
+        {/* QL-PR3: o medidor do caractere, fora da tela, até os cinco zooms estarem medidos (só para texto que quebra). */}
+        {corpo !== null && tipo !== 'Tab' ? medidor : null}
 
         {linha !== null ? (
           <Text style={[styles.dica, { color: cor.muted }]} testID="linha-motivo">

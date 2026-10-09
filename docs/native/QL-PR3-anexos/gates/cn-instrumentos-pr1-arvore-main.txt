@@ -1,0 +1,86 @@
+      dump-quebrado: 49 linhas lógicas → 92 desenhadas em 48 colunas
+== CP-0 a faixa como está (sem quebra)
+  CP-0 G-N3: exit 0 ✓
+  CP-0 G-N3: "(e)=0 · (b)=0 · nome-acessível=0 · rolagem=0 · quebra=0" ✓
+      (e) TEXTO QUE SOME — REPROVA: 0
+        N4P9F-S3-S3a-letra-1a-avd-ret: "Manhã de ensaio · Banda da fixture · Let" 832 → 663.1 dp
+        N4P9F-S3-S3a-letra-1a-avd-ret: corpo 1073.8 → 647.1 dp (altura ×1.9)
+      QUEBRA — o corpo da faixa é uma quebra do texto lógico do corpo da paisagem (QL-D16); não reprova, não soma ao (e): 0
+      G-N3: (e)=0 · (b)=0 · nome-acessível=0 · rolagem=0 · quebra=0 ✓ (d′ e 4 dp não reprovam: triagem e errata)
+  CP-0 corpo-logico: exit 0 ✓
+      corpo: 1 nó(s) · 49 linhas desenhadas · desenho len=2533 sha12=5bcc25b61916
+      referência: 49 linhas lógicas · len=2533 sha12=5bcc25b61916
+      corpo-logico: o desenho é o próprio texto — texto lógico len=2533 sha12=5bcc25b61916 = referência · 0 continuações ✓
+== CP-1 o corpo quebrado em 48, num nó
+  CP-1 G-N3: exit 0 ✓
+  CP-1 G-N3: "quebra=1" ✓
+      (e) TEXTO QUE SOME — REPROVA: 0
+        N4P9F-S3-S3a-letra-1a-avd-ret: "Manhã de ensaio · Banda da fixture · Let" 832 → 663.1 dp
+      QUEBRA — o corpo da faixa é uma quebra do texto lógico do corpo da paisagem (QL-D16); não reprova, não soma ao (e): 1
+        N4P9F-S3-S3a-letra-1a-avd-ret: 92 linhas desenhadas de 49 lógicas · 43 continuações
+      G-N3: (e)=0 · (b)=0 · nome-acessível=0 · rolagem=0 · quebra=1 ✓ (d′ e 4 dp não reprovam: triagem e errata)
+  CP-1 corpo-logico: exit 0 ✓
+      corpo: 1 nó(s) · 92 linhas desenhadas · desenho len=2619 sha12=d17fb5024fff
+      referência: 49 linhas lógicas · len=2533 sha12=5bcc25b61916
+      corpo-logico: o desenho é uma quebra do texto — texto lógico len=2533 sha12=5bcc25b61916 = referência · 43 continuações ✓
+== CP-2 o corpo quebrado em 48, um nó por linha
+      dump-quebrado: 49 linhas lógicas → 92 desenhadas em 48 colunas (um TextView por linha)
+  CP-2 G-N3: exit 0 ✓
+  CP-2 G-N3: "quebra=1" ✓
+      (e) TEXTO QUE SOME — REPROVA: 0
+        N4P9F-S3-S3a-letra-1a-avd-ret: "Manhã de ensaio · Banda da fixture · Let" 832 → 663.1 dp
+      QUEBRA — o corpo da faixa é uma quebra do texto lógico do corpo da paisagem (QL-D16); não reprova, não soma ao (e): 1
+        N4P9F-S3-S3a-letra-1a-avd-ret: 92 linhas desenhadas de 49 lógicas · 43 continuações
+      G-N3: (e)=0 · (b)=0 · nome-acessível=0 · rolagem=0 · quebra=1 ✓ (d′ e 4 dp não reprovam: triagem e errata)
+  CP-2 corpo-logico: exit 0 ✓
+      corpo: 92 nó(s) · 92 linhas desenhadas · desenho len=2619 sha12=d17fb5024fff
+      referência: 49 linhas lógicas · len=2533 sha12=5bcc25b61916
+      corpo-logico: o desenho é uma quebra do texto — texto lógico len=2533 sha12=5bcc25b61916 = referência · 43 continuações ✓
+== CN-3 uma letra trocada
+      dump-quebrado: 49 linhas lógicas → 92 desenhadas em 48 colunas · LAB_DEFEITO=letra
+  CN-3 G-N3: exit 1 ✓
+  CN-3 G-N3: "(e) TEXTO QUE SOME — REPROVA: 1" ✓
+      (e) TEXTO QUE SOME — REPROVA: 1
+        N4P9F-S3-S3a-letra-1a-avd-ret: 1 — corpo
+        N4P9F-S3-S3a-letra-1a-avd-ret: "Manhã de ensaio · Banda da fixture · Let" 832 → 663.1 dp
+      QUEBRA — o corpo da faixa é uma quebra do texto lógico do corpo da paisagem (QL-D16); não reprova, não soma ao (e): 0
+      G-N3: REPROVA ✗ — (e)=1 em 1 dump(s) · (b)=0 em 0 dump(s) · nome-acessível=0 · rolagem=0 · quebra=0
+  CN-3 corpo-logico: exit 1 ✓
+      corpo: 1 nó(s) · 92 linhas desenhadas · desenho len=2619 sha12=7c5d7d92d522
+      referência: 49 linhas lógicas · len=2533 sha12=5bcc25b61916
+      corpo-logico: ✗ as 92 linhas desenhadas não são uma quebra das 49 linhas lógicas
+== CN-4 uma palavra a menos
+      dump-quebrado: 49 linhas lógicas → 92 desenhadas em 48 colunas · LAB_DEFEITO=palavra
+  CN-4 G-N3: exit 1 ✓
+  CN-4 G-N3: "(e) TEXTO QUE SOME — REPROVA: 1" ✓
+      (e) TEXTO QUE SOME — REPROVA: 1
+        N4P9F-S3-S3a-letra-1a-avd-ret: 1 — corpo
+        N4P9F-S3-S3a-letra-1a-avd-ret: "Manhã de ensaio · Banda da fixture · Let" 832 → 663.1 dp
+      QUEBRA — o corpo da faixa é uma quebra do texto lógico do corpo da paisagem (QL-D16); não reprova, não soma ao (e): 0
+      G-N3: REPROVA ✗ — (e)=1 em 1 dump(s) · (b)=0 em 0 dump(s) · nome-acessível=0 · rolagem=0 · quebra=0
+  CN-4 corpo-logico: exit 1 ✓
+      corpo: 1 nó(s) · 92 linhas desenhadas · desenho len=2613 sha12=0825bc80087a
+      referência: 49 linhas lógicas · len=2533 sha12=5bcc25b61916
+      corpo-logico: ✗ as 92 linhas desenhadas não são uma quebra das 49 linhas lógicas
+== CN-5 linhas fora de ordem
+      dump-quebrado: 49 linhas lógicas → 92 desenhadas em 48 colunas · LAB_DEFEITO=ordem
+  CN-5 G-N3: exit 1 ✓
+  CN-5 G-N3: "(e) TEXTO QUE SOME — REPROVA: 1" ✓
+      (e) TEXTO QUE SOME — REPROVA: 1
+        N4P9F-S3-S3a-letra-1a-avd-ret: 1 — corpo
+        N4P9F-S3-S3a-letra-1a-avd-ret: "Manhã de ensaio · Banda da fixture · Let" 832 → 663.1 dp
+      QUEBRA — o corpo da faixa é uma quebra do texto lógico do corpo da paisagem (QL-D16); não reprova, não soma ao (e): 0
+      G-N3: REPROVA ✗ — (e)=1 em 1 dump(s) · (b)=0 em 0 dump(s) · nome-acessível=0 · rolagem=0 · quebra=0
+  CN-5 corpo-logico: exit 1 ✓
+      corpo: 1 nó(s) · 92 linhas desenhadas · desenho len=2619 sha12=ab2847693e32
+      referência: 49 linhas lógicas · len=2533 sha12=5bcc25b61916
+      corpo-logico: ✗ as 92 linhas desenhadas não são uma quebra das 49 linhas lógicas
+== CN-6 o G-N3 de antes (d0d0639) sobre o CP-1
+  CN-6: exit 1 ✓
+  CN-6: "(e) TEXTO QUE SOME — REPROVA: 1" ✓
+      (e) TEXTO QUE SOME — REPROVA: 1
+        N4P9F-S3-S3a-letra-1a-avd-ret: 1 — corpo
+        N4P9F-S3-S3a-letra-1a-avd-ret: "Manhã de ensaio · Banda da fixture · Let" 832 → 663.1 dp
+      G-N3: REPROVA ✗ — (e)=1 em 1 dump(s) · (b)=0 em 0 dump(s) · nome-acessível=0 · rolagem=0
+
+cn-instrumentos: todos os controles como esperado ✓

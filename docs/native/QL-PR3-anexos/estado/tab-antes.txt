@@ -1,0 +1,13 @@
+2026-10-09 07:52:28
+global stay_on_while_plugged_in=0
+system accelerometer_rotation=1
+system user_rotation=0
+global airplane_mode_on=0
+global wifi_on=1
+global mobile_data=1
+reverse: []
+    lastUpdateTime=2026-10-07 17:15:00
+    pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+  mWakefulness=Dozing
+    mShowingDream=false mDreamingLockscreen=true
+    isKeyguardShowing=true

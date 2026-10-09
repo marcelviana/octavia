@@ -84,6 +84,18 @@
  * (`B3-referencia-paisagem/`, pré-QL) tem o corpo sem quebra; o texto lógico não se reconstrói só do desenho
  * (div. 1199), então um par em que a PAISAGEM também está quebrada só passa se as duas forem iguais.
  *
+ * A REFERÊNCIA LÓGICA À PARTE, QL-PR3 (`--logico <dir>`; decisão do Marcel na QL-PR3, a opção 2). A errata em par da
+ * B3 (regra 33) troca a paisagem dos seis dumps de Letra pela Letra quebrada em 80 colunas — e a paisagem deixa de ser
+ * a referência lógica desses pares. A referência passa a ser os dumps PRÉ-QL desses seis, guardados à parte com
+ * `SHA256SUMS.txt` (`docs/native/QL-PR3-anexos/b3-pre-ql/`). Para um par cuja chave (estado + aparelho) está no
+ * `--logico`: a paisagem E a faixa têm de ser QUEBRAS do corpo pré-QL (`ehQuebraDe` contra ele — juntadas pelas
+ * continuações, o texto bate byte a byte) e nenhuma das duas pode ter uma linha que passa da coluna (o corpo rola para
+ * o lado: o `TextView` do corpo cortado na borda direita da rolagem horizontal — o `scrollable` dela não serve, o
+ * Android o marca `true` mesmo com o texto cabendo). Senão é (e), com o motivo. **Não se reconstrói a referência da
+ * própria paisagem**: com ela, uma palavra perdida igual em C e em B passaria (as duas seriam quebras do mesmo texto
+ * errado). Sem o `--logico`, esses pares reprovam como antes (a paisagem quebrada só passa igual à faixa), e o G-N3
+ * diz isso.
+ *
  * PAREAMENTO. O nome do dump é afirmação (caso 23): `<PREFIXO>-<tela>-<estado>-
  * <aparelho>[-<orientação>].xml`. A chave do par é `<tela>-<estado>` + o tipo de
  * aparelho. O celular (`phone`) não tem paisagem de tablet própria no pre-check
@@ -127,12 +139,14 @@ const args = process.argv.slice(2)
 const pais = []
 let dirFaixa = null
 let dirRolada = null
+let dirLogico = null
 let arqMedidas = 'docs/native/DESIGN-N3/medidas.json'
 for (let i = 0; i < args.length; i++) {
   const v = args[i + 1]
   if (args[i] === '--pai' && v) { pais.push(v); i++ }
   else if (args[i] === '--faixa' && v) { dirFaixa = v; i++ }
   else if (args[i] === '--rolada' && v) { dirRolada = v; i++ }
+  else if (args[i] === '--logico' && v) { dirLogico = v; i++ }
   else if (args[i] === '--medidas' && v) { arqMedidas = v; i++ }
   else uso(`argumento desconhecido ou sem valor: ${args[i]}`)
 }
@@ -170,6 +184,7 @@ function ler(arquivo) {
       id: (a['resource-id'] ?? '').replace(/^.*:id\//, ''),
       text: ent(a.text ?? ''),
       cd: ent(a['content-desc'] ?? ''),
+      cls0: a.class ?? '',
       pkg: a.package ?? '',
       b: b.map((v) => v / F),
       filhos: [],
@@ -211,8 +226,14 @@ function medir(arquivo) {
     if ((sob && alt(n.b) < alt(tela) - 1) || borda) cortes.push({ no: sigB(n), onde: sob ? 'sob barra' : 'borda lateral', b: n.b.map(r1) })
   }
   // QL-PR1: as linhas desenhadas sob o `corpo` — cada TextView sob o id é um bloco de texto, partido no `\n`
-  const linhasDoCorpo = app.filter((n) => n.cls === 'TextView' && idAcima(n) === 'corpo').flatMap((n) => n.text.split('\n'))
-  return { arquivo, tela, janela, app, textos, cortes, linhasDoCorpo }
+  const doCorpo = app.filter((n) => n.cls === 'TextView' && idAcima(n) === 'corpo')
+  const linhasDoCorpo = doCorpo.flatMap((n) => n.text.split('\n'))
+  // QL-PR3: o corpo rola para o lado — um TextView dele cortado na borda direita da rolagem horizontal que o contém
+  const corpoRola = doCorpo.some((n) => {
+    for (let p = n.pai; p; p = p.pai) if (p.cls === 'HorizontalScrollView') return n.b[2] >= p.b[2] - 0.25
+    return false
+  })
+  return { arquivo, tela, janela, app, textos, cortes, linhasDoCorpo, corpoRola }
 }
 
 // ---- pareamento -------------------------------------------------------------
@@ -244,6 +265,16 @@ if (dirRolada) {
   }
 }
 if (faixas.length === 0) uso(`nenhum dump com nome no padrão em ${dirFaixa}`)
+// QL-PR3: a referência lógica à parte (os dumps pré-QL dos pares cuja paisagem quebra)
+const logicos = new Map()
+if (dirLogico) {
+  for (const f of xmls(dirLogico)) {
+    const k = chave(f)
+    if (k !== null) logicos.set(`${k.estado}|${k.aparelho}`, f)
+  }
+  if (logicos.size === 0) uso(`nenhum dump com nome no padrão em ${dirLogico} (--logico)`)
+}
+const logicosUsados = new Set()
 
 const pares = []
 const semPar = []
@@ -298,11 +329,29 @@ for (const { ref, f } of pares) {
   const cabe = (t) => t.b[3] - antes.janela[1] <= agora.janela[3] - agora.janela[1]
   // QL-PR1: o corpo da faixa é uma quebra do corpo da paisagem?
   const corpoPai = antes.linhasDoCorpo.join('\n')
-  const qb = antes.linhasDoCorpo.length > 0 && agora.linhasDoCorpo.length > 0 ? ehQuebraDe(agora.linhasDoCorpo, corpoPai) : null
-  if (qb !== null && qb.ok && qb.continuacoes > 0) QB.push({ nome, continuacoes: qb.continuacoes, linhas: agora.linhasDoCorpo.length, logicas: qb.linhasLogicas })
+  let qb = antes.linhasDoCorpo.length > 0 && agora.linhasDoCorpo.length > 0 ? ehQuebraDe(agora.linhasDoCorpo, corpoPai) : null
+  // QL-PR3: o par com referência lógica à parte (`--logico`): a paisagem e a faixa, quebras do corpo PRÉ-QL, sem linha
+  // que passe da coluna — senão (e), com o motivo
+  const kRef = chave(ref)
+  const fLogico = kRef === null ? undefined : logicos.get(`${kRef.estado}|${kRef.aparelho}`)
+  let viaLogico = false
+  if (fLogico !== undefined && antes.linhasDoCorpo.length > 0) {
+    logicosUsados.add(fLogico)
+    viaLogico = true
+    const L = medir(fLogico).linhasDoCorpo.join('\n')
+    const qPai = ehQuebraDe(antes.linhasDoCorpo, L)
+    const qFx = ehQuebraDe(agora.linhasDoCorpo, L)
+    const motivo = !qPai.ok ? `a paisagem não é uma quebra do corpo pré-QL (${qPai.motivo})`
+      : !qFx.ok ? `a faixa não é uma quebra do corpo pré-QL (${qFx.motivo})`
+        : antes.corpoRola ? 'na paisagem uma linha passa da coluna (o corpo rola para o lado)'
+          : agora.corpoRola ? 'na faixa uma linha passa da coluna (o corpo rola para o lado)' : null
+    if (motivo !== null) { E.push({ nome, no: `corpo — referência lógica ${basename(fLogico, '.xml')}: ${motivo}` }); qb = null }
+    else qb = { ...qFx, logico: basename(fLogico, '.xml'), contPai: qPai.continuacoes }
+  }
+  if (qb !== null && qb.ok && (qb.continuacoes > 0 || viaLogico)) QB.push({ nome, continuacoes: qb.continuacoes, linhas: agora.linhasDoCorpo.length, logicas: qb.linhasLogicas, logico: qb.logico, contPai: qb.contPai })
   for (const t of antes.textos) {
     if (!cabe(t) || vivos.test(t.text) || agora.textos.some((u) => u.text === t.text)) continue
-    if (t.rid === 'corpo' && qb !== null && qb.ok) continue
+    if (t.rid === 'corpo' && (viaLogico || (qb !== null && qb.ok))) continue
     if (t.rid && agora.app.some((n) => n.id === t.rid && n.cd === t.text && rotuloVisivel(n, t.text))) { NA.push({ nome, no: t.s, rid: t.rid }); continue }
     const k = chave(f)
     const rol = rolados.get(`${k.estado}|${k.aparelho}|${k.orient}`)
@@ -361,7 +410,11 @@ if (roladosUsados.size) {
 }
 console.log('')
 console.log(`QUEBRA — o corpo da faixa é uma quebra do texto lógico do corpo da paisagem (QL-D16); não reprova, não soma ao (e): ${QB.length}`)
-for (const x of QB) console.log(`  ${x.nome}: ${x.linhas} linhas desenhadas de ${x.logicas} lógicas · ${x.continuacoes} continuações`)
+for (const x of QB) console.log(`  ${x.nome}: ${x.linhas} linhas desenhadas de ${x.logicas} lógicas · ${x.continuacoes} continuações${x.logico ? ` · contra a referência lógica pré-QL ${x.logico} (a paisagem: ${x.contPai} continuações)` : ''}`)
+if (dirLogico) {
+  console.log(`  referência lógica à parte (--logico ${dirLogico}): ${logicos.size} dump(s), ${logicosUsados.size} usado(s)`)
+  for (const f of [...logicosUsados].sort()) console.log(`    ${basename(f)} sha256 ${createHash('sha256').update(readFileSync(f)).digest('hex').slice(0, 12)}`)
+}
 console.log('')
 console.log(`(b) CORTE — nó que sai da janela útil ou encosta na borda lateral, NOVO contra a paisagem — REPROVA: ${B.length}`)
 const bPorDump = new Map()

@@ -1,0 +1,66 @@
+== letra 09:43:01
+09:43:37 toque 'song-1' @ 658,580 (emulator-5554)
+QL3M-S3-letra-z22-avd-pai mCurrentRotation=ROTATION_0 png=262360 xml=25395 1a4497d7a32f
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 0 continuações ✓
+09:43:52 toque 'zoom-mais' @ 497,1358 (emulator-5554)
+09:43:55 toque 'zoom-mais' @ 497,1358 (emulator-5554)
+09:43:58 toque 'zoom-mais' @ 497,1358 (emulator-5554)
+QL3M-S3-letra-z40-avd-pai mCurrentRotation=ROTATION_0 png=259491 xml=25395 d0ba56d0b851
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 0 continuações ✓
+09:44:32 toque 'song-1' @ 800,580 (emulator-5554)
+QL3M-S3-letra-z22-avd-ret mCurrentRotation=ROTATION_90 png=367309 xml=25395 e38fdd2896ac
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 0 continuações ✓
+09:44:47 toque 'zoom-mais' @ 497,2318 (emulator-5554)
+09:44:50 toque 'zoom-mais' @ 497,2318 (emulator-5554)
+09:44:54 toque 'zoom-mais' @ 497,2318 (emulator-5554)
+QL3M-S3-letra-z40-avd-ret mCurrentRotation=ROTATION_90 png=264888 xml=25395 e38fdd2896ac
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 0 continuações ✓
+== cifra 09:45:00
+09:45:27 toque 'song-2' @ 1902,580 (emulator-5554)
+QL3M-S3-cifra-z22-avd-pai mCurrentRotation=ROTATION_0 png=187720 xml=25045 2c84a26d15c3
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1241 sha12=2355a509052d = referência · 0 continuações ✓
+09:46:11 toque 'song-2' @ 800,859 (emulator-5554)
+QL3M-S3-cifra-z22-avd-ret mCurrentRotation=ROTATION_90 png=268665 xml=25045 e4ca8201122e
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1241 sha12=2355a509052d = referência · 0 continuações ✓
+09:46:26 toque 'zoom-mais' @ 497,2318 (emulator-5554)
+09:46:29 toque 'zoom-mais' @ 497,2318 (emulator-5554)
+09:46:32 toque 'zoom-mais' @ 497,2318 (emulator-5554)
+QL3M-S3-cifra-z40-avd-ret mCurrentRotation=ROTATION_90 png=229509 xml=25045 e4ca8201122e
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1241 sha12=2355a509052d = referência · 0 continuações ✓
+== claro 09:46:39
+09:47:06 toque 'song-1' @ 800,580 (emulator-5554)
+09:47:15 toque 'tema' @ 682,2318 (emulator-5554)
+QL3M-S3-letra-claro-avd-ret mCurrentRotation=ROTATION_90 png=369654 xml=25069 52d6270765e9
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 0 continuações ✓
+09:47:24 toque 'tema' @ 682,2318 (emulator-5554)
+== acorde 09:47:25
+09:47:45 toque 'song-4' @ 800,1417 (emulator-5554)
+09:47:54 toque 'zoom-mais' @ 497,2318 (emulator-5554)
+09:47:57 toque 'zoom-mais' @ 497,2318 (emulator-5554)
+09:48:01 toque 'zoom-mais' @ 497,2318 (emulator-5554)
+QL3M-S3-acorde-z40-avd-ret mCurrentRotation=ROTATION_90 png=179525 xml=23869 4b6c34ecf7c8
+   corpo-logico: o desenho é o próprio texto — texto lógico len=183 sha12=09fbd5382a85 = referência · 0 continuações ✓
+   rolagens horizontais roláveis sob a tela: 1 · [[72, 324, 1528, 1584]]
+QL3M-S3-acorde-z40-rolado-avd-ret mCurrentRotation=ROTATION_90 png=162706 xml=23869 4b6c34ecf7c8
+   corpo-logico: o desenho é o próprio texto — texto lógico len=183 sha12=09fbd5382a85 = referência · 0 continuações ✓
+== tab 09:48:20
+09:48:45 toque 'song-5' @ 800,1696 (emulator-5554)
+09:48:54 toque 'zoom-mais' @ 497,2318 (emulator-5554)
+09:48:58 toque 'zoom-mais' @ 497,2318 (emulator-5554)
+09:49:01 toque 'zoom-mais' @ 497,2318 (emulator-5554)
+QL3M-S3-tab-z40-avd-ret mCurrentRotation=ROTATION_90 png=126425 xml=25140 8aed27be75aa
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1412 sha12=d87d1c2f25d2 = referência · 0 continuações ✓
+== v 09:49:08
+09:49:26 toque 'buscar' @ 2295,188 (emulator-5554)
+09:49:34 toque 'lib-campo' @ 1397,152 (emulator-5554)
+09:49:41 toque 'Ver “Lanterna da fixture”' @ 1280,797 (emulator-5554)
+QL3M-V-letra-avd-pai mCurrentRotation=ROTATION_0 png=279605 xml=20405 06ca5f914e09
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 0 continuações ✓
+m14 a janela do texto (HorizontalScrollView) 733.8 dp → 55.0 colunas de mono 22 (13,33 dp, a régua) · view-leitor 797.8 dp
+09:50:14 toque 'buscar' @ 1335,281 (emulator-5554)
+09:50:23 toque 'lib-campo' @ 917,152 (emulator-5554)
+09:50:30 toque 'Ver “Lanterna da fixture”' @ 800,797 (emulator-5554)
+QL3M-V-letra-avd-ret mCurrentRotation=ROTATION_90 png=368533 xml=20077 02c7d6176bc7
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 0 continuações ✓
+m14 a janela do texto (HorizontalScrollView) 647.1 dp → 48.5 colunas de mono 22 (13,33 dp, a régua) · view-leitor 711.1 dp
+capturas=13 falhas=0

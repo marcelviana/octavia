@@ -1,0 +1,7 @@
+a âncora no aparelho — QL3F-ancora-avd-<passo>.txt · fator 2.25 px/dp · a Letra longa (107 linhas lógicas)
+  antes    B 48 col · zoom 22: ScrollY medido 6778 px (3012.4 dp; 82 eventos) · no topo: a linha visual 89, da lógica 61
+  giro-C   C 80 col · zoom 22: ScrollY medido 4604 px (2046.2 dp; 1 eventos) · no topo: a linha visual 61, da lógica 61 · PREVISTO 4603.5 px (a lógica 61 a 32 do topo) → igual · a 1ª linha visual do topo é o COMEÇO da lógica ✓
+  zoom-26  C 68 col · zoom 26: ScrollY medido 6257 px (2780.9 dp; 3 eventos) · no topo: a linha visual 70, da lógica 61 · PREVISTO 6256.6 px (a lógica 61 a 32 do topo) → igual · a 1ª linha visual do topo é o COMEÇO da lógica ✓
+  volta-B  B 41 col · zoom 26: ScrollY medido 8705 px (3868.9 dp; 1 eventos) · no topo: a linha visual 97, da lógica 61 · PREVISTO 8704.8 px (a lógica 61 a 32 do topo) → igual · a 1ª linha visual do topo é o COMEÇO da lógica ✓
+  auto     a rolagem automática: 66 eventos · de 8707 a 9063 px · o ponto ancorado 8705.0 px → parte dele e só desce ✓
+âncora: a rolagem medida é a prevista em todo passo ✓

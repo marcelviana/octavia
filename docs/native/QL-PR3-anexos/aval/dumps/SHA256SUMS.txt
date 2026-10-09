@@ -1,0 +1,8 @@
+445196f0a1f375405d55c8e083055c596f28df249e4b8b1979b9eb436b07945f  QL3F-S3-ancora-antes-avd-ret.png
+609e3411aa566d4e98acc02ebad6e11b7a86f579bf3787fe4fe0b7c441e41c6b  QL3F-S3-ancora-antes-avd-ret.xml
+946828ebc97afa34eec4c536b465a54363621653e5550ac428600f237e301039  QL3F-S3-ancora-giro-avd-pai.png
+19a5765739efef7756ef6f6ad5d657cb769debf98beb1cfda1a9e5c191d9e265  QL3F-S3-ancora-giro-avd-pai.xml
+2b9906bf4a9e6c98fe8abe8fe991537c6fd59f1291f1e17d525208915fb6456e  QL3F-S3-ancora-volta-avd-ret.png
+51436a9e58ce24faf394d21bdad23c6778393fdb137cb0bbd978fcc198d7b53f  QL3F-S3-ancora-volta-avd-ret.xml
+01919896d58ea2848a2a3be5f2592f46ed278e2a4f44ea1ee1054a449c4a8cdb  QL3F-S3-ancora-zoom-avd-pai.png
+d0456d0a8b2dfbc395121a3994501e92613aa5b88108cd833e4006d148857d55  QL3F-S3-ancora-zoom-avd-pai.xml

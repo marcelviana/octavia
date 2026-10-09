@@ -1,0 +1,342 @@
+10-09 14:36:28.841 21398 21398 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:36:28.867 21398 21398 I AndroidRuntime: Using default boot image
+10-09 14:36:28.867 21398 21398 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:36:28.867 21398 21398 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:36:29.080 21398 21398 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:36:31.339 21398 21398 D AndroidRuntime: Shutting down VM
+10-09 14:36:33.656 21476 21476 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:36:33.659 21476 21476 I AndroidRuntime: Using default boot image
+10-09 14:36:33.659 21476 21476 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:36:33.660 21476 21476 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:36:33.824 21476 21476 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:36:35.059 21476 21476 D AndroidRuntime: Shutting down VM
+10-09 14:36:37.140 21500 21500 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:36:37.145 21500 21500 I AndroidRuntime: Using default boot image
+10-09 14:36:37.145 21500 21500 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:36:37.145 21500 21500 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:36:37.267 21500 21500 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:36:38.342 21500 21500 D AndroidRuntime: Shutting down VM
+10-09 14:36:39.165 21397 21517 I ReactNativeJS: OCTAVIA: faixa=B w=711.1 h=1137.8
+10-09 14:36:39.173 21397 21517 I ReactNativeJS: OCTAVIA: net online
+10-09 14:36:39.977 21397 21517 I ReactNativeJS: OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+10-09 14:36:40.186 21397 21517 I ReactNativeJS: OCTAVIA: sync start
+10-09 14:36:40.191 21397 21517 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 14:36:40.263 21397 21517 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=74
+10-09 14:36:40.268 21397 21517 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 14:36:40.332 21397 21517 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=64
+10-09 14:36:40.356 21397 21517 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=1 invalidated=1
+10-09 14:36:40.366 21397 21517 I ReactNativeJS: OCTAVIA: cache write kind=content n=5 invalidated=5
+10-09 14:36:40.367 21397 21517 I ReactNativeJS: OCTAVIA: sync ok setlists=1 content=5 pages=1 t=181
+10-09 14:36:40.373 21397 21517 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+10-09 14:36:40.395 21572 21572 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:36:40.402 21572 21572 I AndroidRuntime: Using default boot image
+10-09 14:36:40.402 21572 21572 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:36:40.402 21572 21572 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:36:40.529 21572 21572 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:36:41.767 21572 21572 D AndroidRuntime: Shutting down VM
+10-09 14:36:45.740 21597 21597 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:36:45.745 21597 21597 I AndroidRuntime: Using default boot image
+10-09 14:36:45.745 21597 21597 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:36:45.745 21597 21597 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:36:45.832 21597 21597 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:36:46.945 21597 21597 D AndroidRuntime: Shutting down VM
+10-09 14:36:47.948 21397 21517 I ReactNativeJS: OCTAVIA: index open
+10-09 14:36:49.935 21627 21627 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:36:49.938 21627 21627 I AndroidRuntime: Using default boot image
+10-09 14:36:49.938 21627 21627 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:36:49.938 21627 21627 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:36:50.001 21627 21627 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:36:51.105 21627 21627 D AndroidRuntime: Shutting down VM
+10-09 14:36:52.028 21648 21648 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:36:52.030 21648 21648 I AndroidRuntime: Using default boot image
+10-09 14:36:52.030 21648 21648 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:36:52.030 21648 21648 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:36:52.085 21648 21648 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:36:53.177 21648 21648 D AndroidRuntime: Shutting down VM
+10-09 14:36:54.151 21397 21517 I ReactNativeJS: OCTAVIA: index jump n=3
+10-09 14:36:54.838 21397 21517 I ReactNativeJS: OCTAVIA: keepawake on
+10-09 14:36:54.844 21397 21517 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+10-09 14:36:57.223 21675 21675 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:36:57.226 21675 21675 I AndroidRuntime: Using default boot image
+10-09 14:36:57.226 21675 21675 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:36:57.226 21675 21675 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:36:57.311 21675 21675 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:36:58.370 21675 21675 D AndroidRuntime: Shutting down VM
+10-09 14:37:00.936 21696 21696 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:37:00.941 21696 21696 I AndroidRuntime: Using default boot image
+10-09 14:37:00.941 21696 21696 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:37:00.942 21696 21696 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:37:01.105 21696 21696 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:37:02.204 21696 21696 D AndroidRuntime: Shutting down VM
+10-09 14:37:17.166 21764 21764 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:37:17.174 21764 21764 I AndroidRuntime: Using default boot image
+10-09 14:37:17.174 21764 21764 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:37:17.174 21764 21764 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:37:17.361 21764 21764 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:37:19.549 21763 21837 I ReactNativeJS: OCTAVIA: faixa=B w=711.1 h=1137.8
+10-09 14:37:19.557 21763 21837 I ReactNativeJS: OCTAVIA: net online
+10-09 14:37:20.018 21763 21837 I ReactNativeJS: OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+10-09 14:37:20.178 21763 21837 I ReactNativeJS: OCTAVIA: cache hit kind=setlists n=1
+10-09 14:37:20.179 21763 21837 I ReactNativeJS: OCTAVIA: cache hit kind=content n=5
+10-09 14:37:20.190 21763 21837 I ReactNativeJS: OCTAVIA: sync start
+10-09 14:37:20.193 21763 21837 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 14:37:20.285 21763 21837 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=93
+10-09 14:37:20.294 21763 21837 I ReactNativeJS: OCTAVIA: auth refresh=cached
+10-09 14:37:20.346 21763 21837 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=53
+10-09 14:37:20.369 21763 21837 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=1 invalidated=0
+10-09 14:37:20.375 21763 21837 I ReactNativeJS: OCTAVIA: cache write kind=content n=5 invalidated=0
+10-09 14:37:20.375 21763 21837 I ReactNativeJS: OCTAVIA: sync ok setlists=1 content=5 pages=1 t=185
+10-09 14:37:20.381 21763 21837 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+10-09 14:37:21.583 21764 21764 D AndroidRuntime: Shutting down VM
+10-09 14:37:25.557 21871 21871 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:37:25.560 21871 21871 I AndroidRuntime: Using default boot image
+10-09 14:37:25.560 21871 21871 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:37:25.560 21871 21871 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:37:25.629 21871 21871 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:37:26.722 21871 21871 D AndroidRuntime: Shutting down VM
+10-09 14:37:27.797 21763 21837 I ReactNativeJS: OCTAVIA: index open
+10-09 14:37:29.729 21900 21900 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:37:29.734 21900 21900 I AndroidRuntime: Using default boot image
+10-09 14:37:29.734 21900 21900 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:37:29.734 21900 21900 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:37:29.811 21900 21900 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:37:30.932 21900 21900 D AndroidRuntime: Shutting down VM
+10-09 14:37:31.864 21921 21921 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:37:31.866 21921 21921 I AndroidRuntime: Using default boot image
+10-09 14:37:31.866 21921 21921 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:37:31.867 21921 21921 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:37:31.923 21921 21921 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:37:33.013 21921 21921 D AndroidRuntime: Shutting down VM
+10-09 14:37:33.933 21763 21837 I ReactNativeJS: OCTAVIA: index jump n=3
+10-09 14:37:34.574 21763 21837 I ReactNativeJS: OCTAVIA: keepawake on
+10-09 14:37:34.577 21763 21837 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+10-09 14:37:37.001 21948 21948 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:37:37.003 21948 21948 I AndroidRuntime: Using default boot image
+10-09 14:37:37.003 21948 21948 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:37:37.003 21948 21948 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:37:37.061 21948 21948 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:37:38.113 21948 21948 D AndroidRuntime: Shutting down VM
+10-09 14:37:40.569 21969 21969 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:37:40.571 21969 21969 I AndroidRuntime: Using default boot image
+10-09 14:37:40.571 21969 21969 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:37:40.571 21969 21969 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:37:40.624 21969 21969 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:37:41.686 21969 21969 D AndroidRuntime: Shutting down VM
+10-09 14:37:42.616 21990 21990 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:37:42.618 21990 21990 I AndroidRuntime: Using default boot image
+10-09 14:37:42.618 21990 21990 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:37:42.618 21990 21990 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:37:42.672 21990 21990 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:37:55.345 22038 22038 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:37:55.349 22038 22038 I AndroidRuntime: Using default boot image
+10-09 14:37:55.349 22038 22038 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:37:55.350 22038 22038 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:37:55.564 22038 22038 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:37:56.673 22038 22038 D AndroidRuntime: Shutting down VM
+10-09 14:37:57.830 22061 22061 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:37:57.838 22061 22061 I AndroidRuntime: Using default boot image
+10-09 14:37:57.838 22061 22061 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:37:57.838 22061 22061 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:37:58.052 22061 22061 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:37:59.274 22061 22061 D AndroidRuntime: Shutting down VM
+10-09 14:38:01.361 22087 22087 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:38:01.367 22087 22087 I AndroidRuntime: Using default boot image
+10-09 14:38:01.367 22087 22087 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:38:01.367 22087 22087 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:38:01.538 22087 22087 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:38:04.814 21763 21837 I ReactNativeJS: OCTAVIA: rotation=landscape n=3/5
+10-09 14:38:04.827 21763 21837 I ReactNativeJS: OCTAVIA: faixa=C w=1137.8 h=711.1
+10-09 14:38:11.809 22263 22263 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:38:11.824 22263 22263 I AndroidRuntime: Using default boot image
+10-09 14:38:11.824 22263 22263 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:38:11.825 22263 22263 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:38:12.022 22263 22263 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:38:13.114 22263 22263 D AndroidRuntime: Shutting down VM
+10-09 14:38:14.234 22287 22287 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:38:14.239 22287 22287 I AndroidRuntime: Using default boot image
+10-09 14:38:14.239 22287 22287 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:38:14.240 22287 22287 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:38:14.409 22287 22287 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:38:15.574 22287 22287 D AndroidRuntime: Shutting down VM
+10-09 14:38:17.458 22314 22314 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:38:17.464 22314 22314 I AndroidRuntime: Using default boot image
+10-09 14:38:17.464 22314 22314 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:38:17.464 22314 22314 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:38:17.676 22314 22314 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:38:19.511 22333 22333 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:38:19.517 22333 22333 I AndroidRuntime: Using default boot image
+10-09 14:38:19.517 22333 22333 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:38:19.517 22333 22333 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:38:19.739 22333 22333 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:38:19.756 22333 22333 D AndroidRuntime: Shutting down VM
+10-09 14:38:19.759 22333 22333 E AndroidRuntime: FATAL EXCEPTION: main
+10-09 14:38:19.759 22333 22333 E AndroidRuntime: PID: 22333
+10-09 14:38:19.759 22333 22333 E AndroidRuntime: java.lang.IllegalStateException: UiAutomationService android.accessibilityservice.IAccessibilityServiceClient$Stub$Proxy@4b6a6a6already registered!
+10-09 14:38:19.759 22333 22333 E AndroidRuntime: 	at android.os.Parcel.createExceptionOrNull(Parcel.java:2434)
+10-09 14:38:19.759 22333 22333 E AndroidRuntime: 	at android.os.Parcel.createException(Parcel.java:2410)
+10-09 14:38:19.759 22333 22333 E AndroidRuntime: 	at android.os.Parcel.readException(Parcel.java:2393)
+10-09 14:38:19.759 22333 22333 E AndroidRuntime: 	at android.os.Parcel.readException(Parcel.java:2335)
+10-09 14:38:19.759 22333 22333 E AndroidRuntime: 	at android.view.accessibility.IAccessibilityManager$Stub$Proxy.registerUiTestAutomationService(IAccessibilityManager.java:830)
+10-09 14:38:19.759 22333 22333 E AndroidRuntime: 	at android.app.UiAutomationConnection.registerUiTestAutomationServiceLocked(UiAutomationConnection.java:532)
+10-09 14:38:19.759 22333 22333 E AndroidRuntime: 	at android.app.UiAutomationConnection.connect(UiAutomationConnection.java:109)
+10-09 14:38:19.759 22333 22333 E AndroidRuntime: 	at android.app.UiAutomation.connectWithTimeout(UiAutomation.java:324)
+10-09 14:38:19.759 22333 22333 E AndroidRuntime: 	at android.app.UiAutomation.connect(UiAutomation.java:276)
+10-09 14:38:19.759 22333 22333 E AndroidRuntime: 	at com.android.uiautomator.core.UiAutomationShellWrapper.connect(UiAutomationShellWrapper.java:31)
+10-09 14:38:19.759 22333 22333 E AndroidRuntime: 	at com.android.commands.uiautomator.DumpCommand.run(DumpCommand.java:78)
+10-09 14:38:19.759 22333 22333 E AndroidRuntime: 	at com.android.commands.uiautomator.Launcher.main(Launcher.java:83)
+10-09 14:38:19.759 22333 22333 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit.nativeFinishInit(Native Method)
+10-09 14:38:19.759 22333 22333 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit.main(RuntimeInit.java:355)
+10-09 14:38:19.759 22333 22333 E AndroidRuntime: Caused by: android.os.RemoteException: Remote stack trace:
+10-09 14:38:19.759 22333 22333 E AndroidRuntime: 	at com.android.server.accessibility.UiAutomationManager.registerUiTestAutomationServiceLocked(UiAutomationManager.java:103)
+10-09 14:38:19.759 22333 22333 E AndroidRuntime: 	at com.android.server.accessibility.AccessibilityManagerService.registerUiTestAutomationService(AccessibilityManagerService.java:1047)
+10-09 14:38:19.759 22333 22333 E AndroidRuntime: 	at android.view.accessibility.IAccessibilityManager$Stub.onTransact(IAccessibilityManager.java:404)
+10-09 14:38:19.759 22333 22333 E AndroidRuntime: 	at android.os.Binder.execTransactInternal(Binder.java:1179)
+10-09 14:38:19.759 22333 22333 E AndroidRuntime: 	at android.os.Binder.execTransact(Binder.java:1143)
+10-09 14:38:19.759 22333 22333 E AndroidRuntime: 
+10-09 14:38:19.769 22333 22333 E AndroidRuntime: Error reporting crash
+10-09 14:38:19.769 22333 22333 E AndroidRuntime: java.lang.RuntimeException: Bad file descriptor
+10-09 14:38:19.769 22333 22333 E AndroidRuntime: 	at android.os.BinderProxy.transactNative(Native Method)
+10-09 14:38:19.769 22333 22333 E AndroidRuntime: 	at android.os.BinderProxy.transact(BinderProxy.java:571)
+10-09 14:38:19.769 22333 22333 E AndroidRuntime: 	at android.os.IServiceManager$Stub$Proxy.checkService(IServiceManager.java:416)
+10-09 14:38:19.769 22333 22333 E AndroidRuntime: 	at android.os.ServiceManagerProxy.getService(ServiceManagerNative.java:63)
+10-09 14:38:19.769 22333 22333 E AndroidRuntime: 	at android.os.ServiceManager.rawGetService(ServiceManager.java:335)
+10-09 14:38:19.769 22333 22333 E AndroidRuntime: 	at android.os.ServiceManager.getService(ServiceManager.java:134)
+10-09 14:38:19.769 22333 22333 E AndroidRuntime: 	at android.app.ActivityManager$1.create(ActivityManager.java:4440)
+10-09 14:38:19.769 22333 22333 E AndroidRuntime: 	at android.app.ActivityManager$1.create(ActivityManager.java:4437)
+10-09 14:38:19.769 22333 22333 E AndroidRuntime: 	at android.util.Singleton.get(Singleton.java:43)
+10-09 14:38:19.769 22333 22333 E AndroidRuntime: 	at android.app.ActivityManager.getService(ActivityManager.java:4428)
+10-09 14:38:19.769 22333 22333 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$KillApplicationHandler.uncaughtException(RuntimeInit.java:156)
+10-09 14:38:19.769 22333 22333 E AndroidRuntime: 	at java.lang.ThreadGroup.uncaughtException(ThreadGroup.java:1073)
+10-09 14:38:19.769 22333 22333 E AndroidRuntime: 	at java.lang.ThreadGroup.uncaughtException(ThreadGroup.java:1068)
+10-09 14:38:19.769 22333 22333 E AndroidRuntime: 	at java.lang.Thread.dispatchUncaughtException(Thread.java:2200)
+10-09 14:38:19.946 21763 21837 I ReactNativeJS: OCTAVIA: zoom dp=26
+10-09 14:38:25.724 22368 22368 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:38:25.726 22368 22368 I AndroidRuntime: Using default boot image
+10-09 14:38:25.726 22368 22368 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:38:25.726 22368 22368 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:38:25.790 22368 22368 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:38:26.881 22368 22368 D AndroidRuntime: Shutting down VM
+10-09 14:38:28.014 22391 22391 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:38:28.019 22391 22391 I AndroidRuntime: Using default boot image
+10-09 14:38:28.019 22391 22391 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:38:28.020 22391 22391 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:38:28.154 22391 22391 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:38:29.263 22391 22391 D AndroidRuntime: Shutting down VM
+10-09 14:38:31.072 22421 22421 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:38:31.077 22421 22421 I AndroidRuntime: Using default boot image
+10-09 14:38:31.077 22421 22421 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:38:31.077 22421 22421 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:38:31.230 22421 22421 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:38:34.753 21763 21837 I ReactNativeJS: OCTAVIA: rotation=portrait n=3/5
+10-09 14:38:34.756 21763 21837 I ReactNativeJS: OCTAVIA: faixa=B w=711.1 h=1137.8
+10-09 14:38:41.664 22457 22457 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:38:41.670 22457 22457 I AndroidRuntime: Using default boot image
+10-09 14:38:41.670 22457 22457 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:38:41.671 22457 22457 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:38:41.822 22457 22457 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:38:42.924 22457 22457 D AndroidRuntime: Shutting down VM
+10-09 14:38:44.021 22480 22480 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:38:44.026 22480 22480 I AndroidRuntime: Using default boot image
+10-09 14:38:44.026 22480 22480 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:38:44.026 22480 22480 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:38:44.165 22480 22480 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:38:45.264 22480 22480 D AndroidRuntime: Shutting down VM
+10-09 14:38:47.035 22508 22508 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:38:47.040 22508 22508 I AndroidRuntime: Using default boot image
+10-09 14:38:47.040 22508 22508 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:38:47.040 22508 22508 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:38:47.176 22508 22508 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:38:49.061 22525 22525 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:38:49.069 22525 22525 I AndroidRuntime: Using default boot image
+10-09 14:38:49.069 22525 22525 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:38:49.069 22525 22525 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:38:49.233 22525 22525 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:38:49.243 22525 22525 D AndroidRuntime: Shutting down VM
+10-09 14:38:49.245 22525 22525 E AndroidRuntime: FATAL EXCEPTION: main
+10-09 14:38:49.245 22525 22525 E AndroidRuntime: PID: 22525
+10-09 14:38:49.245 22525 22525 E AndroidRuntime: java.lang.IllegalStateException: UiAutomationService android.accessibilityservice.IAccessibilityServiceClient$Stub$Proxy@bdd7b1aalready registered!
+10-09 14:38:49.245 22525 22525 E AndroidRuntime: 	at android.os.Parcel.createExceptionOrNull(Parcel.java:2434)
+10-09 14:38:49.245 22525 22525 E AndroidRuntime: 	at android.os.Parcel.createException(Parcel.java:2410)
+10-09 14:38:49.245 22525 22525 E AndroidRuntime: 	at android.os.Parcel.readException(Parcel.java:2393)
+10-09 14:38:49.245 22525 22525 E AndroidRuntime: 	at android.os.Parcel.readException(Parcel.java:2335)
+10-09 14:38:49.245 22525 22525 E AndroidRuntime: 	at android.view.accessibility.IAccessibilityManager$Stub$Proxy.registerUiTestAutomationService(IAccessibilityManager.java:830)
+10-09 14:38:49.245 22525 22525 E AndroidRuntime: 	at android.app.UiAutomationConnection.registerUiTestAutomationServiceLocked(UiAutomationConnection.java:532)
+10-09 14:38:49.245 22525 22525 E AndroidRuntime: 	at android.app.UiAutomationConnection.connect(UiAutomationConnection.java:109)
+10-09 14:38:49.245 22525 22525 E AndroidRuntime: 	at android.app.UiAutomation.connectWithTimeout(UiAutomation.java:324)
+10-09 14:38:49.245 22525 22525 E AndroidRuntime: 	at android.app.UiAutomation.connect(UiAutomation.java:276)
+10-09 14:38:49.245 22525 22525 E AndroidRuntime: 	at com.android.uiautomator.core.UiAutomationShellWrapper.connect(UiAutomationShellWrapper.java:31)
+10-09 14:38:49.245 22525 22525 E AndroidRuntime: 	at com.android.commands.uiautomator.DumpCommand.run(DumpCommand.java:78)
+10-09 14:38:49.245 22525 22525 E AndroidRuntime: 	at com.android.commands.uiautomator.Launcher.main(Launcher.java:83)
+10-09 14:38:49.245 22525 22525 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit.nativeFinishInit(Native Method)
+10-09 14:38:49.245 22525 22525 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit.main(RuntimeInit.java:355)
+10-09 14:38:49.245 22525 22525 E AndroidRuntime: Caused by: android.os.RemoteException: Remote stack trace:
+10-09 14:38:49.245 22525 22525 E AndroidRuntime: 	at com.android.server.accessibility.UiAutomationManager.registerUiTestAutomationServiceLocked(UiAutomationManager.java:103)
+10-09 14:38:49.245 22525 22525 E AndroidRuntime: 	at com.android.server.accessibility.AccessibilityManagerService.registerUiTestAutomationService(AccessibilityManagerService.java:1047)
+10-09 14:38:49.245 22525 22525 E AndroidRuntime: 	at android.view.accessibility.IAccessibilityManager$Stub.onTransact(IAccessibilityManager.java:404)
+10-09 14:38:49.245 22525 22525 E AndroidRuntime: 	at android.os.Binder.execTransactInternal(Binder.java:1179)
+10-09 14:38:49.245 22525 22525 E AndroidRuntime: 	at android.os.Binder.execTransact(Binder.java:1143)
+10-09 14:38:49.245 22525 22525 E AndroidRuntime: 
+10-09 14:38:49.246 22525 22525 E AndroidRuntime: Error reporting crash
+10-09 14:38:49.246 22525 22525 E AndroidRuntime: java.lang.RuntimeException: Bad file descriptor
+10-09 14:38:49.246 22525 22525 E AndroidRuntime: 	at android.os.BinderProxy.transactNative(Native Method)
+10-09 14:38:49.246 22525 22525 E AndroidRuntime: 	at android.os.BinderProxy.transact(BinderProxy.java:571)
+10-09 14:38:49.246 22525 22525 E AndroidRuntime: 	at android.os.IServiceManager$Stub$Proxy.checkService(IServiceManager.java:416)
+10-09 14:38:49.246 22525 22525 E AndroidRuntime: 	at android.os.ServiceManagerProxy.getService(ServiceManagerNative.java:63)
+10-09 14:38:49.246 22525 22525 E AndroidRuntime: 	at android.os.ServiceManager.rawGetService(ServiceManager.java:335)
+10-09 14:38:49.246 22525 22525 E AndroidRuntime: 	at android.os.ServiceManager.getService(ServiceManager.java:134)
+10-09 14:38:49.246 22525 22525 E AndroidRuntime: 	at android.app.ActivityManager$1.create(ActivityManager.java:4440)
+10-09 14:38:49.246 22525 22525 E AndroidRuntime: 	at android.app.ActivityManager$1.create(ActivityManager.java:4437)
+10-09 14:38:49.246 22525 22525 E AndroidRuntime: 	at android.util.Singleton.get(Singleton.java:43)
+10-09 14:38:49.246 22525 22525 E AndroidRuntime: 	at android.app.ActivityManager.getService(ActivityManager.java:4428)
+10-09 14:38:49.246 22525 22525 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$KillApplicationHandler.uncaughtException(RuntimeInit.java:156)
+10-09 14:38:49.246 22525 22525 E AndroidRuntime: 	at java.lang.ThreadGroup.uncaughtException(ThreadGroup.java:1073)
+10-09 14:38:49.246 22525 22525 E AndroidRuntime: 	at java.lang.ThreadGroup.uncaughtException(ThreadGroup.java:1068)
+10-09 14:38:49.246 22525 22525 E AndroidRuntime: 	at java.lang.Thread.dispatchUncaughtException(Thread.java:2200)
+10-09 14:38:50.001 21763 21837 I ReactNativeJS: OCTAVIA: autoscroll on t=595
+10-09 14:38:52.465 22553 22553 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-09 14:38:52.469 22553 22553 I AndroidRuntime: Using default boot image
+10-09 14:38:52.469 22553 22553 I AndroidRuntime: Leaving lock profiling enabled
+10-09 14:38:52.469 22553 22553 W libc    : Access denied finding property "odsign.verification.success"
+10-09 14:38:52.546 22553 22553 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-09 14:38:52.557 22553 22553 D AndroidRuntime: Shutting down VM
+10-09 14:38:52.558 22553 22553 E AndroidRuntime: FATAL EXCEPTION: main
+10-09 14:38:52.558 22553 22553 E AndroidRuntime: PID: 22553
+10-09 14:38:52.558 22553 22553 E AndroidRuntime: java.lang.IllegalStateException: UiAutomationService android.accessibilityservice.IAccessibilityServiceClient$Stub$Proxy@bdd7b1aalready registered!
+10-09 14:38:52.558 22553 22553 E AndroidRuntime: 	at android.os.Parcel.createExceptionOrNull(Parcel.java:2434)
+10-09 14:38:52.558 22553 22553 E AndroidRuntime: 	at android.os.Parcel.createException(Parcel.java:2410)
+10-09 14:38:52.558 22553 22553 E AndroidRuntime: 	at android.os.Parcel.readException(Parcel.java:2393)
+10-09 14:38:52.558 22553 22553 E AndroidRuntime: 	at android.os.Parcel.readException(Parcel.java:2335)
+10-09 14:38:52.558 22553 22553 E AndroidRuntime: 	at android.view.accessibility.IAccessibilityManager$Stub$Proxy.registerUiTestAutomationService(IAccessibilityManager.java:830)
+10-09 14:38:52.558 22553 22553 E AndroidRuntime: 	at android.app.UiAutomationConnection.registerUiTestAutomationServiceLocked(UiAutomationConnection.java:532)
+10-09 14:38:52.558 22553 22553 E AndroidRuntime: 	at android.app.UiAutomationConnection.connect(UiAutomationConnection.java:109)
+10-09 14:38:52.558 22553 22553 E AndroidRuntime: 	at android.app.UiAutomation.connectWithTimeout(UiAutomation.java:324)
+10-09 14:38:52.558 22553 22553 E AndroidRuntime: 	at android.app.UiAutomation.connect(UiAutomation.java:276)
+10-09 14:38:52.558 22553 22553 E AndroidRuntime: 	at com.android.uiautomator.core.UiAutomationShellWrapper.connect(UiAutomationShellWrapper.java:31)
+10-09 14:38:52.558 22553 22553 E AndroidRuntime: 	at com.android.commands.uiautomator.DumpCommand.run(DumpCommand.java:78)
+10-09 14:38:52.558 22553 22553 E AndroidRuntime: 	at com.android.commands.uiautomator.Launcher.main(Launcher.java:83)
+10-09 14:38:52.558 22553 22553 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit.nativeFinishInit(Native Method)
+10-09 14:38:52.558 22553 22553 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit.main(RuntimeInit.java:355)
+10-09 14:38:52.558 22553 22553 E AndroidRuntime: Caused by: android.os.RemoteException: Remote stack trace:
+10-09 14:38:52.558 22553 22553 E AndroidRuntime: 	at com.android.server.accessibility.UiAutomationManager.registerUiTestAutomationServiceLocked(UiAutomationManager.java:103)
+10-09 14:38:52.558 22553 22553 E AndroidRuntime: 	at com.android.server.accessibility.AccessibilityManagerService.registerUiTestAutomationService(AccessibilityManagerService.java:1047)
+10-09 14:38:52.558 22553 22553 E AndroidRuntime: 	at android.view.accessibility.IAccessibilityManager$Stub.onTransact(IAccessibilityManager.java:404)
+10-09 14:38:52.558 22553 22553 E AndroidRuntime: 	at android.os.Binder.execTransactInternal(Binder.java:1179)
+10-09 14:38:52.558 22553 22553 E AndroidRuntime: 	at android.os.Binder.execTransact(Binder.java:1143)
+10-09 14:38:52.558 22553 22553 E AndroidRuntime: 
+10-09 14:38:52.559 22553 22553 E AndroidRuntime: Error reporting crash
+10-09 14:38:52.559 22553 22553 E AndroidRuntime: java.lang.RuntimeException: Bad file descriptor
+10-09 14:38:52.559 22553 22553 E AndroidRuntime: 	at android.os.BinderProxy.transactNative(Native Method)
+10-09 14:38:52.559 22553 22553 E AndroidRuntime: 	at android.os.BinderProxy.transact(BinderProxy.java:571)
+10-09 14:38:52.559 22553 22553 E AndroidRuntime: 	at android.os.IServiceManager$Stub$Proxy.checkService(IServiceManager.java:416)
+10-09 14:38:52.559 22553 22553 E AndroidRuntime: 	at android.os.ServiceManagerProxy.getService(ServiceManagerNative.java:63)
+10-09 14:38:52.559 22553 22553 E AndroidRuntime: 	at android.os.ServiceManager.rawGetService(ServiceManager.java:335)
+10-09 14:38:52.559 22553 22553 E AndroidRuntime: 	at android.os.ServiceManager.getService(ServiceManager.java:134)
+10-09 14:38:52.559 22553 22553 E AndroidRuntime: 	at android.app.ActivityManager$1.create(ActivityManager.java:4440)
+10-09 14:38:52.559 22553 22553 E AndroidRuntime: 	at android.app.ActivityManager$1.create(ActivityManager.java:4437)
+10-09 14:38:52.559 22553 22553 E AndroidRuntime: 	at android.util.Singleton.get(Singleton.java:43)
+10-09 14:38:52.559 22553 22553 E AndroidRuntime: 	at android.app.ActivityManager.getService(ActivityManager.java:4428)
+10-09 14:38:52.559 22553 22553 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$KillApplicationHandler.uncaughtException(RuntimeInit.java:156)
+10-09 14:38:52.559 22553 22553 E AndroidRuntime: 	at java.lang.ThreadGroup.uncaughtException(ThreadGroup.java:1073)
+10-09 14:38:52.559 22553 22553 E AndroidRuntime: 	at java.lang.ThreadGroup.uncaughtException(ThreadGroup.java:1068)
+10-09 14:38:52.559 22553 22553 E AndroidRuntime: 	at java.lang.Thread.dispatchUncaughtException(Thread.java:2200)
+10-09 14:38:52.638 21763 21837 I ReactNativeJS: OCTAVIA: autoscroll off t=0

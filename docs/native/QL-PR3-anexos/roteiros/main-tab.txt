@@ -1,0 +1,66 @@
+== letra 12:36:20
+12:36:48 toque 'song-1' @ 658,580 (RX2N8000F3D)
+QL3M-S3-letra-z22-tab-pai mCurrentRotation=ROTATION_90 png=280191 xml=25737 5bd575629f6d
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 0 continuações ✓
+12:37:04 toque 'zoom-mais' @ 497,1385 (RX2N8000F3D)
+12:37:08 toque 'zoom-mais' @ 497,1385 (RX2N8000F3D)
+12:37:12 toque 'zoom-mais' @ 497,1385 (RX2N8000F3D)
+QL3M-S3-letra-z40-tab-pai mCurrentRotation=ROTATION_90 png=275864 xml=25737 2649547dfda0
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 0 continuações ✓
+12:37:45 toque 'song-1' @ 800,580 (RX2N8000F3D)
+QL3M-S3-letra-z22-tab-ret mCurrentRotation=ROTATION_0 png=388945 xml=25737 0ba0037d4859
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 0 continuações ✓
+12:38:01 toque 'zoom-mais' @ 497,2345 (RX2N8000F3D)
+12:38:05 toque 'zoom-mais' @ 497,2345 (RX2N8000F3D)
+12:38:09 toque 'zoom-mais' @ 497,2345 (RX2N8000F3D)
+QL3M-S3-letra-z40-tab-ret mCurrentRotation=ROTATION_0 png=285639 xml=25737 0ba0037d4859
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 0 continuações ✓
+== cifra 12:38:17
+12:38:41 toque 'song-2' @ 1902,580 (RX2N8000F3D)
+QL3M-S3-cifra-z22-tab-pai mCurrentRotation=ROTATION_90 png=205313 xml=25387 f8f08c6c2cda
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1241 sha12=2355a509052d = referência · 0 continuações ✓
+12:39:19 toque 'song-2' @ 800,859 (RX2N8000F3D)
+QL3M-S3-cifra-z22-tab-ret mCurrentRotation=ROTATION_0 png=285067 xml=25387 13f524267a62
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1241 sha12=2355a509052d = referência · 0 continuações ✓
+12:39:36 toque 'zoom-mais' @ 497,2345 (RX2N8000F3D)
+12:39:39 toque 'zoom-mais' @ 497,2345 (RX2N8000F3D)
+12:39:43 toque 'zoom-mais' @ 497,2345 (RX2N8000F3D)
+QL3M-S3-cifra-z40-tab-ret mCurrentRotation=ROTATION_0 png=249844 xml=25387 13f524267a62
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1241 sha12=2355a509052d = referência · 0 continuações ✓
+== claro 12:39:51
+12:40:16 toque 'song-1' @ 800,580 (RX2N8000F3D)
+12:40:25 toque 'tema' @ 682,2345 (RX2N8000F3D)
+QL3M-S3-letra-claro-tab-ret mCurrentRotation=ROTATION_0 png=388454 xml=25411 b0851fd23214
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 0 continuações ✓
+12:40:37 toque 'tema' @ 682,2345 (RX2N8000F3D)
+== acorde 12:40:38
+12:41:02 toque 'song-4' @ 800,1417 (RX2N8000F3D)
+12:41:12 toque 'zoom-mais' @ 497,2345 (RX2N8000F3D)
+12:41:15 toque 'zoom-mais' @ 497,2345 (RX2N8000F3D)
+12:41:19 toque 'zoom-mais' @ 497,2345 (RX2N8000F3D)
+QL3M-S3-acorde-z40-tab-ret mCurrentRotation=ROTATION_0 png=193146 xml=24211 e38f04c62b04
+   corpo-logico: o desenho é o próprio texto — texto lógico len=183 sha12=09fbd5382a85 = referência · 0 continuações ✓
+   rolagens horizontais roláveis sob a tela: 1 · [[72, 324, 1528, 1584]]
+QL3M-S3-acorde-z40-rolado-tab-ret mCurrentRotation=ROTATION_0 png=169040 xml=24211 e38f04c62b04
+   corpo-logico: o desenho é o próprio texto — texto lógico len=183 sha12=09fbd5382a85 = referência · 0 continuações ✓
+== tab 12:41:42
+12:42:06 toque 'song-5' @ 800,1696 (RX2N8000F3D)
+12:42:16 toque 'zoom-mais' @ 497,2345 (RX2N8000F3D)
+12:42:19 toque 'zoom-mais' @ 497,2345 (RX2N8000F3D)
+12:42:23 toque 'zoom-mais' @ 497,2345 (RX2N8000F3D)
+QL3M-S3-tab-z40-tab-ret mCurrentRotation=ROTATION_0 png=142872 xml=25482 b92314765062
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1412 sha12=d87d1c2f25d2 = referência · 0 continuações ✓
+== v 12:42:31
+12:42:48 toque 'buscar' @ 2295,188 (RX2N8000F3D)
+12:42:57 toque 'lib-campo' @ 1397,152 (RX2N8000F3D)
+12:43:10 toque 'Ver “Lanterna da fixture”' @ 1280,797 (RX2N8000F3D)
+QL3M-V-letra-tab-pai mCurrentRotation=ROTATION_90 png=297171 xml=20747 c79fc64d4d93
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 0 continuações ✓
+m14 a janela do texto (HorizontalScrollView) 733.8 dp → 55.0 colunas de mono 22 (13,33 dp, a régua) · view-leitor 797.8 dp
+12:43:43 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+12:43:52 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+12:44:05 toque 'Ver “Lanterna da fixture”' @ 800,797 (RX2N8000F3D)
+QL3M-V-letra-tab-ret mCurrentRotation=ROTATION_0 png=383616 xml=20419 9b0c15e5007d
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 0 continuações ✓
+m14 a janela do texto (HorizontalScrollView) 647.1 dp → 48.5 colunas de mono 22 (13,33 dp, a régua) · view-leitor 711.1 dp
+capturas=13 falhas=0

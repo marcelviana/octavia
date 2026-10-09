@@ -1,0 +1,8 @@
+QL3D-S1-setlists-tab-pai mCurrentRotation=ROTATION_90 png=240990 xml=40862 47cb51259242
+11:37:51 avião=1 (RX2N8000F3D)
+QL3D-S1-aviso-sem-rede-tab-pai mCurrentRotation=ROTATION_90 png=267360 xml=42971 f180bcb68763
+11:38:10 avião=0 (RX2N8000F3D)
+11:38:12 mock modo=500-pagina-1 vazio=False
+QL3D-S1-S1e-falha-com-cache-tab-pai mCurrentRotation=ROTATION_90 png=271486 xml=44881 23f7cb1b5edc
+11:38:37 mock modo=normal vazio=False
+capturas=3 falhas=0

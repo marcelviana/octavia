@@ -45,7 +45,9 @@ ponto não existe, a palavra pode partir, mas o acorde nunca** (o corte vai para
 *(QL-D45, aval da QL-PR2: **o acorde nunca parte, também na linha de acordes sozinha** — a da Cifra sem letra embaixo,
 que quebra como letra (QL-R6): um acorde maior que a coluna fica inteiro e a linha passa da coluna, como no par. Na Letra
 a linha de acordes quebra como letra, acorde e tudo (QL-R7). Na prática não acontece: a coluna mínima é 14 e o maior
-acorde do dado real tem 8 caracteres.)* *Aceite*: A-QL-1.
+acorde do dado real tem 8 caracteres.)* *(**QL-D48** `[Marcel, 2026-10-09]`, QL-PR3: **a QL-D45 vale só na Cifra.** Na
+Letra, uma linha com acordes digitados quebra como letra (QL-D22), e um acorde maior que a coluna parte como qualquer
+palavra longa, pela R1 — o comportamento que a PR-2 implementou e fixou em teste.)* *Aceite*: A-QL-1.
 
 **QL-R5 — R3, a continuação** `[QL-D29; folha §1]`. Cada pedaço depois do primeiro começa com **2 colunas de recuo**, sem
 glifo; a coluna útil da continuação é colunas − 2. No par, as duas continuações têm o mesmo recuo, e os espaços que sobram
@@ -56,7 +58,8 @@ acordes vazio não ocupa linha. *Aceite*: A-QL-1, A-QL-10.
 certeza como de acordes (a **quase acorde**, *"Intro: Am  E"*) **não forma par** e quebra como letra, se precisar. A
 **progressão de uma seção** (*"Am  F  C  G"*) faz par com a linha de letra de baixo. *Aceite*: A-QL-1.
 
-**QL-R7 — O par só na Cifra** `[QL-D22]`. A Letra quebra **sempre** como letra, mesmo com um acorde digitado. *Aceite*:
+**QL-R7 — O par só na Cifra** `[QL-D22; QL-D48]`. A Letra quebra **sempre** como letra, mesmo com um acorde digitado — e
+o acorde maior que a coluna parte como palavra longa (R1): o "acorde nunca parte" da QL-D45 é só da Cifra. *Aceite*:
 A-QL-1.
 
 **QL-R8 — A Tab não quebra** `[QL-D2; QL-D37]`. Rola para o lado, como hoje, com as 6 linhas e as colunas intactas, em toda
@@ -145,13 +148,13 @@ nativas** (regra 36), e o Tab repousa com o release e volta a ele no fim de todo
 | A-QL-3 | `\t`, `\r` e acento combinante: os três casos que só medem | Vitest no core | — | QL-R9 |
 | A-QL-4 | a errata do T1-R31 e do T1-R25 no `PRD-TELA-1.md`, com R2, a reserva por linha e o aceite novo | o diff da PR-1 | — | QL-R20 |
 | A-QL-5 | os três instrumentos comparam o texto lógico; cada um com CN que reprova uma quebra que muda o texto; o duplo do `native-tela` com colunas (o G-par de V **vê** a quebra) | os CN, colados | — | QL-R19 |
-| A-QL-6 | a largura do caractere nos cinco zooms, no AVD e no Tab (a régua por zoom); qual conta de colunas vale — *(QL-D40, QL-PR1: **fechado no AVD**, vale a conta da folha em C e B, QL-E2, `QL-PR1-anexos/medida-por-zoom.txt`; **o Tab na PR-3**)* | a régua e o dump | — | QL-R21 |
+| A-QL-6 | a largura do caractere nos cinco zooms, no AVD e no Tab (a régua por zoom); qual conta de colunas vale — *(QL-D40, QL-PR1: **fechado no AVD**, vale a conta da folha em C e B, QL-E2, `QL-PR1-anexos/medida-por-zoom.txt`; **o Tab na PR-3** — QL-PR3: **fechado no Tab**, igual ao AVD nos cinco zooms, `QL-PR3-anexos/medidas/regua-tab/`)* | a régua e o dump | — | QL-R21 |
 | A-QL-7 | o `DESIGN-QL` no `shasum -c` do CI | o job verde; o CN (um byte trocado reprova) | — | QL-R22 |
 | A-QL-8 | **G-inv**: a B5 34 de 34 idênticos; a B3 12 de 18 idênticos e os **6 dumps de Letra em par** (`g-inv-par`: só o declarado mudou) | `g-inv.sh`, `g-inv-par.mjs` | — | QL-R11 |
 | A-QL-9 | **G-N3** e **G-par** verdes com o texto lógico; o G-par do core sem mudança | `g-n3.mjs`; Vitest | — | QL-R19 |
 | A-QL-10 | o corpo em C e B pelas molduras: colunas, recuo de 2, o par sobre a sílaba, as tintas nos dois temas (> 4 dp = errata) | dumps de C e B; capturas | — | QL-R5, R10, R12 |
 | A-QL-11 | a Tab rola em toda faixa e zoom, 6 linhas intactas | dumps | — | QL-R8 |
-| A-QL-12 | **a âncora**: girar o tablet no meio de uma Letra longa, e um passo de zoom, põem o começo da linha lógica do topo a 32 da barra | dumps antes/depois | **julga no Tab** (PR-3) | QL-R13 |
+| A-QL-12 | **a âncora**: girar o tablet no meio de uma Letra longa, e um passo de zoom, põem o começo da linha lógica do topo a 32 da barra — *(QL-D50, aval da QL-PR3: medida de novo no AVD com o código final, a rolagem medida igual à prevista (±0,5 px) e a lógica esperada no topo nos três passos, `QL-PR3-anexos/README.md` §16.1; QL-D49: **em V também, ao girar**, na PR-4)* | dumps antes/depois; a rolagem medida (`uiautomator events`) contra a prevista | **julga no Tab** (PR-3) | QL-R13 |
 | A-QL-13 | **o tablet em pé, no zoom padrão** — a letra quebrada se lê no palco? | o executor escolhe as músicas **pelo comprimento das linhas, sem ler o texto**, e diz quais pelo id8 | **julga** (PR-3 e encerramento) | QL-D27 (1) |
 | A-QL-14 | **o tablet deitado, no zoom 40** | idem | **julga** (PR-3 e encerramento) | QL-D27 (2) |
 | A-QL-15 | **uma das 11 Letras que quebram em V em C** | idem | **julga** (PR-3 e encerramento) | QL-D27 (3) |
@@ -196,6 +199,12 @@ até lá o corpo aparece como hoje; um teste prova que o palco e V não caem com
 
 ### PR-4 — as notas no palco
 
+*(Aval da QL-PR3 — a PR-4 ganha dois itens:* **(1)** *a **âncora em V** (QL-D49): ao girar (C ↔ B, 55 ↔ 48 colunas), a primeira
+linha lógica visível vai para o topo, a 32 do começo do corpo, sem sinal; em V em B, contada a partir do começo do corpo
+dentro da rolagem que ele divide com os Detalhes;* **(2)** *a **conta da âncora com as notas acima do corpo**: o `yDaLogica`
+da QL-PR3 supõe o corpo começando no respiro de 32 — com as notas no topo do corpo, a conta soma a altura delas
+(`QL-PR3-anexos/README.md`, a nota do fim).)*
+
 As notas no topo do corpo (QL-D30, D32); recolher e abrir; a **divisa** no catálogo (41 → 42) e no `gate:icones`; o
 **estado lembrado** (QL-D33, QL-D39: gravado no aparelho, a chave declarada, o teste de gravar-reabrir-ler e a mudança
 nos gates que a contam); o julgamento do traço no Tab. *Podem entrar na PR-3* se o desenho as
@@ -206,6 +215,9 @@ A-QL-17…A-QL-19.
 
 O release no Tab com 100 + 100 e as quedas nativas; os julgamentos do Marcel (QL-D27); **a primeira nota de verdade**
 (QL-D26); as corridas do bloco no `CI-FAIXA.md` (regra 22). *Aceites*: A-QL-20, A-QL-21.
+*(QL-D51, aval da QL-PR3: **o custo de `quebrar` no Hermes se mede de novo no release**, junto com as 100 + 100 aberturas
+frias — a mesma fixture do `custo.ts` e as colunas 80, 48, 26 e 14, mediana e máximo de 100 rodadas; o número da QL-PR3 é o
+do dev client e fica como está.)*
 
 ---
 

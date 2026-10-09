@@ -1,0 +1,55 @@
+
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-ql-pr3
+
+ ❯  native-tela  apps/native/test/leitor-quebra.test.tsx (30 tests | 1 failed) 1518ms
+     ✓ colunasDoLeitor: ⌊(contêiner − 2 × 32) ÷ caractere⌋, e null sem medida ou fora do domínio (inteiro > 2) 12ms
+     ✓ linhasDoLeitor: null sem colunas, sem corpo e na Tab — o corpo aparece como hoje 12ms
+     ✓ o palco não cai e mostra o corpo como hoje — a largura ainda não medida (nenhum onLayout) 54ms
+     ✓ o palco não cai e mostra o corpo como hoje — o contêiner medido em 0 32ms
+     ✓ o palco não cai e mostra o corpo como hoje — o contêiner medido só com o respiro (64) 30ms
+     ✓ o palco não cai e mostra o corpo como hoje — 2 colunas (fora do domínio) 29ms
+     ✓ o palco não cai e mostra o corpo como hoje — 0 colunas 31ms
+     ✓ V não cai e mostra o corpo como hoje — a largura ainda não medida (nenhum onLayout) 27ms
+     ✓ V não cai e mostra o corpo como hoje — o contêiner medido em 0 30ms
+     ✓ V não cai e mostra o corpo como hoje — o contêiner medido só com o respiro (64) 28ms
+     ✓ V não cai e mostra o corpo como hoje — 2 colunas (fora do domínio) 28ms
+     ✓ V não cai e mostra o corpo como hoje — 0 colunas 29ms
+     ✓ o palco em B (48 colunas): toda linha cabe, há continuações, e o desenho é uma quebra do texto — num nó só 36ms
+     ✓ o palco deitado, zoom 22 (80 colunas): a Letra de 77 colunas sai IGUAL à de hoje, no mesmo nó (A-QL-16) 32ms
+     ✓ a Tab não quebra (QL-R8): o texto inteiro, no mesmo nó, rolando para o lado, mesmo em 26 colunas 32ms
+     ✓ a Cifra em 26 colunas: o par recuado, o acorde sobre a sílaba (ehQuebraDe confere o mesmo começo) 33ms
+     ✓ o zoom refaz as colunas: B no zoom 22 (48) → três passos → zoom 40 (26) 46ms
+     ✓ V em C (55 colunas) e em B (48): o corpo quebrado, num nó só 44ms
+     ✓ a linha de acordes sozinha: só ela numa rolagem horizontal; o resto em texto que não rola 30ms
+     ✓ no par: o pedaço de acordes e o de letra que passam da coluna rolam JUNTOS (o acorde fica sobre a sílaba) 30ms
+     ✓ na Letra a mesma linha quebra como letra (QL-D22): nada rola, um nó só 30ms
+     ✓ logicaNoTopo: a linha visual que está NA MARCA de 32 (a do respiro, onde a âncora põe o começo), e a lógica dela 11ms
+     ✓ a âncora não deriva (o achado do aparelho): ancorar de novo, sem mudar nada, fica na mesma linha lógica 18ms
+     ✓ yDaLogica: a rolagem que põe a 1ª linha visual da lógica a 32 do topo (o respiro), e 0 para a primeira 11ms
+     ✓ inicioDoBloco: na Cifra, a letra de um par ancora na linha de acordes de cima; na Letra, não 11ms
+     ✓ o giro C → B, nas contas: a lógica do topo em 80 colunas volta ao topo em 48 11ms
+     ✓ o palco num passo de zoom: com a continuação da lógica 10 no topo, a rolagem pedida põe o começo da 10 a 32 50ms
+     × o pedido da âncora se reaplica até a rolagem chegar ao alvo (o achado do Tab), e para quando chega 398ms
+     ✓ duas mudanças seguidas antes de a rolagem chegar ancoram na MESMA lógica (o zoom duas vezes) 97ms
+     ✓ a troca de música não ancora: volta ao topo (0), como hoje 53ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   native-tela  apps/native/test/leitor-quebra.test.tsx > QL-D18 / QL-R13 — a âncora: o começo da linha lógica do topo volta ao topo, a 32 da barra > o pedido da âncora se reaplica até a rolagem chegar ao alvo (o achado do Tab), e para quando chega
+AssertionError: o palco pediu a rolagem da âncora uma vez só: expected 1 to be greater than or equal to 3
+ ❯ apps/native/test/leitor-quebra.test.tsx:382:76
+    380|     const alvo = L.yDaLogica(L.logicasDasVisuais(LETRA_LONGA, quebrar(…
+    381|     const pedidos = __rolagens().filter((y) => Math.abs(y - alvo) < 0.…
+    382|     expect(pedidos.length, 'o palco pediu a rolagem da âncora uma vez …
+       |                                                                            ^
+    383|     __rolar(alvo)
+    384|     await assentar(50)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 29 passed (30)
+   Start at  11:48:11
+   Duration  2.35s (transform 277ms, setup 0ms, import 283ms, tests 1.52s, environment 452ms)
+

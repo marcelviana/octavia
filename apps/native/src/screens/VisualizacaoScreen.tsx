@@ -80,6 +80,8 @@ import {
   S3eDoLeitor,
   estiloDoLeitor,
   leitor,
+  linhasDoLeitor,
+  useColunasDoLeitor,
   type EstadoDoArquivoDoLeitor,
 } from './Leitor'
 
@@ -94,6 +96,9 @@ export interface VisualizacaoScreenProps {
   /** O disco mudou (o leitor baixou o arquivo) — a raiz recalcula `filesPresent`. */
   onArquivosMudaram: () => void
 }
+
+/** QL-PR3: V não tem zoom — o leitor mede o caractere só no padrão. */
+const ZOOM_DE_V = [zoomDefault] as const
 
 /** O ícone de cada tipo do enum (o mesmo mapa da L, do S2 e da S4); fora do enum, nenhum. */
 const ICONE_DO_TIPO: { readonly [k: string]: NomeIcone } = { Lyrics: 'letra', Chords: 'cifra', Tab: 'tab', Sheet: 'partitura' }
@@ -264,6 +269,9 @@ export function VisualizacaoScreen({
   const urlArquivo = validade !== null && validade.ok && validade.body === 'file' ? (content?.file_url ?? null) : null
   const formato = urlArquivo !== null && !ehFormatoQueOAppMostra(urlArquivo)
   const { arquivo, baixar } = useArquivoDaVisualizacao(formato ? null : urlArquivo, online, onArquivosMudaram)
+  // QL-PR3 — as colunas do leitor (QL-R2): o contêiner do corpo (o `onLayout` abaixo, em C e em B) e o caractere no zoom
+  // padrão. Até as duas existirem, o corpo é o de hoje (QL-D43).
+  const { colunas, aoMedirContainer, medidor } = useColunasDoLeitor(content?.content_type ?? null, zoomDefault, ZOOM_DE_V, colors.dark)
 
   const voltar = (
     <Pressable
@@ -412,9 +420,13 @@ export function VisualizacaoScreen({
         </PlaceholderDoLeitor>
       )
   } else {
+    const corpo = bodyOf(content.content_type, content.content_data)
     texto = (
       <CorpoDoLeitor
-        corpo={bodyOf(content.content_type, content.content_data)}
+        corpo={corpo}
+        tipo={content.content_type}
+        linhas={linhasDoLeitor(corpo, content.content_type, colunas)}
+        colunas={colunas}
         estilo={estiloDoLeitor(content.content_type, zoomDefault, cor)}
         testID="corpo"
       />
@@ -436,7 +448,7 @@ export function VisualizacaoScreen({
           </ScrollView>
           <View style={styles.colunaLeitor} testID="view-leitor">
             {texto !== null ? (
-              <ScrollView style={leitor.conteudo} contentContainerStyle={leitor.conteudoPad}>
+              <ScrollView style={leitor.conteudo} contentContainerStyle={leitor.conteudoPad} onLayout={aoMedirContainer}>
                 {texto}
               </ScrollView>
             ) : (
@@ -444,6 +456,7 @@ export function VisualizacaoScreen({
             )}
           </View>
         </View>
+        {texto !== null ? medidor : null}
       </View>
     )
   }
@@ -472,10 +485,15 @@ export function VisualizacaoScreen({
         <View style={styles.detalhesPad} testID="view-detalhes">
           {detalhes}
         </View>
-        <View style={[styles.leitorEmB, texto !== null ? leitor.conteudoPad : null]} testID="view-leitor">
+        <View
+          style={[styles.leitorEmB, texto !== null ? leitor.conteudoPad : null]}
+          onLayout={texto !== null ? aoMedirContainer : undefined}
+          testID="view-leitor"
+        >
           {texto ?? corpoFixo}
         </View>
       </ScrollView>
+      {texto !== null ? medidor : null}
     </View>
   )
 }

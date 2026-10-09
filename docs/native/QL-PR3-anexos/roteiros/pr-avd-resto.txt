@@ -1,0 +1,141 @@
+== cifra 09:08:59
+09:09:27 toque 'song-2' @ 1902,580 (emulator-5554)
+QL3Q-S3-cifra-z22-avd-pai mCurrentRotation=ROTATION_0 png=187306 xml=25045 2c84a26d15c3
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1241 sha12=2355a509052d = referência · 0 continuações ✓
+09:10:10 toque 'song-2' @ 800,859 (emulator-5554)
+QL3Q-S3-cifra-z22-avd-ret mCurrentRotation=ROTATION_90 png=261521 xml=25051 4686fee93b7a
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=1241 sha12=2355a509052d = referência · 1 continuações ✓
+09:10:26 toque 'zoom-mais' @ 497,2318 (emulator-5554)
+09:10:29 toque 'zoom-mais' @ 497,2318 (emulator-5554)
+09:10:33 toque 'zoom-mais' @ 497,2318 (emulator-5554)
+QL3Q-S3-cifra-z40-avd-ret mCurrentRotation=ROTATION_90 png=194527 xml=25162 fc02bfb0eb59
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=1241 sha12=2355a509052d = referência · 31 continuações ✓
+== claro 09:10:40
+09:11:08 toque 'song-1' @ 800,580 (emulator-5554)
+09:11:17 toque 'tema' @ 682,2318 (emulator-5554)
+QL3Q-S3-letra-claro-avd-ret mCurrentRotation=ROTATION_90 png=362848 xml=25081 a4fde9e7bc9e
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 2 continuações ✓
+09:11:27 toque 'tema' @ 682,2318 (emulator-5554)
+== acorde 09:11:28
+09:11:51 toque 'song-4' @ 800,1417 (emulator-5554)
+09:12:00 toque 'zoom-mais' @ 497,2318 (emulator-5554)
+09:12:04 toque 'zoom-mais' @ 497,2318 (emulator-5554)
+09:12:07 toque 'zoom-mais' @ 497,2318 (emulator-5554)
+QL3Q-S3-acorde-z40-avd-ret mCurrentRotation=ROTATION_90 png=187164 xml=26165 c33191805fbb
+    [exit 2]
+   rolagens horizontais roláveis sob a tela: 2 · [[72, 464, 1528, 604], [72, 1444, 1528, 1724]]
+QL3Q-S3-acorde-z40-rolado-avd-ret mCurrentRotation=ROTATION_90 png=187164 xml=26165 c33191805fbb
+    [exit 2]
+== tab 09:12:26
+09:12:53 toque 'song-5' @ 800,1696 (emulator-5554)
+09:13:02 toque 'zoom-mais' @ 497,2318 (emulator-5554)
+09:13:06 toque 'zoom-mais' @ 497,2318 (emulator-5554)
+09:13:09 toque 'zoom-mais' @ 497,2318 (emulator-5554)
+QL3Q-S3-tab-z40-avd-ret mCurrentRotation=ROTATION_90 png=127113 xml=25140 8aed27be75aa
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1412 sha12=d87d1c2f25d2 = referência · 0 continuações ✓
+== ancora 09:13:16
+09:13:43 toque 'song-3' @ 800,1138 (emulator-5554)
+QL3Q-S3-ancora-antes-avd-ret DUMP FALHOU
+QL3Q-S3-ancora-antes-avd-ret mCurrentRotation=ROTATION_90 png=328517 xml=
+    [exit 2]
+FALHA ancora: ORIENTAÇÃO ERRADA para QL3Q-S3-ancora-giro-avd-pai: raiz [0, 0, 1600, 2560]
+== v 09:14:11
+09:14:35 toque 'buscar' @ 2295,188 (emulator-5554)
+09:14:43 toque 'lib-campo' @ 1397,152 (emulator-5554)
+09:14:50 toque 'Ver “Lanterna da fixture”' @ 1280,797 (emulator-5554)
+QL3Q-V-letra-avd-pai mCurrentRotation=ROTATION_0 png=266244 xml=20417 de30804380d2
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 2 continuações ✓
+m14 a janela do texto (HorizontalScrollView) 733.8 dp → 55.0 colunas de mono 22 (13,33 dp, a régua) · view-leitor 797.8 dp
+09:15:26 toque 'buscar' @ 1335,281 (emulator-5554)
+09:15:35 toque 'lib-campo' @ 917,152 (emulator-5554)
+09:15:42 toque 'Ver “Lanterna da fixture”' @ 800,797 (emulator-5554)
+QL3Q-V-letra-avd-ret mCurrentRotation=ROTATION_90 png=363269 xml=20089 f5149385506b
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 2 continuações ✓
+m14 a janela do texto (HorizontalScrollView) 647.1 dp → 48.5 colunas de mono 22 (13,33 dp, a régua) · view-leitor 711.1 dp
+== gpar 09:15:56
+09:15:58 mock modo=normal content=content-gpar.json env=None
+09:16:21 toque 'buscar' @ 2295,188 (emulator-5554)
+09:16:29 toque 'lib-campo' @ 1397,152 (emulator-5554)
+09:16:36 toque 'Ver “Gpar 01”' @ 1280,590 (emulator-5554)
+  IGUAL     letra                        site=texto     V(aparelho)=texto     continuações=0
+09:17:08 toque 'buscar' @ 2295,188 (emulator-5554)
+09:17:16 toque 'lib-campo' @ 1397,152 (emulator-5554)
+09:17:23 toque 'Ver “Gpar 02”' @ 1280,590 (emulator-5554)
+  IGUAL     cifra-texto                  site=texto     V(aparelho)=texto     continuações=0
+09:17:51 toque 'buscar' @ 2295,188 (emulator-5554)
+09:17:59 toque 'lib-campo' @ 1397,152 (emulator-5554)
+09:18:06 toque 'Ver “Gpar 03”' @ 1280,590 (emulator-5554)
+  IGUAL     tab-texto                    site=texto     V(aparelho)=texto     continuações=0
+09:18:35 toque 'buscar' @ 2295,188 (emulator-5554)
+09:18:43 toque 'lib-campo' @ 1397,152 (emulator-5554)
+09:18:50 toque 'Ver “Gpar 04”' @ 1280,590 (emulator-5554)
+  IGUAL     partitura-pdf                site=arquivo   V(aparelho)=arquivo   continuações=0
+09:19:21 toque 'buscar' @ 2295,188 (emulator-5554)
+09:19:29 toque 'lib-campo' @ 1397,152 (emulator-5554)
+09:19:36 toque 'Ver “Gpar 05”' @ 1280,590 (emulator-5554)
+  IGUAL     letra-poluida-editor         site=texto     V(aparelho)=texto     continuações=0
+09:20:04 toque 'buscar' @ 2295,188 (emulator-5554)
+09:20:12 toque 'lib-campo' @ 1397,152 (emulator-5554)
+09:20:19 toque 'Ver “Gpar 06”' @ 1280,590 (emulator-5554)
+  IGUAL     cifra-secoes-acordes-vazios  site=texto     V(aparelho)=texto     continuações=0
+09:20:46 toque 'buscar' @ 2295,188 (emulator-5554)
+09:20:54 toque 'lib-campo' @ 1397,152 (emulator-5554)
+09:21:01 toque 'Ver “Gpar 07”' @ 1280,590 (emulator-5554)
+  IGUAL     cifra-secoes-completas       site=texto     V(aparelho)=texto     continuações=0
+09:21:28 toque 'buscar' @ 2295,188 (emulator-5554)
+09:21:36 toque 'lib-campo' @ 1397,152 (emulator-5554)
+09:21:43 toque 'Ver “Gpar 08”' @ 1280,590 (emulator-5554)
+  IGUAL     cifra-duas-secoes            site=texto     V(aparelho)=texto     continuações=0
+09:22:12 toque 'buscar' @ 2295,188 (emulator-5554)
+09:22:20 toque 'lib-campo' @ 1397,152 (emulator-5554)
+09:22:27 toque 'Ver “Gpar 09”' @ 1280,590 (emulator-5554)
+  IGUAL     so-aninhado                  site=sem-corpo V(aparelho)=sem-corpo continuações=0
+09:22:54 toque 'buscar' @ 2295,188 (emulator-5554)
+09:23:02 toque 'lib-campo' @ 1397,152 (emulator-5554)
+09:23:09 toque 'Ver “Gpar 10”' @ 1280,590 (emulator-5554)
+  IGUAL     tab-editada-no-site          site=texto     V(aparelho)=texto     continuações=0
+G-par da visualização NO APARELHO [avd-pai] — pares 10 · iguais 10 · diferentes 0 [] · continuações vistas 0
+09:23:39 toque 'buscar' @ 1335,281 (emulator-5554)
+09:23:47 toque 'lib-campo' @ 917,152 (emulator-5554)
+09:23:54 toque 'Ver “Gpar 01”' @ 800,590 (emulator-5554)
+  IGUAL     letra                        site=texto     V(aparelho)=texto     continuações=0
+09:24:22 toque 'buscar' @ 1335,281 (emulator-5554)
+09:24:30 toque 'lib-campo' @ 917,152 (emulator-5554)
+09:24:37 toque 'Ver “Gpar 02”' @ 800,590 (emulator-5554)
+  IGUAL     cifra-texto                  site=texto     V(aparelho)=texto     continuações=0
+09:25:04 toque 'buscar' @ 1335,281 (emulator-5554)
+09:25:13 toque 'lib-campo' @ 917,152 (emulator-5554)
+09:25:20 toque 'Ver “Gpar 03”' @ 800,590 (emulator-5554)
+  IGUAL     tab-texto                    site=texto     V(aparelho)=texto     continuações=0
+09:25:47 toque 'buscar' @ 1335,281 (emulator-5554)
+09:25:55 toque 'lib-campo' @ 917,152 (emulator-5554)
+09:26:02 toque 'Ver “Gpar 04”' @ 800,590 (emulator-5554)
+  IGUAL     partitura-pdf                site=arquivo   V(aparelho)=arquivo   continuações=0
+09:26:32 toque 'buscar' @ 1335,281 (emulator-5554)
+09:26:40 toque 'lib-campo' @ 917,152 (emulator-5554)
+09:26:47 toque 'Ver “Gpar 05”' @ 800,590 (emulator-5554)
+  IGUAL     letra-poluida-editor         site=texto     V(aparelho)=texto     continuações=0
+09:27:14 toque 'buscar' @ 1335,281 (emulator-5554)
+09:27:22 toque 'lib-campo' @ 917,152 (emulator-5554)
+09:27:29 toque 'Ver “Gpar 06”' @ 800,590 (emulator-5554)
+  IGUAL     cifra-secoes-acordes-vazios  site=texto     V(aparelho)=texto     continuações=0
+09:27:56 toque 'buscar' @ 1335,281 (emulator-5554)
+09:28:04 toque 'lib-campo' @ 917,152 (emulator-5554)
+09:28:11 toque 'Ver “Gpar 07”' @ 800,590 (emulator-5554)
+  IGUAL     cifra-secoes-completas       site=texto     V(aparelho)=texto     continuações=0
+09:28:39 toque 'buscar' @ 1335,281 (emulator-5554)
+09:28:47 toque 'lib-campo' @ 917,152 (emulator-5554)
+09:28:54 toque 'Ver “Gpar 08”' @ 800,590 (emulator-5554)
+  IGUAL     cifra-duas-secoes            site=texto     V(aparelho)=texto     continuações=0
+09:29:21 toque 'buscar' @ 1335,281 (emulator-5554)
+09:29:29 toque 'lib-campo' @ 917,152 (emulator-5554)
+09:29:36 toque 'Ver “Gpar 09”' @ 800,590 (emulator-5554)
+  IGUAL     so-aninhado                  site=sem-corpo V(aparelho)=sem-corpo continuações=0
+09:30:04 toque 'buscar' @ 1335,281 (emulator-5554)
+09:30:12 toque 'lib-campo' @ 917,152 (emulator-5554)
+09:30:19 toque 'Ver “Gpar 10”' @ 800,590 (emulator-5554)
+  IGUAL     tab-editada-no-site          site=texto     V(aparelho)=texto     continuações=0
+G-par da visualização NO APARELHO [avd-ret] — pares 10 · iguais 10 · diferentes 0 [] · continuações vistas 0
+09:30:30 mock modo=normal vazio=False
+capturas=10 falhas=1
+  ancora: ORIENTAÇÃO ERRADA para QL3Q-S3-ancora-giro-avd-pai: raiz [0, 0, 1600, 2560]
