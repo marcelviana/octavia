@@ -23,6 +23,13 @@ G=apps/native/scripts/g-n3.mjs
 B6=docs/native/N3-PR6b-anexos
 P6=docs/native/N3-PR6-anexos
 PRE=docs/native/N3-PRECHECK-anexos
+# QL-PR3 — a B3 COMO O PRE-CHECK A CONGELOU. A errata em par da QL-PR3 (regra 33) trocou na B3 os seis dumps de Letra
+# pela Letra quebrada em 80 colunas; este controle mede o G-N3 contra dados do pre-check (o `B3-inventario.jsonl`, os
+# dumps de antes do QL), então a paisagem dele é a B3 com esses seis de volta à forma pré-QL, guardada à parte com sha
+# (`docs/native/QL-PR3-anexos/b3-pre-ql/`). Nada mais muda no controle.
+B3PRE="$TMP/b3-pre-ql"; mkdir -p "$B3PRE"
+cp docs/native/N3-PRECHECK-anexos/B3-referencia-paisagem/*.xml "$B3PRE/"
+cp docs/native/QL-PR3-anexos/b3-pre-ql/*.xml "$B3PRE/"
 FALHOU=0
 confere() {  # confere <nome> <exit-esperado> <exit-obtido>
   if [ "$2" = "$3" ]; then echo "  $1: exit $3 ✓"; else echo "  $1: exit $3, esperado $2 ✗"; FALHOU=1; fi
@@ -43,7 +50,7 @@ node $G --pai "$B6/dumps-pai" --faixa "$TMP/cp" > "$TMP/o" 2>&1; confere CP-B2 0
 contem CP-B2 "$TMP/o" "(e)=0 · (b)=0"; mostra "$TMP/o"
 
 echo "== CP-B3 — o consolidado da N3-PR6 (102 pares)"
-node $G --pai $PRE/B5-baseline --pai $PRE/B3-referencia-paisagem --pai $P6/dumps-pai --pai $P6/dumps-pai-extra \
+node $G --pai $PRE/B5-baseline --pai $B3PRE --pai $P6/dumps-pai --pai $P6/dumps-pai-extra \
   --pai docs/native/N3-PR5-anexos/dumps-pai --pai docs/native/N3-PR4-anexos/dumps-pai --pai docs/native/N3-PR3-anexos/dumps-pai \
   --faixa $P6/dumps-ret --rolada $P6/dumps-ret-rolada > "$TMP/o" 2>&1; confere CP-B3 0 $?
 contem CP-B3 "$TMP/o" "102 par(es)"; contem CP-B3 "$TMP/o" "(e)=0 · (b)=0 · nome-acessível=28 · rolagem=18"; mostra "$TMP/o"
@@ -54,7 +61,7 @@ node $G --pai "$P6/dumps-pai-extra" --faixa "$TMP/def" > "$TMP/o" 2>&1; confere 
 contem CN-B4 "$TMP/o" "(b)=6 em 2 dump(s)"; mostra "$TMP/o"
 
 echo "== CT-B5 — o (b) do G-N3 contra o do pre-check, dump a dump"
-GP="node $G --pai $PRE/B5-baseline --pai $PRE/B3-referencia-paisagem"
+GP="node $G --pai $PRE/B5-baseline --pai $B3PRE"
 $GP --faixa "$PRE/B2" > "$TMP/b2" 2>&1
 $GP --faixa "$PRE/B4" > "$TMP/b4" 2>&1
 node -e '
