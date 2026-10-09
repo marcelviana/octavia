@@ -1,0 +1,12 @@
+# QL-PR2 (aval) — o teste da QL-D45, antes (6e5ef19, contra a função da PR-2) e depois (a706ab0)
+# pnpm exec vitest run --project core packages/core/src/quebra.test.ts (sem as cores)
+
+== 6e5ef19
+     × QL-D45 (Q3b) — fora do par (a linha de acordes sozinha, na Cifra), o acorde maior que a coluna fica inteiro 4ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+AssertionError: expected [ 'F#m7(11)', '  /G#' ] to deeply equal [ 'F#m7(11)/G#' ]
+      Tests  1 failed | 46 passed (47)
+
+== a706ab0
+ ✓  core  packages/core/src/quebra.test.ts (47 tests) 64ms
+      Tests  47 passed (47)

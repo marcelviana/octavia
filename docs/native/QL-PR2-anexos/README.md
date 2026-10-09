@@ -8,7 +8,8 @@ removida antes, com `git status --short` vazio e **sem `--force`**. Fonte do blo
 [`DESIGN-QL/`](../DESIGN-QL/README.md) e o que a PR-1 deixou ([`QL-PR1-anexos/`](../QL-PR1-anexos/README.md)).
 
 - **Commits**, na ordem do rito: `23f22ab` `test(ql): QL-PR2 — os casos de borda da quebra, entrando reprovados` ·
-  `5d517d1` `feat(ql): QL-PR2 — a quebra no core (R1–R4, a medida do QL-D24)` · o de docs (este README e os anexos).
+  `5d517d1` `feat(ql): QL-PR2 — a quebra no core (R1–R4, a medida do QL-D24)` · `17ad28a` o de docs. **Depois do aval
+  (§11)**: `6e5ef19` `test(ql): QL-D45 … (reprovado)` · `a706ab0` `feat(ql): QL-D45 …` · o de docs do aval.
 - **Nenhuma tela, nenhum aparelho**: `Leitor.tsx`, `StageScreen.tsx`, `VisualizacaoScreen.tsx` com diff vazio (o G1a, §5:
   a única exceção declarada é `quebra.ts`). Nenhuma requisição a prod, nenhum login, nenhum `.env*` aberto.
 - **Texto**: só os do projeto (`QL-BRIEF.md` §5, a Letra de 110 colunas da fixture do N3, frases inventadas); nenhum texto
@@ -25,6 +26,7 @@ removida antes, com `git status --short` vazio e **sem `--force`**. Fonte do blo
 | [`custo.txt`](custo.txt) | o custo de `quebrar` — `instrumentos/custo.ts` |
 | [`gates.txt`](gates.txt) | os gates locais sobre a PR: G1/G2/G3 com o bloco, o `shasum -c`, os quatro do site |
 | [`ci-log.txt`](ci-log.txt) | o log do CI filtrado (§6.1) |
+| [`aval/`](aval/) | o aval (§11): o teste da QL-D45 antes e depois, os CN da PR-1 e da PR-2 de novo, os gates, o log do CI |
 
 ---
 
@@ -111,6 +113,8 @@ colunas de 3 a 90 — **528 quebras, a invariância em todas**; de 10 colunas em
 ### 3.2 Provisórios — R1–R4 não decidem: **perguntas para o Marcel**
 
 O teste fixa o que a função faz hoje, para que a resposta, qualquer que seja, apareça como mudança de teste.
+**→ Respondidas no aval (§11): QL-D43…QL-D47.** Todas como a função fazia, **salvo a Q3b**, que mudou (QL-D45). A tabela
+abaixo fica como estava, como registro da pergunta.
 
 | Q | caso | o que a função faz (provisório) | a alternativa |
 |---|---|---|---|
@@ -297,3 +301,96 @@ toolchain/aparato · **X** terceiros.
 duas medidas no app; `O_LEITOR_QUEBRA = true` no G-par de V; a medida do caractere no Tab (QL-D40); a errata em par dos 6
 dumps de Letra da B3; a âncora; **e a guarda da Q1** (o leitor não chama a função com a largura ainda não medida), seja
 qual for a resposta. O custo no Hermes se mede ali.
+
+---
+
+## 11. O aval — QL-D43…QL-D47 `[Marcel, 2026-10-09]`
+
+| # | decisão | o que mudou nesta PR |
+|---|---|---|
+| **QL-D43** | (Q1) **Colunas fora do domínio: a função continua lançando `RangeError`.** Ela fica estrita, e a proteção fica na tela. **A PR-3 só chama `quebrar` depois de medir a largura da coluna e a do caractere; até lá o corpo aparece como hoje.** A PR-3 prova com teste que o palco e V não caem com a largura em 0 ou ainda não medida. | o teste vira definitivo; `QL-REQUISITOS.md` §3, a PR-3 |
+| **QL-D44** | (Q2) **Os pedaços vazios ficam como a função faz hoje:** a linha `""` quando o acorde só começa depois da coluna, para ele continuar sobre a sílaba; nenhuma linha para um pedaço de letra só de espaços numa continuação; a linha `""` quando o recuo do autor é maior que a coluna, com a palavra indo para a continuação. Os testes provisórios viram definitivos. | os três testes viram definitivos |
+| **QL-D45** | (Q3) **O acorde nunca parte, também na linha de acordes sozinha.** A R2 se estende à linha de acordes fora do par: um acorde maior que a coluna fica inteiro, e a linha passa da coluna, como no par. **Na PR-3, essa linha é exceção declarada à QL-D37 ("só a Tab rola"): o excesso aparece pela rolagem lateral, só nessa linha.** Na prática não acontece: a coluna mínima é 14, e o maior acorde do dado real tem 8 caracteres. O `\t` mais largo que a coluna, sozinho numa linha, fica como está. | `6e5ef19` (o teste, reprovado) e `a706ab0` (a função); `QL-REQUISITOS.md` QL-R4, QL-R8 e a PR-3 |
+| **QL-D46** | (Q4) **O `\r` do fim da linha de acordes é ignorado**, e o texto colado com CRLF forma par. A diferença para o `btrim` da consulta SQL da Fase B (div. 1209) não muda nenhum número: o dado real não tem `\r`. | o teste vira definitivo |
+| **QL-D47** | (Q5) **O `\t` numa continuação conta a partir da coluna desenhada**, já com o recuo de 2. | o teste vira definitivo |
+
+**E a PR-3 ganha três itens** (`QL-REQUISITOS.md` §3): a proteção da QL-D43, com o teste; a exceção da QL-D45 na rolagem
+lateral (QL-R8); e o custo de `quebrar` medido no Hermes, no Tab, com a fixture de `instrumentos/custo.ts` e as colunas
+80, 48, 26 e 14.
+
+### 11.1 A QL-D45, no rito `[medido: aval/d45-antes-depois.txt]`
+
+- **`6e5ef19` — o teste, reprovado.** No `quebra.test.ts`, o provisório da Q3b (que fixava `F#m7(11)` · `  /G#`) sai, com a
+  razão no comentário, e entra o da QL-D45: a linha de acordes sozinha, na Cifra, com o acorde de 11 colunas em 8 —
+  `F#m7(11)/G#` inteiro; `F#m7(11)/G#  Am` → `F#m7(11)/G#` · `  Am`; `Am  F#m7(11)/G#` → `Am` · `  F#m7(11)/G#`; e a linha
+  seguida de linha vazia. Os outros provisórios ganham o nome da decisão. **Contra a função da PR-2: 1 de 47 reprova**, o
+  novo — `expected [ 'F#m7(11)', '  /G#' ] to deeply equal [ 'F#m7(11)/G#' ]`.
+- **`a706ab0` — a função.** No corte da letra, quando a linha é de acordes **e o tipo é Cifra**, a palavra maior que a coluna
+  não parte: o pedaço vai até o fim dela. **47 de 47.**
+- **A leitura, declarada**: a QL-D45 estende a R2, e a R2 é do par, que só existe na Cifra (QL-D22). Na **Letra** a linha
+  de acordes continua quebrando como letra — o acorde parte. Um teste a mais o fixa (*"QL-D45 — na Letra a linha de
+  acordes quebra como letra (QL-D22)"*), extra da mesma classe.
+- **A varredura refeita**: a invariância em 3…90 colunas ganhou um texto com o acorde de 11 colunas fora e dentro do par
+  (`ACORDE_LONGO`) — **616 quebras** (7 textos × 88), todas com a invariância; ele fica **fora** da conferência da largura,
+  porque passa da coluna abaixo de 11 de propósito.
+- **O gate da quebra**: `passam 46 · reprovam 0`, `zero reprovações, lista vazia (QL-PR2) ✓`; **`ql-quebra.json` sem
+  mudança** (`git diff 827141a -- packages/core/fixtures/ql-quebra.json` vazio).
+
+### 11.2 Os controles negativos, de novo `[medido: aval/]`
+
+| instrumento | resultado |
+|---|---|
+| `QL-PR2-anexos/instrumentos/cn-gate-quebra.sh` | igual ao §4: CN-0 46 passam, extras **47** · CN-L reprova (`ÓRFÃ`, `LISTA NÃO VAZIA`) · CN-K 46 não declaradas · CN-1 3 (os do (iii)) · letra 46 · palavra 19 · ordem 35 · CN-M só `i:quase-acorde-14`, extras 2 de 47 |
+| `QL-PR2-anexos/instrumentos/cn-instrumentos-real.sh` | `todos como esperado ✓` — R48, R26, R48m: G-N3 `quebra=1`, `corpo-logico` = referência (`5bcc25b61916`) |
+| `QL-PR1-anexos/instrumentos/cn-gate-quebra.sh` | o laboratório: 43 passam / letra 46 / palavra 19 / ordem 35 reprovam, como na PR-1; o "CN-0 o contrato (a PR-1)" agora mede a função da PR-2 e dá **46 passam** (div. 1210) |
+| `QL-PR1-anexos/instrumentos/cn-instrumentos.sh d0d0639` | `todos os controles como esperado ✓` |
+| `QL-PR1-anexos/instrumentos/cn-g-par-v.sh` | V0 exit 0 · V1 exit 1 (*"V quebrou o corpo sem a declaração"*) · V2 exit 0 · V3 exit 1 (*"V diferente do site"*) · V5 exit 1 (*"TAB QUEBRADA"*) · V4 exit 1 (*"o leitor não viu as colunas do duplo"*) — todos como esperado |
+
+Cada script devolveu o que trocou (`git status` limpo no fim de cada um).
+
+### 11.3 Os gates, a suíte e o CI
+
+- **Local** (`aval/gates.txt`): G1a `DIFF VAZIO ✓` (a exceção `quebra.ts`) · G1b `só adição ✓` (o `quebra.test.ts` não
+  existe na base, então a troca do Q3b é adição) · G2 `121 = 121 ✓` · G3 `70 = 70`, `nenhuma linha sumiu ✓` · congelados
+  `OK` · G-back, G-palco, G-tok, G-tok cobertura, G-faixa `PASSA`.
+- **Suíte**: `Test Files 144 passed | 3 skipped (147)` · `Tests 1765 passed | 59 skipped (1824)` (+1, o teste da Letra da
+  QL-D45); `tsc` raiz 0 · core 0 · identidade 0 · nativo 0; `pnpm lint` `✔ No ESLint warnings or errors`.
+- **O CI** — §11.4.
+
+### 11.4 Os checks e o log `[medido: aval/ci-log.txt]`
+
+Sobre o head **`a706ab0`**, **todos verdes**, antes deste commit de docs (nível **job**; `n=1`):
+
+| check | workflow · run | estado | duração (job) |
+|---|---|---|---|
+| `build` | `ci.yml` · `37914635962` | pass | 4m27s (09:58:02 → 10:02:29 UTC) |
+| `gates-nativos` | `gates.yml` · `37914635858` | pass | 17s |
+| `g-back` · `g-palco` · `g-tok` · `g-faixa` | `gates-web.yml` · `37914635851` | pass | 38s · 14s · 34s · 15s |
+| `Vercel` · `Vercel Preview Comments` | — | pass | — |
+
+O `native.yml` de novo não rodou (nada do `paths` dele). No passo *"Test — a suíte, e com ela os gates embrulhados"* do
+`build`:
+
+```
+ ✓  core  packages/core/src/quebra.test.ts (47 tests) 281ms
+gate da quebra — casos 23 · checagens 46 ((i) 17 · (ii) 23 · (iii) 6) · passam 46 · reprovam 0
+lista esperada (0) · reprovados (0)
+gate da quebra: zero reprovações, lista vazia (QL-PR2) ✓
+ ✓  web  tests/gates/ql-quebra.test.ts (2 tests) 12ms
+ Test Files  144 passed | 3 skipped (147)
+      Tests  1765 passed | 59 skipped (1824)
+```
+
+No `gates-nativos`: `g1a: packages/core/src/quebra.ts` lida do corpo, `G1a: DIFF VAZIO ✓`, `G1b: só adição ✓`, `G2 121 =
+121 ✓`, `G3 70 = 70 … nenhuma linha sumiu ✓`, `== docs/native/DESIGN-QL` · `telas.html: OK`.
+
+### 11.5 Divergências — 1210
+
+A última usada era a **1209** (§9) `[medido: git grep -nE '^\| \*\*(1[12][0-9]{2})\*\*' -- docs → máximo 1209; nenhum
+número ≥ 1210 em prosa como divergência]`.
+
+| div. | origem | o quê | destino |
+|---|---|---|---|
+| **1210** | T | o `cn-gate-quebra.sh` da PR-1 chama de *"CN-0 o contrato (a PR-1)"* a corrida sobre o `quebra.ts` da árvore — depois da PR-2 ela mede a função, e dá **46 passam**, não as 46 reprovações que o nome promete (nome é afirmação, caso 23) | registrado aqui; o script fica como está (é anexo da PR-1). O contrato da PR-1 contra o gate atual é o **CN-K** do script da PR-2 |
+
+**Contagem** `[medido: a coluna]`: **1 — T 1**. **A próxima livre é a 1211.**

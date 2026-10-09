@@ -1,0 +1,423 @@
+== CN-0 a PR-2 como está
+    gate da quebra — casos 23 · checagens 46 ((i) 17 · (ii) 23 · (iii) 6) · passam 46 · reprovam 0
+    lista esperada (0) · reprovados (0)
+    gate da quebra: zero reprovações, lista vazia (QL-PR2) ✓
+          Tests  2 passed (2)
+    extras do core:       Tests  47 passed (47)
+== CN-L uma linha na lista (i:letra-80)
+    gate da quebra — casos 23 · checagens 46 ((i) 17 · (ii) 23 · (iii) 6) · passam 46 · reprovam 0
+    lista esperada (1) · reprovados (0)
+      ✗ declaração ÓRFÃ: i:letra-80 (passa)
+      ✗ LISTA NÃO VAZIA (1): desde a PR-2 (a quebra no core) reprovação declarada não é mais aceita — ql-quebra-reprovados.txt tem de estar vazio
+    gate da quebra: ✗
+    ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+    AssertionError: declaração ÓRFÃ: expected [ 'i:letra-80' ] to deeply equal []
+          Tests  1 failed | 1 passed (2)
+== CN-K o contrato da PR-1 (lança)
+    gate da quebra — casos 23 · checagens 46 ((i) 17 · (ii) 23 · (iii) 6) · passam 0 · reprovam 46
+      (i  ) REPROVA · (ii) REPROVA  letra-80             Lyrics 80 col · QL-C-S3-letra-escuro
+            (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+      (i  ) REPROVA · (ii) REPROVA  letra-55             Lyrics 55 col · QL-C-V-letra-escuro
+            (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+      (i  ) REPROVA · (ii) REPROVA  letra-48             Lyrics 48 col · QL-B-S3-letra-escuro
+            (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+      (i  ) REPROVA · (ii) REPROVA  letra-26             Lyrics 26 col · QL-A-S3-letra-escuro
+            (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+      (i  ) REPROVA · (ii) REPROVA  letra-14             Lyrics 14 col · QL-A-S3-notas-longa-escuro
+            (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+      (i  ) REPROVA · (ii) REPROVA  cifra-80             Chords 80 col · QL-C-S3-cifra-escuro
+            (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+      (i  ) REPROVA · (ii) REPROVA  cifra-55             Chords 55 col · QL-C-V-cifra-escuro
+            (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+      (i  ) REPROVA · (ii) REPROVA  cifra-48             Chords 48 col · QL-B-S3-cifra-escuro
+            (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+      (i  ) REPROVA · (ii) REPROVA  cifra-26             Chords 26 col · QL-A-S3-cifra-escuro
+            (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+      (i  ) REPROVA · (ii) REPROVA  cifra-14             Chords 14 col · EST-QL-A-S3-cifra-zoom40-sem-saida-escuro
+            (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+      (i  ) REPROVA · (ii) REPROVA  tab-80               Tab    80 col · QL-C-S3-tab… — conferência §13: "78 colunas, 6 linhas"
+            (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+      (i  ) REPROVA · (ii) REPROVA  tab-55               Tab    55 col · QL-C-V-tab… — conferência §13: "78 colunas, 6 linhas"
+            (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+      (i  ) REPROVA · (ii) REPROVA  tab-48               Tab    48 col · QL-B-S3-tab… — conferência §13: "78 colunas, 6 linhas"
+            (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+      (i  ) REPROVA · (ii) REPROVA  tab-26               Tab    26 col · QL-A-S3-tab… — conferência §13: "78 colunas, 6 linhas"
+            (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+      (i  ) REPROVA · (ii) REPROVA  tab-14               Tab    14 col · derivado: R4 (nenhuma moldura de Tab em 14)
+            (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+      (i  ) REPROVA · (ii) REPROVA  quase-acorde-14      Chords 14 col · derivado: R1 + R4
+            (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+      (i  ) REPROVA · (ii) REPROVA  cifra-como-letra-26  Lyrics 26 col · derivado: R1 sobre o texto do §5.2
+            (i) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+      (iii) REPROVA · (ii) REPROVA  tabulacao-16         Lyrics 16 col · derivado: QL-D24
+            (iii) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+      (iii) REPROVA · (ii) REPROVA  tabulacao-14         Lyrics 14 col · derivado: QL-D24
+            (iii) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+      (iii) REPROVA · (ii) REPROVA  cr-50                Lyrics 50 col · derivado: QL-D24
+            (iii) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+      (iii) REPROVA · (ii) REPROVA  cr-48                Lyrics 48 col · derivado: QL-D24 + o corte do QL-B-S3-letra-escuro
+            (iii) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+      (iii) REPROVA · (ii) REPROVA  combinante-50        Lyrics 50 col · derivado: QL-D24
+            (iii) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+      (iii) REPROVA · (ii) REPROVA  combinante-48        Lyrics 48 col · derivado: QL-D24 + o corte do QL-B-S3-letra-escuro
+            (iii) lança: quebrar: só o contrato na PR-1 do QL — a lógica é da PR-2
+    lista esperada (0) · reprovados (46)
+      ✗ reprovação NÃO DECLARADA: i:letra-80
+      ✗ reprovação NÃO DECLARADA: ii:letra-80
+      ✗ reprovação NÃO DECLARADA: i:letra-55
+      ✗ reprovação NÃO DECLARADA: ii:letra-55
+      ✗ reprovação NÃO DECLARADA: i:letra-48
+      ✗ reprovação NÃO DECLARADA: ii:letra-48
+      ✗ reprovação NÃO DECLARADA: i:letra-26
+      ✗ reprovação NÃO DECLARADA: ii:letra-26
+      ✗ reprovação NÃO DECLARADA: i:letra-14
+      ✗ reprovação NÃO DECLARADA: ii:letra-14
+      ✗ reprovação NÃO DECLARADA: i:cifra-80
+      ✗ reprovação NÃO DECLARADA: ii:cifra-80
+      ✗ reprovação NÃO DECLARADA: i:cifra-55
+      ✗ reprovação NÃO DECLARADA: ii:cifra-55
+      ✗ reprovação NÃO DECLARADA: i:cifra-48
+      ✗ reprovação NÃO DECLARADA: ii:cifra-48
+      ✗ reprovação NÃO DECLARADA: i:cifra-26
+      ✗ reprovação NÃO DECLARADA: ii:cifra-26
+      ✗ reprovação NÃO DECLARADA: i:cifra-14
+      ✗ reprovação NÃO DECLARADA: ii:cifra-14
+      ✗ reprovação NÃO DECLARADA: i:tab-80
+      ✗ reprovação NÃO DECLARADA: ii:tab-80
+      ✗ reprovação NÃO DECLARADA: i:tab-55
+      ✗ reprovação NÃO DECLARADA: ii:tab-55
+      ✗ reprovação NÃO DECLARADA: i:tab-48
+      ✗ reprovação NÃO DECLARADA: ii:tab-48
+      ✗ reprovação NÃO DECLARADA: i:tab-26
+      ✗ reprovação NÃO DECLARADA: ii:tab-26
+      ✗ reprovação NÃO DECLARADA: i:tab-14
+      ✗ reprovação NÃO DECLARADA: ii:tab-14
+      ✗ reprovação NÃO DECLARADA: i:quase-acorde-14
+      ✗ reprovação NÃO DECLARADA: ii:quase-acorde-14
+      ✗ reprovação NÃO DECLARADA: i:cifra-como-letra-26
+      ✗ reprovação NÃO DECLARADA: ii:cifra-como-letra-26
+      ✗ reprovação NÃO DECLARADA: iii:tabulacao-16
+      ✗ reprovação NÃO DECLARADA: ii:tabulacao-16
+      ✗ reprovação NÃO DECLARADA: iii:tabulacao-14
+      ✗ reprovação NÃO DECLARADA: ii:tabulacao-14
+      ✗ reprovação NÃO DECLARADA: iii:cr-50
+      ✗ reprovação NÃO DECLARADA: ii:cr-50
+      ✗ reprovação NÃO DECLARADA: iii:cr-48
+      ✗ reprovação NÃO DECLARADA: ii:cr-48
+      ✗ reprovação NÃO DECLARADA: iii:combinante-50
+      ✗ reprovação NÃO DECLARADA: ii:combinante-50
+      ✗ reprovação NÃO DECLARADA: iii:combinante-48
+      ✗ reprovação NÃO DECLARADA: ii:combinante-48
+    gate da quebra: ✗
+    ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+    AssertionError: reprovação NÃO DECLARADA: expected [ 'i:letra-80', 'ii:letra-80', …(44) ] to deeply equal []
+          Tests  1 failed | 1 passed (2)
+== CN-1 o laboratório da PR-1, sem defeito
+    gate da quebra — casos 23 · checagens 46 ((i) 17 · (ii) 23 · (iii) 6) · passam 43 · reprovam 3
+      (iii) REPROVA · (ii) passa    tabulacao-14         Lyrics 14 col · derivado: QL-D24
+            (iii) 1 linhas visuais, esperadas 2
+      (iii) REPROVA · (ii) passa    cr-50                Lyrics 50 col · derivado: QL-D24
+            (iii) 3 linhas visuais, esperadas 2
+      (iii) REPROVA · (ii) passa    combinante-50        Lyrics 50 col · derivado: QL-D24
+            (iii) 2 linhas visuais, esperadas 1
+    lista esperada (0) · reprovados (3)
+      ✗ reprovação NÃO DECLARADA: iii:tabulacao-14
+      ✗ reprovação NÃO DECLARADA: iii:cr-50
+      ✗ reprovação NÃO DECLARADA: iii:combinante-50
+    gate da quebra: ✗
+    ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+    AssertionError: reprovação NÃO DECLARADA: expected [ 'iii:tabulacao-14', …(2) ] to deeply equal []
+          Tests  1 failed | 1 passed (2)
+== LAB_DEFEITO=letra
+    gate da quebra — casos 23 · checagens 46 ((i) 17 · (ii) 23 · (iii) 6) · passam 0 · reprovam 46
+      (i  ) REPROVA · (ii) REPROVA  letra-80             Lyrics 80 col · QL-C-S3-letra-escuro
+            (i) linha visual 1: "Acendi a lanterna do quintal ?" ≠ "Acendi a lanterna do quintal e"
+            (ii) linha visual 1: o texto não é o recuo mais a fatia [0, 30)
+      (i  ) REPROVA · (ii) REPROVA  letra-55             Lyrics 55 col · QL-C-V-letra-escuro
+            (i) linha visual 1: "Acendi a lanterna do quintal ?" ≠ "Acendi a lanterna do quintal e"
+            (ii) linha visual 1: o texto não é o recuo mais a fatia [0, 30)
+      (i  ) REPROVA · (ii) REPROVA  letra-48             Lyrics 48 col · QL-B-S3-letra-escuro
+            (i) linha visual 1: "Acendi a lanterna do quintal ?" ≠ "Acendi a lanterna do quintal e"
+            (ii) linha visual 1: o texto não é o recuo mais a fatia [0, 30)
+      (i  ) REPROVA · (ii) REPROVA  letra-26             Lyrics 26 col · QL-A-S3-letra-escuro
+            (i) linha visual 1: "Acendi a lanterna d?" ≠ "Acendi a lanterna do"
+            (ii) linha visual 1: o texto não é o recuo mais a fatia [0, 20)
+      (i  ) REPROVA · (ii) REPROVA  letra-14             Lyrics 14 col · QL-A-S3-notas-longa-escuro
+            (i) linha visual 1: "Acendi ?" ≠ "Acendi a"
+            (ii) linha visual 1: o texto não é o recuo mais a fatia [0, 8)
+      (i  ) REPROVA · (ii) REPROVA  cifra-80             Chords 80 col · QL-C-S3-cifra-escuro
+            (i) linha visual 1: "Intro: Am  ?" ≠ "Intro: Am  E"
+            (ii) linha visual 1: o texto não é o recuo mais a fatia [0, 12)
+      (i  ) REPROVA · (ii) REPROVA  cifra-55             Chords 55 col · QL-C-V-cifra-escuro
+            (i) linha visual 1: "Intro: Am  ?" ≠ "Intro: Am  E"
+            (ii) linha visual 1: o texto não é o recuo mais a fatia [0, 12)
+      (i  ) REPROVA · (ii) REPROVA  cifra-48             Chords 48 col · QL-B-S3-cifra-escuro
+            (i) linha visual 1: "Intro: Am  ?" ≠ "Intro: Am  E"
+            (ii) linha visual 1: o texto não é o recuo mais a fatia [0, 12)
+      (i  ) REPROVA · (ii) REPROVA  cifra-26             Chords 26 col · QL-A-S3-cifra-escuro
+            (i) linha visual 1: "Intro: Am  ?" ≠ "Intro: Am  E"
+            (ii) linha visual 1: o texto não é o recuo mais a fatia [0, 12)
+      (i  ) REPROVA · (ii) REPROVA  cifra-14             Chords 14 col · EST-QL-A-S3-cifra-zoom40-sem-saida-escuro
+            (i) linha visual 1: "Intro: Am  ?" ≠ "Intro: Am  E"
+            (ii) linha visual 1: o texto não é o recuo mais a fatia [0, 12)
+      (i  ) REPROVA · (ii) REPROVA  tab-80               Tab    80 col · QL-C-S3-tab… — conferência §13: "78 colunas, 6 linhas"
+            (i) linha visual 1: "e|-----0-----0---------0-----0---------0-----0---------0-----0---------0-----?" ≠ "e|-----0-----0---------0-----0---------0-----0---------0-----0---------0-----|"
+            (ii) linha visual 1: o texto não é o recuo mais a fatia [0, 78)
+      (i  ) REPROVA · (ii) REPROVA  tab-55               Tab    55 col · QL-C-V-tab… — conferência §13: "78 colunas, 6 linhas"
+            (i) linha visual 1: "e|-----0-----0---------0-----0---------0-----0---------0-----0---------0-----?" ≠ "e|-----0-----0---------0-----0---------0-----0---------0-----0---------0-----|"
+            (ii) linha visual 1: o texto não é o recuo mais a fatia [0, 78)
+      (i  ) REPROVA · (ii) REPROVA  tab-48               Tab    48 col · QL-B-S3-tab… — conferência §13: "78 colunas, 6 linhas"
+            (i) linha visual 1: "e|-----0-----0---------0-----0---------0-----0---------0-----0---------0-----?" ≠ "e|-----0-----0---------0-----0---------0-----0---------0-----0---------0-----|"
+            (ii) linha visual 1: o texto não é o recuo mais a fatia [0, 78)
+      (i  ) REPROVA · (ii) REPROVA  tab-26               Tab    26 col · QL-A-S3-tab… — conferência §13: "78 colunas, 6 linhas"
+            (i) linha visual 1: "e|-----0-----0---------0-----0---------0-----0---------0-----0---------0-----?" ≠ "e|-----0-----0---------0-----0---------0-----0---------0-----0---------0-----|"
+            (ii) linha visual 1: o texto não é o recuo mais a fatia [0, 78)
+      (i  ) REPROVA · (ii) REPROVA  tab-14               Tab    14 col · derivado: R4 (nenhuma moldura de Tab em 14)
+            (i) linha visual 1: "e|-----0-----0---------0-----0---------0-----0---------0-----0---------0-----?" ≠ "e|-----0-----0---------0-----0---------0-----0---------0-----0---------0-----|"
+            (ii) linha visual 1: o texto não é o recuo mais a fatia [0, 78)
+      (i  ) REPROVA · (ii) REPROVA  quase-acorde-14      Chords 14 col · derivado: R1 + R4
+            (i) linha visual 1: "Intro: Am  ?" ≠ "Intro: Am  E"
+            (ii) linha visual 1: o texto não é o recuo mais a fatia [0, 12)
+      (i  ) REPROVA · (ii) REPROVA  cifra-como-letra-26  Lyrics 26 col · derivado: R1 sobre o texto do §5.2
+            (i) linha visual 1: "Intro: Am  ?" ≠ "Intro: Am  E"
+            (ii) linha visual 1: o texto não é o recuo mais a fatia [0, 12)
+      (iii) REPROVA · (ii) REPROVA  tabulacao-16         Lyrics 16 col · derivado: QL-D24
+            (iii) linha visual 1: "ab\tcd ef g?" ≠ "ab\tcd ef gh"
+            (ii) linha visual 1: o texto não é o recuo mais a fatia [0, 11)
+      (iii) REPROVA · (ii) REPROVA  tabulacao-14         Lyrics 14 col · derivado: QL-D24
+            (iii) 1 linhas visuais, esperadas 2
+            (ii) linha visual 1: o texto não é o recuo mais a fatia [0, 11)
+      (iii) REPROVA · (ii) REPROVA  cr-50                Lyrics 50 col · derivado: QL-D24
+            (iii) 3 linhas visuais, esperadas 2
+            (ii) linha visual 1: o texto não é o recuo mais a fatia [0, 47)
+      (iii) REPROVA · (ii) REPROVA  cr-48                Lyrics 48 col · derivado: QL-D24 + o corte do QL-B-S3-letra-escuro
+            (iii) linha visual 1: "Quando a maré da fixture sobe devagar pelo cai?" ≠ "Quando a maré da fixture sobe devagar pelo cais"
+            (ii) linha visual 1: o texto não é o recuo mais a fatia [0, 47)
+      (iii) REPROVA · (ii) REPROVA  combinante-50        Lyrics 50 col · derivado: QL-D24
+            (iii) 2 linhas visuais, esperadas 1
+            (ii) linha visual 1: o texto não é o recuo mais a fatia [0, 48)
+      (iii) REPROVA · (ii) REPROVA  combinante-48        Lyrics 48 col · derivado: QL-D24 + o corte do QL-B-S3-letra-escuro
+            (iii) linha visual 1: "Quando a maré da fixture sobe devagar pelo cai?" ≠ "Quando a maré da fixture sobe devagar pelo cais"
+            (ii) linha visual 1: o texto não é o recuo mais a fatia [0, 48)
+    lista esperada (0) · reprovados (46)
+      ✗ reprovação NÃO DECLARADA: i:letra-80
+      ✗ reprovação NÃO DECLARADA: ii:letra-80
+      ✗ reprovação NÃO DECLARADA: i:letra-55
+      ✗ reprovação NÃO DECLARADA: ii:letra-55
+      ✗ reprovação NÃO DECLARADA: i:letra-48
+      ✗ reprovação NÃO DECLARADA: ii:letra-48
+      ✗ reprovação NÃO DECLARADA: i:letra-26
+      ✗ reprovação NÃO DECLARADA: ii:letra-26
+      ✗ reprovação NÃO DECLARADA: i:letra-14
+      ✗ reprovação NÃO DECLARADA: ii:letra-14
+      ✗ reprovação NÃO DECLARADA: i:cifra-80
+      ✗ reprovação NÃO DECLARADA: ii:cifra-80
+      ✗ reprovação NÃO DECLARADA: i:cifra-55
+      ✗ reprovação NÃO DECLARADA: ii:cifra-55
+      ✗ reprovação NÃO DECLARADA: i:cifra-48
+      ✗ reprovação NÃO DECLARADA: ii:cifra-48
+      ✗ reprovação NÃO DECLARADA: i:cifra-26
+      ✗ reprovação NÃO DECLARADA: ii:cifra-26
+      ✗ reprovação NÃO DECLARADA: i:cifra-14
+      ✗ reprovação NÃO DECLARADA: ii:cifra-14
+      ✗ reprovação NÃO DECLARADA: i:tab-80
+      ✗ reprovação NÃO DECLARADA: ii:tab-80
+      ✗ reprovação NÃO DECLARADA: i:tab-55
+      ✗ reprovação NÃO DECLARADA: ii:tab-55
+      ✗ reprovação NÃO DECLARADA: i:tab-48
+      ✗ reprovação NÃO DECLARADA: ii:tab-48
+      ✗ reprovação NÃO DECLARADA: i:tab-26
+      ✗ reprovação NÃO DECLARADA: ii:tab-26
+      ✗ reprovação NÃO DECLARADA: i:tab-14
+      ✗ reprovação NÃO DECLARADA: ii:tab-14
+      ✗ reprovação NÃO DECLARADA: i:quase-acorde-14
+      ✗ reprovação NÃO DECLARADA: ii:quase-acorde-14
+      ✗ reprovação NÃO DECLARADA: i:cifra-como-letra-26
+      ✗ reprovação NÃO DECLARADA: ii:cifra-como-letra-26
+      ✗ reprovação NÃO DECLARADA: iii:tabulacao-16
+      ✗ reprovação NÃO DECLARADA: ii:tabulacao-16
+      ✗ reprovação NÃO DECLARADA: iii:tabulacao-14
+      ✗ reprovação NÃO DECLARADA: ii:tabulacao-14
+      ✗ reprovação NÃO DECLARADA: iii:cr-50
+      ✗ reprovação NÃO DECLARADA: ii:cr-50
+      ✗ reprovação NÃO DECLARADA: iii:cr-48
+      ✗ reprovação NÃO DECLARADA: ii:cr-48
+      ✗ reprovação NÃO DECLARADA: iii:combinante-50
+      ✗ reprovação NÃO DECLARADA: ii:combinante-50
+      ✗ reprovação NÃO DECLARADA: iii:combinante-48
+      ✗ reprovação NÃO DECLARADA: ii:combinante-48
+    gate da quebra: ✗
+    ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+    AssertionError: reprovação NÃO DECLARADA: expected [ 'i:letra-80', 'ii:letra-80', …(44) ] to deeply equal []
+          Tests  1 failed | 1 passed (2)
+== LAB_DEFEITO=palavra
+    gate da quebra — casos 23 · checagens 46 ((i) 17 · (ii) 23 · (iii) 6) · passam 27 · reprovam 19
+      (i  ) REPROVA · (ii) REPROVA  letra-55             Lyrics 55 col · QL-C-V-letra-escuro
+            (i) linha visual 6: "  e" ≠ "  sal e"
+            (ii) linha lógica 5: entre os pedaços há o que não é espaço: " sal "
+      (i  ) REPROVA · (ii) REPROVA  letra-48             Lyrics 48 col · QL-B-S3-letra-escuro
+            (i) linha visual 7: "  de sal e" ≠ "  rastro de sal e"
+            (ii) linha lógica 5: entre os pedaços há o que não é espaço: " rastro "
+      (i  ) REPROVA · (ii) REPROVA  letra-26             Lyrics 26 col · QL-A-S3-letra-escuro
+            (i) linha visual 2: "  e" ≠ "  quintal e"
+            (ii) linha lógica 1: entre os pedaços há o que não é espaço: " quintal "
+      (i  ) REPROVA · (ii) REPROVA  letra-14             Lyrics 14 col · QL-A-S3-notas-longa-escuro
+            (i) linha visual 2: "  do" ≠ "  lanterna do"
+            (ii) linha lógica 1: entre os pedaços há o que não é espaço: " lanterna "
+      (i  ) REPROVA · (ii) REPROVA  cifra-26             Chords 26 col · QL-A-S3-cifra-escuro
+            (i) linha visual 6: "  e" ≠ "  fixture, e"
+            (ii) linha lógica 4: entre os pedaços há o que não é espaço: " fixture, "
+      (i  ) REPROVA · (ii) REPROVA  cifra-14             Chords 14 col · EST-QL-A-S3-cifra-zoom40-sem-saida-escuro
+            (i) linha visual 6: "  da" ≠ "  esquina da"
+            (ii) linha lógica 4: entre os pedaços há o que não é espaço: " esquina "
+      (i  ) REPROVA · (ii) REPROVA  quase-acorde-14      Chords 14 col · derivado: R1 + R4
+            (i) linha visual 2: "   G" ≠ "  F#m7(11)  G"
+            (ii) linha lógica 1: entre os pedaços há o que não é espaço: "  F#m7(11) "
+      (i  ) REPROVA · (ii) REPROVA  cifra-como-letra-26  Lyrics 26 col · derivado: R1 sobre o texto do §5.2
+            (i) linha visual 6: "  e" ≠ "  fixture, e"
+            (ii) linha lógica 4: entre os pedaços há o que não é espaço: " fixture, "
+      (iii) REPROVA · (ii) passa    tabulacao-14         Lyrics 14 col · derivado: QL-D24
+            (iii) 1 linhas visuais, esperadas 2
+      (iii) REPROVA · (ii) passa    cr-50                Lyrics 50 col · derivado: QL-D24
+            (iii) 3 linhas visuais, esperadas 2
+      (iii) REPROVA · (ii) passa    combinante-50        Lyrics 50 col · derivado: QL-D24
+            (iii) 2 linhas visuais, esperadas 1
+    lista esperada (0) · reprovados (19)
+      ✗ reprovação NÃO DECLARADA: i:letra-55
+      ✗ reprovação NÃO DECLARADA: ii:letra-55
+      ✗ reprovação NÃO DECLARADA: i:letra-48
+      ✗ reprovação NÃO DECLARADA: ii:letra-48
+      ✗ reprovação NÃO DECLARADA: i:letra-26
+      ✗ reprovação NÃO DECLARADA: ii:letra-26
+      ✗ reprovação NÃO DECLARADA: i:letra-14
+      ✗ reprovação NÃO DECLARADA: ii:letra-14
+      ✗ reprovação NÃO DECLARADA: i:cifra-26
+      ✗ reprovação NÃO DECLARADA: ii:cifra-26
+      ✗ reprovação NÃO DECLARADA: i:cifra-14
+      ✗ reprovação NÃO DECLARADA: ii:cifra-14
+      ✗ reprovação NÃO DECLARADA: i:quase-acorde-14
+      ✗ reprovação NÃO DECLARADA: ii:quase-acorde-14
+      ✗ reprovação NÃO DECLARADA: i:cifra-como-letra-26
+      ✗ reprovação NÃO DECLARADA: ii:cifra-como-letra-26
+      ✗ reprovação NÃO DECLARADA: iii:tabulacao-14
+      ✗ reprovação NÃO DECLARADA: iii:cr-50
+      ✗ reprovação NÃO DECLARADA: iii:combinante-50
+    gate da quebra: ✗
+    ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+    AssertionError: reprovação NÃO DECLARADA: expected [ 'i:letra-55', 'ii:letra-55', …(17) ] to deeply equal []
+          Tests  1 failed | 1 passed (2)
+== LAB_DEFEITO=ordem
+    gate da quebra — casos 23 · checagens 46 ((i) 17 · (ii) 23 · (iii) 6) · passam 11 · reprovam 35
+      (i  ) REPROVA · (ii) REPROVA  letra-80             Lyrics 80 col · QL-C-S3-letra-escuro
+            (i) linha visual 2: "o vento assobia baixinho" ≠ "Quando a maré da fixture sobe devagar pelo cais lá"
+            (ii) as linhas lógicas não aparecem em ordem: 0,2,1,3,4,5,6
+      (i  ) REPROVA · (ii) REPROVA  letra-55             Lyrics 55 col · QL-C-V-letra-escuro
+            (i) linha visual 2: "o vento assobia baixinho" ≠ "Quando a maré da fixture sobe devagar pelo cais lá"
+            (ii) as linhas lógicas não aparecem em ordem: 0,2,1,3,4,5,6
+      (i  ) REPROVA · (ii) REPROVA  letra-48             Lyrics 48 col · QL-B-S3-letra-escuro
+            (i) linha visual 2: "o vento assobia baixinho" ≠ "Quando a maré da fixture sobe devagar pelo cais"
+            (ii) as linhas lógicas não aparecem em ordem: 0,2,1,3,4,5,6
+      (i  ) REPROVA · (ii) REPROVA  letra-26             Lyrics 26 col · QL-A-S3-letra-escuro
+            (i) linha visual 3: "o vento assobia baixinho" ≠ "Quando a maré da fixture"
+            (ii) as linhas lógicas não aparecem em ordem: 0,2,1,3,4,5,6
+      (i  ) REPROVA · (ii) REPROVA  letra-14             Lyrics 14 col · QL-A-S3-notas-longa-escuro
+            (i) linha visual 4: "o vento" ≠ "Quando a maré"
+            (ii) as linhas lógicas não aparecem em ordem: 0,2,1,3,4,5,6
+      (i  ) REPROVA · (ii) REPROVA  cifra-80             Chords 80 col · QL-C-S3-cifra-escuro
+            (i) linha visual 2: "Am            F              C" ≠ ""
+            (ii) as linhas lógicas não aparecem em ordem: 0,2,1,3,4,5,6,7,8,9
+      (i  ) REPROVA · (ii) REPROVA  cifra-55             Chords 55 col · QL-C-V-cifra-escuro
+            (i) linha visual 2: "Am            F              C" ≠ ""
+            (ii) as linhas lógicas não aparecem em ordem: 0,2,1,3,4,5,6,7,8,9
+      (i  ) REPROVA · (ii) REPROVA  cifra-48             Chords 48 col · QL-B-S3-cifra-escuro
+            (i) linha visual 2: "Am            F              C" ≠ ""
+            (ii) as linhas lógicas não aparecem em ordem: 0,2,1,3,4,5,6,7,8,9
+      (i  ) REPROVA · (ii) REPROVA  cifra-26             Chords 26 col · QL-A-S3-cifra-escuro
+            (i) linha visual 2: "Am            F" ≠ ""
+            (ii) as linhas lógicas não aparecem em ordem: 0,2,1,3,4,5,6,7,8,9
+      (i  ) REPROVA · (ii) REPROVA  cifra-14             Chords 14 col · EST-QL-A-S3-cifra-zoom40-sem-saida-escuro
+            (i) linha visual 2: "Am" ≠ ""
+            (ii) as linhas lógicas não aparecem em ordem: 0,2,1,3,4,5,6,7,8,9
+      (i  ) REPROVA · (ii) REPROVA  tab-80               Tab    80 col · QL-C-S3-tab… — conferência §13: "78 colunas, 6 linhas"
+            (i) linha visual 2: "G|-2-------2-------2-------2-------2-------2-------2-------2-------2-------2-|" ≠ "B|---1---1-----1-----1---1-----1-----1---1-----1-----1---1-----1-----1---1---|"
+            (ii) as linhas lógicas não aparecem em ordem: 0,2,1,3,4,5
+      (i  ) REPROVA · (ii) REPROVA  tab-55               Tab    55 col · QL-C-V-tab… — conferência §13: "78 colunas, 6 linhas"
+            (i) linha visual 2: "G|-2-------2-------2-------2-------2-------2-------2-------2-------2-------2-|" ≠ "B|---1---1-----1-----1---1-----1-----1---1-----1-----1---1-----1-----1---1---|"
+            (ii) as linhas lógicas não aparecem em ordem: 0,2,1,3,4,5
+      (i  ) REPROVA · (ii) REPROVA  tab-48               Tab    48 col · QL-B-S3-tab… — conferência §13: "78 colunas, 6 linhas"
+            (i) linha visual 2: "G|-2-------2-------2-------2-------2-------2-------2-------2-------2-------2-|" ≠ "B|---1---1-----1-----1---1-----1-----1---1-----1-----1---1-----1-----1---1---|"
+            (ii) as linhas lógicas não aparecem em ordem: 0,2,1,3,4,5
+      (i  ) REPROVA · (ii) REPROVA  tab-26               Tab    26 col · QL-A-S3-tab… — conferência §13: "78 colunas, 6 linhas"
+            (i) linha visual 2: "G|-2-------2-------2-------2-------2-------2-------2-------2-------2-------2-|" ≠ "B|---1---1-----1-----1---1-----1-----1---1-----1-----1---1-----1-----1---1---|"
+            (ii) as linhas lógicas não aparecem em ordem: 0,2,1,3,4,5
+      (i  ) REPROVA · (ii) REPROVA  tab-14               Tab    14 col · derivado: R4 (nenhuma moldura de Tab em 14)
+            (i) linha visual 2: "G|-2-------2-------2-------2-------2-------2-------2-------2-------2-------2-|" ≠ "B|---1---1-----1-----1---1-----1-----1---1-----1-----1---1-----1-----1---1---|"
+            (ii) as linhas lógicas não aparecem em ordem: 0,2,1,3,4,5
+      (i  ) REPROVA · (ii) REPROVA  cifra-como-letra-26  Lyrics 26 col · derivado: R1 sobre o texto do §5.2
+            (i) linha visual 2: "Am            F" ≠ ""
+            (ii) as linhas lógicas não aparecem em ordem: 0,2,1,3,4,5,6,7,8,9
+      (iii) REPROVA · (ii) passa    tabulacao-14         Lyrics 14 col · derivado: QL-D24
+            (iii) 1 linhas visuais, esperadas 2
+      (iii) REPROVA · (ii) passa    cr-50                Lyrics 50 col · derivado: QL-D24
+            (iii) 3 linhas visuais, esperadas 2
+      (iii) REPROVA · (ii) passa    combinante-50        Lyrics 50 col · derivado: QL-D24
+            (iii) 2 linhas visuais, esperadas 1
+    lista esperada (0) · reprovados (35)
+      ✗ reprovação NÃO DECLARADA: i:letra-80
+      ✗ reprovação NÃO DECLARADA: ii:letra-80
+      ✗ reprovação NÃO DECLARADA: i:letra-55
+      ✗ reprovação NÃO DECLARADA: ii:letra-55
+      ✗ reprovação NÃO DECLARADA: i:letra-48
+      ✗ reprovação NÃO DECLARADA: ii:letra-48
+      ✗ reprovação NÃO DECLARADA: i:letra-26
+      ✗ reprovação NÃO DECLARADA: ii:letra-26
+      ✗ reprovação NÃO DECLARADA: i:letra-14
+      ✗ reprovação NÃO DECLARADA: ii:letra-14
+      ✗ reprovação NÃO DECLARADA: i:cifra-80
+      ✗ reprovação NÃO DECLARADA: ii:cifra-80
+      ✗ reprovação NÃO DECLARADA: i:cifra-55
+      ✗ reprovação NÃO DECLARADA: ii:cifra-55
+      ✗ reprovação NÃO DECLARADA: i:cifra-48
+      ✗ reprovação NÃO DECLARADA: ii:cifra-48
+      ✗ reprovação NÃO DECLARADA: i:cifra-26
+      ✗ reprovação NÃO DECLARADA: ii:cifra-26
+      ✗ reprovação NÃO DECLARADA: i:cifra-14
+      ✗ reprovação NÃO DECLARADA: ii:cifra-14
+      ✗ reprovação NÃO DECLARADA: i:tab-80
+      ✗ reprovação NÃO DECLARADA: ii:tab-80
+      ✗ reprovação NÃO DECLARADA: i:tab-55
+      ✗ reprovação NÃO DECLARADA: ii:tab-55
+      ✗ reprovação NÃO DECLARADA: i:tab-48
+      ✗ reprovação NÃO DECLARADA: ii:tab-48
+      ✗ reprovação NÃO DECLARADA: i:tab-26
+      ✗ reprovação NÃO DECLARADA: ii:tab-26
+      ✗ reprovação NÃO DECLARADA: i:tab-14
+      ✗ reprovação NÃO DECLARADA: ii:tab-14
+      ✗ reprovação NÃO DECLARADA: i:cifra-como-letra-26
+      ✗ reprovação NÃO DECLARADA: ii:cifra-como-letra-26
+      ✗ reprovação NÃO DECLARADA: iii:tabulacao-14
+      ✗ reprovação NÃO DECLARADA: iii:cr-50
+      ✗ reprovação NÃO DECLARADA: iii:combinante-50
+    gate da quebra: ✗
+    ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+    AssertionError: reprovação NÃO DECLARADA: expected [ 'i:letra-80', 'ii:letra-80', …(33) ] to deeply equal []
+          Tests  1 failed | 1 passed (2)
+== CN-M o reconhecedor com o critério "maioria" (diff abaixo)
+    +  let outros = 0
+    -    else if (!SEPARADOR.test(token)) return false
+    +    else if (!SEPARADOR.test(token)) outros++
+    -  return acordes > 0
+    +  return acordes > 0 && 2 * outros <= acordes + outros // CN-M: a maioria
+    gate da quebra — casos 23 · checagens 46 ((i) 17 · (ii) 23 · (iii) 6) · passam 45 · reprovam 1
+      (i  ) REPROVA · (ii) passa    quase-acorde-14      Chords 14 col · derivado: R1 + R4
+            (i) 6 linhas visuais, esperadas 5
+    lista esperada (0) · reprovados (1)
+      ✗ reprovação NÃO DECLARADA: i:quase-acorde-14
+    gate da quebra: ✗
+    ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+    AssertionError: reprovação NÃO DECLARADA: expected [ 'i:quase-acorde-14' ] to deeply equal []
+          Tests  1 failed | 1 passed (2)
+    extras do core: ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+    extras do core:       Tests  2 failed | 45 passed (47)
+== devolvido: git status -- packages/core/src/quebra.ts packages/core/fixtures/ql-quebra-reprovados.txt
+    (vazio = a PR-2 de volta)
