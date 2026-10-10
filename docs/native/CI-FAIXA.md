@@ -22,6 +22,16 @@ Decisão do Marcel, 2026-09-23. **Recalculado no encerramento do N4 (2026-10-07,
 1139)**, com as corridas 119–150 (as 7 do I1, que o encerramento dele não pôs, e as 25 do N4):
 
 ```
+n=135  mín 8m09s   máx 14m32s   mediana 12m30s     Q1 11m03s     Q3 13m17,5s   IQR 2m14,5s
+```
+
+**Recalculado no encerramento do QL (2026-10-10)**, com as corridas 151–157 (as 7 do QL; a D-0 não teve nenhuma). Só as do
+QL (n=7): mín 8m53s · máx 13m51s · mediana 13m01s · IQR 3m11s — recorte descritivo. Nenhum item da lista fechada mudou
+(`git diff cf58f7f ea5e891 -- apps/native/package.json apps/native/app.json .github/workflows/native.yml pnpm-lock.yaml` →
+vazio; o `gates.yml` ganhou o `DESIGN-QL` no laço dos congelados, outro job): sem candidato a segmento. Antes, no
+encerramento do N4:
+
+```
 n=128  mín 8m09s   máx 14m32s   mediana 12m30s     Q1 11m12,2s   Q3 13m15,5s   IQR 2m03,2s
 ```
 
@@ -35,7 +45,7 @@ quartil cai no meio de dois segundos (antes eram arredondados, e não sempre par
 mesmo lado: 12m12,5s saía 12m12s e 11m49,5s saía 11m50s).
 
 Quartis pelo método inclusivo (interpolação linear, `statistics.quantiles(…,
-method='inclusive')`, o "tipo 7"). O regime 2 tem 132 corridas; **4 falhas**
+method='inclusive')`, o "tipo 7"). O regime 2 tem 139 corridas (132 até o N4); **4 falhas**
 ficam na tabela, riscadas, e **fora da população**. São as duas **plantadas** da #322
 (o CN da div. 360) e as duas do `setup-android@v3` (#301). Nenhuma produziu APK.
 
@@ -291,6 +301,13 @@ Fora da referência, pela razão acima. Ficam aqui, em ordem, e não se apagam.
 | 148 | `37625875787` | PR | #365 | `6af916d` | abertura | v4 | 2026-10-07 13:06 | **13m59s** | N4-PR9 |
 | 149 | `37631556721` | PR | #365 | `527cf93` | nativo | v4 | 2026-10-07 13:49 | **13m50s** |  |
 | 150 | `37678036870` | push | #365 | `cf58f7f` | merge na `main` | v4 | 2026-10-07 19:54 | **13m34s** | fim do N4 (o release do encerramento sai deste `cf58f7f`) |
+| 151 | `37853131997` | PR | #373 | `f91fbc1` | abertura | v4 | 2026-10-08 22:23 | **13m22s** | QL-PR1 (a D-0, #367–#369, não disparou nenhuma) |
+| 152 | `37909754815` | push | #373 | `827141a` | merge na `main` | v4 | 2026-10-09 09:12 | **10m45s** | (a QL-PR2, #374, só `packages/core/**`: não disparou) |
+| 153 | `37954250042` | PR | #375 | `0e83c2e` | abertura | v4 | 2026-10-09 15:46 | **9m44s** | QL-PR3 |
+| 154 | `37968987277` | push | #375 | `4078c64` | merge na `main` | v4 | 2026-10-09 17:49 | **8m53s** |  |
+| 155 | `37972416293` | PR | #376 | `20fdbbe` | abertura | v4 | 2026-10-09 18:58 | **13m51s** | QL-PR4; **tentativa 2** (o rerun, um só): a tentativa 1 falhou no `packageDebug` em 13m10s, sem APK — (b) runner, div. 1237 — fora da população |
+| 156 | `37992683884` | PR | #376 | `ce1adb1` | nativo | v4 | 2026-10-09 21:18 | **13m01s** | a volta da QL-PR4 |
+| 157 | `38049682925` | push | #376 | `ea5e891` | merge na `main` | v4 | 2026-10-10 11:48 | **13m29s** | fim do QL (o release do encerramento sai deste `ea5e891`) |
 
 ## Como acrescentar uma linha
 
@@ -331,3 +348,8 @@ linha** (aval, N4-D114): medir por que um push fora do filtro disparou o build e
 quando deveria. **A troca de base** (aval, N4-D111): nenhum gate, workflow ou script lê esta referência como limiar; quem a
 usa é a regra de segmentos acima, à mão, e o IQR do segmento vigente passa de 11m12,2s–12m55,2s (n=96) a
 **11m12,2s–13m15,5s** (n=128) — `N4-ENCERRAMENTO.md` §9.)*
+*(Encerramento do QL, 2026-10-10, regra 22: as corridas do bloco são as **151–157** — sete com APK, todas `success` no job;
+a D-0 (#367–#369) não disparou nenhuma. As `skipped` do QL — cinco, os pushes de docs depois do APK verde (`8c51e68`, `34bca23`,
+`3a8268d`, `4db6fe1`, `c1e2120`) — não entram. **Nenhuma corrida com APK veio de push só fora do filtro.** A 155 é a
+tentativa 2 da corrida da abertura da #376: a 1 falhou no `packageDebug` sem APK (div. 1237) e fica fora da população, como as
+falhas riscadas. A referência recalculada: `n=135`, mediana 12m30s, **IQR 11m03s–13m17,5s** — `QL-ENCERRAMENTO.md` §7.)*

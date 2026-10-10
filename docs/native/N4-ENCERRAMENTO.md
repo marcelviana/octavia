@@ -483,6 +483,12 @@ que vale daqui em diante; a troca está escrita também no `CI-FAIXA.md`.
 | 2 | **as notas da música no palco** — o pre-check do bloco da quebra decide se entram nele (os dois mexem no corpo do palco) | N4-D57 (*"o encerramento do N4 nomeia o bloco"*) |
 | 3 | **as corridas do APK de push só fora do filtro** (124 e 146 do `CI-FAIXA.md`; a 127 é a div. 381): o pre-check **mede por que** um push que não tocou o filtro disparou o build, e **se a mesma lógica pode deixar de disparar quando deveria** (o H1 do W4-b2; a avaliação do `paths` contra o diff acumulado) | div. 1142; N4-D114 |
 
+*(Errata de ponteiro do encerramento do QL, 2026-10-10 — `docs/native/QL-ENCERRAMENTO.md` §8: os três itens estão
+**fechados pelo QL**. O **item 1**: a Letra e a Cifra quebram no palco e em V, em C e B, e a Tab nunca (QL-D2, QL-D28; as
+colunas do palco em C são 80, não ≈ 55 — os 55 são de V, div. 1176). O **item 2**: as notas da música entraram no palco
+(QL-D26, QL-D30, QL-D58; a primeira nota de verdade, A-QL-20). O **item 3**: medido no pre-check do QL — disparo a mais,
+não lado cego — e enviado ao **W5** (QL-D17, div. 1184).)*
+
 ### 10.3 Bloco de identidade (a definir)
 
 | # | item | origem |
