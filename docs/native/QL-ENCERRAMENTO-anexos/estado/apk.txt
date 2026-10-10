@@ -1,0 +1,18 @@
+== 2026-10-10 09:53:53 o APK
+saiu de: main = ea5e891eb634d882a570f5a26e37b781a45b7b09 (o merge da #376)
+sha256 65209b80f94af377905586dd762257823cc30752ef0d50c5cd4c4a30582c680a
+tamanho 105220413 B
+bundle 2389408 B
+magic do bundle: c61fbc03
+aponta para octavia.rocks: 1
+aponta para localhost:8788: 0
+aponta para localhost:8081: 0
+Signer #1 certificate DN: CN=Android Debug, OU=Android, O=Unknown, L=Unknown, ST=Unknown, C=US
+Signer #1 certificate SHA-256 digest: fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c
+application-debuggable: 0
+== A3: o inspetor do Hermes no release
+141432 lib/arm64-v8a/libhermestooling.so
+2477320 lib/arm64-v8a/libhermesvm.so
+412696 lib/arm64-v8a/libjsi.so
+6985168 lib/arm64-v8a/libreactnative.so
+65209b80f94af377905586dd762257823cc30752ef0d50c5cd4c4a30582c680a  /Users/marcelviana/octavia-aparato/tab-s6-release/release-ea5e891.apk

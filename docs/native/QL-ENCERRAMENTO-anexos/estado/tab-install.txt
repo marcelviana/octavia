@@ -1,0 +1,22 @@
+== 2026-10-10 10:24:37 Tab — install -r do release ea5e891 (keyguard: isKeyguardShowing=false; Metro 8081: 0; reverse: [])
+Success
+    lastUpdateTime=2026-10-10 10:24:45
+    pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+sha256 instalado 65209b80f94af377905586dd762257823cc30752ef0d50c5cd4c4a30582c680a
+== a 1ª abertura, COM REDE: é o sync autorizado (regra 38 (b))
+TotalTime: 296
+10:24:52.235 OCTAVIA: faixa=C w=1137.8 h=711.1
+10:24:52.241 OCTAVIA: net online
+10:24:53.254 OCTAVIA: auth uid=<…> src=restored
+10:24:53.307 OCTAVIA: cache hit kind=setlists n=2
+10:24:53.307 OCTAVIA: cache hit kind=content n=63
+10:24:53.341 OCTAVIA: sync start
+10:24:53.342 OCTAVIA: auth refresh=cached
+10:24:56.349 OCTAVIA: api status=200 path=/api/setlists n=1 ms=3008
+10:24:56.402 OCTAVIA: auth refresh=cached
+10:24:56.928 OCTAVIA: api status=200 path=/api/content n=1 ms=527
+10:24:56.965 OCTAVIA: cache write kind=setlists n=2 invalidated=0
+10:24:56.975 OCTAVIA: cache write kind=content n=63 invalidated=0
+10:24:56.975 OCTAVIA: sync ok setlists=2 content=63 pages=1 t=3634
+10:24:56.978 OCTAVIA: prefetch plan n=0 reason=library
+S1: resource-id="buscar" resource-id="criar-setlist" 

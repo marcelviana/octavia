@@ -1,0 +1,17 @@
+== 2026-10-10 11:55:41 A-QL-20: a reabertura que sincroniza (o Marcel salvou a nota no site)
+TotalTime: 235
+11:55:45.114 OCTAVIA: faixa=C w=1137.8 h=711.1
+11:55:45.118 OCTAVIA: net online
+11:55:46.207 OCTAVIA: auth uid=<…> src=restored
+11:55:46.255 OCTAVIA: cache hit kind=setlists n=2
+11:55:46.255 OCTAVIA: cache hit kind=content n=63
+11:55:46.283 OCTAVIA: sync start
+11:55:46.283 OCTAVIA: auth refresh=cached
+11:55:46.922 OCTAVIA: api status=200 path=/api/setlists n=1 ms=639
+11:55:46.959 OCTAVIA: auth refresh=cached
+11:55:47.343 OCTAVIA: api status=200 path=/api/content n=1 ms=385
+11:55:47.372 OCTAVIA: cache write kind=setlists n=2 invalidated=0
+11:55:47.382 OCTAVIA: cache write kind=content n=65 invalidated=3
+11:55:47.382 OCTAVIA: sync ok setlists=2 content=65 pages=1 t=1099
+11:55:47.385 OCTAVIA: prefetch plan n=1 reason=library
+11:55:48.069 OCTAVIA: file src=download name=[QL-ENC: nome do arquivo omitido — título e artista reais; 1 arquivo .pdf] bytes=451924 total=451924 ms=675

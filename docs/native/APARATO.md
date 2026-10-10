@@ -88,6 +88,11 @@ da **ida** não muda. Antes de declarar aceito, o release passou por **100 abert
 com zero queda nativa (N4-D105 d; `instrumentos/frias-release.sh`: no release a abertura é `am start -W -n
 rocks.octavia.app/.MainActivity`, não o link do dev client). No Tab o anel do `logcat` aceita no máximo **5 MiB** (o `-G 16M`
 responde *"MAX log buffer size is 5 MiB"*). `N4-ENCERRAMENTO-anexos/README.md` §2–§5.)*
+*(Encerramento do QL, 2026-10-10, A-QL-21: **o release de repouso do Tab passa a ser o da `main` `ea5e891`** (o merge da
+#376) — `~/octavia-aparato/tab-s6-release/release-ea5e891.apk`, **105.220.413 B**, sha256
+`65209b80f94af377905586dd762257823cc30752ef0d50c5cd4c4a30582c680a`, instalado por `install -r` em 2026-10-10 10:24:45. A
+**volta** de todo aceite com mock usa este; o `release-cf58f7f.apk` fica guardado, como rastro. O dev client da **ida** não
+muda. 100 aberturas frias em avião no Tab e 100 no AVD, zero queda nativa. `QL-ENCERRAMENTO-anexos/README.md` §2–§4.)*
 
 As janelas de retrato e a do celular são do `N3-PRECHECK-anexos/B1-janelas.txt`
 (raiz e janela útil do dump do S1). Criar o celular:
