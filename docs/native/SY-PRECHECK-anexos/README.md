@@ -12,6 +12,8 @@ biblioteca `expo-network` instalada.
 | [`divs-faixa.txt`](divs-faixa.txt) | a faixa de divergências conferida na coluna e em prosa: a última usada é a 1255, nada ≥ 1256 | cabeçalho, §5 |
 | [`suite-tsc-lint.txt`](suite-tsc-lint.txt) | `pnpm install --frozen-lockfile`, a suíte, o `tsc` de dentro de cada pacote e o lint, com os `exit` | §3 |
 | [`diff-fora-de-docs.txt`](diff-fora-de-docs.txt) | `git diff --stat origin/main -- . ':!docs'` com o commit montado → vazio | §3 |
+| [`aval-blocos-decl.txt`](aval-blocos-decl.txt) | **commit 2** — os dois extratores de declaração sobre o corpo da #378 (nenhuma declaração, `exit=0`) e o controle: a chave recuada é recusada | §7 |
+| [`aval-verificacao.txt`](aval-verificacao.txt) | **commit 2** — os checks do commit 1, o diff fora de `docs/` vazio, as 31 decisões sem lacuna, as 15 *"Respondida"*, a faixa de divergências | §3, §5.1, §8 |
 
 ## Os blocos de declaração da PR, verbatim
 

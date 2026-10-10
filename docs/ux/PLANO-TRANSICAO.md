@@ -1579,3 +1579,6 @@ automaticamente.
 > (o texto não muda no meio de uma música), a janela da `naoRegredir` fechada, e o release com a regra 38 (c)/(d) remedida.
 > Sem brief e sem desenho; o site e o backend fora. **A fila não muda**: SY → resto do D → navegação do palco → metrônomo →
 > N5 → identidade → iOS, o **W5** à parte (QL-D64). O pre-check aguarda o aval.
+
+> **Nota do aval do pre-check do SY (2026-10-10)** — sem reescrever a nota acima. O pre-check do SY tem aval (SY-D17…D31
+> `[Marcel, 2026-10-10]`, `docs/native/SY-PRECHECK.md` §8); **a próxima é a PR-1, os gates.**

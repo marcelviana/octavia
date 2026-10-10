@@ -46,6 +46,17 @@ identidade → iOS, com o W5 à parte (QL-D64).
 | **SY-D15** | **O pre-check é só docs, sem aparelho e sem prod, e sem Fase B de dado real**: nada aqui depende da biblioteca do Marcel. Se a leitura mostrar que depende, é pergunta para o aval. |
 | **SY-D16** | **O bloco termina com release no Tab**, no molde do A-QL-21: 100 + 100 aberturas frias com a contagem de quedas (regra 36); **a regra 38 (c)/(d) remedida** (desligar o avião com o app aberto → 1 sync; segundo plano por mais e por menos de 30 s → 1 e 0), com a contagem de `GET` declarada antes; e **o julgamento do Marcel**: com uma música dele aberta no palco e a rolagem andando, ele edita o texto no site e a rede volta — o texto não muda e a rolagem não para; ao sair e voltar, o texto novo está lá. A edição no site é escrita do Marcel e entra na contabilidade como tal. |
 
+*(Errata do aval do pre-check — SY-D17…SY-D31 `[Marcel, 2026-10-10]`, §8; o commit 2 a aplicou. O texto das decisões acima
+fica como está; as mudadas por decisão posterior:)*
+
+| decisão | mudada por | o quê |
+|---|---|---|
+| SY-D5 (o intervalo só para a volta da rede) | **SY-D18** | o intervalo vale para os dois gatilhos, do fim do último sync que saiu à rede; não vale depois de falha de rede; vale depois de falha com status; o *"de novo"* e o *Tentar de novo* fora dele |
+| SY-D7 (a setlist pela sessão do palco) | **SY-D22** | a forma: a foto acima da instância, num módulo que o `native-tela` monta, ligado pelo `navigation.tsx`; a ligação se prova no aparelho |
+| SY-D9 (o voo único) | **SY-D19**, **SY-D25** | o prazo de 20 s também nas leituras do sync, como condição; a máquina no core, o executor no app, a geração de emissão das setlists compartilhada com as releituras |
+| SY-D10 (provar e fechar a janela) | **SY-D26** | cumpre-se pela aplicação na raiz no mesmo bloco síncrono, na PR-2; o §A6.4 é o texto que o D cita |
+| SY-D14 (o fatiamento) | **SY-D29** | a extração do `rodarSync` num commit próprio da PR-1, antes dos gates, com a prova de que nada mudou; os aceites se congelam no aval da PR-1 |
+
 ---
 
 ## 1. O resumo, para quem lê só isto
@@ -459,6 +470,10 @@ SY-D10 manda fechar.
 | **(c)** | **se reescreve**: conta **todo** sync — a abertura, a volta da rede, a volta do segundo plano, o *"de novo"* —, 2 `GET` cada até 100 músicas, mais os downloads do plano, à parte |
 | **(d)** | **deixa de valer** como está (o fato era de builds sem os gatilhos) e **se remede** no release do SY (SY-D16): o fato novo, com a contagem. A div. 1143 está respondida (QL-D5, o T1-R13 passo 4) |
 
+*(Nota do aval — **SY-D27**: o texto abaixo e a linha do `APARATO.md` estão aprovados **como rascunho**; o texto final volta
+para aval no encerramento, com os números do release, e só então entra no `LOGS-OCTAVIA.md`. A frase sobre o destravar do
+Marcel ser um sync é `[hipótese]` até a medida da SY-D17 (2).)*
+
 **O texto novo proposto** (Q11) — **entra no `LOGS-OCTAVIA.md` só no encerramento, com o aval e com os números do release**;
 os colchetes são o que o release preenche:
 
@@ -579,6 +594,13 @@ aparelhos; separadas, a PR-2 entra sem aparelho e a PR-3 mede sobre ela.
 | A-SY-14 | o release: 100 + 100 frias, 0 queda nativa (regra 36) | encerramento |
 | A-SY-15 | a regra 38 (c)/(d) remedida no Tab, a contagem declarada antes | encerramento |
 | A-SY-16 | o julgamento do Marcel (SY-D16) | encerramento |
+| A-SY-17 | **a ligação da foto no aparelho** (SY-D22): o palco, o índice do palco, o fim e a busca na setlist com a mesma setlist depois de um sync que a muda; solta ao voltar a S1/S2 | PR-3 |
+| A-SY-18 | **a tela apagada ou bloqueada com o app na frente** (SY-D17 (2)): conta como segundo plano no `AppState`? medido, não presumido | PR-4 |
+| A-SY-19 | **o evento de rede com o app em segundo plano** (SY-D17 (2)): chega ao JS? medido | PR-4 |
+| A-SY-20 | **a prova da extração** (SY-D29): o commit próprio, G3 70 = 70, a suíte com os mesmos números, a declaração do G1 no corpo da PR | PR-1 |
+
+*(Nota do aval — SY-D20, SY-D29: os aceites acima continuam **candidatos**; congelam-se no aval da PR-1, junto com o
+critério do custo com o palco aberto.)*
 
 ### A11 — as heranças do SY (`QL-ENCERRAMENTO.md` §8.1)
 
@@ -604,6 +626,7 @@ aparelhos; separadas, a PR-2 entra sem aparelho e a PR-3 mede sobre ela.
 | a árvore | `../octavia-ql-encerramento` (mergeada na #377, `git status` limpo) removida com `git worktree remove`, **sem `--force`**; `../octavia-sy-precheck` criada sobre `origin/main`; `pnpm install --frozen-lockfile` |
 | suíte · `tsc` · lint | `Test Files 149 passed \| 3 skipped (152)` · `Tests 1851 passed \| 59 skipped (1910)` — **igual** ao `QL-ENCERRAMENTO.md` §2 (1851 · 59); `tsc` raiz 0 · core 0 · identidade 0 · nativo 0 (de dentro de cada pacote, div. 1187); `✔ No ESLint warnings or errors` `[medido: suite-tsc-lint.txt]` |
 | fora de `docs/` | `git diff --stat origin/main -- . ':!docs'` → **vazio** `[medido: no commit, SY-PRECHECK-anexos/diff-fora-de-docs.txt]` |
+| **commit 2 (o aval)** | 0 requisições a prod, 0 logins, 0 `.env*`, nenhum aparelho, 0 agentes; GitHub: `gh api …/commits/<sha>/check-runs` do commit 1 (os 7 `success`), `gh pr view 378 --json body` (os blocos, §7) e `gh pr edit 378` (a linha do aval); `git diff --stat fd788a2 -- . ':!docs'` → **vazio** `[medido: SY-PRECHECK-anexos/aval-verificacao.txt]`; suíte, `tsc` e lint **não rodaram de novo** (só docs) |
 
 ---
 
@@ -613,11 +636,13 @@ aparelhos; separadas, a PR-2 entra sem aparelho e a PR-3 mede sobre ela.
 rede que volta em segundo plano — disparar já. **Recomendo (a)**: sync em segundo plano é trabalho que o músico não vê, e
 a volta do segundo plano decide com a marca. Destaques: **a primeira leitura do `useOnline` não é gatilho**; **logout no
 meio descarta o resultado**; a volta **sem rede** não chama o `sincronizar`.
+→ **Respondida: SY-D17** (§8).
 
 **Q2 — o intervalo mínimo (A2.4).** (a) **30 s do fim do último sync que saiu à rede, para os dois gatilhos; sem valer
 depois de falha de rede (`code=network`), valendo depois de falha com status; o *"de novo"* e o *Tentar de novo* fora
 dele**; (b) só para a rede (a SY-D5 literal), valendo também depois da falha de rede. **Recomendo (a)** — com (b), uma
 oscilação de Wi-Fi que derruba um sync espera 30 s para tentar de novo, exatamente quando a rede acabou de voltar.
+→ **Respondida: SY-D18** (§8).
 
 **Q3 — o prazo do sync (div. 1258).** O voo único transforma o `GET` sem prazo num trinco. (a) **o prazo de 20 s do core
 (`PRAZO_DE_REDE_MS`, N2-D35) também nas leituras do sync**, com errata do comentário do `api.ts:157-162` e a remedida do
@@ -626,16 +651,19 @@ arnês tem de capturá-lo antes); (b) um **prazo só do voo** (o voo se libera e
 dele se descarta pela geração); (c) aceitar o trinco. **Recomendo (a)**: é uma regra só para toda leitura (a releitura já
 tem o prazo, N2-D35), e o motivo do comentário era um estado de teste que continua existindo, por menos tempo. **Se o S1a
 não couber em 20 s, (b).**
+→ **Respondida: SY-D19** (§8).
 
 **Q4 — onde e quando se mede o custo com o palco aberto (A3).** (a) **o "antes" na PR-1 e o "depois da foto" na PR-3, nos
 dois aparelhos, com o sensor de quadros pelo inspetor e o `uiautomator events`; a decisão da SY-D6 no aval da PR-3, com o
 critério candidato *"nenhum intervalo > 100 ms, n ≥ 10"*; no release, só o `uiautomator events`**; (b) só na PR-4, como a
 SY-D6 permite. **Recomendo (a)**: a SY-D6 muda o que a PR-4 implementa, e a medida tem de vir antes dela.
+→ **Respondida: SY-D20** (§8).
 
 **Q5 — o que a foto congela (A4.1).** (a) **a tabela como está**: congela o texto (corpo, notas, título, *Detalhes*, a nota da
 posição e a barra com a setlist, o `file_url`); fica viva a estrela, o estado do arquivo, o ponto de rede; (b) congelar
 também a estrela. **Recomendo (a)**: o favoritar em V tem de aparecer (N4-R7), e a SY-D3 é sobre texto. **Nenhum pixel novo
 — a SY-D12 vale.**
+→ **Respondida: SY-D21** (§8).
 
 **Q6 — "a sessão do palco" (div. 1260).** (a) **por instância** do palco: simples, provada inteira no `native-tela`; o
 salto pelo índice tira outra foto, e o índice, o fim e a busca seguem lendo a setlist viva; (b) **pela sessão**, acima da
@@ -643,42 +671,54 @@ instância (no `navigation.tsx`): o palco, o índice do palco, o fim e a busca n
 no palco e solta ao voltar a S1/S2 — a SY-D7 literal; a ligação só se prova no aparelho. **Recomendo (b)**: com (a), o
 índice pode dizer 9 músicas com o palco dizendo *"3 DE 8"*, e o salto pelo índice é exatamente o momento em que a ordem
 mudaria no meio do show.
+→ **Respondida: SY-D22** (§8).
 
 **Q7 — a setlist ou a música apagadas com o palco aberto (A4.3; div. 1259).** (a) **a setlist da foto segura o palco; a
 música já aberta volta com a última versão vista; a posição nunca aberta com a música apagada mostra o placeholder de
 hoje; sem aviso ao sair**; (b) sair do palco para S1 com um aviso. **Recomendo (a)** — é o que a SY-D3 e a SY-D8 pedem.
 **(c)**, à parte: a frase do placeholder (*"ainda não foi sincronizada"*) é falsa para a música apagada; **recomendo deixar
 como está** no SY (frase nova é tela; o caso é raro) e registrar.
+→ **Respondida: SY-D23** (§8).
 
 **Q8 — o PDF (A4.4).** (a) **nada além de congelar o `file_url`** (o download nunca troca o arquivo de uma URL; o arquivo
 velho fica no disco abaixo do teto); (b) proteger no LRU o arquivo da foto. **Recomendo (a)**: (b) protege um caso que só
 existe acima de 200 MB com o repertório em 265 KB.
+→ **Respondida: SY-D24** (§8).
 
 **Q9 — a forma do voo único e a corrida com as escritas (A5).** (a) **a máquina no core e o executor no app; o voo único só
 para os syncs; para as setlists, a geração de emissão compartilhada entre o sync e as releituras (a regra da div. 232) — o
 sync que perdeu aplica o content e não as setlists**; (b) as releituras na fila do sync; (c) a trava no `App.tsx`.
 **Recomendo (a)**: (b) faz uma escrita esperar um sync para reler, e (c) não tem gate.
+→ **Respondida: SY-D25** (§8).
 
 **Q10 — fechar ou só provar a janela (A6).** (a) **fechar na PR-2**, pela aplicação síncrona (só de ordem; nenhum
 `updated_at`); (b) só provar e deixar ao D. **Recomendo (a)** — é o que a SY-D10 manda quando o conserto é só de ordem, e
 é. **E o §A6.4 fica como o texto que o D cita.**
+→ **Respondida: SY-D26** (§8).
 
 **Q11 — a regra 38 (A7).** (a) **o texto novo como proposto**, entrando no encerramento com os números do release, e a
 linha do `APARATO.md`; (b) outra redação. **Recomendo (a).**
+→ **Respondida: SY-D27** (§8).
 
 **Q12 — as linhas de log novas (A8).** (a) **uma linha nova**, `sync trigger reason=net|foreground decision=run|queued|skip-interval|skip-short|skip-offline|skip-background`
 — uma por gatilho **avaliado**, inclusive os que não disparam (o *"0"* do aceite passa a ser uma linha, não a ausência de
 uma: o caso 21 pelo outro lado), sem a primeira leitura do `useOnline`; o `sync start` não muda (G3 70 → 71, adição na
 PR-4); (b) errata em par do `sync start` → `sync start reason=open|net|foreground|retry|again`, sem linha para os que não
 disparam. **Recomendo (a)**: não muda linha que os aceites já leem, e torna o *"→ 0"* da regra 38 (d) medível.
+→ **Respondida: SY-D28** (§8).
 
 **Q13 — o fatiamento (A10).** (a) **o da SY-D14, com a extração do `rodarSync` e os contratos inertes na PR-1; a PR-2 e a
 PR-3 separadas**; (b) juntar a PR-2 e a PR-3. **Recomendo (a).**
+→ **Respondida: SY-D29** (§8).
 
 **Q14 — os downloads que falham a cada sync (div. 1263).** O plano pede de novo, a cada evento, todo arquivo que falta e
 falhou. (a) **só registrar**: o release do SY conta os downloads à parte, e se aparecer um repetido por evento ele vira
 herança; (b) uma espera por arquivo falho no SY. **Recomendo (a)** — na conta do Marcel não se conhece arquivo que falhe, e
 mudar o plano é outro escopo.
+→ **Respondida: SY-D30** (§8).
+
+**Q15 — as duas erratas de ponteiro a mais** *(acrescentada pelo aval, a partir do relatório de entrega do commit 1)*. O prompt pedia a nota no `PLANO-TRANSICAO.md`; o commit 1 pôs também uma no `D0-ENCERRAMENTO.md` §8.2 e outra no `QL-ENCERRAMENTO.md` §8.4, as duas apontando para o §A6.4, e as declarou (§6). Aceitar?
+→ **Respondida: SY-D31** (§8).
 
 ---
 
@@ -700,6 +740,13 @@ toolchain/aparato · **X** terceiros (`QL-PRECHECK.md` §6).
 
 **Contagem** `[medido: a coluna]`: **8 — P 1 · D 3 · A 3 · T 1** (P: 1260 · D: 1256, 1257, 1261 · A: 1258, 1259, 1263 ·
 T: 1262). **A próxima livre é a 1264.**
+
+### 5.1 Divergências do aval (commit 2)
+
+**Nenhuma.** O prompt do aval e o repositório não divergiram: a próxima livre conferida pela coluna é a 1264 (nenhum número
+≥ 1264 em `docs/`, `[medido: SY-PRECHECK-anexos/aval-verificacao.txt]`); o recuo dos blocos de declaração (§2 item 4 do
+prompt) **não atrapalha** a leitura (§7), e por isso não é divergência, pela regra que o próprio prompt deu. **Contagem: 0.
+A próxima livre continua a 1264.**
 
 **O que este pre-check não contradisse**: nenhuma das SY-D1…D16 foi contradita pela leitura. A SY-D7 tem um termo sem
 correspondente no código (1260) — divergência **e** pergunta (Q6). A SY-D5 ganha uma proposta para a falha (Q2), como ela
@@ -730,3 +777,45 @@ No molde das existentes, sem reescrever texto:
 ```gates-web
     # só docs — SY pre-check: nenhum arquivo do núcleo do G-back tocado; nenhuma linha de código.
 ```
+
+*(Nota do aval, commit 2 — o recuo de quatro espaços das linhas de dentro (veio do prompt do pre-check; os blocos do
+`QL-ENCERRAMENTO.md` §11 não têm recuo) **não atrapalha a leitura**: os dois extratores, sobre o corpo da #378, devolvem
+nenhuma declaração e `exit=0`, e a linha recuada é lida como comentário. **Mas o recuo faz parte da chave**: uma declaração de
+verdade recuada (`    g1a: …`) seria recusada como *"chave desconhecida"* — o controle está no anexo. Conferido com
+`gh pr view 378 --json body -q .body | sh apps/native/scripts/gates-decl.sh` e `… | sh scripts/gates-web/gates-web-decl.sh`
+`[medido: SY-PRECHECK-anexos/aval-blocos-decl.txt]`. Os blocos ficam como estão; as PRs de código do SY os escrevem sem
+recuo.)*
+
+---
+
+## 8. O aval do pre-check — SY-D17…SY-D31 `[Marcel, 2026-10-10]`
+
+As quinze perguntas do §4, na ordem; o texto da decisão é este (o "→ Respondida" de cada pergunta aponta para cá). A Q15
+nasceu do relatório de entrega do commit 1 (as duas erratas de ponteiro a mais) e entrou no §4 pelo aval. **O commit 2
+aplicou o aval.**
+
+| # | decisão (pergunta) |
+|---|---|
+| **SY-D17** | (Q1) **(a): a tabela da A2.3 como está.** A rede que volta com o app em segundo plano não dispara e deixa a marca; a volta antes de 30 s com a marca conta como "a rede voltou", sujeita ao intervalo; a primeira leitura do `useOnline` (`null → true`) não é gatilho; a volta sem rede não chama o `sincronizar`; o logout no meio descarta o resultado do sync em voo e cancela o "de novo". **Acréscimos:** (1) a marca se apaga quando qualquer sync sai à rede; (2) **a PR-4 mede no aparelho, e não presume**: se apagar ou bloquear a tela com o app na frente conta como segundo plano (`AppState`), e se o evento de rede chega ao JS com o app em segundo plano. Até essa medida, as duas coisas são `[hipótese]` em todo documento do bloco. |
+| **SY-D18** | (Q2) **(a):** o intervalo é de **30 s contados do fim do último sync que saiu à rede, para os dois gatilhos**; **não vale** depois de falha de rede (`code=network`); **vale** depois de falha com status; o "de novo" do voo único e o *Tentar de novo* ficam fora dele. **É errata da SY-D5**, que falava só da volta da rede. |
+| **SY-D19** | (Q3) **(a): o prazo de 20 s do core (`PRAZO_DE_REDE_MS`, N2-D35) vale também nas leituras do sync**, com a errata do comentário do `api.ts` e a remedida do S1a, na PR-2. **Condição, na PR-1:** dizer `[lido]` se os 20 s cobrem **a resposta inteira** ou só até o primeiro byte, e medir no mock com atraso o tempo do `GET` do conteúdo. **Se o prazo for da resposta inteira e um Wi-Fi lento puder derrubar todo sync, inclusive o primeiro, a PR-1 para e volta com a pergunta**; a reserva é a (b), o prazo só do voo. A SY-D9 ganha o prazo como condição. |
+| **SY-D20** | (Q4) **(a):** o "antes" do custo com o palco aberto na PR-1 e o "depois da foto" na PR-3, nos dois aparelhos; a decisão da SY-D6 no aval da PR-3, antes de a PR-4 ligar os gatilhos; no release, só o `uiautomator events`. **Ajuste:** o critério (o candidato é "nenhum intervalo acima de 100 ms, n ≥ 10") **se congela no aval da PR-1**, com os números do "antes" na mão, e não depois de ver o "depois". |
+| **SY-D21** | (Q5) **(a): a tabela da A4.1 como está.** A foto congela o texto: o corpo, as notas da música, o título, o artista e o tipo, os *Detalhes* de V, a nota da posição e a barra com a setlist, e o `file_url`. Ficam vivos a estrela de V, o estado do arquivo no disco, o ponto de rede, o recolher das notas e o estado da tela. Nenhum pixel novo: a SY-D12 vale. |
+| **SY-D22** | (Q6) **(b): a foto da setlist vale pela sessão do palco, acima da instância.** O palco, o índice do palco, o fim e a busca na setlist leem a mesma foto, tirada ao entrar no palco de fora e solta ao voltar a S1/S2. É a SY-D7 ao pé da letra. **Condição:** a lógica da foto mora num **módulo que o `native-tela` consegue montar**, e o `navigation.tsx` só a liga; o gate (iii) prova a lógica, e **um aceite no aparelho prova a ligação** (entra na lista de aceites candidatos, na PR-3). |
+| **SY-D23** | (Q7) **(a):** a setlist da foto segura o palco até ele sair; a música já aberta volta com a última versão vista; a posição nunca aberta cuja música foi apagada mostra o placeholder de hoje; sem aviso ao sair. **(c): a frase do placeholder fica como está no SY.** Ela é falsa para a música apagada e fica registrada como herança, com o destino proposto no encerramento do bloco. |
+| **SY-D24** | (Q8) **(a):** nada além de congelar o `file_url`. |
+| **SY-D25** | (Q9) **(a):** a máquina do voo único no core e o executor no app; o voo único só para os syncs; para as setlists, a geração de emissão compartilhada entre o sync e as releituras (a regra da div. 232): o sync que perdeu aplica o conteúdo e não as setlists. Sem fila para as escritas. |
+| **SY-D26** | (Q10) **(a): a janela da `naoRegredir` se fecha na PR-2**, pela aplicação na raiz dentro do mesmo bloco síncrono do sync, sem tocar no `updated_at`, na `naoRegredir` nem no `reconcile`. **O §A6.4 fica aceito como o texto que o D cita.** |
+| **SY-D27** | (Q11) **(a), como rascunho:** o texto novo da regra 38 e a linha do `APARATO.md` ficam aprovados **como proposta**. **O texto final volta para aval no encerramento**, com os números do release, e só então entra no `LOGS-OCTAVIA.md`. A frase do `APARATO.md` sobre o destravar do Marcel ser um sync é `[hipótese]` até a medida da SY-D17 (2), e o texto final a escreve conforme o medido. |
+| **SY-D28** | (Q12) **(a):** uma linha de log nova, `sync trigger reason=net|foreground decision=run|queued|skip-interval|skip-short|skip-offline|skip-background`, uma por gatilho avaliado, sem a primeira leitura do `useOnline`; o `sync start` não muda; G3 de 70 para 71, adição declarada na PR-4. |
+| **SY-D29** | (Q13) **(a):** o fatiamento da SY-D14, com a extração do `rodarSync` e os contratos inertes na PR-1; a PR-2 e a PR-3 separadas. **Condição da PR-1:** a extração vem num **commit próprio, antes dos gates**, com a prova de que nada mudou: as 70 linhas de log iguais (G3 70 = 70, nenhuma sumiu), a suíte com os mesmos números, e a declaração do G1 no corpo da PR. **Os aceites A-SY-*n* se congelam no aval da PR-1.** |
+| **SY-D30** | (Q14) **(a):** os downloads que falham a cada sync só se registram; o release do SY conta os downloads à parte, e um repetido por evento vira herança. |
+| **SY-D31** | (Q15) **As duas erratas de ponteiro a mais** (a nota no `D0-ENCERRAMENTO.md` §8.2 e a no `QL-ENCERRAMENTO.md` §8.4, apontando para o §A6.4) **ficam aceitas**: são da mesma classe das pedidas e foram declaradas. |
+
+**O que o commit 2 mudou** (só notas, sem reescrever texto de decisão): a errata do §0 (as mudadas por decisão posterior);
+o "→ Respondida" em Q1…Q15 e a Q15 no §4; a nota do rascunho na A7 (SY-D27); os aceites A-SY-17…A-SY-20 na A10 (SY-D17,
+SY-D22, SY-D29); a nota dos blocos no §7; a linha deste commit no §3; o §5.1; a nota do `PLANO-TRANSICAO.md`; e a linha do
+aval no corpo da #378.
+
+**O pre-check do SY tem aval.** A próxima é a **PR-1 — os gates**, em sessão nova e árvore nova, depois do merge desta PR
+pelo Marcel.
