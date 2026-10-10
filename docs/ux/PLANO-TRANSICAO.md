@@ -1572,3 +1572,10 @@ automaticamente.
 > (**QL-D64** `[Marcel, 2026-10-10]`, `docs/native/QL-ENCERRAMENTO.md` §13): a fila é **QL → SY → resto do D → navegação do
 > palco → metrônomo → N5 → identidade → iOS**; o **W5** à parte. O metrônomo vem antes do N5, para o palco do celular já
 > nascer com ele. **O próximo bloco é o SY.**
+
+> **Nota da abertura do SY (2026-10-10)** — sem reescrever a nota acima. **Aberto o bloco SY — a sincronização automática
+> do tablet** (`docs/native/SY-PRECHECK.md`, SY-D1…D16 `[Marcel, 2026-10-10]`): os dois gatilhos do T1-R13 passo 4 (a rede
+> volta com o app aberto; a volta do segundo plano depois de 30 s), o intervalo mínimo, o voo único, a foto da música aberta
+> (o texto não muda no meio de uma música), a janela da `naoRegredir` fechada, e o release com a regra 38 (c)/(d) remedida.
+> Sem brief e sem desenho; o site e o backend fora. **A fila não muda**: SY → resto do D → navegação do palco → metrônomo →
+> N5 → identidade → iOS, o **W5** à parte (QL-D64). O pre-check aguarda o aval.

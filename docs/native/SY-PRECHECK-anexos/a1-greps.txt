@@ -1,0 +1,197 @@
+# A1 — os git grep do §A6 do QL-PRECHECK, refeitos na ponta da main
+# 98c9f7f10097fa331c24b8ae6d0b83e8b6f21ac9 (origin/main = 98c9f7f10097fa331c24b8ae6d0b83e8b6f21ac9)
+
+$ git grep -n 'AppState' -- apps/native packages/core/src
+exit=1
+
+$ git grep -n 'RefreshControl' -- apps/native packages/core/src
+exit=1
+
+$ git grep -n 'setInterval' -- apps/native/src apps/native/App.tsx packages/core/src
+apps/native/src/screens/ModoDeReordenar.tsx:325:  const relogio = useRef<ReturnType<typeof setInterval> | null>(null)
+apps/native/src/screens/ModoDeReordenar.tsx:353:      relogio.current = setInterval(() => {
+exit=0
+
+$ git grep -n 'setTimeout' -- apps/native/src apps/native/App.tsx packages/core/src
+apps/native/src/api.ts:171:  const t = setTimeout(() => controle.abort(), prazoMs)
+apps/native/src/files.ts:357: * `setTimeout`, leia isto primeiro:
+apps/native/src/screens/FolhaDeCriar.tsx:161:   * `setTimeout` de 350 ms**, e o ATRASO é a parte que funciona. Medido neste
+apps/native/src/screens/FolhaDeCriar.tsx:169:   * | `setTimeout(…, 0)`                         | **5 / 10**  |
+apps/native/src/screens/FolhaDeCriar.tsx:170:   * | `setTimeout(…, 150)`                       | 10 / 10     |
+apps/native/src/screens/FolhaDeCriar.tsx:171:   * | `setTimeout(…, 350)`                       | **10 / 10** |
+apps/native/src/screens/FolhaDeCriar.tsx:173:   * **O `setTimeout(0)` é cara-ou-coroa** — e passou nas primeiras tentativas
+apps/native/src/screens/FolhaDeCriar.tsx:307:        setTimeout(() => campoNome.current?.focus(), MS_FOCO_APOS_ANIMACAO)
+apps/native/src/screens/Leitor.tsx:328:  const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
+apps/native/src/screens/Leitor.tsx:359:      timer.current = setTimeout(() => pedir(tentativa + 1), ANCORA_INTERVALO_MS)
+apps/native/src/screens/StageScreen.tsx:287:  const motivoTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+apps/native/src/screens/StageScreen.tsx:291:    motivoTimer.current = setTimeout(() => setMotivoVisivel(null), MOTIVO_MS)
+exit=0
+
+$ git grep -n 'sincronizar\|rodarSync' -- apps/native/src apps/native/App.tsx packages/core/src
+apps/native/App.tsx:27:import { sincronizar } from './src/sync'
+apps/native/App.tsx:139:   * é o caminho que dispara o prefetch nas duas saídas do `rodarSync` abaixo.
+apps/native/App.tsx:160:   * que grava) e aqui, no que a raiz mostra — sem sync. O `dadosRef` é atualizado à mão, como no `rodarSync`, para que
+apps/native/App.tsx:197:  const rodarSync = useCallback(async (uid: string, anterior: Dados): Promise<void> => {
+apps/native/App.tsx:199:    const r = await sincronizar(
+apps/native/App.tsx:272:    void rodarSync(uid, iniciais)
+apps/native/App.tsx:273:  }, [estado, rodarSync])
+apps/native/App.tsx:277:    void rodarSync(estado.user.uid, dados)
+apps/native/App.tsx:278:  }, [estado, dados, rodarSync])
+apps/native/src/apos-escrita.ts:6: * `sincronizar()` do `sync.ts` nunca chamou o prefetch — quem o chama é o
+apps/native/src/apos-escrita.ts:7: * `App.tsx`, nas duas saídas do `rodarSync` —, e a releitura da N2-D13 não
+apps/native/src/escrita.ts:30: * **Não dispara o prefetch.** Medido nesta PR: `sincronizar()` nunca chamou
+apps/native/src/escrita.ts:288: * O que ela NÃO é: não é o `sincronizar()` (que refaria as páginas de
+apps/native/src/prefetch.ts:224:    // `prefetchEArrumar` → `rodarSync` → `void rodarSync(...)` e virava
+apps/native/src/screens/SetlistsScreen.tsx:198: * Antes da N1-PR8 a tela mostrava só "falha ao sincronizar" para tudo: o
+apps/native/src/sync.ts:55:export async function sincronizar(
+packages/core/src/frases-content.ts:237:  'erro.desconhecido': 'falha ao sincronizar',
+exit=0
+
+$ git grep -n "log('sync\|log(\`sync" -- apps/native/src apps/native/App.tsx
+apps/native/src/sync.ts:60:    log('sync skip reason=offline')
+apps/native/src/sync.ts:65:  log('sync start')
+apps/native/src/sync.ts:92:    log(`sync fail stage=${stage} page=${page} code=${code} status=${status}`)
+apps/native/src/sync.ts:119:  if (duplicates > 0) log(`sync dedupe n=${duplicates}`)
+exit=0
+
+$ sed -n 1,6p apps/native/src/net.ts
+/**
+ * Estado de rede (PRD T1-R18; N1-D11: `expo-network`).
+ * O app **nunca** bloqueia por causa disto: offline é um indicador, e o sync
+ * só é pulado quando se sabe que não há rede. Sem retry automático nesta PR —
+ * a revalidação ao voltar do background é o passo 4 do T1-R13 (PR posterior).
+ */
+exit=0
+
+$ sed -n 22,43p apps/native/src/net.ts
+/** Hook do estado de rede; loga só as MUDANÇAS (`net online|offline`). */
+export function useOnline(): boolean {
+  const [online, setOnline] = useState(true)
+
+  useEffect(() => {
+    let anterior: boolean | null = null
+    const aplicar = (valor: boolean): void => {
+      if (valor !== anterior) {
+        anterior = valor
+        log(`net ${valor ? 'online' : 'offline'}`)
+        setOnline(valor)
+      }
+    }
+    void estaOnline().then(aplicar)
+    const sub = Network.addNetworkStateListener((estado) => {
+      aplicar(estado.isInternetReachable ?? estado.isConnected ?? false)
+    })
+    return () => sub.remove()
+  }, [])
+
+  return online
+}
+exit=0
+
+$ git grep -n 'naoRegredir\|linhasConfirmadas' -- apps/native/src apps/native/App.tsx packages/core/src ':!*.test.ts'
+apps/native/src/favoritar.ts:73: * (`naoRegredir` do core): um sync que leu antes do `PUT` não desfaz a estrela. Não se poda: uma entrada velha nunca
+apps/native/src/favoritar.ts:79:export function linhasConfirmadas(): ReadonlyMap<string, ContentDTO> {
+apps/native/src/sync.ts:12:  naoRegredir,
+apps/native/src/sync.ts:19:import { linhasConfirmadas } from './favoritar'
+apps/native/src/sync.ts:106:  // contagem `invalidated` é a do reconcile, de antes (o critério e o porquê: `naoRegredir`, no core).
+apps/native/src/sync.ts:107:  const content = { ...reconciliado, items: naoRegredir(reconciliado.items, linhasConfirmadas()) }
+packages/core/src/favoritar.ts:194:export function naoRegredir<T extends { id: string; updated_at: string }>(
+exit=0
+
+$ git grep -n 'onTentarNovamente\|tentarNovamente' -- apps/native/src apps/native/App.tsx
+apps/native/App.tsx:275:  const tentarNovamente = useCallback(() => {
+apps/native/App.tsx:359:              onTentarNovamente: tentarNovamente,
+apps/native/src/navigation.tsx:316:                  onTentarNovamente={setlists.onTentarNovamente}
+apps/native/src/screens/LibraryScreen.tsx:81:  onTentarNovamente: () => void
+apps/native/src/screens/LibraryScreen.tsx:145:  onTentarNovamente,
+apps/native/src/screens/LibraryScreen.tsx:210:              acao: { rotulo: FRASES_DO_TABLET['tentar-novamente'], onPress: onTentarNovamente },
+apps/native/src/screens/LibraryScreen.tsx:236:        acao={{ rotulo: FRASES_DO_TABLET['tentar-novamente'], onPress: onTentarNovamente }}
+apps/native/src/screens/SetlistsScreen.tsx:110:  onTentarNovamente: () => void
+apps/native/src/screens/SetlistsScreen.tsx:421:  onTentarNovamente,
+apps/native/src/screens/SetlistsScreen.tsx:623:            onPress={onTentarNovamente}
+apps/native/src/screens/SetlistsScreen.tsx:656:          <Pressable style={styles.botaoPrimario} onPress={onTentarNovamente} testID="tentar">
+exit=0
+
+$ git grep -n 'addNetworkStateListener\|getNetworkStateAsync' -- apps/native/src apps/native/App.tsx
+apps/native/src/net.ts:13:    const estado = await Network.getNetworkStateAsync()
+apps/native/src/net.ts:36:    const sub = Network.addNetworkStateListener((estado) => {
+exit=0
+
+$ grep -n 'useEffect\|useCallback\|setDados\|dadosRef.current =' apps/native/App.tsx
+10:import { useCallback, useEffect, useRef, useState } from 'react'
+64:  const [dados, setDados] = useState<Dados>(SEM_DADOS)
+89:  const recarregarArquivos = useCallback(() => {
+108:  const atualizarPresentes = useCallback(() => {
+112:  useEffect(() => {
+113:    dadosRef.current = dados
+127:  const prefetchEArrumar = useCallback(
+150:  useEffect(() => {
+164:  useEffect(() => {
+171:        dadosRef.current = { ...dadosRef.current, content, contentById }
+172:        setDados((atual) => ({ ...atual, content, contentById }))
+178:  useEffect(() => {
+184:        setDados(SEM_DADOS)
+197:  const rodarSync = useCallback(async (uid: string, anterior: Dados): Promise<void> => {
+211:      setDados({
+220:      // `setDados` só corre no próximo render — e o LRU precisa das setlists
+222:      dadosRef.current = {
+245:  useEffect(() => {
+265:    setDados(iniciais)
+275:  const tentarNovamente = useCallback(() => {
+301:  const aoRelerNaEscrita = useCallback((setlists: SetlistDTO[], syncedAtMs: number | null) => {
+302:    setDados((atual) => ({ ...atual, setlists, temCache: true, syncedAtMs: syncedAtMs ?? atual.syncedAtMs }))
+307:  const baixarEsta = useCallback(
+exit=0
+
+$ grep -n '\[posicao, n, setlist, chavePlaceholder, pararScroll\]\|const songs\|const content = avulsa\|const corpo = \|resolveSong(song' apps/native/src/screens/StageScreen.tsx
+309:  const songs = useMemo(
+316:  const resolvida = song !== undefined ? resolveSong(song, contentById) : null
+317:  const content = avulsa ? (contentById.get(avulsaContentId) ?? null) : (resolvida?.content ?? null)
+320:  const corpo = content !== null ? bodyOf(content.content_type, content.content_data) : null
+389:  }, [posicao, n, setlist, chavePlaceholder, pararScroll])
+exit=0
+
+$ grep -n 'contentById.get(route.params.contentId)\|const setlist = acharSetlist\|não está no cache' apps/native/src/navigation.tsx
+184:                const setlist = acharSetlist(route.params.setlistId)
+186:                  return <Placeholder titulo="SETLIST" nota="não está no cache" />
+248:                const setlist = acharSetlist(p.setlistId)
+250:                  return <Placeholder titulo="SETLIST" nota="não está no cache" />
+284:                const setlist = acharSetlist(route.params.setlistId)
+327:                  content={dados.contentById.get(route.params.contentId) ?? null}
+exit=0
+
+$ grep -n 'const ultimo = useRef\|ultimo.current = atual\|const content = atual' apps/native/src/screens/VisualizacaoScreen.tsx
+264:  const ultimo = useRef<ContentDTO | null>(atual)
+265:  if (atual !== null) ultimo.current = atual
+266:  const content = atual ?? ultimo.current
+exit=0
+
+$ grep -n 'export function naoRegredir\|tLocal <= tSync' packages/core/src/favoritar.ts
+194:export function naoRegredir<T extends { id: string; updated_at: string }>(
+205:    if (Number.isNaN(tLocal) || Number.isNaN(tSync) || tLocal <= tSync) return item
+exit=0
+
+$ grep -n 'const confirmadas\|confirmadas.set\|cache.lerContent()\|cache.aoGravar' apps/native/src/favoritar.ts
+76:const confirmadas = new Map<string, ContentDTO>()
+170:      confirmadas.set(id, linha)
+171:      const atual = cache.lerContent()
+180:        cache.aoGravar(novo)
+exit=0
+
+$ grep -n 'let geracao\|let ultimaAplicada\|const minha = ++geracao\|minha < ultimaAplicada\|saveSetlists(' apps/native/src/escrita.ts
+140:let geracao = 0
+141:let ultimaAplicada = 0
+302:  const minha = ++geracao
+315:  if (minha < ultimaAplicada) {
+330:  saveSetlists(
+exit=0
+
+$ grep -n 'export function reconcileByUpdatedAt\|return { items: invalidated === 0' packages/core/src/sync.ts
+127:export function reconcileByUpdatedAt<T extends Versioned>(
+134:  return { items: invalidated === 0 && mesmaOrdem ? prev : next, invalidated }
+exit=0
+
+$ grep -n '4. Ao voltar do background' docs/native/PRD-TELA-1.md
+158:4. Ao voltar do background com > 30 s ausente ou ao recuperar rede: repetir 2 (o web usa 30 s `[medido: hooks/use-setlist-data.ts:172 — nota N2]`).
+exit=0
+

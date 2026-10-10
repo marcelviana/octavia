@@ -1,0 +1,13 @@
+$ git grep -nE '^\| \*\*(12[0-9]{2}|13[0-9]{2})\*\*' -- docs | (o número da célula ≥ 1250)
+docs/native/QL-ENCERRAMENTO-anexos/README.md:195:| **1250** | A | O Marcel fechou o app e **não achou o ícone** para abrir de novo; o app tem a atividade de lançador (`cmd package resolve-activity … LAUNCHER` → `rocks.octavia.app/.MainActivity`) — o executor reabriu pelo `adb` | registrado; observação de uso, não defeito do bloco — candidata a herança (o ícone do app, bloco de identidade), §8 do `QL-ENCERRAMENTO.md` |
+docs/native/QL-ENCERRAMENTO-anexos/README.md:196:| **1251** | P | O prompt manda dizer ao Marcel **o id8** de cada música; ele pediu, para as próximas vezes, **o título** (com o id8, ele consulta o banco pelo título) | memória do executor: o título vai **na conversa**, nunca no anexo (regra 10) |
+docs/native/QL-ENCERRAMENTO.md:486:| **1250** | A | O Marcel não achou o ícone do app para reabrir; reaberto pelo `adb` | §8.7.1; pergunta 1 (b) |
+docs/native/QL-ENCERRAMENTO.md:487:| **1251** | P | O prompt manda dizer o id8; o Marcel pede o título (na conversa, nunca no anexo) | memória do executor |
+docs/native/QL-ENCERRAMENTO.md:488:| **1252** | P | O prompt não traz a tarefa da **regra 22** (as corridas do bloco no `CI-FAIXA.md`), que o `QL-REQUISITOS.md` §3 lista no encerramento | feita, declarada (§7); pergunta 4 |
+docs/native/QL-ENCERRAMENTO.md:489:| **1253** | P | O `ideia-metronomo.md`, copiado sem mudar, diz *"além da rolagem que acompanha o BPM cadastrado"*; o `QL-PRECHECK.md` A1.4 (`[lido]`) registra a rolagem automática como **`y += 1` px por quadro** — sem BPM | o texto mantido (o prompt o manda); o pre-check do metrônomo mede (o primeiro item da lista dele); pergunta 5 |
+docs/native/QL-ENCERRAMENTO.md:490:| **1254** | P | O prompt chama de *"a referência lógica do G-N3 tirada da própria saída (a opção 2)"*; a opção 2 é o contrário — a referência **pré-QL, à parte**; a tirada da própria paisagem foi a **recusada** (div. 1213) | a lição escrita pela fonte (§4.2) |
+docs/native/QL-ENCERRAMENTO.md:536:| **1255** | P | O prompt do aval liga o caso 44 *"às divergências da QL-D60 (1241 e 1242)"*; o caso proposto no §6 nasceu da **1233** (o defeito no Tab), e a 1241 e a 1242 são onde ele passou sem ser visto — não há conflito, só a origem incompleta | o caso 44 entrou com as três (1233, 1241, 1242) |
+exit=0
+
+$ git grep -nE "div(s)?\. ?(125[6-9]|12[6-9][0-9]|13[0-9]{2})" -- docs
+exit=1 (1 = nenhuma ocorrência)

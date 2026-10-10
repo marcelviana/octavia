@@ -357,6 +357,10 @@ pontos em aberto e o que o pre-check do bloco mede. A posição na fila é a per
 | 2 | **o compasso por música — pergunta para o pre-check do D: o campo entra no recorte?** Dele dependem o acento no tempo 1 e a contagem de entrada do metrônomo em 3/4 e 6/8 (ponto 1 do `ideia-metronomo.md`); hoje o site não salva compasso (N4-D31; `N4-ENCERRAMENTO.md` §10.4.5) | ideia do metrônomo; N4-D31 |
 | 3 | o par na Letra com cifra digitada **não é herança** — é o custo declarado da QL-D22 (0 casos no dado), e se reabre como pergunta quando houver um | QL-D22; `QL-REQUISITOS.md` §4 |
 
+*(Errata de ponteiro do pre-check do SY, 2026-10-10 — `docs/native/SY-PRECHECK.md`: o *"a partir do que o SY deixar
+escrito"* do item 1 está no §A6.4 de lá — o que a `naoRegredir`, o critério do `reconcile` e o limite do T1-R10 exigem quando
+o favoritar parar de mexer no `updated_at`.)*
+
 ### 8.5 N5 (o celular)
 
 | # | item | origem |
