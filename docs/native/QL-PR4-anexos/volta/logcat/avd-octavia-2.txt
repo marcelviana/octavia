@@ -1,0 +1,128 @@
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=167
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=98
+OCTAVIA: cache write kind=setlists n=1 invalidated=1
+OCTAVIA: cache write kind=content n=8 invalidated=8
+OCTAVIA: sync ok setlists=1 content=8 pages=1 t=337
+OCTAVIA: prefetch plan n=3 reason=library
+OCTAVIA: file src=download name=partitura-12p.pdf bytes=4198 total=4198 ms=264
+OCTAVIA: download-error partitura-escaneada.jpg: o servidor respondeu 404
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: index open
+OCTAVIA: index jump n=6
+OCTAVIA: keepawake on
+OCTAVIA: file src=disk name=partitura-12p.pdf bytes=4198
+OCTAVIA: prefetch plan n=2 reason=demand
+OCTAVIA: download-error partitura-escaneada.jpg: o servidor respondeu 404
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: pdf-render pages=12 src=disk
+OCTAVIA: pdf-page n=1/12
+OCTAVIA: pdf-page n=2/12
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=8
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=107
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=73
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=8 invalidated=0
+OCTAVIA: sync ok setlists=1 content=8 pages=1 t=233
+OCTAVIA: prefetch plan n=2 reason=library
+OCTAVIA: download-error partitura-escaneada.jpg: o servidor respondeu 404
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: index open
+OCTAVIA: index jump n=6
+OCTAVIA: keepawake on
+OCTAVIA: file src=disk name=partitura-12p.pdf bytes=4198
+OCTAVIA: prefetch plan n=2 reason=demand
+OCTAVIA: download-error partitura-escaneada.jpg: o servidor respondeu 404
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: pdf-render pages=12 src=disk
+OCTAVIA: pdf-page n=1/12
+OCTAVIA: pdf-page n=2/12
+OCTAVIA: rotation=portrait n=6/8
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=8
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=54
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=86
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=8 invalidated=0
+OCTAVIA: sync ok setlists=1 content=8 pages=1 t=206
+OCTAVIA: prefetch plan n=2 reason=library
+OCTAVIA: download-error partitura-escaneada.jpg: o servidor respondeu 404
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: index open
+OCTAVIA: index jump n=6
+OCTAVIA: keepawake on
+OCTAVIA: file src=disk name=partitura-12p.pdf bytes=4198
+OCTAVIA: prefetch plan n=2 reason=demand
+OCTAVIA: download-error partitura-escaneada.jpg: o servidor respondeu 404
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: pdf-render pages=12 src=disk
+OCTAVIA: pdf-page n=1/12
+OCTAVIA: pdf-page n=2/12
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=8
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=311
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=111
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=8 invalidated=0
+OCTAVIA: sync ok setlists=1 content=8 pages=1 t=488
+OCTAVIA: prefetch plan n=2 reason=library
+OCTAVIA: download-error partitura-escaneada.jpg: o servidor respondeu 404
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: index open
+OCTAVIA: index jump n=6
+OCTAVIA: keepawake on
+OCTAVIA: file src=disk name=partitura-12p.pdf bytes=4198
+OCTAVIA: prefetch plan n=2 reason=demand
+OCTAVIA: download-error partitura-escaneada.jpg: o servidor respondeu 404
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: pdf-render pages=12 src=disk
+OCTAVIA: pdf-page n=1/12
+OCTAVIA: pdf-page n=2/12
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=8
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: auth refresh=forced
+OCTAVIA: auth-failure
+OCTAVIA: login-screen
+OCTAVIA: api status=401 path=/api/setlists n=2 ms=1209
+OCTAVIA: sync fail stage=setlists page=1 code=AUTH_REQUIRED status=401
+OCTAVIA: prefetch plan n=3 reason=library
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: download-error files: sem uid — setFilesUser não foi chamado
+OCTAVIA: download-error files: sem uid — setFilesUser não foi chamado
+OCTAVIA: download-error files: sem uid — setFilesUser não foi chamado
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: login-screen
+OCTAVIA: net offline
+OCTAVIA: login-error code=auth/network-request-failed
+OCTAVIA: net online

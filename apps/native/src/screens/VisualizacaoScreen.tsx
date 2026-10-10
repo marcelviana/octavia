@@ -44,8 +44,8 @@
  * `placeholder kind=file-missing` e o `download-error` dele; V não toca e não loga (o `file-reject` e o `file src=…` do
  * `files.ts` continuam saindo de lá) — declarado no anexo (G3 igual).
  */
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { Pressable, ScrollView, StyleSheet, Text, View, type LayoutChangeEvent } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 import {
   FRASES_DO_LEITOR,
@@ -81,6 +81,8 @@ import {
   estiloDoLeitor,
   leitor,
   linhasDoLeitor,
+  logicasDasVisuais,
+  useAncora,
   useColunasDoLeitor,
   type EstadoDoArquivoDoLeitor,
 } from './Leitor'
@@ -273,6 +275,52 @@ export function VisualizacaoScreen({
   // padrão. Até as duas existirem, o corpo é o de hoje (QL-D43).
   const { colunas, aoMedirContainer, medidor } = useColunasDoLeitor(content?.content_type ?? null, zoomDefault, ZOOM_DE_V, colors.dark)
 
+  /**
+   * QL-PR4 — A ÂNCORA EM V (QL-D49), pelo gancho do leitor (`useAncora`, a conta do palco). Ao girar (C ↔ B, 55 ↔ 48
+   * colunas), a linha lógica na marca de 32 volta à marca, sem sinal. Em C o leitor tem a rolagem dele e o corpo começa
+   * no respiro (`inicio` 0); em B o corpo divide a rolagem com os *Detalhes*, e a conta começa no COMEÇO DO CORPO dentro
+   * dela: o `y` do `view-leitor` mais a borda de cima dele (`inicio`), medido a cada vez que B monta — até lá, `null`
+   * (a âncora espera). Com a marca nos *Detalhes*, ou nada rolado, o topo (QL-D52). Ao girar a tela troca de
+   * `ScrollView`: a rolagem vista é da de antes até a nova falar (`rolagemNova`). V não tem zoom; a Tab não ancora.
+   */
+  const scroll = useRef<ScrollView | null>(null)
+  const duasColunasAgora = t.view.coluna !== INEXISTENTE
+  const tipoDoCorpo = content?.content_type ?? null
+  const validadeDoCorpo = content === null ? null : isValidContent(content.content_type, content.content_data, content.file_url)
+  const corpoDeTexto =
+    content !== null && validadeDoCorpo !== null && validadeDoCorpo.ok && validadeDoCorpo.body !== 'file'
+      ? bodyOf(content.content_type, content.content_data)
+      : null
+  const linhasDoCorpo = useMemo(() => linhasDoLeitor(corpoDeTexto, tipoDoCorpo, colunas), [corpoDeTexto, tipoDoCorpo, colunas])
+  const logicas = useMemo(() => (corpoDeTexto === null ? [] : logicasDasVisuais(corpoDeTexto, linhasDoCorpo)), [corpoDeTexto, linhasDoCorpo])
+  const entrelinha = estiloDoLeitor(tipoDoCorpo, zoomDefault, colors.dark).lineHeight ?? zoomDefault
+  const [inicioEmB, setInicioEmB] = useState<number | null>(null)
+  const ancora = useAncora(scroll, {
+    chave: content?.id ?? '',
+    corpo: corpoDeTexto,
+    tipo: tipoDoCorpo,
+    logicas,
+    entrelinha,
+    inicio: duasColunasAgora ? 0 : inicioEmB,
+  })
+  const faixaAntes = useRef(duasColunasAgora)
+  const { rolagemNova } = ancora
+  useLayoutEffect(() => {
+    if (faixaAntes.current === duasColunasAgora) return
+    faixaAntes.current = duasColunasAgora
+    rolagemNova()
+    // B se mede de novo a cada vez que monta: o começo do corpo de antes não vale
+    if (duasColunasAgora) setInicioEmB(null)
+  }, [duasColunasAgora, rolagemNova])
+  const medirLeitorEmB = useCallback(
+    (e: LayoutChangeEvent) => {
+      aoMedirContainer(e)
+      const ini = e.nativeEvent.layout.y + bar.hairline
+      setInicioEmB((a) => (a !== null && Math.abs(a - ini) < 0.01 ? a : ini))
+    },
+    [aoMedirContainer],
+  )
+
   const voltar = (
     <Pressable
       style={styles.botaoIcone}
@@ -420,12 +468,11 @@ export function VisualizacaoScreen({
         </PlaceholderDoLeitor>
       )
   } else {
-    const corpo = bodyOf(content.content_type, content.content_data)
     texto = (
       <CorpoDoLeitor
-        corpo={corpo}
+        corpo={corpoDeTexto}
         tipo={content.content_type}
-        linhas={linhasDoLeitor(corpo, content.content_type, colunas)}
+        linhas={linhasDoCorpo}
         colunas={colunas}
         estilo={estiloDoLeitor(content.content_type, zoomDefault, cor)}
         testID="corpo"
@@ -448,7 +495,16 @@ export function VisualizacaoScreen({
           </ScrollView>
           <View style={styles.colunaLeitor} testID="view-leitor">
             {texto !== null ? (
-              <ScrollView style={leitor.conteudo} contentContainerStyle={leitor.conteudoPad} onLayout={aoMedirContainer}>
+              <ScrollView
+                ref={scroll}
+                style={leitor.conteudo}
+                contentContainerStyle={leitor.conteudoPad}
+                onLayout={aoMedirContainer}
+                onScroll={ancora.aoRolar}
+                scrollEventThrottle={16}
+                onContentSizeChange={ancora.aoMudarConteudo}
+                onScrollBeginDrag={ancora.aoArrastar}
+              >
                 {texto}
               </ScrollView>
             ) : (
@@ -481,13 +537,21 @@ export function VisualizacaoScreen({
     <View style={styles.tela} testID="view-tela">
       {cabecalho}
       {linhaDeAviso}
-      <ScrollView style={styles.rolagem} testID="view-rolagem">
+      <ScrollView
+        ref={scroll}
+        style={styles.rolagem}
+        testID="view-rolagem"
+        onScroll={ancora.aoRolar}
+        scrollEventThrottle={16}
+        onContentSizeChange={ancora.aoMudarConteudo}
+        onScrollBeginDrag={ancora.aoArrastar}
+      >
         <View style={styles.detalhesPad} testID="view-detalhes">
           {detalhes}
         </View>
         <View
           style={[styles.leitorEmB, texto !== null ? leitor.conteudoPad : null]}
-          onLayout={texto !== null ? aoMedirContainer : undefined}
+          onLayout={texto !== null ? medirLeitorEmB : undefined}
           testID="view-leitor"
         >
           {texto ?? corpoFixo}

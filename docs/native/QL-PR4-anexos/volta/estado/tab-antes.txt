@@ -1,0 +1,6 @@
+stay_on=0 accel=1 user_rot=0 airplane=0 wifi=1 data=1
+reverse: [ ]
+lastUpdateTime=2026-10-09 17:55:43
+pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+ping: 64 bytes from 8.8.8.8: icmp_seq=1 ttl=116 time=29.9 ms
+o APK instalado no começo: 070187bf6a5931072afac3f76112905eab732df22d22ad7044048ec70a658e91 · 105194421 B

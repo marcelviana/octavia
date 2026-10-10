@@ -1,0 +1,23 @@
+sessão: files/octavia-<uid> · cache/octavia-<uid>
+== (1) guardado, md5 a md5 igual à cópia: 5 caminho(s)
+e410b6b6531ffd98113902654f0aa5be  files/octavia-<uid>/setlists.json
+6318fa92637b5ccf069831a0fc0fbc47  files/octavia-<uid>/content.json
+239e2970952288b1c2ead460a0aa4d31  files/octavia-<uid>/files-index.json
+9a3d9cb8f6c124a9f60bea82f395d29e  files/octavia-<uid>/files/1786218429715-ux-audit-partitura-12p.pdf
+c53e01e757f7ff14691a0ca83aeb766f  cache/octavia-<uid>/files/1786218427769-ux-audit-partitura-1p.pdf
+== (2) tirado por nome; o que sobrou na pasta da sessão (ls):
+cache/octavia-<uid>/files:
+total 16
+drwx--S--- 2 u0_a149 u0_a149_cache 4096 2026-10-09 18:21 .
+drwx--S--- 3 u0_a149 u0_a149_cache 4096 2026-09-10 20:30 ..
+
+files/octavia-<uid>:
+total 24
+drwx------ 3 u0_a149 u0_a149 4096 2026-10-09 18:21 .
+drwxrwx--x 3 u0_a149 u0_a149 4096 2026-09-14 11:13 ..
+drwx------ 2 u0_a149 u0_a149 4096 2026-10-09 18:21 files
+
+files/octavia-<uid>/files:
+total 16
+drwx------ 2 u0_a149 u0_a149 4096 2026-10-09 18:21 .
+drwx------ 3 u0_a149 u0_a149 4096 2026-10-09 18:21 ..

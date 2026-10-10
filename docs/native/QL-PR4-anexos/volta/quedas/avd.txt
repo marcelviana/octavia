@@ -1,0 +1,16 @@
+quedas do app: java=0 · nativas=2 · (a contagem antiga, a subcadeia FATAL: 6)
+  nativa 10-09 18:59:09.487 sinal 11 (SIGSEGV) pid 7372
+      #00 ?
+      #01 facebook::react::MountingCoordinator::pullTransaction(bool) const+524)
+      #02 facebook::react::FabricUIManagerBinding::schedulerDidFinishTransaction(std::__ndk1::shared_ptr<facebook::react
+      #03 facebook::react::Scheduler::uiManagerDidFinishTransaction(std::__ndk1::shared_ptr<facebook::react::MountingCoo
+      #04 facebook::react::UIManager::shadowTreeDidFinishTransaction(std::__ndk1::shared_ptr<facebook::react::MountingCo
+      #05 facebook::react::ShadowTree::mount(facebook::react::ShadowTreeRevision, bool) const+144)
+  nativa 10-09 19:21:24.328 sinal 11 (SIGSEGV) pid 17667
+      #00 ?
+      #01 facebook::react::MountingCoordinator::pullTransaction(bool) const+524)
+      #02 facebook::react::FabricUIManagerBinding::schedulerDidFinishTransaction(std::__ndk1::shared_ptr<facebook::react
+      #03 facebook::react::Scheduler::uiManagerDidFinishTransaction(std::__ndk1::shared_ptr<facebook::react::MountingCoo
+      #04 facebook::react::UIManager::shadowTreeDidFinishTransaction(std::__ndk1::shared_ptr<facebook::react::MountingCo
+      #05 facebook::react::ShadowTree::mount(facebook::react::ShadowTreeRevision, bool) const+144)
+tombstones do app no dropbox: 2 — 2026-10-09 18:59:10, 2026-10-09 19:21:34

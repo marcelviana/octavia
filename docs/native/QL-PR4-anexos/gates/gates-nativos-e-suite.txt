@@ -1,0 +1,48 @@
+$ git rev-parse HEAD
+20fdbbebfa28c844445220aec35306cb2806d6de
+$ GATES_DECL=<o bloco do corpo> sh apps/native/scripts/g1.sh origin/main HEAD
+G1a — diff vazio em 61 arquivos DERIVADOS de apps/native + packages/core/src
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+      EXCEÇÕES DECLARADAS (o escopo desta PR):
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+  G1b: só adição ✓
+$ GATES_DECL=… sh apps/native/scripts/g2g3.sh origin/main HEAD
+G2 — testIDs  antes=121  depois=124
+  G2: antes ⊆ depois ✓
+      apps/native/src/screens/NotasDoPalco.tsx	testID="notas"
+      apps/native/src/screens/NotasDoPalco.tsx	testID="notas-regua"
+      apps/native/src/screens/NotasDoPalco.tsx	testID="notas-texto"
+G3 — declarações: do corpo da PR (GATES_DECL=/private/tmp/claude-501/-Users-marcelviana-projects-octavia/cc1a39a7-36bc-47b2-8a8a-994c156c4b06/scratchpad/decl.txt)
+G3 — linhas log( antes=70  depois=70
+  G3: nenhuma linha sumiu ✓
+$ pnpm --filter native gate:a20 · gate:icones · gate:icones:cn
+  literais em posição de texto examinados: 229
+  acusações: 0
+  DESIGN-N4: 7/7 linhas P-I achadas · 49 células cobradas · trocas em par: 4 (12 elementos velhos cobrados ausentes)
+  pares do N4: em20 4 (DESIGN-V1/telas.html · tab@20 de quatro cordas (§6.3) → P-I11 em 20, traço 1,8) · traço em 24/28: markup da folha: 1,8 em 24 e 28 → TRACO da família (1,75 · 2)
+  DESIGN-QL (QL-D31): a divisa — 8 células da amostra cobradas · 18 molduras de notas, cada uma com a divisa no estado dela
+  tela 2 (E17): 6/6 nomes já no mapa e cobrados · 0 declarados pendentes
+  mapa: 46 nomes · 98 elementos distintos · 46 com 'normal'
+  hex cravado: 0 · tinta por token: 6
+  §6.3 → T1 (N4-D69): tab em20 3 linhas · normal 3 linhas · a tab@20 de quatro cordas do telas.html (o velho do par): achada
+  fora do catálogo: 4/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  acusações: 0 · avisos: 0
+  acusações: 24 · avisos: 0
+$ congelados
+DESIGN-V1: 3
+DESIGN-N2: 2
+DESIGN-N3: 2
+DESIGN-N4: 2
+DESIGN-QL: 1
+N3-PRECHECK-anexos: 355
+QL-PR3-anexos/b3-pre-ql: 6
+$ tsc (raiz · nativo · core · identidade) e lint
+raiz exit=0
+nativo exit=0
+core exit=0
+identidade exit=0
+✔ No ESLint warnings or errors
+$ npx vitest run
+ Test Files  147 passed | 3 skipped (150)
+      Tests  1832 passed | 59 skipped (1891)

@@ -1,0 +1,6 @@
+19:21:14 mock modo=401 vazio=False
+FALHA S0frio: ESPERA ESGOTADA: 'entrar'
+19:23:10 avião=0 (emulator-5554)
+19:23:12 mock modo=normal vazio=False
+capturas=0 falhas=1
+  S0frio: ESPERA ESGOTADA: 'entrar'

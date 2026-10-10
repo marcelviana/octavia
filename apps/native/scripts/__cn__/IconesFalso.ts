@@ -42,6 +42,10 @@
  * Acusa pela regra 4 (o velho no `em20`; a contagem de linhas, 4 contra 3) e
  * pela regra 7 (o `em20` não é a folha em 20); o `gates.test.ts` diz o total.
  *
+ * **QL-PR4 (QL-D31): a divisa entra CORRETA** — sem ela o CN acusaria "falta no
+ * mapa" e as 26 células da regra 8; o total não muda. Os dois controles da
+ * divisa (ausente; um ícone fora de todo catálogo) são de mão, no anexo da PR.
+ *
  * Esperado: **19** acusações (18 do V1 + a (8)), exit 1, e **quatro** avisos
  * de pendente — `nova-setlist`, `apagar-setlist`, `adicionar` e `remover`, os
  * que (8) e (9) não puseram no mapa. Auto-contido (sem os tipos do
@@ -193,5 +197,10 @@ export const desenhosFalsos = {
   'tocar': {
     normal: [{ d: 'M8.5 5.3v13.4L19 12z' }],
     inerte: [{ d: 'M8.5 5.3v13.4L19 12z', traco: 1.25 }],
+  },
+  // QL-PR4 (QL-D31): a divisa entra CORRETA, pela mesma razão da estrela e do tocar.
+  'divisa': {
+    normal: [{ d: 'M5.5 15.25L12 8.75l6.5 6.5' }],
+    ativo: [{ d: 'M5.5 8.75L12 15.25l6.5-6.5' }],
   },
 } as const

@@ -1243,5 +1243,26 @@
         "razao": "N4-D64 — em C título e artista encolhem por igual, sem mínimo"
       }
     ]
+  },
+  "paresIconesQL": {
+    "origem": "QL-PR4, commit 1 — nome novo (velho null) → o desenho da amostra QL-divisa-amostra do DESIGN-QL/telas.html (QL-D31); regra 14 do LOGS-OCTAVIA.md",
+    "pares": {
+      "divisa": {
+        "velho": null,
+        "novo": {
+          "normal": [
+            {
+              "d": "M5.5 15.25L12 8.75l6.5 6.5"
+            }
+          ],
+          "ativo": [
+            {
+              "d": "M5.5 8.75L12 15.25l6.5-6.5"
+            }
+          ]
+        },
+        "razao": "QL-D31 — a divisa: aberta (normal, para cima) e recolhida (ativo, para baixo), o mesmo traço espelhado; catálogo 41 → 42"
+      }
+    }
   }
 }

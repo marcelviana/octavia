@@ -21,7 +21,7 @@
  * catálogo" (§6.4): estes três mais o `log-in`. O DESIGN-N2 acrescenta seis
  * nomes (cinco registros) — 43 no total. O DESIGN-N4 (N4-PR4) troca o desenho
  * dos quatro de tipo e acrescenta a `estrela` e o `tocar` — 45 nomes, 41
- * registros.
+ * registros. O DESIGN-QL (QL-PR4) acrescenta a `divisa` — 46 nomes, 42.
  *
  * O `garantida` tem UMA forma, a do catálogo (div. 589, I1-E3), e é também o
  * "salvo/confirmado" do web: o visto das folhas do I1 não entra (div. 588,
@@ -306,6 +306,16 @@ export const desenhos = {
   'tocar': {
     normal: [{ d: 'M8.5 5.3v13.4L19 12z' }],
     inerte: [{ d: 'M8.5 5.3v13.4L19 12z', traco: 1.25 }],
+  },
+  /**
+   * QL-PR4 — a `divisa` do `DESIGN-QL` (QL-D31; catálogo 41 → 42), na amostra `QL-divisa-amostra`: UM registro com
+   * dois estados, o mesmo traço espelhado na vertical, como a estrela (o estado é a forma, não a cor). `normal` é a
+   * ABERTA (para cima; o toque recolhe) e `ativo` a RECOLHIDA (para baixo; o toque abre). Caixa de 13 × 6,5 a 45°,
+   * centro em 12 · 12, o traço do catálogo. Na régua das notas da música do palco, 20 em `muted`.
+   */
+  'divisa': {
+    normal: [{ d: 'M5.5 15.25L12 8.75l6.5 6.5' }],
+    ativo: [{ d: 'M5.5 8.75L12 15.25l6.5-6.5' }],
   },
 } as const satisfies Record<string, Desenho>
 

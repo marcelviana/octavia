@@ -95,6 +95,10 @@ zoom —, o **começo da linha lógica** que estava no topo volta ao topo, **a 3
 **rolando com a letra**, em **Manrope 16 × zoom ÷ 22**, entrelinha 1,55, sob a régua *notas da música* (mono 12) e fechadas
 por um fio `line`; 8 entre parágrafos, 24 antes da letra. Quebram pela mesma função (R1). **Música sem nota não mostra
 nada, nem a régua.** A nota **da posição** continua na barra de cima. *Aceite*: A-QL-17.
+*(QL-PR4, div. 1229: "quebram pela mesma função (R1)" é a REGRA R1 — cortar na palavra —, não o `quebrar` do core, que conta
+colunas de mono: as notas são Manrope, e a quebra pela palavra é a do texto de UI da plataforma, como a folha escreve
+(*"uma linha longa quebra pela palavra, como qualquer texto de UI"*). A régua: a de V, 48 em todo zoom — QL-D53, QL-E3.
+Só no corpo de TEXTO (a Letra, a Cifra, a Tab): o arquivo e os placeholders não têm a rolagem do corpo — div. 1230.)*
 
 **QL-R15 — Recolher e abrir** `[QL-D30; QL-D31]`. **Abertas por padrão**; um toque na régua (**48 de altura**) recolhe ou
 abre. A **divisa** de 20 em `muted`, na ponta direita da régua, mostra o estado (aberta para cima, recolhida para baixo). O
@@ -132,6 +136,16 @@ decide qual das duas contas de colunas do `DESIGN-QL/README.md` §4 vale. *Aceit
 **QL-R23 — Nenhum token novo** `[QL-D2; folha: "0 tokens ou frases novos"]`. O ícone novo é só a divisa (QL-R17).
 *Aceite*: A-QL-19.
 
+**QL-R24 — Nenhuma borda invisível de toque fica sobre um controle** `[QL-D56; div. 1233]`. As bordas de 15 % do palco
+continuam valendo sobre o texto do corpo (a letra e o texto das notas). **A régua das notas, com o rótulo e a divisa, fica
+fora delas**: um toque em qualquer ponto da régua recolhe ou abre, e nunca avança nem volta a música. Vale para todo
+controle que entrar no corpo do palco no futuro. *Aceite*: A-QL-22.
+
+**QL-R25 — As notas também quando o corpo não é texto** `[QL-D58; div. 1230]`. Na Partitura (o PDF) e nos estados sem
+corpo de texto (o formato que o app ainda não mostra, o arquivo não baixado, o baixando, o item sem corpo), no topo da área,
+acima do PDF ou da mensagem: a mesma régua, a mesma divisa, o mesmo estado lembrado e a mesma QL-R24. O PDF não muda de
+paginação, e nenhum controle fica sob as notas. Sem nota, nada. *Aceite*: A-QL-23.
+
 ---
 
 ## 2. Aceites do QL
@@ -154,7 +168,7 @@ nativas** (regra 36), e o Tab repousa com o release e volta a ele no fim de todo
 | A-QL-9 | **G-N3** e **G-par** verdes com o texto lógico; o G-par do core sem mudança | `g-n3.mjs`; Vitest | — | QL-R19 |
 | A-QL-10 | o corpo em C e B pelas molduras: colunas, recuo de 2, o par sobre a sílaba, as tintas nos dois temas (> 4 dp = errata) | dumps de C e B; capturas | — | QL-R5, R10, R12 |
 | A-QL-11 | a Tab rola em toda faixa e zoom, 6 linhas intactas | dumps | — | QL-R8 |
-| A-QL-12 | **a âncora**: girar o tablet no meio de uma Letra longa, e um passo de zoom, põem o começo da linha lógica do topo a 32 da barra — *(QL-D50, aval da QL-PR3: medida de novo no AVD com o código final, a rolagem medida igual à prevista (±0,5 px) e a lógica esperada no topo nos três passos, `QL-PR3-anexos/README.md` §16.1; QL-D49: **em V também, ao girar**, na PR-4)* | dumps antes/depois; a rolagem medida (`uiautomator events`) contra a prevista | **julga no Tab** (PR-3) | QL-R13 |
+| A-QL-12 | **a âncora**: girar o tablet no meio de uma Letra longa, e um passo de zoom, põem o começo da linha lógica do topo a 32 da barra — *(QL-D50, aval da QL-PR3: medida de novo no AVD com o código final, a rolagem medida igual à prevista (±0,5 px) e a lógica esperada no topo nos três passos, `QL-PR3-anexos/README.md` §16.1; QL-D49: **em V também, ao girar**, na PR-4)* *(QL-PR4: a conta soma o que está acima do corpo — as notas no palco, os *Detalhes* de V em B —, e com a marca ainda acima do corpo, ou nada rolado, o topo (QL-D52); medida nos dois aparelhos com as notas abertas e recolhidas e em V, `QL-PR4-anexos/README.md` §4)* | dumps antes/depois; a rolagem medida (`uiautomator events`) contra a prevista | **julga no Tab** (PR-3) | QL-R13 |
 | A-QL-13 | **o tablet em pé, no zoom padrão** — a letra quebrada se lê no palco? | o executor escolhe as músicas **pelo comprimento das linhas, sem ler o texto**, e diz quais pelo id8 | **julga** (PR-3 e encerramento) | QL-D27 (1) |
 | A-QL-14 | **o tablet deitado, no zoom 40** | idem | **julga** (PR-3 e encerramento) | QL-D27 (2) |
 | A-QL-15 | **uma das 11 Letras que quebram em V em C** | idem | **julga** (PR-3 e encerramento) | QL-D27 (3) |
@@ -164,6 +178,8 @@ nativas** (regra 36), e o Tab repousa com o release e volta a ele no fim de todo
 | A-QL-19 | a divisa no catálogo (41 → 42) e no `gate:icones` (0 acusações); nenhum token novo | `gate:icones`; `gate:a20` | **o traço no Tab, em 20 dp** (PR-4) | QL-R17, R23 |
 | A-QL-20 | **a primeira nota de verdade**: o Marcel a escreve no site, numa música dele, e a vê no palco | o sync e o dump (comprimento, sem o texto) | **escreve e julga** (encerramento) | QL-D26 |
 | A-QL-21 | **o release no Tab**: o release da `main` sem Metro; **100 + 100 aberturas frias** (AVD e Tab), **0 queda nativa** (regra 36); os julgamentos A-QL-13…15 com as músicas do Marcel | `frias-release.sh`; `quedas.py` | **julga** (encerramento) | QL-D9; QL-D27 |
+| A-QL-22 | o toque na régua — na divisa, no rótulo e no meio, nas duas pontas, em C e B, nos dois temas — recolhe ou abre e **não troca de música**; sobre o texto as bordas seguem valendo | o teste da QL-D56 e o controle negativo; o toque no aparelho (`input tap`), a posição antes e depois | **o toque com a mão, inclusive na divisa e no rótulo** (PR-4) | QL-R24 |
+| A-QL-23 | as notas no PDF, no formato, no S3e e no item sem corpo, acima da área; o PDF paginando como antes; a régua fora das bordas também ali; sem nota, a árvore de hoje (G-inv) | o teste da QL-D58; dumps e capturas no aparelho | **as notas no PDF se leem e não atrapalham a página** (PR-4) | QL-R25 |
 
 ---
 
@@ -199,6 +215,10 @@ até lá o corpo aparece como hoje; um teste prova que o palco e V não caem com
 
 ### PR-4 — as notas no palco
 
+*(**QL-D54** `[Marcel, 2026-10-09]`, a QL-PR4 parada no julgamento do toque: as bordas de 15 % do palco ficam por cima da
+régua das notas — o toque na divisa avança a música. **Parar e redesenhar**: a navegação por ícone se decide antes, num
+bloco com desenho; a PR-4 volta depois, com o A-QL-19 e o "antes" do Tab. `QL-PR4-anexos/README.md`.)*
+
 *(Aval da QL-PR3 — a PR-4 ganha dois itens:* **(1)** *a **âncora em V** (QL-D49): ao girar (C ↔ B, 55 ↔ 48 colunas), a primeira
 linha lógica visível vai para o topo, a 32 do começo do corpo, sem sinal; em V em B, contada a partir do começo do corpo
 dentro da rolagem que ele divide com os Detalhes;* **(2)** *a **conta da âncora com as notas acima do corpo**: o `yDaLogica`
@@ -212,6 +232,10 @@ puser em mono no corpo (QL-D19) — **não pôs**: elas vão em Manrope (QL-D30)
 A-QL-17…A-QL-19.
 
 ### Encerramento
+
+*(**QL-D60** `[Marcel, 2026-10-09]`, a lição da QL-PR4 — **o encerramento a registra**: todo controle novo no corpo do palco
+se confere contra as bordas de toque, **no brief, no desenho e no prompt**. O defeito da div. 1233 passou pelos três; as
+divergências 1241 (P, o revisor) e 1242 (D, o brief e a folha). `QL-PR4-anexos/README.md`, o aval.)*
 
 O release no Tab com 100 + 100 e as quedas nativas; os julgamentos do Marcel (QL-D27); **a primeira nota de verdade**
 (QL-D26); as corridas do bloco no `CI-FAIXA.md` (regra 22). *Aceites*: A-QL-20, A-QL-21.

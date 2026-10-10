@@ -1,0 +1,258 @@
+== medidas 17:05:31
+17:05:55 toque 'song-1' @ 658,580 (RX2N8000F3D)
+   [C] notas (o bloco) [32.0,112.0][1105.8,275.6] 1073.8 × 163.6
+   [C] a régua (o alvo) [32.0,112.0][1105.8,160.0] 1073.8 × 48.0 · content-desc='notas da música'
+      TextView         [32.0,126.7][165.3,144.9] 133.3 × 18.2
+      ViewGroup        [177.3,135.6][1073.8,136.4] 896.4 × 0.9
+      SvgView          [1085.8,126.2][1105.8,146.2] 20.0 × 20.0
+      GroupView        [1090.2,133.3][1101.3,139.1] 11.1 × 5.8
+      PathView         [1090.2,133.3][1101.3,139.1] 11.1 × 5.8
+      parágrafo [32.0,164.0][1106.2,188.9] 1074.2 × 24.9 · 10 caracteres
+      parágrafo [32.0,196.9][1106.2,221.8] 1074.2 × 24.9 · 60 caracteres
+      parágrafo [32.0,229.8][1106.2,254.7] 1074.2 × 24.9 · 90 caracteres
+   [C] o corpo começa 179.6 dp abaixo do respiro (o bloco + 24 − 8)
+17:06:34 toque 'song-1' @ 800,580 (RX2N8000F3D)
+   [B] notas (o bloco) [32.0,136.0][679.1,324.4] 647.1 × 188.4
+   [B] a régua (o alvo) [32.0,136.0][679.1,184.0] 647.1 × 48.0 · content-desc='notas da música'
+      TextView         [32.0,150.7][165.3,168.9] 133.3 × 18.2
+      ViewGroup        [177.3,159.6][647.1,160.4] 469.8 × 0.9
+      SvgView          [659.1,150.2][679.1,170.2] 20.0 × 20.0
+      GroupView        [663.6,157.3][674.7,163.1] 11.1 × 5.8
+      PathView         [663.6,157.3][674.7,163.1] 11.1 × 5.8
+      parágrafo [32.0,188.0][679.1,212.9] 647.1 × 24.9 · 10 caracteres
+      parágrafo [32.0,220.9][679.1,245.8] 647.1 × 24.9 · 60 caracteres
+      parágrafo [32.0,253.8][679.1,303.6] 647.1 × 49.8 · 90 caracteres
+   [B] o corpo começa 204.4 dp abaixo do respiro (o bloco + 24 − 8)
+== notas 17:06:49
+17:07:13 toque 'song-1' @ 658,580 (RX2N8000F3D)
+QL4Q-S3-notas-abertas-escuro-tab-pai mCurrentRotation=ROTATION_90 png=278168 xml=29520 852c64a6ba6f
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 0 continuações ✓
+17:07:35 toque 'notas-regua' @ 1280,306 (RX2N8000F3D)
+QL4Q-S3-notas-recolhidas-escuro-tab-pai mCurrentRotation=ROTATION_90 png=259646 xml=28057 636cdf22e136
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 0 continuações ✓
+17:07:48 toque 'tema' @ 682,1385 (RX2N8000F3D)
+QL4Q-S3-notas-recolhidas-claro-tab-pai mCurrentRotation=ROTATION_90 png=259646 xml=27731 97b651eec493
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 0 continuações ✓
+17:08:01 toque 'notas-regua' @ 1280,306 (RX2N8000F3D)
+QL4Q-S3-notas-abertas-claro-tab-pai mCurrentRotation=ROTATION_90 png=278289 xml=29194 b3b40e0f29f3
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 0 continuações ✓
+17:08:15 toque 'tema' @ 682,1385 (RX2N8000F3D)
+17:08:19 toque 'zoom-mais' @ 497,1385 (RX2N8000F3D)
+17:08:23 toque 'zoom-mais' @ 497,1385 (RX2N8000F3D)
+17:08:27 toque 'zoom-mais' @ 497,1385 (RX2N8000F3D)
+QL4Q-S3-notas-longa-z40-escuro-tab-pai mCurrentRotation=ROTATION_90 png=253780 xml=29556 f906d93c4803
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 6 continuações ✓
+17:08:59 toque 'song-1' @ 800,580 (RX2N8000F3D)
+QL4Q-S3-notas-abertas-escuro-tab-ret mCurrentRotation=ROTATION_0 png=382942 xml=29532 de7701a8a2d4
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 2 continuações ✓
+17:09:21 toque 'notas-regua' @ 800,360 (RX2N8000F3D)
+QL4Q-S3-notas-recolhidas-escuro-tab-ret mCurrentRotation=ROTATION_0 png=367846 xml=28069 1f6219c1ee40
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 2 continuações ✓
+17:09:35 toque 'tema' @ 682,2345 (RX2N8000F3D)
+QL4Q-S3-notas-recolhidas-claro-tab-ret mCurrentRotation=ROTATION_0 png=368065 xml=27743 8549a7286e3b
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 2 continuações ✓
+17:09:49 toque 'notas-regua' @ 800,360 (RX2N8000F3D)
+QL4Q-S3-notas-abertas-claro-tab-ret mCurrentRotation=ROTATION_0 png=381927 xml=29206 5b797c6c42ee
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 2 continuações ✓
+17:10:02 toque 'tema' @ 682,2345 (RX2N8000F3D)
+17:10:06 toque 'zoom-mais' @ 497,2345 (RX2N8000F3D)
+17:10:10 toque 'zoom-mais' @ 497,2345 (RX2N8000F3D)
+17:10:14 toque 'zoom-mais' @ 497,2345 (RX2N8000F3D)
+QL4Q-S3-notas-longa-z40-escuro-tab-ret mCurrentRotation=ROTATION_0 png=292925 xml=29741 8b8f569c89ef
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 36 continuações ✓
+== semnota 17:10:25
+17:10:49 toque 'song-2' @ 1902,580 (RX2N8000F3D)
+   sem nota [pai]: nós das notas presentes: nenhum
+QL4Q-S3-sem-nota-tab-pai mCurrentRotation=ROTATION_90 png=203073 xml=25387 f8f08c6c2cda
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1241 sha12=2355a509052d = referência · 0 continuações ✓
+17:11:30 toque 'song-2' @ 800,859 (RX2N8000F3D)
+   sem nota [ret]: nós das notas presentes: nenhum
+QL4Q-S3-sem-nota-tab-ret mCurrentRotation=ROTATION_0 png=280709 xml=25393 a6423317ffca
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=1241 sha12=2355a509052d = referência · 1 continuações ✓
+== avulso 17:11:46
+17:12:03 toque 'buscar' @ 2295,188 (RX2N8000F3D)
+17:12:12 toque 'lib-campo' @ 1397,152 (RX2N8000F3D)
+17:12:24 toque 'Ver “Lanterna da fixture”' @ 1280,797 (RX2N8000F3D)
+17:12:32 toque 'view-tocar' pelo canto @ 2404,198
+   avulso: a barra diz AVULSA? True · as notas: True
+QL4Q-S3-avulso-notas-tab-pai mCurrentRotation=ROTATION_90 png=273852 xml=26858 92ec2cc34ed5
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 0 continuações ✓
+== reabrir 17:12:49
+17:13:14 toque 'song-1' @ 658,580 (RX2N8000F3D)
+17:13:26 toque 'notas-regua' @ 1280,306 (RX2N8000F3D)
+17:13:33 toque 'zoom-mais' @ 497,1385 (RX2N8000F3D)
+17:13:37 toque 'zoom-mais' @ 497,1385 (RX2N8000F3D)
+17:13:40 toque 'tema' @ 682,1385 (RX2N8000F3D)
+QL4Q-S3-reabrir-antes-do-kill-tab-pai mCurrentRotation=ROTATION_90 png=275019 xml=27743 75b16a081eeb
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 2 continuações ✓
+17:13:49 force-stop e abrir de novo (o ir_s1 do palco)
+17:14:13 toque 'song-1' @ 658,580 (RX2N8000F3D)
+   depois de reabrir: régua presente · o texto das notas recolhido
+QL4Q-S3-reabrir-depois-tab-pai mCurrentRotation=ROTATION_90 png=260013 xml=28057 636cdf22e136
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 0 continuações ✓
+17:14:34 toque 'notas-regua' @ 1280,306 (RX2N8000F3D)
+QL4Q-S3-reabrir-aberta-de-novo-tab-pai mCurrentRotation=ROTATION_90 png=278609 xml=29520 852c64a6ba6f
+   corpo-logico: o desenho é o próprio texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 0 continuações ✓
+== ancora 17:14:45
+17:15:10 toque 'song-3' @ 800,1138 (RX2N8000F3D)
+17:15:31 toque 'zoom-mais' @ 497,1385 (RX2N8000F3D)
+   o começo do corpo [B22, notas abertas]: 460 px (204.44 dp) · corpo [72, 784, 1512, 2236] · rolagem [0, 252, 1600, 2236]
+   o começo do corpo [C22, notas abertas]: 404 px (179.56 dp) · corpo [72, 674, 2382, 1276] · rolagem [0, 198, 2560, 1276]
+   o começo do corpo [C26, notas abertas]: 434 px (192.89 dp) · corpo [72, 704, 2480, 1276] · rolagem [0, 198, 2560, 1276]
+   o começo do corpo [B26, notas abertas]: 500 px (222.22 dp) · corpo [72, 824, 1524, 2236] · rolagem [0, 252, 1600, 2236]
+17:16:07 toque 'song-3' @ 800,1138 (RX2N8000F3D)
+QL4Q-S3-ancora-abertas-antes-tab-ret mCurrentRotation=ROTATION_0 png=358826 xml=29535 4032a93b4bf5
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 48 continuações ✓
+QL4Q-S3-ancora-abertas-giro-tab-pai mCurrentRotation=ROTATION_90 png=280690 xml=29247 311f9c356d6b
+   corpo-logico: o desenho é o próprio texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 0 continuações ✓
+17:16:56 toque 'zoom-mais' @ 497,1385 (RX2N8000F3D)
+QL4Q-S3-ancora-abertas-zoom-tab-pai mCurrentRotation=ROTATION_90 png=307024 xml=29343 93673000a68c
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 16 continuações ✓
+QL4Q-S3-ancora-abertas-volta-tab-ret mCurrentRotation=ROTATION_0 png=393068 xml=29637 f603bd7af278
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 65 continuações ✓
+17:17:27 toque 'auto-scroll' @ 128,2345 (RX2N8000F3D)
+17:17:31 toque 'auto-scroll' @ 128,2345 (RX2N8000F3D)
+17:17:58 toque 'song-3' @ 800,1138 (RX2N8000F3D)
+QL4Q-S3-ancora-nas-notas-antes-tab-ret mCurrentRotation=ROTATION_0 png=369351 xml=33318 ade4e6d3d443
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 48 continuações ✓
+QL4Q-S3-ancora-nas-notas-giro-tab-pai mCurrentRotation=ROTATION_90 png=279983 xml=33030 4304df3e0ac2
+   corpo-logico: o desenho é o próprio texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 0 continuações ✓
+17:19:04 toque 'song-3' @ 800,1138 (RX2N8000F3D)
+17:19:17 toque 'notas-regua' @ 800,360 (RX2N8000F3D)
+17:19:33 toque 'zoom-mais' @ 497,1385 (RX2N8000F3D)
+   o começo do corpo [B22, notas recolhidas]: 164 px (72.89 dp) · corpo [72, 488, 1512, 2236] · rolagem [0, 252, 1600, 2236]
+   o começo do corpo [C22, notas recolhidas]: 164 px (72.89 dp) · corpo [72, 434, 2382, 1276] · rolagem [0, 198, 2560, 1276]
+   o começo do corpo [C26, notas recolhidas]: 164 px (72.89 dp) · corpo [72, 434, 2480, 1276] · rolagem [0, 198, 2560, 1276]
+   o começo do corpo [B26, notas recolhidas]: 164 px (72.89 dp) · corpo [72, 488, 1524, 2236] · rolagem [0, 252, 1600, 2236]
+17:20:08 toque 'song-3' @ 800,1138 (RX2N8000F3D)
+QL4Q-S3-ancora-recolhidas-antes-tab-ret mCurrentRotation=ROTATION_0 png=354825 xml=29535 2c3025a9ec14
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 48 continuações ✓
+QL4Q-S3-ancora-recolhidas-giro-tab-pai mCurrentRotation=ROTATION_90 png=297293 xml=29247 a7a0ed675316
+   corpo-logico: o desenho é o próprio texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 0 continuações ✓
+17:20:58 toque 'zoom-mais' @ 497,1385 (RX2N8000F3D)
+QL4Q-S3-ancora-recolhidas-zoom-tab-pai mCurrentRotation=ROTATION_90 png=322842 xml=29343 dc39a857793c
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 16 continuações ✓
+QL4Q-S3-ancora-recolhidas-volta-tab-ret mCurrentRotation=ROTATION_0 png=410880 xml=29637 42fba7f27062
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 65 continuações ✓
+17:21:28 toque 'auto-scroll' @ 128,2345 (RX2N8000F3D)
+17:21:32 toque 'auto-scroll' @ 128,2345 (RX2N8000F3D)
+== ancorav 17:21:35
+17:21:52 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+17:22:01 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+17:22:13 toque 'Ver “Letra longa da fixture”' @ 800,590 (RX2N8000F3D)
+   V: o começo do corpo em B 461.25 px (205.00 dp; corpo [72, 785, 1512, 2452] · rolagem [0, 252, 1600, 2452]) · em C 0 px
+17:22:43 toque 'buscar' @ 2295,188 (RX2N8000F3D)
+17:22:53 toque 'lib-campo' @ 1397,152 (RX2N8000F3D)
+17:23:05 toque 'Ver “Letra longa da fixture”' @ 1280,590 (RX2N8000F3D)
+QL4Q-V-ancora-antes-tab-pai mCurrentRotation=ROTATION_90 png=339427 xml=25939 6f3a86985170
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 32 continuações ✓
+QL4Q-V-ancora-giro-B-tab-ret mCurrentRotation=ROTATION_0 png=353867 xml=23518 b51457978594
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 48 continuações ✓
+QL4Q-V-ancora-volta-C-tab-pai mCurrentRotation=ROTATION_90 png=318424 xml=25939 6f3a86985170
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 32 continuações ✓
+17:24:25 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+17:24:34 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+17:24:46 toque 'Ver “Letra longa da fixture”' @ 800,590 (RX2N8000F3D)
+QL4Q-V-ancora-detalhes-antes-tab-ret mCurrentRotation=ROTATION_0 png=389764 xml=25710 eccbe8c44877
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 48 continuações ✓
+QL4Q-V-ancora-detalhes-giro-tab-pai mCurrentRotation=ROTATION_90 png=337146 xml=25939 bba8b7e407ee
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 32 continuações ✓
+== v 17:25:26
+17:25:43 toque 'buscar' @ 2295,188 (RX2N8000F3D)
+17:25:53 toque 'lib-campo' @ 1397,152 (RX2N8000F3D)
+17:26:05 toque 'Ver “Lanterna da fixture”' @ 1280,797 (RX2N8000F3D)
+QL4Q-V-letra-tab-pai mCurrentRotation=ROTATION_90 png=346202 xml=22243 a81a268718c0
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 2 continuações ✓
+m14 a janela do texto (HorizontalScrollView) 733.8 dp → 55.0 colunas de mono 22 (13,33 dp, a régua) · view-leitor 797.8 dp
+17:26:37 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+17:26:46 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+17:26:59 toque 'Ver “Lanterna da fixture”' @ 800,797 (RX2N8000F3D)
+QL4Q-V-letra-tab-ret mCurrentRotation=ROTATION_0 png=398279 xml=21918 77b5651f5ae0
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=1547 sha12=6aa6914ce90f = referência · 2 continuações ✓
+m14 a janela do texto (HorizontalScrollView) 647.1 dp → 48.5 colunas de mono 22 (13,33 dp, a régua) · view-leitor 711.1 dp
+== gpar 17:27:14
+17:27:16 mock modo=normal content=content-gpar.json env=None
+17:27:33 toque 'buscar' @ 2295,188 (RX2N8000F3D)
+17:27:42 toque 'lib-campo' @ 1397,152 (RX2N8000F3D)
+17:27:55 toque 'Ver “Gpar 01”' @ 1280,590 (RX2N8000F3D)
+  IGUAL     letra                        site=texto     V(aparelho)=texto     continuações=0
+17:28:21 toque 'buscar' @ 2295,188 (RX2N8000F3D)
+17:28:29 toque 'lib-campo' @ 1397,152 (RX2N8000F3D)
+17:28:42 toque 'Ver “Gpar 02”' @ 1280,590 (RX2N8000F3D)
+  IGUAL     cifra-texto                  site=texto     V(aparelho)=texto     continuações=0
+17:29:08 toque 'buscar' @ 2295,188 (RX2N8000F3D)
+17:29:17 toque 'lib-campo' @ 1397,152 (RX2N8000F3D)
+17:29:29 toque 'Ver “Gpar 03”' @ 1280,590 (RX2N8000F3D)
+  IGUAL     tab-texto                    site=texto     V(aparelho)=texto     continuações=0
+17:29:55 toque 'buscar' @ 2295,188 (RX2N8000F3D)
+17:30:04 toque 'lib-campo' @ 1397,152 (RX2N8000F3D)
+17:30:17 toque 'Ver “Gpar 04”' @ 1280,590 (RX2N8000F3D)
+  IGUAL     partitura-pdf                site=arquivo   V(aparelho)=arquivo   continuações=0
+17:30:45 toque 'buscar' @ 2295,188 (RX2N8000F3D)
+17:30:55 toque 'lib-campo' @ 1397,152 (RX2N8000F3D)
+17:31:07 toque 'Ver “Gpar 05”' @ 1280,590 (RX2N8000F3D)
+  IGUAL     letra-poluida-editor         site=texto     V(aparelho)=texto     continuações=0
+17:31:33 toque 'buscar' @ 2295,188 (RX2N8000F3D)
+17:31:42 toque 'lib-campo' @ 1397,152 (RX2N8000F3D)
+17:31:54 toque 'Ver “Gpar 06”' @ 1280,590 (RX2N8000F3D)
+  IGUAL     cifra-secoes-acordes-vazios  site=texto     V(aparelho)=texto     continuações=0
+17:32:20 toque 'buscar' @ 2295,188 (RX2N8000F3D)
+17:32:29 toque 'lib-campo' @ 1397,152 (RX2N8000F3D)
+17:32:42 toque 'Ver “Gpar 07”' @ 1280,590 (RX2N8000F3D)
+  IGUAL     cifra-secoes-completas       site=texto     V(aparelho)=texto     continuações=0
+17:33:08 toque 'buscar' @ 2295,188 (RX2N8000F3D)
+17:33:17 toque 'lib-campo' @ 1397,152 (RX2N8000F3D)
+17:33:29 toque 'Ver “Gpar 08”' @ 1280,590 (RX2N8000F3D)
+  IGUAL     cifra-duas-secoes            site=texto     V(aparelho)=texto     continuações=0
+17:33:55 toque 'buscar' @ 2295,188 (RX2N8000F3D)
+17:34:04 toque 'lib-campo' @ 1397,152 (RX2N8000F3D)
+17:34:16 toque 'Ver “Gpar 09”' @ 1280,590 (RX2N8000F3D)
+  IGUAL     so-aninhado                  site=sem-corpo V(aparelho)=sem-corpo continuações=0
+17:34:42 toque 'buscar' @ 2295,188 (RX2N8000F3D)
+17:34:51 toque 'lib-campo' @ 1397,152 (RX2N8000F3D)
+17:35:04 toque 'Ver “Gpar 10”' @ 1280,590 (RX2N8000F3D)
+  IGUAL     tab-editada-no-site          site=texto     V(aparelho)=texto     continuações=0
+G-par da visualização NO APARELHO [tab-pai] — pares 10 · iguais 10 · diferentes 0 [] · continuações vistas 0
+17:35:33 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+17:35:42 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+17:35:56 toque 'Ver “Gpar 01”' @ 800,590 (RX2N8000F3D)
+  IGUAL     letra                        site=texto     V(aparelho)=texto     continuações=0
+17:36:22 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+17:36:31 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+17:36:44 toque 'Ver “Gpar 02”' @ 800,590 (RX2N8000F3D)
+  IGUAL     cifra-texto                  site=texto     V(aparelho)=texto     continuações=0
+17:37:10 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+17:37:19 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+17:37:31 toque 'Ver “Gpar 03”' @ 800,590 (RX2N8000F3D)
+  IGUAL     tab-texto                    site=texto     V(aparelho)=texto     continuações=0
+17:37:57 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+17:38:07 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+17:38:19 toque 'Ver “Gpar 04”' @ 800,590 (RX2N8000F3D)
+  IGUAL     partitura-pdf                site=arquivo   V(aparelho)=arquivo   continuações=0
+17:38:48 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+17:38:57 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+17:39:10 toque 'Ver “Gpar 05”' @ 800,590 (RX2N8000F3D)
+  IGUAL     letra-poluida-editor         site=texto     V(aparelho)=texto     continuações=0
+17:39:36 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+17:39:45 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+17:39:58 toque 'Ver “Gpar 06”' @ 800,590 (RX2N8000F3D)
+  IGUAL     cifra-secoes-acordes-vazios  site=texto     V(aparelho)=texto     continuações=0
+17:40:24 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+17:40:34 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+17:40:47 toque 'Ver “Gpar 07”' @ 800,590 (RX2N8000F3D)
+  IGUAL     cifra-secoes-completas       site=texto     V(aparelho)=texto     continuações=0
+17:41:13 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+17:41:22 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+17:41:35 toque 'Ver “Gpar 08”' @ 800,590 (RX2N8000F3D)
+  IGUAL     cifra-duas-secoes            site=texto     V(aparelho)=texto     continuações=0
+17:42:01 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+17:42:10 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+17:42:23 toque 'Ver “Gpar 09”' @ 800,590 (RX2N8000F3D)
+  IGUAL     so-aninhado                  site=sem-corpo V(aparelho)=sem-corpo continuações=0
+17:42:49 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+17:42:58 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+17:43:11 toque 'Ver “Gpar 10”' @ 800,590 (RX2N8000F3D)
+  IGUAL     tab-editada-no-site          site=texto     V(aparelho)=texto     continuações=0
+G-par da visualização NO APARELHO [tab-ret] — pares 10 · iguais 10 · diferentes 0 [] · continuações vistas 0
+17:43:24 mock modo=normal vazio=False
+capturas=33 falhas=0

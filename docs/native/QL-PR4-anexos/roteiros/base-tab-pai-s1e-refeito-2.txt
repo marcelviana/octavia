@@ -1,0 +1,5 @@
+QL4B-S1-setlists-tab-pai mCurrentRotation=ROTATION_90 png=240705 xml=40862 47cb51259242
+17:04:53 mock modo=500-pagina-1 vazio=False
+QL4B-S1-S1e-falha-com-cache-tab-pai mCurrentRotation=ROTATION_90 png=270737 xml=44881 23f7cb1b5edc
+17:05:18 mock modo=normal vazio=False
+capturas=2 falhas=0

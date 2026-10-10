@@ -1,0 +1,1142 @@
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: sync fail stage=setlists page=1 code=network status=-
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=100
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=123
+OCTAVIA: cache write kind=setlists n=3 invalidated=3
+OCTAVIA: cache write kind=content n=12 invalidated=12
+OCTAVIA: sync ok setlists=3 content=12 pages=1 t=329
+OCTAVIA: prefetch plan n=3 reason=library
+OCTAVIA: file src=download name=partitura-12p.pdf bytes=4198 total=4198 ms=601
+OCTAVIA: file src=download name=partitura-1p.pdf bytes=643 total=643 ms=620
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: index open
+OCTAVIA: index jump n=1
+OCTAVIA: keepawake on
+OCTAVIA: prefetch plan n=1 reason=demand
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: index open
+OCTAVIA: keepawake off
+OCTAVIA: keepawake on
+OCTAVIA: stage restore n=1/8
+OCTAVIA: nav n=2/8 setlist=00000001 t=127
+OCTAVIA: prefetch plan n=1 reason=demand
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: theme=light
+OCTAVIA: theme=dark
+OCTAVIA: nav n=3/8 setlist=00000001 t=101
+OCTAVIA: prefetch plan n=1 reason=demand
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: autoscroll on t=48
+OCTAVIA: autoscroll off t=0
+OCTAVIA: nav n=4/8 setlist=00000001 t=109
+OCTAVIA: file src=disk name=partitura-12p.pdf bytes=4198
+OCTAVIA: prefetch plan n=1 reason=demand
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: pdf-render pages=12 src=disk
+OCTAVIA: pdf-page n=1/12
+OCTAVIA: net offline
+OCTAVIA: file src=disk name=partitura-12p.pdf bytes=4198
+OCTAVIA: nav n=5/8 setlist=00000001 t=86
+OCTAVIA: placeholder kind=file-missing name=nao-existe.pdf
+OCTAVIA: net online
+OCTAVIA: prefetch plan n=1 reason=demand
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: nav n=6/8 setlist=00000001 t=305
+OCTAVIA: prefetch plan n=1 reason=demand
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: nav n=7/8 setlist=00000001 t=98
+OCTAVIA: prefetch plan n=1 reason=demand
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: nav n=8/8 setlist=00000001 t=105
+OCTAVIA: prefetch plan n=1 reason=demand
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: end-of-setlist n=8
+OCTAVIA: keepawake off
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=12
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=74
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=70
+OCTAVIA: cache write kind=setlists n=0 invalidated=3
+OCTAVIA: cache write kind=content n=12 invalidated=0
+OCTAVIA: sync ok setlists=0 content=12 pages=1 t=242
+OCTAVIA: prefetch plan n=1 reason=library
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=0
+OCTAVIA: cache hit kind=content n=12
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=67
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=113
+OCTAVIA: cache write kind=setlists n=3 invalidated=3
+OCTAVIA: cache write kind=content n=12 invalidated=0
+OCTAVIA: sync ok setlists=3 content=12 pages=1 t=253
+OCTAVIA: prefetch plan n=1 reason=library
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=12
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=382
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=65
+OCTAVIA: cache write kind=setlists n=3 invalidated=0
+OCTAVIA: cache write kind=content n=12 invalidated=0
+OCTAVIA: sync ok setlists=3 content=12 pages=1 t=540
+OCTAVIA: prefetch plan n=1 reason=library
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: index open
+OCTAVIA: net offline
+OCTAVIA: net online
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=12
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=301
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=70
+OCTAVIA: cache write kind=setlists n=3 invalidated=0
+OCTAVIA: cache write kind=content n=12 invalidated=0
+OCTAVIA: sync ok setlists=3 content=12 pages=1 t=445
+OCTAVIA: prefetch plan n=1 reason=library
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: index open
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=12
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=89
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=80
+OCTAVIA: cache write kind=setlists n=3 invalidated=0
+OCTAVIA: cache write kind=content n=12 invalidated=0
+OCTAVIA: sync ok setlists=3 content=12 pages=1 t=250
+OCTAVIA: prefetch plan n=1 reason=library
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: index open
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=12
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=448
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=224
+OCTAVIA: cache write kind=setlists n=3 invalidated=0
+OCTAVIA: cache write kind=content n=12 invalidated=0
+OCTAVIA: sync ok setlists=3 content=12 pages=1 t=809
+OCTAVIA: prefetch plan n=1 reason=library
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: index open
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=12
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=132
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=164
+OCTAVIA: cache write kind=setlists n=3 invalidated=0
+OCTAVIA: cache write kind=content n=12 invalidated=0
+OCTAVIA: sync ok setlists=3 content=12 pages=1 t=399
+OCTAVIA: prefetch plan n=1 reason=library
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=500 path=/api/setlists n=1 ms=62
+OCTAVIA: write op=create setlist=- items=- status=500 code=INTERNAL_ERROR ms=78
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=104
+OCTAVIA: resync kind=setlists reason=reopen op=- status=200 setlists=3 ms=121
+OCTAVIA: cache write kind=setlists n=3 invalidated=0
+OCTAVIA: prefetch plan n=1 reason=library
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=12
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=370
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=70
+OCTAVIA: cache write kind=setlists n=3 invalidated=0
+OCTAVIA: cache write kind=content n=12 invalidated=0
+OCTAVIA: sync ok setlists=3 content=12 pages=1 t=562
+OCTAVIA: prefetch plan n=1 reason=library
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: index open
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=12
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=72
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=66
+OCTAVIA: cache write kind=setlists n=3 invalidated=0
+OCTAVIA: cache write kind=content n=12 invalidated=0
+OCTAVIA: sync ok setlists=3 content=12 pages=1 t=216
+OCTAVIA: prefetch plan n=1 reason=library
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: keepawake on
+OCTAVIA: prefetch plan n=0 reason=demand
+OCTAVIA: keepawake off
+OCTAVIA: search q=1 n=12 in-setlist=0
+OCTAVIA: search q=6 n=9 in-setlist=0
+OCTAVIA: keepawake on
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=12
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=93
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=77
+OCTAVIA: cache write kind=setlists n=3 invalidated=0
+OCTAVIA: cache write kind=content n=12 invalidated=0
+OCTAVIA: sync ok setlists=3 content=12 pages=1 t=252
+OCTAVIA: prefetch plan n=1 reason=library
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: net offline
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net offline
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=12
+OCTAVIA: sync skip reason=offline
+OCTAVIA: prefetch plan n=1 reason=library
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: net online
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=12
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=103
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=500 path=/api/content n=1 ms=89
+OCTAVIA: sync fail stage=content page=1 code=INTERNAL_ERROR status=500
+OCTAVIA: prefetch plan n=1 reason=library
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=12
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=139
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=146
+OCTAVIA: cache write kind=setlists n=3 invalidated=0
+OCTAVIA: cache write kind=content n=12 invalidated=0
+OCTAVIA: sync ok setlists=3 content=12 pages=1 t=416
+OCTAVIA: prefetch plan n=1 reason=library
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: index open
+OCTAVIA: index jump n=1
+OCTAVIA: keepawake on
+OCTAVIA: prefetch plan n=1 reason=demand
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: index open
+OCTAVIA: keepawake off
+OCTAVIA: keepawake on
+OCTAVIA: stage restore n=1/8
+OCTAVIA: nav n=2/8 setlist=00000001 t=102
+OCTAVIA: prefetch plan n=1 reason=demand
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: theme=light
+OCTAVIA: theme=dark
+OCTAVIA: nav n=3/8 setlist=00000001 t=80
+OCTAVIA: prefetch plan n=1 reason=demand
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: autoscroll on t=42
+OCTAVIA: autoscroll off t=0
+OCTAVIA: nav n=4/8 setlist=00000001 t=89
+OCTAVIA: file src=disk name=partitura-12p.pdf bytes=4198
+OCTAVIA: prefetch plan n=1 reason=demand
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: pdf-render pages=12 src=disk
+OCTAVIA: pdf-page n=1/12
+OCTAVIA: net offline
+OCTAVIA: file src=disk name=partitura-12p.pdf bytes=4198
+OCTAVIA: nav n=5/8 setlist=00000001 t=85
+OCTAVIA: placeholder kind=file-missing name=nao-existe.pdf
+OCTAVIA: net online
+OCTAVIA: prefetch plan n=1 reason=demand
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: nav n=6/8 setlist=00000001 t=272
+OCTAVIA: prefetch plan n=1 reason=demand
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: nav n=7/8 setlist=00000001 t=157
+OCTAVIA: prefetch plan n=1 reason=demand
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: nav n=8/8 setlist=00000001 t=83
+OCTAVIA: prefetch plan n=1 reason=demand
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: end-of-setlist n=8
+OCTAVIA: keepawake off
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=12
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=144
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=82
+OCTAVIA: cache write kind=setlists n=3 invalidated=0
+OCTAVIA: cache write kind=content n=12 invalidated=0
+OCTAVIA: sync ok setlists=3 content=12 pages=1 t=329
+OCTAVIA: prefetch plan n=1 reason=library
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: index open
+OCTAVIA: net offline
+OCTAVIA: net online
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=12
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=525
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=116
+OCTAVIA: cache write kind=setlists n=3 invalidated=0
+OCTAVIA: cache write kind=content n=12 invalidated=0
+OCTAVIA: sync ok setlists=3 content=12 pages=1 t=765
+OCTAVIA: prefetch plan n=1 reason=library
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: index open
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=12
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=598
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=150
+OCTAVIA: cache write kind=setlists n=3 invalidated=0
+OCTAVIA: cache write kind=content n=12 invalidated=0
+OCTAVIA: sync ok setlists=3 content=12 pages=1 t=923
+OCTAVIA: prefetch plan n=1 reason=library
+OCTAVIA: download-error nao-existe.pdf: o servidor respondeu 404
+OCTAVIA: keepawake on
+OCTAVIA: prefetch plan n=0 reason=demand
+OCTAVIA: keepawake off
+OCTAVIA: search q=1 n=12 in-setlist=0
+OCTAVIA: search q=6 n=9 in-setlist=0
+OCTAVIA: keepawake on
+OCTAVIA: rotation=landscape n=1/0
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=3
+OCTAVIA: cache hit kind=content n=12
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=407
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=120
+OCTAVIA: cache write kind=setlists n=1 invalidated=4
+OCTAVIA: cache write kind=content n=5 invalidated=17
+OCTAVIA: sync ok setlists=1 content=5 pages=1 t=869
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: index open
+OCTAVIA: index jump n=1
+OCTAVIA: keepawake on
+OCTAVIA: prefetch plan n=0 reason=demand
+OCTAVIA: rotation=portrait n=1/5
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=5
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=355
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=91
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=5 invalidated=0
+OCTAVIA: sync ok setlists=1 content=5 pages=1 t=545
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: index open
+OCTAVIA: index jump n=1
+OCTAVIA: keepawake on
+OCTAVIA: prefetch plan n=0 reason=demand
+OCTAVIA: rotation=landscape n=1/5
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=5
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=141
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=238
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=5 invalidated=0
+OCTAVIA: sync ok setlists=1 content=5 pages=1 t=467
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: index open
+OCTAVIA: index jump n=1
+OCTAVIA: keepawake on
+OCTAVIA: prefetch plan n=0 reason=demand
+OCTAVIA: theme=light
+OCTAVIA: theme=dark
+OCTAVIA: zoom dp=26
+OCTAVIA: zoom dp=32
+OCTAVIA: zoom dp=40
+OCTAVIA: rotation=portrait n=1/5
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=5
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=81
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=153
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=5 invalidated=0
+OCTAVIA: sync ok setlists=1 content=5 pages=1 t=355
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: index open
+OCTAVIA: index jump n=1
+OCTAVIA: keepawake on
+OCTAVIA: prefetch plan n=0 reason=demand
+OCTAVIA: theme=light
+OCTAVIA: theme=dark
+OCTAVIA: zoom dp=26
+OCTAVIA: zoom dp=32
+OCTAVIA: zoom dp=40
+OCTAVIA: rotation=landscape n=1/5
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=5
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=306
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=88
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=5 invalidated=0
+OCTAVIA: sync ok setlists=1 content=5 pages=1 t=506
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: index open
+OCTAVIA: index jump n=2
+OCTAVIA: keepawake on
+OCTAVIA: prefetch plan n=0 reason=demand
+OCTAVIA: rotation=portrait n=2/5
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=5
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=358
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=301
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=5 invalidated=0
+OCTAVIA: sync ok setlists=1 content=5 pages=1 t=794
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: index open
+OCTAVIA: index jump n=2
+OCTAVIA: keepawake on
+OCTAVIA: prefetch plan n=0 reason=demand
+OCTAVIA: rotation=landscape n=2/5
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=5
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=361
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=85
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=5 invalidated=0
+OCTAVIA: sync ok setlists=1 content=5 pages=1 t=628
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: keepawake on
+OCTAVIA: prefetch plan n=0 reason=demand
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=5
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=138
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=261
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=5 invalidated=0
+OCTAVIA: sync ok setlists=1 content=5 pages=1 t=629
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: index open
+OCTAVIA: index jump n=1
+OCTAVIA: keepawake on
+OCTAVIA: prefetch plan n=0 reason=demand
+OCTAVIA: zoom dp=26
+OCTAVIA: zoom dp=32
+OCTAVIA: theme=light
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=5
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=638
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=165
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=5 invalidated=0
+OCTAVIA: sync ok setlists=1 content=5 pages=1 t=952
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: index open
+OCTAVIA: index jump n=1
+OCTAVIA: keepawake on
+OCTAVIA: prefetch plan n=0 reason=demand
+OCTAVIA: rotation=portrait n=1/5
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=5
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=87
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=142
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=5 invalidated=0
+OCTAVIA: sync ok setlists=1 content=5 pages=1 t=303
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: index open
+OCTAVIA: index jump n=3
+OCTAVIA: keepawake on
+OCTAVIA: prefetch plan n=0 reason=demand
+OCTAVIA: rotation=landscape n=3/5
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: zoom dp=26
+OCTAVIA: rotation=portrait n=3/5
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=5
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=404
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=187
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=5 invalidated=0
+OCTAVIA: sync ok setlists=1 content=5 pages=1 t=733
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: index open
+OCTAVIA: index jump n=3
+OCTAVIA: keepawake on
+OCTAVIA: prefetch plan n=0 reason=demand
+OCTAVIA: rotation=landscape n=3/5
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: zoom dp=26
+OCTAVIA: rotation=portrait n=3/5
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: autoscroll on t=45
+OCTAVIA: autoscroll off t=0
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=5
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=23
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=31
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=5 invalidated=0
+OCTAVIA: sync ok setlists=1 content=5 pages=1 t=150
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: index open
+OCTAVIA: index jump n=3
+OCTAVIA: keepawake on
+OCTAVIA: prefetch plan n=0 reason=demand
+OCTAVIA: rotation=landscape n=3/5
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: rotation=portrait n=3/5
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=5
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=74
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=73
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=5 invalidated=0
+OCTAVIA: sync ok setlists=1 content=5 pages=1 t=215
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: index open
+OCTAVIA: index jump n=3
+OCTAVIA: keepawake on
+OCTAVIA: prefetch plan n=0 reason=demand
+OCTAVIA: rotation=landscape n=3/5
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: zoom dp=26
+OCTAVIA: rotation=portrait n=3/5
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=5
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=66
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=72
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=5 invalidated=0
+OCTAVIA: sync ok setlists=1 content=5 pages=1 t=199
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: index open
+OCTAVIA: index jump n=3
+OCTAVIA: keepawake on
+OCTAVIA: prefetch plan n=0 reason=demand
+OCTAVIA: rotation=landscape n=3/5
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: zoom dp=26
+OCTAVIA: rotation=portrait n=3/5
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: autoscroll on t=38
+OCTAVIA: autoscroll off t=0
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=5
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=279
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=71
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=5 invalidated=0
+OCTAVIA: sync ok setlists=1 content=5 pages=1 t=448
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=5
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=77
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=72
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=5 invalidated=0
+OCTAVIA: sync ok setlists=1 content=5 pages=1 t=209
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=5
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=227
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=57
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=5 invalidated=0
+OCTAVIA: sync ok setlists=1 content=5 pages=1 t=371
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=5
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=285
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=86
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=5 invalidated=0
+OCTAVIA: sync ok setlists=1 content=5 pages=1 t=466
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=5
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=115
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=54
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=5 invalidated=0
+OCTAVIA: sync ok setlists=1 content=5 pages=1 t=223
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=5
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=93
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=61
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=17 invalidated=22
+OCTAVIA: sync ok setlists=1 content=17 pages=1 t=284
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=17
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=95
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=57
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=17 invalidated=0
+OCTAVIA: sync ok setlists=1 content=17 pages=1 t=217
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=17
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=146
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=73
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=17 invalidated=0
+OCTAVIA: sync ok setlists=1 content=17 pages=1 t=329
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=17
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=148
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=34
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=17 invalidated=0
+OCTAVIA: sync ok setlists=1 content=17 pages=1 t=241
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: file src=disk name=partitura-1p.pdf bytes=643
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=17
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=42
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=834
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=17 invalidated=0
+OCTAVIA: sync ok setlists=1 content=17 pages=1 t=1124
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=17
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=32
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=49
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=17 invalidated=0
+OCTAVIA: sync ok setlists=1 content=17 pages=1 t=98
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=17
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=131
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=68
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=17 invalidated=0
+OCTAVIA: sync ok setlists=1 content=17 pages=1 t=363
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=17
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=104
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=66
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=17 invalidated=0
+OCTAVIA: sync ok setlists=1 content=17 pages=1 t=285
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=17
+OCTAVIA: sync start
+OCTAVIA: auth refresh=forced
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=706
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=155
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=17 invalidated=0
+OCTAVIA: sync ok setlists=1 content=17 pages=1 t=957
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=17
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=511
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=95
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=17 invalidated=0
+OCTAVIA: sync ok setlists=1 content=17 pages=1 t=689
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=17
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=211
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=67
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=17 invalidated=0
+OCTAVIA: sync ok setlists=1 content=17 pages=1 t=370
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=17
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=567
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=149
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=17 invalidated=0
+OCTAVIA: sync ok setlists=1 content=17 pages=1 t=920
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=17
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=147
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=84
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=17 invalidated=0
+OCTAVIA: sync ok setlists=1 content=17 pages=1 t=317
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=17
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=370
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=94
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=17 invalidated=0
+OCTAVIA: sync ok setlists=1 content=17 pages=1 t=592
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: file src=disk name=partitura-1p.pdf bytes=643
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=17
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=114
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=130
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=17 invalidated=0
+OCTAVIA: sync ok setlists=1 content=17 pages=1 t=330
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=17
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=427
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=153
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=17 invalidated=0
+OCTAVIA: sync ok setlists=1 content=17 pages=1 t=700
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=17
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=355
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=103
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=17 invalidated=0
+OCTAVIA: sync ok setlists=1 content=17 pages=1 t=552
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=17
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=354
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=123
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=17 invalidated=0
+OCTAVIA: sync ok setlists=1 content=17 pages=1 t=594
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=17
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=303
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=88
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=17 invalidated=0
+OCTAVIA: sync ok setlists=1 content=17 pages=1 t=535
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=17
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=438
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=85
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=17 invalidated=0
+OCTAVIA: sync ok setlists=1 content=17 pages=1 t=623
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=17
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=108
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=101
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=5 invalidated=22
+OCTAVIA: sync ok setlists=1 content=5 pages=1 t=299
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: index open
+OCTAVIA: index jump n=1
+OCTAVIA: keepawake on
+OCTAVIA: prefetch plan n=0 reason=demand
+OCTAVIA: theme=light
+OCTAVIA: theme=dark
+OCTAVIA: zoom dp=26
+OCTAVIA: zoom dp=32
+OCTAVIA: zoom dp=40
+OCTAVIA: rotation=portrait n=1/5
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=5
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=494
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=72
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=5 invalidated=0
+OCTAVIA: sync ok setlists=1 content=5 pages=1 t=672
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: index open
+OCTAVIA: index jump n=1
+OCTAVIA: keepawake on
+OCTAVIA: prefetch plan n=0 reason=demand
+OCTAVIA: theme=light
+OCTAVIA: theme=dark
+OCTAVIA: zoom dp=26
+OCTAVIA: zoom dp=32
+OCTAVIA: zoom dp=40
+OCTAVIA: rotation=landscape n=1/5
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=5
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=153
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=79
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=5 invalidated=0
+OCTAVIA: sync ok setlists=1 content=5 pages=1 t=284
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=5
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=115
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=98
+OCTAVIA: cache write kind=setlists n=1 invalidated=0
+OCTAVIA: cache write kind=content n=5 invalidated=0
+OCTAVIA: sync ok setlists=1 content=5 pages=1 t=283
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: faixa=B w=711.1 h=1137.8
+OCTAVIA: net online
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+OCTAVIA: cache hit kind=setlists n=1
+OCTAVIA: cache hit kind=content n=5
+OCTAVIA: sync start
+OCTAVIA: auth refresh=cached
+OCTAVIA: auth refresh=forced
+OCTAVIA: auth-failure
+OCTAVIA: login-screen
+OCTAVIA: api status=401 path=/api/setlists n=2 ms=606
+OCTAVIA: sync fail stage=setlists page=1 code=AUTH_REQUIRED status=401
+OCTAVIA: prefetch plan n=0 reason=library
+OCTAVIA: faixa=C w=1137.8 h=711.1
+OCTAVIA: net online
+OCTAVIA: login-screen
+OCTAVIA: net offline
+OCTAVIA: login-error code=auth/network-request-failed
+OCTAVIA: net online

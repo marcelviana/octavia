@@ -120,6 +120,19 @@ describe('gate:icones — o mapa contra as fontes congeladas', () => {
     expect(acusacoes(s.texto), comSaida(s)).toBe(0)
   })
 
+  /**
+   * QL-PR4 (QL-D31): a divisa é o 42º registro, cobrada contra a amostra do `DESIGN-QL/telas.html` (as oito células
+   * de 20 e 24) e contra as dezoito molduras de notas (cada uma com a divisa no estado dela). O gate diz o tamanho do
+   * que leu (regra 4): sem a amostra ou as molduras, a contagem cai e ele acusa.
+   */
+  it('a divisa (QL-D31): 42 registros, 8 células da amostra e 18 molduras de notas cobradas, zero acusações', () => {
+    const s = rodar('scripts/icones.mjs', MAPA_ICONES)
+    expect(s.texto, comSaida(s)).toContain('+ 1 (DESIGN-QL, QL-D31) = 42 registros')
+    expect(s.texto, comSaida(s)).toContain('DESIGN-QL (QL-D31): a divisa — 8 células da amostra cobradas · 18 molduras de notas')
+    expect(s.texto, comSaida(s)).toContain('+ 1 do QL = 46 esperados')
+    expect(s.texto, comSaida(s)).toContain('acusações: 0 · avisos: 0')
+  })
+
   it('CONTROLE NEGATIVO: o `IconesFalso` REPROVA — exit 1, 24 acusações', () => {
     const s = rodar('scripts/icones.mjs', 'scripts/__cn__/IconesFalso.ts')
     expect(s.status, comSaida(s)).toBe(1)
@@ -167,10 +180,14 @@ describe('gate:icones — o mapa contra as fontes congeladas', () => {
    * registro, dois estados) e o tocar entram; os quatro de tipo trocam de
    * desenho no mesmo registro. Era "39, e os cinco do DESIGN-N2 entram nessa
    * conta" — o par: `= 39 registros` → `+ 2 (DESIGN-N4, N4-D76) = 41 registros`.
+   *
+   * QL-PR4 (QL-D31): **42 registros** — a divisa (um registro, dois estados). O par:
+   * `+ 2 (DESIGN-N4, N4-D76) = 41 registros` → `+ 2 (DESIGN-N4, N4-D76) + 1 (DESIGN-QL, QL-D31) = 42 registros`. As 49
+   * células do DESIGN-N4 continuam as mesmas (as da divisa contam à parte, na regra 8).
    */
-  it('o catálogo é 41 registros: os cinco do DESIGN-N2 e os dois novos do DESIGN-N4 entram nessa conta', () => {
+  it('o catálogo é 42 registros: os cinco do DESIGN-N2, os dois novos do DESIGN-N4 e a divisa do DESIGN-QL entram nessa conta', () => {
     const s = rodar('scripts/icones.mjs', MAPA_ICONES)
-    expect(s.texto, comSaida(s)).toContain('34 registros (V1) + 5 (DESIGN-N2, E17) + 2 (DESIGN-N4, N4-D76) = 41 registros')
+    expect(s.texto, comSaida(s)).toContain('34 registros (V1) + 5 (DESIGN-N2, E17) + 2 (DESIGN-N4, N4-D76) + 1 (DESIGN-QL, QL-D31) = 42 registros')
     expect(s.texto, comSaida(s)).toContain('DESIGN-N4: 7/7 linhas P-I achadas · 49 células cobradas · trocas em par: 4 (12 elementos velhos cobrados ausentes)')
   })
 

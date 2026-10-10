@@ -1,0 +1,28 @@
+sessão: files/octavia-<uid> · cache/octavia-<uid>
+== (4) apagados por nome, o que a fixture criou: partitura-12p.pdf partitura-1p.pdf
+  ok e410b6b6531ffd98113902654f0aa5be  files/octavia-<uid>/setlists.json
+  ok 6318fa92637b5ccf069831a0fc0fbc47  files/octavia-<uid>/content.json
+  ok 239e2970952288b1c2ead460a0aa4d31  files/octavia-<uid>/files-index.json
+  ok 9a3d9cb8f6c124a9f60bea82f395d29e  files/octavia-<uid>/files/1786218429715-ux-audit-partitura-12p.pdf
+  ok c53e01e757f7ff14691a0ca83aeb766f  cache/octavia-<uid>/files/1786218427769-ux-audit-partitura-1p.pdf
+== (4) regravado, md5 a md5 igual ao manifesto: 5 caminho(s)
+cache/octavia-<uid>/files:
+total 44
+drwx--S--- 2 u0_a149 u0_a149_cache  4096 2026-10-09 16:37 .
+drwx--S--- 3 u0_a149 u0_a149_cache  4096 2026-09-10 20:30 ..
+-rw-rw-rw- 1 u0_a149 u0_a149_cache 20821 2026-10-09 16:37 1786218427769-ux-audit-partitura-1p.pdf
+
+files/octavia-<uid>:
+total 112
+drwx------ 3 u0_a149 u0_a149  4096 2026-10-09 16:34 .
+drwxrwx--x 3 u0_a149 u0_a149  4096 2026-10-09 16:36 ..
+-rw------- 1 u0_a149 u0_a149 53738 2026-10-09 16:37 content.json
+drwx------ 2 u0_a149 u0_a149  4096 2026-10-09 16:37 files
+-rw------- 1 u0_a149 u0_a149   861 2026-10-09 16:37 files-index.json
+-rw------- 1 u0_a149 u0_a149 15247 2026-10-09 16:37 setlists.json
+
+files/octavia-<uid>/files:
+total 260
+drwx------ 2 u0_a149 u0_a149   4096 2026-10-09 16:37 .
+drwx------ 3 u0_a149 u0_a149   4096 2026-10-09 16:34 ..
+-rw-rw-rw- 1 u0_a149 u0_a149 242176 2026-10-09 16:37 1786218429715-ux-audit-partitura-12p.pdf

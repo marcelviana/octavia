@@ -32,9 +32,22 @@
  *     coluna passa dela, e rola para o lado SÓ ELA (no par, o pedaço de acordes e o de letra juntos, para o acorde
  *     continuar sobre a sílaba); o resto segue em texto que não rola. O id `corpo` vai para o contêiner;
  *   - a âncora (QL-D18, QL-D37): as contas puras (`logicaNoTopo`, `inicioDoBloco`, `yDaLogica`); quem rola é o palco.
+ *
+ * QL-PR4 — a âncora passa a morar aqui inteira (`useAncora`), para o palco e V (QL-D49) rolarem pela mesma conta, que
+ * agora soma onde o corpo começa (`logicaNaMarca`, `yDaAncora`: as notas da música acima do corpo no palco, os
+ * *Detalhes* acima do corpo de V em B); e o tamanho das notas pelo zoom (`tamanhoDasNotas`, QL-D32).
  */
-import { useCallback, useState, type ReactNode } from 'react'
-import { ScrollView, StyleSheet, Text, View, type LayoutChangeEvent, type TextStyle } from 'react-native'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  type LayoutChangeEvent,
+  type NativeScrollEvent,
+  type NativeSyntheticEvent,
+  type TextStyle,
+} from 'react-native'
 import Pdf from 'react-native-pdf'
 import {
   FRASES_DO_TABLET,
@@ -47,7 +60,7 @@ import {
   type LinhaVisual,
 } from '@octavia/core'
 import { Icone } from '../icones/Icone'
-import { colors, font, lineHeight, size, space, type ThemeName } from '../theme'
+import { colors, font, lineHeight, size, space, zoomDefault, type ThemeName } from '../theme'
 
 type Cor = (typeof colors)[ThemeName]
 
@@ -243,6 +256,162 @@ export function inicioDoBloco(corpo: string, tipo: string | null, logica: number
 export function yDaLogica(logicas: readonly number[], logica: number, entrelinha: number): number {
   const v = logicas.indexOf(logica)
   return v <= 0 ? 0 : v * entrelinha
+}
+
+/**
+ * QL-PR4 — A ÂNCORA COM ALGO ACIMA DO CORPO, na mesma rolagem: as notas da música no palco (QL-D30) e os *Detalhes* de
+ * V em B (QL-D49). `inicio` é quanto o corpo começa abaixo de onde começaria sem nada acima — sem nada, 0, e as contas
+ * são as da QL-PR3. A lógica na marca de 32 é a de `y − inicio`; **`null` quando a marca ainda está ACIMA do corpo**
+ * (nas notas, nos *Detalhes*) **ou quando nada foi rolado** (a rolagem no topo): aí a âncora volta ao topo — QL-D52
+ * `[Marcel, 2026-10-09]`. Sem nada acima, o topo dá o mesmo 0 de antes (a lógica 0 já ia para 0).
+ */
+export function logicaNaMarca(logicas: readonly number[], y: number, entrelinha: number, inicio: number): number | null {
+  if (y <= 0.5 || y + 0.5 < inicio) return null
+  return logicaNoTopo(logicas, y - inicio, entrelinha)
+}
+
+/** A rolagem da âncora: o começo da lógica na marca, somado o início do corpo; `null` é o topo (QL-D52). */
+export function yDaAncora(logicas: readonly number[], logica: number | null, entrelinha: number, inicio: number): number {
+  return logica === null ? 0 : inicio + yDaLogica(logicas, logica, entrelinha)
+}
+
+/**
+ * QL-D32 — o tamanho das notas da música acompanha o zoom do corpo: 16 × zoom ÷ 22. Uma derivação dos tokens que
+ * existem (o 16 é o `size.body` das notas de V; o 22 é o `zoomDefault`), nenhum token novo.
+ */
+export function tamanhoDasNotas(zoom: number): number {
+  return (size.body * zoom) / zoomDefault
+}
+
+/** QL-PR3 — o pedido da âncora se reaplica a cada `ANCORA_INTERVALO_MS` até a rolagem chegar, no máximo
+ * `ANCORA_TENTATIVAS` vezes (1,5 s): o bastante para o conteúdo novo assentar no Tab, que é o mais lento medido. */
+const ANCORA_INTERVALO_MS = 100
+const ANCORA_TENTATIVAS = 15
+
+/** O desenho do corpo que a âncora acompanha. `inicio` `null` = ainda não medido (a âncora não parte dele). */
+export interface DesenhoDaAncora {
+  /** Muda com a música: a troca de música não ancora (volta ao topo, quem rola é a tela). */
+  chave: string
+  corpo: string | null
+  tipo: string | null
+  logicas: readonly number[]
+  entrelinha: number
+  inicio: number | null
+}
+
+/**
+ * A ÂNCORA (QL-D18, QL-D37; QL-R13), o palco e V com a mesma conta. Movida do `StageScreen.tsx` na QL-PR4 (a regra é
+ * a mesma; o que muda é o `inicio`). Quando o desenho do MESMO corpo muda — o giro (C ↔ B) e o zoom mudam as colunas e a
+ * entrelinha; as notas e os *Detalhes* mudam onde o corpo começa —, a lógica que estava na marca volta à marca: o começo
+ * dela a 32 do topo da rolagem (na Cifra, o par a partir da linha de acordes); com a marca acima do corpo, o topo
+ * (QL-D52). O pedido `{ lógica }` fica de pé até a rolagem VISTA chegar ao alvo, e o alvo se recalcula a cada tentativa
+ * com o desenho de agora (o `inicio` novo chega depois, quando as notas ou os *Detalhes* são medidos de novo); uma
+ * segunda mudança com ele de pé ancora na MESMA lógica; o dedo na rolagem o encerra. A Tab não ancora (R4).
+ *
+ * `rolagemNova()`: a tela trocou de `ScrollView` (V, ao girar): a rolagem vista é de outra, e só vale de novo quando a
+ * nova falar — mas a lógica do pedido continua saindo da última vista, que é a da tela de antes.
+ */
+export function useAncora(
+  scroll: React.RefObject<ScrollView | null>,
+  d: DesenhoDaAncora,
+  aoAncorar?: (y: number) => void,
+): {
+  aoRolar: (e: NativeSyntheticEvent<NativeScrollEvent>) => void
+  aoMudarConteudo: () => void
+  aoArrastar: () => void
+  zerar: () => void
+  rolagemNova: () => void
+} {
+  const yVisto = useRef(0)
+  const vistoValido = useRef(true)
+  const pedido = useRef<{ logica: number | null } | null>(null)
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const atual = useRef(d)
+  atual.current = d
+  const aoAncorarRef = useRef(aoAncorar)
+  aoAncorarRef.current = aoAncorar
+
+  const alvo = useCallback((): number | null => {
+    const p = pedido.current
+    if (p === null) return null
+    const a = atual.current
+    return yDaAncora(a.logicas, p.logica, a.entrelinha, a.inicio ?? 0)
+  }, [])
+  const cancelar = useCallback(() => {
+    pedido.current = null
+    if (timer.current !== null) clearTimeout(timer.current)
+    timer.current = null
+  }, [])
+  const pedir = useCallback(
+    (tentativa: number) => {
+      const y = alvo()
+      if (y === null) return
+      if (tentativa > 0 && vistoValido.current && Math.abs(yVisto.current - y) <= 1) {
+        pedido.current = null
+        return
+      }
+      aoAncorarRef.current?.(y)
+      scroll.current?.scrollTo({ y, animated: false })
+      if (tentativa >= ANCORA_TENTATIVAS) {
+        pedido.current = null
+        return
+      }
+      timer.current = setTimeout(() => pedir(tentativa + 1), ANCORA_INTERVALO_MS)
+    },
+    [alvo, scroll],
+  )
+
+  const anterior = useRef<DesenhoDaAncora | null>(null)
+  const { chave, corpo, tipo, logicas, entrelinha, inicio } = d
+  useLayoutEffect(() => {
+    // o desenho sem o início medido não é ponto de partida nem de chegada: espera a medida
+    if (inicio === null) return
+    const ant = anterior.current
+    anterior.current = { chave, corpo, tipo, logicas, entrelinha, inicio }
+    if (ant === null || ant.inicio === null || ant.chave !== chave || corpo === null || tipo === 'Tab') return
+    const igual =
+      ant.entrelinha === entrelinha &&
+      Math.abs(ant.inicio - inicio) < 0.5 &&
+      ant.logicas.length === logicas.length &&
+      ant.logicas.every((l, i) => l === logicas[i])
+    if (igual) return
+    let logica: number | null
+    if (pedido.current !== null) logica = pedido.current.logica
+    else {
+      const l = logicaNaMarca(ant.logicas, yVisto.current, ant.entrelinha, ant.inicio)
+      logica = l === null ? null : inicioDoBloco(corpo, tipo, l)
+    }
+    pedido.current = { logica }
+    if (timer.current !== null) clearTimeout(timer.current)
+    pedir(0)
+  }, [chave, corpo, tipo, logicas, entrelinha, inicio, pedir])
+  useEffect(() => cancelar, [cancelar])
+
+  const aoRolar = useCallback(
+    (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+      yVisto.current = e.nativeEvent.contentOffset.y
+      vistoValido.current = true
+      // a rolagem chegou ao alvo da âncora: o pedido termina
+      const y = alvo()
+      if (y !== null && Math.abs(yVisto.current - y) <= 1) pedido.current = null
+    },
+    [alvo],
+  )
+  const aoMudarConteudo = useCallback(() => {
+    const y = alvo()
+    if (y !== null) scroll.current?.scrollTo({ y, animated: false })
+  }, [alvo, scroll])
+  const rolagemNova = useCallback(() => {
+    vistoValido.current = false
+  }, [])
+  // a troca de música: o pedido sai e a rolagem vista volta ao topo, com a tela
+  const zerar = useCallback(() => {
+    cancelar()
+    yVisto.current = 0
+    vistoValido.current = true
+  }, [cancelar])
+  // o dedo na rolagem: o músico toma conta, e o pedido da âncora sai
+  return { aoRolar, aoMudarConteudo, aoArrastar: cancelar, zerar, rolagemNova }
 }
 
 /**
