@@ -1,0 +1,10 @@
+== 2026-10-10 10:25:08 avião (regra 11)
+antes:  airplane=0 wifi=1 data=1
+ligado: airplane=1 wifi=3 data=1
+connect: Network is unreachable
+== 2026-10-10 10:40:45 restaurar
+depois: airplane=0 wifi=1 data=1
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+10:39:32.561 OCTAVIA: net offline
+10:40:55.454 OCTAVIA: net online
+api desde a volta da rede: 0

@@ -1,0 +1,5 @@
+avd-release abertura 1 09:55:04 S1 TotalTime=495 · nativas acumuladas=0 · api acumuladas=0
+== avd-release: aberturas=1 S1=1 sem-S1=0 · tombstones do app novos no dropbox=0
+== linhas OCTAVIA da rodada: 11 · api=0 · sync skip=1 · auth restored=1
+quedas do app: java=0 · nativas=0 · (a contagem antiga, a subcadeia FATAL: 0)
+tombstones do app no dropbox: 0

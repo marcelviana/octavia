@@ -314,3 +314,10 @@ com `git worktree remove`, **sem `--force`** (exit 0 nas duas). Fica só esta á
 
 **A D-0 está encerrada** (D0-D24…D28). **O que vem depois: o bloco da quebra de linha**, aberto numa conversa nova de
 revisão, com o `docs/native/N4-ENCERRAMENTO.md` e este `docs/ux/D0-ENCERRAMENTO.md` anexados inteiros.
+
+*(Errata de ponteiro do encerramento do QL, 2026-10-10 — `docs/native/QL-ENCERRAMENTO.md`: o bloco da quebra de linha (o
+QL) está **encerrado** com o aval do encerramento dele. A fila que segue **não é mais** a da D0-D25: o pre-check do QL pôs o
+**SY** logo depois do QL (QL-D12) e a QL-PR4 pôs **a navegação do palco** antes do N5 (QL-D57) — **QL → SY → resto do D →
+navegação do palco → N5 → identidade → iOS**, o W5 à parte. E entra um bloco novo, **o metrônomo visual no palco** (ideia do
+Marcel de 2026-10-09, `QL-ENCERRAMENTO-anexos/ideia-metronomo.md`), depois do resto do D — **a posição em relação à navegação
+do palco a decidir no aval** do encerramento do QL. A div. 1147 segue a primeira do resto do D (D0-D25).)*

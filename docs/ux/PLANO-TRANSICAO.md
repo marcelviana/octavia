@@ -1559,3 +1559,11 @@ automaticamente.
 > que entregou a folha em duas rodadas; **o desenho está congelado** em `docs/native/DESIGN-QL/` (`telas.html`, 56 molduras
 > normativas, com sha), com as decisões QL-D28…D38 (as regras do corte, a continuação por recuo de 2 colunas, as notas no
 > topo do corpo com a divisa) e os requisitos em `docs/native/QL-REQUISITOS.md`. **A próxima é a PR-1 — gates.**
+
+> **Nota do encerramento do QL (2026-10-10)** — sem reescrever as notas acima. **O QL está encerrado** com o aval do
+> encerramento (`docs/native/QL-ENCERRAMENTO.md`): #370–#376 e o release `ea5e891` no Tab (100 + 100 aberturas frias, zero
+> queda nativa; a letra quebrada julgada pelo Marcel com as músicas dele; a primeira nota de verdade). **O próximo bloco é o
+> SY** (a sincronização automática, QL-D12). A fila: **QL → SY → resto do D → navegação do palco → N5 → identidade → iOS**, o
+> **W5** à parte (QL-D57) — e **um bloco novo, o metrônomo visual no palco** (ideia do Marcel de 2026-10-09,
+> `docs/native/QL-ENCERRAMENTO-anexos/ideia-metronomo.md`), **depois do resto do D**; a posição dele em relação à navegação
+> do palco: **a decidir no aval** do encerramento do QL.
