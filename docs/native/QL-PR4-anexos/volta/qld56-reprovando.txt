@@ -1,0 +1,22 @@
+$ git rev-parse HEAD   # 4db6fe1: o código de antes do conserto, com os testes da QL-D56 por cima
+4db6fe114a5d2ecaff99535fd37453352000f8c6
+$ npx vitest run apps/native/test/notas-bordas.test.tsx
+     × B: um toque na DIVISA (a ponta direita da régua, sob a borda de avançar) recolhe — e não avança 82ms
+     × B: um toque no RÓTULO (a ponta esquerda, sob a borda de voltar) abre — e não volta 47ms
+     ✓ B: um toque no MEIO da régua (fora das bordas) recolhe e abre, como sempre 58ms
+     × C: as duas pontas, na borda de 15 % de C 46ms
+     × nas duas alturas da régua: a linha de cima e a de baixo dos 48 ainda são régua 47ms
+     ✓ as bordas CONTINUAM valendo sobre o texto: abaixo da régua (o texto das notas, a letra), avançam e voltam 47ms
+     ✓ no respiro de 32 ao lado da régua (fora dela), a borda segue valendo 51ms
+     ✓ com o corpo rolado, a régua sai do topo, e a mesma altura da tela volta a ser texto: a borda avança 57ms
+     × rolado pouco, a régua segue na tela mais acima, e o toque nela continua sendo régua 60ms
+     ✓ sem nota não há régua: a borda na mesma altura avança, como sempre 33ms
+     × o estado do toque pela borda é o mesmo estado lembrado (o mesmo das outras músicas) 47ms
+AssertionError: o toque na divisa não recolheu as notas: expected true to be false // Object.is equality
+AssertionError: o toque no rótulo não abriu as notas: expected false to be true // Object.is equality
+AssertionError: expected true to be false // Object.is equality
+AssertionError: expected true to be false // Object.is equality
+AssertionError: expected true to be false // Object.is equality
+AssertionError: expected false to be true // Object.is equality
+ Test Files  1 failed (1)
+      Tests  6 failed | 5 passed (11)

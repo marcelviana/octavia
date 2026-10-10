@@ -1,0 +1,28 @@
+{
+ "texto": "Letra longa da fixture",
+ "fator": 2.25,
+ "passos": [
+  {
+   "rotulo": "antes",
+   "cols": 55,
+   "zoom": 22,
+   "o": "C",
+   "inicio_px": 0
+  },
+  {
+   "rotulo": "giro-B",
+   "cols": 48,
+   "zoom": 22,
+   "o": "B",
+   "inicio_px": 461.25
+  },
+  {
+   "rotulo": "volta-C",
+   "cols": 55,
+   "zoom": 22,
+   "o": "C",
+   "inicio_px": 0
+  }
+ ],
+ "auto": false
+}

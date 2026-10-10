@@ -1,0 +1,6 @@
+2026-10-09 19:32:33
+bundle servido antes da 1ª abertura no Tab ( 7470632 B)
+  grep -c 'localhost:8788': 1
+  grep -c 'octavia.rocks': 0
+  grep -c 'toqueNaRegua': 5
+  grep -c 'comNotasFixas': 4

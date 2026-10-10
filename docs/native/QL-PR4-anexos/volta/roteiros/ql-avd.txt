@@ -1,0 +1,228 @@
+== bordas 18:43:06
+18:43:33 toque 'song-3' @ 658,859 (emulator-5554)
+QL4R-S3-bordas-regua-escuro-avd-pai mCurrentRotation=ROTATION_0 png=255956 xml=32688 0431aa1cfcf4
+   corpo-logico: o desenho é o próprio texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 0 continuações ✓
+   [C escuro] régua [72, 252, 2488, 360] · borda-voltar [0, 198, 384, 1249] · borda-avancar [2176, 198, 2560, 1249] · posição 3 DE 8
+      toque no(a) divisa  @ 2465,306 px (borda-avancar): notas abertas → recolhidas · posição 3 DE 8 → 3 DE 8 ✓
+      toque no(a) rótulo  @ 222,305 px (borda-voltar): notas recolhidas → abertas · posição 3 DE 8 → 3 DE 8 ✓
+      toque no(a) meio    @ 1280,306 px (fora das bordas): notas abertas → recolhidas · posição 3 DE 8 → 3 DE 8 ✓
+   [C escuro] 3/3 toques recolhem ou abrem sem trocar de música
+18:44:15 toque 'notas-regua' @ 1280,306 (emulator-5554)
+18:44:48 toque 'song-3' @ 658,859 (emulator-5554)
+18:44:58 toque 'tema' @ 682,1358 (emulator-5554)
+QL4R-S3-bordas-regua-claro-avd-pai mCurrentRotation=ROTATION_0 png=255875 xml=32362 e5434abcc37b
+   corpo-logico: o desenho é o próprio texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 0 continuações ✓
+   [C claro] régua [72, 252, 2488, 360] · borda-voltar [0, 198, 384, 1249] · borda-avancar [2176, 198, 2560, 1249] · posição 3 DE 8
+      toque no(a) divisa  @ 2465,306 px (borda-avancar): notas abertas → recolhidas · posição 3 DE 8 → 3 DE 8 ✓
+      toque no(a) rótulo  @ 222,305 px (borda-voltar): notas recolhidas → abertas · posição 3 DE 8 → 3 DE 8 ✓
+      toque no(a) meio    @ 1280,306 px (fora das bordas): notas abertas → recolhidas · posição 3 DE 8 → 3 DE 8 ✓
+   [C claro] 3/3 toques recolhem ou abrem sem trocar de música
+18:45:36 toque 'notas-regua' @ 1280,306 (emulator-5554)
+18:46:08 toque 'song-3' @ 800,1138 (emulator-5554)
+QL4R-S3-bordas-regua-escuro-avd-ret mCurrentRotation=ROTATION_90 png=326436 xml=32976 40a79a35000d
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 48 continuações ✓
+   [B escuro] régua [72, 306, 1528, 414] · borda-voltar [0, 252, 240, 2209] · borda-avancar [1360, 252, 1600, 2209] · posição 3 DE 8
+      toque no(a) divisa  @ 1505,360 px (borda-avancar): notas abertas → recolhidas · posição 3 DE 8 → 3 DE 8 ✓
+      toque no(a) rótulo  @ 222,359 px (borda-voltar): notas recolhidas → abertas · posição 3 DE 8 → 3 DE 8 ✓
+      toque no(a) meio    @ 800,360 px (fora das bordas): notas abertas → recolhidas · posição 3 DE 8 → 3 DE 8 ✓
+   [B escuro] 3/3 toques recolhem ou abrem sem trocar de música
+18:46:49 toque 'notas-regua' @ 800,360 (emulator-5554)
+18:47:19 toque 'song-3' @ 800,1138 (emulator-5554)
+18:47:28 toque 'tema' @ 682,2318 (emulator-5554)
+QL4R-S3-bordas-regua-claro-avd-ret mCurrentRotation=ROTATION_90 png=327659 xml=32650 00f1df76949d
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 48 continuações ✓
+   [B claro] régua [72, 306, 1528, 414] · borda-voltar [0, 252, 240, 2209] · borda-avancar [1360, 252, 1600, 2209] · posição 3 DE 8
+      toque no(a) divisa  @ 1505,360 px (borda-avancar): notas abertas → recolhidas · posição 3 DE 8 → 3 DE 8 ✓
+      toque no(a) rótulo  @ 222,359 px (borda-voltar): notas recolhidas → abertas · posição 3 DE 8 → 3 DE 8 ✓
+      toque no(a) meio    @ 800,360 px (fora das bordas): notas abertas → recolhidas · posição 3 DE 8 → 3 DE 8 ✓
+   [B claro] 3/3 toques recolhem ou abrem sem trocar de música
+18:48:04 toque 'notas-regua' @ 800,360 (emulator-5554)
+18:48:34 toque 'song-3' @ 658,859 (emulator-5554)
+   controle: a borda de avançar sobre a letra @ 2368,961 px: posição 3 DE 8 → 4 DE 8
+   bordas: 12/12 toques na régua certos (C e B × escuro e claro × divisa, rótulo, meio)
+== foratexto 18:48:48
+18:49:15 toque 'song-6' @ 1902,1138 (emulator-5554)
+   [C PDF] 6 DE 8 · página: página 1 de 12 · notas [72, 252, 2488, 620] · s3d [0, 674, 2560, 1168]
+QL4R-S3-pdf-notas-abertas-avd-pai mCurrentRotation=ROTATION_0 png=220813 xml=27621 a6019ac653dc
+   [C PDF] régua [72, 252, 2488, 360] · borda-voltar [0, 198, 384, 1249] · borda-avancar [2176, 198, 2560, 1249] · posição 6 DE 8
+      toque no(a) divisa  @ 2465,306 px (borda-avancar): notas abertas → recolhidas · posição 6 DE 8 → 6 DE 8 ✓
+      toque no(a) rótulo  @ 222,305 px (borda-voltar): notas recolhidas → abertas · posição 6 DE 8 → 6 DE 8 ✓
+      toque no(a) meio    @ 1280,306 px (fora das bordas): notas abertas → recolhidas · posição 6 DE 8 → 6 DE 8 ✓
+   [C PDF] 3/3 toques recolhem ou abrem sem trocar de música
+18:50:05 toque 'notas-regua' @ 1280,306 (emulator-5554)
+   [C PDF] depois de um deslize no meio da página: página página 1 de 12 · 6 DE 8
+QL4R-S3-pdf-notas-pagina-avd-pai mCurrentRotation=ROTATION_0 png=163615 xml=27621 a6019ac653dc
+18:50:50 toque 'song-7' @ 658,1376 (emulator-5554)
+   [C s3-formato] 7 DE 8 · notas [72, 252, 2488, 620] · s3-formato [0, 674, 2560, 993]
+QL4R-S3-formato-notas-avd-pai mCurrentRotation=ROTATION_0 png=169565 xml=28597 92540477d422
+18:51:38 toque 'song-8' @ 1902,1376 (emulator-5554)
+   [C s3e] 8 DE 8 · notas [72, 252, 2488, 620] · s3e [0, 674, 2560, 1291]
+QL4R-S3-s3e-notas-avd-pai mCurrentRotation=ROTATION_0 png=204612 xml=28041 e970cee7c01b
+18:52:24 toque 'song-6' @ 800,1975 (emulator-5554)
+   [B PDF] 6 DE 8 · página: página 1 de 12 · notas [72, 306, 1528, 730] · s3d [0, 784, 1600, 2128]
+QL4R-S3-pdf-notas-abertas-avd-ret mCurrentRotation=ROTATION_90 png=231445 xml=27620 96fab30b9347
+   [B PDF] régua [72, 306, 1528, 414] · borda-voltar [0, 252, 240, 2209] · borda-avancar [1360, 252, 1600, 2209] · posição 6 DE 8
+      toque no(a) divisa  @ 1505,360 px (borda-avancar): notas abertas → recolhidas · posição 6 DE 8 → 6 DE 8 ✓
+      toque no(a) rótulo  @ 222,359 px (borda-voltar): notas recolhidas → abertas · posição 6 DE 8 → 6 DE 8 ✓
+      toque no(a) meio    @ 800,360 px (fora das bordas): notas abertas → recolhidas · posição 6 DE 8 → 6 DE 8 ✓
+   [B PDF] 3/3 toques recolhem ou abrem sem trocar de música
+18:53:13 toque 'notas-regua' @ 800,360 (emulator-5554)
+   [B PDF] depois de um deslize no meio da página: página página 2 de 12 · 6 DE 8
+QL4R-S3-pdf-notas-pagina-avd-ret mCurrentRotation=ROTATION_90 png=234153 xml=27620 b2163910a633
+18:53:58 toque 'song-7' @ 800,2254 (emulator-5554)
+   [B s3-formato] 7 DE 8 · notas [72, 306, 1528, 730] · s3-formato [0, 784, 1600, 1103]
+QL4R-S3-formato-notas-avd-ret mCurrentRotation=ROTATION_90 png=170513 xml=28591 7f4e4ff886c7
+18:54:46 toque 'song-8' @ 800,2414 (emulator-5554)
+   [B s3e] 8 DE 8 · notas [72, 306, 1528, 730] · s3e [0, 784, 1600, 1401]
+QL4R-S3-s3e-notas-avd-ret mCurrentRotation=ROTATION_90 png=203398 xml=28036 9dd79276108c
+== ancora 18:55:06
+18:55:32 toque 'song-3' @ 800,1138 (emulator-5554)
+18:55:53 toque 'zoom-mais' @ 497,1358 (emulator-5554)
+   o começo do corpo [B22, notas abertas]: 460 px (204.44 dp) · corpo [72, 784, 1512, 2209] · rolagem [0, 252, 1600, 2209]
+   o começo do corpo [C22, notas abertas]: 404 px (179.56 dp) · corpo [72, 674, 2382, 1249] · rolagem [0, 198, 2560, 1249]
+   o começo do corpo [C26, notas abertas]: 434 px (192.89 dp) · corpo [72, 704, 2480, 1249] · rolagem [0, 198, 2560, 1249]
+   o começo do corpo [B26, notas abertas]: 500 px (222.22 dp) · corpo [72, 824, 1524, 2209] · rolagem [0, 252, 1600, 2209]
+18:56:31 toque 'song-3' @ 800,1138 (emulator-5554)
+QL4R-S3-ancora-abertas-antes-avd-ret mCurrentRotation=ROTATION_90 png=340333 xml=29193 ce6629b8457f
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 48 continuações ✓
+QL4R-S3-ancora-abertas-giro-avd-pai mCurrentRotation=ROTATION_0 png=255300 xml=28905 fee809f40448
+   corpo-logico: o desenho é o próprio texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 0 continuações ✓
+18:57:18 toque 'zoom-mais' @ 497,1358 (emulator-5554)
+QL4R-S3-ancora-abertas-zoom-avd-pai mCurrentRotation=ROTATION_0 png=273538 xml=29001 6b2c56c4c00c
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 16 continuações ✓
+QL4R-S3-ancora-abertas-volta-avd-ret mCurrentRotation=ROTATION_90 png=367382 xml=29295 08ded22e3025
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 65 continuações ✓
+18:57:48 toque 'auto-scroll' @ 128,2318 (emulator-5554)
+18:57:51 toque 'auto-scroll' @ 128,2318 (emulator-5554)
+18:58:22 toque 'song-3' @ 800,1138 (emulator-5554)
+QL4R-S3-ancora-nas-notas-antes-avd-ret mCurrentRotation=ROTATION_90 png=343533 xml=32976 955c7539175a
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 48 continuações ✓
+QL4R-S3-ancora-nas-notas-giro-avd-pai mCurrentRotation=ROTATION_0 png=256120 xml=32688 0431aa1cfcf4
+   corpo-logico: o desenho é o próprio texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 0 continuações ✓
+19:00:06 sem S1 em 60 s — o deep link de novo
+19:00:29 toque 'song-3' @ 800,1138 (emulator-5554)
+19:00:41 toque 'notas-regua' @ 800,360 (emulator-5554)
+19:00:56 toque 'zoom-mais' @ 497,1358 (emulator-5554)
+   o começo do corpo [B22, notas recolhidas]: 164 px (72.89 dp) · corpo [72, 488, 1512, 2209] · rolagem [0, 252, 1600, 2209]
+   o começo do corpo [C22, notas recolhidas]: 164 px (72.89 dp) · corpo [72, 434, 2382, 1249] · rolagem [0, 198, 2560, 1249]
+   o começo do corpo [C26, notas recolhidas]: 164 px (72.89 dp) · corpo [72, 434, 2480, 1249] · rolagem [0, 198, 2560, 1249]
+   o começo do corpo [B26, notas recolhidas]: 164 px (72.89 dp) · corpo [72, 488, 1524, 2209] · rolagem [0, 252, 1600, 2209]
+19:01:34 toque 'song-3' @ 800,1138 (emulator-5554)
+QL4R-S3-ancora-recolhidas-antes-avd-ret mCurrentRotation=ROTATION_90 png=334059 xml=29193 8e400a79548c
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 48 continuações ✓
+QL4R-S3-ancora-recolhidas-giro-avd-pai mCurrentRotation=ROTATION_0 png=264470 xml=28905 c3464c2dba97
+   corpo-logico: o desenho é o próprio texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 0 continuações ✓
+19:02:22 toque 'zoom-mais' @ 497,1358 (emulator-5554)
+QL4R-S3-ancora-recolhidas-zoom-avd-pai mCurrentRotation=ROTATION_0 png=274224 xml=29001 2b528849d1fa
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 16 continuações ✓
+QL4R-S3-ancora-recolhidas-volta-avd-ret mCurrentRotation=ROTATION_90 png=379371 xml=29295 1a12cb628cb7
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 65 continuações ✓
+19:02:51 toque 'auto-scroll' @ 128,2318 (emulator-5554)
+19:02:55 toque 'auto-scroll' @ 128,2318 (emulator-5554)
+== ancorav 19:02:58
+19:03:18 toque 'buscar' @ 1335,281 (emulator-5554)
+19:03:27 toque 'lib-campo' @ 917,152 (emulator-5554)
+19:03:35 toque 'Ver “Letra longa da fixture”' @ 800,590 (emulator-5554)
+   V: o começo do corpo em B 461.25 px (205.00 dp; corpo [72, 785, 1512, 2425] · rolagem [0, 252, 1600, 2425]) · em C 0 px
+19:04:07 toque 'buscar' @ 2295,188 (emulator-5554)
+19:04:16 toque 'lib-campo' @ 1397,152 (emulator-5554)
+19:04:24 toque 'Ver “Letra longa da fixture”' @ 1280,590 (emulator-5554)
+QL4R-V-ancora-antes-avd-pai mCurrentRotation=ROTATION_0 png=314191 xml=25597 9c99362979f2
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 32 continuações ✓
+QL4R-V-ancora-giro-B-avd-ret mCurrentRotation=ROTATION_90 png=332648 xml=23176 b8ddd0fb09d1
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 48 continuações ✓
+QL4R-V-ancora-volta-C-avd-pai mCurrentRotation=ROTATION_0 png=307945 xml=25597 9c99362979f2
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 32 continuações ✓
+19:05:46 toque 'buscar' @ 1335,281 (emulator-5554)
+19:05:54 toque 'lib-campo' @ 917,152 (emulator-5554)
+19:06:03 toque 'Ver “Letra longa da fixture”' @ 800,590 (emulator-5554)
+QL4R-V-ancora-detalhes-antes-avd-ret mCurrentRotation=ROTATION_90 png=369659 xml=25368 de23c7f3c432
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 48 continuações ✓
+QL4R-V-ancora-detalhes-giro-avd-pai mCurrentRotation=ROTATION_0 png=320083 xml=25597 f559cd657e00
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 32 continuações ✓
+== gpar 19:06:41
+19:06:43 mock modo=normal content=content-gpar.json env=None
+19:07:02 toque 'buscar' @ 2295,188 (emulator-5554)
+19:07:11 toque 'lib-campo' @ 1397,152 (emulator-5554)
+19:07:19 toque 'Ver “Gpar 01”' @ 1280,590 (emulator-5554)
+  IGUAL     letra                        site=texto     V(aparelho)=texto     continuações=0
+19:07:47 toque 'buscar' @ 2295,188 (emulator-5554)
+19:07:55 toque 'lib-campo' @ 1397,152 (emulator-5554)
+19:08:03 toque 'Ver “Gpar 02”' @ 1280,590 (emulator-5554)
+  IGUAL     cifra-texto                  site=texto     V(aparelho)=texto     continuações=0
+19:08:31 toque 'buscar' @ 2295,188 (emulator-5554)
+19:08:39 toque 'lib-campo' @ 1397,152 (emulator-5554)
+19:08:47 toque 'Ver “Gpar 03”' @ 1280,590 (emulator-5554)
+  IGUAL     tab-texto                    site=texto     V(aparelho)=texto     continuações=0
+19:09:15 toque 'buscar' @ 2295,188 (emulator-5554)
+19:09:24 toque 'lib-campo' @ 1397,152 (emulator-5554)
+19:09:32 toque 'Ver “Gpar 04”' @ 1280,590 (emulator-5554)
+  IGUAL     partitura-pdf                site=arquivo   V(aparelho)=arquivo   continuações=0
+19:10:07 toque 'buscar' @ 2295,188 (emulator-5554)
+19:10:15 toque 'lib-campo' @ 1397,152 (emulator-5554)
+19:10:23 toque 'Ver “Gpar 05”' @ 1280,590 (emulator-5554)
+  IGUAL     letra-poluida-editor         site=texto     V(aparelho)=texto     continuações=0
+19:10:50 toque 'buscar' @ 2295,188 (emulator-5554)
+19:10:58 toque 'lib-campo' @ 1397,152 (emulator-5554)
+19:11:05 toque 'Ver “Gpar 06”' @ 1280,590 (emulator-5554)
+  IGUAL     cifra-secoes-acordes-vazios  site=texto     V(aparelho)=texto     continuações=0
+19:11:26 toque 'buscar' @ 2295,188 (emulator-5554)
+19:11:34 toque 'lib-campo' @ 1397,152 (emulator-5554)
+19:11:41 toque 'Ver “Gpar 07”' @ 1280,590 (emulator-5554)
+  IGUAL     cifra-secoes-completas       site=texto     V(aparelho)=texto     continuações=0
+19:12:01 toque 'buscar' @ 2295,188 (emulator-5554)
+19:12:09 toque 'lib-campo' @ 1397,152 (emulator-5554)
+19:12:16 toque 'Ver “Gpar 08”' @ 1280,590 (emulator-5554)
+  IGUAL     cifra-duas-secoes            site=texto     V(aparelho)=texto     continuações=0
+19:12:37 toque 'buscar' @ 2295,188 (emulator-5554)
+19:12:44 toque 'lib-campo' @ 1397,152 (emulator-5554)
+19:12:51 toque 'Ver “Gpar 09”' @ 1280,590 (emulator-5554)
+  IGUAL     so-aninhado                  site=sem-corpo V(aparelho)=sem-corpo continuações=0
+19:13:12 toque 'buscar' @ 2295,188 (emulator-5554)
+19:13:20 toque 'lib-campo' @ 1397,152 (emulator-5554)
+19:13:27 toque 'Ver “Gpar 10”' @ 1280,590 (emulator-5554)
+  IGUAL     tab-editada-no-site          site=texto     V(aparelho)=texto     continuações=0
+G-par da visualização NO APARELHO [avd-pai] — pares 10 · iguais 10 · diferentes 0 [] · continuações vistas 0
+19:13:50 toque 'buscar' @ 1335,281 (emulator-5554)
+19:13:58 toque 'lib-campo' @ 917,152 (emulator-5554)
+19:14:05 toque 'Ver “Gpar 01”' @ 800,590 (emulator-5554)
+  IGUAL     letra                        site=texto     V(aparelho)=texto     continuações=0
+19:14:26 toque 'buscar' @ 1335,281 (emulator-5554)
+19:14:34 toque 'lib-campo' @ 917,152 (emulator-5554)
+19:14:42 toque 'Ver “Gpar 02”' @ 800,590 (emulator-5554)
+  IGUAL     cifra-texto                  site=texto     V(aparelho)=texto     continuações=0
+19:15:12 toque 'buscar' @ 1335,281 (emulator-5554)
+19:15:21 toque 'lib-campo' @ 917,152 (emulator-5554)
+19:15:29 toque 'Ver “Gpar 03”' @ 800,590 (emulator-5554)
+  IGUAL     tab-texto                    site=texto     V(aparelho)=texto     continuações=0
+19:15:58 toque 'buscar' @ 1335,281 (emulator-5554)
+19:16:07 toque 'lib-campo' @ 917,152 (emulator-5554)
+19:16:15 toque 'Ver “Gpar 04”' @ 800,590 (emulator-5554)
+  IGUAL     partitura-pdf                site=arquivo   V(aparelho)=arquivo   continuações=0
+19:16:47 toque 'buscar' @ 1335,281 (emulator-5554)
+19:16:56 toque 'lib-campo' @ 917,152 (emulator-5554)
+19:17:04 toque 'Ver “Gpar 05”' @ 800,590 (emulator-5554)
+  IGUAL     letra-poluida-editor         site=texto     V(aparelho)=texto     continuações=0
+19:17:34 toque 'buscar' @ 1335,281 (emulator-5554)
+19:17:43 toque 'lib-campo' @ 917,152 (emulator-5554)
+19:17:51 toque 'Ver “Gpar 06”' @ 800,590 (emulator-5554)
+  IGUAL     cifra-secoes-acordes-vazios  site=texto     V(aparelho)=texto     continuações=0
+19:18:19 toque 'buscar' @ 1335,281 (emulator-5554)
+19:18:28 toque 'lib-campo' @ 917,152 (emulator-5554)
+19:18:36 toque 'Ver “Gpar 07”' @ 800,590 (emulator-5554)
+  IGUAL     cifra-secoes-completas       site=texto     V(aparelho)=texto     continuações=0
+19:19:07 toque 'buscar' @ 1335,281 (emulator-5554)
+19:19:16 toque 'lib-campo' @ 917,152 (emulator-5554)
+19:19:24 toque 'Ver “Gpar 08”' @ 800,590 (emulator-5554)
+  IGUAL     cifra-duas-secoes            site=texto     V(aparelho)=texto     continuações=0
+19:19:53 toque 'buscar' @ 1335,281 (emulator-5554)
+19:20:02 toque 'lib-campo' @ 917,152 (emulator-5554)
+19:20:10 toque 'Ver “Gpar 09”' @ 800,590 (emulator-5554)
+  IGUAL     so-aninhado                  site=sem-corpo V(aparelho)=sem-corpo continuações=0
+19:20:40 toque 'buscar' @ 1335,281 (emulator-5554)
+19:20:48 toque 'lib-campo' @ 917,152 (emulator-5554)
+19:20:56 toque 'Ver “Gpar 10”' @ 800,590 (emulator-5554)
+  IGUAL     tab-editada-no-site          site=texto     V(aparelho)=texto     continuações=0
+G-par da visualização NO APARELHO [avd-ret] — pares 10 · iguais 10 · diferentes 0 [] · continuações vistas 0
+19:21:10 mock modo=normal vazio=False
+capturas=27 falhas=0

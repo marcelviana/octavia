@@ -1,0 +1,19 @@
+$ git rev-parse HEAD   # 9f4d26a: o conserto da QL-D56, sem as notas fora do texto
+9f4d26a0567e9334bf6e9c33f4f6f8b998d3c012
+$ npx vitest run apps/native/test/notas-fora-do-texto.test.tsx
+     × o arquivo não baixado (S3e, sem rede): as notas acima da mensagem, com o Baixar abaixo delas 68ms
+     × o baixando (o PDF ainda vindo): as notas acima da mensagem 46ms
+     × o formato que o app ainda não mostra (.jpg): as notas acima do placeholder 43ms
+     × o item sem corpo (o placeholder do motivo): as notas acima do placeholder 43ms
+     × o mesmo estado lembrado: recolhidas numa Letra, recolhidas no S3e 44ms
+     × a mesma QL-D56 fora do texto: a divisa sob a borda de avançar recolhe, e não avança 45ms
+     ✓ sem nota (o S3e): nada, e o nó do estado continua filho direto da área do corpo, como hoje 44ms
+     ✓ sem nota (o formato): nada, e o nó do estado continua filho direto da área do corpo, como hoje 43ms
+Error: sem nó com testID="notas-texto"
+Error: sem nó com testID="notas-texto"
+Error: sem nó com testID="notas-texto"
+Error: sem nó com testID="notas-texto"
+AssertionError: expected null not to be null
+Error: __medir: nenhum nó "notas" com onLayout montado
+ Test Files  1 failed (1)
+      Tests  6 failed | 2 passed (8)

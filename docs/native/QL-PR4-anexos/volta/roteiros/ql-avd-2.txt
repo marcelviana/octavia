@@ -1,0 +1,14 @@
+== paginacao 19:25:18
+19:25:48 toque 'song-6' @ 1902,1138 (emulator-5554)
+   [C PDF, notas abertas] área do PDF [0, 674, 2560, 1168] px · 6 deslize(s) → página 2 de 12 · 6 DE 8
+19:27:05 toque 'song-6' @ 1902,1138 (emulator-5554)
+19:27:22 toque 'notas-regua' @ 1280,306 (emulator-5554)
+   [C PDF, notas recolhidas] área do PDF [0, 434, 2560, 1168] px · 3 deslize(s) → página 2 de 12 · 6 DE 8
+19:28:14 toque 'song-6' @ 800,1975 (emulator-5554)
+19:28:30 toque 'notas-regua' @ 800,360 (emulator-5554)
+   [B PDF, notas abertas] área do PDF [0, 784, 1600, 2128] px · 1 deslize(s) → página 2 de 12 · 6 DE 8
+19:29:14 toque 'song-6' @ 800,1975 (emulator-5554)
+19:29:30 toque 'notas-regua' @ 800,360 (emulator-5554)
+   [B PDF, notas recolhidas] área do PDF [0, 488, 1600, 2128] px · 1 deslize(s) → página 2 de 12 · 6 DE 8
+19:29:50 toque 'notas-regua' @ 800,360 (emulator-5554)
+capturas=0 falhas=0

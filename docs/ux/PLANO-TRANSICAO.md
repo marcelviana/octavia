@@ -1547,6 +1547,14 @@ automaticamente.
 > da música no palco ficam no QL**, como última fatia, provadas com fixture (QL-D26) — o Marcel escreve a primeira nota de
 > verdade no encerramento. **O próximo passo do QL é o brief** para o Claude Design.
 
+> **Errata de ponteiro da QL-PR4 (2026-10-09)** — sem reescrever as notas acima. A QL-PR4 parou no julgamento do Marcel no
+> Tab: as bordas invisíveis de 15 % do palco ficavam por cima da régua das notas, e o toque nela trocava de música (QL-D54,
+> div. 1233). A saída (QL-D55 `[Marcel, 2026-10-09]`) tem duas partes: na PR, a régua fica fora das bordas (QL-D56); e **a
+> navegação do palco repensada por inteiro** — bordas visíveis ou não, gesto de deslizar, pedal Bluetooth, controles
+> explícitos — **vira bloco próprio**, com pre-check, brief e desenho. **A fila passa a ser (QL-D57): QL → SY → resto do D →
+> navegação do palco → N5 → identidade → iOS**; o **W5** à parte. O bloco da navegação entra antes do N5 porque o celular
+> vai precisar dela e não comporta bordas sobre controles. Fonte: `docs/native/QL-PR4-anexos/README.md`, o aval.
+
 > **Nota do congelamento do desenho do QL (2026-10-08)** — sem reescrever a nota acima. O brief (#371) foi ao Claude Design,
 > que entregou a folha em duas rodadas; **o desenho está congelado** em `docs/native/DESIGN-QL/` (`telas.html`, 56 molduras
 > normativas, com sha), com as decisões QL-D28…D38 (as regras do corte, a continuação por recuo de 2 colunas, as notas no

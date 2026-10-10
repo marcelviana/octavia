@@ -248,6 +248,13 @@ V, com o espaçamento `tracking.display` (0,14; o rótulo mede **133,3 dp** no d
 **48 em todo zoom** (Δ −14 no zoom 40). Nenhuma moldura se edita; a errata prevalece. `QL-PR4-anexos/README.md` §2.
 *(A próxima é a QL-E4.)*
 
+**QL-E4 — as bordas de toque não cobrem a régua das notas** (QL-PR4; **QL-D56**, div. 1233). **Comportamento.** As
+molduras `QL-*-S3-notas-*` desenham a régua de ponta a ponta do corpo, e o palco tem, invisíveis, as bordas de 15 % que
+avançam e voltam a música (T1-R27) — a folha não as desenha, e a régua passava por baixo delas: o toque na divisa avançava,
+no rótulo voltava. **A régua fica fora das bordas**: um toque em qualquer ponto dela recolhe ou abre (a borda entrega à régua
+o toque que cai nela). Sobre o texto, as bordas seguem valendo. Nenhuma moldura se edita; a errata prevalece.
+`QL-PR4-anexos/README.md`, o aval. *(A próxima é a QL-E5.)*
+
 **O que não é errata**: as colunas fora do 22 (O1) ficam com as **duas** contas (QL-D34), sem vencedor até a PR-1 medir; o
 respiro em A (O2) fica o do brief (QL-D35); a O6 da folha não procede (div. 1197).
 

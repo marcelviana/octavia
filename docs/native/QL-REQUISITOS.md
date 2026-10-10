@@ -136,6 +136,16 @@ decide qual das duas contas de colunas do `DESIGN-QL/README.md` §4 vale. *Aceit
 **QL-R23 — Nenhum token novo** `[QL-D2; folha: "0 tokens ou frases novos"]`. O ícone novo é só a divisa (QL-R17).
 *Aceite*: A-QL-19.
 
+**QL-R24 — Nenhuma borda invisível de toque fica sobre um controle** `[QL-D56; div. 1233]`. As bordas de 15 % do palco
+continuam valendo sobre o texto do corpo (a letra e o texto das notas). **A régua das notas, com o rótulo e a divisa, fica
+fora delas**: um toque em qualquer ponto da régua recolhe ou abre, e nunca avança nem volta a música. Vale para todo
+controle que entrar no corpo do palco no futuro. *Aceite*: A-QL-22.
+
+**QL-R25 — As notas também quando o corpo não é texto** `[QL-D58; div. 1230]`. Na Partitura (o PDF) e nos estados sem
+corpo de texto (o formato que o app ainda não mostra, o arquivo não baixado, o baixando, o item sem corpo), no topo da área,
+acima do PDF ou da mensagem: a mesma régua, a mesma divisa, o mesmo estado lembrado e a mesma QL-R24. O PDF não muda de
+paginação, e nenhum controle fica sob as notas. Sem nota, nada. *Aceite*: A-QL-23.
+
 ---
 
 ## 2. Aceites do QL
@@ -168,6 +178,8 @@ nativas** (regra 36), e o Tab repousa com o release e volta a ele no fim de todo
 | A-QL-19 | a divisa no catálogo (41 → 42) e no `gate:icones` (0 acusações); nenhum token novo | `gate:icones`; `gate:a20` | **o traço no Tab, em 20 dp** (PR-4) | QL-R17, R23 |
 | A-QL-20 | **a primeira nota de verdade**: o Marcel a escreve no site, numa música dele, e a vê no palco | o sync e o dump (comprimento, sem o texto) | **escreve e julga** (encerramento) | QL-D26 |
 | A-QL-21 | **o release no Tab**: o release da `main` sem Metro; **100 + 100 aberturas frias** (AVD e Tab), **0 queda nativa** (regra 36); os julgamentos A-QL-13…15 com as músicas do Marcel | `frias-release.sh`; `quedas.py` | **julga** (encerramento) | QL-D9; QL-D27 |
+| A-QL-22 | o toque na régua — na divisa, no rótulo e no meio, nas duas pontas, em C e B, nos dois temas — recolhe ou abre e **não troca de música**; sobre o texto as bordas seguem valendo | o teste da QL-D56 e o controle negativo; o toque no aparelho (`input tap`), a posição antes e depois | **o toque com a mão, inclusive na divisa e no rótulo** (PR-4) | QL-R24 |
+| A-QL-23 | as notas no PDF, no formato, no S3e e no item sem corpo, acima da área; o PDF paginando como antes; a régua fora das bordas também ali; sem nota, a árvore de hoje (G-inv) | o teste da QL-D58; dumps e capturas no aparelho | **as notas no PDF se leem e não atrapalham a página** (PR-4) | QL-R25 |
 
 ---
 
@@ -220,6 +232,10 @@ puser em mono no corpo (QL-D19) — **não pôs**: elas vão em Manrope (QL-D30)
 A-QL-17…A-QL-19.
 
 ### Encerramento
+
+*(**QL-D60** `[Marcel, 2026-10-09]`, a lição da QL-PR4 — **o encerramento a registra**: todo controle novo no corpo do palco
+se confere contra as bordas de toque, **no brief, no desenho e no prompt**. O defeito da div. 1233 passou pelos três; as
+divergências 1241 (P, o revisor) e 1242 (D, o brief e a folha). `QL-PR4-anexos/README.md`, o aval.)*
 
 O release no Tab com 100 + 100 e as quedas nativas; os julgamentos do Marcel (QL-D27); **a primeira nota de verdade**
 (QL-D26); as corridas do bloco no `CI-FAIXA.md` (regra 22). *Aceites*: A-QL-20, A-QL-21.

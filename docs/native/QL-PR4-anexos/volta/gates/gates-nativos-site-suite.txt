@@ -1,0 +1,47 @@
+$ git rev-parse HEAD
+ce1adb1e76dd0e1869979247c20d6aa652c176a6
+$ GATES_DECL=<o bloco do corpo> sh apps/native/scripts/g1.sh origin/main HEAD
+G1a — diff vazio em 61 arquivos DERIVADOS de apps/native + packages/core/src
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+  G1b: só adição ✓
+$ GATES_DECL=… sh apps/native/scripts/g2g3.sh origin/main HEAD
+G2 — testIDs  antes=121  depois=124
+  G2: antes ⊆ depois ✓
+      apps/native/src/screens/NotasDoPalco.tsx	testID="notas"
+      apps/native/src/screens/NotasDoPalco.tsx	testID="notas-regua"
+      apps/native/src/screens/NotasDoPalco.tsx	testID="notas-texto"
+G3 — declarações: do corpo da PR (GATES_DECL=/private/tmp/claude-501/-Users-marcelviana-projects-octavia/cc1a39a7-36bc-47b2-8a8a-994c156c4b06/scratchpad/decl.txt)
+G3 — linhas log( antes=70  depois=70
+  G3: nenhuma linha sumiu ✓
+$ gate:a20 · gate:icones · gate:icones:cn
+  literais em posição de texto examinados: 229
+  acusações: 0
+  anexo D: 34 registros (V1) + 5 (DESIGN-N2, E17) + 2 (DESIGN-N4, N4-D76) + 1 (DESIGN-QL, QL-D31) = 42 registros · 68 elementos distintos no do V1
+  DESIGN-QL (QL-D31): a divisa — 8 células da amostra cobradas · 18 molduras de notas, cada uma com a divisa no estado dela
+  acusações: 0 · avisos: 0
+  acusações: 24 · avisos: 0
+$ congelados
+DESIGN-V1: 3
+DESIGN-N2: 2
+DESIGN-N3: 2
+DESIGN-N4: 2
+DESIGN-QL: 1
+N3-PRECHECK-anexos: 355
+$ tsc de dentro de cada pacote (raiz · apps/native · packages/core · packages/identidade) e lint
+raiz exit=0
+nativo exit=0
+core exit=0
+identidade exit=0
+✔ No ESLint warnings or errors
+$ npx vitest run
+ Test Files  149 passed | 3 skipped (152)
+      Tests  1851 passed | 59 skipped (1910)
+$ os do site
+G-back: PASSA
+G-palco: PASSA — 0 ocorrências
+G-tok: PASSA
+G-tok (cobertura): PASSA
+      Tests  4 passed (4)
+G-faixa: PASSA
+$ o site não muda
+(vazio = nenhum arquivo do site)

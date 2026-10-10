@@ -19,6 +19,11 @@ nota; 3 a Letra longa, COM nota):
   ancorav   V da Letra longa: o começo do corpo de V em B medido no topo; C rolado ao meio → B → C, com os eventos; e a
             marca nos Detalhes (B) → C (QL-D52)
   antes     (com o código da `main`) a Lanterna em C e em B, escuro e claro, e no zoom 40 — o par das capturas `notas-*`
+  bordas    QL-D56: o toque na divisa, no rótulo e no meio da régua (`input tap` no centro de cada um), em C e B, nos dois
+            temas — cada um recolhe ou abre e a posição ("3 DE 8") não muda; e o controle: a borda sobre a letra avança
+  foratexto QL-D58: o PDF (a 6, o S3d) com as notas, o toque na régua sobre ele, a página virando por um deslize no meio;
+            o formato (a 7) e o S3e (a 8, o 404) com as notas
+  paginacao QL-D58: os deslizes no meio da página do PDF até a página 2, com as notas abertas e recolhidas, em C e B
   medidas   a régua, o rótulo, a divisa, o fio e os parágrafos das notas, pelo dump, em C e em B (dp)
 
 As capturas: `<saida>/<PREFIXO>-<tela>-<estado>-<ap>-<orient>.{png,xml}`. O plano da âncora (o começo do corpo de cada
@@ -125,6 +130,132 @@ class QL4(ql.QL):
             n3.tap(self.s, rid="tema", espera=1.2)
             self.zoom(3)
             self.capo("S3", "notas-longa-z40-escuro", o, 1)
+
+    # ---- a volta da PR-4 (QL-D56, QL-D58) ------------------------------------------------------------------------------
+    def _posicao(self, nos):
+        t = [a.get("text", "") for a in nos if " DE " in a.get("text", "") and a.get("text", "").split(" DE ")[0].isdigit()]
+        return t[0] if t else "?"
+
+    def _alvos_da_regua(self, nos):
+        """Os três pontos da régua, em px: a divisa (o centro do SvgView dentro dela), o rótulo (o centro do TextView) e o
+        meio (o centro da régua). E as bordas, para mostrar que as pontas caem nelas."""
+        regua = n3.achar(nos, rid="notas-regua")["b"]
+        dentro = [a for a in nos if a["b"][0] >= regua[0] and a["b"][2] <= regua[2] and a["b"][1] >= regua[1] and a["b"][3] <= regua[3]]
+        svg = [a for a in dentro if a.get("class", "").endswith("SvgView")][0]["b"]
+        rot = [a for a in dentro if a.get("class", "").endswith("TextView")][0]["b"]
+        c = lambda b: ((b[0] + b[2]) // 2, (b[1] + b[3]) // 2)  # noqa: E731
+        bv = n3.achar(nos, rid="borda-voltar")["b"]
+        ba = n3.achar(nos, rid="borda-avancar")["b"]
+        return {"divisa": c(svg), "rótulo": c(rot), "meio": c(regua)}, regua, bv, ba
+
+    def _tocar_regua(self, rotulo_estado, o):
+        """O toque na divisa, no rótulo e no meio: cada um alterna as notas e a posição não muda."""
+        nos = n3.dump(self.s)
+        alvos, regua, bv, ba = self._alvos_da_regua(nos)
+        pos0 = self._posicao(nos)
+        dentro = lambda p, b: b[0] <= p[0] <= b[2] and b[1] <= p[1] <= b[3]  # noqa: E731
+        print(f"   [{faixa_de(self.ap, o)} {rotulo_estado}] régua {regua} · borda-voltar {bv} · borda-avancar {ba} · posição {pos0}", flush=True)
+        ok = 0
+        for nome, (x, y) in alvos.items():
+            antes = n3.achar(n3.dump(self.s), rid="notas-texto") is not None
+            n3.sh(self.s, "shell", "input", "tap", str(x), str(y))
+            time.sleep(1.5)
+            nos2 = n3.dump(self.s)
+            depois = n3.achar(nos2, rid="notas-texto") is not None
+            pos = self._posicao(nos2)
+            na_borda = "borda-voltar" if dentro((x, y), bv) else "borda-avancar" if dentro((x, y), ba) else "fora das bordas"
+            certo = depois != antes and pos == pos0
+            ok += certo
+            print(f"      toque no(a) {nome:7} @ {x},{y} px ({na_borda}): notas {'abertas' if antes else 'recolhidas'} → {'abertas' if depois else 'recolhidas'} · posição {pos0} → {pos} {'✓' if certo else '✗'}", flush=True)
+        print(f"   [{faixa_de(self.ap, o)} {rotulo_estado}] {ok}/3 toques recolhem ou abrem sem trocar de música", flush=True)
+        return ok
+
+    def bordas(self):
+        total = 0
+        for o in ("pai", "ret"):
+            for tema in ("escuro", "claro"):
+                self.palco(3, o)
+                if tema == "claro":
+                    n3.tap(self.s, rid="tema", espera=1.5)
+                self.garantir(True)
+                self.capo("S3", f"bordas-regua-{tema}", o, 3)
+                total += self._tocar_regua(tema, o)
+                self.garantir(True)
+        # o controle: a borda sobre a letra continua avançando
+        self.palco(3, "pai")
+        nos = n3.dump(self.s)
+        ba = n3.achar(nos, rid="borda-avancar")["b"]
+        corpo = n3.achar(nos, rid="corpo")["b"]
+        x, y = (ba[0] + ba[2]) // 2, (corpo[1] + corpo[3]) // 2
+        pos0 = self._posicao(nos)
+        n3.sh(self.s, "shell", "input", "tap", str(x), str(y))
+        time.sleep(2)
+        print(f"   controle: a borda de avançar sobre a letra @ {x},{y} px: posição {pos0} → {self._posicao(n3.dump(self.s))}", flush=True)
+        print(f"   bordas: {total}/12 toques na régua certos (C e B × escuro e claro × divisa, rótulo, meio)", flush=True)
+
+    def foratexto(self):
+        for o in ("pai", "ret"):
+            # o PDF que baixa (o S3d), a 6
+            self.palco_pos(6, o)
+            R.esperar(self.s, rid="s3d", prazo=40)
+            R.esperar(self.s, rid="pagina", prazo=30)
+            time.sleep(2)
+            self.garantir(True)
+            nos = n3.dump(self.s)
+            print(f"   [{faixa_de(self.ap, o)} PDF] {self._posicao(nos)} · página: {n3.achar(nos, rid='pagina').get('text')} · notas {n3.achar(nos, rid='notas')['b']} · s3d {n3.achar(nos, rid='s3d')['b']}", flush=True)
+            self.capo("S3", "pdf-notas-abertas", o)
+            self._tocar_regua("PDF", o)
+            self.garantir(True)
+            # a paginação do PDF: um deslize no meio da página (longe das bordas) vira a página
+            s3d = n3.achar(n3.dump(self.s), rid="s3d")["b"]
+            cx = (s3d[0] + s3d[2]) // 2
+            n3.sh(self.s, "shell", "input", "swipe", str(cx), str(int(s3d[3] - 60)), str(cx), str(int(s3d[1] + 60)), "300")
+            time.sleep(2)
+            nos = n3.dump(self.s)
+            print(f"   [{faixa_de(self.ap, o)} PDF] depois de um deslize no meio da página: página {n3.achar(nos, rid='pagina').get('text')} · {self._posicao(nos)}", flush=True)
+            self.capo("S3", "pdf-notas-pagina", o)
+            # o formato (a 7) e o S3e (a 8, o 404)
+            for pos, nome, alvo in ((7, "formato-notas", "s3-formato"), (8, "s3e-notas", "s3e")):
+                self.palco_pos(pos, o)
+                R.esperar(self.s, rid=alvo, prazo=40)
+                time.sleep(1.5)
+                self.garantir(True)
+                nos = n3.dump(self.s)
+                print(f"   [{faixa_de(self.ap, o)} {alvo}] {self._posicao(nos)} · notas {n3.achar(nos, rid='notas')['b']} · {alvo} {n3.achar(nos, rid=alvo)['b']}", flush=True)
+                self.capo("S3", nome, o)
+
+    def paginacao(self):
+        """A paginação do PDF com as notas acima (QL-D58): quantos deslizes no meio da página (longe das bordas) até a página
+        2, com as notas abertas e recolhidas, em C e B. O `fitPolicy` de largura rola dentro da página antes de virar
+        (`Leitor.tsx`): o número é o do aparelho, não uma regra."""
+        for o in ("pai", "ret"):
+            for abertas in (True, False):
+                self.palco_pos(6, o)
+                R.esperar(self.s, rid="s3d", prazo=40)
+                R.esperar(self.s, rid="pagina", prazo=30)
+                time.sleep(2)
+                self.garantir(abertas)
+                s3d = n3.achar(n3.dump(self.s), rid="s3d")["b"]
+                cx = (s3d[0] + s3d[2]) // 2
+                n = 0
+                pag = n3.achar(n3.dump(self.s), rid="pagina").get("text")
+                while n < 12 and pag.startswith("página 1 "):
+                    n3.sh(self.s, "shell", "input", "swipe", str(cx), str(int(s3d[3] - 40)), str(cx), str(int(s3d[1] + 40)), "250")
+                    n += 1
+                    time.sleep(1.5)
+                    pag = n3.achar(n3.dump(self.s), rid="pagina").get("text")
+                print(f"   [{faixa_de(self.ap, o)} PDF, notas {'abertas' if abertas else 'recolhidas'}] área do PDF {s3d} px · {n} deslize(s) → {pag} · {self._posicao(n3.dump(self.s))}", flush=True)
+        self.garantir(True)
+
+    def palco_pos(self, musica, o):
+        ql.orientar(self.s, self.ap, o)
+        R.ir_s1(self.s)
+        b = R.esperar(self.s, rid=ql.SETLIST)["b"]
+        n3.sh(self.s, "shell", "input", "tap", str(b[0] + 24), str(b[1] + 24))
+        time.sleep(2)
+        R.esperar(self.s, rid="picker-abrir")
+        n3.tap(self.s, rid=f"song-{musica}", espera=3)
+        time.sleep(2)
 
     def semnota(self):
         for o in ("pai", "ret"):

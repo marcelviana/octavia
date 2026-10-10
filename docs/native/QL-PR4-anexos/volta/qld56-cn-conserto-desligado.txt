@@ -1,0 +1,20 @@
+$ # CN: o conserto desligado — toqueNaRegua devolve sempre false (a borda volta a só navegar)
+     × B: um toque na DIVISA (a ponta direita da régua, sob a borda de avançar) recolhe — e não avança 79ms
+     × B: um toque no RÓTULO (a ponta esquerda, sob a borda de voltar) abre — e não volta 49ms
+     ✓ B: um toque no MEIO da régua (fora das bordas) recolhe e abre, como sempre 57ms
+     × C: as duas pontas, na borda de 15 % de C 47ms
+     × nas duas alturas da régua: a linha de cima e a de baixo dos 48 ainda são régua 46ms
+     ✓ as bordas CONTINUAM valendo sobre o texto: abaixo da régua (o texto das notas, a letra), avançam e voltam 45ms
+     ✓ no respiro de 32 ao lado da régua (fora dela), a borda segue valendo 47ms
+     ✓ com o corpo rolado, a régua sai do topo, e a mesma altura da tela volta a ser texto: a borda avança 59ms
+     × rolado pouco, a régua segue na tela mais acima, e o toque nela continua sendo régua 60ms
+     ✓ sem nota não há régua: a borda na mesma altura avança, como sempre 33ms
+     × o estado do toque pela borda é o mesmo estado lembrado (o mesmo das outras músicas) 47ms
+AssertionError: a música trocou (avançou ou voltou): expected "vi.fn()" to not be called at all, but actually been called 1 times
+AssertionError: a música trocou (avançou ou voltou): expected "vi.fn()" to not be called at all, but actually been called 1 times
+AssertionError: a música trocou (avançou ou voltou): expected "vi.fn()" to not be called at all, but actually been called 1 times
+AssertionError: a música trocou (avançou ou voltou): expected "vi.fn()" to not be called at all, but actually been called 1 times
+AssertionError: a música trocou (avançou ou voltou): expected "vi.fn()" to not be called at all, but actually been called 1 times
+AssertionError: a música trocou (avançou ou voltou): expected "vi.fn()" to not be called at all, but actually been called 1 times
+ Test Files  1 failed (1)
+      Tests  6 failed | 5 passed (11)

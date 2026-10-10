@@ -8,14 +8,14 @@ antes, com `git status --short` vazio e **sem `--force`**. Fonte do bloco: [`QL-
 [`QL-PR3-anexos/`](../QL-PR3-anexos/README.md). Molde: [`QL-PR3-anexos/`](../QL-PR3-anexos/README.md) e, para o ícone no
 catálogo, [`N4-PR4-anexos/`](../N4-PR4-anexos/README.md).
 
-> ## ⚠ A PR-4 PAROU NO JULGAMENTO DO MARCEL — QL-D54
+> ## A PR-4 parou no julgamento do Marcel (QL-D54) e voltou (QL-D55…QL-D60) — §14
 >
-> No Tab, o julgamento do toque achou um defeito que nenhum instrumento desta série mediria: **as bordas invisíveis de 15 %
-> do palco (avançar e voltar às cegas, T1-R27) ficam POR CIMA da régua das notas, nas duas pontas.** O toque na divisa
-> (ponta direita) **avança a música**; o toque no rótulo (ponta esquerda) volta uma. Só o meio da régua recolhe e abre
-> (§6). **Decisão do Marcel** `[2026-10-09]`: **parar e redesenhar** — a navegação por ícone (tirar as bordas invisíveis)
-> se decide antes, num bloco com desenho; a PR-4 volta depois. Este README registra o que foi feito e medido até o ponto da
-> parada, com o bruto (regra 3: o achado que bloqueia precisa do bruto commitado).
+> No Tab, o julgamento do toque achou que **as bordas invisíveis de 15 % do palco ficavam POR CIMA da régua das notas**: o
+> toque na divisa avançava a música, no rótulo voltava (§6). O Marcel decidiu parar (QL-D54) e depois a saída em duas partes
+> (QL-D55): **nesta PR, a régua fica fora das bordas** (QL-D56); **a navegação do palco repensada por inteiro vira bloco
+> próprio** (QL-D57, na fila antes do N5). A volta também pôs **as notas quando o corpo não é texto** (QL-D58). As §1–§13
+> registram a primeira rodada, até a parada, como ela foi; **a §14 é a volta**, com o código final, as medidas de novo e os
+> três julgamentos.
 
 - **Commits**: `af2a800` `test(ql): QL-PR4 — as notas no palco, a divisa no gate e o estado lembrado, reprovando` ·
   `20fdbbe` `feat(ql): as notas da música no palco, a divisa e o estado lembrado; a âncora com as notas e em V` · o de docs
@@ -281,5 +281,167 @@ toolchain/aparato · **X** terceiros.
 
 ---
 
-**A próxima**: a PR-4 está parada (QL-D54). Antes de ela voltar, a navegação por ícone (a próxima música sem as bordas
+**A próxima** *(escrito na parada)*: a PR-4 está parada (QL-D54). Antes de ela voltar, a navegação por ícone (a próxima música sem as bordas
 invisíveis) se decide num bloco com desenho; a PR-4 volta com o A-QL-19 (o traço, nos dois estados) e o "antes" do Tab.
+*(Respondido pela QL-D55: a PR volta antes do bloco da navegação, com a QL-D56 — §14.)*
+
+---
+
+## 14. A volta — o aval da parada (QL-D55…QL-D60) e o código final
+
+Base: a mesma (`origin/main` = `4078c64`, conferido — nenhuma mudança na `main` desde a parada). Commits da volta, na ordem do
+rito: `68c1510` `test(ql): QL-D56 — … reprovando` · `9f4d26a` `fix(ql): QL-D56 — a borda entrega à régua das notas o toque que
+cai nela` · `3889e2d` `test(ql): QL-D58 — … reprovando` · `ce1adb1` `feat(ql): QL-D58 — as notas também quando o corpo não é
+texto` · o de docs (este). Os anexos da volta estão em [`volta/`](volta/), na mesma forma das pastas da primeira rodada.
+
+### 14.1 As decisões `[Marcel, 2026-10-09]`
+
+| # | decisão |
+|---|---|
+| **QL-D55** | **A saída da QL-D54 em duas partes.** (1) Agora, nesta PR: uma regra que conserta o defeito achado no Tab (QL-D56). (2) Depois: **a navegação do palco repensada por inteiro**, como **bloco próprio**, com pre-check, brief e desenho — bordas visíveis ou não, gesto de deslizar, pedal Bluetooth, controles explícitos. O QL não espera esse bloco. |
+| **QL-D56** | **Nenhuma borda invisível de toque fica sobre um controle.** As bordas de 15 % continuam valendo sobre o texto do corpo (a letra e o texto das notas). **A régua das notas, com o rótulo e a divisa, fica fora delas**, e o mesmo vale para qualquer controle que entrar no corpo do palco no futuro. Um toque em qualquer ponto da régua recolhe ou abre, e nunca avança nem volta a música. |
+| **QL-D57** | **A fila:** o bloco da navegação do palco entra **depois do resto do D e antes do N5** (o celular vai precisar dela e não comporta bordas sobre controles): **QL → SY → resto do D → navegação do palco → N5 → identidade → iOS**, com o W5 à parte. Errata de ponteiro no `docs/ux/PLANO-TRANSICAO.md`. |
+| **QL-D58** | (div. 1230) **As notas aparecem também quando o corpo não é texto**: na Partitura (PDF) e nos estados sem corpo de texto. A mesma régua, a mesma divisa, o mesmo estado lembrado e a mesma QL-D56. |
+| **QL-D59** | (div. 1235) **O `reordenar.test.tsx` instável vai ao W5**, como herança. Esta PR não toca nele. |
+| **QL-D60** | **Lição para o encerramento:** todo controle novo no corpo do palco se confere contra as bordas de toque, no brief, no desenho e no prompt. O defeito passou pelo brief, pela folha e pelo prompt da PR-4 — divergências **1241** (P, o revisor) e **1242** (D, o brief e a folha). No `QL-REQUISITOS.md`, o escopo do encerramento. |
+
+Registradas também: o **QL-R24** (QL-D56) e o **QL-R25** (QL-D58), com os aceites **A-QL-22** e **A-QL-23**, no
+`QL-REQUISITOS.md`; a errata **QL-E4** no `DESIGN-QL/README.md` §6 (as bordas não cobrem a régua; a moldura não se edita).
+
+### 14.2 O conserto da QL-D56 — o rito `[medido: volta/qld56-*.txt]`
+
+- **Os testes primeiro** (`apps/native/test/notas-bordas.test.tsx`, 11): o toque na **divisa** (sob a borda de avançar), no
+  **rótulo** (sob a de voltar) e no **meio** da régua, em B e em C, no topo e na base dos 48, rolado pouco — recolhe ou abre e
+  **não troca de música**; e os controles do que não pode mudar: o texto das notas, a letra, o respiro ao lado da régua e o
+  corpo rolado (a régua fora da tela) **seguem navegando**; sem nota, a borda avança. **Contra o código de antes: 6 reprovam, 5
+  passam** (`volta/qld56-reprovando.txt`). O duplo ganhou o ponto do toque no `onPress` (`locationX/Y`, como o RN; `tocarEm`,
+  div. 1244).
+- **A implementação, declarada: por ORDEM DE CAPTURA.** A borda continua capturando o toque — o mesmo nó, do mesmo tamanho
+  (a base do G-inv não muda) — e o **entrega à régua** quando ele cai na faixa dela: `toqueNaRegua` (`NotasDoPalco.tsx`) põe o
+  ponto do toque no sistema do `meio` (onde as bordas começam) contra a régua na tela — o `y` do bloco das notas menos a
+  rolagem do corpo, 48 de altura, do respiro esquerdo ao direito (32). Fora da faixa, a borda faz o que sempre fez. Não foi
+  por área de toque (recortar as bordas em volta da régua): a régua rola com o corpo, e a área teria de se refazer a cada
+  quadro da rolagem.
+- **O controle negativo**: com o conserto desligado (`toqueNaRegua` devolvendo sempre `false`), os 6 reprovam **pela razão
+  certa** — *"a música trocou (avançou ou voltou)"*, seis vezes (`volta/qld56-cn-conserto-desligado.txt`).
+
+### 14.3 As notas fora do corpo de texto (QL-D58) — couberam, e foram implementadas
+
+**A leitura** (`StageScreen.tsx`): o `meio` desenha o formato (`FormatoDoLeitor`), o arquivo (`Arquivo`: o PDF com `flex: 1`,
+o *baixando*, o S3e com o *Baixar*) ou a rolagem do texto, com o placeholder do item sem corpo dentro dela. **Couberam do
+jeito pedido**: no item sem corpo, dentro da rolagem, acima do placeholder (como na Letra); no formato e no arquivo, num bloco
+fixo no topo da área (o respiro do corpo dos lados e em cima), acima dele — **o PDF com as mesmas props** (a paginação é a
+mesma), **as bordas os mesmos nós** (a régua fora delas pela QL-D56, ali sem rolagem), **nenhum controle sob as notas** (o
+*Baixar* fica abaixo). **Sem nota, nenhum invólucro**: a árvore é a de hoje.
+
+**Os testes primeiro** (`apps/native/test/notas-fora-do-texto.test.tsx`, 8): o S3e, o *baixando*, o formato e o item sem
+corpo com as notas acima, o mesmo estado lembrado, a mesma QL-D56, e sem nota o nó de hoje. **Contra o código de antes: 6
+reprovam, 2 passam** (os de sem nota) — `volta/qld58-reprovando.txt`. O S3d não se alcança no duplo (o arquivo não baixa no
+`jsdom`); ele passa pelo mesmo invólucro do arquivo e se mediu no aparelho.
+
+### 14.4 No aparelho, com o código final `[medido: volta/medidas/, volta/roteiros/, volta/eventos/]`
+
+A fixture da volta (`instrumentos/fixture-ql4.py`) acrescenta à de antes **três Partituras com a nota** (posições 6, 7 e 8: o
+PDF que baixa, o `.jpg`, o PDF que dá 404), com outro `updated_at` na setlist (o sync não guarda a de 5 do cache).
+
+| medida | AVD | Tab |
+|---|---|---|
+| **o toque na régua** (`input tap` no centro da divisa, do rótulo e da régua; C e B × escuro e claro) | **12 de 12**: recolhe ou abre, a posição *3 DE 8* não muda; a divisa cai na `borda-avancar`, o rótulo na `borda-voltar` | **12 de 12** |
+| o controle: a borda de avançar sobre a letra | *3 DE 8 → 4 DE 8* | *3 DE 8 → 4 DE 8* |
+| **o toque na régua sobre o PDF** (C e B) | **6 de 6**, *6 DE 8* | **6 de 6** |
+| **as notas no PDF, no formato e no S3e** (C e B) | o bloco no topo, a área do estado abaixo dele (C: notas 252–620 px, PDF de 674 em diante); *página 1 de 12* | igual |
+| **a paginação do PDF** (deslizes no meio da página até a 2) | C: 6 com as notas abertas, 3 recolhidas · B: 1 e 1 | C: 4 e 3 · B: 1 e 1 |
+| **a âncora** (±0,5 px) — palco com as notas abertas, recolhidas, a marca nas notas; V nos dois giros e nos Detalhes | **todos os passos** (Δ ≤ 0,4) | **todos os passos** (Δ ≤ 0,5) |
+| **G-par de V** | 10 de 10 em C e B | 10 de 10 em C e B |
+
+**A paginação**: o PDF vira a página com as notas abertas e recolhidas, nas duas faixas. Em C com as notas abertas a área do
+PDF fica com 231 dp (Tab) e o deslize do arnês, que vai da base ao topo da área, fica mais curto — por isso mais deslizes; o
+*fit width* rola dentro da página antes de virar (`Leitor.tsx`), como antes. **O deslize não troca de música** em nenhum caso.
+
+### 14.5 Os gates sobre o código final (`ce1adb1`) `[medido: volta/gates/]`
+
+| gate | resultado |
+|---|---|
+| G-inv `B5-baseline/` · `B3-referencia-paisagem/` | **34 de 34 · 18 de 18**, nos dois aparelhos |
+| G-N3 (`--logico docs/native/QL-PR3-anexos/b3-pre-ql`) | **(e)=0 · (b)=0** · nome-acessível 8 · rolagem 6 · quebra 16 ✓ |
+| G-par de V | 10 de 10, nos dois aparelhos (§14.4) |
+| `gate:icones` · `gate:a20` | 0 acusações, **42 registros**, as 8 células e as 18 molduras da divisa; CN `IconesFalso` 24 · 0 acusações (229 literais) |
+| G1a / G1b / G2 / G3 | `G1a: DIFF VAZIO ✓` (as 5 exceções do bloco, as mesmas) · `G1b: só adição ✓` · `testIDs 121 → 124 ✓` (nenhum novo na volta) · `log( 70 = 70 ✓` |
+| suíte · `tsc` (de dentro de cada pacote) · lint | `Test Files 149 passed \| 3 skipped (152)` · `Tests 1851 passed \| 59 skipped (1910)` · raiz 0 · nativo 0 · core 0 · identidade 0 · sem aviso |
+| os do site | G-back · G-palco · G-tok (+ cobertura, CSS) · G-faixa: **PASSA**; nenhum arquivo do site tocado |
+| CI (`ce1adb1`) | **todos verdes**: `android-debug-apk` **13m01s** (job, primeira tentativa) · `build` 4m46s · `gates-nativos` 12s · `g-back` 32s · `g-palco` 19s · `g-tok` 33s · `g-faixa` 20s · `mudou-nativo` 11s · Vercel |
+
+O bloco ```` ```gates ```` do corpo é **o mesmo da §10** (os arquivos que a volta mexeu — `StageScreen.tsx`,
+`NotasDoPalco.tsx` — já estavam nele); o ```` ```gates-web ```` também.
+
+### 14.6 Os julgamentos do Marcel, no Tab — verbatim
+
+No palco da *Lanterna da fixture* (1 de 8), deitado, notas abertas, a rotação automática ligada; para o PDF, a 6 de 8
+(*Partitura da fixture QL*). As perguntas pediam *sim ou não, e a razão*; a razão não veio escrita em nenhuma, e fica assim.
+
+| pergunta | resposta |
+|---|---|
+| **A-QL-19** — o traço da divisa em 20 dp, nos dois estados e nos dois temas, está bom? | **"Sim"** |
+| o toque na régua recolhe e abre na primeira tentativa, com a mão, inclusive tocando na divisa e no rótulo, sem trocar de música? | **"Sim"** |
+| as notas sobre o PDF se leem e não atrapalham a página? | **"Sim"** |
+
+### 14.7 O aparato e as quedas `[medido: volta/estado/, volta/quedas/]`
+
+- **AVD**: subido **duas vezes** do `default_boot` com `-no-snapshot-save`: a primeira para a base, os estados da volta e a
+  âncora; a segunda porque o S0 frio da primeira não se alcançou (a queda abaixo) — nela, a sonda da paginação e o S0
+  (capturado). Nas duas, o repouso lido igual (`avd-antes.txt`, `avd-antes-2.txt`); a receita do cache da sessão de audit
+  guardada e, na segunda, regravada **5 de 5 md5** (a primeira subida se desfez no desligar sem salvar); o mock de pé **antes**
+  da primeira abertura (div. 1236); o rádio só nas rodadas; o fim **igual ao lido**; `ram.bin` de 2026-09-24 14:00 intacto.
+- **Tab**: o mesmo caminho da §8 — release `cf58f7f` lido (sha256 do APK instalado `070187bf6a59…`, igual), `stay_on` a 7 antes
+  do destravar, o dev client, a receita (4 caminhos, os mesmos md5), o mock (8789) e o bundle conferidos **antes** da primeira
+  abertura; na volta, **4 de 4 md5** regravados, o release reinstalado (**sha256 igual**), `stay_on` **0**, settings e túneis
+  **iguais ao lido**; a chave das notas **não ficou** (0 no `RKStorage`; o controle, as chaves `firebase:`, 2).
+- **O bundle servido** com o código final (`volta/medidas/bundle-servido-*.txt`): `localhost:8788` 1 · `octavia.rocks` **0** ·
+  `toqueNaRegua` 5 · `comNotasFixas` 4.
+
+| quedas (regra 36) | aberturas do app | Java | **nativa** | tombstones |
+|---|---|---|---|---|
+| AVD, 1ª subida | 58 | 0 | **2** | 2 |
+| AVD, 2ª subida | 6 | 0 | **0** | 0 |
+| Tab (o logcat das 20:55 em diante; o `dropbox`, a sessão inteira) | — (o anel girou) | 0 | **0** | 0 — o `dropbox` sem nada do app |
+
+**As duas nativas do AVD** (div. 1243) — a assinatura da **N4-D105** e da div. 1222: `Fatal signal 11 (SIGSEGV), code 2
+(SEGV_ACCERR)`, thread `mqt_v_js`, `#01 facebook::react::MountingCoordinator::pullTransaction(bool) const+524` · … · `#05
+ShadowTree::mount`, com os tombstones no `dropbox` (18:59:10, 19:21:34). **O momento das duas**: uma abertura fria logo depois
+de um `force-stop` do arnês — o processo 7372 nasceu às 18:59:03 (entre dois estados da âncora) e caiu às 18:59:09; o 17667
+nasceu às 19:21:13 (a abertura do S0 frio) e caiu às 19:21:24 — **e nenhum dos dois emitiu uma só linha `OCTAVIA:`**: antes
+da primeira tela, **antes de o palco ou V montarem**. Pela condição da QL-PR3 (§8: *"se … sair uma queda nativa com o palco ou
+V montados … pare e reporte"*), **não é parada**: registro, ligado à N4-D105. **Nenhuma queda com o palco ou V montados**, nos
+dois aparelhos.
+
+### 14.8 Não feito, declarado
+
+- **O "antes" (`QL4M-`) no Tab** — só o AVD tem o par antes × depois das telas das notas (§8); a volta não o pediu.
+
+### 14.9 Divergências da volta — 1241 a 1247
+
+A última usada era a **1240** (§12) `[medido: git grep -nE '^\| \*\*(1[12][0-9]{2})\*\*' -- docs → máximo 1240]`.
+
+| div. | origem | o quê | destino |
+|---|---|---|---|
+| **1241** | P | **O prompt da PR-4 (o revisor) pôs um controle no corpo do palco sem o conferir contra as bordas de toque** (QL-D60) | a lição no escopo do encerramento (`QL-REQUISITOS.md`); a QL-D56 |
+| **1242** | D | **O brief e a folha desenharam a régua sob as bordas de 15 %**, que a folha não desenha por serem invisíveis (QL-D60) | a errata QL-E4; a lição no encerramento |
+| **1243** | A | 2 quedas nativas no AVD (a assinatura da N4-D105), em aberturas frias **antes da primeira tela** — uma delas derrubou o S0 frio da 1ª subida | registradas (§14.7), ligadas à N4-D105; o S0 refeito numa 2ª subida |
+| **1244** | T | O duplo do `Pressable` chamava o `onPress` sem evento: o ponto do toque (`locationX/Y`), que a borda lê, não existia no `native-tela` | o duplo entrega o ponto (`__proximoToqueEm`, `tocarEm`); sem `tocarEm`, 0 · 0, que os testes de antes nunca leram (regra 32) |
+| **1245** | T | O teste da QL-D56 do commit `68c1510` com o `vi.fn` sem assinatura (o `tsc` reprovou) e o "recolheu" conferido antes do "não trocou" — o controle negativo reprovaria pela razão errada | corrigidos no commit do conserto (`9f4d26a`), declarado na mensagem |
+| **1246** | T | Um deslize no meio da página do PDF nem sempre a vira: o *fit width* rola dentro da página antes (`Leitor.tsx`); o número de deslizes do arnês depende da altura da área | a sonda conta os deslizes até a página 2 (§14.4) |
+| **1247** | T | O anel do logcat do Tab (5 MiB) girou de novo numa rodada longa: o logcat guarda das 20:55, a rodada começou às 19:33 | a contagem de quedas completada pelo `dropbox` (a sessão inteira), como na div. 1223 |
+
+**Contagem** `[medido: a coluna]`: **7 — P 1 · D 1 · A 1 · T 4** (P: 1241 · D: 1242 · A: 1243 · T: 1244–1247). **A próxima livre é
+a 1248.**
+
+### 14.10 Contabilidade da volta
+
+| | |
+|---|---|
+| requisições a prod · logins · `.env*` abertos | **0 · 0 · 0** — o `apps/native/.env` por `cp -p`, sha256 `f2bfa179cd8e` igual, sem abrir, apagado |
+| `octavia.rocks` | **0** nos bundles servidos (dois) e **0** nos logcats (AVD 1ª e 2ª subidas, Tab); as linhas `api` todas `path=/api/…` ao mock (AVD 112 + 9, Tab 48 no trecho guardado) |
+| AVD `octavia_tab32` | começo e fim **iguais** ao lido; duas subidas sem salvar; `ram.bin` intacto |
+| Tab S6 | **começo: release cf58f7f · fim: release cf58f7f** (sha256 igual); `stay_on` 0 → 7 → **0**; settings e túneis iguais; o cache do Marcel fora durante o mock e de volta 4 de 4 md5; as cópias do Mac **apagadas**; destravado pelo Marcel |
+| quedas | **2 nativas** no AVD, antes da primeira tela (§14.7) · Java 0 · Tab 0 · **nenhuma com o palco ou V montados** |
+| agentes | **0** |

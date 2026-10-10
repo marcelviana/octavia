@@ -1,0 +1,106 @@
+== roteiros/ql-avd.txt
+== bordas 18:43:06
+   [C escuro] régua [72, 252, 2488, 360] · borda-voltar [0, 198, 384, 1249] · borda-avancar [2176, 198, 2560, 1249] · posição 3 DE 8
+      toque no(a) divisa  @ 2465,306 px (borda-avancar): notas abertas → recolhidas · posição 3 DE 8 → 3 DE 8 ✓
+      toque no(a) rótulo  @ 222,305 px (borda-voltar): notas recolhidas → abertas · posição 3 DE 8 → 3 DE 8 ✓
+      toque no(a) meio    @ 1280,306 px (fora das bordas): notas abertas → recolhidas · posição 3 DE 8 → 3 DE 8 ✓
+   [C escuro] 3/3 toques recolhem ou abrem sem trocar de música
+   [C claro] régua [72, 252, 2488, 360] · borda-voltar [0, 198, 384, 1249] · borda-avancar [2176, 198, 2560, 1249] · posição 3 DE 8
+      toque no(a) divisa  @ 2465,306 px (borda-avancar): notas abertas → recolhidas · posição 3 DE 8 → 3 DE 8 ✓
+      toque no(a) rótulo  @ 222,305 px (borda-voltar): notas recolhidas → abertas · posição 3 DE 8 → 3 DE 8 ✓
+      toque no(a) meio    @ 1280,306 px (fora das bordas): notas abertas → recolhidas · posição 3 DE 8 → 3 DE 8 ✓
+   [C claro] 3/3 toques recolhem ou abrem sem trocar de música
+   [B escuro] régua [72, 306, 1528, 414] · borda-voltar [0, 252, 240, 2209] · borda-avancar [1360, 252, 1600, 2209] · posição 3 DE 8
+      toque no(a) divisa  @ 1505,360 px (borda-avancar): notas abertas → recolhidas · posição 3 DE 8 → 3 DE 8 ✓
+      toque no(a) rótulo  @ 222,359 px (borda-voltar): notas recolhidas → abertas · posição 3 DE 8 → 3 DE 8 ✓
+      toque no(a) meio    @ 800,360 px (fora das bordas): notas abertas → recolhidas · posição 3 DE 8 → 3 DE 8 ✓
+   [B escuro] 3/3 toques recolhem ou abrem sem trocar de música
+   [B claro] régua [72, 306, 1528, 414] · borda-voltar [0, 252, 240, 2209] · borda-avancar [1360, 252, 1600, 2209] · posição 3 DE 8
+      toque no(a) divisa  @ 1505,360 px (borda-avancar): notas abertas → recolhidas · posição 3 DE 8 → 3 DE 8 ✓
+      toque no(a) rótulo  @ 222,359 px (borda-voltar): notas recolhidas → abertas · posição 3 DE 8 → 3 DE 8 ✓
+      toque no(a) meio    @ 800,360 px (fora das bordas): notas abertas → recolhidas · posição 3 DE 8 → 3 DE 8 ✓
+   [B claro] 3/3 toques recolhem ou abrem sem trocar de música
+   controle: a borda de avançar sobre a letra @ 2368,961 px: posição 3 DE 8 → 4 DE 8
+   bordas: 12/12 toques na régua certos (C e B × escuro e claro × divisa, rótulo, meio)
+== foratexto 18:48:48
+   [C PDF] 6 DE 8 · página: página 1 de 12 · notas [72, 252, 2488, 620] · s3d [0, 674, 2560, 1168]
+   [C PDF] régua [72, 252, 2488, 360] · borda-voltar [0, 198, 384, 1249] · borda-avancar [2176, 198, 2560, 1249] · posição 6 DE 8
+      toque no(a) divisa  @ 2465,306 px (borda-avancar): notas abertas → recolhidas · posição 6 DE 8 → 6 DE 8 ✓
+      toque no(a) rótulo  @ 222,305 px (borda-voltar): notas recolhidas → abertas · posição 6 DE 8 → 6 DE 8 ✓
+      toque no(a) meio    @ 1280,306 px (fora das bordas): notas abertas → recolhidas · posição 6 DE 8 → 6 DE 8 ✓
+   [C PDF] 3/3 toques recolhem ou abrem sem trocar de música
+   [C PDF] depois de um deslize no meio da página: página página 1 de 12 · 6 DE 8
+   [C s3-formato] 7 DE 8 · notas [72, 252, 2488, 620] · s3-formato [0, 674, 2560, 993]
+   [C s3e] 8 DE 8 · notas [72, 252, 2488, 620] · s3e [0, 674, 2560, 1291]
+   [B PDF] 6 DE 8 · página: página 1 de 12 · notas [72, 306, 1528, 730] · s3d [0, 784, 1600, 2128]
+   [B PDF] régua [72, 306, 1528, 414] · borda-voltar [0, 252, 240, 2209] · borda-avancar [1360, 252, 1600, 2209] · posição 6 DE 8
+      toque no(a) divisa  @ 1505,360 px (borda-avancar): notas abertas → recolhidas · posição 6 DE 8 → 6 DE 8 ✓
+      toque no(a) rótulo  @ 222,359 px (borda-voltar): notas recolhidas → abertas · posição 6 DE 8 → 6 DE 8 ✓
+      toque no(a) meio    @ 800,360 px (fora das bordas): notas abertas → recolhidas · posição 6 DE 8 → 6 DE 8 ✓
+   [B PDF] 3/3 toques recolhem ou abrem sem trocar de música
+   [B PDF] depois de um deslize no meio da página: página página 2 de 12 · 6 DE 8
+   [B s3-formato] 7 DE 8 · notas [72, 306, 1528, 730] · s3-formato [0, 784, 1600, 1103]
+   [B s3e] 8 DE 8 · notas [72, 306, 1528, 730] · s3e [0, 784, 1600, 1401]
+== ancora 18:55:06
+== ancorav 19:02:58
+== gpar 19:06:41
+
+== roteiros/ql-avd-2.txt
+== paginacao 19:25:18
+   [C PDF, notas abertas] área do PDF [0, 674, 2560, 1168] px · 6 deslize(s) → página 2 de 12 · 6 DE 8
+   [C PDF, notas recolhidas] área do PDF [0, 434, 2560, 1168] px · 3 deslize(s) → página 2 de 12 · 6 DE 8
+   [B PDF, notas abertas] área do PDF [0, 784, 1600, 2128] px · 1 deslize(s) → página 2 de 12 · 6 DE 8
+   [B PDF, notas recolhidas] área do PDF [0, 488, 1600, 2128] px · 1 deslize(s) → página 2 de 12 · 6 DE 8
+
+== roteiros/ql-tab.txt
+== bordas 20:37:32
+   [C escuro] régua [72, 252, 2488, 360] · borda-voltar [0, 198, 384, 1276] · borda-avancar [2176, 198, 2560, 1276] · posição 3 DE 8
+      toque no(a) divisa  @ 2465,306 px (borda-avancar): notas abertas → recolhidas · posição 3 DE 8 → 3 DE 8 ✓
+      toque no(a) rótulo  @ 222,305 px (borda-voltar): notas recolhidas → abertas · posição 3 DE 8 → 3 DE 8 ✓
+      toque no(a) meio    @ 1280,306 px (fora das bordas): notas abertas → recolhidas · posição 3 DE 8 → 3 DE 8 ✓
+   [C escuro] 3/3 toques recolhem ou abrem sem trocar de música
+   [C claro] régua [72, 252, 2488, 360] · borda-voltar [0, 198, 384, 1276] · borda-avancar [2176, 198, 2560, 1276] · posição 3 DE 8
+      toque no(a) divisa  @ 2465,306 px (borda-avancar): notas abertas → recolhidas · posição 3 DE 8 → 3 DE 8 ✓
+      toque no(a) rótulo  @ 222,305 px (borda-voltar): notas recolhidas → abertas · posição 3 DE 8 → 3 DE 8 ✓
+      toque no(a) meio    @ 1280,306 px (fora das bordas): notas abertas → recolhidas · posição 3 DE 8 → 3 DE 8 ✓
+   [C claro] 3/3 toques recolhem ou abrem sem trocar de música
+   [B escuro] régua [72, 306, 1528, 414] · borda-voltar [0, 252, 240, 2236] · borda-avancar [1360, 252, 1600, 2236] · posição 3 DE 8
+      toque no(a) divisa  @ 1505,360 px (borda-avancar): notas abertas → recolhidas · posição 3 DE 8 → 3 DE 8 ✓
+      toque no(a) rótulo  @ 222,359 px (borda-voltar): notas recolhidas → abertas · posição 3 DE 8 → 3 DE 8 ✓
+      toque no(a) meio    @ 800,360 px (fora das bordas): notas abertas → recolhidas · posição 3 DE 8 → 3 DE 8 ✓
+   [B escuro] 3/3 toques recolhem ou abrem sem trocar de música
+   [B claro] régua [72, 306, 1528, 414] · borda-voltar [0, 252, 240, 2236] · borda-avancar [1360, 252, 1600, 2236] · posição 3 DE 8
+      toque no(a) divisa  @ 1505,360 px (borda-avancar): notas abertas → recolhidas · posição 3 DE 8 → 3 DE 8 ✓
+      toque no(a) rótulo  @ 222,359 px (borda-voltar): notas recolhidas → abertas · posição 3 DE 8 → 3 DE 8 ✓
+      toque no(a) meio    @ 800,360 px (fora das bordas): notas abertas → recolhidas · posição 3 DE 8 → 3 DE 8 ✓
+   [B claro] 3/3 toques recolhem ou abrem sem trocar de música
+   controle: a borda de avançar sobre a letra @ 2368,975 px: posição 3 DE 8 → 4 DE 8
+   bordas: 12/12 toques na régua certos (C e B × escuro e claro × divisa, rótulo, meio)
+== foratexto 20:43:12
+   [C PDF] 6 DE 8 · página: página 1 de 12 · notas [72, 252, 2488, 620] · s3d [0, 674, 2560, 1195]
+   [C PDF] régua [72, 252, 2488, 360] · borda-voltar [0, 198, 384, 1276] · borda-avancar [2176, 198, 2560, 1276] · posição 6 DE 8
+      toque no(a) divisa  @ 2465,306 px (borda-avancar): notas abertas → recolhidas · posição 6 DE 8 → 6 DE 8 ✓
+      toque no(a) rótulo  @ 222,305 px (borda-voltar): notas recolhidas → abertas · posição 6 DE 8 → 6 DE 8 ✓
+      toque no(a) meio    @ 1280,306 px (fora das bordas): notas abertas → recolhidas · posição 6 DE 8 → 6 DE 8 ✓
+   [C PDF] 3/3 toques recolhem ou abrem sem trocar de música
+   [C PDF] depois de um deslize no meio da página: página página 1 de 12 · 6 DE 8
+   [C s3-formato] 7 DE 8 · notas [72, 252, 2488, 620] · s3-formato [0, 674, 2560, 993]
+   [C s3e] 8 DE 8 · notas [72, 252, 2488, 620] · s3e [0, 674, 2560, 1291]
+   [B PDF] 6 DE 8 · página: página 1 de 12 · notas [72, 306, 1528, 730] · s3d [0, 784, 1600, 2155]
+   [B PDF] régua [72, 306, 1528, 414] · borda-voltar [0, 252, 240, 2236] · borda-avancar [1360, 252, 1600, 2236] · posição 6 DE 8
+      toque no(a) divisa  @ 1505,360 px (borda-avancar): notas abertas → recolhidas · posição 6 DE 8 → 6 DE 8 ✓
+      toque no(a) rótulo  @ 222,359 px (borda-voltar): notas recolhidas → abertas · posição 6 DE 8 → 6 DE 8 ✓
+      toque no(a) meio    @ 800,360 px (fora das bordas): notas abertas → recolhidas · posição 6 DE 8 → 6 DE 8 ✓
+   [B PDF] 3/3 toques recolhem ou abrem sem trocar de música
+   [B PDF] depois de um deslize no meio da página: página página 2 de 12 · 6 DE 8
+   [B s3-formato] 7 DE 8 · notas [72, 306, 1528, 730] · s3-formato [0, 784, 1600, 1103]
+   [B s3e] 8 DE 8 · notas [72, 306, 1528, 730] · s3e [0, 784, 1600, 1401]
+== paginacao 20:49:24
+   [C PDF, notas abertas] área do PDF [0, 674, 2560, 1195] px · 4 deslize(s) → página 2 de 12 · 6 DE 8
+   [C PDF, notas recolhidas] área do PDF [0, 434, 2560, 1195] px · 3 deslize(s) → página 2 de 12 · 6 DE 8
+   [B PDF, notas abertas] área do PDF [0, 784, 1600, 2155] px · 1 deslize(s) → página 2 de 12 · 6 DE 8
+   [B PDF, notas recolhidas] área do PDF [0, 488, 1600, 2155] px · 1 deslize(s) → página 2 de 12 · 6 DE 8
+== ancora 20:53:40
+== ancorav 21:00:32
+== gpar 21:04:29
+
