@@ -1,0 +1,35 @@
+# o aval do pre-check — a verificação do commit 2 (2026-10-10 18:02:08 -0300)
+
+$ gh api repos/marcelviana/octavia/commits/fd788a2abe21205d55af42d8769f9f721fc2f541/check-runs --jq '.check_runs[] | "\(.name) · \(.status) · \(.conclusion)"'
+Vercel Preview Comments · completed · success
+g-palco · completed · success
+build · completed · success
+g-faixa · completed · success
+g-back · completed · success
+g-tok · completed · success
+gates-nativos · completed · success
+
+$ git rev-parse origin/main
+98c9f7f10097fa331c24b8ae6d0b83e8b6f21ac9
+
+$ git diff --cached --stat fd788a2 -- . ':!docs'   (o commit 2 montado)
+exit=0 (saída vazia = nada fora de docs/)
+
+$ git grep --cached -hoE '^\| \*\*SY-D[0-9]+\*\*' -- docs | sort -u | wc -l
+      31
+$ … | grep -oE '[0-9]+' | sort -n | tr '
+' ' '
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 
+
+$ grep -c '→ \*\*Respondida: SY-D' docs/native/SY-PRECHECK.md
+15
+$ grep -oE '→ \*\*Respondida: SY-D[0-9]+' docs/native/SY-PRECHECK.md | tr '
+' ' '
+SY-D17 SY-D18 SY-D19 SY-D20 SY-D21 SY-D22 SY-D23 SY-D24 SY-D25 SY-D26 SY-D27 SY-D28 SY-D29 SY-D30 SY-D31 
+$ grep -cE '^\*\*Q[0-9]+ — ' docs/native/SY-PRECHECK.md
+15
+
+$ git grep --cached -nE '^\| \*\*(126[4-9]|12[7-9][0-9]|13[0-9]{2})\*\*' -- docs; git grep --cached -nE 'div(s)?\. ?(126[4-9]|12[7-9][0-9]|13[0-9]{2})' -- docs
+exit=1 (1 = nenhuma: a próxima livre é a 1264)
+
+suíte · tsc · lint: não rodaram neste commit (só docs)

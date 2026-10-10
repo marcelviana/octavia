@@ -215,6 +215,10 @@ que vem antes do resto do D. O pre-check do QL leu que, se o favoritar parar de 
 nada **e** o `reconcileByUpdatedAt` deixa de ver o favorito feito no site (`QL-PRECHECK.md` §A6.3); o SY deixa escrito o
 que a `naoRegredir` e o critério do `reconcile` exigem, e o item 3 muda os três juntos, a partir disso.)*
 
+*(Errata de ponteiro do pre-check do SY, 2026-10-10 — `docs/native/SY-PRECHECK.md` §A6.4: o que o SY deixa escrito para o
+**item 3** está lá — a `naoRegredir`, o critério do `reconcile` e o limite do T1-R10 mudam juntos com o `updated_at` do
+favoritar, e o gate da janela do SY (a estrela no meio do sync) é o controle que o D roda com o critério novo.)*
+
 ### 8.3 W5 (instrumento)
 
 | # | item | origem |

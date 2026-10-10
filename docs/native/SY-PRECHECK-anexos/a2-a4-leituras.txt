@@ -1,0 +1,174 @@
+# A2/A4 — leituras de biblioteca e de código citadas no SY-PRECHECK.md (saída literal; [lido])
+
+$ grep '"version"' node_modules/.pnpm/expo-network@57.0.1_expo@57.0.20_react@19.2.3/node_modules/expo-network/package.json
+  "version": "57.0.1",
+
+$ sed -n 7,20p node_modules/.pnpm/expo-network@57.0.1_expo@57.0.20_react@19.2.3/node_modules/expo-network/build/Network.types.d.ts
+    /**
+     * If there is an active network connection. Note that this does not mean that internet is reachable.
+     * This field is `false` if the type is either `Network.NetworkStateType.NONE` or `Network.NetworkStateType.UNKNOWN`,
+     * `true` otherwise.
+     */
+    isConnected?: boolean;
+    /**
+     * If the internet is reachable with the currently active network connection. On Android, this
+     * requires the active network to have internet capability (`NET_CAPABILITY_INTERNET`), confirmed
+     * internet access (`NET_CAPABILITY_VALIDATED`), and a usable connection state. VPN connections
+     * also require non-zero downstream bandwidth. On iOS, this value will always be the same as
+     * `isConnected`.
+     */
+    isInternetReachable?: boolean;
+
+$ sed -n 39,42p;100,102p;110,113p node_modules/.pnpm/expo-network@57.0.1_expo@57.0.20_react@19.2.3/node_modules/expo-network/android/.../NetworkModule.kt
+  private val networkCallback = object : ConnectivityManager.NetworkCallback() {
+    override fun onAvailable(network: android.net.Network) {
+      asyncEmitNetworkState(DELAY_MS)
+    }
+    override fun onCapabilitiesChanged(network: android.net.Network, networkCapabilities: NetworkCapabilities) {
+      asyncEmitNetworkState(DELAY_MS)
+    }
+    OnCreate {
+      try {
+        connectivityManager.registerDefaultNetworkCallback(networkCallback)
+        isNetworkCallbackRegistered = true
+  private fun asyncEmitNetworkState(delay: Int) {
+    mainHandler.removeCallbacks(emitRunnable)
+    mainHandler.postDelayed(emitRunnable, delay.toLong())
+  }
+
+$ sed -n 23,49p node_modules/.pnpm/expo-network@57.0.1_expo@57.0.20_react@19.2.3/node_modules/expo-network/android/.../NetworkUtils.kt
+internal fun isInternetReachable(
+  connectivityManager: ConnectivityManager,
+  sdkInt: Int = Build.VERSION.SDK_INT
+): Boolean {
+  val network = connectivityManager.activeNetwork ?: return false
+  val capabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
+
+  val hasUsableConnectionState = if (sdkInt >= Build.VERSION_CODES.Q) {
+    capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED)
+  } else {
+    val networkInfo = try {
+      connectivityManager.getNetworkInfo(network)
+    } catch (e: SecurityException) {
+      Log.w(TAG, "expo-network could not read network state: missing ACCESS_NETWORK_STATE permission", e)
+      null
+    }
+    networkInfo?.detailedState == NetworkInfo.DetailedState.CONNECTED
+  }
+
+  var isReachable =
+    capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+      capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED) &&
+      hasUsableConnectionState
+
+  if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_VPN)) {
+    isReachable = isReachable && capabilities.linkDownstreamBandwidthKbps != 0
+  }
+
+$ sed -n 20,40p node_modules/.pnpm/react-native@0.86.3_@babel+core@7.28.4_@types+react@19.2.18_react@19.2.3/node_modules/react-native/Libraries/AppState/AppState.d.ts
+ *      change - This even is received when the app state has changed.
+ *      focus [Android] - Received when the app gains focus (the user is interacting with the app).
+ *      blur [Android] - Received when the user is not actively interacting with the app.
+ *
+ * App States
+ *      active - The app is running in the foreground
+ *      background - The app is running in the background. The user is either in another app or on the home screen
+ *      inactive [iOS] - This is a transition state that happens when the app launches, is asking for permissions or when a call or SMS message is received.
+ *      unknown [iOS] - Initial value until the current app state is determined
+ *      extension [iOS] - The app is running as an app extension
+ *
+ * For more information, see Apple's documentation: https://developer.apple.com/library/ios/documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/TheAppLifeCycle/TheAppLifeCycle.html
+ *
+ * @see https://reactnative.dev/docs/appstate#app-states
+ */
+export type AppStateEvent = 'change' | 'memoryWarning' | 'blur' | 'focus';
+export type AppStateStatus =
+  | 'active'
+  | 'background'
+  | 'inactive'
+  | 'unknown'
+
+$ sed -n 128,136p hooks/use-setlist-data.ts   (o "30 s do web" do T1-R13)
+  // Add window focus listener to refresh data when user returns to the tab
+  useEffect(() => {
+    const handleWindowFocus = () => {
+      const now = Date.now()
+      if (ready && user && user.uid && (now - lastFocusTimeRef.current) > 30000) {
+        load(true) // Force refresh to bypass cache
+      }
+      lastFocusTimeRef.current = now
+    }
+
+$ sed -n 92,104p app/api/storage/upload/route.ts   (o nome do objeto: timestamp, sem upsert)
+
+    // Create unique filename with timestamp to prevent conflicts and directory traversal
+    const timestamp = Date.now()
+    const uniqueFilename = `${timestamp}-${sanitizedFilename}`
+
+    // Upload to Supabase using service client with service role
+    const supabase = getSupabaseServiceClient()
+    
+    const { data, error } = await supabase.storage
+      .from(BUCKET)
+      .upload(uniqueFilename, uint8Array, {
+        upsert: false, // Don't overwrite existing files for security
+        contentType: file.type,
+
+$ sed -n 208,226p packages/core/src/offline.ts   (o plano: só exclui o que está no disco)
+export function planoDaBiblioteca(
+  setlists: SetlistDTO[],
+  contentById: Map<string, ContentDTO>,
+  filesPresent: Set<string>,
+  today: string,
+): ItemDoPlano[] {
+  const out: ItemDoPlano[] = selectPrefetch(setlists, contentById, filesPresent, today).map((item) => ({
+    url: item.url,
+    prioridade: '7d',
+  }))
+  const vistas = new Set(out.map((item) => item.url))
+  for (const content of ordenarBiblioteca([...contentById.values()])) {
+    const url = urlDoArquivo(content)
+    if (url === null || filesPresent.has(url) || vistas.has(url)) continue
+    vistas.add(url)
+    out.push({ url, prioridade: 'biblioteca' })
+  }
+  return out
+}
+
+$ sed -n 151,162p apps/native/src/api.ts; sed -n 203,211p apps/native/src/api.ts   (o sync sem prazo)
+/**
+ * **O prazo de rede (N2-D35), e é só isto que ele é**: um `AbortController`
+ * que dispara depois de `prazoMs` e mata a request em voo. O número é do core
+ * (`PRAZO_DE_REDE_MS`); a decisão de usá-lo é de quem chama; o mecanismo é
+ * daqui, porque a primeira linha deste arquivo diz que ele é a camada de rede
+ * única do app.
+ *
+ * `prazoMs` ausente = **sem prazo**, que é o comportamento de sempre. As
+ * leituras do sync continuam assim de propósito: a fixture `atraso` do S1a
+ * segura a resposta por 45 s para que o estado "sincronizando pela primeira
+ * vez" fique parado o suficiente para ser medido, e um prazo ali apagaria um
+ * estado do design em vez de proteger alguém.
+
+/**
+ * `GET /api/setlists` — array na raiz, sem paginação (`docs/api/SETLISTS.md`).
+ *
+ * `prazoMs` só chega pela **releitura** da escrita (T2-R9, N2-D35): quem lê
+ * pelo sync continua sem prazo (ver o `prazoDe` acima).
+ */
+export function getSetlists(opcoes?: { prazoMs?: number }): Promise<ApiResult<SetlistDTO[]>> {
+  return get<SetlistDTO[]>('/api/setlists', 'setlist-read', opcoes?.prazoMs)
+
+$ grep -n "AppState\|addNetworkStateListener" apps/native/test/fake-react-native.tsx apps/native/test/*.test.ts* | head
+apps/native/test/apos-escrita.test.tsx:35:  addNetworkStateListener: () => ({ remove: () => undefined }),
+apps/native/test/biblioteca-tela.test.tsx:39:  addNetworkStateListener: () => ({ remove: () => undefined }),
+apps/native/test/escrita.test.ts:48:  addNetworkStateListener: () => ({ remove: () => undefined }),
+apps/native/test/favoritar.test.ts:36:  addNetworkStateListener: () => ({ remove: () => undefined }),
+apps/native/test/favoritar-sync.test.ts:32:  addNetworkStateListener: () => ({ remove: () => undefined }),
+apps/native/test/g-par-visualizacao.test.tsx:51:  addNetworkStateListener: () => ({ remove: () => undefined }),
+apps/native/test/leitor-quebra.test.tsx:38:  addNetworkStateListener: () => ({ remove: () => undefined }),
+apps/native/test/notas-bordas.test.tsx:30:  addNetworkStateListener: () => ({ remove: () => undefined }),
+apps/native/test/notas-palco.test.tsx:44:  addNetworkStateListener: () => ({ remove: () => undefined }),
+apps/native/test/notas-fora-do-texto.test.tsx:30:  addNetworkStateListener: () => ({ remove: () => undefined }),
+
+$ grep -rn "App.tsx\|from '../App'" apps/native/test/*.test.ts* | grep -c "import"
+       0

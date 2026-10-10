@@ -1,0 +1,14 @@
+$ git diff --cached --stat origin/main -- . ':!docs'   (o commit montado, antes do commit)
+exit=0 (saída vazia = nada fora de docs/)
+
+$ git diff --cached --stat origin/main
+ docs/native/QL-ENCERRAMENTO.md                    |   4 +
+ docs/native/SY-PRECHECK-anexos/README.md          |  26 +
+ docs/native/SY-PRECHECK-anexos/a1-greps.txt       | 197 ++++++
+ docs/native/SY-PRECHECK-anexos/a2-a4-leituras.txt | 174 +++++
+ docs/native/SY-PRECHECK-anexos/divs-faixa.txt     |  13 +
+ docs/native/SY-PRECHECK-anexos/suite-tsc-lint.txt |  28 +
+ docs/native/SY-PRECHECK.md                        | 732 ++++++++++++++++++++++
+ docs/ux/D0-ENCERRAMENTO.md                        |   4 +
+ docs/ux/PLANO-TRANSICAO.md                        |   7 +
+ 9 files changed, 1185 insertions(+)

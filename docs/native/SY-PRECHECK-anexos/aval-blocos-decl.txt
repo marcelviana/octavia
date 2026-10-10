@@ -1,0 +1,14 @@
+$ gh pr view 378 --json body -q .body | sh apps/native/scripts/gates-decl.sh
+exit=0
+
+$ gh pr view 378 --json body -q .body | sh scripts/gates-web/gates-web-decl.sh
+exit=0
+
+# controle: um bloco com uma chave DESCONHECIDA recuada em 4 espaços — o extrator a vê?
+gates-decl: chave desconhecida:     xyz (linha 2 do corpo)
+exit=1
+gates-web-decl: chave desconhecida:     xyz (linha 2 do corpo)
+exit=1
+
+# controle: o mesmo comentário sem recuo
+exit=0
