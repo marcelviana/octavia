@@ -1,0 +1,5 @@
+== o dump do palco depois da reabertura (só resource-id e atributos; nenhum texto)
+palco: True · corpo: True
+notas presente bounds=[72,252][2488,380]
+notas-regua presente bounds=[72,252][2488,360]
+notas-texto AUSENTE 

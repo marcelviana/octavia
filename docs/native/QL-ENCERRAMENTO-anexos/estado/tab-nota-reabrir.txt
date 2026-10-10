@@ -1,0 +1,16 @@
+== 2026-10-10 12:07:00 A-QL-20: a reabertura depois de recolher (o Marcel fechou o app; aberto pelo adb a pedido dele)
+TotalTime: 244
+12:07:03.063 OCTAVIA: faixa=C w=1137.8 h=711.1
+12:07:03.064 OCTAVIA: net online
+12:07:03.698 OCTAVIA: auth uid=<…> src=restored
+12:07:03.749 OCTAVIA: cache hit kind=setlists n=2
+12:07:03.749 OCTAVIA: cache hit kind=content n=65
+12:07:03.777 OCTAVIA: sync start
+12:07:03.777 OCTAVIA: auth refresh=cached
+12:07:06.348 OCTAVIA: api status=200 path=/api/setlists n=1 ms=2571
+12:07:06.377 OCTAVIA: auth refresh=cached
+12:07:06.790 OCTAVIA: api status=200 path=/api/content n=1 ms=413
+12:07:06.817 OCTAVIA: cache write kind=setlists n=2 invalidated=0
+12:07:06.827 OCTAVIA: cache write kind=content n=65 invalidated=0
+12:07:06.827 OCTAVIA: sync ok setlists=2 content=65 pages=1 t=3050
+12:07:06.835 OCTAVIA: prefetch plan n=0 reason=library

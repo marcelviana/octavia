@@ -1,0 +1,13 @@
+| conta | id8      | maior_linha | linhas_acima_48 |
+| ----- | -------- | ----------- | --------------- |
+| xVDJ  | f0523c5e | 77          | 15              |
+| xVDJ  | 69735e94 | 75          | 2               |
+| xVDJ  | 1c6c8afd | 65          | 7               |
+| xVDJ  | 8ca6316a | 64          | 10              |
+| xVDJ  | 1120cfe6 | 64          | 1               |
+| xVDJ  | f1800933 | 63          | 3               |
+| xVDJ  | 83b41db2 | 62          | 5               |
+| xVDJ  | 639cafda | 60          | 9               |
+| xVDJ  | 7a36ce4f | 58          | 6               |
+| xVDJ  | 60896e4e | 58          | 5               |
+| xVDJ  | e3ce350a | 57          | 3               |

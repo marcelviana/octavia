@@ -1,0 +1,17 @@
+== 2026-10-10 12:10:42 Tab — estado final
+global stay_on_while_plugged_in = 0
+system accelerometer_rotation = 1
+system user_rotation = 0
+global airplane_mode_on = 0
+global wifi_on = 1
+global mobile_data = 1
+reverse: []
+    lastUpdateTime=2026-10-10 10:24:45
+    pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+sha256 do instalado: 65209b80f94af377905586dd762257823cc30752ef0d50c5cd4c4a30582c680a
+/sdcard: ls: /sdcard/fr.xml: No such file or directory ls: /sdcard/q.xml: No such file or directory 
+quedas na sessão inteira do Tab (logcat desde o -c das frias; dropbox de hoje):
+quedas do app: java=0 · nativas=0 · (a contagem antiga, a subcadeia FATAL: 1)
+tombstones do app no dropbox: 0
+dropbox hoje (crash/native_crash/tombstone): 0
+OCTAVIA api desde o -c das frias: 4 · write: 0

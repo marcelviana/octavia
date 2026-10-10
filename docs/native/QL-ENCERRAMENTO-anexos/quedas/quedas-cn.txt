@@ -1,0 +1,2 @@
+CN — a amostra: java=0 nativas=1 (esperado 0 e 1) · a contagem antiga: 1 (o FATAL do OUTRO processo; a queda nativa do app não entra nela)
+CN — a mesma amostra sem a linha `Fatal signal`: nativas=0 (esperado 0)

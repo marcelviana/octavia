@@ -32,6 +32,10 @@
 | **D0-D4** | A ordem dos blocos: **D-0 → quebra de linha → resto do D → N5 → identidade → iOS**, com o W5 à parte. |
 | **D0-D5** | **Como** consertar a Tab não está decidido: é a pergunta deste pre-check. Os caminhos se medem antes de escolher. |
 
+*(Errata de ponteiro do aval do encerramento do QL — **QL-D64** `[Marcel, 2026-10-10]`, `docs/native/QL-ENCERRAMENTO.md` §13:
+a ordem da D0-D4 passou pela D-0 encerrada (D0-D25), pelo SY (QL-D12) e pela navegação do palco (QL-D57). A fila é hoje **QL → SY → resto do D → navegação do palco → metrônomo → N5 → identidade → iOS**, o W5 à parte; o metrônomo visual no palco (`QL-ENCERRAMENTO-anexos/ideia-metronomo.md`) vem antes do N5,
+para o palco do celular já nascer com ele.)*
+
 **Erratas de ponteiro, neste commit** (o `N4-ENCERRAMENTO.md` §15.1 e a nota do N4 no `PLANO-TRANSICAO.md` descreviam a
 D-0 com o `updated_at` dentro — div. 1146): no **`docs/native/N4-ENCERRAMENTO.md`**, uma nota depois da tabela do §10.4
 (o item 1 vira a D-0; o item 3 amarrado à N4-D91) e uma errata no fim do §15; no **`docs/ux/PLANO-TRANSICAO.md`**, uma

@@ -468,6 +468,9 @@ As duas perguntas do §14 respondidas, e uma decisão a mais:
 | **QL-D50** | (pergunta 2, div. 1226) **A âncora se mede de novo no AVD com o código final**, antes do merge: o giro C → B, o giro B → C e um passo de zoom, no meio da Letra longa, com o mock e o caminho do `APARATO.md`. A rolagem medida tem de bater com a prevista (±0,5 px) e a linha lógica do topo tem de ser a esperada nos três passos. | a medida do §16.1; o `ancora.ts` com o critério de ±0,5 px (div. 1228); `QL-REQUISITOS.md`: o A-QL-12 |
 | **QL-D51** | **O custo de `quebrar` no Hermes se mede de novo no release, no encerramento**, junto com as 100 + 100 aberturas frias (QL-D9). A fixture e as colunas (80, 48, 26, 14) são as mesmas, com mediana e máximo de 100 rodadas. O número desta PR (dev client, §9) fica como está. | `QL-REQUISITOS.md`: o escopo do encerramento |
 
+*(Errata de ponteiro do encerramento do QL: a QL-D51 foi tentada e **não tem caminho no release sem mudar código** (div.
+1248) — **QL-D61** `[Marcel, 2026-10-10]`, `QL-ENCERRAMENTO.md` §3.1: o número do §9 fica como teto; o W5 herda o caminho.)*
+
 ### 16.1 A âncora no AVD com o código final (QL-D50) `[medido: aval/]`
 
 O código da ponta da branch (`34bca23`; o de `apps/` e `packages/` é o de `0e83c2e`), o bundle servido conferido antes da

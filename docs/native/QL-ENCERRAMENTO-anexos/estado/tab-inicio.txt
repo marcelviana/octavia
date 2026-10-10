@@ -1,0 +1,13 @@
+== 2026-10-10 09:45:06 Tab — estado inicial (lido antes de qualquer mudança)
+global stay_on_while_plugged_in = 0
+system accelerometer_rotation = 1
+system user_rotation = 0
+global airplane_mode_on = 0
+global wifi_on = 1
+global mobile_data = 1
+reverse: []
+    lastUpdateTime=2026-10-10 07:40:21
+    pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+sha256 do instalado: 070187bf6a5931072afac3f76112905eab732df22d22ad7044048ec70a658e91
+keyguard: isKeyguardShowing=true
+stay_on → 7

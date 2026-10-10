@@ -1,0 +1,9 @@
+ PostgreSQL 17.11 (Homebrew) on aarch64-apple-darwin25.6.0, compiled by Apple clang version 21.0.0 (clang-2100.1.1.101), 64-bit
+ conta |   id8    | maior_linha | linhas_acima_48 
+-------+----------+-------------+-----------------
+ xVDJ  | aaaaaaaa |          77 |               3
+ xVDJ  | dddddddd |          60 |               2
+ xVDJ  | bbbbbbbb |          56 |               1
+(3 rows)
+
+esperado: xVDJ aaaaaaaa 77 3 · xVDJ dddddddd 60 2 · xVDJ bbbbbbbb 56 1 (cccccccc 55 fora; 99999999 outra conta fora; a Cifra fora; a nula fora)

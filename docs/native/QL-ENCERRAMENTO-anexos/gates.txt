@@ -1,0 +1,164 @@
+== 2026-10-10 12:12:26 gates na ponta da main — árvore ../octavia-ql-encerramento, HEAD ea5e891 (ea5e891 + só docs)
+
+$ sh apps/native/scripts/g-inv.sh docs/native/N3-PRECHECK-anexos/B5-baseline docs/native/QL-PR4-anexos/volta/dumps/base | tail -4
+  · QL4B-picker-vazio-avd-ret: sem chave na base (fora da conta)
+  · QL4B-picker-vazio-tab-ret: sem chave na base (fora da conta)
+G-inv: 34 de 34 idênticos
+G-inv: IDÊNTICO EM DP ✓
+exit=0
+
+$ sh apps/native/scripts/g-inv.sh docs/native/N3-PRECHECK-anexos/B3-referencia-paisagem docs/native/QL-PR4-anexos/volta/dumps/base | tail -4
+  · QL4B-reordenar-aberto-avd-pai: sem chave na base (fora da conta)
+  · QL4B-reordenar-aberto-tab-pai: sem chave na base (fora da conta)
+G-inv: 18 de 18 idênticos
+G-inv: IDÊNTICO EM DP ✓
+exit=0
+
+$ node apps/native/scripts/g-n3.mjs --pai docs/native/N3-PRECHECK-anexos/B5-baseline --pai docs/native/N3-PRECHECK-anexos/B3-referencia-paisagem --logico docs/native/QL-PR3-anexos/b3-pre-ql --faixa docs/native/QL-PR4-anexos/volta/dumps/base --rolada docs/native/QL-PR4-anexos/volta/dumps/base | grep -E '^G-N3|^\(e\)|QUEBRA|^\(b\)' 
+G-N3 — 84 par(es) (paisagem × faixa); medidas: docs/native/DESIGN-N3/medidas.json (tolerância 4 dp)
+(e) TEXTO QUE SOME — REPROVA: 0
+QUEBRA — o corpo da faixa é uma quebra do texto lógico do corpo da paisagem (QL-D16); não reprova, não soma ao (e): 16
+(b) CORTE — nó que sai da janela útil ou encosta na borda lateral, NOVO contra a paisagem — REPROVA: 0
+G-N3: (e)=0 · (b)=0 · nome-acessível=8 · rolagem=6 · quebra=16 ✓ (d′ e 4 dp não reprovam: triagem e errata)
+exit=0
+
+$ pnpm exec vitest run tests/gates/ql-quebra.test.ts apps/native/test/g-par-visualizacao.test.tsx tests/gates/n4-g-par.test.tsx 2>&1 | grep -E 'gate da quebra|lista esperada|zero diferenças|linhas do par|o leitor quebra|Test Files|Tests '
+  o leitor quebra: sim (PR-3) · linhas do par acima da coluna: 0 · continuações vistas em V: 0
+G-par da visualização: zero diferenças ✓
+  o leitor quebra: sim (PR-3) · linhas do par acima da coluna: 6 · continuações vistas em V: 6
+G-par da visualização: zero diferenças ✓
+stdout | tests/gates/ql-quebra.test.ts > gate da quebra (QL-PR1) — as regras do corte, a invariância e a medida > reprova exatamente a lista de ql-quebra-reprovados.txt
+gate da quebra — casos 23 · checagens 46 ((i) 17 · (ii) 23 · (iii) 6) · passam 46 · reprovam 0
+lista esperada (0) · reprovados (0)
+gate da quebra: zero reprovações, lista vazia (QL-PR2) ✓
+lista esperada (0): (vazia)
+ Test Files  3 passed (3)
+      Tests  6 passed (6)
+exit=0
+
+$ cd apps/native && node scripts/icones.mjs ../../packages/identidade/src/icones.ts | tail -3
+  §6.3 → T1 (N4-D69): tab em20 3 linhas · normal 3 linhas · a tab@20 de quatro cordas do telas.html (o velho do par): achada
+  fora do catálogo: 4/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  acusações: 0 · avisos: 0
+exit=0
+
+$ cd apps/native && node scripts/a20.mjs . | tail -2
+  literais em posição de texto examinados: 229
+  acusações: 0
+exit=0
+
+$ sh apps/native/scripts/g1.sh ea5e891 WORKTREE | grep -E 'G1a|G1b' 
+G1a — diff vazio em 66 arquivos DERIVADOS de apps/native + packages/core/src
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+  G1b: só adição ✓
+exit=0
+
+$ sh apps/native/scripts/g2g3.sh ea5e891 WORKTREE | grep -E 'G2|G3|antes|sumiu' 
+G2 — testIDs  antes=124  depois=124
+  G2: antes ⊆ depois ✓
+G3 — declarações: as listas locais deste script (sem GATES_DECL — rodada à mão)
+G3 — linhas log( antes=70  depois=70
+  G3: nenhuma linha sumiu ✓
+exit=0
+
+$ sh apps/native/scripts/g1.sh 81249cd WORKTREE | grep -E 'G1a|G1b|exceç|EXCEÇ' | tail -6
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+      EXCEÇÕES DECLARADAS (o escopo desta PR):
+  G1a: DIFF NÃO VAZIO ✗
+  G1a: ARQUIVO NOVO no escopo, sem exceção declarada ✗
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+  G1b: só adição ✓
+exit=0
+
+$ sh apps/native/scripts/g2g3.sh 81249cd WORKTREE | grep -E 'antes=|sumiu|SUMIU|errata|nova' | tail -8
+G2 — testIDs  antes=121  depois=124
+G3 — linhas log( antes=70  depois=70
+      ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+  G3: nenhuma linha sumiu ✓
+exit=0
+
+$ cd docs/native/DESIGN-V1 && shasum -a 256 -c SHA256SUMS | grep -c ': OK' ; cd - >/dev/null; cd docs/native/DESIGN-V1 && shasum -a 256 -c SHA256SUMS | grep -vc ': OK'
+3
+0
+exit=1
+
+$ cd docs/native/DESIGN-N2 && shasum -a 256 -c SHA256SUMS | grep -c ': OK' ; cd - >/dev/null; cd docs/native/DESIGN-N2 && shasum -a 256 -c SHA256SUMS | grep -vc ': OK'
+2
+0
+exit=1
+
+$ cd docs/native/DESIGN-N3 && shasum -a 256 -c SHA256SUMS | grep -c ': OK' ; cd - >/dev/null; cd docs/native/DESIGN-N3 && shasum -a 256 -c SHA256SUMS | grep -vc ': OK'
+2
+0
+exit=1
+
+$ cd docs/native/DESIGN-N4 && shasum -a 256 -c SHA256SUMS | grep -c ': OK' ; cd - >/dev/null; cd docs/native/DESIGN-N4 && shasum -a 256 -c SHA256SUMS | grep -vc ': OK'
+2
+0
+exit=1
+
+$ cd docs/native/DESIGN-QL && shasum -a 256 -c SHA256SUMS | grep -c ': OK' ; cd - >/dev/null; cd docs/native/DESIGN-QL && shasum -a 256 -c SHA256SUMS | grep -vc ': OK'
+1
+0
+exit=1
+
+$ cd docs/ux/DESIGN-I1 && shasum -a 256 -c SHA256SUMS | grep -c ': OK' ; cd - >/dev/null; cd docs/ux/DESIGN-I1 && shasum -a 256 -c SHA256SUMS | grep -vc ': OK'
+14
+0
+exit=1
+
+$ cd docs/native/N3-PRECHECK-anexos && shasum -a 256 -c SHA256SUMS.txt | grep -c ': OK'; shasum -a 256 -c SHA256SUMS.txt | grep -vc ': OK'
+355
+0
+exit=1
+
+$ cd docs/native/QL-PR3-anexos/b3-pre-ql && shasum -a 256 -c SHA256SUMS.txt | grep -c ': OK'
+6
+exit=0
+
+$ sh scripts/gates-web/g-back.sh 81249cd WORKTREE | tail -3
+  ✓ nenhuma
+
+G-back: PASSA
+exit=0
+
+$ sh scripts/gates-web/g-palco.sh | tail -1
+G-palco: PASSA — 0 ocorrências
+exit=0
+
+$ node scripts/gates-web/g-tok.mjs | tail -2; node scripts/gates-web/g-tok-cobertura.mjs | tail -2
+
+G-tok: PASSA
+
+G-tok (cobertura): PASSA
+exit=0
+
+$ node scripts/gates-web/g-faixa-veredito.mjs tests/gates-web/medicoes | tail -2
+
+G-faixa: PASSA
+exit=0
+
+$ pnpm exec tsc --noEmit | tail -3
+exit=0
+
+$ cd packages/core && npx tsc --noEmit | tail -3
+exit=0
+
+$ cd packages/identidade && npx tsc --noEmit | tail -3
+exit=0
+
+$ cd apps/native && npx tsc --noEmit | tail -3
+exit=0
+
+$ pnpm lint 2>&1 | tail -2
+
+✔ No ESLint warnings or errors
+exit=0
+
+$ pnpm test 2>&1 | grep -E 'Test Files|Tests |FAIL' | tail -6
+ Test Files  149 passed | 3 skipped (152)
+      Tests  1851 passed | 59 skipped (1910)
+exit=0
+== 2026-10-10 12:15:04 fim

@@ -652,6 +652,10 @@ Respondida" de cada pergunta aponta para cá).
 | **QL-D20** | Q9 | **A Fase B roda com as três consultas**, mais o acréscimo da QL-D14 na consulta 2, provado no Postgres local antes de o Marcel colar. | §3.1 |
 | **QL-D21** | Q10 | **A A9 fica sem rodar.** O "antes" do desenho são os PNGs e dumps já commitados; a largura do caractere nos outros zooms se mede na PR-1. | — |
 
+*(Errata de ponteiro do aval do encerramento do QL — **QL-D64** `[Marcel, 2026-10-10]`, `docs/native/QL-ENCERRAMENTO.md` §13:
+a fila da QL-D12 ganhou a navegação do palco (QL-D57, na QL-PR4) e o metrônomo (QL-D64). A fila é hoje **QL → SY → resto do D → navegação do palco → metrônomo → N5 → identidade → iOS**, o W5 à parte; o metrônomo visual no palco (`QL-ENCERRAMENTO-anexos/ideia-metronomo.md`) vem antes do N5,
+para o palco do celular já nascer com ele.)*
+
 ---
 
 ## 10. A Fase B — a leitura do dado real (commit 3)

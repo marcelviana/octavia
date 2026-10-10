@@ -242,6 +242,9 @@ O release no Tab com 100 + 100 e as quedas nativas; os julgamentos do Marcel (QL
 *(QL-D51, aval da QL-PR3: **o custo de `quebrar` no Hermes se mede de novo no release**, junto com as 100 + 100 aberturas
 frias — a mesma fixture do `custo.ts` e as colunas 80, 48, 26 e 14, mediana e máximo de 100 rodadas; o número da QL-PR3 é o
 do dev client e fica como está.)*
+*(Errata de ponteiro do encerramento do QL — **QL-D61** `[Marcel, 2026-10-10]`, `QL-ENCERRAMENTO.md` §3.1: o release não
+tem como rodar o instrumento sem mudar código (div. 1248); **o número do dev client fica como teto**, e o W5 herda *"um
+caminho para medir desempenho no release sem mudar o código do app"*.)*
 
 ---
 

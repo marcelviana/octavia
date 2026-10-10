@@ -483,6 +483,12 @@ que vale daqui em diante; a troca está escrita também no `CI-FAIXA.md`.
 | 2 | **as notas da música no palco** — o pre-check do bloco da quebra decide se entram nele (os dois mexem no corpo do palco) | N4-D57 (*"o encerramento do N4 nomeia o bloco"*) |
 | 3 | **as corridas do APK de push só fora do filtro** (124 e 146 do `CI-FAIXA.md`; a 127 é a div. 381): o pre-check **mede por que** um push que não tocou o filtro disparou o build, e **se a mesma lógica pode deixar de disparar quando deveria** (o H1 do W4-b2; a avaliação do `paths` contra o diff acumulado) | div. 1142; N4-D114 |
 
+*(Errata de ponteiro do encerramento do QL, 2026-10-10 — `docs/native/QL-ENCERRAMENTO.md` §8: os três itens estão
+**fechados pelo QL**. O **item 1**: a Letra e a Cifra quebram no palco e em V, em C e B, e a Tab nunca (QL-D2, QL-D28; as
+colunas do palco em C são 80, não ≈ 55 — os 55 são de V, div. 1176). O **item 2**: as notas da música entraram no palco
+(QL-D26, QL-D30, QL-D58; a primeira nota de verdade, A-QL-20). O **item 3**: medido no pre-check do QL — disparo a mais,
+não lado cego — e enviado ao **W5** (QL-D17, div. 1184).)*
+
 ### 10.3 Bloco de identidade (a definir)
 
 | # | item | origem |
@@ -810,3 +816,6 @@ com `content_data` nulo, e as anotações mantidas. #367 e #368; prova em prod n
 ordem que segue** é a da N4-D109 com a D0-D4: **quebra de linha → resto do D → N5 → identidade → iOS**; o W5 à parte —
 confirmada no aval do encerramento da D-0 (D0-D25), com a div. 1147 primeira do resto do D.
 
+*(Errata de ponteiro do aval do encerramento do QL — **QL-D64** `[Marcel, 2026-10-10]`, `docs/native/QL-ENCERRAMENTO.md` §13:
+a ordem que segue já não é a da N4-D109 com a D0-D4 (a errata acima): o QL está encerrado, o SY (QL-D12) e a navegação do palco (QL-D57) entraram, e o metrônomo também. A fila é hoje **QL → SY → resto do D → navegação do palco → metrônomo → N5 → identidade → iOS**, o W5 à parte; o metrônomo visual no palco (`QL-ENCERRAMENTO-anexos/ideia-metronomo.md`) vem antes do N5,
+para o palco do celular já nascer com ele.)*

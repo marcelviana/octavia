@@ -1,0 +1,10 @@
+== 2026-10-10 12:11:27 AVD — estado final
+global stay_on_while_plugged_in = 1
+system accelerometer_rotation = 1
+system user_rotation = 0
+global airplane_mode_on = 1
+global wifi_on = 0
+global mobile_data = 0
+reverse: []
+connect: Network is unreachable
+emu kill sem salvar (subido com -no-snapshot-save) · ram.bin: Sep 24 14:00
