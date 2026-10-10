@@ -1567,3 +1567,8 @@ automaticamente.
 > **W5** à parte (QL-D57) — e **um bloco novo, o metrônomo visual no palco** (ideia do Marcel de 2026-10-09,
 > `docs/native/QL-ENCERRAMENTO-anexos/ideia-metronomo.md`), **depois do resto do D**; a posição dele em relação à navegação
 > do palco: **a decidir no aval** do encerramento do QL.
+
+> **Nota do aval do encerramento do QL (2026-10-10)** — sem reescrever a nota acima. A posição do metrônomo está decidida
+> (**QL-D64** `[Marcel, 2026-10-10]`, `docs/native/QL-ENCERRAMENTO.md` §13): a fila é **QL → SY → resto do D → navegação do
+> palco → metrônomo → N5 → identidade → iOS**; o **W5** à parte. O metrônomo vem antes do N5, para o palco do celular já
+> nascer com ele. **O próximo bloco é o SY.**

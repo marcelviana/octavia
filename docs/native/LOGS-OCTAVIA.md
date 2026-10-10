@@ -298,6 +298,7 @@ perigoso: um instrumento que mede **mais** do que a coisa medida.
 | 41 | **divs. 1034, 1109** (N4-PR3; N4-PR8) | o G-tok e o G3 | o G-tok leu um genérico de TypeScript (`<…>`) como texto de JSX (33 → 34 sem frase nova); o G3 contou um `log(` dentro de comentário (70 → 71). Superconjunto, como o 19: quem lê texto bruto mede mais do que afirma. Os dois ao W5 |
 | 42 | **divs. 1081, 1110** (N4-PR7; N4-PR8) | CNs da L e de V | "o CN reprova". O duplo do `FlatList` ignorava o cabeçalho e o `autoFocus` era atributo; a planta do otimismo não exercia o caminho: CNs **verdes antes do conserto**. CN que não reprova na `main` não prova nada (regra 4) |
 | 43 | **div. 1137** (encerramento do N4) | o reconhecimento de S1 por `resource-id="buscar"` no arnês da prova do release | "voltei a S1". O **S2 também tem `buscar`** (abre a S4): o "de volta a S1: True" era falso, e o toque seguinte abriu a S4. Tela se reconhece pelo id que só ela tem (`criar-setlist`) |
+| 44 | **divs. 1233, 1241, 1242** (QL-PR4; QL-D60) | o toque do arnês na régua das notas, pelo `resource-id` — **no centro do nó** — e o `native-tela`, sem geometria | "a régua recolhe e abre, e o alvo tem 48 de altura". As bordas invisíveis de 15 % do palco ficavam **por cima** da régua: o toque na divisa avançava a música, no rótulo voltava (1233); o alvo de 48 só existia no meio. O brief, a folha e o prompt desenharam e pediram a régua sem as bordas, que nenhum deles desenha por serem invisíveis (1241, 1242). Quem achou foi a mão do Marcel. É o **caso 1** (A14, N1) outra vez, sete blocos depois — e a regra 40 |
 
 > **O 19 é o 15 outra vez, e a segunda vez muda o que a primeira parecia ser.** Quando o
 > 15 apareceu, o texto acima o chamou de *"a primeira vez no projeto em que o instrumento
@@ -736,6 +737,22 @@ esquema e o contrato — e exige o aceite **antes** de comparar os bytes. E **o 
 os casos aceitos**: na D-0, o controle negativo achou o gravar escrevendo a fixture com só o caso que passou, em silêncio
 (div. 1161, `2d90f60`). O par de quem muda de propósito continua sendo a regra 14 — agora sobre corpos que o servidor
 aceita.
+
+### A regra que o QL firmou — 40
+
+*(Encerramento do QL, 2026-10-10; fonte: `docs/native/QL-ENCERRAMENTO.md` §6; **aprovada como proposta — QL-D63**
+`[Marcel, 2026-10-10]`.)* Numerada na sequência da da D-0. Vale para todo controle que entrar no corpo do palco, e para
+qualquer área com alvo invisível por cima.
+
+**40. Um controle novo no palco se confere contra tudo o que fica por cima dele — e o toque se prova nas pontas do alvo,
+não no centro.** *(Divs. 1233, 1241, 1242, QL-PR4; QL-D56, QL-D60.)* As bordas de 15 % do palco são invisíveis por
+desenho: nenhuma folha as desenha, e o brief, a folha e o prompt da QL-PR4 puseram a régua das notas sob elas sem que
+nenhum dos três a conferisse. O arnês tocava o alvo pelo `resource-id`, **no centro do nó** — onde não havia borda —, e o
+`native-tela` não tem geometria; só a mão achou. Por isso, para todo controle que entra no corpo do palco (ou em qualquer
+área com alvo invisível por cima): **(a)** o brief e o desenho dizem o que fica por cima do controle, inclusive o que não
+se desenha; **(b)** o prompt da PR o pergunta; **(c)** o aceite toca **nas duas pontas e no meio** do alvo — e no ícone e no
+rótulo, se houver — e mede que o toque fez o que o controle faz, não outra coisa; **(d)** a regra de produto é a QL-D56:
+nenhuma borda invisível fica sobre um controle. É o caso 1 do padrão (A14, N1) outra vez — o caso 44.
 
 ### A regra de método que o padrão implica
 

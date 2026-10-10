@@ -321,3 +321,7 @@ QL) está **encerrado** com o aval do encerramento dele. A fila que segue **não
 navegação do palco → N5 → identidade → iOS**, o W5 à parte. E entra um bloco novo, **o metrônomo visual no palco** (ideia do
 Marcel de 2026-10-09, `QL-ENCERRAMENTO-anexos/ideia-metronomo.md`), depois do resto do D — **a posição em relação à navegação
 do palco a decidir no aval** do encerramento do QL. A div. 1147 segue a primeira do resto do D (D0-D25).)*
+
+*(Errata de ponteiro do aval do encerramento do QL — **QL-D64** `[Marcel, 2026-10-10]`, `docs/native/QL-ENCERRAMENTO.md` §13:
+a posição do metrônomo, que a errata acima deixava *"a decidir no aval"*, está decidida — entre a navegação do palco e o N5. A fila é hoje **QL → SY → resto do D → navegação do palco → metrônomo → N5 → identidade → iOS**, o W5 à parte; o metrônomo visual no palco (`QL-ENCERRAMENTO-anexos/ideia-metronomo.md`) vem antes do N5,
+para o palco do celular já nascer com ele.)*

@@ -321,7 +321,7 @@ da lista fechada mudou (`git diff cf58f7f ea5e891 -- apps/native/package.json ap
 
 ---
 
-## 8. Heranças, com destino — **proposta do executor, para o aval** (pergunta 1)
+## 8. Heranças, com destino — **aprovadas: QL-D62** (§13)
 
 Numeração estável — cite por **§8.<n>.<m>**. Toda linha tem origem e bloco (regra 23).
 
@@ -401,10 +401,12 @@ ao W5 pela QL-D17) — com nota na fonte (§10). E a **div. 1143** (N4) respondi
    client no celular; **recomendo W5**: o que falta é reproduzir com taxa medida, e o release (o que o músico usa) deu zero;
    (b) **o ícone do app** (§8.7.1) — só registro, ou o bloco de identidade; **recomendo só registro**: o ícone existe, e o Tab
    repousa com o release instalado por `adb`, não pela loja.
+   → **Respondida: QL-D62** (§13).
 2. **A regra 40** (§6): entra no `LOGS-OCTAVIA.md` como está? E o **caso 44** na tabela do padrão (div. 1233, *"o arnês toca
    no centro do nó × a extensão do alvo"*), extra declarado? **Recomendo: as duas**, num commit desta PR depois do aval — a
    regra porque a lição já tem decisão (QL-D60) e falta só o texto normativo; o caso porque o padrão o reconhece pelo número
    e o 1 sozinho não diz que voltou.
+   → **Respondida: QL-D63** (§13).
 3. **A fila.** Hoje: **QL → SY → resto do D → navegação do palco → N5 → identidade → iOS**, o W5 à parte (QL-D57). O Marcel
    decidiu em 2026-10-09 que o **metrônomo visual** vem **depois do resto do D**, antes de a navegação do palco entrar na
    fila. A posição entre os dois:
@@ -418,12 +420,15 @@ ao W5 pela QL-D17) — com nota na fonte (§10). E a **div. 1143** (N4) respondi
    (a), o metrônomo desenharia contra bordas que vão mudar; (c) junta dois redesenhos do palco num bloco grande, contra o molde
    de blocos curtos do `ideia-metronomo.md`. **Nas três opções o metrônomo fica antes do N5**, para o palco do celular já ser
    desenhado com ele — **confirme, Marcel, que é isso que você quer.**
+   → **Respondida: QL-D64** (§13).
 4. **O `CI-FAIXA.md`** (div. 1252): o prompt não pedia, a regra 22 pede — as 151–157 e o recálculo entraram no commit 2.
    Aceitar? **Recomendo aceitar.**
+   → **Respondida: QL-D65** (§13).
 5. **O texto do metrônomo contra os documentos do QL** (div. 1253): o anexo diz *"a rolagem que acompanha o BPM cadastrado"*;
    o `QL-PRECHECK.md` A1.4 lê a rolagem automática como **1 px por quadro**, sem BPM. O texto ficou como veio. Só registro
    (o pre-check do metrônomo mede — é o primeiro item da lista dele), ou uma nota no anexo? **Recomendo só registro**: o
    anexo já manda o pre-check medir *"como a rolagem lê o BPM hoje"*.
+   → **Respondida: QL-D66** (§13).
 
 **O bloco só se declara encerrado depois do aval.**
 
@@ -485,3 +490,49 @@ As 1248–1251 são da Parte A (`QL-ENCERRAMENTO-anexos/README.md` §10, com o t
 | **1254** | P | O prompt chama de *"a referência lógica do G-N3 tirada da própria saída (a opção 2)"*; a opção 2 é o contrário — a referência **pré-QL, à parte**; a tirada da própria paisagem foi a **recusada** (div. 1213) | a lição escrita pela fonte (§4.2) |
 
 **Contagem**: 7 — P 4 · D 1 · A 2. **A próxima livre é a 1255.**
+
+---
+
+## 13. O aval do encerramento — QL-D62…QL-D66 `[Marcel, 2026-10-10]`
+
+As cinco perguntas do §9, na ordem; o texto da decisão é este (o "→ Respondida" de cada pergunta aponta para cá). **O
+commit 3 aplicou o aval.**
+
+| # | decisão (pergunta) | o que muda (commit 3) |
+|---|---|---|
+| **QL-D62** | (Q1) **Os destinos das heranças do §8 ficam como propostos, em bloco.** Deixam de ser proposta. **Acréscimo:** a div. 1253 vira **entrada obrigatória do pre-check do metrônomo**. O anexo diz que a rolagem acompanha o BPM, e o pre-check do QL mediu a rolagem a 1 px por quadro, sem BPM. O pre-check do metrônomo decide entre fazer a rolagem seguir o BPM e manter rolagem e pulso separados, e mede o custo de cada caminho. O anexo `ideia-metronomo.md` **não muda**; a herança aponta para a 1253. | o título do §8; a herança da 1253 (abaixo) |
+| **QL-D63** | (Q2) **A regra 40 e o caso 44 ficam aprovados como propostos.** Entram neste commit no `LOGS-OCTAVIA.md`, no molde de como a D-0 pôs a regra 39, com o caso ligado às divergências da QL-D60 (1241 e 1242). | `LOGS-OCTAVIA.md`: *"A regra que o QL firmou — 40"* e o caso 44 na tabela do padrão (divs. 1233, 1241, 1242) |
+| **QL-D64** | (Q3) **A fila é a opção (b)**: QL → SY → resto do D → navegação do palco → **metrônomo** → N5 → identidade → iOS, com o W5 à parte. **O Marcel confirma que o metrônomo vem antes do N5**, para o palco do celular já nascer com ele. | as erratas de ponteiro da fila (§13.1) |
+| **QL-D65** | (Q4) **O acréscimo das corridas 151 a 157 ao `CI-FAIXA.md` fica aceito**, com a referência recalculada (regra 22; div. 1252). | — (já no commit 2) |
+| **QL-D66** | (Q5) **A div. 1253 fica registrada**, com o destino da QL-D62. | — (a linha da 1253 no §12 fica como está; o destino é o da QL-D62) |
+
+**A herança da 1253, pela QL-D62** (acréscimo ao §8.3, sem reescrever a linha de lá): **o pre-check do metrônomo** tem como
+entrada obrigatória a div. 1253 — decidir entre a rolagem seguir o BPM e rolagem e pulso separados, com o custo de cada caminho
+medido.
+
+**O §8 deixa de ser proposta** (QL-D62): os destinos são os da tabela, sem marca. **A regra 40** está no `LOGS-OCTAVIA.md`
+(QL-D63). **A fila** é a da QL-D64.
+
+### 13.1 As erratas de ponteiro do aval (commit 3)
+
+| arquivo | onde | a nota |
+|---|---|---|
+| `docs/ux/PLANO-TRANSICAO.md` | depois da nota do encerramento do QL | a fila da QL-D64 no lugar do *"a decidir no aval"*; o próximo bloco é o **SY** |
+| `docs/ux/D0-ENCERRAMENTO.md` | na errata do commit 2 (fim do arquivo) | a fila da QL-D64 |
+| `docs/native/N4-ENCERRAMENTO.md` | fim do §15, depois da errata da D-0 encerrada | a ordem que segue já não é a da N4-D109 com a D0-D4: é a da QL-D64 |
+| `docs/native/QL-PRECHECK.md` | depois da tabela do §9 (a QL-D12) | a fila da QL-D12 ganhou a navegação do palco (QL-D57) e o metrônomo (QL-D64) |
+| `docs/native/QL-PR4-anexos/README.md` | depois da tabela do §14.1 (a QL-D57) | a fila da QL-D57 ganhou o metrônomo (QL-D64) |
+| `docs/ux/D0-PRECHECK.md` | depois da tabela do §0 (a D0-D4) | a ordem da D0-D4 é hoje a da QL-D64 |
+
+`[medido: git grep -nE "→ ?N5 ?→ ?identidade|resto do D → N5|navegação do palco → N5" -- docs CLAUDE.md]`: as outras
+ocorrências são **histórico dentro de documentos que já têm uma errata posterior** (as notas do `PLANO-TRANSICAO.md`
+anteriores à do encerramento do QL; as perguntas e decisões do N4 que os seus próprios §15 corrigem; o texto da pergunta 3
+do §9 daqui) — não se reescrevem. O `CLAUDE.md` não cita a fila.
+
+### 13.2 Divergências do aval — 1255
+
+| div. | origem | o quê | destino |
+|---|---|---|---|
+| **1255** | P | O prompt do aval liga o caso 44 *"às divergências da QL-D60 (1241 e 1242)"*; o caso proposto no §6 nasceu da **1233** (o defeito no Tab), e a 1241 e a 1242 são onde ele passou sem ser visto — não há conflito, só a origem incompleta | o caso 44 entrou com as três (1233, 1241, 1242) |
+
+**Contagem**: 1 — P 1. **A próxima livre é a 1256.** O bloco: **81** — P 22 · D 19 · A 12 · T 28.

@@ -305,6 +305,10 @@ texto` · o de docs (este). Os anexos da volta estão em [`volta/`](volta/), na 
 | **QL-D59** | (div. 1235) **O `reordenar.test.tsx` instável vai ao W5**, como herança. Esta PR não toca nele. |
 | **QL-D60** | **Lição para o encerramento:** todo controle novo no corpo do palco se confere contra as bordas de toque, no brief, no desenho e no prompt. O defeito passou pelo brief, pela folha e pelo prompt da PR-4 — divergências **1241** (P, o revisor) e **1242** (D, o brief e a folha). No `QL-REQUISITOS.md`, o escopo do encerramento. |
 
+*(Errata de ponteiro do aval do encerramento do QL — **QL-D64** `[Marcel, 2026-10-10]`, `docs/native/QL-ENCERRAMENTO.md` §13:
+a fila da QL-D57 ganhou o metrônomo, entre a navegação do palco e o N5. A fila é hoje **QL → SY → resto do D → navegação do palco → metrônomo → N5 → identidade → iOS**, o W5 à parte; o metrônomo visual no palco (`QL-ENCERRAMENTO-anexos/ideia-metronomo.md`) vem antes do N5,
+para o palco do celular já nascer com ele.)*
+
 Registradas também: o **QL-R24** (QL-D56) e o **QL-R25** (QL-D58), com os aceites **A-QL-22** e **A-QL-23**, no
 `QL-REQUISITOS.md`; a errata **QL-E4** no `DESIGN-QL/README.md` §6 (as bordas não cobrem a régua; a moldura não se edita).
 

@@ -816,3 +816,6 @@ com `content_data` nulo, e as anotações mantidas. #367 e #368; prova em prod n
 ordem que segue** é a da N4-D109 com a D0-D4: **quebra de linha → resto do D → N5 → identidade → iOS**; o W5 à parte —
 confirmada no aval do encerramento da D-0 (D0-D25), com a div. 1147 primeira do resto do D.
 
+*(Errata de ponteiro do aval do encerramento do QL — **QL-D64** `[Marcel, 2026-10-10]`, `docs/native/QL-ENCERRAMENTO.md` §13:
+a ordem que segue já não é a da N4-D109 com a D0-D4 (a errata acima): o QL está encerrado, o SY (QL-D12) e a navegação do palco (QL-D57) entraram, e o metrônomo também. A fila é hoje **QL → SY → resto do D → navegação do palco → metrônomo → N5 → identidade → iOS**, o W5 à parte; o metrônomo visual no palco (`QL-ENCERRAMENTO-anexos/ideia-metronomo.md`) vem antes do N5,
+para o palco do celular já nascer com ele.)*
