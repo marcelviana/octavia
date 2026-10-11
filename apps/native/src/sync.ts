@@ -43,6 +43,15 @@ export type SyncOutcome =
 export interface GanchosDoSync {
   /** No instante da linha `sync start`: o sync saiu à rede (a definição da A2.4 do `SY-PRECHECK.md`). */
   aoComecar?: () => void
+  /**
+   * **SY-D26 — a aplicação na raiz, no MESMO bloco síncrono** que lê as confirmadas do favoritar (`naoRegredir`) e
+   * grava o disco: chamado logo antes do `return` do sync ok, sem nenhum `await` desde a leitura das confirmadas. É o
+   * que fecha a janela da A6.1 (`SY-PRECHECK.md`): o executor aplicava numa microtarefa DEPOIS de o sync devolver, e um
+   * favoritar que assentasse ali gravava a confirmada tarde demais para o sync e era desfeito na raiz. Com a aplicação
+   * aqui, só há duas ordens: o favoritar antes (a confirmada está no mapa, e a `naoRegredir` a mantém) ou depois (ele lê
+   * a raiz já com o sync e põe a estrela). Não toca no `updated_at`, na `naoRegredir` nem no `reconcile`.
+   */
+  aoAplicar?: (aplicado: { setlists: SetlistDTO[]; content: ContentDTO[]; syncedAtMs: number }) => void
 }
 
 /** Todas as páginas de content até `hasMore === false`. */
@@ -142,6 +151,8 @@ export async function sincronizar(
   log(
     `sync ok setlists=${plano.setlists.length} content=${plano.content.length} pages=${paginas} t=${Date.now() - t0}`,
   )
+  // SY-D26: ainda no bloco síncrono que começou na leitura das confirmadas — nenhum `await` desde ela.
+  ganchos.aoAplicar?.({ setlists: setlists.items, content: content.items, syncedAtMs })
 
   return { kind: 'ok', setlists: setlists.items, content: content.items, syncedAtMs }
 }

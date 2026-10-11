@@ -99,12 +99,47 @@ export async function rodarSync(raiz: RaizDoSync, uid: string, anterior: Dados):
 async function rodarUm(raiz: RaizDoSync, uid: string, anterior: Dados): Promise<void> {
   const { setSync, setDados, dadosRef, prefetchEArrumar, sessaoAtual } = raiz
   setSync({ fase: 'sincronizando' })
+  // O que a aplicação entregou, para o prefetch de depois do `await` (um objeto, e não um `let`: quem escreve é o gancho).
+  const aplicado: { v: { setlists: SetlistDTO[]; contentById: Map<string, ContentDTO> } | null } = { v: null }
   const r = await sincronizar(
     uid,
     anterior.temCache ? { content: anterior.content, setlists: anterior.setlists } : null,
     {
       aoComecar: () => {
         ultimo = { inicioMs: Date.now(), fimMs: null, falhaDeRede: false }
+      },
+      // SY-D26 — a aplicação na raiz DENTRO do bloco síncrono do sync (o gancho é chamado antes de o `sincronizar`
+      // devolver, sem `await` desde a leitura das confirmadas do favoritar): a janela da A6.1 deixa de existir.
+      aoAplicar: (a) => {
+        // SY-D17: a sessão mudou enquanto o sync voava — nada chega à raiz (o disco do uid dele já foi gravado, como
+        // sempre foi: é o cache DAQUELE uid).
+        if (sessaoAtual() !== uid) return
+        // T1-R10: conjunto de content inalterado volta com a MESMA referência
+        // (`reconcileByUpdatedAt`), e o índice por id é reaproveitado — senão
+        // todo derivado que o lê se recriaria num sync com `invalidated=0`.
+        const contentById =
+          a.content === anterior.content
+            ? anterior.contentById
+            : new Map(a.content.map((c) => [c.id, c]))
+        setDados({
+          setlists: a.setlists,
+          content: a.content,
+          contentById,
+          temCache: true,
+          syncedAtMs: a.syncedAtMs,
+        })
+        setSync({ fase: 'ok', syncedAtMs: a.syncedAtMs })
+        // O `dadosRef` é atualizado à mão aqui porque o efeito que o segue o
+        // `setDados` só corre no próximo render — e o LRU precisa das setlists
+        // NOVAS para saber o que está garantido.
+        dadosRef.current = {
+          setlists: a.setlists,
+          content: a.content,
+          contentById,
+          temCache: true,
+          syncedAtMs: a.syncedAtMs,
+        }
+        aplicado.v = { setlists: a.setlists, contentById }
       },
     },
   )
@@ -116,32 +151,7 @@ async function rodarUm(raiz: RaizDoSync, uid: string, anterior: Dados): Promise<
   // de outra sessão). O disco do uid dele o `sincronizar` já gravou, como sempre gravou — é o cache DAQUELE uid.
   if (sessaoAtual() !== uid) return
   if (r.kind === 'ok') {
-    // T1-R10: conjunto de content inalterado volta com a MESMA referência
-    // (`reconcileByUpdatedAt`), e o índice por id é reaproveitado — senão
-    // todo derivado que o lê se recriaria num sync com `invalidated=0`.
-    const contentById =
-      r.content === anterior.content
-        ? anterior.contentById
-        : new Map(r.content.map((c) => [c.id, c]))
-    setDados({
-      setlists: r.setlists,
-      content: r.content,
-      contentById,
-      temCache: true,
-      syncedAtMs: r.syncedAtMs,
-    })
-    setSync({ fase: 'ok', syncedAtMs: r.syncedAtMs })
-    // O `dadosRef` é atualizado à mão aqui porque o efeito que o segue o
-    // `setDados` só corre no próximo render — e o LRU precisa das setlists
-    // NOVAS para saber o que está garantido.
-    dadosRef.current = {
-      setlists: r.setlists,
-      content: r.content,
-      contentById,
-      temCache: true,
-      syncedAtMs: r.syncedAtMs,
-    }
-    await prefetchEArrumar(r.setlists, contentById)
+    if (aplicado.v !== null) await prefetchEArrumar(aplicado.v.setlists, aplicado.v.contentById)
     return
   }
   // Falha ou offline: o cache anterior fica exatamente como está (A21) e o
