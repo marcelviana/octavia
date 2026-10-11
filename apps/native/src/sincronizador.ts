@@ -31,7 +31,12 @@ export interface Dados {
 /** O que o executor recebe da raiz — o que o `rodarSync` lia por fechamento no `App.tsx`. */
 export interface RaizDoSync {
   setSync: (sync: SyncState) => void
-  setDados: (dados: Dados) => void
+  /**
+   * O `setDados` do React: o valor novo, ou a função sobre o de AGORA. SY-PR2 (SY-D25): o sync que perdeu as setlists
+   * aplica o conteúdo pela função, para as setlists da raiz ficarem as de agora — as da releitura que venceu, que o
+   * `aoRelerNaEscrita` do `App.tsx` entrega à raiz sem tocar no `dadosRef` (A5).
+   */
+  setDados: (dados: Dados | ((atual: Dados) => Dados)) => void
   dadosRef: { current: Dados }
   prefetchEArrumar: (setlists: SetlistDTO[], contentById: Map<string, ContentDTO>) => Promise<void>
   /**
@@ -121,6 +126,16 @@ async function rodarUm(raiz: RaizDoSync, uid: string, anterior: Dados): Promise<
           a.content === anterior.content
             ? anterior.contentById
             : new Map(a.content.map((c) => [c.id, c]))
+        if (a.setlists === null) {
+          // SY-D25: uma releitura de escrita mais nova venceu as setlists — este sync aplica só o conteúdo. As setlists
+          // de agora vêm da RAIZ (a função do `setDados`), nunca do `dadosRef`, que a releitura não atualiza (A5); o
+          // `dadosRef` recebe o conteúdo e fica com as setlists que tem até o próximo render o igualar à raiz.
+          setDados((atual) => ({ ...atual, content: a.content, contentById, temCache: true, syncedAtMs: a.syncedAtMs }))
+          setSync({ fase: 'ok', syncedAtMs: a.syncedAtMs })
+          dadosRef.current = { ...dadosRef.current, content: a.content, contentById, temCache: true, syncedAtMs: a.syncedAtMs }
+          aplicado.v = { setlists: dadosRef.current.setlists, contentById }
+          return
+        }
         setDados({
           setlists: a.setlists,
           content: a.content,

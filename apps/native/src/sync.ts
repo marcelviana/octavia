@@ -17,12 +17,24 @@ import {
 } from '@octavia/core'
 import { getContentPage, getSetlists, type ApiResult } from './api'
 import { linhasConfirmadas } from './favoritar'
+import { aplicarLeituraDeSetlists, emitirLeituraDeSetlists } from './geracao-das-setlists'
 import { log } from './log'
 import { estaOnline } from './net'
-import { save, type CacheSnapshot } from './store'
+import { save, saveContent, type CacheSnapshot } from './store'
 
 export type SyncOutcome =
-  | { kind: 'ok'; setlists: SetlistDTO[]; content: ContentDTO[]; syncedAtMs: number }
+  | {
+      kind: 'ok'
+      /** As setlists que ESTE sync leu (reconciliadas) — aplicadas só quando `setlistsAplicadas`. */
+      setlists: SetlistDTO[]
+      content: ContentDTO[]
+      syncedAtMs: number
+      /**
+       * SY-PR2 (SY-D25) — `false` quando uma releitura de escrita emitida DEPOIS do `GET /api/setlists` deste sync já
+       * aplicou (a geração da div. 232): o sync gravou e aplicou o conteúdo, e as setlists ficaram as da releitura.
+       */
+      setlistsAplicadas: boolean
+    }
   | { kind: 'skipped-offline' }
   | {
       kind: 'failed'
@@ -50,8 +62,11 @@ export interface GanchosDoSync {
    * favoritar que assentasse ali gravava a confirmada tarde demais para o sync e era desfeito na raiz. Com a aplicação
    * aqui, só há duas ordens: o favoritar antes (a confirmada está no mapa, e a `naoRegredir` a mantém) ou depois (ele lê
    * a raiz já com o sync e põe a estrela). Não toca no `updated_at`, na `naoRegredir` nem no `reconcile`.
+   *
+   * `setlists: null` (SY-D25): o sync PERDEU as setlists para uma releitura mais nova — aplica-se o conteúdo, e as
+   * setlists da raiz ficam as de agora (que o executor não pode ler de um `dadosRef` defasado, A5).
    */
-  aoAplicar?: (aplicado: { setlists: SetlistDTO[]; content: ContentDTO[]; syncedAtMs: number }) => void
+  aoAplicar?: (aplicado: { setlists: SetlistDTO[] | null; content: ContentDTO[]; syncedAtMs: number }) => void
 }
 
 /** Todas as páginas de content até `hasMore === false`. */
@@ -94,6 +109,8 @@ export async function sincronizar(
   log('sync start')
   ganchos.aoComecar?.()
 
+  // SY-D25: o número deste `GET /api/setlists` na ordem de emissão — a mesma das releituras das escritas (div. 232).
+  const minha = emitirLeituraDeSetlists()
   const rSetlists = await getSetlists()
   const rContent = rSetlists.ok ? await buscarContent() : null
 
@@ -128,6 +145,11 @@ export async function sincronizar(
     }
   }
 
+  // SY-D25 (a div. 232 estendida ao sync): uma releitura de escrita emitida DEPOIS do `GET` deste sync já aplicou? Então
+  // a foto das setlists deste sync é mais velha que a do disco e da raiz, e não vence — o conteúdo se aplica, as setlists
+  // não, e a `cache write kind=setlists` não sai (a assinatura do descarte da errata N2-PR2). Daqui até o `aoAplicar`,
+  // nenhum `await`: outra leitura não aplica no meio.
+  const setlistsValem = aplicarLeituraDeSetlists(minha)
   // T1-R10 (N2-D8): compara com o que o app já tem. Sem cache anterior, tudo
   // é novo. Quando nada mudou, o conjunto devolvido é o MESMO do anterior —
   // os derivados memoizados por referência não se recriam.
@@ -143,7 +165,8 @@ export async function sincronizar(
     content: content.items,
     syncedAtMs,
   }
-  save(uid, snapshot, { setlists: setlists.invalidated, content: content.invalidated })
+  if (setlistsValem) save(uid, snapshot, { setlists: setlists.invalidated, content: content.invalidated })
+  else saveContent(uid, snapshot, { content: content.invalidated })
 
   const paginas = rContent !== null && !rContent.failed ? rContent.paginas.length : 0
   const { duplicates } = mergePages(rContent !== null && !rContent.failed ? rContent.paginas : [])
@@ -152,7 +175,7 @@ export async function sincronizar(
     `sync ok setlists=${plano.setlists.length} content=${plano.content.length} pages=${paginas} t=${Date.now() - t0}`,
   )
   // SY-D26: ainda no bloco síncrono que começou na leitura das confirmadas — nenhum `await` desde ela.
-  ganchos.aoAplicar?.({ setlists: setlists.items, content: content.items, syncedAtMs })
+  ganchos.aoAplicar?.({ setlists: setlistsValem ? setlists.items : null, content: content.items, syncedAtMs })
 
-  return { kind: 'ok', setlists: setlists.items, content: content.items, syncedAtMs }
+  return { kind: 'ok', setlists: setlists.items, content: content.items, syncedAtMs, setlistsAplicadas: setlistsValem }
 }

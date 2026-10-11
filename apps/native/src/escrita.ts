@@ -57,6 +57,11 @@ import {
   type SetlistDTO,
 } from '@octavia/core'
 import { getSetlists, mutate, type RespostaDeEscrita } from './api'
+import {
+  aplicarLeituraDeSetlists,
+  emitirLeituraDeSetlists,
+  limparGeracaoDasSetlists,
+} from './geracao-das-setlists'
 import { log } from './log'
 import { estaOnline } from './net'
 import { saveSetlists } from './store'
@@ -136,9 +141,11 @@ let emVoo = false
  * **não** emite `cache write kind=setlists` (ela não gravou). Duas linhas
  * `resync` e uma `cache write` é a assinatura de um descarte, e as duas
  * linhas já estão no catálogo.
+ *
+ * **SY-PR2 (SY-D25)**: o contador saiu daqui para o `geracao-das-setlists.ts`,
+ * porque o sync disputa pela mesma regra — o `GET /api/setlists` dele também
+ * tira um número, e o sync que perde não grava as setlists.
  */
-let geracao = 0
-let ultimaAplicada = 0
 
 /**
  * Instrumento de teste: troca o gate por um NOVO e solta o "em voo". Nenhuma
@@ -156,8 +163,7 @@ let ultimaAplicada = 0
 export function limparGatesDeEscrita(): void {
   gate = rateLimitGate()
   emVoo = false
-  geracao = 0
-  ultimaAplicada = 0
+  limparGeracaoDasSetlists()
 }
 
 function barrar(op: Op, motivo: MotivoBarrado): void {
@@ -299,7 +305,7 @@ async function reler(
   op: Op | null,
   prazoMs: number = PRAZO_DE_REDE_MS,
 ): Promise<Releitura> {
-  const minha = ++geracao
+  const minha = emitirLeituraDeSetlists()
   const t0 = Date.now()
   // N2-D35 — a releitura tem o MESMO prazo da escrita: uma leitura pendurada
   // deixa a tela em "relendo…" pelo mesmo tempo infinito que uma escrita
@@ -312,14 +318,13 @@ async function reler(
     log(`resync kind=setlists reason=${reason} op=${opDoLog} status=${status} setlists=- ms=${ms}`)
     return { setlists: null, syncedAtMs: null, leu: false }
   }
-  if (minha < ultimaAplicada) {
-    // Uma releitura MAIS NOVA já gravou: esta foto é velha e não vence
-    // (div. 232). A linha sai igual — ela leu, e o 200 é verdade —, e o que
-    // falta depois dela é o `cache write kind=setlists`.
+  if (!aplicarLeituraDeSetlists(minha)) {
+    // Uma leitura MAIS NOVA já gravou — outra releitura ou, desde a SY-PR2, um
+    // sync: esta foto é velha e não vence (div. 232). A linha sai igual — ela
+    // leu, e o 200 é verdade —, e o que falta depois dela é o `cache write kind=setlists`.
     log(`resync kind=setlists reason=${reason} op=${opDoLog} status=200 setlists=${r.data.length} ms=${ms}`)
     return { setlists: null, syncedAtMs: null, leu: true }
   }
-  ultimaAplicada = minha
   // T1-R10 (N2-D8): o contador real. Quando nada mudou, o conjunto devolvido
   // é o MESMO do anterior, e os derivados memoizados por referência não se
   // recriam — a escrita de outro aparelho que não mexeu nesta setlist não
