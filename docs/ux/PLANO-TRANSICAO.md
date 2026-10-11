@@ -1582,3 +1582,7 @@ automaticamente.
 
 > **Nota do aval do pre-check do SY (2026-10-10)** — sem reescrever a nota acima. O pre-check do SY tem aval (SY-D17…D31
 > `[Marcel, 2026-10-10]`, `docs/native/SY-PRECHECK.md` §8); **a próxima é a PR-1, os gates.**
+>
+> **Nota do aval da PR-1 do SY (2026-10-11)** — sem reescrever a nota acima. A PR-1 do SY (#379, os gates) tem aval
+> (SY-D33…D41 `[Marcel, 2026-10-11]`, `docs/native/SY-PR1-anexos/README.md` §13); **a próxima é a PR-2** — o voo único, a
+> janela da `naoRegredir`, as escritas e o prazo.

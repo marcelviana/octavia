@@ -414,6 +414,13 @@ tabela, marcado; a conclusão não muda.
   de mediana no sync** contra **133 ms no piso** (a resolução dele é a do evento de acessibilidade, ~100 ms `[hipótese]`) — ele
   vê o bloco, mais grosso. É o instrumento da regra 38 e do release (SY-D20).
 
+*(Notas do aval — **SY-D36** e **SY-D38** `[Marcel, 2026-10-11]`, §13: **o "antes" que vale para a comparação é o da base da
+PR-3** (a `main` já com a PR-2, que junta a gravação e a troca da raiz num bloco síncrono só, SY-D26), medido nos dois
+aparelhos na mesma ida do "depois" — o "antes" desta seção fica como referência de método e de ordem de grandeza. E **o que se
+registrou antes de medir**: a gravação síncrona sozinha (o passo 1, ~175 ms, nunca abaixo de 137 ms aqui) tende a reprovar
+também o critério da SY-D36, cujo limite hoje seria 149 ms (2 × 74,4); a foto não a tira. Se o "depois" reprovar, a PR-3 volta
+com a pergunta, com as duas saídas na mesa.)*
+
 ### 6.4 O Tab S6 — não medido nesta PR (a parada do prompt)
 
 O prompt: *"se medir no Tab exigir … apagar dados do app … pare antes de tocar no Tab e pergunte, entregando o que tem do
@@ -441,6 +448,7 @@ comando `adb` levou `-s emulator-5554`. **Pergunta Q6** (§8).
 | temporários | no scratchpad da sessão, fora do repositório: as fixtures, a cópia do cache da audit (guardada e regravada), o bundle baixado, as saídas da suíte |
 | perguntas ao Marcel nesta sessão | 1 — o prazo (SY-D19 → SY-D32, §5.1) |
 | regra 4 do catálogo sobre os anexos | `grep -rn eyJ` e `grep -rln <email>` nos anexos: nenhuma linha |
+| **o commit do aval** (2026-10-11) | só docs: 0 requisições a prod, 0 logins, 0 `.env*`, nenhum aparelho, 0 agentes; GitHub: `git fetch origin` (a `main` em `f4f4231`, não andou), `gh pr checks 379` e `gh run view` dos três workflows (§11), o push e o `gh pr edit 379` (a linha do aval); `git diff --stat b2e2a85 -- . ':!docs'` → **vazio**; suíte, `tsc` e lint **não rodaram de novo** (só docs) `[medido: aval-verificacao.txt]` |
 
 ## 8. As perguntas para o aval
 
@@ -452,12 +460,14 @@ expõe; o gate o lê das linhas, que é a definição da A2.4); (b) os gatilhos 
 pela ligação, em vez de importá-las. **Recomendo (a)**: é a forma que o gate (i) e o laboratório já exercem (os 16 casos e os
 8 defeitos do CN), e o `AppState` só existe no `native-tela`, onde o duplo entra por alias — injetar as fontes não ganha teste
 novo e afasta o módulo do jeito como o app assina hoje (`net.ts`).
+→ **Respondida: SY-D33** (§13)
 
 **Q2 — a forma da foto da sessão** (§2). (a) **como está**: `criarFotoDaSessao() → { entrar(id, achar), setlistDaSessao(id,
 achar), sair() }`, um objeto por sessão de navegação, com a busca da setlist viva passada como função (o `acharSetlist` do
 `navigation.tsx`); (b) a foto como estado de React (um contexto acima do `Stack`). **Recomendo (a)**: o `native-tela` monta a
 lógica sem a `Navigation` (SY-D22), e o `navigation.tsx` só a chama nos três lugares que já leem a setlist (o palco, o índice,
 o fim e a busca); a ligação se prova no aparelho (A-SY-17).
+→ **Respondida: SY-D34** (§13)
 
 **Q3 — o voo: sem contrato no core nesta PR, e a entrada do executor** (§2). (a) **como está**: a PR-2 mantém
 `rodarSync(raiz, uid, anterior)` como a entrada de todo pedido (a abertura, o *Tentar de novo*, os gatilhos) e põe o voo atrás
@@ -465,6 +475,7 @@ dela, com o `sessaoAtual` obrigatório; a máquina pura no core nasce na PR-2 (S
 PR-1 já criar `packages/core/src/voo.ts` (o tipo e a assinatura). **Recomendo (a)**: o gate (ii) mede o voo pela entrada do
 executor e pelas linhas do log — que é o que o aceite no aparelho mede —, e um contrato no core sem gate que o importe seria
 superfície declarada sem uso.
+→ **Respondida: SY-D35** (§13)
 
 **Q4 — o critério do custo com o palco aberto (SY-D6, SY-D20)**, com os números do §6 na mão (AVD, dev client, n = 10):
 o SYNC tem **mediana 331 ms** de maior intervalo e **mediana 5 intervalos > 100 ms** (em 10 de 10 rodadas); o PISO tem **74 ms**
@@ -484,30 +495,38 @@ tira.
 **Recomendo (b) para a decisão da PR-3, com (c) registrado para o release**, e o mesmo instrumento, as mesmas janelas e o host
 sem carga (div. 1276) no "depois". Se o Marcel preferir (a), a consequência fica escrita aqui: o "depois" no AVD do dev
 client tende a reprovar pelo passo 1, e a PR-4 implementaria o "nenhum gatilho com o palco aberto; marcado, roda ao sair".
+→ **Respondida: SY-D36** (§13)
 
 **Q5 — o congelamento dos aceites A-SY-1…A-SY-22** (§9), com os critérios escritos contra as linhas da lista. **Recomendo
 congelar como está.**
+→ **Respondida: SY-D37** (§13)
 
 **Q6 — o "antes" no Tab S6** (§6.4: a medida exige a receita do cache, que apaga por nome o cache real durante o mock, e o
 destravar do Marcel). (a) **o "antes" do Tab na PR-3**, na mesma ida ao Tab do "depois" (as duas medidas no mesmo dia, o
 mesmo dev client, a receita uma vez só), com o Marcel destravando; (b) uma sessão só para o "antes" do Tab, antes da PR-3; (c)
 só o AVD nas duas pontas. **Recomendo (a)**: a comparação que decide a SY-D6 é antes × depois no MESMO aparelho, e na PR-3 o Tab
 já é obrigatório (A-SY-10, A-SY-17).
+→ **Respondida: SY-D38** (§13)
 
 **Q7 — "os dois juntos" da A2.3** (div. 1267): o gate lê (a) **o segundo depois do fim do primeiro → 1 (o intervalo)**, e o
 segundo DURANTE o primeiro → 2 (o "de novo"); (b) "um sync" também no segundo caso (o "de novo" não roda se o segundo evento
 for do outro gatilho). **Recomendo (a)**: é o que a SY-D9 e a SY-D18 dizem juntas, e o (b) precisaria de uma regra nova.
+→ **Respondida: SY-D39** (§13)
 
 **Q8 — o controle negativo de tela por chave no próprio gate** (§4, CN iii-0): o `sy-foto.test.tsx` lê `SY_PLANTA_TELA=congela`
 e embrulha o palco e V num componente que congela tudo — a planta mora no arquivo do gate, desligada por padrão (o CI não a
 liga). (a) **aceitar**; (b) mover o embrulho para um arquivo de anexo copiado sobre o gate pelo `cn-sy.sh`, como as outras
 plantas. **Recomendo (a)**: copiar um gate de 300 linhas para trocar duas linhas é mais frágil que a chave, e o juiz imprime a
 planta quando ela está ligada.
+→ **Respondida: SY-D40** (§13)
 
-## 9. Os aceites A-SY-*n* — a lista proposta para congelar
+## 9. Os aceites A-SY-*n* — congelados (SY-D37)
 
 Os candidatos da A10 (A-SY-1…A-SY-20), com o critério de cada um escrito contra os gates desta PR, e **dois novos** que a
 SY-D32 pede (A-SY-21) e que a leitura do prazo abriu (A-SY-22). **Proposta: congelar no aval desta PR** (SY-D20, SY-D29).
+
+*(Nota do aval — **SY-D37** `[Marcel, 2026-10-11]`: a lista abaixo está **congelada**, com o A-SY-9 reescrito pelas SY-D36 e
+SY-D38; o texto proposto da linha do A-SY-9 fica no rastro do git, `b2e2a85`.)*
 
 | # | o quê | o critério (o que fecha) | PR |
 |---|---|---|---|
@@ -519,7 +538,7 @@ SY-D32 pede (A-SY-21) e que a leitura do prazo abriu (A-SY-22). **Proposta: cong
 | **A-SY-6** | (iii) a foto no palco | as 9 linhas `iii:palco-*` saem; `palco-trocar-posicao` e `palco-musica-apagada-nunca-aberta` seguem passando | PR-3 |
 | **A-SY-7** | (iii) a foto em V | as 5 linhas `iii:v-*` saem; `v-estrela-viva` segue passando | PR-3 |
 | **A-SY-8** | o apagado com o palco aberto (SY-D23) | `iii:setlist-apagada` e `iii:palco-musica-apagada-aberta` saem | PR-3 |
-| **A-SY-9** | o custo com a rolagem (SY-D6) | o "antes" (esta PR, §6) e o "depois da foto" (PR-3), **com o mesmo instrumento e as mesmas janelas**, n ≥ 10 por aparelho; o critério congelado no aval desta PR (§8, Q4); a decisão da SY-D6 no aval da PR-3 | PR-1 (antes), PR-3 |
+| **A-SY-9** | o custo com a rolagem (SY-D6) | **SY-D37**: o critério é o da **SY-D36** — *"na janela do sync, com n ≥ 10 por aparelho: a mediana do número de intervalos acima de 100 ms é no máximo a do piso + 1, **e** a mediana do maior intervalo é no máximo o maior entre 2 × a mediana do piso e 100 ms"*; para o release, *"a maior lacuna de rolagem pelo `uiautomator events` na janela do sync é no máximo a mediana do piso + 100 ms, n ≥ 10"*; o mesmo instrumento, as mesmas janelas e o host sem carga no "depois" (div. 1276). O "antes" e o "depois" se medem **sobre a base da PR-3**, nos dois aparelhos (SY-D38); o "antes" do AVD desta PR (§6) fica como referência de método e de ordem de grandeza, não como o termo da comparação. Se o "depois" reprovar, a PR-3 entrega a tabela por passo e volta com a pergunta (SY-D36); a decisão da SY-D6 é do aval da PR-3 | PR-3 |
 | **A-SY-10** | nenhum pixel novo | o G-inv B5 e B3 iguais nos dois aparelhos, sem errata | PR-3 |
 | **A-SY-11** | (v) a contagem | as 3 linhas `v:` saem (2 GET até 100 músicas, 3 com 101); downloads à parte | PR-4 |
 | **A-SY-12** | os gatilhos no AVD | avião desligado com o app aberto → 1; segundo plano > 30 s → 1, < 30 s → 0; dentro do intervalo → 0 — pelas linhas `sync trigger` e `api` | PR-4 |
@@ -540,6 +559,7 @@ SY-D32 pede (A-SY-21) e que a leitura do prazo abriu (A-SY-22). **Proposta: cong
 |---|---|---|
 | **"Cada tentativa baixa a página inteira de novo"** (sem requisição condicional nem retomada) — abaixo de ~21 kbit/s, todo sync falha | SY-D32 item 3 | proposto no encerramento do SY, **junto do ETag da SY-D11** (o site e o backend: fora do SY) |
 | a frase do placeholder para a música apagada nunca aberta (*"ainda não foi sincronizada"*) | SY-D23 (c) (já registrada no pre-check) | o encerramento do SY |
+| **o projeto `web` do Vitest coleta todo `.test.ts` dentro de `docs/`** (a div. 1268: a frase da div. 1144 vale só para nome que não é de teste) | div. 1268, **SY-D41 (2)** | **W5** (o mesmo bloco que leva os testes do core para dentro do core) |
 
 ## 10. Os blocos de declaração desta PR (a cópia que a regra do W4-b2 pede)
 
@@ -561,8 +581,24 @@ Sem recuo nas linhas de dentro (a nota do §7 do `SY-PRECHECK.md`: o recuo vira 
 
 ## 11. Os checks da PR
 
-*(Preenchido no commit seguinte a este, depois de o CI do head de código terminar — a regra 18: o push de docs só depois do APK
-verde.)*
+Sobre o head **`b2e2a85`** (a ponta da PR antes deste commit), **todos verdes**, antes deste commit do aval
+`[medido: gh pr checks 379; gh run view <id> --json jobs; ci-log.txt]` (duração no nível do **job**, como o `gh` a dá; `n=1`
+— não é referência):
+
+| check | workflow · run | estado | duração |
+|---|---|---|---|
+| `build` (lint, type-check, `pnpm test:unit` com os gates, cobertura, `pnpm build`) | `ci.yml` · `38105413558` | pass | 5m20s |
+| `gates-nativos` (G1a/G1b, G2/G3 com o bloco do corpo) | `gates.yml` · `38105413542` | pass | 16s |
+| `g-back` · `g-palco` · `g-tok` · `g-faixa` | `gates-web.yml` · `38105413519` | pass | 32s · 18s · 38s · 17s |
+| `mudou-nativo` | `native.yml` · `38105413544` | pass | 11s |
+| `android-debug-apk` | `native.yml` · `38105413544` | pass | **10m33s** (02:31:21 → 02:41:54 UTC) — dentro da faixa do regime 2 (`CI-FAIXA.md`: n=135, mín 8m09s, máx 14m32s, mediana 12m30s), abaixo do Q1 (11m03s) e acima do mínimo — não é estranho |
+| `Vercel` · `Vercel Preview Comments` | — | pass | — |
+
+**No log** (`ci-log.txt`): o `gates-nativos` leu as **4 declarações** do corpo, `G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no
+escopo)`, `G1b: só adição ✓`, `G2 — testIDs antes=124 depois=124`, `G3 — linhas log( antes=70 depois=70`, `nenhuma linha
+sumiu ✓`; o `build` rodou os cinco gates do SY (no passo do teste e no da cobertura) — *"reprova exatamente a lista esperada"*
+com 6 · 6 · 18 · 1 · 3 — e a suíte `Test Files 155 passed | 3 skipped (158)` · `Tests 1892 passed | 59 skipped (1951)`, igual à
+local. A linha da série no `CI-FAIXA.md` entra no encerramento do bloco (regra 22).
 
 ## 12. Divergências — 1264 a 1276
 
@@ -589,3 +625,38 @@ ambiente, dado real ou defeito do produto · **T** toolchain/aparato · **X** te
 
 **Contagem** `[medido: a coluna]`: **13 — P 1 · D 5 · A 2 · T 5** (P: 1264 · D: 1265, 1266, 1267, 1268, 1273 · A: 1269, 1275 ·
 T: 1270, 1271, 1272, 1274, 1276). **A próxima livre é a 1277.**
+
+### 12.1 Divergências do aval (o commit do aval)
+
+**Nenhuma.** O prompt do aval e o repositório não divergiram, com uma nota que o próprio prompt previu: a conta
+`git grep -hoE '^\| \*\*SY-D[0-9]+\*\*' -- docs | sort -u | wc -l` dá **40**, não 41 — a **SY-D32** não está em linha de
+tabela: ela vive no **§5.1** deste README (*"### 5.1 A decisão — SY-D32"*, com o texto do Marcel em citação). A conta certa é
+**40 em tabela (SY-D1…SY-D31 no `SY-PRECHECK.md`, SY-D33…SY-D41 no §13) + 1 no §5.1 = 41, de SY-D1 a SY-D41, sem lacuna**
+`[medido: aval-verificacao.txt]`. **Contagem: 0. A próxima livre continua a 1277.**
+
+## 13. O aval da PR-1 — SY-D33…SY-D41 `[Marcel, 2026-10-11]`
+
+As oito perguntas do §8, na ordem, e um registro sem pergunta; o texto da decisão é este (o "→ Respondida" de cada pergunta
+aponta para cá).
+
+| # | decisão (pergunta) |
+|---|---|
+| **SY-D33** | (Q1) **(a): o contrato dos gatilhos como está** — `ligarGatilhos({ sessao, pedirSync, ultimoSyncNaRede }) → desligar`, com o `AppState` e o `expo-network` assinados dentro do módulo. |
+| **SY-D34** | (Q2) **(a): a foto da sessão como está** — `criarFotoDaSessao() → { entrar, setlistDaSessao, sair }`, um objeto por sessão de navegação; o `navigation.tsx` só a liga, e a ligação se prova no aparelho (A-SY-17). |
+| **SY-D35** | (Q3) **(a): nenhum contrato do voo no core nesta PR.** A PR-2 mantém `rodarSync(raiz, uid, anterior)` como a entrada de todo pedido, põe o voo atrás dela com o `sessaoAtual` obrigatório, e cria a máquina pura no core com os testes de unidade dela (SY-D25). |
+| **SY-D36** | (Q4) **O critério do custo com o palco aberto é o (b), relativo ao piso das mesmas rodadas, com o (c) registrado para o release.** O texto congelado: *"na janela do sync, com n ≥ 10 por aparelho: a mediana do número de intervalos acima de 100 ms é no máximo a do piso + 1, **e** a mediana do maior intervalo é no máximo o maior entre 2 × a mediana do piso e 100 ms"*. Para o release: *"a maior lacuna de rolagem pelo `uiautomator events` na janela do sync é no máximo a mediana do piso + 100 ms, n ≥ 10"*. O mesmo instrumento, as mesmas janelas e o host sem carga no "depois" (div. 1276). **Registrado antes de medir:** a gravação síncrona sozinha (~175 ms, nunca abaixo de 137 ms no "antes") tende a reprovar também o (b), cujo limite hoje seria 149 ms; a foto não a tira. **Se o "depois" reprovar, a PR-3 não decide sozinha:** ela entrega a tabela por passo do "depois" e volta com a pergunta, com duas saídas na mesa — a SY-D6 cai para "com o palco aberto nenhum gatilho automático dispara; o sync fica marcado e roda ao sair do palco", ou a gravação se ataca. A decisão da SY-D6 segue sendo do aval da PR-3 (SY-D20). |
+| **SY-D37** | (Q5) **Os aceites A-SY-1…A-SY-22 ficam congelados** como no §9 do README, com o **A-SY-9 reescrito** pelas SY-D36 e SY-D38: o critério é o da SY-D36; o "antes" e o "depois" se medem **sobre a base da PR-3**, nos dois aparelhos; o "antes" do AVD desta PR fica como referência de método e de ordem de grandeza, não como o termo da comparação. |
+| **SY-D38** | (Q6) **(a): o "antes" do Tab S6 na PR-3**, na mesma ida ao Tab do "depois", com o Marcel destravando e a receita do cache uma vez só (N4-D102, regra 35). **Acréscimo:** o "antes" se mede **sobre a base da PR-3** (a `main` já com a PR-2), servida pelo Metro ao mesmo dev client, **nos dois aparelhos**; o AVD se remede nessa base. Motivo: a PR-2 junta a gravação e a troca da raiz num bloco síncrono só (SY-D26), o que muda o perfil das paradas; sem remedir, o "antes" e o "depois" comparariam códigos diferentes. |
+| **SY-D39** | (Q7) **(a):** o segundo evento **depois do fim** do primeiro sync → 1 sync (o intervalo segura); o segundo **durante** o primeiro → 2 syncs (o "de novo" do voo único). **É errata da linha "os dois juntos" da A2.3 do `SY-PRECHECK.md`**, que dizia "um sync" nos dois casos (div. 1267). |
+| **SY-D40** | (Q8) **(a): a chave `SY_PLANTA_TELA` do controle negativo fica no arquivo do gate**, desligada por padrão; o juiz imprime a planta quando ela está ligada. |
+| **SY-D41** | **Registros, sem pergunta:** (1) a **div. 1269** (o relógio dos 20 s começa antes do token; a renovação e a 2ª requisição de um 401 gastam o mesmo prazo) é **entrada obrigatória da PR-2**, que diz o que faz com ela ou a traz como pergunta; (2) a **div. 1268** (o projeto `web` coleta testes dentro de `docs/`) fica como **herança do W5**; (3) a **div. 1273** (a pergunta do prazo citou a conta errada) não muda a **SY-D32**, que fica como está. |
+
+**O que este commit mudou** (só notas, sem reescrever texto de decisão): o "→ Respondida" em Q1…Q8 (§8); o §9 congelado e a
+linha do A-SY-9 (SY-D37); a nota das SY-D36 e SY-D38 no §6; a herança da div. 1268 no §9.1 (SY-D41); o §11 (os checks); a
+linha deste commit no §7; o §12.1; no `SY-PRECHECK.md`, a errata da SY-D39 na A2.3, a nota da SY-D37 na A10 e as três linhas
+novas na tabela das mudadas do §0; a nota do `docs/ux/PLANO-TRANSICAO.md`; e a linha do aval no corpo da #379
+(`aval-blocos-decl.txt`).
+
+**A PR-1 do SY tem aval.** A próxima é a **PR-2 — o voo único, a janela da `naoRegredir`, as escritas e o prazo**, em sessão e
+árvore novas, depois do merge desta PR pelo Marcel; a árvore `../octavia-sy-precheck` fica para essa sessão remover, sem
+`--force`.

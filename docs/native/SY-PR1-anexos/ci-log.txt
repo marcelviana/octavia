@@ -1,0 +1,56 @@
+# o CI do head de código b2e2a85 (PR #379) — os checks e o log filtrado, 2026-10-11 08:24 -0300
+$ gh pr checks 379
+Vercel	pass	0	https://vercel.com/marcelvianas-projects/octavia/G7XrYor5yKJDHg9oevec8e2ufJjq	Deployment has completed
+Vercel Preview Comments	pass	0	https://vercel.com/github	
+android-debug-apk	pass	10m33s	https://github.com/marcelviana/octavia/actions/runs/38105413544/job/114369816561	
+build	pass	5m20s	https://github.com/marcelviana/octavia/actions/runs/38105413558/job/114369779292	
+g-back	pass	32s	https://github.com/marcelviana/octavia/actions/runs/38105413519/job/114369779261	
+g-faixa	pass	17s	https://github.com/marcelviana/octavia/actions/runs/38105413519/job/114369779279	
+g-palco	pass	18s	https://github.com/marcelviana/octavia/actions/runs/38105413519/job/114369779131	
+g-tok	pass	38s	https://github.com/marcelviana/octavia/actions/runs/38105413519/job/114369779253	
+gates-nativos	pass	16s	https://github.com/marcelviana/octavia/actions/runs/38105413542/job/114369779156	
+mudou-nativo	pass	11s	https://github.com/marcelviana/octavia/actions/runs/38105413544/job/114369779222	
+
+$ gh run view 38105413544 --json jobs   # native.yml
+mudou-nativo success 2026-10-11T02:31:08Z → 2026-10-11T02:31:19Z
+android-debug-apk success 2026-10-11T02:31:21Z → 2026-10-11T02:41:54Z
+
+$ gh run view 38105413542 --log | grep …   # gates.yml, job gates-nativos
+declarações (4 linhas):
+  g1a: apps/native/App.tsx
+  g1a: apps/native/src/sincronizador.ts
+  g1a: apps/native/src/gatilhos.ts
+  g1a: apps/native/src/foto-do-palco.ts
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+  G1b: só adição ✓
+G2 — testIDs  antes=124  depois=124
+  G2: antes ⊆ depois ✓
+G3 — declarações: do corpo da PR (GATES_DECL=/home/runner/work/_temp/decl)
+G3 — linhas log( antes=70  depois=70
+  G3: nenhuma linha sumiu ✓
+
+$ gh run view 38105413558 --log | grep …   # ci.yml, job build: os cinco gates do SY e a suíte (no passo do test e no do coverage)
+gate iv (a janela da naoRegredir) — casos 2 · passam 1 · reprovam 1
+gate iv: reprova exatamente a lista esperada (1) ✓
+gate ii (o voo único) — casos 8 · passam 2 · reprovam 6
+gate ii: reprova exatamente a lista esperada (6) ✓
+gate iii (a foto) — casos 23 · passam 5 · reprovam 18
+gate iii: reprova exatamente a lista esperada (18) ✓
+gate i (os gatilhos) — casos 16 · passam 10 · reprovam 6
+gate i: reprova exatamente a lista esperada (6) ✓
+gate v (a contagem) — casos 3 · passam 0 · reprovam 3
+gate v: reprova exatamente a lista esperada (3) ✓
+ Test Files  155 passed | 3 skipped (158)
+      Tests  1892 passed | 59 skipped (1951)
+gate iv (a janela da naoRegredir) — casos 2 · passam 1 · reprovam 1
+gate iv: reprova exatamente a lista esperada (1) ✓
+gate ii (o voo único) — casos 8 · passam 2 · reprovam 6
+gate ii: reprova exatamente a lista esperada (6) ✓
+gate i (os gatilhos) — casos 16 · passam 10 · reprovam 6
+gate i: reprova exatamente a lista esperada (6) ✓
+gate v (a contagem) — casos 3 · passam 0 · reprovam 3
+gate v: reprova exatamente a lista esperada (3) ✓
+gate iii (a foto) — casos 23 · passam 5 · reprovam 18
+gate iii: reprova exatamente a lista esperada (18) ✓
+ Test Files  155 passed | 3 skipped (158)
+      Tests  1892 passed | 59 skipped (1951)
