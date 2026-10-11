@@ -1,0 +1,6 @@
+# o "antes" da suíte — a main desta sessão, f4f4231e7f28056cb9ca57deadcd62c4f3d7c915, 2026-10-10 18:19:31 -0300
+$ pnpm test  (as linhas de resumo)
+ Test Files  149 passed | 3 skipped (152)
+      Tests  1851 passed | 59 skipped (1910)
+   Duration  62.66s (transform 7.99s, setup 16.64s, import 14.40s, tests 138.28s, environment 103.52s)
+exit=0

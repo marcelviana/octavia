@@ -1,0 +1,51 @@
+# árvore cb520d7f98d768ce133e51dfaacb90c4eb30e575 · base f4f4231e7f28056cb9ca57deadcd62c4f3d7c915 · 2026-10-10 22:17:10 -0300
+$ git status --short
+?? docs/native/SY-PR1-anexos/
+$ sh apps/native/scripts/gates-decl.sh < <corpo>
+exit=0
+  g1a: apps/native/App.tsx
+  g1a: apps/native/src/sincronizador.ts
+$ GATES_DECL=<decl> sh apps/native/scripts/g1.sh origin/main WORKTREE
+declarações: do corpo da PR (GATES_DECL=/var/folders/y9/tw0zmy8x5rs4ybgyt8lys8vw0000gn/T//sy-pr1-decl.5552)
+base=origin/main head=WORKTREE
+G1a — diff vazio em 65 arquivos DERIVADOS de apps/native + packages/core/src
+      escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+      EXCEÇÕES DECLARADAS (o escopo desta PR):
+        apps/native/App.tsx
+        apps/native/src/sincronizador.ts
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+      PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+        (nenhum — nenhuma asserção do core pode mudar nesta PR)
+  G1b: só adição ✓
+exit=0
+$ GATES_DECL=<decl> sh apps/native/scripts/g2g3.sh origin/main WORKTREE
+G2 — testIDs  antes=124  depois=124
+  G2: antes ⊆ depois ✓
+G3 — declarações: do corpo da PR (GATES_DECL=/var/folders/y9/tw0zmy8x5rs4ybgyt8lys8vw0000gn/T//sy-pr1-decl.5552)
+G3 — linhas log( antes=70  depois=70
+      ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+        (nenhuma)
+      REMOÇÕES DECLARADAS (linha → REMOVIDA: razão; N2-D34):
+        (nenhuma)
+      — nenhuma linha de log pode sumir nesta PR
+  G3: nenhuma linha sumiu ✓
+exit=0
+$ (cd . && npx tsc --noEmit)
+exit=0
+$ (cd packages/core && npx tsc --noEmit)
+exit=0
+$ (cd packages/identidade && npx tsc --noEmit)
+exit=0
+$ (cd apps/native && npx tsc --noEmit)
+exit=0
+$ pnpm lint
+
+✔ No ESLint warnings or errors
+exit=0
+$ pnpm test  (as linhas de resumo)
+ Test Files  149 passed | 3 skipped (152)
+      Tests  1851 passed | 59 skipped (1910)
+   Duration  62.32s (transform 6.02s, setup 21.81s, import 11.95s, tests 139.64s, environment 56.91s)
+exit=0

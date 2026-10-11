@@ -1,0 +1,30 @@
+# gate (v), a 1ª corrida com a lista VAZIA
+$ pnpm exec vitest run --project native-tela apps/native/test/sy-requisicoes.test.tsx
+stdout | apps/native/test/sy-requisicoes.test.tsx > gate (v) — a contagem de GET por evento de gatilho (A2.5) > a abertura (o controle do servidor): 2 GET com 100 músicas, 3 com 101 — o sync de hoje, sem gatilho
+gate (v), o controle: a abertura com 100 músicas → 2 GET; com 101 → 3 GET
+gate v (a contagem) — casos 3 · passam 0 · reprovam 3
+  REPROVA             v:rede-volta-100 · GET por evento: 0 (esperado 2) · downloads à parte: 0 · []
+        0 GET, esperado 2
+  REPROVA             v:rede-volta-101 · GET por evento: 0 (esperado 3) · downloads à parte: 0 · []
+        0 GET, esperado 3
+  REPROVA             v:fundo-100 · GET por evento: 0 (esperado 2) · downloads à parte: 0 · []
+        0 GET, esperado 2
+lista esperada (0) · reprovados (3)
+  ✗ reprovação NÃO DECLARADA: v:rede-volta-100
+  ✗ reprovação NÃO DECLARADA: v:rede-volta-101
+  ✗ reprovação NÃO DECLARADA: v:fundo-100
+gate v: ✗
+     ✓ a abertura (o controle do servidor): 2 GET com 100 músicas, 3 com 101 — o sync de hoje, sem gatilho 194ms
+     ✓ a rede volta (100 músicas) → 2 GET 261ms
+     ✓ a rede volta (101 músicas) → 3 GET 270ms
+     ✓ a volta do segundo plano depois de 30 s (100 músicas) → 2 GET 263ms
+     × reprova exatamente a lista de sy-reprovados.txt 11ms
+    168|     console.info(j.texto)
+    169|     expect(j.casos, 'gate sem casos: não mediu nada (regra 4)').toBeGr…
+    170|     expect(j.naoDeclaradas, 'reprovação NÃO DECLARADA').toEqual([])
+       |                                                         ^
+    171|     expect(j.orfas, 'declaração ÓRFÃ').toEqual([])
+    172|   })
+      Tests  1 failed | 4 passed (5)
+   Start at  22:30:51
+   Duration  1.65s (transform 166ms, setup 0ms, import 97ms, tests 1.17s, environment 288ms)
