@@ -1,0 +1,49 @@
+# SY-PR1 — os gates do SY (SY-D13): o que DEVE reprovar hoje, uma checagem por linha, <gate>:<caso>.
+# O juiz é o `sy-lista.ts`: reprovação fora daqui (NÃO DECLARADA) e linha que passa ou não existe (ÓRFÃ) reprovam o
+# gate (regra 14). Cada PR do SY esvazia a sua parte (a PR ao lado de cada bloco); vazia, a lista exige zero
+# reprovações sem mudar os gates. O que passa hoje NÃO está aqui: a prova daqueles casos é o controle negativo
+# plantado (`docs/native/SY-PR1-anexos/instrumentos/cn-sy.sh`). Comentário e linha em branco são ignorados.
+
+# (i) os gatilhos — sy-gatilhos.test.tsx — esvazia na PR-4 (o `de-novo-fora-do-intervalo` precisa também do voo, PR-2)
+i:rede-volta-na-frente
+i:fundo-mais-de-30s
+i:marca-volta-curta
+i:dois-eventos
+i:apos-falha-de-rede
+i:de-novo-fora-do-intervalo
+
+# (ii) o voo único — sy-voo.test.ts — esvazia na PR-2
+ii:nunca-dois-em-curso
+ii:um-de-novo
+ii:escrita-setlists-ficam
+ii:escrita-sync-sem-cache-write-setlists
+ii:logout-descarta
+ii:prazo-libera-o-voo
+
+# (iii) a foto — sy-foto.test.tsx — esvazia na PR-3
+iii:palco-corpo
+iii:palco-sem-topo
+iii:palco-rolagem-segue
+iii:palco-notas
+iii:palco-titulo
+iii:palco-nota-da-posicao
+iii:palco-barra
+iii:palco-file-url
+iii:palco-musica-apagada-aberta
+iii:sessao-indice
+iii:sessao-fim
+iii:sessao-busca
+iii:setlist-apagada
+iii:v-corpo
+iii:v-titulo
+iii:v-detalhes
+iii:v-notas
+iii:v-file-url
+
+# (iv) a janela da naoRegredir — sy-nao-regredir.test.ts — esvazia na PR-2
+iv:janela
+
+# (v) a contagem — sy-requisicoes.test.tsx — esvazia na PR-4
+v:rede-volta-100
+v:rede-volta-101
+v:fundo-100

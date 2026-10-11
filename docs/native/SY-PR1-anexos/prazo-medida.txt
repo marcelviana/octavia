@@ -1,0 +1,67 @@
+$ SY_FIXTURE=<scratch>/fx-n3 pnpm exec vitest run --config docs/native/SY-PR1-anexos/instrumentos/prazo/vitest.config.mts
+  (a fixture: python3 docs/native/N3-PRECHECK-anexos/instrumentos/fixture.py <scratch>/fx-n3 2026-09-23)
+ RUN  v4.0.16 /Users/marcelviana/projects/octavia-sy-pr1
+[mock] fixture: servidor em :64963 modo=normal setlists=3 content=12 paginas=[12]
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=2
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=1
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=2
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=2
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=1
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=1
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=2
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=1
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=1
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=0
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=1
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=1
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=1
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=1
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=1
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=1
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=1
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=1
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=1
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=1
+[a] GET /api/setlists   32152 B · n=10 mín 1 · mediana 1.5 · máx 3 ms
+[a] GET /api/content p1 25696 B · n=10 mín 1 · mediana 1 · máx 2 ms
+[mock] fixture: servidor em :64987 modo=atraso setlists=3 content=12 paginas=[12]
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/content n=1 ms=45013
+[b] GET /api/content p1, como o sync pede hoje (sem prazo): ok=true em 45014 ms
+OCTAVIA: auth refresh=cached
+[b] GET /api/setlists com o prazo do core (20000 ms): ok=false kind=network status=null em 20004 ms
+OCTAVIA: auth refresh=cached
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=10
+[c] 2000 B/s (o corpo inteiro levaria 26.5 s): ok=false kind=network status=null em 20009 ms · linhas api: ["OCTAVIA: api status=200 path=/api/setlists n=1 ms=10"]
+OCTAVIA: auth refresh=cached
+[gotas 2000 B/s] o cliente fechou com 40000 de 52941 B enviados
+OCTAVIA: api status=200 path=/api/setlists n=1 ms=4
+[c] 4000 B/s (o corpo inteiro levaria 13.2 s): ok=true em 13052 ms · linhas api: ["OCTAVIA: api status=200 path=/api/setlists n=1 ms=4"]
+ ✓ docs/native/SY-PR1-anexos/instrumentos/prazo/prazo-medida.ts (3 tests) 98367ms
+     ✓ (b) o mock `atraso` (45 s): o GET do sync sem prazo, e o mesmo GET com o prazo do core  65129ms
+     ✓ (c) o servidor de gotas: 52.941 B a 2.000 B/s (o prazo derruba no meio do corpo?) e a 4.000 B/s (passa)  33067ms
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  22:52:03
+   Duration  98.77s (transform 128ms, setup 0ms, import 177ms, tests 98.37s, environment 0ms)
+exit=0

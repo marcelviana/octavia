@@ -23,23 +23,14 @@ import { estaOnline, useOnline } from './src/net'
 import { aplicarLru, baixarSetlist, prefetchDaBiblioteca } from './src/prefetch'
 import type { SyncState } from './src/screens/SetlistsScreen'
 import { onAuth, signedInThisRun, type User } from './src/session'
+import { rodarSync as executarSync, type Dados } from './src/sincronizador'
 import { load } from './src/store'
-import { sincronizar } from './src/sync'
 import { dark } from './src/theme'
 
 // N4-D92 (div. 1066): o `files.ts` consulta a rede quando um download rejeita — sem rede, não é falha do arquivo.
 ligarSondaDeRede(estaOnline)
 
 type Estado = { fase: 'carregando' } | { fase: 'fora' } | { fase: 'dentro'; user: User }
-
-interface Dados {
-  setlists: SetlistDTO[]
-  content: ContentDTO[]
-  contentById: Map<string, ContentDTO>
-  /** `true` só depois de um sync bem-sucedido gravado neste aparelho. */
-  temCache: boolean
-  syncedAtMs: number | null
-}
 
 /**
  * N3-PR1 — a régua de desenvolvimento (`src/screens/ReguaDeDev.tsx`). Por
@@ -136,7 +127,7 @@ export default function App(): React.JSX.Element {
    * **T2-R17 / div. 228 — o gancho do prefetch, ligado aqui.**
    *
    * A releitura que segue uma escrita (N2-D13) não passa pelo `planSync`, que
-   * é o caminho que dispara o prefetch nas duas saídas do `rodarSync` abaixo.
+   * é o caminho que dispara o prefetch nas duas saídas do `rodarSync` (`src/sincronizador.ts`).
    * A N2-PR2 deixou o gancho `aoRelerSetlists` e o declarou INERTE, para que o
    * requisito não parecesse atendido por construção; a ligação é esta, e o que
    * ela faz é dar à releitura de uma escrita o mesmo tratamento que um sync
@@ -193,54 +184,15 @@ export default function App(): React.JSX.Element {
     })
   }, [])
 
-  /** Passo 2 do T1-R13 — roda depois de a tela já mostrar o cache. */
-  const rodarSync = useCallback(async (uid: string, anterior: Dados): Promise<void> => {
-    setSync({ fase: 'sincronizando' })
-    const r = await sincronizar(
-      uid,
-      anterior.temCache ? { content: anterior.content, setlists: anterior.setlists } : null,
-    )
-    if (r.kind === 'ok') {
-      // T1-R10: conjunto de content inalterado volta com a MESMA referência
-      // (`reconcileByUpdatedAt`), e o índice por id é reaproveitado — senão
-      // todo derivado que o lê se recriaria num sync com `invalidated=0`.
-      const contentById =
-        r.content === anterior.content
-          ? anterior.contentById
-          : new Map(r.content.map((c) => [c.id, c]))
-      setDados({
-        setlists: r.setlists,
-        content: r.content,
-        contentById,
-        temCache: true,
-        syncedAtMs: r.syncedAtMs,
-      })
-      setSync({ fase: 'ok', syncedAtMs: r.syncedAtMs })
-      // O `dadosRef` é atualizado à mão aqui porque o efeito que o segue o
-      // `setDados` só corre no próximo render — e o LRU precisa das setlists
-      // NOVAS para saber o que está garantido.
-      dadosRef.current = {
-        setlists: r.setlists,
-        content: r.content,
-        contentById,
-        temCache: true,
-        syncedAtMs: r.syncedAtMs,
-      }
-      await prefetchEArrumar(r.setlists, contentById)
-      return
-    }
-    // Falha ou offline: o cache anterior fica exatamente como está (A21) e o
-    // estado da tela conta o que houve, sem esconder e sem bloquear (T1-R18).
-    setSync(
-      r.kind === 'skipped-offline'
-        ? { fase: 'offline', syncedAtMs: anterior.syncedAtMs }
-        // T1-R36 / D-b: a chave do core viaja até a tela, que escolhe o texto.
-        : { fase: 'falha', syncedAtMs: anterior.syncedAtMs, messageKey: r.messageKey },
-    )
-    // Sync falho ou pulado: o cache anterior é o que vale, e é sobre ele que
-    // o prefetch e o LRU trabalham.
-    await prefetchEArrumar(anterior.setlists, anterior.contentById)
-  }, [prefetchEArrumar])
+  /**
+   * Passo 2 do T1-R13 — roda depois de a tela já mostrar o cache. O executor mora no `src/sincronizador.ts` desde a
+   * SY-PR1 (a extração literal, SY-D29); aqui fica a ligação com a raiz, com as mesmas dependências de antes.
+   */
+  const rodarSync = useCallback(
+    (uid: string, anterior: Dados): Promise<void> =>
+      executarSync({ setSync, setDados, dadosRef, prefetchEArrumar }, uid, anterior),
+    [prefetchEArrumar],
+  )
 
   useEffect(() => {
     if (estado.fase !== 'dentro') return

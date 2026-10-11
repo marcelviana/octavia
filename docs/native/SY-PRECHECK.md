@@ -56,6 +56,9 @@ fica como está; as mudadas por decisão posterior:)*
 | SY-D9 (o voo único) | **SY-D19**, **SY-D25** | o prazo de 20 s também nas leituras do sync, como condição; a máquina no core, o executor no app, a geração de emissão das setlists compartilhada com as releituras |
 | SY-D10 (provar e fechar a janela) | **SY-D26** | cumpre-se pela aplicação na raiz no mesmo bloco síncrono, na PR-2; o §A6.4 é o texto que o D cita |
 | SY-D14 (o fatiamento) | **SY-D29** | a extração do `rodarSync` num commit próprio da PR-1, antes dos gates, com a prova de que nada mudou; os aceites se congelam no aval da PR-1 |
+| SY-D6 (o custo com o palco aberto) | **SY-D36** | o critério da decisão: relativo ao piso das mesmas rodadas (e, para o release, a lacuna do `uiautomator events`); se o "depois" reprovar, a PR-3 volta com a pergunta (`SY-PR1-anexos/README.md` §13) |
+| SY-D20 (onde e quando se mede o custo) | **SY-D36**, **SY-D38** | o critério congelado no aval da PR-1 (SY-D36); o "antes" e o "depois" medidos sobre a base da PR-3, nos dois aparelhos, o Tab na mesma ida (SY-D38) |
+| SY-D19 (o prazo nas leituras do sync) | **SY-D32** | confirmada: os 20 s cobrem a resposta inteira, e a SY-D19 (a) fica, com quatro acréscimos (`SY-PR1-anexos/README.md` §5.1) |
 
 ---
 
@@ -193,6 +196,11 @@ encerramento do QL acrescentou o caso 44 ao `LOGS-OCTAVIA.md`. **Nenhuma afirma�
 | **logout no meio** (o 2º 401 de uma escrita ou do favoritar, `api.ts:109`) | o resultado do sync em voo **se descarta** se a sessão mudou, e o *"de novo"* se cancela | hoje o `rodarSync` não confere a sessão: um sync que termina depois do `onAuth(null)` (`App.tsx:184`) regravaria os dados da sessão velha na raiz `[lido; não medido]` |
 | o *Tentar de novo* visível e um gatilho chegando | o gatilho roda o sync (o botão some com o `sincronizando`, `App.tsx:198`); um toque no *Tentar de novo* **não** passa pelo intervalo, passa pelo voo único | o gesto é do músico |
 | a primeira leitura do `useOnline` (`null → true`) | **não é gatilho** | A2.1 |
+
+*(Errata do aval da PR-1 — **SY-D39** `[Marcel, 2026-10-11]`, div. 1267: a linha "os dois juntos" acima dizia "um sync" nos
+dois casos. Vale: o segundo evento **depois do fim** do primeiro sync → **1** sync (o intervalo segura); o segundo **durante**
+o primeiro → **2** syncs (o "de novo" do voo único). O texto da tabela fica como está; o gate (i) mede as duas leituras
+(`dois-eventos`, `de-novo-fora-do-intervalo`), `SY-PR1-anexos/README.md` §3 e §13.)*
 
 **A2.4 — o intervalo mínimo** (SY-D5; pergunta Q2):
 
@@ -601,6 +609,9 @@ aparelhos; separadas, a PR-2 entra sem aparelho e a PR-3 mede sobre ela.
 
 *(Nota do aval — SY-D20, SY-D29: os aceites acima continuam **candidatos**; congelam-se no aval da PR-1, junto com o
 critério do custo com o palco aberto.)*
+
+*(Nota do aval da PR-1 — **SY-D37** `[Marcel, 2026-10-11]`: os aceites estão congelados no `SY-PR1-anexos/README.md` §9
+(A-SY-1…A-SY-22, com o A-SY-9 reescrito pelas SY-D36 e SY-D38).)*
 
 ### A11 — as heranças do SY (`QL-ENCERRAMENTO.md` §8.1)
 

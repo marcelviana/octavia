@@ -1,0 +1,11 @@
+# os blocos de declaração no corpo NOVO da #379 (com a linha do aval), lidos pelos dois extratores — antes do gh pr edit
+$ sh apps/native/scripts/gates-decl.sh < <corpo novo>
+g1a: apps/native/App.tsx
+g1a: apps/native/src/sincronizador.ts
+g1a: apps/native/src/gatilhos.ts
+g1a: apps/native/src/foto-do-palco.ts
+exit=0
+$ sh scripts/gates-web/gates-web-decl.sh < <corpo novo>
+exit=0 (0 declarações)
+$ diff <(gates-decl.sh < corpo de antes) <(gates-decl.sh < corpo novo)
+exit=0 (0 = lidos como antes)

@@ -1,0 +1,45 @@
+== rodada 1/10: o mock serve B (o cache tem a outra)
+  {"instalado":true,"base":1791663569762.548}
+  controle (a): {"travou":200.00737499818206,"em":1791683936379}
+  sensor: 5495 quadros → <scratch>/avd/rodadas/r01-sensor.json
+  t_open=1791683846862 setlists +57011 ms · sync ok +102223 ms
+== rodada 2/10: o mock serve A (o cache tem a outra)
+  {"instalado":true,"base":1791663569763.2805}
+  controle (a): {"travou":200.00258399918675,"em":1791684059643}
+  sensor: 5420 quadros → <scratch>/avd/rodadas/r02-sensor.json
+  t_open=1791683969869 setlists +57310 ms · sync ok +102593 ms
+== rodada 3/10: o mock serve B (o cache tem a outra)
+  {"instalado":true,"base":1791663569763.261}
+  controle (a): {"travou":200.02633399888873,"em":1791684182161}
+  sensor: 5571 quadros → <scratch>/avd/rodadas/r03-sensor.json
+  t_open=1791684092912 setlists +56870 ms · sync ok +102114 ms
+== rodada 4/10: o mock serve A (o cache tem a outra)
+  {"instalado":true,"base":1791663569763.3}
+  sensor: 5435 quadros → <scratch>/avd/rodadas/r04-sensor.json
+  t_open=1791684215582 setlists +57676 ms · sync ok +103005 ms
+== rodada 5/10: o mock serve B (o cache tem a outra)
+  {"instalado":true,"base":1791663569762.8213}
+  sensor: 5530 quadros → <scratch>/avd/rodadas/r05-sensor.json
+  t_open=1791684339322 setlists +57336 ms · sync ok +102550 ms
+== rodada 6/10: o mock serve A (o cache tem a outra)
+  {"instalado":true,"base":1791663569762.7896}
+  sensor: 5522 quadros → <scratch>/avd/rodadas/r06-sensor.json
+  t_open=1791684462288 setlists +57024 ms · sync ok +102373 ms
+== rodada 7/10: o mock serve B (o cache tem a outra)
+  {"instalado":true,"base":1791663569762.9346}
+  sensor: 5580 quadros → <scratch>/avd/rodadas/r07-sensor.json
+  t_open=1791684585194 setlists +57688 ms · sync ok +102942 ms
+== rodada 8/10: o mock serve A (o cache tem a outra)
+  {"instalado":true,"base":1791663569763.1707}
+  sensor: 5550 quadros → <scratch>/avd/rodadas/r08-sensor.json
+  t_open=1791684708774 setlists +57611 ms · sync ok +102829 ms
+== rodada 9/10: o mock serve B (o cache tem a outra)
+  {"instalado":true,"base":1791663569763.3381}
+  sensor: 5540 quadros → <scratch>/avd/rodadas/r09-sensor.json
+  t_open=1791684832137 setlists +58084 ms · sync ok +103343 ms
+== rodada 10/10: o mock serve A (o cache tem a outra)
+  {"instalado":true,"base":1791663569762.71}
+  sensor: 5537 quadros → <scratch>/avd/rodadas/r10-sensor.json
+  t_open=1791684955854 setlists +56743 ms · sync ok +101982 ms
+fim
+fim exit=0

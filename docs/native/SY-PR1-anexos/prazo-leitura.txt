@@ -1,0 +1,255 @@
+# SY-PR1, commit 4 — O PRAZO DE REDE, LIDO (SY-D19). Árvore d5582c4 (os arquivos do app são os da main f4f4231: a PR não toca neles).
+# Pergunta: o PRAZO_DE_REDE_MS (20 s) cobre a resposta INTEIRA ou só até o primeiro byte? Onde o relógio para?
+
+## 1. O número e o mecanismo — apps/native/src/api.ts e o core
+$ grep -n "PRAZO_DE_REDE_MS = " packages/core/src/escrita.ts
+70:export const PRAZO_DE_REDE_MS = 20_000
+$ sed -n 168,202p apps/native/src/api.ts   # o prazoDe e o get
+   168	function prazoDe(prazoMs: number | undefined): { signal?: unknown; fim: () => void } {
+   169	  if (prazoMs === undefined) return { fim: () => undefined }
+   170	  const controle = new AbortController()
+   171	  const t = setTimeout(() => controle.abort(), prazoMs)
+   172	  return { signal: controle.signal, fim: () => clearTimeout(t) }
+   173	}
+   174	
+   175	/** Uma chamada GET instrumentada: mede o tempo e normaliza a falha (T1-R37). */
+   176	async function get<T>(path: string, familia: string, prazoMs?: number): Promise<ApiResult<T>> {
+   177	  const t0 = Date.now()
+   178	  const prazo = prazoDe(prazoMs)
+   179	  try {
+   180	    const { response, requests } = await authFetch(`${baseUrl()}${path}`, { signal: prazo.signal })
+   181	    const ms = Date.now() - t0
+   182	    log(`api status=${response.status} path=${path.split('?')[0]} n=${requests} ms=${ms}`)
+   183	    const corpo = await response.text()
+   184	    if (!response.ok) {
+   185	      const headers: Record<string, string> = {}
+   186	      response.headers.forEach((v, k) => {
+   187	        headers[k] = v
+   188	      })
+   189	      const error = errorFrom({ status: response.status, bodyText: corpo, headers })
+   190	      if (error.kind === 'rate-limited' && error.retryAfter !== null) {
+   191	        log(`ratelimit retry-after=${error.retryAfter} family=${familia}`)
+   192	      }
+   193	      return { ok: false, error, status: response.status }
+   194	    }
+   195	    return { ok: true, data: JSON.parse(corpo) as T }
+   196	  } catch (e: unknown) {
+   197	    const msg = e instanceof Error ? e.message : String(e)
+   198	    return { ok: false, error: errorFrom({ networkError: msg }), status: null }
+   199	  } finally {
+   200	    prazo.fim()
+   201	  }
+   202	}
+$ sed -n 204,230p apps/native/src/api.ts   # as duas leituras do sync: o getContentPage não aceita prazoMs; o getSetlists só o recebe pela releitura
+   204	/**
+   205	 * `GET /api/setlists` — array na raiz, sem paginação (`docs/api/SETLISTS.md`).
+   206	 *
+   207	 * `prazoMs` só chega pela **releitura** da escrita (T2-R9, N2-D35): quem lê
+   208	 * pelo sync continua sem prazo (ver o `prazoDe` acima).
+   209	 */
+   210	export function getSetlists(opcoes?: { prazoMs?: number }): Promise<ApiResult<SetlistDTO[]>> {
+   211	  return get<SetlistDTO[]>('/api/setlists', 'setlist-read', opcoes?.prazoMs)
+   212	}
+   213	
+   214	export interface ContentPageBody {
+   215	  data: ContentDTO[]
+   216	  total: number
+   217	  page: number
+   218	  pageSize: number
+   219	  hasMore: boolean
+   220	  totalPages: number
+   221	}
+   222	
+   223	/**
+   224	 * `GET /api/content` — `pageSize=100` é o teto real do handler (clampado a
+   225	 * [1,100], medido em prod) e `sortBy=recent` é a chave estável entre páginas
+   226	 * exigida pelo T1-R9b (A22).
+   227	 */
+   228	export function getContentPage(page: number): Promise<ApiResult<ContentPageBody>> {
+   229	  return get<ContentPageBody>(`/api/content?pageSize=100&page=${page}&sortBy=recent`, 'content-read')
+   230	}
+$ sed -n 53,78p packages/core/src/auth-fetch.ts   # o authFetch: o token (e a renovação) e a 2ª requisição do 401 ficam DENTRO do relógio
+    53	export function createAuthFetch<R extends AuthResponseLike>({ fetch, getToken, onAuthFailure }: AuthFetchDeps<R>): AuthFetch<R> {
+    54	  const doFetch = (path: string, init: Omit<AuthRequestInit, 'cache'> | undefined, token: string) =>
+    55	    fetch(path, {
+    56	      ...init,
+    57	      headers: { ...(init?.headers ?? {}), Authorization: `Bearer ${token}` },
+    58	      cache: 'no-store',
+    59	    })
+    60	
+    61	  return async (path, init) => {
+    62	    const first = await getToken({ forceRefresh: false })
+    63	    if (!first) {
+    64	      await onAuthFailure()
+    65	      throw new Error('auth-fetch: sem token')
+    66	    }
+    67	    const response = await doFetch(path, init, first)
+    68	    if (response.status !== 401) return { response, requests: 1 }
+    69	
+    70	    const refreshed = await getToken({ forceRefresh: true })
+    71	    if (!refreshed || refreshed === first) {
+    72	      await onAuthFailure()
+    73	      return { response, requests: 1 }
+    74	    }
+    75	    const second = await doFetch(path, init, refreshed)
+    76	    if (second.status === 401) await onAuthFailure()
+    77	    return { response: second, requests: 2 }
+    78	  }
+
+## 2. O fetch do aparelho — o do React Native (0.86.3) é o whatwg-fetch 3.6.20 sobre XMLHttpRequest
+$ sed -n 13,17p node_modules/.pnpm/react-native@0.86.3_@babel+core@7.28.4_@types+react@19.2.18_react@19.2.3/node_modules/react-native/Libraries/Network/fetch.js
+    13	// side-effectful require() to put fetch,
+    14	// Headers, Request, Response in global scope
+    15	require('whatwg-fetch');
+    16	
+    17	export const fetch = global.fetch;
+$ sed -n 532,640p node_modules/.pnpm/whatwg-fetch@3.6.20/node_modules/whatwg-fetch/dist/fetch.umd.js   # o fetch: resolve no xhr.onload (o corpo INTEIRO já chegou); o abort fica armado até readyState 4
+   532	  function fetch(input, init) {
+   533	    return new Promise(function(resolve, reject) {
+   534	      var request = new Request(input, init);
+   535	
+   536	      if (request.signal && request.signal.aborted) {
+   537	        return reject(new exports.DOMException('Aborted', 'AbortError'))
+   538	      }
+   539	
+   540	      var xhr = new XMLHttpRequest();
+   541	
+   542	      function abortXhr() {
+   543	        xhr.abort();
+   544	      }
+   545	
+   546	      xhr.onload = function() {
+   547	        var options = {
+   548	          statusText: xhr.statusText,
+   549	          headers: parseHeaders(xhr.getAllResponseHeaders() || '')
+   550	        };
+   551	        // This check if specifically for when a user fetches a file locally from the file system
+   552	        // Only if the status is out of a normal range
+   553	        if (request.url.indexOf('file://') === 0 && (xhr.status < 200 || xhr.status > 599)) {
+   554	          options.status = 200;
+   555	        } else {
+   556	          options.status = xhr.status;
+   557	        }
+   558	        options.url = 'responseURL' in xhr ? xhr.responseURL : options.headers.get('X-Request-URL');
+   559	        var body = 'response' in xhr ? xhr.response : xhr.responseText;
+   560	        setTimeout(function() {
+   561	          resolve(new Response(body, options));
+   562	        }, 0);
+   563	      };
+   564	
+   565	      xhr.onerror = function() {
+   566	        setTimeout(function() {
+   567	          reject(new TypeError('Network request failed'));
+   568	        }, 0);
+   569	      };
+   570	
+   571	      xhr.ontimeout = function() {
+   572	        setTimeout(function() {
+   573	          reject(new TypeError('Network request timed out'));
+   574	        }, 0);
+   575	      };
+   576	
+   577	      xhr.onabort = function() {
+   578	        setTimeout(function() {
+   579	          reject(new exports.DOMException('Aborted', 'AbortError'));
+   580	        }, 0);
+   581	      };
+   582	
+   583	      function fixUrl(url) {
+   584	        try {
+   585	          return url === '' && g.location.href ? g.location.href : url
+   586	        } catch (e) {
+   587	          return url
+   588	        }
+   589	      }
+   590	
+   591	      xhr.open(request.method, fixUrl(request.url), true);
+   592	
+   593	      if (request.credentials === 'include') {
+   594	        xhr.withCredentials = true;
+   595	      } else if (request.credentials === 'omit') {
+   596	        xhr.withCredentials = false;
+   597	      }
+   598	
+   599	      if ('responseType' in xhr) {
+   600	        if (support.blob) {
+   601	          xhr.responseType = 'blob';
+   602	        } else if (
+   603	          support.arrayBuffer
+   604	        ) {
+   605	          xhr.responseType = 'arraybuffer';
+   606	        }
+   607	      }
+   608	
+   609	      if (init && typeof init.headers === 'object' && !(init.headers instanceof Headers || (g.Headers && init.headers instanceof g.Headers))) {
+   610	        var names = [];
+   611	        Object.getOwnPropertyNames(init.headers).forEach(function(name) {
+   612	          names.push(normalizeName(name));
+   613	          xhr.setRequestHeader(name, normalizeValue(init.headers[name]));
+   614	        });
+   615	        request.headers.forEach(function(value, name) {
+   616	          if (names.indexOf(name) === -1) {
+   617	            xhr.setRequestHeader(name, value);
+   618	          }
+   619	        });
+   620	      } else {
+   621	        request.headers.forEach(function(value, name) {
+   622	          xhr.setRequestHeader(name, value);
+   623	        });
+   624	      }
+   625	
+   626	      if (request.signal) {
+   627	        request.signal.addEventListener('abort', abortXhr);
+   628	
+   629	        xhr.onreadystatechange = function() {
+   630	          // DONE (success or failure)
+   631	          if (xhr.readyState === 4) {
+   632	            request.signal.removeEventListener('abort', abortXhr);
+   633	          }
+   634	        };
+   635	      }
+   636	
+   637	      xhr.send(typeof request._bodyInit === 'undefined' ? null : request._bodyInit);
+   638	    })
+   639	  }
+   640	
+
+## 3. A leitura
+
+- O relógio COMEÇA no `prazoDe(prazoMs)` (`api.ts:178`), ANTES do `authFetch` (`:180`): o `getIdToken` — e, perto do fim do
+  token, o `getIdToken(true)` que vai ao Google — e a 2ª requisição de um 401 (`auth-fetch.ts:62-77`) correm DENTRO dos 20 s.
+- O `abort` mata a requisição EM VOO. No aparelho, o `fetch` é o `whatwg-fetch` (`fetch.js:15`), que só resolve no
+  `xhr.onload` (`fetch.umd.js:546-561`) — com o corpo INTEIRO já recebido —, e o ouvinte do `abort` fica ligado até o
+  `readyState` 4 (`:625-634`). Um corpo que ainda está chegando aos 20 s é abortado (`xhr.abort()` → `onabort` → rejeita,
+  `:577-581`), e a rejeição cai no `catch` do `get` (`api.ts:196-198`): `networkError` → espécie `rede` → no sync,
+  `sync fail … code=network status=-`.
+- O relógio PARA de valer quando o corpo inteiro chegou: o `clearTimeout` só corre no `finally` (`api.ts:199-201`), mas
+  depois do `readyState` 4 o `abort` não tem mais o que matar; o `response.text()` (`:183`) lê o que o XHR já guardou.
+- **Resposta: os 20 s cobrem a RESPOSTA INTEIRA** (do pedido do token ao último byte do corpo), por requisição — cada
+  página de content e o `GET /api/setlists` têm o seu.
+- **No Node (os testes) também**, e por outro caminho: o `fetch` do Node (undici) resolve no CABEÇALHO, e o `abort` no meio
+  do corpo faz o `response.text()` rejeitar — medido (`prazo-medida.txt`, (c)): 40.000 de 52.941 B recebidos, falha em
+  20.009 ms. **Diferença de instrumento, declarada**: no Node a linha `api status=200 …` sai no cabeçalho, ANTES de o corpo
+  falhar; no aparelho não sai linha `api` nenhuma (o `fetch` só resolve com o corpo). Nos testes, uma falha por prazo no
+  corpo aparece como `api status=200` seguida de `sync fail … code=network`.
+
+## 4. A conta (SY-D32 item 1)
+
+- A página medida no N1: **52.941 B, 66 músicas, a conta de AUDIT** (`N1-PRECHECK-anexos/A3-probe-prod.txt:14-15`) — e não
+  "a conta principal", como a pergunta do commit 4 disse (errata no README, §5). Para caber em 20 s: 52.941 B / 20 s =
+  **2.647 B/s ≈ 21,2 kbit/s** de vazão efetiva do corpo (sem contar o token nem o TLS).
+- Uma página cheia, 100 músicas `[hipótese]`: pelo tamanho médio do N1 (52.941 / 66 = **802 B por música**) ≈ 80.200 B →
+  **4.010 B/s ≈ 32 kbit/s**; pelo da fixture do N3 (25.696 B / 12 = 2.141 B por música — os corpos da fixture são mais
+  longos que os da conta) ≈ 214.100 B → **10.705 B/s ≈ 86 kbit/s**.
+- Com `gzip` no fio (o OkHttp pede e descomprime sozinho; a Vercel comprime JSON) o que trafega é menos, e o limiar cai —
+  `[hipótese]`, sem medida.
+- Abaixo do limiar, **todo** sync falha, inclusive o primeiro: cada tentativa baixa a página inteira de novo (sem requisição
+  condicional nem retomada — herança, SY-D32 item 3). A falha é `code=network`, e o intervalo da SY-D18 não segura a
+  próxima tentativa — mas a próxima só vem com outro gatilho ou com o *Tentar de novo* (gate (i), `falha-de-rede-nao-retenta`).
+
+## 5. O que se fez com isto
+
+A condição da SY-D19 valeu (o prazo é da resposta inteira, e uma rede lenta o bastante derruba todo sync): a PR-1 parou e
+voltou com a pergunta. **Decisão do Marcel `[2026-10-10]` — SY-D32** (README, §5): a SY-D19 (a) fica — os 20 s também nas
+leituras do sync —; o caso "sync pendurado → falha em até 20 s e o voo se libera" entra no gate (ii) e na lista
+(`ii:prazo-libera-o-voo`, para a PR-2 esvaziar); a PR-2 remede o S1a.

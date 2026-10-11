@@ -1,0 +1,80 @@
+# gate (iii), a 1ª corrida com a lista VAZIA (depois dos dois consertos de instrumento do §4 do README, div. 1271)
+$ pnpm exec vitest run --project native-tela apps/native/test/sy-foto.test.tsx
+gate iii (a foto) — casos 23 · passam 5 · reprovam 18
+  REPROVA             iii:palco-corpo
+        o corpo mudou no meio da música
+  REPROVA             iii:palco-sem-topo · rolagens antes do sync: 9 (a última em y=8) · depois: 0, a última em y=0
+        a rolagem voltou ao topo (scrollTo y: 0) com o sync
+  REPROVA             iii:palco-rolagem-segue · o controle: "Rolagem automática, desligada" · andou depois do sync: false
+        a rolagem parou com o sync (ligada: false, andou: false)
+  REPROVA             iii:palco-notas
+        as notas da música mudaram
+  REPROVA             iii:palco-titulo
+        o título mudou
+  REPROVA             iii:palco-nota-da-posicao
+        a nota da posição mudou
+  REPROVA             iii:palco-barra · antes: "1 DE 3" · depois: "1 DE 4"
+        a barra mudou (o "n DE N" ou o nome da setlist)
+  passa               iii:palco-trocar-posicao
+  REPROVA             iii:palco-file-url · downloads antes do sync: ["sy-partitura-a.pdf"] · depois: ["sy-partitura-b.pdf"]
+        o palco pediu o arquivo novo com a música aberta
+  REPROVA             iii:palco-musica-apagada-aberta
+        a música aberta, apagada pelo sync, virou placeholder
+  passa               iii:palco-musica-apagada-nunca-aberta
+  REPROVA             iii:sessao-indice · o índice lê: 4 músicas, "SY foto, renomeada no site" (a foto: 3 músicas, "SY foto")
+        o índice leu a setlist viva
+  REPROVA             iii:sessao-fim · o fim lê: 4 (a foto: 3)
+        o fim leu 4 músicas (a viva)
+  REPROVA             iii:sessao-busca · a busca lê: 4 músicas, "SY foto, renomeada no site"
+        a busca leu a setlist viva
+  passa               iii:sessao-outra-setlist
+  REPROVA             iii:setlist-apagada · com a setlist apagada pelo sync, o palco lê: nenhuma
+        a setlist apagada derruba o palco (o placeholder "não está no cache")
+  passa               iii:sessao-solta · depois de sair, lê: 4 músicas, "SY foto, renomeada no site" (a viva: 4 músicas)
+  REPROVA             iii:v-corpo
+        o corpo de V mudou
+  REPROVA             iii:v-titulo
+        o título de V mudou
+  REPROVA             iii:v-detalhes
+        os Detalhes de V mudaram
+  REPROVA             iii:v-notas
+        as notas de V mudaram
+  passa               iii:v-estrela-viva · a estrela antes: "Favoritar “SY foto 1”" · depois: "Tirar “SY foto 1, mudada no site” das favoritas"
+  REPROVA             iii:v-file-url · downloads antes: ["sy-partitura-a.pdf"] · depois: ["sy-partitura-b.pdf"]
+        V pediu o arquivo novo com a música aberta
+lista esperada (0) · reprovados (18)
+  ✗ reprovação NÃO DECLARADA: iii:palco-corpo
+  ✗ reprovação NÃO DECLARADA: iii:palco-sem-topo
+  ✗ reprovação NÃO DECLARADA: iii:palco-rolagem-segue
+  ✗ reprovação NÃO DECLARADA: iii:palco-notas
+  ✗ reprovação NÃO DECLARADA: iii:palco-titulo
+  ✗ reprovação NÃO DECLARADA: iii:palco-nota-da-posicao
+  ✗ reprovação NÃO DECLARADA: iii:palco-barra
+  ✗ reprovação NÃO DECLARADA: iii:palco-file-url
+  ✗ reprovação NÃO DECLARADA: iii:palco-musica-apagada-aberta
+  ✗ reprovação NÃO DECLARADA: iii:sessao-indice
+  ✗ reprovação NÃO DECLARADA: iii:sessao-fim
+  ✗ reprovação NÃO DECLARADA: iii:sessao-busca
+  ✗ reprovação NÃO DECLARADA: iii:setlist-apagada
+  ✗ reprovação NÃO DECLARADA: iii:v-corpo
+  ✗ reprovação NÃO DECLARADA: iii:v-titulo
+  ✗ reprovação NÃO DECLARADA: iii:v-detalhes
+  ✗ reprovação NÃO DECLARADA: iii:v-notas
+  ✗ reprovação NÃO DECLARADA: iii:v-file-url
+gate iii: ✗
+     ✓ o PALCO aberto com a rolagem ligada, e um sync que muda a música, a nota da posição e a setlist  413ms
+     ✓ o PALCO com uma Partitura aberta: o sync troca o file_url — o arquivo novo não é pedido 116ms
+     ✓ o APAGADO com o palco aberto: a música aberta apagada volta com a última versão; a nunca aberta mostra o placeholder 86ms
+     ✓ a SESSÃO (na lógica do módulo): o índice, o fim e a busca leem a mesma foto; a setlist apagada segura; ao sair, solta 13ms
+     ✓ V aberta, e um sync que muda a música: o texto congela, a ESTRELA fica viva 56ms
+     ✓ V com uma Partitura aberta: o sync troca o file_url — o arquivo novo não é pedido 104ms
+     × reprova exatamente a lista de sy-reprovados.txt 29ms
+    313|     console.info(`${PLANTA !== '' ? `[planta: SY_PLANTA_TELA=${PLANTA}…
+    314|     expect(j.casos, 'gate sem casos: não mediu nada (regra 4)').toBeGr…
+    315|     expect(j.naoDeclaradas, 'reprovação NÃO DECLARADA').toEqual([])
+       |                                                         ^
+    316|     expect(j.orfas, 'declaração ÓRFÃ').toEqual([])
+    317|   })
+      Tests  1 failed | 6 passed (7)
+   Start at  22:38:58
+   Duration  1.65s (transform 263ms, setup 0ms, import 156ms, tests 1.12s, environment 280ms)

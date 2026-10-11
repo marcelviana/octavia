@@ -1,0 +1,30 @@
+fixture: servidor em :8788 modo=atraso setlists=1 content=8 paginas=[8]
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+fixture: servidor em :8788 modo=atraso setlists=1 content=8 paginas=[8]
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+fixture: servidor em :8788 modo=atraso setlists=1 content=8 paginas=[8]
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+fixture: servidor em :8788 modo=atraso setlists=1 content=8 paginas=[8]
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+fixture: servidor em :8788 modo=atraso setlists=1 content=8 paginas=[8]
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+fixture: servidor em :8788 modo=atraso setlists=1 content=8 paginas=[8]
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+fixture: servidor em :8788 modo=atraso setlists=1 content=8 paginas=[8]
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+fixture: servidor em :8788 modo=atraso setlists=1 content=8 paginas=[8]
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+fixture: servidor em :8788 modo=atraso setlists=1 content=8 paginas=[8]
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+fixture: servidor em :8788 modo=atraso setlists=1 content=8 paginas=[8]
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent

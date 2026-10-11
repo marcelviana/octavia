@@ -1,0 +1,21 @@
+# gate (iv), a 1ª corrida com a lista VAZIA
+$ pnpm exec vitest run --project native apps/native/test/sy-nao-regredir.test.ts
+gate iv (a janela da naoRegredir) — casos 2 · passam 1 · reprovam 1
+  REPROVA             iv:janela · a estrela — na memória (o que o executor entregou à raiz): false · no disco: true · fronteiras: 1
+        a estrela regrediu — memória false, disco true
+  passa               iv:controle-antes · a estrela — na memória (o que o executor entregou à raiz): true · no disco: true · fronteiras: 1
+lista esperada (0) · reprovados (1)
+  ✗ reprovação NÃO DECLARADA: iv:janela
+gate iv: ✗
+     ✓ o favoritar NA FRONTEIRA (depois de o sincronizar devolver, antes de o executor aplicar): a estrela fica, na memória e no disco 184ms
+     ✓ o CONTROLE: o mesmo embrulho, com o favoritar terminando ANTES de o sync ler as confirmadas → a estrela fica (passa hoje) 247ms
+     × reprova exatamente a lista de sy-reprovados.txt 12ms
+    211|     console.info(j.texto)
+    212|     expect(j.casos, 'gate sem casos: não mediu nada (regra 4)').toBeGr…
+    213|     expect(j.naoDeclaradas, 'reprovação NÃO DECLARADA').toEqual([])
+       |                                                         ^
+    214|     expect(j.orfas, 'declaração ÓRFÃ').toEqual([])
+    215|   })
+      Tests  1 failed | 2 passed (3)
+   Start at  22:35:56
+   Duration  796ms (transform 159ms, setup 0ms, import 79ms, tests 622ms, environment 0ms)

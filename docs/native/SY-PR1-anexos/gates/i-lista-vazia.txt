@@ -1,0 +1,33 @@
+# gate (i), a 1ª corrida com a lista VAZIA (só o cabeçalho de comentário; a lista volta com git checkout) — as reprovações como NÃO DECLARADAS
+$ pnpm exec vitest run --project native-tela apps/native/test/sy-gatilhos.test.tsx
+gate i (os gatilhos) — casos 16 · passam 10 · reprovam 6
+  REPROVA             i:rede-volta-na-frente · sync start depois do cenário: 0 (esperado 1)
+        0 sync(s), esperado 1
+  REPROVA             i:fundo-mais-de-30s · sync start depois do cenário: 0 (esperado 1)
+        0 sync(s), esperado 1
+  passa               i:fundo-menos-de-30s · sync start depois do cenário: 0 (esperado 0)
+  passa               i:rede-volta-no-fundo · sync start depois do cenário: 0 (esperado 0)
+  REPROVA             i:marca-volta-curta · sync start depois do cenário: 0 (esperado 1)
+        0 sync(s), esperado 1
+  passa               i:marca-apaga-com-sync · sync start depois do cenário: 0 (esperado 0)
+  REPROVA             i:dois-eventos · sync start depois do cenário: 0 (esperado 1)
+        0 sync(s), esperado 1
+  passa               i:volta-sem-rede · sync start depois do cenário: 0 (esperado 0)
+  passa               i:sem-sessao · sync start depois do cenário: 0 (esperado 0)
+  passa               i:primeira-leitura · sync start depois do cenário: 0 (esperado 0)
+  passa               i:dentro-do-intervalo · sync start depois do cenário: 0 (esperado 0)
+  REPROVA             i:apos-falha-de-rede · sync start depois do cenário: 0 (esperado 1)
+        0 sync(s), esperado 1
+  passa               i:apos-falha-com-status · sync start depois do cenário: 0 (esperado 0)
+  REPROVA             i:de-novo-fora-do-intervalo · sync start depois do cenário: 1 (esperado 2)
+        1 sync(s), esperado 2
+  passa               i:tentar-de-novo-fora-do-intervalo · sync start depois do cenário: 1 (esperado 1)
+  passa               i:falha-de-rede-nao-retenta · sync start depois do cenário: 1 (esperado 1)
+lista esperada (0) · reprovados (6)
+  ✗ reprovação NÃO DECLARADA: i:rede-volta-na-frente
+  ✗ reprovação NÃO DECLARADA: i:fundo-mais-de-30s
+  ✗ reprovação NÃO DECLARADA: i:marca-volta-curta
+  ✗ reprovação NÃO DECLARADA: i:dois-eventos
+  ✗ reprovação NÃO DECLARADA: i:apos-falha-de-rede
+  ✗ reprovação NÃO DECLARADA: i:de-novo-fora-do-intervalo
+gate i: ✗

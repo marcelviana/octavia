@@ -1,0 +1,55 @@
+# árvore 17a7ec052f615ca98ad8d290b54a44aafe067717 · base f4f4231e7f28056cb9ca57deadcd62c4f3d7c915 · 2026-10-10 22:24:03 -0300
+$ git status --short
+?? docs/native/SY-PR1-anexos/
+$ sh apps/native/scripts/gates-decl.sh < <corpo>
+exit=0
+  g1a: apps/native/App.tsx
+  g1a: apps/native/src/sincronizador.ts
+  g1a: apps/native/src/gatilhos.ts
+  g1a: apps/native/src/foto-do-palco.ts
+$ GATES_DECL=<decl> sh apps/native/scripts/g1.sh origin/main WORKTREE
+declarações: do corpo da PR (GATES_DECL=/var/folders/y9/tw0zmy8x5rs4ybgyt8lys8vw0000gn/T//sy-pr1-decl.12936)
+base=origin/main head=WORKTREE
+G1a — diff vazio em 65 arquivos DERIVADOS de apps/native + packages/core/src
+      escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+      EXCEÇÕES DECLARADAS (o escopo desta PR):
+        apps/native/App.tsx
+        apps/native/src/sincronizador.ts
+        apps/native/src/gatilhos.ts
+        apps/native/src/foto-do-palco.ts
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+      PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+        (nenhum — nenhuma asserção do core pode mudar nesta PR)
+  G1b: só adição ✓
+exit=0
+$ GATES_DECL=<decl> sh apps/native/scripts/g2g3.sh origin/main WORKTREE
+G2 — testIDs  antes=124  depois=124
+  G2: antes ⊆ depois ✓
+G3 — declarações: do corpo da PR (GATES_DECL=/var/folders/y9/tw0zmy8x5rs4ybgyt8lys8vw0000gn/T//sy-pr1-decl.12936)
+G3 — linhas log( antes=70  depois=70
+      ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+        (nenhuma)
+      REMOÇÕES DECLARADAS (linha → REMOVIDA: razão; N2-D34):
+        (nenhuma)
+      — nenhuma linha de log pode sumir nesta PR
+  G3: nenhuma linha sumiu ✓
+exit=0
+$ (cd . && npx tsc --noEmit)
+exit=0
+$ (cd packages/core && npx tsc --noEmit)
+exit=0
+$ (cd packages/identidade && npx tsc --noEmit)
+exit=0
+$ (cd apps/native && npx tsc --noEmit)
+exit=0
+$ pnpm lint
+
+✔ No ESLint warnings or errors
+exit=0
+$ pnpm test  (as linhas de resumo)
+ Test Files  150 passed | 3 skipped (153)
+      Tests  1854 passed | 59 skipped (1913)
+   Duration  61.98s (transform 4.77s, setup 16.57s, import 10.00s, tests 129.12s, environment 44.34s)
+exit=0

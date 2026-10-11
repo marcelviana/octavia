@@ -1,0 +1,5 @@
+# o rádio do AVD ligado SÓ para as rodadas (APARATO, div. 418; a decisão do QL-PR3 sobre o avião, div. 1212) — 22:55:39
+airplane=0 wifi=1 data=1
+$ ping -c 2 -W 2 8.8.8.8
+2 packets transmitted, 2 received, 0% packet loss, time 1007ms
+rtt min/avg/max/mdev = 16.049/16.275/16.501/0.226 ms
