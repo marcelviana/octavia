@@ -62,6 +62,10 @@ export type Op = 'create' | 'update' | 'delete' | 'add' | 'remove' | 'reorder'
  * caminho, ninguém espera por elas numa folha modal, e a fixture `atraso` do
  * S1a segura a resposta por 45 s de propósito — um prazo ali apagaria um
  * estado do design em vez de proteger alguém.
+ * *(Errata da SY-PR2 — SY-D19, SY-D32: o parágrafo acima deixou de valer. O
+ * prazo vale também nas leituras do sync — com o voo único do SY, um sync
+ * pendurado trancaria todo pedido seguinte —, e o S1a dura até ele e cai em
+ * falha.)*
  *
  * Um prazo estourado é a espécie `rede`: a operação não aconteceu e o
  * servidor não disse nada. É o que o `classificar` já faz com qualquer falha

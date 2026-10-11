@@ -12,8 +12,7 @@ i:dois-eventos
 i:apos-falha-de-rede
 i:de-novo-fora-do-intervalo
 
-# (ii) o voo único — sy-voo.test.ts — esvazia na PR-2 (o voo e a sessão saíram no commit 2 da SY-PR2; as escritas, no 4)
-ii:prazo-libera-o-voo
+# (ii) o voo único — sy-voo.test.ts — esvazia na PR-2 (vazia desde o commit 5 da SY-PR2: o voo e a sessão no 2, as escritas no 4, o prazo no 5)
 
 # (iii) a foto — sy-foto.test.tsx — esvazia na PR-3
 iii:palco-corpo

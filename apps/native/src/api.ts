@@ -155,11 +155,19 @@ export type ApiResult<T> = ApiOk<T> | ApiErro
  * daqui, porque a primeira linha deste arquivo diz que ele é a camada de rede
  * única do app.
  *
- * `prazoMs` ausente = **sem prazo**, que é o comportamento de sempre. As
- * leituras do sync continuam assim de propósito: a fixture `atraso` do S1a
- * segura a resposta por 45 s para que o estado "sincronizando pela primeira
- * vez" fique parado o suficiente para ser medido, e um prazo ali apagaria um
- * estado do design em vez de proteger alguém.
+ * `prazoMs` ausente = **sem prazo**. *(Errata da SY-PR2 — SY-D19, SY-D32: este
+ * parágrafo dizia que as leituras do SYNC ficavam sem prazo de propósito, pelo
+ * S1a. Deixaram de ficar: com o voo único, um sync pendurado trancaria todo
+ * pedido seguinte, e o `sincronizar` passa o `PRAZO_DE_REDE_MS` do core às duas
+ * leituras. O S1a continua existindo — "sincronizando pela primeira vez" dura
+ * até o prazo e cai em falha —, remedido no aparelho na SY-PR2.)*
+ *
+ * **O que o prazo cobre** (lido na SY-PR1, `SY-PR1-anexos/README.md` §5; div.
+ * 1269): o relógio começa AQUI, antes do `authFetch` — o token, a renovação dele
+ * e a 2ª requisição de um 401 correm dentro dele. O `abort` só corta o `fetch`:
+ * uma renovação do token que passe dele não é cortada (ela tem o prazo próprio
+ * do SDK do Firebase), e o `fetch` que vem depois sai com o sinal já abortado e
+ * rejeita na hora.
  *
  * O `abort` faz o `fetch` rejeitar, e a rejeição cai no mesmo `catch` de
  * qualquer falha de transporte: vira `networkError`, e o core a classifica
@@ -204,8 +212,9 @@ async function get<T>(path: string, familia: string, prazoMs?: number): Promise<
 /**
  * `GET /api/setlists` — array na raiz, sem paginação (`docs/api/SETLISTS.md`).
  *
- * `prazoMs` só chega pela **releitura** da escrita (T2-R9, N2-D35): quem lê
- * pelo sync continua sem prazo (ver o `prazoDe` acima).
+ * `prazoMs` chega pela **releitura** da escrita (T2-R9, N2-D35) e, desde a
+ * SY-PR2, pelo **sync** (SY-D19, SY-D32) — os dois com o `PRAZO_DE_REDE_MS`.
+ * *(Errata da SY-PR2: aqui dizia que quem lê pelo sync continuava sem prazo.)*
  */
 export function getSetlists(opcoes?: { prazoMs?: number }): Promise<ApiResult<SetlistDTO[]>> {
   return get<SetlistDTO[]>('/api/setlists', 'setlist-read', opcoes?.prazoMs)
@@ -224,9 +233,12 @@ export interface ContentPageBody {
  * `GET /api/content` — `pageSize=100` é o teto real do handler (clampado a
  * [1,100], medido em prod) e `sortBy=recent` é a chave estável entre páginas
  * exigida pelo T1-R9b (A22).
+ *
+ * `prazoMs` (SY-PR2, SY-D19): o sync passa o `PRAZO_DE_REDE_MS` a cada página —
+ * cada requisição tem o seu relógio.
  */
-export function getContentPage(page: number): Promise<ApiResult<ContentPageBody>> {
-  return get<ContentPageBody>(`/api/content?pageSize=100&page=${page}&sortBy=recent`, 'content-read')
+export function getContentPage(page: number, opcoes?: { prazoMs?: number }): Promise<ApiResult<ContentPageBody>> {
+  return get<ContentPageBody>(`/api/content?pageSize=100&page=${page}&sortBy=recent`, 'content-read', opcoes?.prazoMs)
 }
 
 // ------------------------------------------------------- escrita (N2-PR2)

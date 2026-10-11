@@ -8,6 +8,7 @@
  * antes desta função ser chamada (T1-R13 passo 1).
  */
 import {
+  PRAZO_DE_REDE_MS,
   mergePages,
   naoRegredir,
   planSync,
@@ -78,7 +79,7 @@ async function buscarContent(): Promise<
   let page = 1
   let total = 0
   for (;;) {
-    const r = await getContentPage(page)
+    const r = await getContentPage(page, { prazoMs: PRAZO_DE_REDE_MS })
     // D-d: a página que falhou viaja junto — o `sync fail` tinha `page=1`
     // hardcoded, e o aceite da N1-PR7 (§3.4) mediu a falha na página 2 sendo
     // reportada como 1. O catálogo define `page=<p>`.
@@ -111,7 +112,9 @@ export async function sincronizar(
 
   // SY-D25: o número deste `GET /api/setlists` na ordem de emissão — a mesma das releituras das escritas (div. 232).
   const minha = emitirLeituraDeSetlists()
-  const rSetlists = await getSetlists()
+  // SY-D19, SY-D32 — o prazo de rede do core também nas leituras do sync: com o voo único, um `GET` pendurado trancaria
+  // todo pedido seguinte. Cada requisição tem o seu relógio (a de setlists e cada página de content).
+  const rSetlists = await getSetlists({ prazoMs: PRAZO_DE_REDE_MS })
   const rContent = rSetlists.ok ? await buscarContent() : null
 
   const plano = planSync({
