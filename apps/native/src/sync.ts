@@ -24,7 +24,26 @@ import { save, type CacheSnapshot } from './store'
 export type SyncOutcome =
   | { kind: 'ok'; setlists: SetlistDTO[]; content: ContentDTO[]; syncedAtMs: number }
   | { kind: 'skipped-offline' }
-  | { kind: 'failed'; stage: 'setlists' | 'content'; messageKey: string }
+  | {
+      kind: 'failed'
+      stage: 'setlists' | 'content'
+      messageKey: string
+      /**
+       * SY-PR2 (SY-D33) — a falha SEM resposta HTTP: `true` exatamente quando a linha `sync fail` saiu com
+       * `code=network` (o prazo de rede inclusive). É o que o intervalo dos gatilhos lê (SY-D18: depois de falha de rede
+       * ele não vale), pelo `ultimoSyncNaRede` do executor.
+       */
+      falhaDeRede: boolean
+    }
+
+/**
+ * SY-PR2 — o que o executor (`sincronizador.ts`) pendura num sync. Opcional: sem ganchos, o sync é o de sempre (é
+ * assim que os testes do T1-R10 e do favoritar o chamam).
+ */
+export interface GanchosDoSync {
+  /** No instante da linha `sync start`: o sync saiu à rede (a definição da A2.4 do `SY-PRECHECK.md`). */
+  aoComecar?: () => void
+}
 
 /** Todas as páginas de content até `hasMore === false`. */
 async function buscarContent(): Promise<
@@ -55,6 +74,7 @@ async function buscarContent(): Promise<
 export async function sincronizar(
   uid: string,
   anterior: { content: ContentDTO[]; setlists: SetlistDTO[] } | null,
+  ganchos: GanchosDoSync = {},
 ): Promise<SyncOutcome> {
   if (!(await estaOnline())) {
     log('sync skip reason=offline')
@@ -63,6 +83,7 @@ export async function sincronizar(
 
   const t0 = Date.now()
   log('sync start')
+  ganchos.aoComecar?.()
 
   const rSetlists = await getSetlists()
   const rContent = rSetlists.ok ? await buscarContent() : null
@@ -94,6 +115,7 @@ export async function sincronizar(
       kind: 'failed',
       stage,
       messageKey: erro !== null && !erro.ok ? erro.error.messageKey : 'erro.desconhecido',
+      falhaDeRede: code === 'network',
     }
   }
 
