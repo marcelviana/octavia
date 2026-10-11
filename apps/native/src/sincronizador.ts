@@ -29,6 +29,12 @@ export interface RaizDoSync {
   setDados: (dados: Dados) => void
   dadosRef: { current: Dados }
   prefetchEArrumar: (setlists: SetlistDTO[], contentById: Map<string, ContentDTO>) => Promise<void>
+  /**
+   * **SY-PR1: contrato inerte** (SY-D17: o logout no meio). O uid da sessão de AGORA, `null` fora dela: o executor da
+   * PR-2 descarta o resultado de um sync cuja sessão mudou enquanto ele voava, e cancela o "de novo". Opcional e
+   * ignorado nesta PR — o `App.tsx` não o passa; a PR-2 o torna obrigatório e o liga. O gate (ii) já o entrega.
+   */
+  sessaoAtual?: () => string | null
 }
 
 /** Passo 2 do T1-R13 — roda depois de a tela já mostrar o cache. */

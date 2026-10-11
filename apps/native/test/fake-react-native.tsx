@@ -451,3 +451,46 @@ export const Dimensions = { get: () => janela }
 export function useWindowDimensions(): typeof janela {
   return janela
 }
+
+/**
+ * SY-PR1 (SY-D13, `SY-PRECHECK.md` A8) — o `AppState` do duplo, ACIONÁVEL pelo teste. O de verdade é do `react-native`
+ * (0.86.3: `'active' | 'background' | 'inactive'`, o `inactive` só no iOS; o evento `'change'`). Até aqui nada no app o
+ * usava (A1: `git grep AppState` → exit 1), e por isso o duplo não o tinha. Os gatilhos do T1-R13 passo 4 (a volta do
+ * segundo plano depois de 30 s) se ligam nele na PR-4 do SY.
+ *
+ * `__appState(e)` muda o estado e entrega o `'change'` a cada ouvinte — **só na MUDANÇA**, uma vez. O que isto NÃO é:
+ * a entrega do Android. Se apagar ou bloquear a tela com o app na frente conta como `background`, e se o evento chega
+ * duplicado, o aparelho mede na PR-4 (SY-D17 (2), A-SY-18) — até lá é `[hipótese]`, e o duplo não pode ser mais
+ * generoso que a biblioteca (caso 15 do padrão): se o aparelho entregar diferente, o duplo se corrige contra a medição.
+ */
+export type EstadoDoApp = 'active' | 'background' | 'inactive'
+let estadoDoApp: EstadoDoApp = 'active'
+const ouvintesDoApp = new Set<(estado: EstadoDoApp) => void>()
+export const AppState = {
+  get currentState(): EstadoDoApp {
+    return estadoDoApp
+  },
+  addEventListener(tipo: 'change', f: (estado: EstadoDoApp) => void): { remove: () => void } {
+    if (tipo !== 'change') throw new Error(`AppState do duplo: só o evento 'change' (pediram '${String(tipo)}')`)
+    ouvintesDoApp.add(f)
+    return {
+      remove: () => {
+        ouvintesDoApp.delete(f)
+      },
+    }
+  },
+}
+export function __appState(estado: EstadoDoApp): void {
+  if (estado === estadoDoApp) return
+  estadoDoApp = estado
+  for (const f of [...ouvintesDoApp]) f(estado)
+}
+/** Quantos ouvintes do `AppState` estão ligados — o teste confere que o desligar desligou. */
+export function __ouvintesDoAppState(): number {
+  return ouvintesDoApp.size
+}
+/** Volta ao `active`, sem avisar ninguém, e esquece os ouvintes (o começo de cada caso). */
+export function __limparAppState(): void {
+  estadoDoApp = 'active'
+  ouvintesDoApp.clear()
+}
