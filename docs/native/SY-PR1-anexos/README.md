@@ -27,6 +27,8 @@ nenhum outro momento.
 | [`cn-sy.txt`](cn-sy.txt) | os 20 controles negativos dos cinco gates (`instrumentos/cn-sy.sh`, as plantas em `instrumentos/plantas/`) |
 | [`prazo-leitura.txt`](prazo-leitura.txt) · [`prazo-medida.txt`](prazo-medida.txt) | o prazo, lido e medido (§5; `instrumentos/prazo/`) |
 | [`avd/`](avd/) | o bruto do AVD: o estado antes e depois, a receita do cache, o bundle servido, as rodadas (sensor, eventos, logcat), as quedas, a análise |
+| [`ci-log.txt`](ci-log.txt) | os checks do head `b2e2a85` e o log filtrado: o `gates-nativos` com o bloco, os cinco gates do SY no `build` (§11) |
+| [`aval-verificacao.txt`](aval-verificacao.txt) · [`aval-blocos-decl.txt`](aval-blocos-decl.txt) | o commit do aval: nada fora de `docs`, a conta das SY-D, os “→ Respondida”, e os extratores sobre o corpo novo da #379 (§12.1, §13) |
 | [`instrumentos/`](instrumentos/) | `verifica.sh`, `cn-sy.sh` e as plantas, `prazo/`, `fixture-sy.py`, `sensor-quadros.mjs`, `custo.py`, `custo-analise.mjs`, `estado.sh` |
 
 ---
