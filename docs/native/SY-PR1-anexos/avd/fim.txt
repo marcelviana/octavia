@@ -1,0 +1,18 @@
+# o fim da sessão no aparelho — 23:23:48
+$ adb -s emulator-5554 emu kill   (subido com -no-snapshot-save: nada volta ao snapshot)
+$ ls -la ~/.android/avd/octavia_tab32.avd/snapshots/default_boot/ram.bin
+-rw-r--r--@ 1 marcelviana  staff  881129137 Sep 24 14:00 /Users/marcelviana/.android/avd/octavia_tab32.avd/snapshots/default_boot/ram.bin
+$ adb devices
+List of devices attached
+RX2N8000F3D	device
+
+$ pgrep -fl "aceite.py|http.server 8790|expo start"  (vazio = derrubados)
+44230 /Library/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python /Users/marcelviana/projects/octavia-sy-pr1/apps/native/src/fixtures/aceite.py servidor 53875 normal <scratch>/fx-n3/setlists.json <scratch>/fx-n3/content.json
+44238 /Library/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python /Users/marcelviana/projects/octavia-sy-pr1/apps/native/src/fixtures/aceite.py servidor 53876 atraso <scratch>/fx-n3/setlists.json <scratch>/fx-n3/content.json
+$ ls apps/native/.env  (apagado)
+ls: apps/native/.env: No such file or directory
+$ git status --short apps/native
+
+# dois aceite.py da 1ª corrida (a que lançou TypeError no s.connect) do instrumento do prazo ficaram de pé (portas 53875 e 53876, 127.0.0.1) — derrubados aqui:
+$ pkill -f "aceite.py servidor 5387"; pgrep -fl "aceite.py|http.server 8790|expo start"
+exit=1 (1 = nenhum processo)

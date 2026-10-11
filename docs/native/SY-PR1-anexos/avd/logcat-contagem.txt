@@ -1,0 +1,6 @@
+# o logcat da sessão no AVD (desde o logcat -c das 22:55:46), as linhas OCTAVIA
+linhas OCTAVIA: 356
+octavia.rocks no logcat inteiro: 0
+linhas api (todas ao mock, path=/api/…): 26 · fora de /api/setlists|/api/content: 0
+sync start: 14 · sync ok: 13 · sync fail: 1
+auth refresh=forced (ida ao Google): 0 · cached: 27
