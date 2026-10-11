@@ -1,0 +1,19 @@
+# rodadas.py — 2026-10-11 09:19:57 -0300 · emulator-5554
+
+## B. o pedido seguinte roda, e o voo único (dois pedidos durante o sync, pela função do botão)
+$ node pedir-pelo-botao.mjs achar
+  {"achou":"SetlistsScreen","fase":"falha"}
+o `tentar` tocado → sync start em toque + 3175 ms (o voo se liberou depois da falha por prazo)
+$ node pedir-pelo-botao.mjs pedir 2 1000
+  {"agendadas":2,"componente":"SetlistsScreen","faseAntes":"sincronizando"}
+$ node pedir-pelo-botao.mjs ler
+  {"componente":"SetlistsScreen","faseAntes":"sincronizando","em":[1791721201269,1791721202269]}
+o silêncio depois: 25 s sem outro sync
+  +     0 ms  sync start
+  + 20032 ms  sync fail stage=setlists page=1 code=network status=-
+  + 20104 ms  sync start
+  + 40126 ms  sync fail stage=setlists page=1 code=network status=-
+sync start desde o toque: 2 (esperado 2: o do toque e UM "de novo") · máximo em voo: 1 (esperado 1)
+o "de novo" começou 72 ms depois do fim do primeiro (sync fail) · durações: 20032 ms e 20022 ms
+no fim: s1d na tela: True
+# os dois pedidos contra o sync em voo (o logcat -v epoch do aparelho): o sync começou em 1791721198034; os pedidos em sync start + 3235 ms e + 4235 ms; o sync terminou em + 20032 ms — os dois DENTRO do voo

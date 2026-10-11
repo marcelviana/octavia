@@ -1,0 +1,23 @@
+         1791721069.210 21479 21599 I ReactNativeJS: OCTAVIA: faixa=C w=1137.8 h=711.1
+         1791721069.217 21479 21599 I ReactNativeJS: OCTAVIA: net online
+         1791721069.988 21479 21599 I ReactNativeJS: OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+         1791721070.118 21479 21599 I ReactNativeJS: OCTAVIA: sync start
+         1791721070.121 21479 21599 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791721090.152 21479 21599 I ReactNativeJS: OCTAVIA: sync fail stage=setlists page=1 code=network status=-
+         1791721090.158 21479 21599 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791721096.423 21479 21599 I ReactNativeJS: OCTAVIA: sync start
+         1791721096.424 21479 21599 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791721116.442 21479 21599 I ReactNativeJS: OCTAVIA: sync fail stage=setlists page=1 code=network status=-
+         1791721116.445 21479 21599 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791721116.490 21479 21599 I ReactNativeJS: OCTAVIA: sync start
+         1791721116.492 21479 21599 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791721136.509 21479 21599 I ReactNativeJS: OCTAVIA: sync fail stage=setlists page=1 code=network status=-
+         1791721136.511 21479 21599 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791721198.034 21479 21599 I ReactNativeJS: OCTAVIA: sync start
+         1791721198.036 21479 21599 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791721218.066 21479 21599 I ReactNativeJS: OCTAVIA: sync fail stage=setlists page=1 code=network status=-
+         1791721218.069 21479 21599 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791721218.138 21479 21599 I ReactNativeJS: OCTAVIA: sync start
+         1791721218.141 21479 21599 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791721238.160 21479 21599 I ReactNativeJS: OCTAVIA: sync fail stage=setlists page=1 code=network status=-
+         1791721238.161 21479 21599 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library

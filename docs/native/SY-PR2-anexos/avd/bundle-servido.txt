@@ -1,0 +1,16 @@
+# o bundle SERVIDO (regra 13 ampliada) — conferido ANTES de qualquer abertura do app, 2026-10-11 09:17:04 -0300
+$ curl -s "http://127.0.0.1:8081/apps/native/index.bundle?platform=android&dev=true" | grep -c …
+bytes: 7491039
+localhost:8788: 1
+octavia.rocks: 0
+pedirVoo: 4
+terminouVoo: 6
+aplicarLeituraDeSetlists: 4
+aoAplicar: 3
+ultimoSyncNaRede: 3
+sessaoAtual: 5
+PRAZO_DE_REDE_MS: 13
+$ adb -s emulator-5554 reverse --list
+host-57 tcp:8081 tcp:8081
+host-57 tcp:8788 tcp:8788
+

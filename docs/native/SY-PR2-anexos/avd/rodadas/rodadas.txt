@@ -1,0 +1,25 @@
+# rodadas.py — 2026-10-11 09:17:43 -0300 · emulator-5554
+## A. o S1a remedido: o app frio, sem cache, o mock `atraso` (45 s por resposta)
+sync start em t_open + 8583 ms
+s1a na tela: o dump começou em sync start + 70 ms e terminou em + 2454 ms; a captura terminou em + 2701 ms  (o prazo: + 20000)
+sync fail em sync start + 20034 ms
+  +     0 ms  sync start
+  +     3 ms  auth refresh=cached
+  + 20034 ms  sync fail stage=setlists page=1 code=network status=-
+linhas `api` entre o sync start e o sync fail: 0  (A-SY-22: 0 no aparelho)
+depois da falha: s1d na tela: True · tentar: True
+
+## B. o pedido seguinte roda, e o voo único (dois pedidos durante o sync, pela função do botão)
+$ node pedir-pelo-botao.mjs achar
+  {"achou":"SetlistsScreen","fase":"falha"}
+o `tentar` tocado → sync start em toque + 2128 ms (o voo se liberou depois da falha por prazo)
+$ node pedir-pelo-botao.mjs pedir 2 1000
+  { _A: null, _x: 0, _y: 0, _z: null }
+o silêncio depois: 25 s sem outro sync
+  +     0 ms  sync start
+  + 20019 ms  sync fail stage=setlists page=1 code=network status=-
+  + 20067 ms  sync start
+  + 40086 ms  sync fail stage=setlists page=1 code=network status=-
+sync start desde o toque: 2 (esperado 2: o do toque e UM "de novo") · máximo em voo: 1 (esperado 1)
+o "de novo" começou 48 ms depois do fim do primeiro (sync fail) · durações: 20019 ms e 20019 ms
+no fim: s1d na tela: True

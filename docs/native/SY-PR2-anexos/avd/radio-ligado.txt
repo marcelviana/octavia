@@ -1,0 +1,5 @@
+# o rádio do AVD ligado SÓ para as rodadas (APARATO, div. 418; div. 1264) — 09:17:29
+airplane=0 wifi=1 data=1
+$ ping -c 2 -W 2 8.8.8.8
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 14.836/22.036/29.236/7.200 ms
