@@ -1,0 +1,99 @@
+# a ordem das linhas de um sync — ANTES do commit 3 · árvore 83d8fe8702601e49db6921ecb794038ba7ee8297 (o commit 2) · 2026-10-11 08:53:35 -0300
+$ pnpm exec vitest run --config docs/native/SY-PR2-anexos/instrumentos/ordem/vitest.config.mts
+### ORDEM ###
+1) o primeiro sync, sem cache
+  sync start
+  auth refresh=cached
+  api status=200 path=/api/setlists n=1 ms=<ms>
+  auth refresh=cached
+  api status=200 path=/api/content n=1 ms=<ms>
+  cache write kind=setlists n=1 invalidated=1
+  cache write kind=content n=2 invalidated=2
+  sync ok setlists=1 content=2 pages=1 t=<ms>
+  ── a 1ª microtarefa depois do sync ok ──
+  [setDados]
+  [dadosRef]
+  [prefetchEArrumar]
+2) sem mudança no servidor
+  sync start
+  auth refresh=cached
+  api status=200 path=/api/setlists n=1 ms=<ms>
+  auth refresh=cached
+  api status=200 path=/api/content n=1 ms=<ms>
+  cache write kind=setlists n=1 invalidated=0
+  cache write kind=content n=2 invalidated=0
+  sync ok setlists=1 content=2 pages=1 t=<ms>
+  ── a 1ª microtarefa depois do sync ok ──
+  [setDados]
+  [dadosRef]
+  [prefetchEArrumar]
+3) a música 2 mudada no servidor
+  sync start
+  auth refresh=cached
+  api status=200 path=/api/setlists n=1 ms=<ms>
+  auth refresh=cached
+  api status=200 path=/api/content n=1 ms=<ms>
+  cache write kind=setlists n=1 invalidated=0
+  cache write kind=content n=2 invalidated=1
+  sync ok setlists=1 content=2 pages=1 t=<ms>
+  ── a 1ª microtarefa depois do sync ok ──
+  [setDados]
+  [dadosRef]
+  [prefetchEArrumar]
+### FIM ###
+      Tests  1 passed (1)
+
+# a ordem das linhas de um sync — DEPOIS do commit 3 (a árvore de trabalho do commit 3, sobre 83d8fe8) · 2026-10-11 08:54:58 -0300
+$ pnpm exec vitest run --config docs/native/SY-PR2-anexos/instrumentos/ordem/vitest.config.mts
+### ORDEM ###
+1) o primeiro sync, sem cache
+  sync start
+  auth refresh=cached
+  api status=200 path=/api/setlists n=1 ms=<ms>
+  auth refresh=cached
+  api status=200 path=/api/content n=1 ms=<ms>
+  cache write kind=setlists n=1 invalidated=1
+  cache write kind=content n=2 invalidated=2
+  sync ok setlists=1 content=2 pages=1 t=<ms>
+  [setDados]
+  [dadosRef]
+  ── a 1ª microtarefa depois do sync ok ──
+  [prefetchEArrumar]
+2) sem mudança no servidor
+  sync start
+  auth refresh=cached
+  api status=200 path=/api/setlists n=1 ms=<ms>
+  auth refresh=cached
+  api status=200 path=/api/content n=1 ms=<ms>
+  cache write kind=setlists n=1 invalidated=0
+  cache write kind=content n=2 invalidated=0
+  sync ok setlists=1 content=2 pages=1 t=<ms>
+  [setDados]
+  [dadosRef]
+  ── a 1ª microtarefa depois do sync ok ──
+  [prefetchEArrumar]
+3) a música 2 mudada no servidor
+  sync start
+  auth refresh=cached
+  api status=200 path=/api/setlists n=1 ms=<ms>
+  auth refresh=cached
+  api status=200 path=/api/content n=1 ms=<ms>
+  cache write kind=setlists n=1 invalidated=0
+  cache write kind=content n=2 invalidated=1
+  sync ok setlists=1 content=2 pages=1 t=<ms>
+  [setDados]
+  [dadosRef]
+  ── a 1ª microtarefa depois do sync ok ──
+  [prefetchEArrumar]
+### FIM ###
+      Tests  1 passed (1)
+
+# as linhas OCTAVIA (sem as marcas [..], a fronteira e o resumo do vitest), antes × depois — par a par, pelo python3 deste anexo
+linhas antes=24 depois=24 · iguais, na mesma ordem: True
+# e onde a raiz recebe os dados, contra a fronteira (a 1ª microtarefa depois do sync ok), nos três syncs:
+  antes 1: ── a 1ª microtarefa depois do sync ok ── → [setDados] → [dadosRef] → [prefetchEArrumar]
+  antes 2: ── a 1ª microtarefa depois do sync ok ── → [setDados] → [dadosRef] → [prefetchEArrumar]
+  antes 3: ── a 1ª microtarefa depois do sync ok ── → [setDados] → [dadosRef] → [prefetchEArrumar]
+  depois 1: [setDados] → [dadosRef] → ── a 1ª microtarefa depois do sync ok ── → [prefetchEArrumar]
+  depois 2: [setDados] → [dadosRef] → ── a 1ª microtarefa depois do sync ok ── → [prefetchEArrumar]
+  depois 3: [setDados] → [dadosRef] → ── a 1ª microtarefa depois do sync ok ── → [prefetchEArrumar]

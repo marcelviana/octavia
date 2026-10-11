@@ -1,0 +1,98 @@
+# os cinco gates do SY na ponta da PR — árvore 236e47e · 2026-10-11 09:22:53
+$ pnpm exec vitest run apps/native/test/sy-gatilhos.test.tsx apps/native/test/sy-voo.test.ts apps/native/test/sy-foto.test.tsx apps/native/test/sy-nao-regredir.test.ts apps/native/test/sy-requisicoes.test.tsx
+gate iv (a janela da naoRegredir) — casos 2 · passam 2 · reprovam 0
+  passa               iv:janela · a estrela — na memória (o que o executor entregou à raiz): true · no disco: true · fronteiras: 1
+  passa               iv:controle-antes · a estrela — na memória (o que o executor entregou à raiz): true · no disco: true · fronteiras: 1
+lista esperada (0) · reprovados (0)
+gate iv: reprova exatamente a lista esperada (0) ✓
+gate iii (a foto) — casos 23 · passam 5 · reprovam 18
+  REPROVA (declarado) iii:palco-corpo
+        o corpo mudou no meio da música
+  REPROVA (declarado) iii:palco-sem-topo · rolagens antes do sync: 9 (a última em y=8) · depois: 0, a última em y=0
+        a rolagem voltou ao topo (scrollTo y: 0) com o sync
+  REPROVA (declarado) iii:palco-rolagem-segue · o controle: "Rolagem automática, desligada" · andou depois do sync: false
+        a rolagem parou com o sync (ligada: false, andou: false)
+  REPROVA (declarado) iii:palco-notas
+        as notas da música mudaram
+  REPROVA (declarado) iii:palco-titulo
+        o título mudou
+  REPROVA (declarado) iii:palco-nota-da-posicao
+        a nota da posição mudou
+  REPROVA (declarado) iii:palco-barra · antes: "1 DE 3" · depois: "1 DE 4"
+        a barra mudou (o "n DE N" ou o nome da setlist)
+  passa               iii:palco-trocar-posicao
+  REPROVA (declarado) iii:palco-file-url · downloads antes do sync: ["sy-partitura-a.pdf"] · depois: ["sy-partitura-b.pdf"]
+        o palco pediu o arquivo novo com a música aberta
+  REPROVA (declarado) iii:palco-musica-apagada-aberta
+        a música aberta, apagada pelo sync, virou placeholder
+  passa               iii:palco-musica-apagada-nunca-aberta
+  REPROVA (declarado) iii:sessao-indice · o índice lê: 4 músicas, "SY foto, renomeada no site" (a foto: 3 músicas, "SY foto")
+        o índice leu a setlist viva
+  REPROVA (declarado) iii:sessao-fim · o fim lê: 4 (a foto: 3)
+        o fim leu 4 músicas (a viva)
+  REPROVA (declarado) iii:sessao-busca · a busca lê: 4 músicas, "SY foto, renomeada no site"
+        a busca leu a setlist viva
+  passa               iii:sessao-outra-setlist
+  REPROVA (declarado) iii:setlist-apagada · com a setlist apagada pelo sync, o palco lê: nenhuma
+        a setlist apagada derruba o palco (o placeholder "não está no cache")
+  passa               iii:sessao-solta · depois de sair, lê: 4 músicas, "SY foto, renomeada no site" (a viva: 4 músicas)
+  REPROVA (declarado) iii:v-corpo
+        o corpo de V mudou
+  REPROVA (declarado) iii:v-titulo
+        o título de V mudou
+  REPROVA (declarado) iii:v-detalhes
+        os Detalhes de V mudaram
+  REPROVA (declarado) iii:v-notas
+        as notas de V mudaram
+  passa               iii:v-estrela-viva · a estrela antes: "Favoritar “SY foto 1”" · depois: "Tirar “SY foto 1, mudada no site” das favoritas"
+  REPROVA (declarado) iii:v-file-url · downloads antes: ["sy-partitura-a.pdf"] · depois: ["sy-partitura-b.pdf"]
+        V pediu o arquivo novo com a música aberta
+lista esperada (18) · reprovados (18)
+gate iii: reprova exatamente a lista esperada (18) ✓
+gate v (a contagem) — casos 3 · passam 0 · reprovam 3
+  REPROVA (declarado) v:rede-volta-100 · GET por evento: 0 (esperado 2) · downloads à parte: 0 · []
+        0 GET, esperado 2
+  REPROVA (declarado) v:rede-volta-101 · GET por evento: 0 (esperado 3) · downloads à parte: 0 · []
+        0 GET, esperado 3
+  REPROVA (declarado) v:fundo-100 · GET por evento: 0 (esperado 2) · downloads à parte: 0 · []
+        0 GET, esperado 2
+lista esperada (3) · reprovados (3)
+gate v: reprova exatamente a lista esperada (3) ✓
+gate i (os gatilhos) — casos 16 · passam 10 · reprovam 6
+  REPROVA (declarado) i:rede-volta-na-frente · sync start depois do cenário: 0 (esperado 1)
+        0 sync(s), esperado 1
+  REPROVA (declarado) i:fundo-mais-de-30s · sync start depois do cenário: 0 (esperado 1)
+        0 sync(s), esperado 1
+  passa               i:fundo-menos-de-30s · sync start depois do cenário: 0 (esperado 0)
+  passa               i:rede-volta-no-fundo · sync start depois do cenário: 0 (esperado 0)
+  REPROVA (declarado) i:marca-volta-curta · sync start depois do cenário: 0 (esperado 1)
+        0 sync(s), esperado 1
+  passa               i:marca-apaga-com-sync · sync start depois do cenário: 0 (esperado 0)
+  REPROVA (declarado) i:dois-eventos · sync start depois do cenário: 0 (esperado 1)
+        0 sync(s), esperado 1
+  passa               i:volta-sem-rede · sync start depois do cenário: 0 (esperado 0)
+  passa               i:sem-sessao · sync start depois do cenário: 0 (esperado 0)
+  passa               i:primeira-leitura · sync start depois do cenário: 0 (esperado 0)
+  passa               i:dentro-do-intervalo · sync start depois do cenário: 0 (esperado 0)
+  REPROVA (declarado) i:apos-falha-de-rede · sync start depois do cenário: 0 (esperado 1)
+        0 sync(s), esperado 1
+  passa               i:apos-falha-com-status · sync start depois do cenário: 0 (esperado 0)
+  REPROVA (declarado) i:de-novo-fora-do-intervalo · sync start depois do cenário: 1 (esperado 2)
+        1 sync(s), esperado 2
+  passa               i:tentar-de-novo-fora-do-intervalo · sync start depois do cenário: 1 (esperado 1)
+  passa               i:falha-de-rede-nao-retenta · sync start depois do cenário: 1 (esperado 1)
+lista esperada (6) · reprovados (6)
+gate i: reprova exatamente a lista esperada (6) ✓
+gate ii (o voo único) — casos 8 · passam 8 · reprovam 0
+  passa               ii:nunca-dois-em-curso · máximo em voo: 1 · sync start: 2
+  passa               ii:um-de-novo · sync start: 2 (esperado 2) · o 2º começa depois do fim do 1º
+  passa               ii:escrita-setlists-ficam · a criada na raiz: true · no disco: true
+  passa               ii:escrita-conteudo-aplica · o título na raiz: "SY música 2, mudada no site" · no disco: "SY música 2, mudada no site"
+  passa               ii:escrita-sync-sem-cache-write-setlists · cache write kind=setlists — da releitura: 1 · do sync, depois dela: 0
+  passa               ii:logout-descarta · aplicações na raiz depois do logout: 0
+  passa               ii:logout-cancela-de-novo · sync start depois do logout: 0
+  passa               ii:prazo-libera-o-voo · sync fail code=network em 20068 ms · o pedido seguinte rodou: true
+lista esperada (0) · reprovados (0)
+gate ii: reprova exatamente a lista esperada (0) ✓
+ Test Files  5 passed (5)
+      Tests  38 passed (38)

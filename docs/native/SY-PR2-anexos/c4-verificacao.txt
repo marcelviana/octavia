@@ -1,0 +1,74 @@
+# árvore 800a9bf0d337cf67eb6a98c16b65d26309184aa1 · base 17207c4d72b091eeeed77bacba9852f80e710531 · 2026-10-11 08:59:55 -0300
+$ git status --short
+M  apps/native/src/escrita.ts
+A  apps/native/src/geracao-das-setlists.ts
+M  apps/native/src/sincronizador.ts
+M  apps/native/src/sync.ts
+M  apps/native/test/sy-arnes.ts
+M  apps/native/test/sy-reprovados.txt
+M  apps/native/test/sy-voo.test.ts
+?? docs/native/SY-PR2-anexos/
+$ sh apps/native/scripts/gates-decl.sh < <corpo>
+exit=0
+  g1a: packages/core/src/voo.ts
+  g1a: packages/core/src/index.ts
+  g1a: apps/native/src/sincronizador.ts
+  g1a: apps/native/src/sync.ts
+  g1a: apps/native/App.tsx
+  g1a: apps/native/src/escrita.ts
+  g1a: apps/native/src/geracao-das-setlists.ts
+$ GATES_DECL=<decl> sh apps/native/scripts/g1.sh origin/main WORKTREE
+declarações: do corpo da PR (GATES_DECL=/var/folders/y9/tw0zmy8x5rs4ybgyt8lys8vw0000gn/T//sy-pr2-decl.63499)
+base=origin/main head=WORKTREE
+G1a — diff vazio em 64 arquivos DERIVADOS de apps/native + packages/core/src
+      escopo derivado (W2, div. 134): união BASE∪HEAD, menos apps/native/{test,scripts}/,
+      menos os *.test.ts (que ficam sob o G1b), menos as exceções abaixo
+      EXCEÇÕES DECLARADAS (o escopo desta PR):
+        packages/core/src/voo.ts
+        packages/core/src/index.ts
+        apps/native/src/sincronizador.ts
+        apps/native/src/sync.ts
+        apps/native/App.tsx
+        apps/native/src/escrita.ts
+        apps/native/src/geracao-das-setlists.ts
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+G1b — linhas REMOVIDAS ou ALTERADAS nos testes do core: 0
+      PARES DECLARADOS (velha -> nova · razão; o escopo de decisão desta PR):
+        (nenhum — nenhuma asserção do core pode mudar nesta PR)
+  G1b: só adição ✓
+exit=0
+$ GATES_DECL=<decl> sh apps/native/scripts/g2g3.sh origin/main WORKTREE
+G2 — testIDs  antes=124  depois=124
+  G2: antes ⊆ depois ✓
+G3 — declarações: do corpo da PR (GATES_DECL=/var/folders/y9/tw0zmy8x5rs4ybgyt8lys8vw0000gn/T//sy-pr2-decl.63499)
+G3 — linhas log( antes=70  depois=70
+      ERRATAS DECLARADAS (pares velha -> nova; o escopo de log desta PR):
+        (nenhuma)
+      REMOÇÕES DECLARADAS (linha → REMOVIDA: razão; N2-D34):
+        (nenhuma)
+      — nenhuma linha de log pode sumir nesta PR
+  G3: nenhuma linha sumiu ✓
+exit=0
+$ (cd . && npx tsc --noEmit)
+exit=0
+$ (cd packages/core && npx tsc --noEmit)
+exit=0
+$ (cd packages/identidade && npx tsc --noEmit)
+exit=0
+$ (cd apps/native && npx tsc --noEmit)
+exit=0
+$ pnpm lint
+
+✔ No ESLint warnings or errors
+exit=0
+$ pnpm test  (as linhas de resumo)
+ Test Files  157 passed | 3 skipped (160)
+      Tests  1914 passed | 59 skipped (1973)
+   Duration  62.06s (transform 4.65s, setup 15.74s, import 9.85s, tests 159.28s, environment 43.87s)
+exit=0
+# os juízes dos cinco gates do SY (a linha do veredito de cada um; SY-PR2: acrescentado à cópia)
+gate iv: reprova exatamente a lista esperada (0) ✓
+gate i: reprova exatamente a lista esperada (6) ✓
+gate v: reprova exatamente a lista esperada (3) ✓
+gate iii: reprova exatamente a lista esperada (18) ✓
+gate ii: reprova exatamente a lista esperada (1) ✓

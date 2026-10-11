@@ -1,0 +1,70 @@
+# a suíte na main desta sessão (o "antes") — árvore 17207c4d72b091eeeed77bacba9852f80e710531 · 2026-10-11 08:39:19 -0300
+$ pnpm test
+exit=0
+ Test Files  155 passed | 3 skipped (158)
+      Tests  1892 passed | 59 skipped (1951)
+   Duration  63.01s (transform 6.18s, setup 16.24s, import 11.97s, tests 164.59s, environment 81.87s)
+
+# os cinco gates do SY, na main (as linhas do juiz)
+gate iv (a janela da naoRegredir) — casos 2
+  REPROVA (declarado) iv:janela
+  passa               iv:controle-antes
+gate iv: reprova exatamente a lista esperada (1) ✓
+gate iii (a foto) — casos 23
+  REPROVA (declarado) iii:palco-corpo
+  REPROVA (declarado) iii:palco-sem-topo
+  REPROVA (declarado) iii:palco-rolagem-segue
+  REPROVA (declarado) iii:palco-notas
+  REPROVA (declarado) iii:palco-titulo
+  REPROVA (declarado) iii:palco-nota-da-posicao
+  REPROVA (declarado) iii:palco-barra
+  passa               iii:palco-trocar-posicao
+  REPROVA (declarado) iii:palco-file-url
+  REPROVA (declarado) iii:palco-musica-apagada-aberta
+  passa               iii:palco-musica-apagada-nunca-aberta
+  REPROVA (declarado) iii:sessao-indice
+  REPROVA (declarado) iii:sessao-fim
+  REPROVA (declarado) iii:sessao-busca
+  passa               iii:sessao-outra-setlist
+  REPROVA (declarado) iii:setlist-apagada
+  passa               iii:sessao-solta
+  REPROVA (declarado) iii:v-corpo
+  REPROVA (declarado) iii:v-titulo
+  REPROVA (declarado) iii:v-detalhes
+  REPROVA (declarado) iii:v-notas
+  passa               iii:v-estrela-viva
+  REPROVA (declarado) iii:v-file-url
+gate iii: reprova exatamente a lista esperada (18) ✓
+gate v (a contagem) — casos 3
+  REPROVA (declarado) v:rede-volta-100
+  REPROVA (declarado) v:rede-volta-101
+  REPROVA (declarado) v:fundo-100
+gate v: reprova exatamente a lista esperada (3) ✓
+gate ii (o voo único) — casos 8
+  REPROVA (declarado) ii:nunca-dois-em-curso
+  REPROVA (declarado) ii:um-de-novo
+  REPROVA (declarado) ii:escrita-setlists-ficam
+  passa               ii:escrita-conteudo-aplica
+  REPROVA (declarado) ii:escrita-sync-sem-cache-write-setlists
+  REPROVA (declarado) ii:logout-descarta
+  passa               ii:logout-cancela-de-novo
+  REPROVA (declarado) ii:prazo-libera-o-voo
+gate ii: reprova exatamente a lista esperada (6) ✓
+gate i (os gatilhos) — casos 16
+  REPROVA (declarado) i:rede-volta-na-frente
+  REPROVA (declarado) i:fundo-mais-de-30s
+  passa               i:fundo-menos-de-30s
+  passa               i:rede-volta-no-fundo
+  REPROVA (declarado) i:marca-volta-curta
+  passa               i:marca-apaga-com-sync
+  REPROVA (declarado) i:dois-eventos
+  passa               i:volta-sem-rede
+  passa               i:sem-sessao
+  passa               i:primeira-leitura
+  passa               i:dentro-do-intervalo
+  REPROVA (declarado) i:apos-falha-de-rede
+  passa               i:apos-falha-com-status
+  REPROVA (declarado) i:de-novo-fora-do-intervalo
+  passa               i:tentar-de-novo-fora-do-intervalo
+  passa               i:falha-de-rede-nao-retenta
+gate i: reprova exatamente a lista esperada (6) ✓

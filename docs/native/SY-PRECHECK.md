@@ -394,6 +394,11 @@ atualiza o `dadosRef` à mão (`App.tsx:301-304`), e o executor que aplicar as s
 rede do palco "conectada" e muda — deixa o voo ocupado para sempre, e todo gatilho seguinte só marca *"de novo"*, que nunca
 roda. Pergunta Q3.
 
+*(Nota da SY-PR2 — ponteiro, sem reescrever o texto acima: o voo único, a geração compartilhada e o prazo estão feitos
+na PR-2 — a máquina em `packages/core/src/voo.ts`, o executor em `apps/native/src/sincronizador.ts`, a geração em
+`apps/native/src/geracao-das-setlists.ts` (o sync que perde aplica o conteúdo pela função do `setDados`, não pelo
+`dadosRef`), o prazo nas duas leituras do `sync.ts`. `SY-PR2-anexos/README.md` §1–§5.)*
+
 ### A6 — a janela da `naoRegredir` (SY-D10)
 
 **A6.1 — a janela, com as linhas de hoje** `[lido]`:
@@ -434,6 +439,11 @@ duas ordens possíveis: o favoritar antes (a confirmada está no mapa → a `nao
 `dadosRef` já com o sync e acrescenta a estrela). As duas dão memória e disco iguais. **Não toca no `updated_at`, na
 `naoRegredir` nem no `reconcile`**; a ordem das linhas de log (`cache write` × 2, depois `sync ok`) não muda. **Fecha** — a
 SY-D10 manda fechar.
+
+*(Nota da SY-PR2 — ponteiro: fechada na PR-2 pelo gancho `aoAplicar` do `sincronizar` (`apps/native/src/sync.ts`), chamado
+logo antes do `return` do sync ok, sem `await` desde a leitura das confirmadas; o `iv:janela` passa e o
+`iv:controle-antes` segue passando; as linhas, as mesmas na mesma ordem (`SY-PR2-anexos/ordem-das-linhas.txt`). O §A6.4
+segue como o texto que o D cita.)*
 
 **A6.4 — o que o D tem de mudar junto, quando mexer no `updated_at` do favoritar** (para o D citar; `QL-ENCERRAMENTO.md`
 §8.4 item 1; `D0-ENCERRAMENTO.md` §8.2 item 3):
