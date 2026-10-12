@@ -1,0 +1,54 @@
+== rodada 1/10: o cache e o mock em A; o sync traz B
+  {"instalado":true,"base":1791794651003.785}
+  controle (a): {"travou":200.04275000095367,"em":1791829150055}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 2760 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/avd/custo/antes/r01-sensor.json
+  rolagem +30162 ms · pedido +62086 · sync ok +62975
+== rodada 2/10: o cache e o mock em B; o sync traz A
+  {"instalado":true,"base":1791794651004.5105}
+  controle (a): {"travou":200.02545800060034,"em":1791829224795}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 2928 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/avd/custo/antes/r02-sensor.json
+  rolagem +21873 ms · pedido +53588 · sync ok +54384
+== rodada 3/10: o cache e o mock em A; o sync traz B
+  {"instalado":true,"base":1791794651004.1445}
+  controle (a): {"travou":200.00295899808407,"em":1791829300834}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 2728 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/avd/custo/antes/r03-sensor.json
+  rolagem +23237 ms · pedido +55091 · sync ok +55980
+== rodada 4/10: o cache e o mock em B; o sync traz A
+  {"instalado":true,"base":1791794651004.5334}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 2755 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/avd/custo/antes/r04-sensor.json
+  rolagem +20373 ms · pedido +52049 · sync ok +52706
+== rodada 5/10: o cache e o mock em A; o sync traz B
+  {"instalado":true,"base":1791794651004.4617}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 2952 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/avd/custo/antes/r05-sensor.json
+  rolagem +19610 ms · pedido +51510 · sync ok +52669
+== rodada 6/10: o cache e o mock em B; o sync traz A
+  {"instalado":true,"base":1791794651004.2566}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 2818 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/avd/custo/antes/r06-sensor.json
+  rolagem +18412 ms · pedido +50129 · sync ok +51466
+== rodada 7/10: o cache e o mock em A; o sync traz B
+  {"instalado":true,"base":1791794651004.1768}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 2743 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/avd/custo/antes/r07-sensor.json
+  rolagem +18804 ms · pedido +50462 · sync ok +51092
+== rodada 8/10: o cache e o mock em B; o sync traz A
+  {"instalado":true,"base":1791794651004.1577}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 2937 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/avd/custo/antes/r08-sensor.json
+  rolagem +20227 ms · pedido +52173 · sync ok +52931
+== rodada 9/10: o cache e o mock em A; o sync traz B
+  {"instalado":true,"base":1791794651004.1418}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 2943 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/avd/custo/antes/r09-sensor.json
+  rolagem +20109 ms · pedido +51841 · sync ok +52391
+== rodada 10/10: o cache e o mock em B; o sync traz A
+  {"instalado":true,"base":1791794651004.4111}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 2884 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/avd/custo/antes/r10-sensor.json
+  rolagem +19595 ms · pedido +51442 · sync ok +51848
+fim

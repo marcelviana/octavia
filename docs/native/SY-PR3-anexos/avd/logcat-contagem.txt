@@ -1,0 +1,6 @@
+linhas OCTAVIA:     4018
+octavia.rocks no logcat inteiro: 0
+api (todas ao mock): 379
+auth refresh=cached: 378 · forced: 2
+sync start: 188 · sync ok: 186 · sync fail: 2
+write op=favorite: 2

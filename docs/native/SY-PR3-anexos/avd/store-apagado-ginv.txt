@@ -1,0 +1,28 @@
+# o store apagado por nome antes da base do G-inv (APARATO, 'Store apagado', errata da N4-PR7; div. 1130) — 16:15:47
+$ run-as … ls -la files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83 files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files cache/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files (antes)
+cache/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files:
+total 16
+drwx--S--- 2 u0_a149 u0_a149_cache 4096 2026-10-12 10:42 .
+drwx--S--- 3 u0_a149 u0_a149_cache 4096 2026-09-10 20:30 ..
+
+files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83:
+total 60
+drwx------ 3 u0_a149 u0_a149  4096 2026-10-12 16:14 .
+drwxrwx--x 3 u0_a149 u0_a149  4096 2026-10-12 16:14 ..
+-rw------- 1 u0_a149 u0_a149 13068 2026-10-12 16:14 content.json
+drwx------ 2 u0_a149 u0_a149  4096 2026-10-12 15:53 files
+-rw------- 1 u0_a149 u0_a149   220 2026-10-12 15:59 files-index.json
+-rw------- 1 u0_a149 u0_a149  1835 2026-10-12 16:14 setlists.json
+
+files/octavia-Pw3bxXZw0iT3WwyL7kxGtGJIJH83/files:
+total 36
+drwx------ 2 u0_a149 u0_a149 4096 2026-10-12 15:53 .
+drwx------ 3 u0_a149 u0_a149 4096 2026-10-12 16:14 ..
+-rw------- 1 u0_a149 u0_a149 4198 2026-10-12 10:48 partitura-12p.pdf
+-rw------- 1 u0_a149 u0_a149  643 2026-10-12 15:53 partitura-1p.pdf
+$ … (depois)
+total 32
+drwx------ 3 u0_a149 u0_a149 4096 2026-10-12 16:15 .
+drwxrwx--x 3 u0_a149 u0_a149 4096 2026-10-12 16:14 ..
+drwx------ 2 u0_a149 u0_a149 4096 2026-10-12 15:53 files
+-rw------- 1 u0_a149 u0_a149  220 2026-10-12 15:59 files-index.json

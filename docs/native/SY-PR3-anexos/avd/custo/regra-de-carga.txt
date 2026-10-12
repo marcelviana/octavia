@@ -1,0 +1,7 @@
+# SY-PR3 — a regra de carga do host, DECLARADA ANTES de ler os números do par (escrita em 2026-10-12 15:19:05 -0300, com o par
+# em curso e nenhuma análise dele feita; div. 1276, div. 1288)
+# Uma rodada é MARCADA (⚠) quando o amostrador (amostrar-carga.sh, os 5 processos de mais CPU a cada 5 s) viu algum
+# processo FORA do emulador (qemu-system), do WindowServer e do app do Claude acima de 80% de CPU dentro da janela do
+# PISO ou da do SYNC (com 5 s de folga antes). O veredito da SY-D36 sai com TODAS as rodadas (n = 10) e, à parte, sem as
+# marcadas — os dois números lado a lado; nenhuma rodada se apaga. Se sobrarem menos de 10 limpas num lado, o veredito
+# "sem as marcadas" diz o n que sobrou.

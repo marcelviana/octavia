@@ -1,0 +1,18 @@
+# a tabela por passo — as medianas das rodadas (ms; faixa)
+
+| passo | antes | depois | depois − antes |
+|---|---|---|---|
+| 0 o disparo (`sync start`) | **132** · 50–267 (n=10) | **178** · 50–284 (n=10) | +47 |
+| 1 o fim síncrono do sync (gravação + aplicação) | **125** · 100–311 (n=10) | **92** · 69–145 (n=10) | -33 |
+| 2 o render da troca da raiz | **223** · 178–644 (n=10) | **148** · 50–199 (n=10) | -75 |
+| 3 o prefetch sob demanda do palco | **142** · 96–198 (n=10) | **99** · 58–574 (n=10) | -43 |
+| 4 o render seguinte | **170** · 128–340 (n=10) | **162** · 143–256 (n=10) | -8 |
+# a tabela por passo — as medianas das rodadas (antes sem r03, r04, r07, r08, r09, r10; depois sem r01, r02, r04, r05, r08, r10) (ms; faixa)
+
+| passo | antes | depois | depois − antes |
+|---|---|---|---|
+| 0 o disparo (`sync start`) | **59** · 50–267 (n=4) | **170** · 142–213 (n=4) | +110 |
+| 1 o fim síncrono do sync (gravação + aplicação) | **181** · 134–311 (n=4) | **87** · 80–145 (n=4) | -94 |
+| 2 o render da troca da raiz | **366** · 228–644 (n=4) | **142** · 50–174 (n=4) | -224 |
+| 3 o prefetch sob demanda do palco | **136** · 116–198 (n=4) | **96** · 69–99 (n=4) | -40 |
+| 4 o render seguinte | **227** · 164–340 (n=4) | **152** · 149–177 (n=4) | -75 |

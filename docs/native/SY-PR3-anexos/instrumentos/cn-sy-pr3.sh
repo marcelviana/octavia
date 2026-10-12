@@ -16,15 +16,15 @@ ARQS=$(git ls-files -- "$SRC/foto-do-palco.ts" "$SRC/navigation.tsx" "$SRC/scree
 QUAIS="$*"
 
 rodar() {
-  rotulo=$1; planta=$2; defeito=$3; shift 3
+  rotulo=$1; planta=$2; defeito=$3; testes=$4; shift 4
   case " $QUAIS " in *" $rotulo "*) ;; *) [ -n "$QUAIS" ] && return ;; esac
   echo "=================================================================================================="
   echo "CN $rotulo — $*"
   echo "  planta: ${planta:--} · defeito: ${defeito:--}"
   if [ -n "$planta" ]; then cp "$P/$planta" "$SRC/foto-do-palco.ts"; export SY_DEFEITO="$defeito"
   elif [ -n "$defeito" ]; then python3 "$I/plantar.py" "$defeito" || { echo "  ✗ NÃO PLANTOU — o CN não mede nada"; git checkout -- $ARQS; return; }; fi
-  pnpm exec vitest run apps/native/test/sy-foto.test.tsx 2>&1 | sed 's/\x1b\[[0-9;]*m//g' \
-    | grep -E '^gate iii \(|^  REPROVA|^        |^  ✗|^gate iii:|^ *(Test Files|Tests) ' | sed 's/^/  /'
+  pnpm exec vitest run apps/native/test/sy-foto.test.tsx $testes 2>&1 | sed 's/\x1b\[[0-9;]*m//g' \
+    | grep -E '^gate iii \(|^  REPROVA|^        |^  ✗|^gate iii:|^ *(Test Files|Tests) |^ *× ' | sed 's/^/  /'
   unset SY_DEFEITO
   git checkout -- $ARQS
 }
@@ -33,8 +33,15 @@ echo "# cn-sy-pr3.sh — $(date '+%Y-%m-%d %H:%M:%S %z') · árvore $(git rev-pa
 echo "# Leitura: com o defeito plantado, o gate (iii) tem de ACUSAR a checagem daquela regra — uma REPROVA que não é das"
 echo "# declaradas; com a planta certa, as declaradas que ela cumpre aparecem como ÓRFÃS."
 
-rodar c-1 foto-do-palco-lab.ts serve-outra  'a foto de uma setlist serve a outra (div. 1283, o sessao-outra-setlist)'
-rodar c-2 foto-do-palco-lab.ts ''           'o laboratório da foto da sessão, sem defeito (o controle do c-1)'
+rodar c-1 foto-do-palco-lab.ts serve-outra '' 'a foto de uma setlist serve a outra (div. 1283, o sessao-outra-setlist)'
+rodar c-2 foto-do-palco-lab.ts ''          '' 'o laboratório da foto da sessão, sem defeito (o controle do c-1)'
+rodar c-3 '' v-congela-a-estrela        '' 'a foto de V congela também a estrela'
+rodar c-4 '' sessao-nunca-solta         '' 'a foto da sessão não solta ao voltar a S1/S2'
+rodar c-5 '' palco-nao-renova-na-troca  '' 'a foto do conteúdo não se renova ao trocar de posição'
+rodar c-6 '' sessao-por-instancia       '' 'a foto por instância, não por sessão (o índice vê a setlist viva)'
+rodar c-7 '' palco-esquece-a-apagada    '' 'a música aberta, apagada pelo sync, perde a foto'
+rodar c-8 '' palco-sem-foto             '' 'o palco lê o conteúdo vivo'
+rodar c-9 '' v-sem-chave-do-id apps/native/test/visualizacao-tela.test.tsx 'a foto de V sem a chave do id (a 1ª forma do commit 4)'
 
 echo "=================================================================================================="
 echo "\$ git status --short -- apps/native/src   (vazio = os arquivos voltaram)"

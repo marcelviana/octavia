@@ -1,0 +1,54 @@
+== rodada 1/10: o cache e o mock em A; o sync traz B
+  {"instalado":true,"base":1791794651004.476}
+  controle (a): {"travou":200.00366700440645,"em":1791830046756}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 2951 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/avd/custo/depois/r01-sensor.json
+  rolagem +23551 ms · pedido +55386 · sync ok +55989
+== rodada 2/10: o cache e o mock em B; o sync traz A
+  {"instalado":true,"base":1791794651004.496}
+  controle (a): {"travou":200.00379200279713,"em":1791830117672}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 2988 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/avd/custo/depois/r02-sensor.json
+  rolagem +18309 ms · pedido +50207 · sync ok +50735
+== rodada 3/10: o cache e o mock em A; o sync traz B
+  {"instalado":true,"base":1791794651004.3157}
+  controle (a): {"travou":200.00487500429153,"em":1791830188119}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 2942 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/avd/custo/depois/r03-sensor.json
+  rolagem +17976 ms · pedido +49652 · sync ok +50157
+== rodada 4/10: o cache e o mock em B; o sync traz A
+  {"instalado":true,"base":1791794651004.2769}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 2925 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/avd/custo/depois/r04-sensor.json
+  rolagem +18521 ms · pedido +50347 · sync ok +50861
+== rodada 5/10: o cache e o mock em A; o sync traz B
+  {"instalado":true,"base":1791794651004.1172}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 2965 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/avd/custo/depois/r05-sensor.json
+  rolagem +18525 ms · pedido +50441 · sync ok +50906
+== rodada 6/10: o cache e o mock em B; o sync traz A
+  {"instalado":true,"base":1791794651003.8079}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 2936 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/avd/custo/depois/r06-sensor.json
+  rolagem +18579 ms · pedido +50339 · sync ok +50888
+== rodada 7/10: o cache e o mock em A; o sync traz B
+  {"instalado":true,"base":1791794651004.1174}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 2972 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/avd/custo/depois/r07-sensor.json
+  rolagem +18923 ms · pedido +50668 · sync ok +51168
+== rodada 8/10: o cache e o mock em B; o sync traz A
+  {"instalado":true,"base":1791794651003.8599}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 2956 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/avd/custo/depois/r08-sensor.json
+  rolagem +18378 ms · pedido +50173 · sync ok +50670
+== rodada 9/10: o cache e o mock em A; o sync traz B
+  {"instalado":true,"base":1791794651004.6648}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 2866 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/avd/custo/depois/r09-sensor.json
+  rolagem +17979 ms · pedido +49711 · sync ok +50313
+== rodada 10/10: o cache e o mock em B; o sync traz A
+  {"instalado":true,"base":1791794651003.849}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 2489 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/avd/custo/depois/r10-sensor.json
+  rolagem +18706 ms · pedido +50846 · sync ok +51623
+fim

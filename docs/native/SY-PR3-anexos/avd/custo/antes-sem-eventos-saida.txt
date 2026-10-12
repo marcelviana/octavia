@@ -1,0 +1,11 @@
+== rodada 1/2: o cache e o mock em A; o sync traz B
+  {"instalado":true,"base":1791794651004.3071}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 2912 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/avd/custo/antes-sem-eventos/r01-sensor.json
+  rolagem +18672 ms · pedido +50487 · sync ok +51017
+== rodada 2/2: o cache e o mock em B; o sync traz A
+  {"instalado":true,"base":1791794651004.4023}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 2960 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/avd/custo/antes-sem-eventos/r02-sensor.json
+  rolagem +17162 ms · pedido +48956 · sync ok +49497
+fim

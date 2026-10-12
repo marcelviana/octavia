@@ -1,0 +1,14 @@
+# estado de emulator-5554 — 2026-10-12 10:41:54 -0300
+global stay_on_while_plugged_in = 1
+system accelerometer_rotation = 1
+system user_rotation = 0
+global airplane_mode_on = 1
+global wifi_on = 0
+global mobile_data = 0
+reverse: [ ]
+  lastUpdateTime=2026-09-24 14:00:01
+  pkgFlags=[ DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+  versionName=0.0.1
+app em execução: 
+$ ping -c 2 -W 2 8.8.8.8
+connect: Network is unreachable

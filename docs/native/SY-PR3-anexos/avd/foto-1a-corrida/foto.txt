@@ -1,0 +1,73 @@
+# foto.py — 2026-10-12 15:49:08 -0300 · emulator-5554 · a setlist 0000000a · a música 3 00000000
+## A — o palco aberto na 3, a rolagem ligada; o sync traz y
+  sync → y: {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"} · sync ok em +453 ms
+  barra antes:  ['3 DE 8', 'Letra longa da fixture · Banda da fixture · Letra']
+  barra depois: ['3 DE 8', 'Letra longa da fixture · Banda da fixture · Letra']
+  o corpo antes: versão ?, 1 linhas visíveis, a do topo = -1 · depois: versão ?, 1, topo = -1
+  ✗ A-corpo — o corpo visível depois do sync é da versão ? (a da abertura: x)
+  ✓ A-barra-titulo-nota — a barra (n DE N, o nome), o título e a nota da posição iguais
+  ✗ A-rolagem — a rolagem: 'Rolagem automática, ligada', a linha do topo -1 → -1 (sem volta ao topo)
+## B — o índice do palco e o salto pelo índice
+  o índice: posições [1, 2, 3, 4, 5, 6, 7, 8] · o nome [] · o título da 3: ['Letra longa da fixture, mudada no site']
+  ✓ B-indice-foto — o índice com a setlist da foto (8 posições, o nome de antes)
+  o palco depois do salto: barra ['3 DE 8', 'Letra longa da fixture, mudada no site · Banda da fixture · Letra'] · o corpo da versão ?
+  ✓ B-salto-sem-foto-nova — o salto pelo índice não tira foto nova da setlist (3 DE 8, o nome de antes)
+  ✗ B-salto-abertura — o salto é uma abertura: o conteúdo de agora (versão ?; esperado y)
+## C — a busca do palco
+  a busca: ['NESTA SETLIST · ENSAIO DA QUEBRA']
+## D — o fim
+  o fim: ['8 DE 8', 'ENSAIO DA QUEBRA', 'FIM DA SETLIST', '8 músicas  ·  Ensaio da quebra', 'Voltar ao início', 'Sair']
+  ✓ D-fim-foto — o fim com a foto (o total 8, o nome de antes)
+## E — sair a S1 e reentrar: a setlist nova
+  o palco na reentrada: ['3 DE 9', 'Letra longa da fixture, mudada no site · Banda da fixture · Letra', 'Nota: nota da posição, mudada no site']
+  ✗ E-reentrada — a reentrada mostra a setlist nova (3 DE 9, o nome novo)
+## F — V aberta na 3; o sync traz z; o favoritar
+  sync → z: {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"} · sync ok em +567 ms
+  ✓ F-v-texto — o título ['Letra longa da fixture, mudada no site'] → ['Letra longa da fixture, mudada no site']; o corpo da versão ? → ?
+  a estrela: 'Favoritar “Letra longa da fixture, mudada no site”' → 'Tirar “Letra longa da fixture, mudada no site” das favoritas' · ['write op=favorite content=00000000 status=200 code=- ms=22']
+  ✓ F-estrela-viva — o favoritar em V aparece na hora (a estrela viva)
+## G — a setlist apagada com o palco aberto
+  sync → w: {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"} · sync ok em +404 ms
+  ✓ G-palco-segue — o palco segue de pé (sem o placeholder 'não está no cache')
+  ✓ G-s1-sem-ela — S1 sem a setlist ao sair, sem aviso
+## H — a música da posição 3 apagada com o palco aberto na 3
+  sync → y: {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"} · sync ok em +317 ms
+  sync → m: {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"} · sync ok em +414 ms
+  ✓ H-musica-apagada — o corpo segue com a última versão vista (?), sem placeholder
+## I — girar e mudar o zoom com a foto (a âncora do QL)
+  a linha do topo: antes -1 · em pé -1 · deitado -1 · zoom -1 (as versões: ['?', '?', '?', '?'])
+  ✗ I-ancora — a linha do topo segue no topo ao girar e ao mudar o zoom
+  restaurado: accelerometer_rotation=1 user_rotation=0
+## J — a partitura nova no site com o palco aberto nela (a leitura do prefetch; SY-D24)
+  sync → x: {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"} · sync ok em +680 ms
+  sync → v: {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"} · sync ok em +457 ms
+  a página antes: ['página 1 de 12'] · depois: ['página 1 de 12']
+    prefetch plan n=3 reason=library
+    file src=download name=partitura-1p.pdf bytes=643 total=643 ms=183
+    download-error partitura-escaneada.jpg: o servidor respondeu 404
+    prefetch plan n=2 reason=demand
+    prefetch plan n=2 reason=demand
+    prefetch plan n=2 reason=demand
+    prefetch plan n=2 reason=demand
+    prefetch plan n=2 reason=demand
+    prefetch plan n=2 reason=demand
+    prefetch plan n=2 reason=demand
+    download-error nao-existe.pdf: o servidor respondeu 404
+    download-error nao-existe.pdf: o servidor respondeu 404
+    download-error nao-existe.pdf: o servidor respondeu 404
+    download-error nao-existe.pdf: o servidor respondeu 404
+    download-error nao-existe.pdf: o servidor respondeu 404
+    download-error nao-existe.pdf: o servidor respondeu 404
+    download-error nao-existe.pdf: o servidor respondeu 404
+    download-error nao-existe.pdf: o servidor respondeu 404
+    download-error partitura-escaneada.jpg: o servidor respondeu 404
+    download-error partitura-escaneada.jpg: o servidor respondeu 404
+    download-error partitura-escaneada.jpg: o servidor respondeu 404
+    download-error partitura-escaneada.jpg: o servidor respondeu 404
+    download-error partitura-escaneada.jpg: o servidor respondeu 404
+    download-error partitura-escaneada.jpg: o servidor respondeu 404
+    download-error partitura-escaneada.jpg: o servidor respondeu 404
+  ✓ J-tela-segue — o palco segue com o arquivo da abertura (a mesma contagem de páginas)
+  (registro, não critério) com a música aberta saiu download de partitura-1p.pdf: True
+
+## RESULTADO: 10 de 15

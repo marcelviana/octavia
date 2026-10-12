@@ -1,0 +1,164 @@
+# cn-sy-pr2.sh — 2026-10-12 10:41:45 -0300 · árvore 664b849575b515124ab46395b0e01f579a12a71e
+# Leitura: com o defeito plantado, o teste da regra tem de ACUSAR — no gate do SY, uma REPROVA que não é das
+# declaradas (a parte (ii) e a (iv) da lista estão vazias desde esta PR); nos outros, um teste vermelho (×).
+# O n-2 (o defeito na MÁQUINA) só os testes de unidade dela acusam: o executor roda um "de novo" só quando há um
+# pedido guardado, e absorve o defeito — o n-2b planta o mesmo defeito no EXECUTOR, que é o que o gate (ii) mede.
+==================================================================================================
+CN n-1 a máquina deixa rodar o pedido durante o voo
+  defeito: dois-em-curso · testes: packages/core/src/voo.test.ts apps/native/test/sy-voo.test.ts
+  plantado em packages/core/src/voo.ts (1×): "return { estado: 'em-voo-de-novo', acao: 'marcar' }" → "return { estado: 'em-voo-de-novo', acao: 'rodar' }"
+       × em voo + pedido → marca o "de novo" (nunca dois syncs em curso) 7ms
+       × um pedido durante o voo → exatamente UM "de novo" ao terminar, e depois ocioso 1ms
+       × cinco pedidos durante o voo → ainda UM "de novo" (os quatro últimos não somam nada) 1ms
+       × um pedido durante o "de novo" → outro "de novo" depois dele (o "de novo" é um voo como qualquer outro) 2ms
+       × depois do cancelamento, o próximo pedido roda (o voo não fica trancado) 1ms
+  gate ii (o voo único) — casos 6 · passam 4 · reprovam 2
+    REPROVA             ii:nunca-dois-em-curso
+          lança: terminouVoo: nenhum sync em curso — um terminou sem o pedir que o abriu
+    REPROVA             ii:um-de-novo
+          lança: terminouVoo: nenhum sync em curso — um terminou sem o pedir que o abriu
+    ✗ reprovação NÃO DECLARADA: ii:nunca-dois-em-curso
+    ✗ reprovação NÃO DECLARADA: ii:um-de-novo
+  gate ii: ✗
+       × O LOGOUT NO MEIO: o resultado do sync em voo se descarta, e o "de novo" se cancela 305ms
+       × reprova exatamente a lista de sy-reprovados.txt 10ms
+   FAIL   native  apps/native/test/sy-voo.test.ts > gate (ii) — o voo único (SY-D9, SY-D25) > O LOGOUT NO MEIO: o resultado do sync em voo se descarta, e o "de novo" se cancela
+   FAIL   native  apps/native/test/sy-voo.test.ts > gate (ii) — o voo único (SY-D9, SY-D25) > reprova exatamente a lista de sy-reprovados.txt
+   FAIL   core  packages/core/src/voo.test.ts > o voo único — os estados > em voo + pedido → marca o "de novo" (nunca dois syncs em curso)
+   FAIL   core  packages/core/src/voo.test.ts > o voo único — os pedidos durante o voo > um pedido durante o voo → exatamente UM "de novo" ao terminar, e depois ocioso
+   FAIL   core  packages/core/src/voo.test.ts > o voo único — os pedidos durante o voo > cinco pedidos durante o voo → ainda UM "de novo" (os quatro últimos não somam nada)
+   FAIL   core  packages/core/src/voo.test.ts > o voo único — os pedidos durante o voo > um pedido durante o "de novo" → outro "de novo" depois dele (o "de novo" é um voo como qualquer outro)
+   FAIL   core  packages/core/src/voo.test.ts > o voo único — o cancelamento (SY-D17, o logout no meio) > depois do cancelamento, o próximo pedido roda (o voo não fica trancado)
+   Test Files  2 failed (2)
+        Tests  7 failed | 16 passed (23)
+==================================================================================================
+CN n-2 o voo roda o "de novo" duas vezes
+  defeito: de-novo-duas-vezes · testes: packages/core/src/voo.test.ts apps/native/test/sy-voo.test.ts
+  plantado em packages/core/src/voo.ts (1×): ": { estado: 'em-voo', acao: 'rodar' }" → ": { estado: 'em-voo-de-novo', acao: 'rodar' }"
+       × em voo com "de novo" + terminou → roda o "de novo", que passa a ser o voo em curso 5ms
+       × um pedido durante o voo → exatamente UM "de novo" ao terminar, e depois ocioso 1ms
+       × cinco pedidos durante o voo → ainda UM "de novo" (os quatro últimos não somam nada) 1ms
+       × um pedido durante o "de novo" → outro "de novo" depois dele (o "de novo" é um voo como qualquer outro) 1ms
+  gate ii (o voo único) — casos 8 · passam 8 · reprovam 0
+  gate ii: reprova exatamente a lista esperada (0) ✓
+   FAIL   core  packages/core/src/voo.test.ts > o voo único — os estados > em voo com "de novo" + terminou → roda o "de novo", que passa a ser o voo em curso
+   FAIL   core  packages/core/src/voo.test.ts > o voo único — os pedidos durante o voo > um pedido durante o voo → exatamente UM "de novo" ao terminar, e depois ocioso
+   FAIL   core  packages/core/src/voo.test.ts > o voo único — os pedidos durante o voo > cinco pedidos durante o voo → ainda UM "de novo" (os quatro últimos não somam nada)
+   FAIL   core  packages/core/src/voo.test.ts > o voo único — os pedidos durante o voo > um pedido durante o "de novo" → outro "de novo" depois dele (o "de novo" é um voo como qualquer outro)
+   Test Files  1 failed | 1 passed (2)
+        Tests  4 failed | 19 passed (23)
+==================================================================================================
+CN n-2b o EXECUTOR roda o "de novo" duas vezes (a máquina certa)
+  defeito: executor-de-novo-duas-vezes · testes: apps/native/test/sy-voo.test.ts
+  plantado em apps/native/src/sincronizador.ts (1×): 'await rodarUm(vez.raiz, vez.uid, vez.anterior)' → 'await rodarUm(vez.raiz, vez.uid, vez.anterior)\n      if (vez.anterior '
+  gate ii (o voo único) — casos 8 · passam 7 · reprovam 1
+    REPROVA             ii:um-de-novo · sync start: 3 (esperado 2) · o 2º começa depois do fim do 1º
+          3 syncs, esperado 2 (o primeiro e um "de novo")
+    ✗ reprovação NÃO DECLARADA: ii:um-de-novo
+  gate ii: ✗
+       × reprova exatamente a lista de sy-reprovados.txt 11ms
+   FAIL   native  apps/native/test/sy-voo.test.ts > gate (ii) — o voo único (SY-D9, SY-D25) > reprova exatamente a lista de sy-reprovados.txt
+   Test Files  1 failed (1)
+        Tests  1 failed | 5 passed (6)
+==================================================================================================
+CN n-3 o executor aplica DEPOIS do await (o do commit 2)
+  defeito: aplica-depois-do-await · testes: apps/native/test/sy-nao-regredir.test.ts apps/native/test/sy-voo.test.ts
+  apps/native/src/sincronizador.ts ← o do commit 2 (83d8fe8): aplica DEPOIS do await sincronizar
+  gate iv (a janela da naoRegredir) — casos 2 · passam 1 · reprovam 1
+    REPROVA             iv:janela · a estrela — na memória (o que o executor entregou à raiz): false · no disco: true · fronteiras: 1
+          a estrela regrediu — memória false, disco true
+    ✗ reprovação NÃO DECLARADA: iv:janela
+  gate iv: ✗
+       × reprova exatamente a lista de sy-reprovados.txt 6ms
+  gate ii (o voo único) — casos 8 · passam 7 · reprovam 1
+    REPROVA             ii:escrita-setlists-ficam · a criada na raiz: false · no disco: true
+          o sync gravou por cima da releitura — a criada na raiz: false, no disco: true
+    ✗ reprovação NÃO DECLARADA: ii:escrita-setlists-ficam
+  gate ii: ✗
+       × reprova exatamente a lista de sy-reprovados.txt 15ms
+   FAIL   native  apps/native/test/sy-nao-regredir.test.ts > gate (iv) — a janela da naoRegredir (A6) > reprova exatamente a lista de sy-reprovados.txt
+   FAIL   native  apps/native/test/sy-voo.test.ts > gate (ii) — o voo único (SY-D9, SY-D25) > reprova exatamente a lista de sy-reprovados.txt
+   Test Files  2 failed (2)
+        Tests  2 failed | 7 passed (9)
+==================================================================================================
+CN n-4 o sync não descarta depois do logout
+  defeito: nao-descarta · testes: apps/native/test/sy-voo.test.ts
+  plantado em apps/native/src/sincronizador.ts (2×): 'if (sessaoAtual() !== uid) return' → 'if (false as boolean) return'
+  gate ii (o voo único) — casos 8 · passam 7 · reprovam 1
+    REPROVA             ii:logout-descarta · aplicações na raiz depois do logout: 1
+          1 aplicação(ões) da sessão velha na raiz depois do logout
+    ✗ reprovação NÃO DECLARADA: ii:logout-descarta
+  gate ii: ✗
+       × reprova exatamente a lista de sy-reprovados.txt 17ms
+   FAIL   native  apps/native/test/sy-voo.test.ts > gate (ii) — o voo único (SY-D9, SY-D25) > reprova exatamente a lista de sy-reprovados.txt
+   Test Files  1 failed (1)
+        Tests  1 failed | 5 passed (6)
+==================================================================================================
+CN n-5 o "de novo" da sessão velha roda depois do logout
+  defeito: de-novo-apos-logout · testes: apps/native/test/sy-voo.test.ts
+  plantado em apps/native/src/sincronizador.ts (1×): 'cancelarDeNovo: marcado === null || marcado.raiz.sessaoAtual() !== mar' → 'cancelarDeNovo: marcado === null,'
+  gate ii (o voo único) — casos 8 · passam 7 · reprovam 1
+    REPROVA             ii:logout-cancela-de-novo · sync start depois do logout: 1
+          1 sync(s) começaram depois do logout
+    ✗ reprovação NÃO DECLARADA: ii:logout-cancela-de-novo
+  gate ii: ✗
+       × reprova exatamente a lista de sy-reprovados.txt 8ms
+   FAIL   native  apps/native/test/sy-voo.test.ts > gate (ii) — o voo único (SY-D9, SY-D25) > reprova exatamente a lista de sy-reprovados.txt
+   Test Files  1 failed (1)
+        Tests  1 failed | 5 passed (6)
+==================================================================================================
+CN n-6 o sync que perdeu a geração grava as setlists
+  defeito: perdeu-e-grava · testes: apps/native/test/sy-voo.test.ts apps/native/test/escrita.test.ts
+  plantado em apps/native/src/sync.ts (1×): 'const setlistsValem = aplicarLeituraDeSetlists(minha)' → 'const setlistsValem = aplicarLeituraDeSetlists(minha) || true'
+  gate ii (o voo único) — casos 8 · passam 6 · reprovam 2
+    REPROVA             ii:escrita-setlists-ficam · a criada na raiz: false · no disco: false
+          o sync gravou por cima da releitura — a criada na raiz: false, no disco: false
+    REPROVA             ii:escrita-sync-sem-cache-write-setlists · cache write kind=setlists — da releitura: 1 · do sync, depois dela: 1
+          o sync que perdeu emitiu 1 cache write kind=setlists
+    ✗ reprovação NÃO DECLARADA: ii:escrita-setlists-ficam
+    ✗ reprovação NÃO DECLARADA: ii:escrita-sync-sem-cache-write-setlists
+  gate ii: ✗
+       × reprova exatamente a lista de sy-reprovados.txt 11ms
+   FAIL   native  apps/native/test/sy-voo.test.ts > gate (ii) — o voo único (SY-D9, SY-D25) > reprova exatamente a lista de sy-reprovados.txt
+   Test Files  1 failed | 1 passed (2)
+        Tests  1 failed | 23 passed (24)
+==================================================================================================
+CN n-7 o sync que perdeu lê as setlists do dadosRef defasado
+  defeito: perdeu-le-o-ref · testes: apps/native/test/sy-voo.test.ts
+  plantado em apps/native/src/sincronizador.ts (1×): 'setDados((atual) => ({ ...atual, content: a.content,' → 'setDados(() => ({ ...dadosRef.current, content: a.content,'
+  gate ii (o voo único) — casos 8 · passam 7 · reprovam 1
+    REPROVA             ii:escrita-setlists-ficam · a criada na raiz: false · no disco: true
+          o sync gravou por cima da releitura — a criada na raiz: false, no disco: true
+    ✗ reprovação NÃO DECLARADA: ii:escrita-setlists-ficam
+  gate ii: ✗
+       × reprova exatamente a lista de sy-reprovados.txt 15ms
+   FAIL   native  apps/native/test/sy-voo.test.ts > gate (ii) — o voo único (SY-D9, SY-D25) > reprova exatamente a lista de sy-reprovados.txt
+   Test Files  1 failed (1)
+        Tests  1 failed | 5 passed (6)
+==================================================================================================
+CN n-8 as leituras do sync sem prazo
+  defeito: sem-prazo · testes: apps/native/test/sy-voo.test.ts
+  plantado em apps/native/src/sync.ts (1×): 'getSetlists({ prazoMs: PRAZO_DE_REDE_MS })' → 'getSetlists()'
+  plantado em apps/native/src/sync.ts (1×): 'getContentPage(page, { prazoMs: PRAZO_DE_REDE_MS })' → 'getContentPage(page)'
+  gate ii (o voo único) — casos 8 · passam 7 · reprovam 1
+    REPROVA             ii:prazo-libera-o-voo · sync fail code=network em > 21500 ms · o pedido seguinte rodou: true
+          nenhum sync fail code=network em 21,5 s: o sync não tem prazo
+    ✗ reprovação NÃO DECLARADA: ii:prazo-libera-o-voo
+  gate ii: ✗
+       × reprova exatamente a lista de sy-reprovados.txt 16ms
+   FAIL   native  apps/native/test/sy-voo.test.ts > gate (ii) — o voo único (SY-D9, SY-D25) > reprova exatamente a lista de sy-reprovados.txt
+   Test Files  1 failed (1)
+        Tests  1 failed | 5 passed (6)
+==================================================================================================
+CN n-9 o ultimoSyncNaRede nunca diz falha de rede
+  defeito: falha-de-rede-sempre-falsa · testes: apps/native/test/sy-ultimo-sync.test.ts
+  plantado em apps/native/src/sync.ts (1×): "falhaDeRede: code === 'network'," → 'falhaDeRede: false,'
+       × a falha DE REDE (a porta morta): terminou com `code=network`, e é falha de rede 6ms
+       × o sync pulado sem rede não saiu à rede: o último continua o de antes 1ms
+   FAIL   native  apps/native/test/sy-ultimo-sync.test.ts > o ultimoSyncNaRede do executor = a definição da A2.4 lida nas linhas (SY-D33) > a falha DE REDE (a porta morta): terminou com `code=network`, e é falha de rede
+   FAIL   native  apps/native/test/sy-ultimo-sync.test.ts > o ultimoSyncNaRede do executor = a definição da A2.4 lida nas linhas (SY-D33) > o sync pulado sem rede não saiu à rede: o último continua o de antes
+   Test Files  1 failed (1)
+        Tests  2 failed | 3 passed (5)
+==================================================================================================
+$ git status --short -- apps/native/src packages/core/src   (vazio = os arquivos voltaram)
+exit=0

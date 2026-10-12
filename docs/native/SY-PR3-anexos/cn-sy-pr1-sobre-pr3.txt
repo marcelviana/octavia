@@ -1,0 +1,265 @@
+# cn-sy.sh — 2026-10-12 10:38:42 -0300 · árvore 664b849575b515124ab46395b0e01f579a12a71e
+# Leitura: com a PLANTA certa (o laboratório sem defeito), o gate deixa de reprovar o que a planta implementa — as
+# linhas declaradas que ela cumpre aparecem como ÓRFÃS, e é isso que se espera; com um DEFEITO, o gate tem de
+# acusar a checagem daquela regra (uma REPROVA que não é das declaradas).
+==================================================================================================
+CN i-0  o laboratório dos gatilhos, sem defeito
+  gate: sy-gatilhos.test.tsx · gatilhos: gatilhos-lab.ts · executor: o literal · foto: o contrato · SY_DEFEITO=- · SY_PLANTA_TELA=-
+  gate i (os gatilhos) — casos 16
+    ✗ declaração ÓRFÃ: i:rede-volta-na-frente (passa)
+    ✗ declaração ÓRFÃ: i:fundo-mais-de-30s (passa)
+    ✗ declaração ÓRFÃ: i:marca-volta-curta (passa)
+    ✗ declaração ÓRFÃ: i:dois-eventos (passa)
+    ✗ declaração ÓRFÃ: i:apos-falha-de-rede (passa)
+    ✗ declaração ÓRFÃ: i:de-novo-fora-do-intervalo (passa)
+  gate i: ✗
+   Test Files  1 failed (1)
+        Tests  1 failed | 16 passed (17)
+==================================================================================================
+CN i-1  ignora o intervalo
+  gate: sy-gatilhos.test.tsx · gatilhos: gatilhos-lab.ts · executor: o literal · foto: o contrato · SY_DEFEITO=intervalo · SY_PLANTA_TELA=-
+  gate i (os gatilhos) — casos 16
+    REPROVA (declarado) i:dois-eventos
+    REPROVA             i:dentro-do-intervalo
+    REPROVA             i:apos-falha-com-status
+    ✗ reprovação NÃO DECLARADA: i:dentro-do-intervalo
+    ✗ reprovação NÃO DECLARADA: i:apos-falha-com-status
+    ✗ declaração ÓRFÃ: i:rede-volta-na-frente (passa)
+    ✗ declaração ÓRFÃ: i:fundo-mais-de-30s (passa)
+    ✗ declaração ÓRFÃ: i:marca-volta-curta (passa)
+    ✗ declaração ÓRFÃ: i:apos-falha-de-rede (passa)
+    ✗ declaração ÓRFÃ: i:de-novo-fora-do-intervalo (passa)
+  gate i: ✗
+   Test Files  1 failed (1)
+        Tests  1 failed | 16 passed (17)
+==================================================================================================
+CN i-2  conta a primeira leitura e a repetição
+  gate: sy-gatilhos.test.tsx · gatilhos: gatilhos-lab.ts · executor: o literal · foto: o contrato · SY_DEFEITO=primeira · SY_PLANTA_TELA=-
+  gate i (os gatilhos) — casos 16
+    REPROVA             i:primeira-leitura
+    ✗ reprovação NÃO DECLARADA: i:primeira-leitura
+    ✗ declaração ÓRFÃ: i:rede-volta-na-frente (passa)
+    ✗ declaração ÓRFÃ: i:fundo-mais-de-30s (passa)
+    ✗ declaração ÓRFÃ: i:marca-volta-curta (passa)
+    ✗ declaração ÓRFÃ: i:dois-eventos (passa)
+    ✗ declaração ÓRFÃ: i:apos-falha-de-rede (passa)
+    ✗ declaração ÓRFÃ: i:de-novo-fora-do-intervalo (passa)
+  gate i: ✗
+   Test Files  1 failed (1)
+        Tests  1 failed | 16 passed (17)
+==================================================================================================
+CN i-3  tenta de novo sozinho depois da falha de rede
+  gate: sy-gatilhos.test.tsx · gatilhos: gatilhos-lab.ts · executor: o literal · foto: o contrato · SY_DEFEITO=retenta · SY_PLANTA_TELA=-
+  gate i (os gatilhos) — casos 16
+    REPROVA             i:falha-de-rede-nao-retenta
+    ✗ reprovação NÃO DECLARADA: i:falha-de-rede-nao-retenta
+    ✗ declaração ÓRFÃ: i:rede-volta-na-frente (passa)
+    ✗ declaração ÓRFÃ: i:fundo-mais-de-30s (passa)
+    ✗ declaração ÓRFÃ: i:marca-volta-curta (passa)
+    ✗ declaração ÓRFÃ: i:dois-eventos (passa)
+    ✗ declaração ÓRFÃ: i:apos-falha-de-rede (passa)
+    ✗ declaração ÓRFÃ: i:de-novo-fora-do-intervalo (passa)
+  gate i: ✗
+   Test Files  1 failed (1)
+        Tests  1 failed | 16 passed (17)
+==================================================================================================
+CN i-4  a marca não se apaga por um sync
+  gate: sy-gatilhos.test.tsx · gatilhos: gatilhos-lab.ts · executor: o literal · foto: o contrato · SY_DEFEITO=marca · SY_PLANTA_TELA=-
+  gate i (os gatilhos) — casos 16
+    REPROVA             i:marca-apaga-com-sync
+    ✗ reprovação NÃO DECLARADA: i:marca-apaga-com-sync
+    ✗ declaração ÓRFÃ: i:rede-volta-na-frente (passa)
+    ✗ declaração ÓRFÃ: i:fundo-mais-de-30s (passa)
+    ✗ declaração ÓRFÃ: i:marca-volta-curta (passa)
+    ✗ declaração ÓRFÃ: i:dois-eventos (passa)
+    ✗ declaração ÓRFÃ: i:apos-falha-de-rede (passa)
+    ✗ declaração ÓRFÃ: i:de-novo-fora-do-intervalo (passa)
+  gate i: ✗
+   Test Files  1 failed (1)
+        Tests  1 failed | 16 passed (17)
+==================================================================================================
+CN i-5  dispara com o app em segundo plano
+  gate: sy-gatilhos.test.tsx · gatilhos: gatilhos-lab.ts · executor: o literal · foto: o contrato · SY_DEFEITO=fundo · SY_PLANTA_TELA=-
+  gate i (os gatilhos) — casos 16
+    REPROVA             i:rede-volta-no-fundo
+    ✗ reprovação NÃO DECLARADA: i:rede-volta-no-fundo
+    ✗ declaração ÓRFÃ: i:rede-volta-na-frente (passa)
+    ✗ declaração ÓRFÃ: i:fundo-mais-de-30s (passa)
+    ✗ declaração ÓRFÃ: i:marca-volta-curta (passa)
+    ✗ declaração ÓRFÃ: i:dois-eventos (passa)
+    ✗ declaração ÓRFÃ: i:apos-falha-de-rede (passa)
+    ✗ declaração ÓRFÃ: i:de-novo-fora-do-intervalo (passa)
+  gate i: ✗
+   Test Files  1 failed (1)
+        Tests  1 failed | 16 passed (17)
+==================================================================================================
+CN i-6  ignora a sessão
+  gate: sy-gatilhos.test.tsx · gatilhos: gatilhos-lab.ts · executor: o literal · foto: o contrato · SY_DEFEITO=sessao · SY_PLANTA_TELA=-
+  gate i (os gatilhos) — casos 16
+    REPROVA             i:sem-sessao
+    ✗ reprovação NÃO DECLARADA: i:sem-sessao
+    ✗ declaração ÓRFÃ: i:rede-volta-na-frente (passa)
+    ✗ declaração ÓRFÃ: i:fundo-mais-de-30s (passa)
+    ✗ declaração ÓRFÃ: i:marca-volta-curta (passa)
+    ✗ declaração ÓRFÃ: i:dois-eventos (passa)
+    ✗ declaração ÓRFÃ: i:apos-falha-de-rede (passa)
+    ✗ declaração ÓRFÃ: i:de-novo-fora-do-intervalo (passa)
+  gate i: ✗
+   Test Files  1 failed (1)
+        Tests  1 failed | 16 passed (17)
+==================================================================================================
+CN i-7  não confere a rede na volta
+  gate: sy-gatilhos.test.tsx · gatilhos: gatilhos-lab.ts · executor: o literal · foto: o contrato · SY_DEFEITO=sem-rede · SY_PLANTA_TELA=-
+  gate i (os gatilhos) — casos 16
+    REPROVA             i:volta-sem-rede
+    ✗ reprovação NÃO DECLARADA: i:volta-sem-rede
+    ✗ declaração ÓRFÃ: i:rede-volta-na-frente (passa)
+    ✗ declaração ÓRFÃ: i:fundo-mais-de-30s (passa)
+    ✗ declaração ÓRFÃ: i:marca-volta-curta (passa)
+    ✗ declaração ÓRFÃ: i:dois-eventos (passa)
+    ✗ declaração ÓRFÃ: i:apos-falha-de-rede (passa)
+    ✗ declaração ÓRFÃ: i:de-novo-fora-do-intervalo (passa)
+  gate i: ✗
+   Test Files  1 failed (1)
+        Tests  1 failed | 16 passed (17)
+==================================================================================================
+CN i-8  a volta curta sem a marca dispara
+  gate: sy-gatilhos.test.tsx · gatilhos: gatilhos-lab.ts · executor: o literal · foto: o contrato · SY_DEFEITO=curta · SY_PLANTA_TELA=-
+  gate i (os gatilhos) — casos 16
+    REPROVA             i:fundo-menos-de-30s
+    REPROVA             i:marca-apaga-com-sync
+    ✗ reprovação NÃO DECLARADA: i:fundo-menos-de-30s
+    ✗ reprovação NÃO DECLARADA: i:marca-apaga-com-sync
+    ✗ declaração ÓRFÃ: i:rede-volta-na-frente (passa)
+    ✗ declaração ÓRFÃ: i:fundo-mais-de-30s (passa)
+    ✗ declaração ÓRFÃ: i:marca-volta-curta (passa)
+    ✗ declaração ÓRFÃ: i:dois-eventos (passa)
+    ✗ declaração ÓRFÃ: i:apos-falha-de-rede (passa)
+    ✗ declaração ÓRFÃ: i:de-novo-fora-do-intervalo (passa)
+  gate i: ✗
+   Test Files  1 failed (1)
+        Tests  1 failed | 16 passed (17)
+==================================================================================================
+CN i-9  os dois laboratórios (gatilhos e voo), sem defeito
+  gate: sy-gatilhos.test.tsx · gatilhos: gatilhos-lab.ts · executor: sincronizador-lab.ts · foto: o contrato · SY_DEFEITO=- · SY_PLANTA_TELA=-
+  gate i (os gatilhos) — casos 16
+    ✗ declaração ÓRFÃ: i:rede-volta-na-frente (passa)
+    ✗ declaração ÓRFÃ: i:fundo-mais-de-30s (passa)
+    ✗ declaração ÓRFÃ: i:marca-volta-curta (passa)
+    ✗ declaração ÓRFÃ: i:dois-eventos (passa)
+    ✗ declaração ÓRFÃ: i:apos-falha-de-rede (passa)
+    ✗ declaração ÓRFÃ: i:de-novo-fora-do-intervalo (passa)
+  gate i: ✗
+   Test Files  1 failed (1)
+        Tests  1 failed | 16 passed (17)
+==================================================================================================
+CN i-10 o voo aplica o intervalo a todo pedido
+  gate: sy-gatilhos.test.tsx · gatilhos: gatilhos-lab.ts · executor: sincronizador-lab.ts · foto: o contrato · SY_DEFEITO=intervalo-em-tudo · SY_PLANTA_TELA=-
+  gate i (os gatilhos) — casos 16
+    REPROVA (declarado) i:marca-volta-curta
+    REPROVA             i:marca-apaga-com-sync
+    REPROVA (declarado) i:dois-eventos
+    REPROVA (declarado) i:apos-falha-de-rede
+    REPROVA             i:apos-falha-com-status
+    REPROVA (declarado) i:de-novo-fora-do-intervalo
+    REPROVA             i:tentar-de-novo-fora-do-intervalo
+    REPROVA             i:falha-de-rede-nao-retenta
+    ✗ reprovação NÃO DECLARADA: i:marca-apaga-com-sync
+    ✗ reprovação NÃO DECLARADA: i:apos-falha-com-status
+    ✗ reprovação NÃO DECLARADA: i:tentar-de-novo-fora-do-intervalo
+    ✗ reprovação NÃO DECLARADA: i:falha-de-rede-nao-retenta
+    ✗ declaração ÓRFÃ: i:rede-volta-na-frente (passa)
+    ✗ declaração ÓRFÃ: i:fundo-mais-de-30s (passa)
+  gate i: ✗
+   Test Files  1 failed (1)
+        Tests  2 failed | 15 passed (17)
+==================================================================================================
+CN ii-0 o laboratório do voo, sem defeito
+  gate: sy-voo.test.ts · gatilhos: o contrato · executor: sincronizador-lab.ts · foto: o contrato · SY_DEFEITO=- · SY_PLANTA_TELA=-
+  gate ii (o voo único) — casos 8
+    REPROVA             ii:escrita-setlists-ficam
+    ✗ reprovação NÃO DECLARADA: ii:escrita-setlists-ficam
+  gate ii: ✗
+   Test Files  1 failed (1)
+        Tests  1 failed | 5 passed (6)
+==================================================================================================
+CN ii-1 o "de novo" roda depois do logout
+  gate: sy-voo.test.ts · gatilhos: o contrato · executor: sincronizador-lab.ts · foto: o contrato · SY_DEFEITO=de-novo-apos-logout · SY_PLANTA_TELA=-
+  gate ii (o voo único) — casos 8
+    REPROVA             ii:escrita-setlists-ficam
+    REPROVA             ii:logout-cancela-de-novo
+    ✗ reprovação NÃO DECLARADA: ii:escrita-setlists-ficam
+    ✗ reprovação NÃO DECLARADA: ii:logout-cancela-de-novo
+  gate ii: ✗
+   Test Files  1 failed (1)
+        Tests  1 failed | 5 passed (6)
+==================================================================================================
+CN ii-2 o sync ok não chega à raiz
+  gate: sy-voo.test.ts · gatilhos: o contrato · executor: sincronizador-lab.ts · foto: o contrato · SY_DEFEITO=nao-aplica · SY_PLANTA_TELA=-
+  gate ii (o voo único) — casos 8
+    REPROVA             ii:escrita-conteudo-aplica
+    ✗ reprovação NÃO DECLARADA: ii:escrita-conteudo-aplica
+  gate ii: ✗
+   Test Files  1 failed (1)
+        Tests  1 failed | 5 passed (6)
+==================================================================================================
+CN iii-0 a tela que congela TUDO (o embrulho)
+  gate: sy-foto.test.tsx · gatilhos: o contrato · executor: o literal · foto: o contrato · SY_DEFEITO=- · SY_PLANTA_TELA=congela
+  gate iii (a foto) — casos 23
+    REPROVA             iii:palco-trocar-posicao
+    REPROVA             iii:palco-musica-apagada-nunca-aberta
+    REPROVA             iii:v-estrela-viva
+    ✗ reprovação NÃO DECLARADA: iii:palco-trocar-posicao
+    ✗ reprovação NÃO DECLARADA: iii:palco-musica-apagada-nunca-aberta
+    ✗ reprovação NÃO DECLARADA: iii:v-estrela-viva
+  gate iii: ✗
+   Test Files  1 failed (1)
+        Tests  1 failed | 6 passed (7)
+==================================================================================================
+CN iii-1 o laboratório da foto da sessão, sem defeito
+  gate: sy-foto.test.tsx · gatilhos: o contrato · executor: o literal · foto: foto-do-palco-lab.ts · SY_DEFEITO=- · SY_PLANTA_TELA=-
+  gate iii (a foto) — casos 23
+  gate iii: reprova exatamente a lista esperada (0) ✓
+   Test Files  1 passed (1)
+        Tests  7 passed (7)
+==================================================================================================
+CN iii-2 a foto da sessão nunca se solta
+  gate: sy-foto.test.tsx · gatilhos: o contrato · executor: o literal · foto: foto-do-palco-lab.ts · SY_DEFEITO=nunca-solta · SY_PLANTA_TELA=-
+  gate iii (a foto) — casos 23
+    REPROVA             iii:sessao-solta
+    ✗ reprovação NÃO DECLARADA: iii:sessao-solta
+  gate iii: ✗
+   Test Files  1 failed (1)
+        Tests  1 failed | 6 passed (7)
+==================================================================================================
+CN iv-0 o laboratório do voo (a janela não é dele)
+  gate: sy-nao-regredir.test.ts · gatilhos: o contrato · executor: sincronizador-lab.ts · foto: o contrato · SY_DEFEITO=- · SY_PLANTA_TELA=-
+  gate iv (a janela da naoRegredir) — casos 2
+    REPROVA             iv:janela
+    ✗ reprovação NÃO DECLARADA: iv:janela
+  gate iv: ✗
+   Test Files  1 failed (1)
+        Tests  1 failed | 2 passed (3)
+==================================================================================================
+CN v-0  o laboratório dos gatilhos, sem defeito
+  gate: sy-requisicoes.test.tsx · gatilhos: gatilhos-lab.ts · executor: o literal · foto: o contrato · SY_DEFEITO=- · SY_PLANTA_TELA=-
+  gate v (a contagem) — casos 3
+    ✗ declaração ÓRFÃ: v:rede-volta-100 (passa)
+    ✗ declaração ÓRFÃ: v:rede-volta-101 (passa)
+    ✗ declaração ÓRFÃ: v:fundo-100 (passa)
+  gate v: ✗
+   Test Files  1 failed (1)
+        Tests  1 failed | 4 passed (5)
+==================================================================================================
+CN v-1  pede dois syncs por evento
+  gate: sy-requisicoes.test.tsx · gatilhos: gatilhos-lab.ts · executor: o literal · foto: o contrato · SY_DEFEITO=duplo · SY_PLANTA_TELA=-
+  gate v (a contagem) — casos 3
+    REPROVA (declarado) v:rede-volta-100
+    REPROVA (declarado) v:rede-volta-101
+    REPROVA (declarado) v:fundo-100
+  gate v: reprova exatamente a lista esperada (3) ✓
+   Test Files  1 passed (1)
+        Tests  5 passed (5)
+==================================================================================================
+$ git status --short -- apps/native/src   (vazio = os contratos voltaram)
+exit=0

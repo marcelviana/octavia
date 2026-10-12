@@ -1,0 +1,2 @@
+AVD antes: > 100 ms por rodada na rajada [5, 5, 7, 6, 6, 8, 4, 5, 5, 4] (mediana 5) · fora [2, 0, 0, 1, 0, 1, 6, 0, 1, 1] (mediana 1) · o passo 1 > 100 ms em 9 de 10 rodadas · o passo 0 > 100 ms em 5 de 10
+AVD depois: > 100 ms por rodada na rajada [5, 3, 4, 6, 4, 4, 4, 4, 4, 7] (mediana 4) · fora [0, 0, 1, 1, 0, 0, 0, 0, 1, 16] (mediana 0) · o passo 1 > 100 ms em 2 de 10 rodadas · o passo 0 > 100 ms em 9 de 10
