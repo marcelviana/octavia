@@ -1,0 +1,12 @@
+# o fim no host — 19:12:50
+$ pgrep -fl "aceite.py|expo start|http.server 8790|amostrar-carga"  (vazio = derrubados)
+exit=1
+$ ls apps/native/.env nas duas árvores
+ls: /Users/marcelviana/projects/octavia-sy-pr3-base/apps/native/.env: No such file or directory
+ls: /Users/marcelviana/projects/octavia-sy-pr3/apps/native/.env: No such file or directory
+$ git -C ../octavia-sy-pr3-base status --short; git log -1
+690972f Merge pull request #380 from marcelviana/sy/pr2-voo
+$ git worktree remove ../octavia-sy-pr3-base   (sem --force)
+exit=0
+/Users/marcelviana/projects/octavia         98c9f7f [main]
+/Users/marcelviana/projects/octavia-sy-pr3  664b849 [sy/pr3-foto]

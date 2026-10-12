@@ -1,0 +1,4 @@
+# carga do host antes do lado 18:05:00
+# fim do lado antes 18:18:43
+# carga do host antes do lado 18:19:03
+# fim do lado depois 18:32:56

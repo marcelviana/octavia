@@ -1,0 +1,32 @@
+sessão: files/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3 · cache/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3
+== (4) apagados por nome, o que a fixture criou: partitura-12p.pdf partitura-1p.pdf
+  ok eac9ac71128dcf66341d61aa644a1e62  files/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3/setlists.json
+  ok 6ee559ac8a9ff87f1d76e9503ab24a82  files/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3/content.json
+  ok 01765eb12438063684ae4a188c7a0f7d  files/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3/files-index.json
+  ok 05253d4239dadb2696115b934a546bb1  files/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3/files/<arquivo do Marcel>
+  ok 704b8ba7aa6bb7ea6e25485ff2055d36  files/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3/files/<arquivo do Marcel>
+== (4) regravado, md5 a md5 igual ao manifesto: 5 caminho(s)
+cache/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3/files:
+total 6
+drwx------ 2 u0_a292 u0_a292       3488 2026-10-04 12:47 .
+drwx------ 3 u0_a292 u0_a292_cache 3488 2026-09-11 09:59 ..
+
+files/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3:
+total 145
+drwx------ 3 u0_a292 u0_a292   3488 2026-10-12 19:09 .
+drwxrwx--x 3 u0_a292 u0_a292   3488 2026-10-12 19:09 ..
+-rw------- 1 u0_a292 u0_a292    163 2026-09-23 19:14 ._content.json
+-rwx------ 1 u0_a292 u0_a292    163 2026-09-24 18:01 ._files
+-rw------- 1 u0_a292 u0_a292    163 2026-09-14 11:49 ._files-index.json
+-rw------- 1 u0_a292 u0_a292    163 2026-09-23 19:14 ._setlists.json
+-rw------- 1 u0_a292 u0_a292 113098 2026-10-12 19:12 content.json
+drwx------ 2 u0_a292 u0_a292   3488 2026-10-12 19:12 files
+-rw------- 1 u0_a292 u0_a292    649 2026-10-12 19:12 files-index.json
+-rw------- 1 u0_a292 u0_a292   2752 2026-10-12 19:12 setlists.json
+
+files/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3/files:
+total 586
+drwx------ 2 u0_a292 u0_a292   3488 2026-10-12 19:12 .
+drwx------ 3 u0_a292 u0_a292   3488 2026-10-12 19:09 ..
+-rw-rw-rw- 1 u0_a292 u0_a292 138916 2026-10-12 19:12 <arquivo do Marcel>
+-rw-rw-rw- 1 u0_a292 u0_a292 451924 2026-10-12 19:12 <arquivo do Marcel>

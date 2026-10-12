@@ -1,0 +1,54 @@
+== rodada 1/10: o cache e o mock em A; o sync traz B
+  {"instalado":true,"base":1790913133379.8926}
+  controle (a): {"travou":200.00421905517578,"em":1791839149466}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 3047 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/tab/custo/antes/r01-sensor.json
+  rolagem +21032 ms · pedido +52801 · sync ok +53216
+== rodada 2/10: o cache e o mock em B; o sync traz A
+  {"instalado":true,"base":1790913133380.289}
+  controle (a): {"travou":200.0047390460968,"em":1791839217296}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 3048 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/tab/custo/antes/r02-sensor.json
+  rolagem +15959 ms · pedido +47705 · sync ok +48128
+== rodada 3/10: o cache e o mock em A; o sync traz B
+  {"instalado":true,"base":1790913133379.679}
+  controle (a): {"travou":200.0065619945526,"em":1791839284790}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 3056 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/tab/custo/antes/r03-sensor.json
+  rolagem +15439 ms · pedido +47382 · sync ok +47762
+== rodada 4/10: o cache e o mock em B; o sync traz A
+  {"instalado":true,"base":1790913133380.139}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 3059 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/tab/custo/antes/r04-sensor.json
+  rolagem +15944 ms · pedido +47751 · sync ok +48194
+== rodada 5/10: o cache e o mock em A; o sync traz B
+  {"instalado":true,"base":1790913133379.7117}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 3073 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/tab/custo/antes/r05-sensor.json
+  rolagem +15293 ms · pedido +47179 · sync ok +47560
+== rodada 6/10: o cache e o mock em B; o sync traz A
+  {"instalado":true,"base":1790913133380.0972}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 3063 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/tab/custo/antes/r06-sensor.json
+  rolagem +15918 ms · pedido +47719 · sync ok +48134
+== rodada 7/10: o cache e o mock em A; o sync traz B
+  {"instalado":true,"base":1790913133379.9163}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 3066 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/tab/custo/antes/r07-sensor.json
+  rolagem +16078 ms · pedido +47971 · sync ok +48392
+== rodada 8/10: o cache e o mock em B; o sync traz A
+  {"instalado":true,"base":1790913133379.9792}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 3055 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/tab/custo/antes/r08-sensor.json
+  rolagem +16138 ms · pedido +47960 · sync ok +48354
+== rodada 9/10: o cache e o mock em A; o sync traz B
+  {"instalado":true,"base":1790913133380.2964}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 3066 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/tab/custo/antes/r09-sensor.json
+  rolagem +15730 ms · pedido +47487 · sync ok +47904
+== rodada 10/10: o cache e o mock em B; o sync traz A
+  {"instalado":true,"base":1790913133379.5488}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 3062 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/tab/custo/antes/r10-sensor.json
+  rolagem +15866 ms · pedido +47740 · sync ok +48143
+fim

@@ -1,0 +1,15 @@
+# o bundle servido — depois · o Metro da árvore /Users/marcelviana/projects/octavia-sy-pr3 (664b849) · 2026-10-12 18:18:55 -0300
+$ curl -s "http://127.0.0.1:8081/apps/native/index.bundle?platform=android&dev=true" | grep -c …
+bytes: 7498185
+localhost:8788: 1
+octavia.rocks: 0
+chaveDaAbertura: 3
+fotoDoConteudo: 4
+criarFotoDaSessao: 3
+foto.entrar(: 2
+pedirVoo: 4
+$ adb -s emulator-5554 reverse --list
+UsbFfs tcp:8081 tcp:8081
+UsbFfs tcp:8790 tcp:8790
+UsbFfs tcp:8788 tcp:8789
+

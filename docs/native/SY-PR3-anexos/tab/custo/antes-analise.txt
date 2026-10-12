@@ -1,0 +1,88 @@
+# o custo — Tab S6, 10 rodadas (/private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/tab/custo/antes)
+
+## SYNC — [t_ok − 5 s, t_ok + 15 s]
+
+| rodada | quadros | maior intervalo (ms) | > 16,7 ms | > 50 ms | > 100 ms | rolagem (uiautomator: eventos · maior lacuna · andou) | o `cache write` do content |
+|---|---|---|---|---|---|---|---|
+| r01 | 1175 | **174.8** | 546 | 3 | 3 | 507 · 164 ms · 2634 px | n=8 invalidated=1 |
+| r02 | 1174 | **173.3** | 545 | 4 | 3 | 509 · 135 ms · 2637 px | n=8 invalidated=1 |
+| r03 | 1175 | **175.5** | 554 | 3 | 3 | 506 · 146 ms · 2640 px | n=8 invalidated=1 |
+| r04 | 1174 | **195.9** | 538 | 4 | 3 | 506 · 133 ms · 2626 px | n=8 invalidated=1 |
+| r05 | 1176 | **180.5** | 538 | 4 | 3 | 506 · 131 ms · 2635 px | n=8 invalidated=1 |
+| r06 | 1174 | **179.8** | 539 | 3 | 3 | 506 · 266 ms · 2640 px | n=8 invalidated=1 |
+| r07 | 1175 | **174.9** | 540 | 4 | 3 | 507 · 127 ms · 2624 px | n=8 invalidated=1 |
+| r08 | 1175 | **174.2** | 541 | 4 | 3 | 505 · 164 ms · 2628 px | n=8 invalidated=1 |
+| r09 | 1175 | **182.2** | 536 | 4 | 3 | 507 · 165 ms · 2632 px | n=8 invalidated=1 |
+| r10 | 1174 | **183.6** | 541 | 4 | 3 | 505 · 173 ms · 2631 px | n=8 invalidated=1 |
+
+## PISO — a rolagem ligada, sem sync: [t_rol + 3 s, t_rol + 23 s]
+
+| rodada | quadros | maior intervalo (ms) | > 16,7 ms | > 50 ms | > 100 ms | rolagem (uiautomator: eventos · maior lacuna · andou) |
+|---|---|---|---|---|---|---|
+| r01 | 1204 | **22.8** | 542 | 0 | 0 | 516 · 106 ms · 2695 px |
+| r02 | 1205 | **23.7** | 547 | 0 | 0 | 514 · 105 ms · 2696 px |
+| r03 | 1204 | **22.5** | 508 | 0 | 0 | 515 · 108 ms · 2695 px |
+| r04 | 1204 | **22.7** | 549 | 0 | 0 | 515 · 108 ms · 2695 px |
+| r05 | 1204 | **22.5** | 553 | 0 | 0 | 516 · 105 ms · 2696 px |
+| r06 | 1205 | **22.3** | 546 | 0 | 0 | 516 · 108 ms · 2696 px |
+| r07 | 1204 | **21.9** | 544 | 0 | 0 | 516 · 109 ms · 2696 px |
+| r08 | 1204 | **22.4** | 555 | 0 | 0 | 516 · 107 ms · 2696 px |
+| r09 | 1205 | **23.2** | 541 | 0 | 0 | 516 · 106 ms · 2695 px |
+| r10 | 1205 | **22.2** | 560 | 0 | 0 | 515 · 108 ms · 2695 px |
+
+## CONTROLE (a) — a tarefa plantada de 200 ms aparece no sensor?
+
+| rodada | a tarefa durou | o maior intervalo em volta | o quadro que a fechou, depois do fim dela |
+|---|---|---|---|
+| r01 | 200.0 ms | **214.8 ms** | 1 ms |
+| r02 | 200.0 ms | **216.2 ms** | 1 ms |
+| r03 | 200.0 ms | **210.4 ms** | 0 ms |
+
+## O que estava no JS em cada intervalo > 50 ms da janela do sync (as linhas OCTAVIA saídas dentro dele)
+
+| rodada | intervalo (ms) | o quadro que o fechou, contra o `sync ok` | as linhas dentro |
+|---|---|---|---|
+| r01 | 174.8 | -75 ms | `sync start` · `auth refresh=cached` |
+| r01 | 161.1 | +179 ms | — |
+| r01 | 138.4 | +362 ms | — |
+| r02 | 173.3 | -97 ms | `sync start` · `auth refresh=cached` |
+| r02 | 56.3 | +20 ms | `cache write kind=setlists n=1 invalidated=0` · `cache write kind=content n=8 invalidated=1` · `sync ok setlists=1 content=8 pages=1` · `prefetch plan n=2 reason=library` |
+| r02 | 173.1 | +193 ms | — |
+| r02 | 134.7 | +372 ms | — |
+| r03 | 175.5 | -62 ms | `sync start` · `auth refresh=cached` |
+| r03 | 162.6 | +181 ms | — |
+| r03 | 138.1 | +365 ms | — |
+| r04 | 195.9 | -101 ms | `sync start` · `auth refresh=cached` |
+| r04 | 56.4 | +21 ms | `api status=200 path=/api/content n=1` · `cache write kind=setlists n=1 invalidated=0` · `cache write kind=content n=8 invalidated=1` · `sync ok setlists=1 content=8 pages=1` · `prefetch plan n=2 reason=library` |
+| r04 | 165.7 | +187 ms | — |
+| r04 | 137.4 | +370 ms | — |
+| r05 | 170.4 | -59 ms | — |
+| r05 | 50.6 | +18 ms | `api status=200 path=/api/content n=1` · `cache write kind=setlists n=1 invalidated=0` · `cache write kind=content n=8 invalidated=1` · `sync ok setlists=1 content=8 pages=1` · `prefetch plan n=2 reason=library` |
+| r05 | 163.0 | +181 ms | — |
+| r05 | 180.5 | +361 ms | `prefetch plan n=2 reason=demand` · `download-error nao-existe.pdf: o servidor respondeu 404` · `download-error nao-existe.pdf: o servidor respondeu 404` · `download-error partitura-escaneada.jpg: o servidor respondeu 404` · `download-error partitura-escaneada.jpg: o servidor respondeu 404` |
+| r06 | 179.8 | -75 ms | `sync start` · `auth refresh=cached` |
+| r06 | 164.6 | +187 ms | — |
+| r06 | 175.9 | +363 ms | `prefetch plan n=2 reason=demand` · `download-error nao-existe.pdf: o servidor respondeu 404` · `download-error nao-existe.pdf: o servidor respondeu 404` · `download-error partitura-escaneada.jpg: o servidor respondeu 404` · `download-error partitura-escaneada.jpg: o servidor respondeu 404` |
+| r07 | 174.9 | -85 ms | `sync start` · `auth refresh=cached` |
+| r07 | 53.5 | +21 ms | `api status=200 path=/api/content n=1` · `cache write kind=setlists n=1 invalidated=0` · `cache write kind=content n=8 invalidated=1` · `sync ok setlists=1 content=8 pages=1` · `prefetch plan n=2 reason=library` |
+| r07 | 169.1 | +190 ms | — |
+| r07 | 134.2 | +370 ms | — |
+| r08 | 174.2 | -72 ms | `sync start` · `auth refresh=cached` |
+| r08 | 55.1 | +24 ms | `api status=200 path=/api/content n=1` · `cache write kind=setlists n=1 invalidated=0` · `cache write kind=content n=8 invalidated=1` · `sync ok setlists=1 content=8 pages=1` · `prefetch plan n=2 reason=library` |
+| r08 | 170.6 | +194 ms | — |
+| r08 | 139.3 | +380 ms | — |
+| r09 | 182.2 | -75 ms | `sync start` · `auth refresh=cached` |
+| r09 | 51.8 | +22 ms | `api status=200 path=/api/content n=1` · `cache write kind=setlists n=1 invalidated=0` · `cache write kind=content n=8 invalidated=1` · `sync ok setlists=1 content=8 pages=1` · `prefetch plan n=2 reason=library` |
+| r09 | 164.8 | +187 ms | — |
+| r09 | 131.9 | +365 ms | — |
+| r10 | 183.6 | -83 ms | `sync start` · `auth refresh=cached` |
+| r10 | 59.2 | +20 ms | `api status=200 path=/api/content n=1` · `cache write kind=setlists n=1 invalidated=0` · `cache write kind=content n=8 invalidated=1` · `sync ok setlists=1 content=8 pages=1` · `prefetch plan n=2 reason=library` |
+| r10 | 163.0 | +183 ms | — |
+| r10 | 134.3 | +363 ms | — |
+
+## As medianas e o critério da SY-D36 (n = 10)
+
+- SYNC: maior intervalo, mediana **177.7 ms** · intervalos > 100 ms, mediana **3** · a maior lacuna do uiautomator, mediana **155 ms**
+- PISO: maior intervalo, mediana **22.5 ms** · intervalos > 100 ms, mediana **0** · a maior lacuna do uiautomator, mediana **107.5 ms**
+- (dev client) > 100 ms: 3 ≤ 0 + 1 = 1? **NÃO** · maior intervalo: 177.7 ≤ max(2 × 22.5, 100) = 100.0? **NÃO** → **REPROVA**
+- (release, o uiautomator) a maior lacuna na janela do sync: mediana 155 ≤ 107.5 + 100 = 207.5? **PASSA** · rodada a rodada: 9 de 10 dentro

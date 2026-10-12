@@ -1,0 +1,5 @@
+(o anel do Tab é de 5 MiB e gira numa rodada longa: a contagem abaixo é a do que o anel guardou; as quedas vêm do dropbox, que cobre a sessão)
+linhas OCTAVIA no anel:     1603
+octavia.rocks no anel: 0
+api no anel: 145 · fora do mock: 0
+auth refresh=cached: 144 · forced: 1

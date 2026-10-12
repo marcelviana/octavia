@@ -1,0 +1,54 @@
+== rodada 1/10: o cache e o mock em A; o sync traz B
+  {"instalado":true,"base":1790913133380.463}
+  controle (a): {"travou":200.00536394119263,"em":1791839991514}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 3065 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/tab/custo/depois/r01-sensor.json
+  rolagem +20496 ms · pedido +52501 · sync ok +52929
+== rodada 2/10: o cache e o mock em B; o sync traz A
+  {"instalado":true,"base":1790913133380.3433}
+  controle (a): {"travou":200.00385403633118,"em":1791840060096}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 3055 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/tab/custo/depois/r02-sensor.json
+  rolagem +15930 ms · pedido +47777 · sync ok +48218
+== rodada 3/10: o cache e o mock em A; o sync traz B
+  {"instalado":true,"base":1790913133380.2302}
+  controle (a): {"travou":200.00489509105682,"em":1791840129486}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 3078 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/tab/custo/depois/r03-sensor.json
+  rolagem +16584 ms · pedido +48594 · sync ok +49034
+== rodada 4/10: o cache e o mock em B; o sync traz A
+  {"instalado":true,"base":1790913133380.247}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 3050 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/tab/custo/depois/r04-sensor.json
+  rolagem +16262 ms · pedido +47982 · sync ok +48401
+== rodada 5/10: o cache e o mock em A; o sync traz B
+  {"instalado":true,"base":1790913133380.079}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 3077 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/tab/custo/depois/r05-sensor.json
+  rolagem +16595 ms · pedido +48500 · sync ok +48913
+== rodada 6/10: o cache e o mock em B; o sync traz A
+  {"instalado":true,"base":1790913133379.9963}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 3061 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/tab/custo/depois/r06-sensor.json
+  rolagem +15995 ms · pedido +47721 · sync ok +48164
+== rodada 7/10: o cache e o mock em A; o sync traz B
+  {"instalado":true,"base":1790913133379.658}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 3071 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/tab/custo/depois/r07-sensor.json
+  rolagem +15950 ms · pedido +47903 · sync ok +48320
+== rodada 8/10: o cache e o mock em B; o sync traz A
+  {"instalado":true,"base":1790913133380.048}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 3062 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/tab/custo/depois/r08-sensor.json
+  rolagem +16183 ms · pedido +48049 · sync ok +48449
+== rodada 9/10: o cache e o mock em A; o sync traz B
+  {"instalado":true,"base":1790913133380.1208}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 3058 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/tab/custo/depois/r09-sensor.json
+  rolagem +16318 ms · pedido +48122 · sync ok +48535
+== rodada 10/10: o cache e o mock em B; o sync traz A
+  {"instalado":true,"base":1790913133380.4355}
+  {"agendadas":1,"componente":"SetlistsScreen","faseAntes":"ok"}
+  sensor: 3067 quadros → /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/tab/custo/depois/r10-sensor.json
+  rolagem +16119 ms · pedido +47899 · sync ok +48311
+fim

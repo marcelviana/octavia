@@ -1,0 +1,8 @@
+$ sh apps/native/scripts/gates-decl.sh < <corpo>
+g1a: apps/native/src/foto-do-palco.ts
+g1a: apps/native/src/navigation.tsx
+g1a: apps/native/src/screens/StageScreen.tsx
+g1a: apps/native/src/screens/VisualizacaoScreen.tsx
+exit=0
+$ sh scripts/gates-web/gates-web-decl.sh < <corpo>
+exit=0

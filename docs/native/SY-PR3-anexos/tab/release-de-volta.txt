@@ -1,0 +1,4 @@
+# o release de volta — 19:12:25
+$ adb install -r ~/octavia-aparato/tab-s6-release/release-ea5e891.apk  → Success
+sha256 do APK instalado (puxado do aparelho): 65209b80f94af377905586dd762257823cc30752ef0d50c5cd4c4a30582c680a
+sha256 do release-ea5e891.apk guardado:        65209b80f94af377905586dd762257823cc30752ef0d50c5cd4c4a30582c680a

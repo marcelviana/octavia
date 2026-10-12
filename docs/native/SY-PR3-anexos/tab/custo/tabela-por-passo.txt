@@ -1,0 +1,9 @@
+# a tabela por passo — as medianas das rodadas (ms; faixa)
+
+| passo | antes | depois | depois − antes |
+|---|---|---|---|
+| 0 o disparo (`sync start`) | **175** · 50–196 (n=10) | **186** · 50–193 (n=10) | +11 |
+| 1 o fim síncrono do sync (gravação + aplicação) | **53** · 50–59 (n=10) | **53** · 50–64 (n=10) | -0 |
+| 2 o render da troca da raiz | **164** · 50–173 (n=10) | **148** · 50–155 (n=10) | -16 |
+| 3 o prefetch sob demanda do palco | **50** · 50–180 (n=10) | **50** · 50–50 (n=10) | +0 |
+| 4 o render seguinte | **50** · 50–50 (n=10) | **50** · 50–50 (n=10) | +0 |

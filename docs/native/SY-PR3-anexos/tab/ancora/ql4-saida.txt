@@ -1,0 +1,66 @@
+== ancora 18:39:00
+18:39:24 toque 'song-3' @ 800,1138 (RX2N8000F3D)
+18:39:37 toque 'notas-regua' @ 800,360 (RX2N8000F3D)
+18:39:53 toque 'zoom-mais' @ 497,1385 (RX2N8000F3D)
+   o começo do corpo [B22, notas abertas]: 460 px (204.44 dp) · corpo [72, 784, 1512, 2236] · rolagem [0, 252, 1600, 2236]
+   o começo do corpo [C22, notas abertas]: 404 px (179.56 dp) · corpo [72, 674, 2382, 1276] · rolagem [0, 198, 2560, 1276]
+   o começo do corpo [C26, notas abertas]: 434 px (192.89 dp) · corpo [72, 704, 2480, 1276] · rolagem [0, 198, 2560, 1276]
+   o começo do corpo [B26, notas abertas]: 500 px (222.22 dp) · corpo [72, 824, 1524, 2236] · rolagem [0, 252, 1600, 2236]
+18:40:29 toque 'song-3' @ 800,1138 (RX2N8000F3D)
+SY3Q-S3-ancora-abertas-antes-tab-ret mCurrentRotation=ROTATION_0 png=354956 xml=29535 e633cdf0a9e8
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 48 continuações ✓
+SY3Q-S3-ancora-abertas-giro-tab-pai mCurrentRotation=ROTATION_90 png=280591 xml=29247 25c9184865bd
+   corpo-logico: o desenho é o próprio texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 0 continuações ✓
+18:41:18 toque 'zoom-mais' @ 497,1385 (RX2N8000F3D)
+SY3Q-S3-ancora-abertas-zoom-tab-pai mCurrentRotation=ROTATION_90 png=304841 xml=29343 0b436cc1c955
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 16 continuações ✓
+SY3Q-S3-ancora-abertas-volta-tab-ret mCurrentRotation=ROTATION_0 png=396144 xml=29637 1ab621f2d46d
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 65 continuações ✓
+18:41:49 toque 'auto-scroll' @ 128,2345 (RX2N8000F3D)
+18:41:52 toque 'auto-scroll' @ 128,2345 (RX2N8000F3D)
+18:42:20 toque 'song-3' @ 800,1138 (RX2N8000F3D)
+SY3Q-S3-ancora-nas-notas-antes-tab-ret mCurrentRotation=ROTATION_0 png=371313 xml=33318 cfd380a9a02e
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 48 continuações ✓
+SY3Q-S3-ancora-nas-notas-giro-tab-pai mCurrentRotation=ROTATION_90 png=281127 xml=33030 546198d5d5b3
+   corpo-logico: o desenho é o próprio texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 0 continuações ✓
+18:43:26 toque 'song-3' @ 800,1138 (RX2N8000F3D)
+18:43:38 toque 'notas-regua' @ 800,360 (RX2N8000F3D)
+18:43:55 toque 'zoom-mais' @ 497,1385 (RX2N8000F3D)
+   o começo do corpo [B22, notas recolhidas]: 164 px (72.89 dp) · corpo [72, 488, 1512, 2236] · rolagem [0, 252, 1600, 2236]
+   o começo do corpo [C22, notas recolhidas]: 164 px (72.89 dp) · corpo [72, 434, 2382, 1276] · rolagem [0, 198, 2560, 1276]
+   o começo do corpo [C26, notas recolhidas]: 164 px (72.89 dp) · corpo [72, 434, 2480, 1276] · rolagem [0, 198, 2560, 1276]
+   o começo do corpo [B26, notas recolhidas]: 164 px (72.89 dp) · corpo [72, 488, 1524, 2236] · rolagem [0, 252, 1600, 2236]
+18:44:31 toque 'song-3' @ 800,1138 (RX2N8000F3D)
+SY3Q-S3-ancora-recolhidas-antes-tab-ret mCurrentRotation=ROTATION_0 png=353353 xml=29535 58121419c5ce
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 48 continuações ✓
+SY3Q-S3-ancora-recolhidas-giro-tab-pai mCurrentRotation=ROTATION_90 png=299192 xml=29247 68b42d4cb337
+   corpo-logico: o desenho é o próprio texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 0 continuações ✓
+18:45:20 toque 'zoom-mais' @ 497,1385 (RX2N8000F3D)
+SY3Q-S3-ancora-recolhidas-zoom-tab-pai mCurrentRotation=ROTATION_90 png=324311 xml=29343 f779092bbb5b
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 16 continuações ✓
+SY3Q-S3-ancora-recolhidas-volta-tab-ret mCurrentRotation=ROTATION_0 png=412569 xml=29637 c0262b712fe0
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 65 continuações ✓
+18:45:51 toque 'auto-scroll' @ 128,2345 (RX2N8000F3D)
+18:45:54 toque 'auto-scroll' @ 128,2345 (RX2N8000F3D)
+== ancorav 18:45:58
+18:46:15 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+18:46:24 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+18:46:34 toque 'Ver “Letra longa da fixture”' @ 800,590 (RX2N8000F3D)
+   V: o começo do corpo em B 461.25 px (205.00 dp; corpo [72, 785, 1512, 2452] · rolagem [0, 252, 1600, 2452]) · em C 0 px
+18:47:04 toque 'buscar' @ 2295,188 (RX2N8000F3D)
+18:47:13 toque 'lib-campo' @ 1397,152 (RX2N8000F3D)
+18:47:24 toque 'Ver “Letra longa da fixture”' @ 1280,590 (RX2N8000F3D)
+SY3Q-V-ancora-antes-tab-pai mCurrentRotation=ROTATION_90 png=341354 xml=25939 6f3a86985170
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 32 continuações ✓
+SY3Q-V-ancora-giro-B-tab-ret mCurrentRotation=ROTATION_0 png=354260 xml=23518 b51457978594
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 48 continuações ✓
+SY3Q-V-ancora-volta-C-tab-pai mCurrentRotation=ROTATION_90 png=319313 xml=25939 6f3a86985170
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 32 continuações ✓
+18:48:44 toque 'buscar' @ 1335,281 (RX2N8000F3D)
+18:48:53 toque 'lib-campo' @ 917,152 (RX2N8000F3D)
+18:49:03 toque 'Ver “Letra longa da fixture”' @ 800,590 (RX2N8000F3D)
+SY3Q-V-ancora-detalhes-antes-tab-ret mCurrentRotation=ROTATION_0 png=390783 xml=25710 e906ce3b776b
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 48 continuações ✓
+SY3Q-V-ancora-detalhes-giro-tab-pai mCurrentRotation=ROTATION_90 png=338293 xml=25939 bba8b7e407ee
+   corpo-logico: o desenho é uma quebra do texto — texto lógico len=4826 sha12=d2f9815ddf1f = referência · 32 continuações ✓
+capturas=15 falhas=0

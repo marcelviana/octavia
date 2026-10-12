@@ -1,0 +1,39 @@
+# o custo — Tab S6, 2 rodadas (/private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/tab/custo/depois-sem-eventos)
+
+## SYNC — [t_ok − 5 s, t_ok + 15 s]
+
+| rodada | quadros | maior intervalo (ms) | > 16,7 ms | > 50 ms | > 100 ms | rolagem (uiautomator: eventos · maior lacuna · andou) | o `cache write` do content |
+|---|---|---|---|---|---|---|---|
+| r01 | 1175 | **190.8** | 552 | 3 | 3 | 0 · 0 ms · 0 px | n=8 invalidated=1 |
+| r02 | 1177 | **167.0** | 540 | 3 | 3 | 0 · 0 ms · 0 px | n=8 invalidated=1 |
+
+## PISO — a rolagem ligada, sem sync: [t_rol + 3 s, t_rol + 23 s]
+
+| rodada | quadros | maior intervalo (ms) | > 16,7 ms | > 50 ms | > 100 ms | rolagem (uiautomator: eventos · maior lacuna · andou) |
+|---|---|---|---|---|---|---|
+| r01 | 1205 | **22.2** | 542 | 0 | 0 | 0 · 0 ms · 0 px |
+| r02 | 1205 | **22.3** | 531 | 0 | 0 | 0 · 0 ms · 0 px |
+
+## CONTROLE (a) — a tarefa plantada de 200 ms aparece no sensor?
+
+| rodada | a tarefa durou | o maior intervalo em volta | o quadro que a fechou, depois do fim dela |
+|---|---|---|---|
+| — | — | — | — |
+
+## O que estava no JS em cada intervalo > 50 ms da janela do sync (as linhas OCTAVIA saídas dentro dele)
+
+| rodada | intervalo (ms) | o quadro que o fechou, contra o `sync ok` | as linhas dentro |
+|---|---|---|---|
+| r01 | 190.8 | -76 ms | `sync start` · `auth refresh=cached` |
+| r01 | 162.0 | +183 ms | — |
+| r01 | 138.9 | +366 ms | — |
+| r02 | 167.0 | -69 ms | — |
+| r02 | 145.4 | +163 ms | — |
+| r02 | 139.1 | +346 ms | — |
+
+## As medianas e o critério da SY-D36 (n = 2)
+
+- SYNC: maior intervalo, mediana **178.9 ms** · intervalos > 100 ms, mediana **3** · a maior lacuna do uiautomator, mediana **0 ms**
+- PISO: maior intervalo, mediana **22.3 ms** · intervalos > 100 ms, mediana **0** · a maior lacuna do uiautomator, mediana **0 ms**
+- (dev client) > 100 ms: 3 ≤ 0 + 1 = 1? **NÃO** · maior intervalo: 178.9 ≤ max(2 × 22.3, 100) = 100.0? **NÃO** → **REPROVA**
+- (release, o uiautomator) a maior lacuna na janela do sync: mediana 0 ≤ 0 + 100 = 100? **PASSA** · rodada a rodada: 2 de 2 dentro
