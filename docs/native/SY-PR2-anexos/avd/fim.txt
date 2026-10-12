@@ -1,0 +1,16 @@
+# o fim da sessão no aparelho — 09:22:00
+$ adb -s emulator-5554 emu kill   (subido com -no-snapshot-save: nada volta ao snapshot)
+OK: killing emulator, bye bye
+OK
+$ ls -la …/default_boot/ram.bin
+-rw-r--r--@ 1 marcelviana  staff  881129137 Sep 24 14:00 ~/.android/avd/octavia_tab32.avd/snapshots/default_boot/ram.bin
+$ adb devices
+List of devices attached
+RX2N8000F3D	device
+
+$ pgrep -fl "aceite.py|expo start"  (vazio = derrubados)
+exit=1
+$ ls apps/native/.env  (apagado)
+ls: apps/native/.env: No such file or directory
+$ git status --short
+?? docs/native/SY-PR2-anexos/

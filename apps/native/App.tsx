@@ -166,8 +166,16 @@ export default function App(): React.JSX.Element {
     return () => ligarCacheDoFavoritar(null)
   }, [estado])
 
+  /**
+   * SY-D17 (SY-PR2) — a sessão de AGORA, para o executor do sync: o resultado de um sync cuja sessão mudou enquanto ele
+   * voava se descarta, e o "de novo" da sessão velha se cancela. Um ref, e não o `estado`: o executor a lê depois de um
+   * `await`, e o que vale é o instante, não o último render. Posto no `onAuth`, antes de qualquer `set…`.
+   */
+  const sessaoRef = useRef<string | null>(null)
+
   useEffect(() => {
     return onAuth((user) => {
+      sessaoRef.current = user === null ? null : user.uid
       if (user === null) {
         log('login-screen')
         setFilesUser(null)
@@ -186,11 +194,16 @@ export default function App(): React.JSX.Element {
 
   /**
    * Passo 2 do T1-R13 — roda depois de a tela já mostrar o cache. O executor mora no `src/sincronizador.ts` desde a
-   * SY-PR1 (a extração literal, SY-D29); aqui fica a ligação com a raiz, com as mesmas dependências de antes.
+   * SY-PR1 (a extração literal, SY-D29); aqui fica a ligação com a raiz, com as mesmas dependências de antes. Desde a
+   * SY-PR2 ele é também o voo único (um sync por vez; o pedido durante um sync vira o "de novo") e confere a sessão.
    */
   const rodarSync = useCallback(
     (uid: string, anterior: Dados): Promise<void> =>
-      executarSync({ setSync, setDados, dadosRef, prefetchEArrumar }, uid, anterior),
+      executarSync(
+        { setSync, setDados, dadosRef, prefetchEArrumar, sessaoAtual: () => sessaoRef.current },
+        uid,
+        anterior,
+      ),
     [prefetchEArrumar],
   )
 

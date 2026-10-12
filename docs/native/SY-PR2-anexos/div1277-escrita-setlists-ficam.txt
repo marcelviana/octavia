@@ -1,0 +1,30 @@
+# div. 1277 — o gate ii:escrita-setlists-ficam com a leitura do disco consertada, contra o código de ANTES (o executor e o sync do commit 3, 800a9bf) — a prova de que ele reprova POR MEDIDA, e não por exceção · 2026-10-11 08:59:38 -0300
+$ git checkout 800a9bf -- apps/native/src/sync.ts apps/native/src/sincronizador.ts apps/native/src/escrita.ts
+exit=0
+$ pnpm exec vitest run apps/native/test/sy-voo.test.ts -t "ESCRITAS|lista"   (o sy-voo.test.ts e o sy-arnes.ts da árvore de trabalho: a leitura consertada)
+gate ii (o voo único) — casos 3 · passam 1 · reprovam 2
+  REPROVA (declarado) ii:escrita-setlists-ficam · a criada na raiz: false · no disco: false
+        o sync gravou por cima da releitura — a criada na raiz: false, no disco: false
+  passa               ii:escrita-conteudo-aplica · o título na raiz: "SY música 2, mudada no site" · no disco: "SY música 2, mudada no site"
+  REPROVA (declarado) ii:escrita-sync-sem-cache-write-setlists · cache write kind=setlists — da releitura: 1 · do sync, depois dela: 1
+        o sync que perdeu emitiu 1 cache write kind=setlists
+  ✗ declaração ÓRFÃ: ii:prazo-libera-o-voo (não existe no gate)
+gate ii: ✗
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  1 failed | 1 passed | 4 skipped (6)
+$ (os três arquivos de volta, da árvore de trabalho do commit 4)
+ 3 files changed, 60 insertions(+), 17 deletions(-)
+# (a órfã acima é o filtro -t, que não roda o caso do prazo — não é do gate)
+
+# o mesmo, com o código do commit 4 (a geração compartilhada) · 2026-10-11 08:59:45 -0300
+$ pnpm exec vitest run apps/native/test/sy-voo.test.ts -t "ESCRITAS"
+gate ii (o voo único) — casos 3 · passam 3 · reprovam 0
+  passa               ii:escrita-setlists-ficam · a criada na raiz: true · no disco: true
+  passa               ii:escrita-conteudo-aplica · o título na raiz: "SY música 2, mudada no site" · no disco: "SY música 2, mudada no site"
+  passa               ii:escrita-sync-sem-cache-write-setlists · cache write kind=setlists — da releitura: 1 · do sync, depois dela: 0
+  ✗ declaração ÓRFÃ: ii:escrita-setlists-ficam (passa)
+  ✗ declaração ÓRFÃ: ii:escrita-sync-sem-cache-write-setlists (passa)
+  ✗ declaração ÓRFÃ: ii:prazo-libera-o-voo (não existe no gate)
+gate ii: ✗
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  1 failed | 1 passed | 4 skipped (6)

@@ -1,0 +1,136 @@
+# SY-D45 — a auditoria das 27 linhas da lista: por que cada uma reprova hoje — árvore 5511e99 · 2026-10-12 07:15:47
+# (1) a suíte, uma vez: $ pnpm test
+ Test Files  157 passed | 3 skipped (160)
+      Tests  1914 passed | 59 skipped (1973)
+# os juízes dos gates (i), (v) e (iii), verbatim desta corrida — a linha REPROVA com a nota do caso e, abaixo, o motivo que o caso DEVOLVEU (um 'lança: …' seria o catch do juiz, sy-lista.ts:42-44: nenhum)
+gate i (os gatilhos) — casos 16 · passam 10 · reprovam 6
+  REPROVA (declarado) i:rede-volta-na-frente · sync start depois do cenário: 0 (esperado 1)
+        0 sync(s), esperado 1
+  REPROVA (declarado) i:fundo-mais-de-30s · sync start depois do cenário: 0 (esperado 1)
+        0 sync(s), esperado 1
+  passa               i:fundo-menos-de-30s · sync start depois do cenário: 0 (esperado 0)
+  passa               i:rede-volta-no-fundo · sync start depois do cenário: 0 (esperado 0)
+  REPROVA (declarado) i:marca-volta-curta · sync start depois do cenário: 0 (esperado 1)
+        0 sync(s), esperado 1
+  passa               i:marca-apaga-com-sync · sync start depois do cenário: 0 (esperado 0)
+  REPROVA (declarado) i:dois-eventos · sync start depois do cenário: 0 (esperado 1)
+        0 sync(s), esperado 1
+  passa               i:volta-sem-rede · sync start depois do cenário: 0 (esperado 0)
+  passa               i:sem-sessao · sync start depois do cenário: 0 (esperado 0)
+  passa               i:primeira-leitura · sync start depois do cenário: 0 (esperado 0)
+  passa               i:dentro-do-intervalo · sync start depois do cenário: 0 (esperado 0)
+  REPROVA (declarado) i:apos-falha-de-rede · sync start depois do cenário: 0 (esperado 1)
+        0 sync(s), esperado 1
+  passa               i:apos-falha-com-status · sync start depois do cenário: 0 (esperado 0)
+  REPROVA (declarado) i:de-novo-fora-do-intervalo · sync start depois do cenário: 1 (esperado 2)
+        1 sync(s), esperado 2
+  passa               i:tentar-de-novo-fora-do-intervalo · sync start depois do cenário: 1 (esperado 1)
+  passa               i:falha-de-rede-nao-retenta · sync start depois do cenário: 1 (esperado 1)
+lista esperada (6) · reprovados (6)
+gate i: reprova exatamente a lista esperada (6) ✓
+gate v (a contagem) — casos 3 · passam 0 · reprovam 3
+  REPROVA (declarado) v:rede-volta-100 · GET por evento: 0 (esperado 2) · downloads à parte: 0 · []
+        0 GET, esperado 2
+  REPROVA (declarado) v:rede-volta-101 · GET por evento: 0 (esperado 3) · downloads à parte: 0 · []
+        0 GET, esperado 3
+  REPROVA (declarado) v:fundo-100 · GET por evento: 0 (esperado 2) · downloads à parte: 0 · []
+        0 GET, esperado 2
+lista esperada (3) · reprovados (3)
+gate v: reprova exatamente a lista esperada (3) ✓
+gate iii (a foto) — casos 23 · passam 5 · reprovam 18
+  REPROVA (declarado) iii:palco-corpo
+        o corpo mudou no meio da música
+  REPROVA (declarado) iii:palco-sem-topo · rolagens antes do sync: 9 (a última em y=8) · depois: 0, a última em y=0
+        a rolagem voltou ao topo (scrollTo y: 0) com o sync
+  REPROVA (declarado) iii:palco-rolagem-segue · o controle: "Rolagem automática, desligada" · andou depois do sync: false
+        a rolagem parou com o sync (ligada: false, andou: false)
+  REPROVA (declarado) iii:palco-notas
+        as notas da música mudaram
+  REPROVA (declarado) iii:palco-titulo
+        o título mudou
+  REPROVA (declarado) iii:palco-nota-da-posicao
+        a nota da posição mudou
+  REPROVA (declarado) iii:palco-barra · antes: "1 DE 3" · depois: "1 DE 4"
+        a barra mudou (o "n DE N" ou o nome da setlist)
+  passa               iii:palco-trocar-posicao
+  REPROVA (declarado) iii:palco-file-url · downloads antes do sync: ["sy-partitura-a.pdf"] · depois: ["sy-partitura-b.pdf"]
+        o palco pediu o arquivo novo com a música aberta
+  REPROVA (declarado) iii:palco-musica-apagada-aberta
+        a música aberta, apagada pelo sync, virou placeholder
+  passa               iii:palco-musica-apagada-nunca-aberta
+  REPROVA (declarado) iii:sessao-indice · o índice lê: 4 músicas, "SY foto, renomeada no site" (a foto: 3 músicas, "SY foto")
+        o índice leu a setlist viva
+  REPROVA (declarado) iii:sessao-fim · o fim lê: 4 (a foto: 3)
+        o fim leu 4 músicas (a viva)
+  REPROVA (declarado) iii:sessao-busca · a busca lê: 4 músicas, "SY foto, renomeada no site"
+        a busca leu a setlist viva
+  passa               iii:sessao-outra-setlist
+  REPROVA (declarado) iii:setlist-apagada · com a setlist apagada pelo sync, o palco lê: nenhuma
+        a setlist apagada derruba o palco (o placeholder "não está no cache")
+  passa               iii:sessao-solta · depois de sair, lê: 4 músicas, "SY foto, renomeada no site" (a viva: 4 músicas)
+  REPROVA (declarado) iii:v-corpo
+        o corpo de V mudou
+  REPROVA (declarado) iii:v-titulo
+        o título de V mudou
+  REPROVA (declarado) iii:v-detalhes
+        os Detalhes de V mudaram
+  REPROVA (declarado) iii:v-notas
+        as notas de V mudaram
+  passa               iii:v-estrela-viva · a estrela antes: "Favoritar “SY foto 1”" · depois: "Tirar “SY foto 1, mudada no site” das favoritas"
+  REPROVA (declarado) iii:v-file-url · downloads antes: ["sy-partitura-a.pdf"] · depois: ["sy-partitura-b.pdf"]
+        V pediu o arquivo novo com a música aberta
+lista esperada (18) · reprovados (18)
+gate iii: reprova exatamente a lista esperada (18) ✓
+$ grep -c "lança:" <a suíte>
+0
+
+# (2) o gate (iii) isolado, numa CÓPIA TEMPORÁRIA do sy-foto.test.tsx (apps/native/test/zz-auditoria-temporaria.test.tsx), com notas a mais nos nove casos que o juiz não detalha (o esperado e o obtido; texto de fixture do projeto, cortado em 48 caracteres). A cópia foi APAGADA depois da corrida: não entra no repositório.
+$ pnpm exec vitest run apps/native/test/zz-auditoria-temporaria.test.tsx
+gate iii (a foto) — casos 23 · passam 5 · reprovam 18
+  REPROVA (declarado) iii:palco-corpo · esperado (antes): "antes: linha 1 da música 1 do gate da foto antes…(1750)" · obtido: "depois: linha 1 da música 1 do gate da foto depo…(1790)"
+        o corpo mudou no meio da música
+  REPROVA (declarado) iii:palco-sem-topo · rolagens antes do sync: 9 (a última em y=8) · depois: 0, a última em y=0
+        a rolagem voltou ao topo (scrollTo y: 0) com o sync
+  REPROVA (declarado) iii:palco-rolagem-segue · o controle: "Rolagem automática, desligada" · andou depois do sync: false
+        a rolagem parou com o sync (ligada: false, andou: false)
+  REPROVA (declarado) iii:palco-notas · esperado (antes): "notas da música 1, antes" · obtido: "notas da música 1, depois"
+        as notas da música mudaram
+  REPROVA (declarado) iii:palco-titulo · esperado: tem "SY foto 1" e não "mudada no site" · obtido: true / true
+        o título mudou
+  REPROVA (declarado) iii:palco-nota-da-posicao · esperado: "Nota: nota da posição, antes" e sem "depois" · obtido: false / true
+        a nota da posição mudou
+  REPROVA (declarado) iii:palco-barra · antes: "1 DE 3" · depois: "1 DE 4"
+        a barra mudou (o "n DE N" ou o nome da setlist)
+  passa               iii:palco-trocar-posicao
+  REPROVA (declarado) iii:palco-file-url · downloads antes do sync: ["sy-partitura-a.pdf"] · depois: ["sy-partitura-b.pdf"]
+        o palco pediu o arquivo novo com a música aberta
+  REPROVA (declarado) iii:palco-musica-apagada-aberta · esperado: o corpo "antes: linha 1 da música 1 do gate da foto antes…(1750)" · obtido: corpo ausente · placeholder true
+        a música aberta, apagada pelo sync, virou placeholder
+  passa               iii:palco-musica-apagada-nunca-aberta
+  REPROVA (declarado) iii:sessao-indice · o índice lê: 4 músicas, "SY foto, renomeada no site" (a foto: 3 músicas, "SY foto")
+        o índice leu a setlist viva
+  REPROVA (declarado) iii:sessao-fim · o fim lê: 4 (a foto: 3)
+        o fim leu 4 músicas (a viva)
+  REPROVA (declarado) iii:sessao-busca · a busca lê: 4 músicas, "SY foto, renomeada no site"
+        a busca leu a setlist viva
+  passa               iii:sessao-outra-setlist
+  REPROVA (declarado) iii:setlist-apagada · com a setlist apagada pelo sync, o palco lê: nenhuma
+        a setlist apagada derruba o palco (o placeholder "não está no cache")
+  passa               iii:sessao-solta · depois de sair, lê: 4 músicas, "SY foto, renomeada no site" (a viva: 4 músicas)
+  REPROVA (declarado) iii:v-corpo · esperado: "antes: linha 1 da música 1 do gate da foto antes…(1750)" · obtido: "depois: linha 1 da música 1 do gate da foto depo…(1790)"
+        o corpo de V mudou
+  REPROVA (declarado) iii:v-titulo · esperado: "SY foto 1" · obtido: "SY foto 1, mudada no site"
+        o título de V mudou
+  REPROVA (declarado) iii:v-detalhes · esperado: "DetalhestomGandamento90 BPMnotas da músicanotas …(85)" · obtido: "DetalhestomAandamento120 BPMnotas da músicanotas…(87)"
+        os Detalhes de V mudaram
+  REPROVA (declarado) iii:v-notas · esperado: "notas da músicanotas da música 1, antes" · obtido: "notas da músicanotas da música 1, depois"
+        as notas de V mudaram
+  passa               iii:v-estrela-viva · a estrela antes: "Favoritar “SY foto 1”" · depois: "Tirar “SY foto 1, mudada no site” das favoritas"
+  REPROVA (declarado) iii:v-file-url · downloads antes: ["sy-partitura-a.pdf"] · depois: ["sy-partitura-b.pdf"]
+        V pediu o arquivo novo com a música aberta
+gate iii: reprova exatamente a lista esperada (18) ✓
+      Tests  7 passed (7)
+$ rm apps/native/test/zz-auditoria-temporaria.test.tsx; git status --short
+?? docs/native/SY-PR2-anexos/auditoria-lista.txt
+?? docs/native/SY-PR2-anexos/blocos-decl.txt
+?? docs/native/SY-PR2-anexos/ci-log.txt

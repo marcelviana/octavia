@@ -1,0 +1,93 @@
+# div. 1269 — o relógio dos 20 s começa ANTES do token: o que isso é para o sync, LIDO · 2026-10-11 09:10:34 -0300
+# as versões: firebase "version":"12.18.0" → @firebase/auth "version":"1.13.5" (o build react-native: "react-native":"dist/rn/index.js"); whatwg-fetch whatwg-fetch@3.6.20
+
+## 1. o relógio e o token, no app
+$ grep -n "prazoDe(prazoMs)\|await authFetch(" apps/native/src/api.ts
+186:  const prazo = prazoDe(prazoMs)
+188:    const { response, requests } = await authFetch(`${baseUrl()}${path}`, { signal: prazo.signal })
+303:  const prazo = prazoDe(prazoMs)
+$ sed -n 83,102p apps/native/src/api.ts   (o obterToken: getIdToken(false); renovação forçada se faltam ≤ 5 min)
+async function obterToken({ forceRefresh }: { forceRefresh: boolean }): Promise<string | null> {
+  if (FORJAR_401) {
+    log(`auth refresh=${forceRefresh ? 'forced' : 'cached'}`)
+    return tokenForjado()
+  }
+  const user = auth.currentUser
+  if (user === null) return null
+  if (forceRefresh) {
+    log('auth refresh=forced')
+    return user.getIdToken(true)
+  }
+  const atual = await user.getIdToken(false)
+  const exp = decodeExp(atual)
+  if (exp !== null && shouldRefresh(exp, Date.now())) {
+    log('auth refresh=forced')
+    return user.getIdToken(true)
+  }
+  log('auth refresh=cached')
+  return atual
+}
+$ sed -n 61,78p packages/core/src/auth-fetch.ts   (o token, o fetch, o 401 → a renovação forçada → a 2ª requisição, com o MESMO sinal)
+  return async (path, init) => {
+    const first = await getToken({ forceRefresh: false })
+    if (!first) {
+      await onAuthFailure()
+      throw new Error('auth-fetch: sem token')
+    }
+    const response = await doFetch(path, init, first)
+    if (response.status !== 401) return { response, requests: 1 }
+
+    const refreshed = await getToken({ forceRefresh: true })
+    if (!refreshed || refreshed === first) {
+      await onAuthFailure()
+      return { response, requests: 1 }
+    }
+    const second = await doFetch(path, init, refreshed)
+    if (second.status === 401) await onAuthFailure()
+    return { response: second, requests: 2 }
+  }
+
+## 2. o fetch com o sinal já abortado rejeita na hora (o aparelho: whatwg-fetch)
+$ sed -n 532,538p node_modules/.pnpm/whatwg-fetch@3.6.20/node_modules/whatwg-fetch/dist/fetch.umd.js
+  function fetch(input, init) {
+    return new Promise(function(resolve, reject) {
+      var request = new Request(input, init);
+
+      if (request.signal && request.signal.aborted) {
+        return reject(new exports.DOMException('Aborted', 'AbortError'))
+      }
+
+## 3. a renovação do token tem o PRAZO PRÓPRIO do SDK — 60 s no React Native — e o nosso abort não a corta
+$ grep -n … node_modules/.pnpm/@firebase+auth@1.13.5_@firebase+app@0.16.1_@react-native-async-storage+async-storage@2._fee48f6d804431c2a6d97632c30a9844/node_modules/@firebase/auth/dist/rn/index-CiDS6PaG.js
+553:        this.isMobile = util.isMobileCordova() || util.isReactNative();
+558:            return Math.min(5000 /* DelayMin.OFFLINE */, this.shortDelay);
+564:        return this.isMobile ? this.longDelay : this.shortDelay;
+784:const DEFAULT_API_TIMEOUT_MS = new Delay(30000, 60000);
+839:        const networkTimeout = new NetworkTimeout(auth);
+842:            networkTimeout.promise
+941:                return reject(_createError(this.auth, "network-request-failed" /* AuthErrorCode.NETWORK_REQUEST_FAILED */));
+1482:async function requestStsToken(auth, refreshToken) {
+1483:    const response = await _performFetchWithErrorHandling(auth, {}, async () => {
+1560:    async getToken(auth, forceRefresh = false) {
+1566:            await this.refresh(auth, this.refreshToken);
+$ grep -n -A2 '^function isReactNative' node_modules/.pnpm/@firebase+util@1.15.3/node_modules/@firebase/util/dist/index.cjs.js
+831:function isReactNative() {
+832-    return (typeof navigator === 'object' && navigator['product'] === 'ReactNative');
+833-}
+$ sed -n '/^function _isOnline/,/^}/p' node_modules/.pnpm/@firebase+auth@1.13.5_@firebase+app@0.16.1_@react-native-async-storage+async-storage@2._fee48f6d804431c2a6d97632c30a9844/node_modules/@firebase/auth/dist/rn/index-CiDS6PaG.js   (no RN o navigator não tem onLine booleano com http/extensão/connection → true → o atraso é o longo)
+function _isOnline() {
+    if (typeof navigator !== 'undefined' &&
+        navigator &&
+        'onLine' in navigator &&
+        typeof navigator.onLine === 'boolean' &&
+        // Apply only for traditional web apps and Chrome extensions.
+        // This is especially true for Cordova apps which have unreliable
+        // navigator.onLine behavior unless cordova-plugin-network-information is
+        // installed which overwrites the native navigator.onLine value and
+        // defines navigator.connection.
+        (_isHttpOrHttps() || util.isBrowserExtension() || 'connection' in navigator)) {
+        return navigator.onLine;
+    }
+    // If we can't determine the state, assume it is online.
+    return true;
+}

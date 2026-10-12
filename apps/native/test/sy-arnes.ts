@@ -81,8 +81,11 @@ export class Arnes {
       setSync: (s) => {
         this.syncs.push(s)
       },
+      // o `setDados` do React aceita o valor ou a função sobre o de agora (SY-PR2: o sync que perdeu as setlists aplica
+      // pela função) — a raiz de mentira resolve a função sobre o que ela mostra AGORA, como o React faz
       setDados: (d) => {
-        this.aplicacoes.push({ t: Date.now(), sessao: this.sessao, dados: d })
+        const dados = typeof d === 'function' ? d(this.dados) : d
+        this.aplicacoes.push({ t: Date.now(), sessao: this.sessao, dados })
       },
       dadosRef: this.dadosRef,
       prefetchEArrumar: async () => undefined,

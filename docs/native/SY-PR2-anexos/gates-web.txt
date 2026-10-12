@@ -1,0 +1,30 @@
+# os gates do web sobre a árvore da PR — 2026-10-11 09:22:33 · 236e47e
+$ sh scripts/gates-web/gates-web-decl.sh < <o bloco do corpo>
+exit=0 · 0 declarações
+$ GATES_WEB_DECL=<decl> sh scripts/gates-web/g-back.sh origin/main WORKTREE
+G-back — base 17207c4 · head WORKTREE
+núcleo: congelado 39 · derivação BASE 39 · HEAD 39 · união 40
+declarações gback: 0 caminho(s)
+
+## (i) arquivo do núcleo que mudou
+  ✓ nenhum — diff vazio no núcleo
+## (ii) arquivo novo no alcance (derivação do HEAD fora do congelado)
+  ✓ nenhum
+## (iii) declaração órfã (gback: de arquivo que não mudou)
+  ✓ nenhuma
+
+G-back: PASSA
+exit=0
+$ sh scripts/gates-web/g-palco.sh
+
+G-palco: PASSA — 0 ocorrências
+exit=0
+$ node scripts/gates-web/g-tok.mjs
+G-tok: PASSA
+exit=0
+$ node scripts/gates-web/g-tok-cobertura.mjs
+G-tok (cobertura): PASSA
+exit=0
+$ node scripts/gates-web/g-faixa-veredito.mjs tests/gates-web/medicoes
+G-faixa: PASSA
+exit=0

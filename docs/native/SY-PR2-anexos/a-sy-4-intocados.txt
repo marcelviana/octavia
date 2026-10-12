@@ -1,0 +1,19 @@
+# A-SY-4 — o updated_at, a naoRegredir e o reconcile intocados (SY-D10, SY-D26) — 2026-10-11 09:24:37
+$ git diff --stat origin/main HEAD -- packages/core/src/favoritar.ts packages/core/src/sync.ts app/api/content/route.ts apps/native/src/favoritar.ts apps/native/src/store.ts
+exit=0 (vazio = intocados)
+$ git diff --stat origin/main HEAD -- . ":!docs"   (tudo o que a PR muda fora de docs)
+ apps/native/App.tsx                     |  17 ++-
+ apps/native/src/api.ts                  |  30 ++++--
+ apps/native/src/escrita.ts              |  25 +++--
+ apps/native/src/geracao-das-setlists.ts |  43 ++++++++
+ apps/native/src/sincronizador.ts        | 177 ++++++++++++++++++++++++--------
+ apps/native/src/sync.ts                 |  73 +++++++++++--
+ apps/native/test/sy-arnes.ts            |   5 +-
+ apps/native/test/sy-reprovados.txt      |  11 +-
+ apps/native/test/sy-ultimo-sync.test.ts | 119 +++++++++++++++++++++
+ apps/native/test/sy-voo.test.ts         |   4 +-
+ packages/core/src/escrita.ts            |   4 +
+ packages/core/src/index.ts              |   1 +
+ packages/core/src/voo.test.ts           | 130 +++++++++++++++++++++++
+ packages/core/src/voo.ts                |  75 ++++++++++++++
+ 14 files changed, 634 insertions(+), 80 deletions(-)

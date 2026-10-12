@@ -12,13 +12,7 @@ i:dois-eventos
 i:apos-falha-de-rede
 i:de-novo-fora-do-intervalo
 
-# (ii) o voo único — sy-voo.test.ts — esvazia na PR-2
-ii:nunca-dois-em-curso
-ii:um-de-novo
-ii:escrita-setlists-ficam
-ii:escrita-sync-sem-cache-write-setlists
-ii:logout-descarta
-ii:prazo-libera-o-voo
+# (ii) o voo único — sy-voo.test.ts — esvazia na PR-2 (vazia desde o commit 5 da SY-PR2: o voo e a sessão no 2, as escritas no 4, o prazo no 5)
 
 # (iii) a foto — sy-foto.test.tsx — esvazia na PR-3
 iii:palco-corpo
@@ -40,8 +34,7 @@ iii:v-detalhes
 iii:v-notas
 iii:v-file-url
 
-# (iv) a janela da naoRegredir — sy-nao-regredir.test.ts — esvazia na PR-2
-iv:janela
+# (iv) a janela da naoRegredir — sy-nao-regredir.test.ts — esvazia na PR-2 (vazia desde o commit 3 da SY-PR2: a aplicação síncrona)
 
 # (v) a contagem — sy-requisicoes.test.tsx — esvazia na PR-4
 v:rede-volta-100

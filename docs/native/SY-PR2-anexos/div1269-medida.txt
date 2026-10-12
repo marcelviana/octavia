@@ -1,0 +1,29 @@
+# div. 1269 — o prazo com o token dentro, MEDIDO (o api.ts e o sync.ts do commit 5, no Node) · árvore de trabalho sobre 1dadf19 · 2026-10-11 09:03:08 -0300
+$ pnpm exec vitest run --config docs/native/SY-PR2-anexos/instrumentos/prazo-token/vitest.config.mts
+### PRAZO-TOKEN ###
+PRAZO_DE_REDE_MS = 20000
+
+(a) token na hora, servidor 18 s
+  resultado: ok · 36044 ms · requisições que o servidor recebeu: 2
+  sync start
+  auth refresh=cached
+  api status=200 path=/api/setlists n=1 ms=18026
+  auth refresh=cached
+  api status=200 path=/api/content n=1 ms=18009
+  cache write kind=setlists n=1 invalidated=1
+  cache write kind=content n=2 invalidated=2
+  sync ok setlists=1 content=2 pages=1 t=36043
+
+(b) token 5 s, servidor 18 s
+  resultado: failed stage=setlists falhaDeRede=true · 20007 ms · requisições que o servidor recebeu: 1
+  sync start
+  auth refresh=cached
+  sync fail stage=setlists page=1 code=network status=-
+
+(c) token 25 s, servidor na hora
+  resultado: failed stage=setlists falhaDeRede=true · 25004 ms · requisições que o servidor recebeu: 0
+  sync start
+  auth refresh=cached
+  sync fail stage=setlists page=1 code=network status=-
+### FIM ###
+      Tests  1 passed (1)

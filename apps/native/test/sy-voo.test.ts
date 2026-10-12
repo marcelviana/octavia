@@ -195,7 +195,9 @@ describe('gate (ii) — o voo único (SY-D9, SY-D25)', () => {
       await montar()
       if (criada === '') return 'a escrita não criou a setlist no mock — o cenário não se montou'
       const naRaiz = a.dados.setlists.some((s) => s.id === criada)
-      const noDisco = (doDisco('setlists.json') as SetlistDTO[]).some((s) => s.id === criada)
+      // o `setlists.json` é `{ setlists, syncedAtMs }` (o `ArquivoSetlists` do `store.ts`), não a lista: na SY-PR1 este
+      // caso lia o arquivo como lista e reprovava por EXCEÇÃO, sem medir o disco (div. 1277, SY-PR2)
+      const noDisco = (doDisco('setlists.json') as { setlists: SetlistDTO[] }).setlists.some((s) => s.id === criada)
       C.nota('escrita-setlists-ficam', `a criada na raiz: ${naRaiz} · no disco: ${noDisco}`)
       return naRaiz && noDisco ? null : `o sync gravou por cima da releitura — a criada na raiz: ${naRaiz}, no disco: ${noDisco}`
     })

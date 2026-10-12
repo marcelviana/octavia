@@ -1,0 +1,22 @@
+# a lista (sy-reprovados.txt) antes e depois, linha a linha — 2026-10-11 09:23:29
+$ git show origin/main:apps/native/test/sy-reprovados.txt | grep -v "^#" | grep . | wc -l
+      34
+$ grep -v "^#" apps/native/test/sy-reprovados.txt | grep . | wc -l
+      27
+$ diff <(main, sem comentários) <(ponta, sem comentários)
+7,12d6
+< ii:nunca-dois-em-curso
+< ii:um-de-novo
+< ii:escrita-setlists-ficam
+< ii:escrita-sync-sem-cache-write-setlists
+< ii:logout-descarta
+< ii:prazo-libera-o-voo
+31d24
+< iv:janela
+# por commit (quantas linhas ficaram e as que saíram):
+17207c4: 34 linhas · saíram: —
+f3113b7: 34 linhas · saíram: —
+83d8fe8: 31 linhas · saíram: ii:nunca-dois-em-curso ii:um-de-novo ii:logout-descarta
+800a9bf: 30 linhas · saíram: iv:janela
+1dadf19: 28 linhas · saíram: ii:escrita-setlists-ficam ii:escrita-sync-sem-cache-write-setlists
+236e47e: 27 linhas · saíram: ii:prazo-libera-o-voo
