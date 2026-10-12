@@ -1,0 +1,81 @@
+# cn-sy-pr3.sh — 2026-10-12 09:28:55 -0300 · árvore 690972fbc022ee9ff18e11f38e9a3cf3733f62e8
+# Leitura: com o defeito plantado, o gate (iii) tem de ACUSAR a checagem daquela regra — uma REPROVA que não é das
+# declaradas; com a planta certa, as declaradas que ela cumpre aparecem como ÓRFÃS.
+==================================================================================================
+CN c-1 — a foto de uma setlist serve a outra (div. 1283, o sessao-outra-setlist)
+  planta: foto-do-palco-lab.ts · defeito: serve-outra
+  gate iii (a foto) — casos 23 · passam 11 · reprovam 12
+    REPROVA (declarado) iii:palco-corpo
+          o corpo mudou no meio da música
+    REPROVA (declarado) iii:palco-notas
+          as notas da música mudaram
+    REPROVA (declarado) iii:palco-titulo
+          o título mudou
+    REPROVA (declarado) iii:palco-nota-da-posicao
+          a nota da posição mudou
+    REPROVA (declarado) iii:palco-file-url · downloads antes do sync: ["sy-partitura-a.pdf"] · depois: ["sy-partitura-b.pdf"]
+          o palco pediu o arquivo novo com a música aberta
+    REPROVA (declarado) iii:palco-musica-apagada-aberta
+          a música aberta, apagada pelo sync, virou placeholder
+    REPROVA             iii:sessao-outra-setlist
+          outra setlist não leu a viva
+    REPROVA (declarado) iii:v-corpo
+          o corpo de V mudou
+    REPROVA (declarado) iii:v-titulo
+          o título de V mudou
+    REPROVA (declarado) iii:v-detalhes
+          os Detalhes de V mudaram
+    REPROVA (declarado) iii:v-notas
+          as notas de V mudaram
+    REPROVA (declarado) iii:v-file-url · downloads antes: ["sy-partitura-a.pdf"] · depois: ["sy-partitura-b.pdf"]
+          V pediu o arquivo novo com a música aberta
+    ✗ reprovação NÃO DECLARADA: iii:sessao-outra-setlist
+    ✗ declaração ÓRFÃ: iii:palco-sem-topo (passa)
+    ✗ declaração ÓRFÃ: iii:palco-rolagem-segue (passa)
+    ✗ declaração ÓRFÃ: iii:palco-barra (passa)
+    ✗ declaração ÓRFÃ: iii:sessao-indice (passa)
+    ✗ declaração ÓRFÃ: iii:sessao-fim (passa)
+    ✗ declaração ÓRFÃ: iii:sessao-busca (passa)
+    ✗ declaração ÓRFÃ: iii:setlist-apagada (passa)
+  gate iii: ✗
+   Test Files  1 failed (1)
+        Tests  1 failed | 6 passed (7)
+==================================================================================================
+CN c-2 — o laboratório da foto da sessão, sem defeito (o controle do c-1)
+  planta: foto-do-palco-lab.ts · defeito: -
+  gate iii (a foto) — casos 23 · passam 12 · reprovam 11
+    REPROVA (declarado) iii:palco-corpo
+          o corpo mudou no meio da música
+    REPROVA (declarado) iii:palco-notas
+          as notas da música mudaram
+    REPROVA (declarado) iii:palco-titulo
+          o título mudou
+    REPROVA (declarado) iii:palco-nota-da-posicao
+          a nota da posição mudou
+    REPROVA (declarado) iii:palco-file-url · downloads antes do sync: ["sy-partitura-a.pdf"] · depois: ["sy-partitura-b.pdf"]
+          o palco pediu o arquivo novo com a música aberta
+    REPROVA (declarado) iii:palco-musica-apagada-aberta
+          a música aberta, apagada pelo sync, virou placeholder
+    REPROVA (declarado) iii:v-corpo
+          o corpo de V mudou
+    REPROVA (declarado) iii:v-titulo
+          o título de V mudou
+    REPROVA (declarado) iii:v-detalhes
+          os Detalhes de V mudaram
+    REPROVA (declarado) iii:v-notas
+          as notas de V mudaram
+    REPROVA (declarado) iii:v-file-url · downloads antes: ["sy-partitura-a.pdf"] · depois: ["sy-partitura-b.pdf"]
+          V pediu o arquivo novo com a música aberta
+    ✗ declaração ÓRFÃ: iii:palco-sem-topo (passa)
+    ✗ declaração ÓRFÃ: iii:palco-rolagem-segue (passa)
+    ✗ declaração ÓRFÃ: iii:palco-barra (passa)
+    ✗ declaração ÓRFÃ: iii:sessao-indice (passa)
+    ✗ declaração ÓRFÃ: iii:sessao-fim (passa)
+    ✗ declaração ÓRFÃ: iii:sessao-busca (passa)
+    ✗ declaração ÓRFÃ: iii:setlist-apagada (passa)
+  gate iii: ✗
+   Test Files  1 failed (1)
+        Tests  1 failed | 6 passed (7)
+==================================================================================================
+$ git status --short -- apps/native/src   (vazio = os arquivos voltaram)
+exit=0
