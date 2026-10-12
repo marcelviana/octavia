@@ -555,6 +555,11 @@ SY-D38; o texto proposto da linha do A-SY-9 fica no rastro do git, `b2e2a85`.)*
 | **A-SY-21** | *(novo, SY-D32 item 2)* a duração do `GET /api/content` no Tab, no Wi-Fi do Marcel | em cada sync do release, o `ms=` da linha `api status=… path=/api/content` (no aparelho, a resposta inteira, §5); **algum > 5 s → pergunta no encerramento**, com a (b) e a (c) da SY-D19 na mesa | encerramento |
 | **A-SY-22** | *(novo, div. 1270)* o prazo visto no aparelho | na remedida do S1a, o logcat da falha por prazo: `sync fail … code=network` **sem** linha `api` antes (o que o Node não mostra) | PR-2 |
 
+*(Nota do aval da PR-3 — **SY-D49** `[Marcel, 2026-10-12]`, depois da tabela congelada e sem mexer nas linhas dela: o aval
+da PR-3 acrescenta o **A-SY-23** (SY-D49): com o palco aberto, um gatilho automático → 0 sync e a marca; ao sair do palco →
+1, sujeito à rede e ao intervalo; o "de novo" espera o palco fechar. Fecha na PR-4, pelo gate e no aparelho.
+`SY-PR3-anexos/README.md` §16, §17.)*
+
 ### 9.1 As heranças que esta PR registra
 
 | herança | origem | destino proposto |

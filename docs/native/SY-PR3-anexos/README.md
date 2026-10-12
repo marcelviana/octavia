@@ -30,6 +30,7 @@ frase, nenhuma linha de log nova**; nada no sync, no voo, no prazo nem no core.
 | [`avd/`](avd/) | o AVD: o estado antes e depois, a receita, o bundle, o rádio, o custo (o par, a regra de carga, as análises, a tabela por passo), a foto, a âncora, o G-inv, as quedas, o logcat |
 | [`tab/`](tab/) | o Tab S6: idem, sem o S0 |
 | [`dumps/`](dumps/) | os dumps da base do G-inv, AVD e Tab (`SHA256SUMS.txt`) |
+| [`ci-log.txt`](ci-log.txt) · [`aval-verificacao.txt`](aval-verificacao.txt) · [`aval-blocos-decl.txt`](aval-blocos-decl.txt) | os checks do head `a7b19e4` (§14); a verificação do commit do aval; os extratores sobre o corpo da #381 com a linha do aval |
 | [`instrumentos/`](instrumentos/) | `verifica.sh`, `cn-sy-pr3.sh` + `plantar.py` + `plantas/`, `bundle.sh`, `custo/` (o par, a análise, a carga, a tabela por passo, a rajada), `foto/` (o roteiro e as fixtures da foto), `arnes/` (as cadeias do G-inv) |
 
 ---
@@ -511,6 +512,7 @@ depois dele. Div. 1291.
 | agentes | **0** |
 | perguntas ao Marcel nesta sessão | 5 — a outra sessão (a origem, parar e aproveitar); a carga do host (duas vezes: limpar e o Docker); a janela do Tab |
 | regra 4 do catálogo sobre os anexos | `grep -rn eyJ` → exit 1; `grep -rln <email>` → exit 1 |
+| **o commit do aval** (2026-10-12) | só docs: 0 requisições a prod, 0 logins, 0 `.env*`, nenhum aparelho, 0 agentes; GitHub: `git fetch origin` (a `main` em `690972f`, não andou), `gh pr checks 381` e `gh run view` dos quatro workflows (§14), o push e o `gh pr edit 381` (a linha do aval); `git diff --stat a7b19e4 -- . ':!docs'` → **vazio**; suíte, `tsc` e lint **não rodaram de novo** (só docs) `[medido: aval-verificacao.txt]` |
 | texto nos anexos | só o do projeto: as fixtures do N3, do QL e desta PR (o `CLAUDE.md`, "Anexo não carrega texto de música"); do Tab, nenhum dado da conta do Marcel (o cache real fora do aparelho durante o mock; os nomes dos arquivos dele omitidos) |
 
 ## 10. Os aceites desta PR — o veredito
@@ -523,6 +525,8 @@ depois dele. Div. 1291.
 | **A-SY-9** | o custo pelo critério da SY-D36, o "antes" e o "depois" sobre a base da PR-3, nos dois aparelhos; se o "depois" reprovar, a tabela por passo e a pergunta | **medido — o "depois" REPROVA o critério do dev client nos dois aparelhos** (passa o do release nos dois): **a pergunta Q1**, com a tabela por passo e o número das duas saídas | §5; Q1 |
 | **A-SY-10** | o G-inv B5 e B3 iguais nos dois aparelhos, sem errata | **cumprido** — B5 **34 de 34** e B3 **18 de 18** idênticos em dp, AVD + Tab, sem errata; G-N3 (e)=0 · (b)=0 | §7 |
 | **A-SY-17** | o palco, o índice, o fim e a busca com a mesma setlist depois de um sync que a muda; solta ao voltar a S1/S2 | **cumprido nos dois aparelhos** | §6 A–E |
+
+*(Nota do aval — **SY-D55 (3)** `[Marcel, 2026-10-12]`, na linha do A-SY-9, sem mudar o critério congelado: **o A-SY-9 fica fechado como "medido; o depois reprovou o critério; a consequência é a SY-D49"**.)*
 
 ## 11. As perguntas para o aval
 
@@ -555,6 +559,8 @@ foto já impõe à tela. *(Registro, sem pergunta: o que de fato pesa é o **ren
 re-renderizando sem mudar nada. Atacá-lo é uma terceira saída que a SY-D36 não pôs na mesa; ela teria de passar por desenho
 de render, fora do SY.)*
 
+→ **Respondida: SY-D49** (§16)
+
 **Q2 — o título e o rótulo vivos no índice e na busca do palco** (§3.1). Com a foto da sessão, o índice do palco tem as
 posições, a ordem e o nome da foto, mas o **título e o rótulo de cada posição** vêm do `contentById` vivo (`IndexScreen.tsx:283-285`),
 e a busca do palco indexa a biblioteca viva (`SearchScreen.tsx:180-181`). O que o músico vê: com a música 3 renomeada no site
@@ -565,6 +571,8 @@ pixel novo; (b) o índice do palco ler, para a posição aberta, o título da fo
 quem está acima (estado novo no `navigation.tsx`); (c) congelar o `contentById` pela sessão inteira — **contraria a SY-D7**
 (o conteúdo é por abertura). **Recomendo (a)**, com o caso escrito como conhecido.
 
+→ **Respondida: SY-D50** (§16)
+
 **Q3 — o arquivo novo chega ao disco com a música aberta** (§3.2; div. 1287). A tela não muda (a SY-D24 vale: o `file_url`
 congela), mas o prefetch sob demanda do palco (o mapa vivo, a posição atual primeiro) e o plano da biblioteca do sync pedem
 o arquivo novo **com a música aberta**. (a) **deixar**: o arquivo novo chega antes, e a próxima abertura já o acha no disco
@@ -573,6 +581,8 @@ do palco ler a foto **na posição aberta** (as outras posições, o mapa vivo) 
 mas o plano da biblioteca ainda pede o arquivo; (c) (b) **e** o plano da biblioteca excluir o arquivo da música aberta —
 mexe no prefetch do sync (fora do escopo do SY: SY-D11, §1 do prompt). **Recomendo (a)**. *(O (b) tira o efeito do prefetch
 do re-render do sync só para a posição aberta; o passo 3 da tabela de custo é o efeito inteiro — §5 diz quanto ele pesa.)*
+
+→ **Respondida: SY-D51** (§16)
 
 **Q4 — o que a PR-4 precisa saber da foto antes de ligar os gatilhos.** Para registro, sem opção a escolher salvo onde
 indicado: (1) **a foto não depende de quem disparou o sync**: ela congela na tela o que o `setDados` traz, do sync da
@@ -583,6 +593,8 @@ novo; (4) **o "SEM CONEXÃO" de um sync automático que falha** é a entrada obr
 aberto, a foto não esconde nada disso** — o palco não lê o `sync` (a fase), só o `online`; o que muda por baixo é S1; (5)
 **o custo** (Q1): a decisão da SY-D6 é o que a PR-4 implementa.
 
+→ **Respondida: SY-D52** (§16)
+
 **Q5 — o caminho do "antes" mudou** (div. 1286, §5.1). O "antes" da PR-1 provocava o sync segurando a abertura no mock
 `atraso`; com o prazo de 20 s da PR-2 esse sync falha antes de aplicar, e não há o que medir. Aqui o sync é disparado pela
 **função do *Tentar de novo*** (a mesma que um gatilho chamará, pelo `rodarSync`) com o palco já aberto e a rolagem
@@ -591,10 +603,14 @@ andando; o piso passou a ser `[t_rol + 3 s, t_rol + 23 s]`. Os instrumentos (o s
 (o mesmo disparo pela função não existe no release: lá é o gatilho de verdade, na PR-4 e no encerramento); (b) outro.
 **Recomendo (a)**.
 
+→ **Respondida: SY-D53** (§16)
+
 **Q6 — a origem dos quatro commits** (§1; div. 1284). O aproveitamento já é decisão do Marcel nesta sessão; a pergunta é só
 o **registro**: (a) **como está** — o README declara a origem, a reverificação desta sessão (§1) e o descarte das medidas
 de aparelho daquela; (b) mais do que isso (por exemplo, o bruto do aparelho daquela sessão como rastro: ~20 MB, inválido
 para a comparação). **Recomendo (a)**.
+
+→ **Respondida: SY-D54** (§16)
 
 ## 12. Divergências — 1284 a 1291
 
@@ -616,6 +632,14 @@ real ou defeito do produto · **T** toolchain/aparato · **X** terceiros.
 **Contagem** `[medido: a coluna]`: **8 — P 2 · D 1 · A 2 · T 3** (P: 1285, 1287 · D: 1286 · A: 1288, 1291 · T: 1284, 1289,
 1290). **A próxima livre é a 1292.**
 
+### 12.1 Divergências do aval (o commit do aval)
+
+**Nenhuma.** O prompt do aval e o repositório não divergiram, com duas notas que não são divergência: (1) a nota da A3 do
+`SY-PRECHECK.md` apontando para o §5 deste README **já tinha entrado no `a7b19e4`** (§15); este commit acrescenta, ao lado
+dela, a nota da decisão (SY-D49), sem duplicar o ponteiro; (2) a conta das SY-D em linha de tabela dá **54**, não 55 — a
+**SY-D32** vive no §5.1 do `SY-PR1-anexos/README.md`, em citação, como o §12.1 de lá já registra
+`[medido: aval-verificacao.txt]`. **Contagem: 0. A próxima livre continua a 1292.**
+
 ## 13. Os blocos de declaração desta PR (a cópia que a regra do W4-b2 pede)
 
 ```gates
@@ -636,7 +660,23 @@ extratores sobre este bloco: `blocos-decl.txt` (as 4 linhas `g1a:`; o `gates-web
 
 ## 14. Os checks da PR
 
-*(Preenchido no commit seguinte, com o head deste e o CI dele — a regra 18: o push de docs depois do APK verde.)*
+Sobre o head **`a7b19e4`** (a ponta da PR antes do commit do aval), **todos verdes** `[medido: gh pr checks 381; gh run view
+<id> --json jobs; ci-log.txt]` (duração no nível do **job**; `n=1` — não é referência):
+
+| check | workflow · run | estado | duração |
+|---|---|---|---|
+| `build` (lint, type-check, `pnpm test:unit` com os gates, cobertura, `pnpm build`) | `ci.yml` · `38315691407` | pass | 4m55s |
+| `gates-nativos` (G1a/G1b, G2/G3 com o bloco do corpo) | `gates.yml` · `38315691541` | pass | 13s |
+| `g-back` · `g-palco` · `g-tok` · `g-faixa` | `gates-web.yml` · `38315691410` | pass | 34s · 20s · 35s · 22s |
+| `mudou-nativo` | `native.yml` · `38315691409` | pass | 14s |
+| `android-debug-apk` | `native.yml` · `38315691409` | pass | **11m21s** (22:16:39 → 22:28:00 UTC) — dentro da faixa do regime 2 (`CI-FAIXA.md`: n=135, mín 8m09s, máx 14m32s, mediana 12m30s, Q1 11m03s), entre o Q1 e a mediana — não é estranho |
+| `Vercel` · `Vercel Preview Comments` | — | pass | — |
+
+**No log** (`ci-log.txt`): o `gates-nativos` leu as **4 declarações** do corpo, `G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no
+escopo)`, `G1b: só adição ✓`, `G2 — testIDs antes=124 depois=124`, `G3 — linhas log( antes=70 depois=70`, `nenhuma linha
+sumiu ✓`; o `build` rodou os cinco gates do SY (no teste e na cobertura) — *"reprova exatamente a lista esperada"* com 6 · 0
+· 0 · 0 · 3 — e a suíte `Test Files 157 passed | 3 skipped (160)`, igual à local. A linha da série no `CI-FAIXA.md` entra no
+encerramento do bloco (regra 22). O commit do aval é só docs, e sobe **depois** do APK verde (regra 18).
 
 ## 15. As erratas de ponteiro — neste commit
 
@@ -645,3 +685,39 @@ extratores sobre este bloco: `blocos-decl.txt` (as 4 linhas `g1a:`; o `gates-web
 | `docs/native/SY-PRECHECK.md` | a A3 (o custo), depois do texto | o "antes" e o "depois" medidos na PR-3, nos dois aparelhos, e o veredito da SY-D36 (`SY-PR3-anexos/README.md` §5) |
 | `docs/native/SY-PRECHECK.md` | a A4 (a foto), depois da A4.5 | a foto feita na PR-3 (`foto-do-palco.ts`, `navigation.tsx`, o palco, V) e o que o aparelho mostrou, com o título vivo do índice (Q2) e o arquivo novo que baixa com a música aberta (Q3) |
 | `docs/ux/PLANO-TRANSICAO.md` | "Sequência", depois da nota do aval da PR-2 | a PR-3 aberta, aguardando o aval (a SY-D6 é dele) |
+
+## 16. O aval da PR-3 — SY-D49…SY-D55 `[Marcel, 2026-10-12]`
+
+As seis perguntas do §11, na ordem, e um registro sem pergunta; o texto da decisão é este (o "→ Respondida" de cada
+pergunta aponta para cá).
+
+| # | decisão (pergunta) |
+|---|---|
+| **SY-D49** | (Q1) **A SY-D6 cai para a saída (a): com o palco aberto nenhum gatilho automático dispara; o sync fica marcado e roda ao sair do palco.** O "depois" reprovou o critério congelado da SY-D36 nos dois aparelhos (no Tab, 3 pausas de 150 a 190 ms por sync em 10 de 10 rodadas, contra nenhuma no piso), a foto não mudou esse custo, e atacar a gravação não tira nenhuma das três. **Registrado:** o "passa" do critério do release é o instrumento grosso aplicado ao dev client, não uma medida no release. **As três definições, para a PR-4:** (1) **"palco aberto" é a sessão do palco**, a mesma da foto (SY-D22): de entrar no palco de fora até voltar a S1 ou S2, inclusive com o índice ou a busca por cima; **V não conta** — ali os gatilhos rodam e a foto protege o texto; (2) **ao sair do palco, o sync marcado passa pelas regras de sempre** (a rede de pé; fora do intervalo de 30 s da SY-D18), e **o "de novo" do voo único também espera**, se o palco estiver aberto na hora de rodar; (3) **a PR-4 começa pelos gates disso**: os casos novos entram reprovando no primeiro commit dela, com o aceite novo **A-SY-23** e um valor novo de `decision` na linha `sync trigger` (acréscimo à SY-D28; o nome é proposta da PR-4). **O que não muda:** o sync da abertura e o *Tentar de novo* seguem podendo rodar com o palco aberto, e por isso a foto continua necessária; o julgamento do Marcel no release (SY-D16) vale como escrito. **O custo aceito:** uma correção feita no site durante o show só chega ao tablet quando o músico sai do palco, e não mais entre duas músicas. |
+| **SY-D50** | (Q2) **(a): o título e o rótulo no índice e na busca do palco ficam vivos.** Caso conhecido, escrito: com a música aberta renomeada no site, o palco mostra o título da abertura e o índice o novo, até a próxima abertura. |
+| **SY-D51** | (Q3) **(a): o arquivo novo que baixa com a música aberta fica como está** (div. 1287). A tela não muda (SY-D24). Com a SY-D49, os gatilhos não rodam com o palco aberto. |
+| **SY-D52** | (Q4) **O registro do que a PR-4 precisa saber da foto fica aceito**, com um acréscimo como **entrada obrigatória da PR-4**: um gatilho que chega com **S2 aberta em edição** muda S2 na hora; a PR-4 mostra, no gate e no aparelho, que uma reordenação ou edição em andamento **não se perde nem pula**. Se não der para garantir, ela para e traz a pergunta. |
+| **SY-D53** | (Q5) **(a): o caminho novo do "antes" fica aceito** (div. 1286): o sync disparado pela função do *Tentar de novo* com o palco já aberto e a rolagem andando, e o piso na janela nova. |
+| **SY-D54** | (Q6) **(a): o registro da outra sessão fica como está** (div. 1284): a origem dos quatro commits declarada, a reverificação desta sessão, e as medidas de aparelho daquela descartadas. |
+| **SY-D55** | **Registros, sem pergunta:** (1) a **div. 1290** — no Tab o instrumento do release saiu com zero eventos e o critério "passou" vazio; o conserto (o relógio da linha quando as bases se afastam) é **entrada obrigatória do encerramento**, que usa esse instrumento, **com um controle que reprove quando a janela vier vazia**; (2) a **div. 1291** — as 3 quedas nativas do dev client no AVD ficam na herança do W5; (3) o **A-SY-9 fica fechado como "medido; o depois reprovou o critério; a consequência é a SY-D49"**. |
+
+**O que este commit mudou** (só notas, sem reescrever texto de decisão): o "→ Respondida" em Q1…Q6 (§11); a nota da SY-D55
+(3) no §10; a linha deste commit no §9; o §12.1; o §14 (os checks); este §16 e as entradas obrigatórias (§17); no
+`SY-PR1-anexos/README.md` §9, a nota do A-SY-23; no `SY-PRECHECK.md`, as linhas novas na tabela das mudadas do §0 e a nota
+da SY-D49 na A3; a nota do `docs/ux/PLANO-TRANSICAO.md`; e a linha do aval no corpo da #381 (`aval-blocos-decl.txt`).
+
+## 17. Entradas obrigatórias das próximas PRs
+
+As do §17 do `SY-PR2-anexos/README.md` que são da PR-4, juntadas às que este aval abre:
+
+| entrada | origem | PR |
+|---|---|---|
+| **O que o músico vê quando um sync automático falha com cache** — por prazo, por rede, por status —, em S1 e com o palco aberto: `[lido]` e no aparelho, **antes** de ligar os gatilhos; se aparecer aviso, botão ou troca de tela por cima do palco ou de S1 que hoje não aparece, **a PR-4 para e traz a pergunta** | SY-D43 (div. 1278) | **PR-4** |
+| **O `ultimoSyncNaRede` não é zerado no logout**: o intervalo de uma sessão não pode segurar o gatilho de outra — decide ao consumi-lo, ou traz como pergunta | SY-D44 | **PR-4** |
+| **"Palco aberto" é a sessão do palco** (a da foto, SY-D22): de entrar no palco de fora até voltar a S1 ou S2, inclusive com o índice ou a busca por cima; **V não conta** | SY-D49 (1) | **PR-4** |
+| **Ao sair do palco, o sync marcado passa pelas regras de sempre** (a rede de pé; fora do intervalo de 30 s, SY-D18), e **o "de novo" do voo único também espera** se o palco estiver aberto na hora de rodar | SY-D49 (2) | **PR-4** |
+| **Os gates primeiro**: os casos novos entram reprovando no primeiro commit da PR-4, com o aceite **A-SY-23** e um valor novo de `decision` na linha `sync trigger` (acréscimo à SY-D28; o nome é proposta da PR-4) | SY-D49 (3) | **PR-4** |
+| **S2 aberta em edição**: um gatilho que chega muda S2 na hora; o gate e o aparelho mostram que uma reordenação ou edição em andamento **não se perde nem pula** — se não der para garantir, a PR-4 para e traz a pergunta | SY-D52 | **PR-4** |
+| **O que a foto garante e não garante** (o Q4 do §11): ela congela o que o `setDados` traz, venha de onde vier; solta no foco de S1/S2 (o voltar do Android do palco a S2 solta); S2 lê a viva; o palco não lê a fase do sync, só o `online` | SY-D52 (o registro aceito) | **PR-4** |
+| **O instrumento do release** (o `uiautomator events`) com a base de tempo consertada (div. 1290) **e um controle que reprove quando a janela vier vazia** | SY-D55 (1) | **encerramento** |
+| **A regra 38 e o `APARATO.md` com o palco aberto**: o texto final do rascunho (SY-D27) ganha *"com o palco aberto, o gatilho não dispara"* — o sync fica marcado e roda ao sair | SY-D49, SY-D27 | **encerramento** |

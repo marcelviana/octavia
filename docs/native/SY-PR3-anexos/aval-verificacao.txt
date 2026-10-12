@@ -1,0 +1,39 @@
+# o commit do aval da PR-3 — a verificação (2026-10-12 20:35:54)
+$ git fetch origin; git rev-parse --short origin/main
+690972f
+$ git diff --stat a7b19e4 -- . ':!docs'   (vazio = nada fora de docs)
+exit=0
+$ git diff --stat a7b19e4
+ docs/native/SY-PR1-anexos/README.md |  5 +++
+ docs/native/SY-PR3-anexos/README.md | 77 ++++++++++++++++++++++++++++++++++++-
+ docs/native/SY-PRECHECK.md          |  8 ++++
+ docs/ux/PLANO-TRANSICAO.md          |  4 ++
+ 4 files changed, 93 insertions(+), 1 deletion(-)
+
+$ git grep -hoE "^\| \*\*SY-D[0-9]+\*\*" -- docs | sort -u | wc -l   (as SY-D em linha de tabela)
+      54
+$ … | grep -oE "[0-9]+" | sort -n | tr "
+" " "
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 
+$ seq 1 55, menos as de tabela (a que falta)
+32
+$ git grep -n "### 5.1 A decisão — SY-D32" -- docs
+docs/native/SY-PR1-anexos/README.md:284:### 5.1 A decisão — SY-D32 `[Marcel, 2026-10-10]`
+docs/native/SY-PR1-anexos/README.md:641:tabela: ela vive no **§5.1** deste README (*"### 5.1 A decisão — SY-D32"*, com o texto do Marcel em citação). A conta certa é
+docs/native/SY-PR1-anexos/aval-verificacao.txt:10:$ git grep -n "### 5.1 A decisão — SY-D32" -- docs   (a SY-D32: fora de tabela)
+docs/native/SY-PR1-anexos/aval-verificacao.txt:11:docs/native/SY-PR1-anexos/README.md:282:### 5.1 A decisão — SY-D32 `[Marcel, 2026-10-10]`
+docs/native/SY-PR1-anexos/aval-verificacao.txt:12:docs/native/SY-PR1-anexos/README.md:633:tabela: ela vive no **§5.1** deste README (*"### 5.1 A decisão — SY-D32"*, com o texto do Marcel em citação). A conta certa é
+docs/native/SY-PR2-anexos/aval-verificacao.txt:12:$ grep -n "### 5.1 A decisão — SY-D32" docs/native/SY-PR1-anexos/README.md
+docs/native/SY-PR2-anexos/aval-verificacao.txt:13:284:### 5.1 A decisão — SY-D32 `[Marcel, 2026-10-10]`
+docs/native/SY-PR2-anexos/aval-verificacao.txt:14:636:tabela: ela vive no **§5.1** deste README (*"### 5.1 A decisão — SY-D32"*, com o texto do Marcel em citação). A conta certa é
+
+$ grep -c "→ \*\*Respondida: SY-D" docs/native/SY-PR3-anexos/README.md   (as seis perguntas do §11)
+6
+561:→ **Respondida: SY-D49** (§16)
+573:→ **Respondida: SY-D50** (§16)
+584:→ **Respondida: SY-D51** (§16)
+595:→ **Respondida: SY-D52** (§16)
+605:→ **Respondida: SY-D53** (§16)
+612:→ **Respondida: SY-D54** (§16)
+
+suíte, tsc e lint: NÃO rodaram de novo (só docs)
