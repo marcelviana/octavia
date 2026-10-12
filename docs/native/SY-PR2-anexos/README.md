@@ -33,6 +33,8 @@ na entrada da sessão e no *Tentar de novo*; nenhum pixel, nenhuma frase, nenhum
 | [`gates-existentes.txt`](gates-existentes.txt) · [`gates-web.txt`](gates-web.txt) | G-inv, G-N3, G-par, a quebra, `icones`, `a20`, os SHA256SUMS; os gates do web |
 | [`a-sy-4-intocados.txt`](a-sy-4-intocados.txt) | o `updated_at`, a `naoRegredir` e o `reconcile` sem diff; tudo o que a PR muda fora de `docs` |
 | [`avd/`](avd/) | o aparelho: o estado antes e depois, a receita do cache, o bundle servido, o rádio, as rodadas (dumps e capturas), o logcat, as quedas, o fim |
+| [`auditoria-lista.txt`](auditoria-lista.txt) | o commit do aval: a auditoria das 27 linhas da lista (SY-D45, §16) |
+| [`ci-log.txt`](ci-log.txt) · [`aval-verificacao.txt`](aval-verificacao.txt) · [`blocos-decl.txt`](blocos-decl.txt) | os checks do head `5511e99` (§14); a verificação do commit do aval; os extratores sobre o corpo da #380 |
 | [`instrumentos/`](instrumentos/) | `verifica.sh` (a cópia da PR-1, com os juízes), `ordem/`, `prazo-token/`, `cn-sy-pr2.sh`, `plantar.py`, `avd/rodadas.py`, `avd/pedir-pelo-botao.mjs` |
 
 ---
@@ -314,6 +316,7 @@ na suíte.
 | temporários | no scratchpad da sessão: a fixture do aparelho, a cópia do cache da audit, o bundle, o log do Metro, as cópias para a prova da div. 1277 |
 | regra 4 do catálogo sobre os anexos | `grep -rn eyJ` → exit 1; `grep -rln <email>` → exit 1 |
 | perguntas ao Marcel durante a sessão | 0 |
+| **o commit do aval** (2026-10-12) | só docs: 0 requisições a prod, 0 logins, 0 `.env*`, nenhum aparelho, 0 agentes; GitHub: `git fetch origin` (a `main` em `17207c4`, não andou), `gh pr checks 380` e `gh run view` dos quatro workflows (§14), o push e o `gh pr edit 380` (a linha do aval); a suíte rodou **uma vez** (a auditoria, §16: `157 \| 3 (160)` · `1914 \| 59 (1973)`, iguais aos da entrega); o gate (iii) rodou mais uma vez numa **cópia temporária** do `sy-foto.test.tsx`, apagada depois (`auditoria-lista.txt` (2)); o `tsc` e o lint **não rodaram de novo**; `git diff --stat 5511e99 -- . ':!docs'` → **vazio** `[medido: aval-verificacao.txt]` |
 
 ## 10. Os aceites desta PR — o veredito
 
@@ -324,6 +327,10 @@ na suíte.
 | **A-SY-4** | `iv:janela` sai; `iv:controle-antes` segue passando; nada no `updated_at`, na `naoRegredir` nem no `reconcile` | **cumprido** | §3, `c3-verificacao.txt`, `ordem-das-linhas.txt`, `a-sy-4-intocados.txt`; CN n-3 |
 | **A-SY-5** | `ii:prazo-libera-o-voo` sai; a errata do comentário do `api.ts`; o S1a remedido no aparelho (antes dos 20 s) | **cumprido no AVD** (o Tab não se toca nesta PR) | §5, `c5-verificacao.txt`; §7 A (o `s1a` a + 2,7 s, a falha a + 20.034 ms); CN n-8 |
 | **A-SY-22** | o logcat da falha por prazo: `sync fail … code=network` **sem** linha `api` antes | **cumprido** | §7 A e B: 5 falhas, 0 linhas `api` |
+
+*(Nota do aval — **SY-D48** `[Marcel, 2026-10-12]`, na linha do A-SY-2, sem mudar o critério congelado: o gate (ii) não vê
+um defeito plantado só na máquina do voo, porque o executor o absorve (div. 1281, CN n-2); **a prova da máquina são os
+testes de unidade dela** (`packages/core/src/voo.test.ts`).)*
 
 ## 11. As perguntas para o aval
 
@@ -336,12 +343,14 @@ um prazo da **operação inteira** só nas leituras do sync (uma corrida contra 
 mecanismo novo, e o voo passa a se liberar em 20 s mesmo com o token lento; (c) o mesmo para toda leitura e escrita — muda o
 prazo das escritas e das releituras (N2-D35), fora do escopo desta PR. **Recomendo (a)**: o voo nunca tranca (toda espera tem
 teto), a renovação lenta é rara (uma por hora de token), e (b) mede-se no release antes de valer o mecanismo.
+→ **Respondida: SY-D42** (§15)
 
 **Q2 — a falha por prazo diz "SEM CONEXÃO"** (div. 1278, §7 A). Sem cache, um servidor que demora mais de 20 s mostra
 *"SEM CONEXÃO · Nenhuma setlist foi salva neste aparelho ainda. Conecte-se à internet…"* com a rede de pé — o prazo é a
 espécie `rede` (N2-D35), como já é nas escritas. (a) **deixar** no SY (frase nova é tela; SY-D12) e registrar como herança,
 junto da frase do placeholder (SY-D23 (c)), com destino proposto no encerramento; (b) uma frase própria para o prazo nesta
 série. **Recomendo (a)**.
+→ **Respondida: SY-D43** (§15)
 
 **Q3 — a forma final da máquina do voo e do `ultimoSyncNaRede`** (§1, §2, §6.2). (a) **como está**: a máquina com três
 estados e o executor guardando **quem pediu por último** (a raiz e o uid), cancelando o "de novo" sem pedido guardado ou com
@@ -349,6 +358,7 @@ a sessão mudada — uma defesa em profundidade que **absorve** um defeito só d
 sync que lança libera o voo e não encadeia; o `ultimoSyncNaRede` de módulo, não zerado no logout (a PR-4 decide, ao
 consumi-lo); (b) a máquina carregando o pedido guardado (um genérico), e o executor sem estado próprio além dela — o gate (ii)
 passaria a ver o n-2, ao preço de a máquina conhecer um "quem". **Recomendo (a)**.
+→ **Respondida: SY-D44** (§15)
 
 **Q4 — as duas mudanças de instrumento do gate (ii)** (§4). (1) a leitura do `setlists.json` no caso
 `escrita-setlists-ficam` (div. 1277: reprovava por exceção desde a PR-1; a asserção não mudou, e a prova de que agora mede
@@ -357,16 +367,19 @@ está no anexo); (2) o `setDados` do arnês resolvendo a função sobre o que a 
 sem medir; a (2) volta e o executor perde a forma de aplicar só o conteúdo sem ler o `dadosRef`. **Recomendo (a)**. *(O
 prompt manda parar diante de "um teste existente que só passa mudando a asserção": a asserção não mudou — mudou a leitura do
 arquivo —, e por isso segui, declarando aqui e no commit `1dadf19`, para veto.)*
+→ **Respondida: SY-D45** (§15)
 
 **Q5 — o que o sync da sessão velha grava** (§2). Com a sessão mudada, nada chega à raiz, mas o `sincronizar` já gravou o
 disco **do uid dele** (como sempre gravou; o logout não apaga cache). (a) **deixar**: é o cache daquele uid, com dado
 daquele uid; (b) conferir a sessão também antes do `save` — sem `cache write`, mas então o `sync ok` sairia sem gravar, e
 a linha mentiria (ou pediria uma linha nova, G3). **Recomendo (a)**.
+→ **Respondida: SY-D46** (§15)
 
 **Q6 — os dois extras declarados** (§2, §5): o `sy-ultimo-sync.test.ts` (o teste que confere o `ultimoSyncNaRede` contra as
 linhas) e a errata do comentário do `PRAZO_DE_REDE_MS` no `packages/core/src/escrita.ts`. (a) **aceitar**; (b) tirar.
 **Recomendo (a)**: os dois são da classe do escopo — o primeiro é o que impede o contrato exposto de divergir da definição, o
 segundo é o registro do prazo onde quem mexe nele lê.
+→ **Respondida: SY-D47** (§15)
 
 ## 12. Divergências — 1277 a 1281
 
@@ -383,6 +396,16 @@ ambiente, dado real ou defeito do produto · **T** toolchain/aparato · **X** te
 | **1281** | T | O gate (ii) mede o voo **pelo executor**, e um defeito **só na máquina** (rodar o "de novo" duas vezes) ele não vê: o executor só roda um "de novo" com um pedido guardado (CN n-2) — escopo do instrumento menor que o nome ("o voo único"), pela defesa em profundidade | os testes de unidade da máquina o veem (4 ×); o mesmo defeito no executor, o gate acusa (n-2b); Q3 |
 
 **Contagem** `[medido: a coluna]`: **5 — T 4 · A 1** (T: 1277, 1279, 1280, 1281 · A: 1278). **A próxima livre é a 1282.**
+
+### 12.1 Divergências do aval (o commit do aval)
+
+| div. | origem | o quê | destino |
+|---|---|---|---|
+| **1282** | P | O prompt do aval chama o `5511e99` de *"head de código"*: ele é o commit de **docs** (o README), a ponta da PR; o último commit de código é o `236e47e`. Sem consequência: os checks lidos são os do `5511e99`, que contém todo o código | os checks do `5511e99` no §14; o `git diff --stat 5511e99 -- . ':!docs'` do commit do aval, vazio |
+| **1283** | T | Dos casos que **passam hoje e ficam fora da lista**, um não tem controle negativo que o exerça: o `iii:sessao-outra-setlist` (a foto de uma setlist não serve para outra). Nenhum CN da PR-1 o acusa (`SY-PR1-anexos/README.md` §4; `cn-sy-pr1-sobre-pr2.txt`): ele passa hoje porque nada congela, e não há laboratório que o faça reprovar | entrada obrigatória da **PR-3** (§17): um CN que o reprove, no primeiro commit dela, antes de a foto entrar |
+
+**Contagem** `[medido: a coluna]`: **2 — P 1 · T 1** (P: 1282 · T: 1283). **A auditoria das 27 linhas (§16) não achou
+nenhuma que reprove por exceção, tempo esgotado ou erro do teste: nenhuma divergência dela.** **A próxima livre é a 1284.**
 
 ## 13. Os blocos de declaração desta PR (a cópia que a regra do W4-b2 pede)
 
@@ -409,4 +432,111 @@ corpo da PR e os checks entram no §14.
 
 ## 14. Os checks da PR
 
-*(Preenchido depois do CI, num commit de docs que só sobe com o APK verde — regra 18.)*
+Sobre o head **`5511e99`** (a ponta da PR antes do commit do aval), **todos verdes** `[medido: gh pr checks 380; gh run view
+<id> --json jobs; ci-log.txt]` (duração no nível do **job**; `n=1` — não é referência):
+
+| check | workflow · run | estado | duração |
+|---|---|---|---|
+| `build` (lint, type-check, `pnpm test:unit` com os gates, cobertura, `pnpm build`) | `ci.yml` · `38139360088` | pass | 5m17s |
+| `gates-nativos` (G1a/G1b, G2/G3 com o bloco do corpo) | `gates.yml` · `38139360020` | pass | 13s |
+| `g-back` · `g-palco` · `g-tok` · `g-faixa` | `gates-web.yml` · `38139359917` | pass | 31s · 22s · 33s · 18s |
+| `mudou-nativo` | `native.yml` · `38139359962` | pass | 12s |
+| `android-debug-apk` | `native.yml` · `38139359962` | pass | **10m25s** (12:28:19 → 12:38:44 UTC) — dentro da faixa do regime 2 (`CI-FAIXA.md`: n=135, mín 8m09s, máx 14m32s, mediana 12m30s), abaixo do Q1 (11m03s) e acima do mínimo — não é estranho |
+| `Vercel` · `Vercel Preview Comments` | — | pass | — |
+
+**No log** (`ci-log.txt`): o `gates-nativos` leu as **9 declarações** do corpo, `G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no
+escopo)`, `G1b: só adição ✓`, `G2 — testIDs antes=124 depois=124`, `G3 — linhas log( antes=70 depois=70`, `nenhuma linha
+sumiu ✓`; o `build` rodou os cinco gates do SY (no teste e na cobertura) — *"reprova exatamente a lista esperada"* com 6 · 0
+· 18 · 0 · 3 — e a suíte `157 passed | 3 skipped (160)` · `1914 passed | 59 skipped (1973)`, igual à local. Os extratores
+sobre o corpo antes de abrir a PR estão em `blocos-decl.txt`; sobre o corpo com a linha do aval, em `aval-verificacao.txt`.
+A linha da série no `CI-FAIXA.md` entra no encerramento do bloco (regra 22).
+
+## 15. O aval da PR-2 — SY-D42…SY-D48 `[Marcel, 2026-10-12]`
+
+As seis perguntas do §11, na ordem, e um registro sem pergunta; o texto da decisão é este (o "→ Respondida" de cada
+pergunta aponta para cá).
+
+| # | decisão (pergunta) |
+|---|---|
+| **SY-D42** | (Q1) **(a): a div. 1269 fica como está.** O prazo de 20 s corta o `fetch` e não a renovação do token, que tem o prazo próprio do SDK; o pior caso por requisição é de cerca de 80 s e nunca infinito, e o voo não tranca. O A-SY-21 mede no release o `ms=`, que já inclui o token. |
+| **SY-D43** | (Q2) **(a): a tela "SEM CONEXÃO" quando o prazo estoura fica como está no SY** (div. 1278) e vira herança, junto da frase do placeholder (SY-D23 (c)), com destino proposto no encerramento. **Entrada obrigatória da PR-4:** antes de ligar os gatilhos, ela diz `[lido]` e mostra no aparelho **o que o músico vê quando um sync automático falha com cache** (por prazo, por rede, por status), em S1 e com o palco aberto. Se aparecer aviso, botão ou troca de tela por cima do palco ou de S1 que hoje não aparece, **a PR-4 para e traz a pergunta**. |
+| **SY-D44** | (Q3) **(a): a máquina do voo e o executor como estão** — a máquina com três estados; o executor guardando quem pediu por último e cancelando o "de novo" sem pedido guardado ou com a sessão mudada; um sync que lança libera o voo e não encadeia. **O `ultimoSyncNaRede` não zerado no logout é entrada obrigatória da PR-4**, que decide ao consumi-lo (o intervalo de uma sessão não pode segurar o gatilho de outra) ou traz como pergunta. |
+| **SY-D45** | (Q4) **(a): as duas mudanças de instrumento do gate (ii) ficam aceitas** — a leitura do `setlists.json` no caso `escrita-setlists-ficam` (div. 1277) e o `setDados` do arnês aceitando a função sobre o estado de agora. **Acréscimo:** o caso reprovava por exceção desde a PR-1, sem medir, e passou por dois avais. **As 27 linhas que seguem na lista se auditam neste commit** (§2 deste prompt): cada uma tem de reprovar **por medida** — o esperado contra o obtido —, e não por exceção, por tempo esgotado nem por erro do próprio teste. |
+| **SY-D46** | (Q5) **(a): o disco da sessão velha fica como está.** Com a sessão mudada no meio do sync, só a raiz descarta; o `sincronizar` grava o cache do uid dele, com dado dele. |
+| **SY-D47** | (Q6) **(a): os dois extras ficam aceitos** — o `sy-ultimo-sync.test.ts` e a errata do comentário do `PRAZO_DE_REDE_MS` no `packages/core/src/escrita.ts`. |
+| **SY-D48** | **Registro, sem pergunta:** a **div. 1281** — o gate (ii) não vê um defeito plantado só na máquina do voo, porque o executor o absorve. **A prova da máquina são os testes de unidade dela**; o A-SY-2 ganha essa frase, como nota, sem mudar o critério congelado. |
+
+*(O "§2 deste prompt" da SY-D45 é o §2 do prompt do aval; a auditoria que ele pede está no §16 abaixo.)*
+
+**O que este commit mudou** (só notas, sem reescrever texto de decisão): o "→ Respondida" em Q1…Q6 (§11); a nota da SY-D48
+no §10; a linha deste commit no §9; o §12.1; o §14 (os checks); este §15; a auditoria (§16) e as entradas obrigatórias
+(§17); a linha de dois anexos na tabela do topo; a herança da div. 1278 no §9.1 do `SY-PR1-anexos/README.md`; a nota do
+`docs/ux/PLANO-TRANSICAO.md`; e a linha do aval no corpo da #380 (`aval-verificacao.txt`).
+
+## 16. A auditoria das 27 linhas da lista (SY-D45) `[medido: auditoria-lista.txt]`
+
+A suíte rodou **uma vez** (`157 | 3 (160)` · `1914 | 59 (1973)`, os números da entrega). **Como se lê**: cada caso devolve
+`null` (passa) ou o motivo, e o juiz grava o que o caso devolveu; uma exceção cai no `catch` do juiz e sai como **`lança:
+…`** (`apps/native/test/sy-lista.ts:42-44`). **`grep -c "lança:"` na suíte inteira: 0.** Nos gates (i) e (v) o juiz já
+imprime o esperado e o obtido; no (iii), nove casos imprimem só o motivo — para eles, o gate rodou de novo numa **cópia
+temporária** do `sy-foto.test.tsx` com uma nota a mais em cada um (o esperado e o obtido), **apagada depois** (nenhuma
+instrumentação entrou no repositório; `auditoria-lista.txt` (2), com o `git status` do fim). E o `texto()` das telas usa o
+`exige`, que **lança** se o nó falta (`tela.tsx:63-66, 79-81`): nenhum `lança:` quer dizer que, nos casos de texto, o nó
+estava lá e o que difere é o conteúdo.
+
+| linha | esperado | obtido | reprova por medida? | a evidência |
+|---|---|---|---|---|
+| `i:rede-volta-na-frente` | 1 `sync start` | 0 | sim — a contagem (`sy-gatilhos.test.tsx:96-100`) | `auditoria-lista.txt:7-8` |
+| `i:fundo-mais-de-30s` | 1 | 0 | sim — idem | `:9-10` |
+| `i:marca-volta-curta` | 1 | 0 | sim — idem | `:13-14` |
+| `i:dois-eventos` | 1 | 0 | sim — idem | `:16-17` |
+| `i:apos-falha-de-rede` | 1 | 0 | sim — idem | `:22-23` |
+| `i:de-novo-fora-do-intervalo` | 2 | 1 | sim — idem | `:25-26` |
+| `v:rede-volta-100` | 2 `GET` por evento | 0 | sim — a contagem (`sy-requisicoes.test.tsx:97-101`) | `:32-33` |
+| `v:rede-volta-101` | 3 | 0 | sim — idem | `:34-35` |
+| `v:fundo-100` | 2 | 0 | sim — idem | `:36-37` |
+| `iii:palco-corpo` | o corpo de antes (`"antes: linha 1 da música 1…"`, 1750 car.) | o de depois (`"depois: linha 1…"`, 1790) | sim — `texto('corpo') === antes.corpo` (`sy-foto.test.tsx:178`) | `:41-42`; o obtido, `:90` (a cópia) |
+| `iii:palco-sem-topo` | nenhum `scrollTo` a 0 depois do sync | 0 rolagens depois, a última em `y=0` | sim — `rolagens.slice(…).includes(0)` (`:179-181`) | `:43-44` |
+| `iii:palco-rolagem-segue` | *"Rolagem automática, ligada"* e andando | *"…, desligada"*, não andou | sim — `ligada && andou` (`:182-187`) | `:45-46` |
+| `iii:palco-notas` | `"notas da música 1, antes"` | `"notas da música 1, depois"` | sim — `texto('notas-texto') === antes.notas` (`:188`) | `:47-48`; `:96` |
+| `iii:palco-titulo` | tem *"SY foto 1"* e não *"mudada no site"* | tem os dois (`true / true`) | sim — `:189-191` | `:49-50`; `:98` |
+| `iii:palco-nota-da-posicao` | *"Nota: nota da posição, antes"* e sem *"depois"* | `false / true` | sim — `:192-194` | `:51-52`; `:100` |
+| `iii:palco-barra` | *"1 DE 3"* | *"1 DE 4"* | sim — `:195-199` | `:53-54` |
+| `iii:palco-file-url` | nenhum download novo com a música aberta | `sy-partitura-b.pdf` pedido | sim — `novos.some(…)` (`:220-224`; o caso confere antes que a abertura pediu a `-a`) | `:56-57` |
+| `iii:palco-musica-apagada-aberta` | o corpo de antes | corpo **ausente**, placeholder presente | sim — `achar('corpo') !== null && …` (`:237-239`: mede a ausência pelo `achar`, que não lança) | `:58-59`; `:107` |
+| `iii:sessao-indice` | 3 músicas, *"SY foto"* (a foto) | 4, *"SY foto, renomeada no site"* (a viva) | sim — `:260` | `:61-62` |
+| `iii:sessao-fim` | 3 | 4 | sim — `:261` | `:63-64` |
+| `iii:sessao-busca` | 3, *"SY foto"* | 4, *"…renomeada no site"* | sim — `:262` | `:65-66` |
+| `iii:setlist-apagada` | a setlist da foto (3 músicas) | nenhuma | sim — `:267-271` | `:68-69` |
+| `iii:v-corpo` | o corpo de antes (1750) | o de depois (1790) | sim — `:288` | `:71-72`; `:120` |
+| `iii:v-titulo` | `"SY foto 1"` | `"SY foto 1, mudada no site"` | sim — `:289` | `:73-74`; `:122` |
+| `iii:v-detalhes` | tom G, 90 BPM | tom A, 120 BPM | sim — `:290` | `:75-76`; `:124` |
+| `iii:v-notas` | `"…notas da música 1, antes"` | `"…, depois"` | sim — `:291` | `:77-78`; `:126` |
+| `iii:v-file-url` | nenhum download novo com V aberta | `sy-partitura-b.pdf` pedido | sim — `:305-309` | `:80-81` |
+
+**27 de 27 reprovam por medida.** Nenhuma por exceção, por tempo esgotado ou por erro do teste — **nada a consertar
+nas PRs donas por esta auditoria.**
+
+**Os casos que passam hoje e ficam fora da lista**, por gate:
+
+- **(i)** — os 10 passam **medindo** a contagem (*"0 (esperado 0)"*, e *"1 (esperado 1)"* no `tentar-de-novo` e no
+  `falha-de-rede-nao-retenta`), e passam porque o contrato inerte não dispara nada — passar não prova a regra; **cada um
+  é coberto por um CN da PR-1** que o faz reprovar com o laboratório quebrado (i-1…i-8, i-10), rodados de novo sobre o
+  código desta PR (`cn-sy-pr1-sobre-pr2.txt`).
+- **(iii)** — os 5 passam medindo (o corpo novo ao trocar de posição, o placeholder, a setlist da outra sessão, a foto
+  solta, a estrela viva); o CN iii-0 (a tela que congela tudo) faz reprovar `palco-trocar-posicao`,
+  `palco-musica-apagada-nunca-aberta` e `v-estrela-viva`, e o iii-2 o `sessao-solta`; **o `sessao-outra-setlist` não tem
+  CN** (div. 1283) — entrada obrigatória da PR-3 (§17).
+- **(v)** — nenhum caso passa: os 3 estão na lista; o que passa é o **controle do servidor** (um `it` à parte: 2 `GET`
+  com 100 músicas e 3 com 101 na abertura), que mede o servidor do teste e não os gatilhos.
+
+## 17. Entradas obrigatórias das próximas PRs
+
+| entrada | origem | PR |
+|---|---|---|
+| **O que o músico vê quando um sync automático falha com cache** — por prazo, por rede, por status —, em S1 e com o palco aberto: `[lido]` e no aparelho, **antes** de ligar os gatilhos; se aparecer aviso, botão ou troca de tela por cima do palco ou de S1 que hoje não aparece, **a PR-4 para e traz a pergunta** | SY-D43 (div. 1278) | **PR-4** |
+| **O `ultimoSyncNaRede` não é zerado no logout**: o intervalo de uma sessão não pode segurar o gatilho de outra — decide ao consumi-lo, ou traz como pergunta | SY-D44 | **PR-4** |
+| **O `iii:sessao-outra-setlist` sem controle negativo**: um CN que o faça reprovar (a foto de uma setlist servindo a outra), no primeiro commit, antes de a foto entrar | SY-D45 (a auditoria, §16; div. 1283) | **PR-3** |
+| **Das 27 linhas da lista, nenhuma a consertar**: todas reprovam por medida (§16); as donas as tiram da lista do jeito de sempre — o gate dizendo "órfã" quando o código passa a cumprir | SY-D45 | PR-3 (`iii:`), PR-4 (`i:`, `v:`) |
+| **O perfil das paradas depois da aplicação síncrona** `[hipótese, §3]`: a aplicação entrou no bloco síncrono do `sincronizar`, mas só enfileira o `setDados` e troca o `dadosRef`; o render segue numa tarefa própria e o prefetch depois do `await` — o perfil não deve mudar de forma visível. **O "antes" sobre a base da PR-3 o mede** | SY-D38 (a hipótese do §3 desta PR) | **PR-3** |
+

@@ -1,0 +1,22 @@
+# os extratores sobre o corpo da PR (antes de abrir) — 2026-10-11 09:27:38
+$ sh apps/native/scripts/gates-decl.sh < <corpo>
+g1a: packages/core/src/voo.ts
+g1a: packages/core/src/index.ts
+g1a: packages/core/src/escrita.ts
+g1a: apps/native/src/sincronizador.ts
+g1a: apps/native/src/sync.ts
+g1a: apps/native/App.tsx
+g1a: apps/native/src/escrita.ts
+g1a: apps/native/src/geracao-das-setlists.ts
+g1a: apps/native/src/api.ts
+exit=0
+$ sh scripts/gates-web/gates-web-decl.sh < <corpo>
+exit=0
+$ GATES_DECL=<decl> sh apps/native/scripts/g1.sh origin/main HEAD | grep G1
+  G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+  G1b: só adição ✓
+$ GATES_DECL=<decl> sh apps/native/scripts/g2g3.sh origin/main HEAD | grep G
+G2 — testIDs  antes=124  depois=124
+  G2: antes ⊆ depois ✓
+G3 — linhas log( antes=70  depois=70
+  G3: nenhuma linha sumiu ✓

@@ -1590,3 +1590,6 @@ automaticamente.
 > **Nota da PR-2 do SY (2026-10-11)** — sem reescrever a nota acima. A PR-2 do SY (o voo único, a janela da `naoRegredir`,
 > as escritas e o prazo; `docs/native/SY-PR2-anexos/README.md`) está aberta e **aguarda o aval**; a lista dos gates do SY
 > desce de 34 para 27 linhas. **A próxima é a PR-3** — a foto —, depois do aval e do merge desta.
+>
+> **Nota do aval da PR-2 do SY (2026-10-12)** — sem reescrever a nota acima. A PR-2 do SY (#380) tem aval (SY-D42…D48
+> `[Marcel, 2026-10-12]`, `docs/native/SY-PR2-anexos/README.md` §15); **a próxima é a PR-3, a foto.**

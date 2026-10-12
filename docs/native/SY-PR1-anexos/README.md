@@ -562,6 +562,7 @@ SY-D38; o texto proposto da linha do A-SY-9 fica no rastro do git, `b2e2a85`.)*
 | **"Cada tentativa baixa a página inteira de novo"** (sem requisição condicional nem retomada) — abaixo de ~21 kbit/s, todo sync falha | SY-D32 item 3 | proposto no encerramento do SY, **junto do ETag da SY-D11** (o site e o backend: fora do SY) |
 | a frase do placeholder para a música apagada nunca aberta (*"ainda não foi sincronizada"*) | SY-D23 (c) (já registrada no pre-check) | o encerramento do SY |
 | **o projeto `web` do Vitest coleta todo `.test.ts` dentro de `docs/`** (a div. 1268: a frase da div. 1144 vale só para nome que não é de teste) | div. 1268, **SY-D41 (2)** | **W5** (o mesmo bloco que leva os testes do core para dentro do core) |
+| **"SEM CONEXÃO" com a rede de pé**: sem cache, a falha por prazo (a espécie `rede`, N2-D35) mostra *"SEM CONEXÃO · … Conecte-se à internet"* com o servidor só lento *(acrescentada no aval da PR-2 — SY-D43; `SY-PR2-anexos/README.md` §7 A)* | div. 1278, **SY-D43** | a propor no encerramento do SY, **junto da frase do placeholder** (SY-D23 (c)) |
 
 ## 10. Os blocos de declaração desta PR (a cópia que a regra do W4-b2 pede)
 

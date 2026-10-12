@@ -1,0 +1,38 @@
+# a verificação do commit do aval — 2026-10-12 07:18:02
+$ git rev-parse HEAD; git rev-parse origin/main
+5511e9979f06e4facc942f59304f4bf8c8b91f56
+17207c4d72b091eeeed77bacba9852f80e710531
+$ git diff --stat 5511e99 -- . ":!docs"   (vazio = nada fora de docs)
+exit=0
+$ grep -rhoE "^\| \*\*SY-D[0-9]+\*\*" docs | sort -u | wc -l   (a árvore de trabalho deste commit, antes do commit)
+      47
+$ … | sed "s/[^0-9]//g" | sort -n | awk lacunas
+  falta em tabela: SY-D32
+  a última: SY-D48
+$ grep -n "### 5.1 A decisão — SY-D32" docs/native/SY-PR1-anexos/README.md
+284:### 5.1 A decisão — SY-D32 `[Marcel, 2026-10-10]`
+636:tabela: ela vive no **§5.1** deste README (*"### 5.1 A decisão — SY-D32"*, com o texto do Marcel em citação). A conta certa é
+$ grep -c "→ \*\*Respondida: SY-D" docs/native/SY-PR2-anexos/README.md
+6
+$ gh pr view 380 --json body -q .body | sh apps/native/scripts/gates-decl.sh
+g1a: packages/core/src/voo.ts
+g1a: packages/core/src/index.ts
+g1a: packages/core/src/escrita.ts
+g1a: apps/native/src/sincronizador.ts
+g1a: apps/native/src/sync.ts
+g1a: apps/native/App.tsx
+g1a: apps/native/src/escrita.ts
+g1a: apps/native/src/geracao-das-setlists.ts
+g1a: apps/native/src/api.ts
+exit=0
+$ gh pr view 380 --json body -q .body | sh scripts/gates-web/gates-web-decl.sh
+exit=0 (nenhuma declaração)
+$ diff <(extrator sobre o corpo de antes) <(extrator sobre o corpo com o aval)
+  iguais
+$ grep -rn eyJ docs/native/SY-PR2-anexos; grep -rln <email> docs/native/SY-PR2-anexos
+docs/native/SY-PR2-anexos/README.md:317:| regra 4 do catálogo sobre os anexos | `grep -rn eyJ` → exit 1; `grep -rln <email>` → exit 1 |
+exit=0
+exit=1
+# o único `eyJ` é a linha de PROSA do README que descreve a própria varredura (a §9, "`grep -rn eyJ` → exit 1"),
+# não um token; nos anexos brutos, nenhum: grep -rn eyJ docs/native/SY-PR2-anexos --exclude=README.md → exit 1
+exit=1
