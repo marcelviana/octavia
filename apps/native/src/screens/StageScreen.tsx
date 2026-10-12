@@ -314,7 +314,21 @@ export function StageScreen({
   const avulsa = avulsaContentId !== null
   const song = avulsa ? undefined : songs[posicao - 1]
   const resolvida = song !== undefined ? resolveSong(song, contentById) : null
-  const content = avulsa ? (contentById.get(avulsaContentId) ?? null) : (resolvida?.content ?? null)
+  const vivo = avulsa ? (contentById.get(avulsaContentId) ?? null) : (resolvida?.content ?? null)
+  /**
+   * **SY-PR3 — a foto do conteúdo, por ABERTURA** (SY-D3, SY-D7, SY-D21, SY-D24; `SY-PRECHECK.md` A4.2). O texto da
+   * música aberta não muda com o sync: a linha do `content` se guarda na primeira vez que esta abertura a vê, e é ela
+   * que a tela lê — o corpo, as notas, o título, o artista, o tipo e o `file_url`. **Abertura** é a chave: a posição e
+   * a música dela (`posicao|content_id`; no avulso, a música) — trocar de posição, ou uma instância nova (sair e
+   * voltar, o salto pelo índice), tira a foto de agora. Girar, o zoom, recolher as notas e o segundo plano não mudam
+   * a chave. Apagada pelo sync depois de aberta, a música segue com a última versão vista (SY-D23); nunca vista, o
+   * placeholder de hoje. A memória: UMA linha, a da abertura de agora, trocada a cada abertura.
+   */
+  const chaveDaAbertura = avulsa ? `avulsa|${avulsaContentId}` : `${posicao}|${song?.content_id ?? ''}`
+  const fotoDoConteudo = useRef<{ chave: string; content: ContentDTO | null }>({ chave: '', content: null })
+  if (fotoDoConteudo.current.chave !== chaveDaAbertura) fotoDoConteudo.current = { chave: chaveDaAbertura, content: vivo }
+  else if (fotoDoConteudo.current.content === null && vivo !== null) fotoDoConteudo.current.content = vivo
+  const content = fotoDoConteudo.current.content
   const validade =
     content !== null ? isValidContent(content.content_type, content.content_data, content.file_url) : null
   const corpo = content !== null ? bodyOf(content.content_type, content.content_data) : null
