@@ -1,3 +1,7 @@
+# SY-PR4 (commit 5): a lista ficou VAZIA, e vazia é a CONDIÇÃO FIXA dos cinco gates (o molde do gate da quebra,
+# QL-PR2): qualquer linha aqui reprova o gate, mesmo a de uma checagem que de fato reprova — reprovação declarada não é
+# mais aceita (`sy-lista.ts`, `listaNaoVazia`). O histórico abaixo fica como registro.
+#
 # SY-PR1 — os gates do SY (SY-D13): o que DEVE reprovar hoje, uma checagem por linha, <gate>:<caso>.
 # O juiz é o `sy-lista.ts`: reprovação fora daqui (NÃO DECLARADA) e linha que passa ou não existe (ÓRFÃ) reprovam o
 # gate (regra 14). Cada PR do SY esvazia a sua parte (a PR ao lado de cada bloco); vazia, a lista exige zero

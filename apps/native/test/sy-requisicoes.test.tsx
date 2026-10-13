@@ -173,5 +173,6 @@ describe('gate (v) — a contagem de GET por evento de gatilho (A2.5)', () => {
     expect(j.casos, 'gate sem casos: não mediu nada (regra 4)').toBeGreaterThan(0)
     expect(j.naoDeclaradas, 'reprovação NÃO DECLARADA').toEqual([])
     expect(j.orfas, 'declaração ÓRFÃ').toEqual([])
+    expect(j.listaNaoVazia, 'lista não vazia: desde a SY-PR4 reprovação declarada não é mais aceita').toEqual([])
   })
 })
