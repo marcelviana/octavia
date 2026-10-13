@@ -1,0 +1,55 @@
+# os checks do head a7b19e4 (a PR #381) — 2026-10-12 20:33:52
+$ gh pr checks 381
+Vercel	pass	0	https://vercel.com/marcelvianas-projects/octavia/G22cph37TkxLCzVsdBhdC5xPXYGJ	Deployment has completed
+Vercel Preview Comments	pass	0	https://vercel.com/github	
+android-debug-apk	pass	11m21s	https://github.com/marcelviana/octavia/actions/runs/38315691409/job/115031720655	
+build	pass	4m55s	https://github.com/marcelviana/octavia/actions/runs/38315691407/job/115031639895	
+g-back	pass	34s	https://github.com/marcelviana/octavia/actions/runs/38315691410/job/115031640137	
+g-faixa	pass	22s	https://github.com/marcelviana/octavia/actions/runs/38315691410/job/115031640055	
+g-palco	pass	20s	https://github.com/marcelviana/octavia/actions/runs/38315691410/job/115031640321	
+g-tok	pass	35s	https://github.com/marcelviana/octavia/actions/runs/38315691410/job/115031640153	
+gates-nativos	pass	13s	https://github.com/marcelviana/octavia/actions/runs/38315691541/job/115031640682	
+mudou-nativo	pass	14s	https://github.com/marcelviana/octavia/actions/runs/38315691409/job/115031640011	
+
+$ gh run view 38315691409 --json name,headSha,conclusion,jobs
+native · head a7b19e4 · success
+  mudou-nativo: success 2026-10-12T22:16:23Z → 2026-10-12T22:16:37Z
+  android-debug-apk: success 2026-10-12T22:16:39Z → 2026-10-12T22:28:00Z
+$ gh run view 38315691407 --json name,headSha,conclusion,jobs
+CI · head a7b19e4 · success
+  build: success 2026-10-12T22:16:23Z → 2026-10-12T22:21:18Z
+$ gh run view 38315691410 --json name,headSha,conclusion,jobs
+gates-web · head a7b19e4 · success
+  g-faixa: success 2026-10-12T22:16:24Z → 2026-10-12T22:16:46Z
+  g-back: success 2026-10-12T22:16:24Z → 2026-10-12T22:16:58Z
+  g-tok: success 2026-10-12T22:16:23Z → 2026-10-12T22:16:58Z
+  g-palco: success 2026-10-12T22:16:24Z → 2026-10-12T22:16:44Z
+$ gh run view 38315691541 --json name,headSha,conclusion,jobs
+gates · head a7b19e4 · success
+  gates-nativos: success 2026-10-12T22:16:23Z → 2026-10-12T22:16:36Z
+
+$ gh run view 38315691541 --log | grep (o gates-nativos)
+gates-nativos	UNKNOWN STEP	2026-10-12T22:16:32.6999454Z   g1a: apps/native/src/foto-do-palco.ts
+gates-nativos	UNKNOWN STEP	2026-10-12T22:16:32.7000004Z   g1a: apps/native/src/navigation.tsx
+gates-nativos	UNKNOWN STEP	2026-10-12T22:16:32.7000550Z   g1a: apps/native/src/screens/StageScreen.tsx
+gates-nativos	UNKNOWN STEP	2026-10-12T22:16:32.7000976Z   g1a: apps/native/src/screens/VisualizacaoScreen.tsx
+gates-nativos	UNKNOWN STEP	2026-10-12T22:16:32.7567323Z   G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+gates-nativos	UNKNOWN STEP	2026-10-12T22:16:32.7964980Z   G1b: só adição ✓
+gates-nativos	UNKNOWN STEP	2026-10-12T22:16:34.5162191Z G2 — testIDs  antes=124  depois=124
+gates-nativos	UNKNOWN STEP	2026-10-12T22:16:34.5242533Z G3 — linhas log( antes=70  depois=70
+gates-nativos	UNKNOWN STEP	2026-10-12T22:16:34.5245678Z       — nenhuma linha de log pode sumir nesta PR
+gates-nativos	UNKNOWN STEP	2026-10-12T22:16:34.5345569Z   G3: nenhuma linha sumiu ✓
+
+$ gh run view 38315691407 --log | grep (o build: os juízes e a suíte)
+2026-10-12T22:17:25.6892917Z gate iv: reprova exatamente a lista esperada (0) ✓
+2026-10-12T22:17:39.0134608Z gate ii: reprova exatamente a lista esperada (0) ✓
+2026-10-12T22:17:48.4180825Z gate iii: reprova exatamente a lista esperada (0) ✓
+2026-10-12T22:17:57.3542368Z gate i: reprova exatamente a lista esperada (6) ✓
+2026-10-12T22:18:01.5233927Z gate v: reprova exatamente a lista esperada (3) ✓
+2026-10-12T22:18:45.5121491Z ^[[2m Test Files ^[[22m ^[[1m^[[32m157 passed^[[39m^[[22m^[[2m | ^[[22m^[[33m3 skipped^[[39m^[[90m (160)^[[39m
+2026-10-12T22:19:03.6762281Z gate iv: reprova exatamente a lista esperada (0) ✓
+2026-10-12T22:19:12.4040430Z gate ii: reprova exatamente a lista esperada (0) ✓
+2026-10-12T22:19:19.0113817Z gate i: reprova exatamente a lista esperada (6) ✓
+2026-10-12T22:19:33.6808995Z gate v: reprova exatamente a lista esperada (3) ✓
+2026-10-12T22:19:36.1547810Z gate iii: reprova exatamente a lista esperada (0) ✓
+2026-10-12T22:20:27.7055461Z ^[[2m Test Files ^[[22m ^[[1m^[[32m157 passed^[[39m^[[22m^[[2m | ^[[22m^[[33m3 skipped^[[39m^[[90m (160)^[[39m

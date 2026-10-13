@@ -1,0 +1,39 @@
+# t_open=1791840640542 t_rol=1791840656921 t_pedido=1791840688762 t_ok=1791840689199
+1791840643720 faixa=C w=1137.8 h=711.1
+1791840643729 net online
+1791840644347 auth uid=xVDJRBh1WpPOatbfWahOLttYn1E3 src=restored
+1791840644543 cache hit kind=setlists n=1
+1791840644544 cache hit kind=content n=8
+1791840644674 sync start
+1791840644680 auth refresh=cached
+1791840644706 api status=200 path=/api/setlists n=1 ms=30
+1791840644711 auth refresh=cached
+1791840644732 api status=200 path=/api/content n=1 ms=22
+1791840644749 cache write kind=setlists n=1 invalidated=0
+1791840644758 cache write kind=content n=8 invalidated=0
+1791840644758 sync ok setlists=1 content=8 pages=1 t=84
+1791840644766 prefetch plan n=2 reason=library
+1791840644849 download-error partitura-escaneada.jpg: o servidor respondeu 404
+1791840644849 download-error nao-existe.pdf: o servidor respondeu 404
+1791840648661 index open
+1791840651287 index jump n=3
+1791840651432 keepawake on
+1791840651446 prefetch plan n=2 reason=demand
+1791840651517 download-error partitura-escaneada.jpg: o servidor respondeu 404
+1791840651520 download-error nao-existe.pdf: o servidor respondeu 404
+1791840653978 zoom dp=26
+1791840656864 autoscroll on t=48
+1791840689121 sync start
+1791840689121 auth refresh=cached
+1791840689151 api status=200 path=/api/setlists n=1 ms=29
+1791840689154 auth refresh=cached
+1791840689177 api status=200 path=/api/content n=1 ms=24
+1791840689191 cache write kind=setlists n=1 invalidated=0
+1791840689199 cache write kind=content n=8 invalidated=1
+1791840689199 sync ok setlists=1 content=8 pages=1 t=79
+1791840689203 prefetch plan n=2 reason=library
+1791840689413 prefetch plan n=2 reason=demand
+1791840689414 download-error partitura-escaneada.jpg: o servidor respondeu 404
+1791840689414 download-error partitura-escaneada.jpg: o servidor respondeu 404
+1791840689414 download-error nao-existe.pdf: o servidor respondeu 404
+1791840689415 download-error nao-existe.pdf: o servidor respondeu 404

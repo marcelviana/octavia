@@ -14,6 +14,7 @@ import { DarkTheme, NavigationContainer, type Theme } from '@react-navigation/na
 import { createNativeStackNavigator, type NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { StyleSheet, Text, View } from 'react-native'
 import type { ContentDTO, SetlistDTO } from '@octavia/core'
+import { criarFotoDaSessao } from './foto-do-palco'
 import { EndScreen } from './screens/EndScreen'
 import { IndexScreen, type AvisoDeSaida } from './screens/IndexScreen'
 import { LibraryScreen } from './screens/LibraryScreen'
@@ -120,6 +121,17 @@ export function Navigation({ signedIn, setlists, dados }: NavigationProps): Reac
   const acharSetlist = (id: string): SetlistDTO | undefined => dados.lista.find((s) => s.id === id)
 
   /**
+   * **SY-PR3 — a foto da setlist pela sessão do palco** (SY-D7, SY-D22; `foto-do-palco.ts`). O palco, o índice DO
+   * PALCO, o fim e a busca na setlist leem `daSessao`: a foto tirada ao entrar no palco de fora, e a viva fora da
+   * sessão. A foto se tira nas ações que abrem o palco de fora (a posição tocada em S2; o resultado da busca aberta de
+   * S2) e se solta no FOCO de S1 e de S2 — o `Index` sem `posicaoAtual`; com ela, o mesmo `Index` é o índice do palco
+   * (E6: o salto pelo índice desempilha o palco, e voltar a ele não é sair da sessão). S1 e S2 leem a setlist VIVA: o
+   * músico edita o que está no servidor.
+   */
+  const [foto] = useState(criarFotoDaSessao)
+  const daSessao = (id: string): SetlistDTO | undefined => foto.setlistDaSessao(id, acharSetlist)
+
+  /**
    * **T2-R10 — o aviso que S2 deixa para S1.** Quando uma escrita volta 404, a
    * tela é abandonada: *"fecha o que estiver aberto, sai de S2 e cai em S1 já
    * relida, com a linha de aviso de 48 dp […] sem botão"*. O estado mora AQUI
@@ -160,7 +172,7 @@ export function Navigation({ signedIn, setlists, dados }: NavigationProps): Reac
       >
         {signedIn ? (
           <Stack.Group>
-            <Stack.Screen name="Setlists">
+            <Stack.Screen name="Setlists" listeners={{ focus: () => foto.sair() }}>
               {({ navigation }) => (
                 <SetlistsScreen
                   {...setlists}
@@ -179,9 +191,21 @@ export function Navigation({ signedIn, setlists, dados }: NavigationProps): Reac
               )}
             </Stack.Screen>
 
-            <Stack.Screen name="Index">
+            <Stack.Screen
+              name="Index"
+              listeners={({ navigation, route }) => ({
+                // S2 (o `Index` sem `posicaoAtual`) solta a foto; o índice do palco (com ela) é a mesma sessão. Os
+                // params se leem do estado no instante do foco: o salto do palco ao índice os troca na mesma ação.
+                focus: () => {
+                  const agora = navigation.getState().routes.find((r) => r.key === route.key)
+                  const params = agora?.params as RootStackParamList['Index'] | undefined
+                  if (params?.posicaoAtual === undefined) foto.sair()
+                },
+              })}
+            >
               {({ navigation, route }) => {
-                const setlist = acharSetlist(route.params.setlistId)
+                const doPalco = route.params.posicaoAtual !== undefined
+                const setlist = doPalco ? daSessao(route.params.setlistId) : acharSetlist(route.params.setlistId)
                 if (setlist === undefined) {
                   return <Placeholder titulo="SETLIST" nota="não está no cache" />
                 }
@@ -208,9 +232,11 @@ export function Navigation({ signedIn, setlists, dados }: NavigationProps): Reac
                         : null
                     }
                     onVoltar={() => navigation.goBack()}
-                    onAbrirPosicao={(position) =>
+                    onAbrirPosicao={(position) => {
+                      // de S2 é entrar no palco de fora: a foto da sessão se tira aqui (SY-D22)
+                      if (!doPalco) foto.entrar(setlist.id, acharSetlist)
                       navigation.navigate('Stage', { setlistId: setlist.id, position })
-                    }
+                    }}
                     onBuscar={() =>
                       navigation.navigate('Search', {
                         setlistId: setlist.id,
@@ -245,7 +271,7 @@ export function Navigation({ signedIn, setlists, dados }: NavigationProps): Reac
                     />
                   )
                 }
-                const setlist = acharSetlist(p.setlistId)
+                const setlist = daSessao(p.setlistId)
                 if (setlist === undefined) {
                   return <Placeholder titulo="SETLIST" nota="não está no cache" />
                 }
@@ -281,7 +307,7 @@ export function Navigation({ signedIn, setlists, dados }: NavigationProps): Reac
 
             <Stack.Screen name="End">
               {({ navigation, route }) => {
-                const setlist = acharSetlist(route.params.setlistId)
+                const setlist = daSessao(route.params.setlistId)
                 const total = setlist?.setlist_songs.length ?? 0
                 return (
                   <EndScreen
@@ -335,10 +361,12 @@ export function Navigation({ signedIn, setlists, dados }: NavigationProps): Reac
 
             <Stack.Screen name="Search">
               {({ navigation, route }) => {
+                // a busca do palco (com `posicao`) lê a foto da sessão; a aberta de S2 (sem ela), a viva
+                const doPalco = route.params.posicao !== undefined
                 const setlist =
                   route.params.setlistId === undefined
                     ? null
-                    : (acharSetlist(route.params.setlistId) ?? null)
+                    : ((doPalco ? daSessao(route.params.setlistId) : acharSetlist(route.params.setlistId)) ?? null)
                 return (
                   <SearchScreen
                     contents={dados.contents}
@@ -352,9 +380,11 @@ export function Navigation({ signedIn, setlists, dados }: NavigationProps): Reac
                     // Sem setlist (de S1, ou do avulso): o avulso SEM
                     // hospedeira empilha, e o voltar devolve esta busca no
                     // mesmo termo (N4-R16) — `rotas-do-avulso.ts`.
-                    onAbrir={(contentId, posicaoNaSetlist) =>
+                    onAbrir={(contentId, posicaoNaSetlist) => {
+                      // a busca aberta de S2 leva ao palco da setlist: entrar de fora, a foto se tira aqui (SY-D22)
+                      if (!doPalco && setlist !== null) foto.entrar(setlist.id, acharSetlist)
                       ir(navigation, destinoDoResultado(setlist, route.params.posicao ?? null, contentId, posicaoNaSetlist))
-                    }
+                    }}
                   />
                 )
               }}

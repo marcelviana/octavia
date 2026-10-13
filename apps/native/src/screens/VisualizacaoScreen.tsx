@@ -261,9 +261,15 @@ export function VisualizacaoScreen({
     }, []),
   )
   // A música que sumiu do cache com V aberta (um sync que a apagou): V segue com a última que viu.
+  // **SY-PR3 — a foto do conteúdo, por abertura** (SY-D3, SY-D7, SY-D21, SY-D24): V guarda a linha da PRIMEIRA vez
+  // que a vê, e o texto (o corpo, o título, os *Detalhes*, as notas, o `file_url`) é o dela até V sair — uma instância
+  // de V é uma abertura (o `contentId` é da rota), e a foto se chaveia pelo id (`SY-PRECHECK.md` A4.5): outra música
+  // nesta tela é outra abertura. **A estrela fica viva** (SY-D21): o `is_favorite` vem da linha de agora, e o
+  // favoritar feito em V aparece na hora (N4-R7). Apagada pelo sync, segue a foto. A memória: UMA linha.
   const ultimo = useRef<ContentDTO | null>(atual)
-  if (atual !== null) ultimo.current = atual
-  const content = atual ?? ultimo.current
+  if (atual !== null && (ultimo.current === null || ultimo.current.id !== atual.id)) ultimo.current = atual
+  const content =
+    ultimo.current === null ? atual : atual === null ? ultimo.current : { ...ultimo.current, is_favorite: atual.is_favorite }
 
   // O corpo é um ARQUIVO? (Sheet, e a Cifra escaneada — o core decide.) De um formato que o app mostra? (N4-D43: só
   // `.pdf`, pela extensão; o resto vai ao placeholder de formato, sem pedir o arquivo.)

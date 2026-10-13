@@ -1,0 +1,17 @@
+# a regra de carga sobre /private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/avd/custo/antes
+  r01: limpa
+  r02: limpa
+  r03: ⚠ mobileassetd 98%, mobileassetd 97%, mobileassetd 92%
+  r04: ⚠ softwareupdated 98%
+  r05: limpa
+  r06: limpa
+  r07: ⚠ Google Chrome Helper (Renderer) 224%
+  r08: ⚠ mediaanalysisd 90%
+  r09: ⚠ Google Chrome Helper (Renderer) 189%, Google Chrome Helper (Renderer) 120%, Creative Cloud UI Helper (Render 90%
+  r10: ⚠ mediaanalysisd 94%
+- com TODAS: n = 10 · SYNC maior 383.5 ms, > 100 ms 6.5, lacuna 390.5 ms · PISO maior 138.5 ms, > 100 ms 2, lacuna 201 ms
+    (dev client) 6.5 ≤ 2 + 1? NÃO · 383.5 ≤ max(2 × 138.5, 100) = 277.0? NÃO → **REPROVA**
+    (release, o uiautomator) 390.5 ≤ 201 + 100 = 301? **REPROVA**
+- sem as MARCADAS (r03, r04, r07, r08, r09, r10): n = 4 · SYNC maior 573.8 ms, > 100 ms 6.5, lacuna 499.5 ms · PISO maior 134.1 ms, > 100 ms 1.5, lacuna 177.5 ms
+    (dev client) 6.5 ≤ 1.5 + 1? NÃO · 573.8 ≤ max(2 × 134.1, 100) = 268.3? NÃO → **REPROVA**
+    (release, o uiautomator) 499.5 ≤ 177.5 + 100 = 277.5? **REPROVA**

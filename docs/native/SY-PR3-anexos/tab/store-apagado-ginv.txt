@@ -1,0 +1,35 @@
+# o store da fixture do SY apagado por nome antes da base do G-inv no Tab — 18:50:29
+cache/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3/files:
+total 6
+drwx------ 2 u0_a292 u0_a292       3488 2026-10-04 12:47 .
+drwx------ 3 u0_a292 u0_a292_cache 3488 2026-09-11 09:59 ..
+
+files/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3:
+total 49
+drwx------ 3 u0_a292 u0_a292  3488 2026-10-12 18:48 .
+drwxrwx--x 3 u0_a292 u0_a292  3488 2026-10-12 18:48 ..
+-rw------- 1 u0_a292 u0_a292   163 2026-09-23 19:14 ._content.json
+-rwx------ 1 u0_a292 u0_a292   163 2026-09-24 18:01 ._files
+-rw------- 1 u0_a292 u0_a292   163 2026-09-14 11:49 ._files-index.json
+-rw------- 1 u0_a292 u0_a292   163 2026-09-23 19:14 ._setlists.json
+-rw------- 1 u0_a292 u0_a292 13068 2026-10-12 18:48 content.json
+drwx------ 2 u0_a292 u0_a292  3488 2026-10-12 18:38 files
+-rw------- 1 u0_a292 u0_a292   220 2026-10-12 18:38 files-index.json
+-rw------- 1 u0_a292 u0_a292  1835 2026-10-12 18:48 setlists.json
+
+files/octavia-xVDJRBh1WpPOatbfWahOLttYn1E3/files:
+total 18
+drwx------ 2 u0_a292 u0_a292 3488 2026-10-12 18:38 .
+drwx------ 3 u0_a292 u0_a292 3488 2026-10-12 18:48 ..
+-rw------- 1 u0_a292 u0_a292 4198 2026-10-12 18:05 partitura-12p.pdf
+-rw------- 1 u0_a292 u0_a292  643 2026-10-12 18:38 partitura-1p.pdf
+$ … (depois)
+total 29
+drwx------ 3 u0_a292 u0_a292 3488 2026-10-12 18:50 .
+drwxrwx--x 3 u0_a292 u0_a292 3488 2026-10-12 18:48 ..
+-rw------- 1 u0_a292 u0_a292  163 2026-09-23 19:14 ._content.json
+-rwx------ 1 u0_a292 u0_a292  163 2026-09-24 18:01 ._files
+-rw------- 1 u0_a292 u0_a292  163 2026-09-14 11:49 ._files-index.json
+-rw------- 1 u0_a292 u0_a292  163 2026-09-23 19:14 ._setlists.json
+drwx------ 2 u0_a292 u0_a292 3488 2026-10-12 18:38 files
+-rw------- 1 u0_a292 u0_a292  220 2026-10-12 18:38 files-index.json

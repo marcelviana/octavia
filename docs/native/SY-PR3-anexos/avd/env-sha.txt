@@ -1,0 +1,4 @@
+# o apps/native/.env — cp -p do checkout principal para as duas árvores, SEM ABRIR; sha256 (12); apagado no fim (regra 2)
+octavia: f2bfa179cd8e
+octavia-sy-pr3-base: f2bfa179cd8e
+octavia-sy-pr3: f2bfa179cd8e

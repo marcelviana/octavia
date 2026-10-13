@@ -1,0 +1,88 @@
+# o custo — Tab S6, 10 rodadas (/private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/tab/custo/depois)
+
+## SYNC — [t_ok − 5 s, t_ok + 15 s]
+
+| rodada | quadros | maior intervalo (ms) | > 16,7 ms | > 50 ms | > 100 ms | rolagem (uiautomator: eventos · maior lacuna · andou) | o `cache write` do content |
+|---|---|---|---|---|---|---|---|
+| r01 | 1176 | **183.3** | 552 | 3 | 3 | 508 · 174 ms · 2646 px | n=8 invalidated=1 |
+| r02 | 1175 | **188.4** | 532 | 4 | 3 | 509 · 109 ms · 2639 px | n=8 invalidated=1 |
+| r03 | 1176 | **163.6** | 550 | 4 | 3 | 509 · 104 ms · 2640 px | n=8 invalidated=1 |
+| r04 | 1175 | **192.1** | 541 | 4 | 3 | 510 · 109 ms · 2634 px | n=8 invalidated=1 |
+| r05 | 1176 | **177.6** | 539 | 4 | 3 | 507 · 147 ms · 2639 px | n=8 invalidated=1 |
+| r06 | 1176 | **185.2** | 532 | 3 | 3 | 507 · 174 ms · 2635 px | n=8 invalidated=1 |
+| r07 | 1175 | **187.1** | 541 | 4 | 3 | 506 · 147 ms · 2626 px | n=8 invalidated=1 |
+| r08 | 1176 | **163.0** | 542 | 4 | 3 | 508 · 162 ms · 2646 px | n=8 invalidated=1 |
+| r09 | 1175 | **189.1** | 537 | 4 | 3 | 509 · 170 ms · 2640 px | n=8 invalidated=1 |
+| r10 | 1177 | **192.6** | 531 | 3 | 3 | 508 · 148 ms · 2642 px | n=8 invalidated=1 |
+
+## PISO — a rolagem ligada, sem sync: [t_rol + 3 s, t_rol + 23 s]
+
+| rodada | quadros | maior intervalo (ms) | > 16,7 ms | > 50 ms | > 100 ms | rolagem (uiautomator: eventos · maior lacuna · andou) |
+|---|---|---|---|---|---|---|
+| r01 | 1205 | **22.9** | 553 | 0 | 0 | 514 · 110 ms · 2696 px |
+| r02 | 1205 | **22.0** | 554 | 0 | 0 | 516 · 105 ms · 2695 px |
+| r03 | 1205 | **23.5** | 543 | 0 | 0 | 515 · 108 ms · 2695 px |
+| r04 | 1205 | **21.9** | 561 | 0 | 0 | 516 · 107 ms · 2695 px |
+| r05 | 1204 | **23.1** | 542 | 0 | 0 | 515 · 107 ms · 2696 px |
+| r06 | 1205 | **24.1** | 546 | 0 | 0 | 516 · 107 ms · 2695 px |
+| r07 | 1204 | **22.8** | 536 | 0 | 0 | 518 · 106 ms · 2709 px |
+| r08 | 1204 | **22.8** | 543 | 0 | 0 | 516 · 105 ms · 2695 px |
+| r09 | 1204 | **23.6** | 554 | 0 | 0 | 515 · 106 ms · 2696 px |
+| r10 | 1204 | **24.0** | 540 | 0 | 0 | 516 · 107 ms · 2696 px |
+
+## CONTROLE (a) — a tarefa plantada de 200 ms aparece no sensor?
+
+| rodada | a tarefa durou | o maior intervalo em volta | o quadro que a fechou, depois do fim dela |
+|---|---|---|---|
+| r01 | 200.0 ms | **209.1 ms** | 1 ms |
+| r02 | 200.0 ms | **213.6 ms** | 0 ms |
+| r03 | 200.0 ms | **212.7 ms** | 2 ms |
+
+## O que estava no JS em cada intervalo > 50 ms da janela do sync (as linhas OCTAVIA saídas dentro dele)
+
+| rodada | intervalo (ms) | o quadro que o fechou, contra o `sync ok` | as linhas dentro |
+|---|---|---|---|
+| r01 | 183.3 | -72 ms | `sync start` · `auth refresh=cached` |
+| r01 | 144.6 | +162 ms | — |
+| r01 | 135.3 | +340 ms | — |
+| r02 | 188.4 | -98 ms | `sync start` · `auth refresh=cached` |
+| r02 | 50.8 | +23 ms | `cache write kind=setlists n=1 invalidated=0` · `cache write kind=content n=8 invalidated=1` · `sync ok setlists=1 content=8 pages=1` · `prefetch plan n=2 reason=library` |
+| r02 | 149.0 | +172 ms | — |
+| r02 | 139.7 | +355 ms | — |
+| r03 | 163.6 | -92 ms | — |
+| r03 | 55.0 | +26 ms | `cache write kind=setlists n=1 invalidated=0` · `cache write kind=content n=8 invalidated=1` · `sync ok setlists=1 content=8 pages=1` · `prefetch plan n=2 reason=library` |
+| r03 | 155.1 | +181 ms | — |
+| r03 | 138.2 | +363 ms | — |
+| r04 | 192.1 | -82 ms | `sync start` · `auth refresh=cached` |
+| r04 | 52.1 | +23 ms | `api status=200 path=/api/content n=1` · `cache write kind=setlists n=1 invalidated=0` · `cache write kind=content n=8 invalidated=1` · `sync ok setlists=1 content=8 pages=1` · `prefetch plan n=2 reason=library` |
+| r04 | 146.7 | +169 ms | — |
+| r04 | 135.8 | +347 ms | — |
+| r05 | 177.6 | -86 ms | `sync start` · `auth refresh=cached` |
+| r05 | 59.4 | +24 ms | `api status=200 path=/api/content n=1` · `cache write kind=setlists n=1 invalidated=0` · `cache write kind=content n=8 invalidated=1` · `sync ok setlists=1 content=8 pages=1` · `prefetch plan n=2 reason=library` |
+| r05 | 147.2 | +171 ms | — |
+| r05 | 138.8 | +355 ms | — |
+| r06 | 185.2 | -85 ms | `sync start` · `auth refresh=cached` |
+| r06 | 148.7 | +170 ms | — |
+| r06 | 139.8 | +351 ms | — |
+| r07 | 187.1 | -78 ms | `sync start` · `auth refresh=cached` |
+| r07 | 58.2 | +24 ms | `api status=200 path=/api/content n=1` · `cache write kind=setlists n=1 invalidated=0` · `cache write kind=content n=8 invalidated=1` · `sync ok setlists=1 content=8 pages=1` · `prefetch plan n=2 reason=library` |
+| r07 | 151.6 | +176 ms | — |
+| r07 | 145.7 | +366 ms | — |
+| r08 | 163.0 | -80 ms | `sync start` · `auth refresh=cached` |
+| r08 | 53.0 | +24 ms | `api status=200 path=/api/content n=1` · `cache write kind=setlists n=1 invalidated=0` · `cache write kind=content n=8 invalidated=1` · `sync ok setlists=1 content=8 pages=1` · `prefetch plan n=2 reason=library` |
+| r08 | 148.0 | +172 ms | — |
+| r08 | 141.4 | +358 ms | — |
+| r09 | 189.1 | -76 ms | `sync start` · `auth refresh=cached` |
+| r09 | 63.6 | +26 ms | `api status=200 path=/api/content n=1` · `cache write kind=setlists n=1 invalidated=0` · `cache write kind=content n=8 invalidated=1` · `sync ok setlists=1 content=8 pages=1` · `prefetch plan n=2 reason=library` |
+| r09 | 150.9 | +177 ms | — |
+| r09 | 139.7 | +358 ms | — |
+| r10 | 192.6 | -76 ms | `sync start` · `auth refresh=cached` |
+| r10 | 144.9 | +167 ms | — |
+| r10 | 140.4 | +352 ms | — |
+
+## As medianas e o critério da SY-D36 (n = 10)
+
+- SYNC: maior intervalo, mediana **186.2 ms** · intervalos > 100 ms, mediana **3** · a maior lacuna do uiautomator, mediana **147.5 ms**
+- PISO: maior intervalo, mediana **23.0 ms** · intervalos > 100 ms, mediana **0** · a maior lacuna do uiautomator, mediana **107 ms**
+- (dev client) > 100 ms: 3 ≤ 0 + 1 = 1? **NÃO** · maior intervalo: 186.2 ≤ max(2 × 23.0, 100) = 100.0? **NÃO** → **REPROVA**
+- (release, o uiautomator) a maior lacuna na janela do sync: mediana 147.5 ≤ 107 + 100 = 207? **PASSA** · rodada a rodada: 10 de 10 dentro

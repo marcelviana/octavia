@@ -59,6 +59,11 @@ fica como está; as mudadas por decisão posterior:)*
 | SY-D6 (o custo com o palco aberto) | **SY-D36** | o critério da decisão: relativo ao piso das mesmas rodadas (e, para o release, a lacuna do `uiautomator events`); se o "depois" reprovar, a PR-3 volta com a pergunta (`SY-PR1-anexos/README.md` §13) |
 | SY-D20 (onde e quando se mede o custo) | **SY-D36**, **SY-D38** | o critério congelado no aval da PR-1 (SY-D36); o "antes" e o "depois" medidos sobre a base da PR-3, nos dois aparelhos, o Tab na mesma ida (SY-D38) |
 | SY-D19 (o prazo nas leituras do sync) | **SY-D32** | confirmada: os 20 s cobrem a resposta inteira, e a SY-D19 (a) fica, com quatro acréscimos (`SY-PR1-anexos/README.md` §5.1) |
+| SY-D6 (o sync com o palco aberto) | **SY-D49** | decidida: o "depois" reprovou o critério da SY-D36 nos dois aparelhos, e **com o palco aberto nenhum gatilho automático dispara; o sync fica marcado e roda ao sair do palco** (`SY-PR3-anexos/README.md` §5, §16) |
+| SY-D20 (onde e quando se mede o custo) | **SY-D49** | decidida no aval da PR-3, com o "antes" e o "depois" da PR-3 na mão (`SY-PR3-anexos/README.md` §5) |
+| SY-D7 (o alcance da foto) | **SY-D49** | a versão nova chega ao tablet ao sair do palco, e não entre duas músicas (SY-D49) |
+| SY-D28 (a linha `sync trigger`) | **SY-D49** | um valor a mais de `decision`: o gatilho segurado pelo palco aberto (o nome é proposta da PR-4) |
+| SY-D27 (o rascunho da regra 38) | **SY-D49** | o rascunho da regra 38 e a linha do `APARATO.md` ganham *"com o palco aberto, o gatilho não dispara"* no texto final do encerramento |
 
 ---
 
@@ -272,6 +277,15 @@ decidir com o número na mão: **nenhum intervalo entre quadros > 100 ms durante
 sensor de quadros), que é código de anexo — a forma de uma PR, não de um pre-check só de docs; e a medida não muda nenhuma
 pergunta deste aval, só a da SY-D6, que tem condição própria. **Nenhum aparelho foi tocado.**
 
+*(Nota da SY-PR3 — ponteiro, sem reescrever o texto acima: o "antes" e o "depois" medidos sobre a base da PR-3, nos dois
+aparelhos (SY-D38), pelo caminho do *Tentar de novo* com o palco aberto (o `atraso` já não serve depois do prazo da PR-2,
+div. 1286). O "depois" **reprova o critério do dev client** da SY-D36 nos dois e **passa o do release** nos dois; o que
+sobra são renders (o disparo e a troca da raiz), não a gravação. A SY-D6 é do aval da PR-3:
+`SY-PR3-anexos/README.md` §5 e a Q1.)*
+
+*(Nota do aval da PR-3 — **SY-D49** `[Marcel, 2026-10-12]`: a SY-D6 cai para a saída (a) — com o palco aberto nenhum gatilho
+automático dispara; o sync fica marcado e roda ao sair do palco. `SY-PR3-anexos/README.md` §5, §16.)*
+
 ### A4 — a foto (SY-D7)
 
 **A4.1 — de onde cada coisa vem hoje, e o que congela** (pergunta Q5):
@@ -356,6 +370,12 @@ congelar o `file_url`.
   `corpo` igual; nenhuma rolagem para `y: 0` depois da troca (o duplo registra cada `scrollTo`, `__rolagens()`); o rótulo da
   rolagem segue *"ligada"*; com a posição trocada, o corpo novo. **Não prova**: geometria, a `Navigation` real (a ligação da
   (b)), o tempo do quadro.
+
+*(Nota da SY-PR3 — ponteiro: a foto está feita na PR-3 — a da sessão em `apps/native/src/foto-do-palco.ts`, ligada pelo
+`navigation.tsx`; a do conteúdo, por abertura, no `StageScreen.tsx` e no `VisualizacaoScreen.tsx`, com a estrela viva — e
+provada no aparelho (A-SY-17). Duas coisas que a A4.1 não decidia ficaram como pergunta: o **título vivo** no índice e na busca
+do palco (Q2) e **o arquivo novo que baixa com a música aberta** (a tela não muda; Q3, div. 1287). `SY-PR3-anexos/README.md`
+§2, §3, §6, §7.)*
 
 ### A5 — o voo único (SY-D9)
 

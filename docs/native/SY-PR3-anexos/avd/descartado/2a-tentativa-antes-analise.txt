@@ -1,0 +1,182 @@
+# o custo — AVD, 10 rodadas (/private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/avd/descartado-carga-2/custo/antes)
+
+## SYNC — [t_ok − 5 s, t_ok + 15 s]
+
+| rodada | quadros | maior intervalo (ms) | > 16,7 ms | > 50 ms | > 100 ms | rolagem (uiautomator: eventos · maior lacuna · andou) | o `cache write` do content |
+|---|---|---|---|---|---|---|---|
+| r01 | 813 | **853.2** | 564 | 15 | 7 | 370 · 745 ms · 1818 px | n=8 invalidated=1 |
+| r02 | 933 | **400.6** | 614 | 11 | 5 | 410 · 301 ms · 2097 px | n=8 invalidated=1 |
+| r03 | 932 | **378.3** | 625 | 10 | 5 | 407 · 360 ms · 2083 px | n=8 invalidated=1 |
+| r04 | 926 | **348.5** | 618 | 9 | 6 | 407 · 275 ms · 2076 px | n=8 invalidated=1 |
+| r05 | 920 | **343.8** | 614 | 9 | 6 | 414 · 300 ms · 2058 px | n=8 invalidated=1 |
+| r06 | 926 | **415.9** | 594 | 10 | 5 | 403 · 321 ms · 2073 px | n=8 invalidated=1 |
+| r07 | 878 | **600.5** | 588 | 14 | 8 | 386 · 628 ms · 1958 px | n=8 invalidated=1 |
+| r08 | 997 | **268.7** | 549 | 25 | 9 | 416 · 222 ms · 2232 px | n=8 invalidated=1 |
+| r09 | 1052 | **563.5** | 564 | 13 | 7 | 447 · 655 ms · 2347 px | n=8 invalidated=1 |
+| r10 | 1023 | **220.5** | 580 | 15 | 11 | 445 · 296 ms · 2291 px | n=8 invalidated=1 |
+
+## PISO — a rolagem ligada, sem sync: [t_rol + 3 s, t_rol + 23 s]
+
+| rodada | quadros | maior intervalo (ms) | > 16,7 ms | > 50 ms | > 100 ms | rolagem (uiautomator: eventos · maior lacuna · andou) |
+|---|---|---|---|---|---|---|
+| r01 | 767 | **1052.4** | 514 | 30 | 12 | 353 · 1141 ms · 1712 px |
+| r02 | 1019 | **77.8** | 634 | 7 | 0 | 436 · 139 ms · 2282 px |
+| r03 | 1002 | **65.8** | 631 | 3 | 0 | 427 · 148 ms · 2241 px |
+| r04 | 1020 | **60.0** | 667 | 2 | 0 | 433 · 144 ms · 2279 px |
+| r05 | 1018 | **79.2** | 659 | 3 | 0 | 432 · 168 ms · 2273 px |
+| r06 | 1019 | **64.0** | 611 | 6 | 0 | 436 · 139 ms · 2275 px |
+| r07 | 1016 | **64.7** | 651 | 8 | 0 | 439 · 128 ms · 2275 px |
+| r08 | 1142 | **89.0** | 622 | 4 | 0 | 473 · 169 ms · 2552 px |
+| r09 | 1158 | **79.4** | 626 | 3 | 0 | 480 · 152 ms · 2594 px |
+| r10 | 935 | **190.8** | 575 | 30 | 2 | 427 · 213 ms · 2090 px |
+
+## CONTROLE (a) — a tarefa plantada de 200 ms aparece no sensor?
+
+| rodada | a tarefa durou | o maior intervalo em volta | o quadro que a fechou, depois do fim dela |
+|---|---|---|---|
+| r01 | 200.0 ms | **213.5 ms** | 3 ms |
+| r02 | 200.0 ms | **218.7 ms** | 1 ms |
+| r03 | 200.0 ms | **215.4 ms** | 0 ms |
+
+## O que estava no JS em cada intervalo > 50 ms da janela do sync (as linhas OCTAVIA saídas dentro dele)
+
+| rodada | intervalo (ms) | o quadro que o fechou, contra o `sync ok` | as linhas dentro |
+|---|---|---|---|
+| r01 | 67.3 | -900 ms | `sync start` · `auth refresh=cached` |
+| r01 | 557.1 | -331 ms | — |
+| r01 | 174.4 | -157 ms | `api status=200 path=/api/setlists n=1` · `auth refresh=cached` |
+| r01 | 210.7 | +81 ms | `cache write kind=setlists n=1 invalidated=0` · `cache write kind=content n=8 invalidated=1` · `sync ok setlists=1 content=8 pages=1` · `prefetch plan n=2 reason=library` |
+| r01 | 853.2 | +934 ms | — |
+| r01 | 259.8 | +1194 ms | `prefetch plan n=2 reason=demand` · `download-error partitura-escaneada.jpg: o servidor respondeu 404` · `download-error partitura-escaneada.jpg: o servidor respondeu 404` · `download-error nao-existe.pdf: o servidor respondeu 404` · `download-error nao-existe.pdf: o servidor respondeu 404` |
+| r01 | 666.8 | +1861 ms | — |
+| r01 | 85.8 | +1947 ms | — |
+| r01 | 53.9 | +4555 ms | — |
+| r01 | 57.0 | +6147 ms | — |
+| r01 | 50.3 | +11172 ms | — |
+| r01 | 264.1 | +12253 ms | — |
+| r01 | 68.8 | +12322 ms | — |
+| r01 | 52.9 | +12922 ms | — |
+| r01 | 50.1 | +13148 ms | — |
+| r02 | 350.6 | -226 ms | — |
+| r02 | 88.2 | -138 ms | `api status=200 path=/api/setlists n=1` · `auth refresh=cached` |
+| r02 | 114.5 | +58 ms | `cache write kind=setlists n=1 invalidated=0` · `cache write kind=content n=8 invalidated=1` · `sync ok setlists=1 content=8 pages=1` · `prefetch plan n=2 reason=library` |
+| r02 | 400.6 | +459 ms | — |
+| r02 | 175.4 | +635 ms | `prefetch plan n=2 reason=demand` · `download-error partitura-escaneada.jpg: o servidor respondeu 404` · `download-error partitura-escaneada.jpg: o servidor respondeu 404` · `download-error nao-existe.pdf: o servidor respondeu 404` · `download-error nao-existe.pdf: o servidor respondeu 404` |
+| r02 | 218.2 | +853 ms | — |
+| r02 | 63.1 | +916 ms | — |
+| r02 | 51.2 | +3991 ms | — |
+| r02 | 51.5 | +8598 ms | — |
+| r02 | 54.0 | +11352 ms | — |
+| r02 | 52.6 | +11603 ms | — |
+| r03 | 378.3 | -159 ms | — |
+| r03 | 114.7 | -45 ms | `api status=200 path=/api/setlists n=1` · `auth refresh=cached` |
+| r03 | 96.8 | +52 ms | `api status=200 path=/api/content n=1` · `cache write kind=setlists n=1 invalidated=0` · `cache write kind=content n=8 invalidated=1` · `sync ok setlists=1 content=8 pages=1` · `prefetch plan n=2 reason=library` |
+| r03 | 360.9 | +413 ms | — |
+| r03 | 210.7 | +624 ms | `prefetch plan n=2 reason=demand` · `download-error partitura-escaneada.jpg: o servidor respondeu 404` · `download-error partitura-escaneada.jpg: o servidor respondeu 404` · `download-error nao-existe.pdf: o servidor respondeu 404` · `download-error nao-existe.pdf: o servidor respondeu 404` |
+| r03 | 253.2 | +877 ms | — |
+| r03 | 52.1 | +929 ms | — |
+| r03 | 52.5 | +4660 ms | — |
+| r03 | 54.6 | +9566 ms | — |
+| r03 | 59.4 | +14903 ms | — |
+| r04 | 62.5 | -2786 ms | — |
+| r04 | 53.2 | -811 ms | — |
+| r04 | 324.1 | -334 ms | — |
+| r04 | 124.3 | -210 ms | `sync start` · `auth refresh=cached` |
+| r04 | 271.0 | +160 ms | `api status=200 path=/api/content n=1` · `cache write kind=setlists n=1 invalidated=0` · `cache write kind=content n=8 invalidated=1` · `sync ok setlists=1 content=8 pages=1` · `prefetch plan n=2 reason=library` |
+| r04 | 348.5 | +508 ms | — |
+| r04 | 207.0 | +715 ms | `prefetch plan n=2 reason=demand` · `download-error partitura-escaneada.jpg: o servidor respondeu 404` · `download-error partitura-escaneada.jpg: o servidor respondeu 404` · `download-error nao-existe.pdf: o servidor respondeu 404` · `download-error nao-existe.pdf: o servidor respondeu 404` |
+| r04 | 341.6 | +1065 ms | — |
+| r04 | 78.5 | +1143 ms | — |
+| r05 | 343.8 | -399 ms | `sync start` · `auth refresh=cached` |
+| r05 | 100.5 | -299 ms | — |
+| r05 | 148.5 | +81 ms | `cache write kind=setlists n=1 invalidated=0` · `cache write kind=content n=8 invalidated=1` · `sync ok setlists=1 content=8 pages=1` · `prefetch plan n=2 reason=library` |
+| r05 | 343.3 | +425 ms | — |
+| r05 | 204.3 | +629 ms | `prefetch plan n=2 reason=demand` · `download-error partitura-escaneada.jpg: o servidor respondeu 404` · `download-error partitura-escaneada.jpg: o servidor respondeu 404` · `download-error nao-existe.pdf: o servidor respondeu 404` · `download-error nao-existe.pdf: o servidor respondeu 404` |
+| r05 | 241.8 | +871 ms | — |
+| r05 | 69.6 | +940 ms | — |
+| r05 | 52.4 | +7497 ms | — |
+| r05 | 51.1 | +13558 ms | — |
+| r06 | 50.2 | -4692 ms | — |
+| r06 | 373.9 | -330 ms | `sync start` · `auth refresh=cached` |
+| r06 | 99.6 | -231 ms | `api status=200 path=/api/setlists n=1` · `auth refresh=cached` |
+| r06 | 67.1 | -123 ms | — |
+| r06 | 183.7 | +76 ms | `api status=200 path=/api/content n=1` · `cache write kind=setlists n=1 invalidated=0` · `cache write kind=content n=8 invalidated=1` · `sync ok setlists=1 content=8 pages=1` · `prefetch plan n=2 reason=library` |
+| r06 | 415.9 | +492 ms | — |
+| r06 | 199.0 | +691 ms | `prefetch plan n=2 reason=demand` · `download-error nao-existe.pdf: o servidor respondeu 404` · `download-error nao-existe.pdf: o servidor respondeu 404` · `download-error partitura-escaneada.jpg: o servidor respondeu 404` · `download-error partitura-escaneada.jpg: o servidor respondeu 404` |
+| r06 | 231.7 | +923 ms | — |
+| r06 | 71.1 | +4165 ms | — |
+| r06 | 55.9 | +8089 ms | — |
+| r07 | 373.8 | -157 ms | — |
+| r07 | 106.7 | -50 ms | `api status=200 path=/api/setlists n=1` · `auth refresh=cached` |
+| r07 | 139.4 | +89 ms | `api status=200 path=/api/content n=1` · `cache write kind=setlists n=1 invalidated=0` · `cache write kind=content n=8 invalidated=1` · `sync ok setlists=1 content=8 pages=1` · `prefetch plan n=2 reason=library` |
+| r07 | 405.9 | +495 ms | — |
+| r07 | 201.1 | +696 ms | `prefetch plan n=2 reason=demand` · `download-error partitura-escaneada.jpg: o servidor respondeu 404` · `download-error partitura-escaneada.jpg: o servidor respondeu 404` · `download-error nao-existe.pdf: o servidor respondeu 404` · `download-error nao-existe.pdf: o servidor respondeu 404` |
+| r07 | 259.9 | +966 ms | — |
+| r07 | 75.2 | +1042 ms | — |
+| r07 | 53.1 | +2232 ms | — |
+| r07 | 57.7 | +7688 ms | — |
+| r07 | 600.5 | +13621 ms | — |
+| r07 | 52.6 | +13686 ms | — |
+| r07 | 396.7 | +14412 ms | — |
+| r07 | 78.1 | +14490 ms | — |
+| r07 | 67.5 | +14558 ms | — |
+| r08 | 64.0 | -4585 ms | — |
+| r08 | 195.0 | -245 ms | `sync start` · `auth refresh=cached` |
+| r08 | 66.0 | -179 ms | — |
+| r08 | 111.6 | +55 ms | `api status=200 path=/api/content n=1` · `cache write kind=setlists n=1 invalidated=0` · `cache write kind=content n=8 invalidated=1` · `sync ok setlists=1 content=8 pages=1` · `prefetch plan n=2 reason=library` |
+| r08 | 268.7 | +323 ms | — |
+| r08 | 148.5 | +472 ms | `download-error partitura-escaneada.jpg: o servidor respondeu 404` · `prefetch plan n=2 reason=demand` · `download-error nao-existe.pdf: o servidor respondeu 404` · `download-error nao-existe.pdf: o servidor respondeu 404` |
+| r08 | 145.9 | +618 ms | — |
+| r08 | 147.8 | +817 ms | — |
+| r08 | 94.8 | +1042 ms | — |
+| r08 | 184.4 | +2339 ms | — |
+| r08 | 180.8 | +2520 ms | — |
+| r08 | 70.0 | +2589 ms | — |
+| r08 | 66.5 | +4344 ms | — |
+| r08 | 79.9 | +5295 ms | — |
+| r08 | 54.5 | +5438 ms | — |
+| r08 | 54.0 | +5492 ms | — |
+| r08 | 107.2 | +5599 ms | — |
+| r08 | 53.1 | +6003 ms | — |
+| r08 | 86.6 | +6751 ms | — |
+| r08 | 60.9 | +6812 ms | — |
+| r08 | 80.2 | +6996 ms | — |
+| r08 | 63.3 | +7394 ms | — |
+| r08 | 63.4 | +7458 ms | — |
+| r08 | 98.8 | +8459 ms | — |
+| r08 | 90.5 | +11689 ms | — |
+| r09 | 58.0 | -3863 ms | — |
+| r09 | 75.6 | -1255 ms | — |
+| r09 | 217.7 | -260 ms | `sync start` · `auth refresh=cached` |
+| r09 | 56.5 | -204 ms | — |
+| r09 | 107.8 | +49 ms | `cache write kind=setlists n=1 invalidated=0` · `cache write kind=content n=8 invalidated=1` · `sync ok setlists=1 content=8 pages=1` · `prefetch plan n=2 reason=library` |
+| r09 | 212.7 | +262 ms | — |
+| r09 | 122.4 | +384 ms | `prefetch plan n=2 reason=demand` · `download-error partitura-escaneada.jpg: o servidor respondeu 404` · `download-error partitura-escaneada.jpg: o servidor respondeu 404` · `download-error nao-existe.pdf: o servidor respondeu 404` · `download-error nao-existe.pdf: o servidor respondeu 404` |
+| r09 | 144.4 | +529 ms | — |
+| r09 | 57.8 | +7475 ms | — |
+| r09 | 53.1 | +7553 ms | — |
+| r09 | 563.5 | +8733 ms | — |
+| r09 | 153.0 | +10374 ms | — |
+| r09 | 56.7 | +13509 ms | — |
+| r10 | 139.0 | -4963 ms | — |
+| r10 | 194.2 | -188 ms | — |
+| r10 | 122.2 | +53 ms | `cache write kind=setlists n=1 invalidated=0` · `cache write kind=content n=8 invalidated=1` · `sync ok setlists=1 content=8 pages=1` · `prefetch plan n=2 reason=library` |
+| r10 | 198.7 | +252 ms | — |
+| r10 | 155.1 | +407 ms | `download-error partitura-escaneada.jpg: o servidor respondeu 404` · `prefetch plan n=2 reason=demand` · `download-error nao-existe.pdf: o servidor respondeu 404` · `download-error nao-existe.pdf: o servidor respondeu 404` |
+| r10 | 166.4 | +580 ms | `download-error partitura-escaneada.jpg: o servidor respondeu 404` |
+| r10 | 176.9 | +804 ms | — |
+| r10 | 58.7 | +863 ms | — |
+| r10 | 147.8 | +1613 ms | — |
+| r10 | 100.2 | +2550 ms | — |
+| r10 | 220.5 | +11742 ms | — |
+| r10 | 112.3 | +11854 ms | — |
+| r10 | 68.5 | +11954 ms | — |
+| r10 | 72.7 | +12430 ms | — |
+| r10 | 66.8 | +12786 ms | — |
+
+## As medianas e o critério da SY-D36 (n = 10)
+
+- SYNC: maior intervalo, mediana **389.5 ms** · intervalos > 100 ms, mediana **6.5** · a maior lacuna do uiautomator, mediana **311 ms**
+- PISO: maior intervalo, mediana **78.5 ms** · intervalos > 100 ms, mediana **0** · a maior lacuna do uiautomator, mediana **150 ms**
+- (dev client) > 100 ms: 6.5 ≤ 0 + 1 = 1? **NÃO** · maior intervalo: 389.5 ≤ max(2 × 78.5, 100) = 157.0? **NÃO** → **REPROVA**
+- (release, o uiautomator) a maior lacuna na janela do sync: mediana 311 ≤ 150 + 100 = 250? **REPROVA** · rodada a rodada: 1 de 10 dentro

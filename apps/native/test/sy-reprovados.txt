@@ -14,25 +14,7 @@ i:de-novo-fora-do-intervalo
 
 # (ii) o voo único — sy-voo.test.ts — esvazia na PR-2 (vazia desde o commit 5 da SY-PR2: o voo e a sessão no 2, as escritas no 4, o prazo no 5)
 
-# (iii) a foto — sy-foto.test.tsx — esvazia na PR-3
-iii:palco-corpo
-iii:palco-sem-topo
-iii:palco-rolagem-segue
-iii:palco-notas
-iii:palco-titulo
-iii:palco-nota-da-posicao
-iii:palco-barra
-iii:palco-file-url
-iii:palco-musica-apagada-aberta
-iii:sessao-indice
-iii:sessao-fim
-iii:sessao-busca
-iii:setlist-apagada
-iii:v-corpo
-iii:v-titulo
-iii:v-detalhes
-iii:v-notas
-iii:v-file-url
+# (iii) a foto — sy-foto.test.tsx — esvazia na PR-3 (a foto da sessão, commit 2 da SY-PR3, fechou as da sessão, o topo, a rolagem e a barra; a do conteúdo no palco, commit 3, as outras do palco; a de V, commit 4 — vazia)
 
 # (iv) a janela da naoRegredir — sy-nao-regredir.test.ts — esvazia na PR-2 (vazia desde o commit 3 da SY-PR2: a aplicação síncrona)
 

@@ -1,0 +1,47 @@
+# o custo — AVD, 2 rodadas (/private/tmp/claude-501/-Users-marcelviana-projects-octavia/666cc103-f76d-462c-84d5-3ebfd025d7a0/scratchpad/avd/custo/depois-sem-eventos)
+
+## SYNC — [t_ok − 5 s, t_ok + 15 s]
+
+| rodada | quadros | maior intervalo (ms) | > 16,7 ms | > 50 ms | > 100 ms | rolagem (uiautomator: eventos · maior lacuna · andou) | o `cache write` do content |
+|---|---|---|---|---|---|---|---|
+| r01 | 1158 | **148.6** | 566 | 7 | 4 | 0 · 0 ms · 0 px | n=8 invalidated=1 |
+| r02 | 1149 | **217.2** | 565 | 7 | 4 | 0 · 0 ms · 0 px | n=8 invalidated=1 |
+
+## PISO — a rolagem ligada, sem sync: [t_rol + 3 s, t_rol + 23 s]
+
+| rodada | quadros | maior intervalo (ms) | > 16,7 ms | > 50 ms | > 100 ms | rolagem (uiautomator: eventos · maior lacuna · andou) |
+|---|---|---|---|---|---|---|
+| r01 | 1189 | **88.6** | 599 | 2 | 0 | 0 · 0 ms · 0 px |
+| r02 | 1195 | **93.9** | 570 | 1 | 0 | 0 · 0 ms · 0 px |
+
+## CONTROLE (a) — a tarefa plantada de 200 ms aparece no sensor?
+
+| rodada | a tarefa durou | o maior intervalo em volta | o quadro que a fechou, depois do fim dela |
+|---|---|---|---|
+| — | — | — | — |
+
+## O que estava no JS em cada intervalo > 50 ms da janela do sync (as linhas OCTAVIA saídas dentro dele)
+
+| rodada | intervalo (ms) | o quadro que o fechou, contra o `sync ok` | as linhas dentro |
+|---|---|---|---|
+| r01 | 146.6 | -227 ms | `sync start` · `auth refresh=cached` |
+| r01 | 102.0 | +45 ms | `api status=200 path=/api/content n=1` · `cache write kind=setlists n=1 invalidated=0` · `cache write kind=content n=8 invalidated=1` · `sync ok setlists=1 content=8 pages=1` · `prefetch plan n=2 reason=library` |
+| r01 | 148.6 | +193 ms | — |
+| r01 | 79.5 | +273 ms | `prefetch plan n=2 reason=demand` · `download-error partitura-escaneada.jpg: o servidor respondeu 404` · `download-error partitura-escaneada.jpg: o servidor respondeu 404` · `download-error nao-existe.pdf: o servidor respondeu 404` · `download-error nao-existe.pdf: o servidor respondeu 404` |
+| r01 | 129.3 | +402 ms | — |
+| r01 | 89.8 | +1247 ms | — |
+| r01 | 57.2 | +13874 ms | — |
+| r02 | 217.2 | -165 ms | `sync start` · `auth refresh=cached` |
+| r02 | 56.1 | -109 ms | — |
+| r02 | 86.0 | +40 ms | `cache write kind=setlists n=1 invalidated=0` · `cache write kind=content n=8 invalidated=1` · `sync ok setlists=1 content=8 pages=1` · `prefetch plan n=2 reason=library` |
+| r02 | 155.6 | +195 ms | — |
+| r02 | 100.1 | +295 ms | `prefetch plan n=2 reason=demand` · `download-error partitura-escaneada.jpg: o servidor respondeu 404` · `download-error partitura-escaneada.jpg: o servidor respondeu 404` · `download-error nao-existe.pdf: o servidor respondeu 404` · `download-error nao-existe.pdf: o servidor respondeu 404` |
+| r02 | 172.7 | +468 ms | — |
+| r02 | 97.3 | +6044 ms | — |
+
+## As medianas e o critério da SY-D36 (n = 2)
+
+- SYNC: maior intervalo, mediana **182.9 ms** · intervalos > 100 ms, mediana **4** · a maior lacuna do uiautomator, mediana **0 ms**
+- PISO: maior intervalo, mediana **91.2 ms** · intervalos > 100 ms, mediana **0** · a maior lacuna do uiautomator, mediana **0 ms**
+- (dev client) > 100 ms: 4 ≤ 0 + 1 = 1? **NÃO** · maior intervalo: 182.9 ≤ max(2 × 91.2, 100) = 182.5? **NÃO** → **REPROVA**
+- (release, o uiautomator) a maior lacuna na janela do sync: mediana 0 ≤ 0 + 100 = 100? **PASSA** · rodada a rodada: 2 de 2 dentro

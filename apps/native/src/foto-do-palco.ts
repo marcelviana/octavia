@@ -7,9 +7,14 @@
  * desempilha o palco e cria outro), e por isso a foto mora ACIMA da instância, neste módulo, que o `native-tela`
  * consegue montar; o `navigation.tsx` só o liga (a ligação se prova no aparelho, A-SY-17).
  *
- * **SY-PR1: CONTRATO INERTE.** A assinatura e os tipos; a leitura devolve a setlist VIVA (o comportamento de hoje),
- * `entrar` e `sair` não guardam nada. Nenhuma tela o chama nesta PR. Existe para o gate (iii) (`test/sy-foto.test.tsx`)
- * ter o que importar; os casos da sessão reprovam pela lista, e a **PR-3** os esvazia implementando ESTE arquivo.
+ * **SY-PR3 — a lógica** (era contrato inerte na SY-PR1): `entrar` tira a foto da setlist VIVA daquele id; a leitura
+ * daquele id devolve a foto enquanto ela existir, e qualquer outro id lê a viva; `sair` solta. **A leitura nunca tira
+ * foto**: se tirasse, um render do palco durante a animação de saída a refaria depois de solta. Quem chama o `entrar`
+ * são as ações que abrem o palco de fora; quem chama o `sair` é o FOCO de S1 ou de S2 — pelo foco, e não pela ação de
+ * sair, porque o voltar do Android também leva a S2 (`navigation.tsx`).
+ *
+ * **A memória**: uma setlist só, a da sessão aberta — o objeto que a raiz já tinha, guardado por referência (nenhuma
+ * cópia); solta no foco de S1/S2. Uma sessão nova troca a foto, nunca soma.
  *
  * A foto do CONTEÚDO (o texto da música, por abertura, no palco e em V) não mora aqui: é estado de cada tela (a PR-3,
  * no `StageScreen.tsx` e no `VisualizacaoScreen.tsx`), e a estrela de V fica viva (SY-D21).
@@ -31,11 +36,16 @@ export interface FotoDaSessao {
   sair(): void
 }
 
-/** **SY-PR1: inerte** — a leitura é a viva; `entrar` e `sair` não guardam nada. Implementado na PR-3. */
+/** Uma foto por sessão de navegação — o `navigation.tsx` cria uma e a guarda. */
 export function criarFotoDaSessao(): FotoDaSessao {
+  let foto: SetlistDTO | null = null
   return {
-    entrar: () => undefined,
-    setlistDaSessao: (setlistId, achar) => achar(setlistId),
-    sair: () => undefined,
+    entrar: (setlistId, achar) => {
+      foto = achar(setlistId) ?? null
+    },
+    setlistDaSessao: (setlistId, achar) => (foto !== null && foto.id === setlistId ? foto : achar(setlistId)),
+    sair: () => {
+      foto = null
+    },
   }
 }

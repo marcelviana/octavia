@@ -1,0 +1,63 @@
+== 2026-10-12 10:46:20 os gates existentes — árvore 664b849, base origin/main 690972f
+
+$ sh apps/native/scripts/g-inv.sh docs/native/N3-PRECHECK-anexos/B5-baseline docs/native/QL-PR4-anexos/volta/dumps/base | tail -2
+G-inv: 34 de 34 idênticos
+G-inv: IDÊNTICO EM DP ✓
+exit=0
+
+$ sh apps/native/scripts/g-inv.sh docs/native/N3-PRECHECK-anexos/B3-referencia-paisagem docs/native/QL-PR4-anexos/volta/dumps/base | tail -2
+G-inv: 18 de 18 idênticos
+G-inv: IDÊNTICO EM DP ✓
+exit=0
+
+$ node apps/native/scripts/g-n3.mjs --pai docs/native/N3-PRECHECK-anexos/B5-baseline --pai docs/native/N3-PRECHECK-anexos/B3-referencia-paisagem --logico docs/native/QL-PR3-anexos/b3-pre-ql --faixa docs/native/QL-PR4-anexos/volta/dumps/base --rolada docs/native/QL-PR4-anexos/volta/dumps/base | grep -E '^G-N3'
+G-N3 — 84 par(es) (paisagem × faixa); medidas: docs/native/DESIGN-N3/medidas.json (tolerância 4 dp)
+G-N3: (e)=0 · (b)=0 · nome-acessível=8 · rolagem=6 · quebra=16 ✓ (d′ e 4 dp não reprovam: triagem e errata)
+exit=0
+
+$ pnpm exec vitest run tests/gates/ql-quebra.test.ts apps/native/test/g-par-visualizacao.test.tsx tests/gates/n4-g-par.test.tsx apps/native/test/gates.test.ts 2>&1 | grep -E 'gate da quebra:|zero diferenças|Test Files|Tests '
+G-par da visualização: zero diferenças ✓
+G-par da visualização: zero diferenças ✓
+gate da quebra: zero reprovações, lista vazia (QL-PR2) ✓
+[2m Test Files [22m [1m[32m4 passed[39m[22m[90m (4)[39m
+[2m      Tests [22m [1m[32m18 passed[39m[22m[90m (18)[39m
+exit=0
+
+$ cd apps/native && node scripts/icones.mjs ../../packages/identidade/src/icones.ts | tail -2
+  fora do catálogo: 4/4 idênticos a um <svg> do telas.html (36 assinaturas distintas no arquivo)
+  acusações: 0 · avisos: 0
+exit=0
+
+$ cd apps/native && node scripts/a20.mjs . | tail -2
+  literais em posição de texto examinados: 229
+  acusações: 0
+exit=0
+
+$ cd docs/native/DESIGN-V1 && shasum -a 256 -c SHA256SUMS | grep -c ': OK'
+3
+exit=0
+
+$ cd docs/native/DESIGN-N2 && shasum -a 256 -c SHA256SUMS | grep -c ': OK'
+2
+exit=0
+
+$ cd docs/native/DESIGN-N3 && shasum -a 256 -c SHA256SUMS | grep -c ': OK'
+2
+exit=0
+
+$ cd docs/native/DESIGN-N4 && shasum -a 256 -c SHA256SUMS | grep -c ': OK'
+2
+exit=0
+
+$ cd docs/native/DESIGN-QL && shasum -a 256 -c SHA256SUMS | grep -c ': OK'
+1
+exit=0
+
+$ cd docs/ux/DESIGN-I1 && shasum -a 256 -c SHA256SUMS | grep -c ': OK'
+14
+exit=0
+
+$ cd docs/native/N3-PRECHECK-anexos && shasum -a 256 -c SHA256SUMS.txt | grep -vc ': OK'
+0
+exit=1
+== 2026-10-12 10:46:27 fim

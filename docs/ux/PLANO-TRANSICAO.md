@@ -1593,3 +1593,11 @@ automaticamente.
 >
 > **Nota do aval da PR-2 do SY (2026-10-12)** — sem reescrever a nota acima. A PR-2 do SY (#380) tem aval (SY-D42…D48
 > `[Marcel, 2026-10-12]`, `docs/native/SY-PR2-anexos/README.md` §15); **a próxima é a PR-3, a foto.**
+>
+> **Nota da PR-3 do SY (2026-10-12)** — sem reescrever a nota acima. A PR-3 do SY (a foto; `docs/native/SY-PR3-anexos/README.md`)
+> está aberta e **aguarda o aval**, que decide a **SY-D6** (o "depois" do custo reprova o critério do dev client nos dois
+> aparelhos, Q1); a lista dos gates do SY vai de 27 a 9 (a parte (iii) vazia). **A próxima é a PR-4, os gatilhos.**
+>
+> **Nota do aval da PR-3 do SY (2026-10-12)** — sem reescrever a nota acima. A PR-3 do SY (#381) tem aval (SY-D49…D55
+> `[Marcel, 2026-10-12]`, `docs/native/SY-PR3-anexos/README.md` §16); a **SY-D6** caiu para *"nenhum gatilho com o palco
+> aberto"*; **a próxima é a PR-4, os gatilhos.**

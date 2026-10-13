@@ -1,0 +1,2 @@
+Tab antes: > 100 ms por rodada na rajada [3, 3, 3, 3, 3, 3, 3, 3, 3, 3] (mediana 3) · fora [0, 0, 0, 0, 0, 0, 0, 0, 0, 0] (mediana 0) · o passo 1 > 100 ms em 0 de 10 rodadas · o passo 0 > 100 ms em 9 de 10
+Tab depois: > 100 ms por rodada na rajada [3, 3, 3, 3, 3, 3, 3, 3, 3, 3] (mediana 3) · fora [0, 0, 0, 0, 0, 0, 0, 0, 0, 0] (mediana 0) · o passo 1 > 100 ms em 0 de 10 rodadas · o passo 0 > 100 ms em 9 de 10

@@ -1,0 +1,145 @@
+# cn-sy-pr3.sh — 2026-10-12 10:38:14 -0300 · árvore 664b849575b515124ab46395b0e01f579a12a71e
+# Leitura: com o defeito plantado, o gate (iii) tem de ACUSAR a checagem daquela regra — uma REPROVA que não é das
+# declaradas; com a planta certa, as declaradas que ela cumpre aparecem como ÓRFÃS.
+==================================================================================================
+CN c-1 — a foto de uma setlist serve a outra (div. 1283, o sessao-outra-setlist)
+  planta: foto-do-palco-lab.ts · defeito: serve-outra
+  gate iii (a foto) — casos 23 · passam 22 · reprovam 1
+    REPROVA             iii:sessao-outra-setlist
+          outra setlist não leu a viva
+    ✗ reprovação NÃO DECLARADA: iii:sessao-outra-setlist
+  gate iii: ✗
+       × reprova exatamente a lista de sy-reprovados.txt 20ms
+   Test Files  1 failed (1)
+        Tests  1 failed | 6 passed (7)
+==================================================================================================
+CN c-2 — o laboratório da foto da sessão, sem defeito (o controle do c-1)
+  planta: foto-do-palco-lab.ts · defeito: -
+  gate iii (a foto) — casos 23 · passam 23 · reprovam 0
+  gate iii: reprova exatamente a lista esperada (0) ✓
+   Test Files  1 passed (1)
+        Tests  7 passed (7)
+==================================================================================================
+CN c-3 — a foto de V congela também a estrela
+  planta: - · defeito: v-congela-a-estrela
+  plantado em apps/native/src/screens/VisualizacaoScreen.tsx (1×): '{ ...ultimo.current, is_favorite: atual.is_favorite }' → 'ultimo.current'
+  gate iii (a foto) — casos 23 · passam 22 · reprovam 1
+    REPROVA             iii:v-estrela-viva · a estrela antes: "Favoritar “SY foto 1”" · depois: "Favoritar “SY foto 1”"
+          a estrela não acompanhou o favoritar (congelou)
+    ✗ reprovação NÃO DECLARADA: iii:v-estrela-viva
+  gate iii: ✗
+       × reprova exatamente a lista de sy-reprovados.txt 20ms
+   Test Files  1 failed (1)
+        Tests  1 failed | 6 passed (7)
+==================================================================================================
+CN c-4 — a foto da sessão não solta ao voltar a S1/S2
+  planta: - · defeito: sessao-nunca-solta
+  plantado em apps/native/src/foto-do-palco.ts (1×): 'sair: () => {\n      foto = null\n    },' → 'sair: () => undefined,'
+  gate iii (a foto) — casos 23 · passam 22 · reprovam 1
+    REPROVA             iii:sessao-solta · depois de sair, lê: 3 músicas, "SY foto" (a viva: 4 músicas)
+          a foto não se soltou ao sair do palco
+    ✗ reprovação NÃO DECLARADA: iii:sessao-solta
+  gate iii: ✗
+       × reprova exatamente a lista de sy-reprovados.txt 19ms
+   Test Files  1 failed (1)
+        Tests  1 failed | 6 passed (7)
+==================================================================================================
+CN c-5 — a foto do conteúdo não se renova ao trocar de posição
+  planta: - · defeito: palco-nao-renova-na-troca
+  plantado em apps/native/src/screens/StageScreen.tsx (1×): 'const chaveDaAbertura = avulsa ? `avulsa|${avulsaContentId}` : `${posi' → "const chaveDaAbertura = 'uma-so'"
+  gate iii (a foto) — casos 23 · passam 21 · reprovam 2
+    REPROVA             iii:palco-trocar-posicao
+          trocar de posição não abriu a versão nova
+    REPROVA             iii:palco-musica-apagada-nunca-aberta
+          a posição nunca aberta, com a música apagada, não mostrou o placeholder de hoje
+    ✗ reprovação NÃO DECLARADA: iii:palco-trocar-posicao
+    ✗ reprovação NÃO DECLARADA: iii:palco-musica-apagada-nunca-aberta
+  gate iii: ✗
+       × reprova exatamente a lista de sy-reprovados.txt 19ms
+   Test Files  1 failed (1)
+        Tests  1 failed | 6 passed (7)
+==================================================================================================
+CN c-6 — a foto por instância, não por sessão (o índice vê a setlist viva)
+  planta: - · defeito: sessao-por-instancia
+  apps/native/src/foto-do-palco.ts ← o da SY-PR1 (17207c4): inerte, a leitura é a viva
+  gate iii (a foto) — casos 23 · passam 15 · reprovam 8
+    REPROVA             iii:palco-sem-topo · rolagens antes do sync: 10 (a última em y=9) · depois: 0, a última em y=0
+          a rolagem voltou ao topo (scrollTo y: 0) com o sync
+    REPROVA             iii:palco-rolagem-segue · o controle: "Rolagem automática, desligada" · andou depois do sync: false
+          a rolagem parou com o sync (ligada: false, andou: false)
+    REPROVA             iii:palco-nota-da-posicao
+          a nota da posição mudou
+    REPROVA             iii:palco-barra · antes: "1 DE 3" · depois: "1 DE 4"
+          a barra mudou (o "n DE N" ou o nome da setlist)
+    REPROVA             iii:sessao-indice · o índice lê: 4 músicas, "SY foto, renomeada no site" (a foto: 3 músicas, "SY foto")
+          o índice leu a setlist viva
+    REPROVA             iii:sessao-fim · o fim lê: 4 (a foto: 3)
+          o fim leu 4 músicas (a viva)
+    REPROVA             iii:sessao-busca · a busca lê: 4 músicas, "SY foto, renomeada no site"
+          a busca leu a setlist viva
+    REPROVA             iii:setlist-apagada · com a setlist apagada pelo sync, o palco lê: nenhuma
+          a setlist apagada derruba o palco (o placeholder "não está no cache")
+    ✗ reprovação NÃO DECLARADA: iii:palco-sem-topo
+    ✗ reprovação NÃO DECLARADA: iii:palco-rolagem-segue
+    ✗ reprovação NÃO DECLARADA: iii:palco-nota-da-posicao
+    ✗ reprovação NÃO DECLARADA: iii:palco-barra
+    ✗ reprovação NÃO DECLARADA: iii:sessao-indice
+    ✗ reprovação NÃO DECLARADA: iii:sessao-fim
+    ✗ reprovação NÃO DECLARADA: iii:sessao-busca
+    ✗ reprovação NÃO DECLARADA: iii:setlist-apagada
+  gate iii: ✗
+       × reprova exatamente a lista de sy-reprovados.txt 19ms
+   Test Files  1 failed (1)
+        Tests  1 failed | 6 passed (7)
+==================================================================================================
+CN c-7 — a música aberta, apagada pelo sync, perde a foto
+  planta: - · defeito: palco-esquece-a-apagada
+  plantado em apps/native/src/screens/StageScreen.tsx (1×): 'if (fotoDoConteudo.current.chave !== chaveDaAbertura) fotoDoConteudo.c' → 'if (fotoDoConteudo.current.chave !== chaveDaAbertura || vivo === null)'
+  gate iii (a foto) — casos 23 · passam 22 · reprovam 1
+    REPROVA             iii:palco-musica-apagada-aberta
+          a música aberta, apagada pelo sync, virou placeholder
+    ✗ reprovação NÃO DECLARADA: iii:palco-musica-apagada-aberta
+  gate iii: ✗
+       × reprova exatamente a lista de sy-reprovados.txt 21ms
+   Test Files  1 failed (1)
+        Tests  1 failed | 6 passed (7)
+==================================================================================================
+CN c-8 — o palco lê o conteúdo vivo
+  planta: - · defeito: palco-sem-foto
+  plantado em apps/native/src/screens/StageScreen.tsx (1×): 'const content = fotoDoConteudo.current.content' → 'const content = vivo'
+  gate iii (a foto) — casos 23 · passam 17 · reprovam 6
+    REPROVA             iii:palco-corpo
+          o corpo mudou no meio da música
+    REPROVA             iii:palco-notas
+          as notas da música mudaram
+    REPROVA             iii:palco-titulo
+          o título mudou
+    REPROVA             iii:palco-nota-da-posicao
+          a nota da posição mudou
+    REPROVA             iii:palco-file-url · downloads antes do sync: ["sy-partitura-a.pdf"] · depois: ["sy-partitura-b.pdf"]
+          o palco pediu o arquivo novo com a música aberta
+    REPROVA             iii:palco-musica-apagada-aberta
+          a música aberta, apagada pelo sync, virou placeholder
+    ✗ reprovação NÃO DECLARADA: iii:palco-corpo
+    ✗ reprovação NÃO DECLARADA: iii:palco-notas
+    ✗ reprovação NÃO DECLARADA: iii:palco-titulo
+    ✗ reprovação NÃO DECLARADA: iii:palco-nota-da-posicao
+    ✗ reprovação NÃO DECLARADA: iii:palco-file-url
+    ✗ reprovação NÃO DECLARADA: iii:palco-musica-apagada-aberta
+  gate iii: ✗
+       × reprova exatamente a lista de sy-reprovados.txt 19ms
+   Test Files  1 failed (1)
+        Tests  1 failed | 6 passed (7)
+==================================================================================================
+CN c-9 — a foto de V sem a chave do id (a 1ª forma do commit 4)
+  planta: - · defeito: v-sem-chave-do-id
+  plantado em apps/native/src/screens/VisualizacaoScreen.tsx (1×): '(ultimo.current === null || ultimo.current.id !== atual.id)' → 'ultimo.current === null'
+       × o tipo vem com o ícone de 20 do catálogo, e o tipo desconhecido em `offlineInk`, com o ▶ inerte 17ms
+       × o ▶ inerte tem a MESMA borda do ativo (`line`, a da folha); só o ícone muda, para `lineInfo` (P-I2) 12ms
+  gate iii (a foto) — casos 23 · passam 23 · reprovam 0
+  gate iii: reprova exatamente a lista esperada (0) ✓
+   Test Files  1 failed | 1 passed (2)
+        Tests  2 failed | 41 passed (43)
+==================================================================================================
+$ git status --short -- apps/native/src   (vazio = os arquivos voltaram)
+exit=0

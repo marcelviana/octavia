@@ -1,0 +1,11 @@
+# os extratores sobre o corpo da #381 com a linha do aval — 2026-10-12 20:36:16
+$ gh pr view 381 --json body -q .body | grep -n "Aval aplicado"
+10:**Aval aplicado (SY-D49…SY-D55)** `[Marcel, 2026-10-12]` — `docs/native/SY-PR3-anexos/README.md` §16: a SY-D6 caiu para *"nenhum gatilho com o palco aberto"* (SY-D49).
+$ gh pr view 381 --json body -q .body | sh apps/native/scripts/gates-decl.sh
+g1a: apps/native/src/foto-do-palco.ts
+g1a: apps/native/src/navigation.tsx
+g1a: apps/native/src/screens/StageScreen.tsx
+g1a: apps/native/src/screens/VisualizacaoScreen.tsx
+exit=0
+$ gh pr view 381 --json body -q .body | sh scripts/gates-web/gates-web-decl.sh
+exit=0 · 0 declarações
