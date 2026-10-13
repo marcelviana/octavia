@@ -11,6 +11,26 @@ i:marca-volta-curta
 i:dois-eventos
 i:apos-falha-de-rede
 i:de-novo-fora-do-intervalo
+# SY-PR4, commit 1 — os casos novos (SY-D49 (3), SY-D44, SY-D28, SY-D56), entrando reprovados; esvaziam no commit 3 (as
+# linhas, o logout) e no commit 4 (o palco, o avulso). O `palco-sair-sem-marca` e o `palco-abertura-e-tentar` passam
+# hoje e ficam FORA: a prova deles é o controle negativo (`docs/native/SY-PR4-anexos/instrumentos/cn-sy-pr4.sh`).
+i:linhas-sem-disparo
+i:logout-intervalo-de-outra-sessao
+i:palco-rede
+i:palco-fundo
+i:palco-indice-por-cima
+i:palco-sair-com-marca
+i:palco-sair-no-intervalo
+i:palco-sair-sem-rede
+i:palco-v-aberta
+i:palco-de-novo-espera
+i:palco-avulso
+# (i), a família tela- — sy-gatilhos-telas.test.tsx (SY-D52, SY-D57): esvazia no commit 3 (o gatilho chega à tela)
+i:tela-s2-reordenar
+i:tela-s2-folha
+i:tela-banner-some
+i:tela-banner-nao-desfaz-s1
+i:tela-banner-nao-desfaz-l
 
 # (ii) o voo único — sy-voo.test.ts — esvazia na PR-2 (vazia desde o commit 5 da SY-PR2: o voo e a sessão no 2, as escritas no 4, o prazo no 5)
 

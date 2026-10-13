@@ -17,6 +17,20 @@
  * **O que NÃO consegue ver**: o que o Android entrega de fato (o portal cativo, a troca Wi-Fi ↔ dados, o evento com o
  * app em segundo plano, a tela bloqueada como segundo plano — SY-D17 (2), A-SY-18, A-SY-19) e o JS suspenso em segundo
  * plano. Isso é do aparelho, na PR-4 (AVD com o mock).
+ *
+ * **SY-PR4, commit 1 — os casos novos** (SY-D49 (3): entram reprovando no primeiro commit da PR-4): o PALCO (A-SY-23,
+ * SY-D49, SY-D56 — a foto da sessão de verdade, `criarFotoDaSessao`, é o que os gatilhos leem; `entrar`/`sair`/
+ * `focoDoIndice`/`abrirAvulso` fazem o papel da navegação), o LOGOUT (SY-D44 — o caso lê o `ultimoSyncNaRede` do
+ * EXECUTOR, que é o que o `App.tsx` passa) e as LINHAS `sync trigger` dos gatilhos que não disparam (SY-D28). Os casos
+ * novos conferem a contagem de `sync start` **e** as linhas `sync trigger`, na ordem. A sessão (`sessao()`) passou a
+ * ligar o `palco` (a foto, fechada) e o `segurarDeNovo` na raiz do arnês — mudança de instrumento, declarada: os casos
+ * da PR-1 não mudaram de cenário nem de asserção. Os de TELA (S2 em edição, o banner da falha automática) moram em
+ * `sy-gatilhos-telas.test.tsx`, a família `tela-` do mesmo gate.
+ *
+ * **O que estes casos NÃO veem**: a `Navigation` real (que tela chama `entrar`/`sair`/`focoDoIndice`/`abrirAvulso` é
+ * do `navigation.tsx`, e a ligação se prova no aparelho, A-SY-23); a busca do palco por cima (ela não toca a sessão:
+ * o caso do índice cobre a regra, o aparelho a tela); V aberta (V não está na sessão por construção — o caso confere que
+ * a sessão solta não segura nada, o aparelho que o texto de V não muda).
  */
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { mkdtempSync, rmSync } from 'node:fs'
@@ -27,6 +41,8 @@ import { __appState, __limparAppState } from './fake-react-native'
 import { __limparRede, __rede, __redeSemEvento } from './fake-expo-network'
 import { __reset } from './fake-expo-file-system'
 import { Mock, portaLivre } from './mock'
+import type { FotoDaSessao } from '../src/foto-do-palco'
+import type { GatilhosLigados, LigacaoDosGatilhos } from '../src/gatilhos'
 import { Arnes, SEM_DADOS, comPrazo, musica, segurarConteudo, setlistCom } from './sy-arnes'
 import { Checagens, type Veredito } from './sy-lista'
 
@@ -45,7 +61,9 @@ let dir = ''
 let portaMorta = 0
 let S: typeof import('../src/sincronizador')
 let G: typeof import('../src/gatilhos')
+let F: typeof import('../src/foto-do-palco')
 let a: Arnes
+let foto: FotoDaSessao
 let desligar: () => void = () => undefined
 const C = new Checagens('i', 'os gatilhos')
 
@@ -71,6 +89,24 @@ async function syncDireto(): Promise<void> {
   await a.quieto()
 }
 
+/**
+ * Liga os gatilhos como o `App.tsx` os liga: a sessão, o pedido (o executor), o último sync, o palco (a foto) — e o
+ * `segurarDeNovo` na raiz do executor (SY-D49 (2)). Por omissão, o `ultimoSyncNaRede` é o das LINHAS (a definição da A2.4).
+ */
+function ligar(extra: Partial<LigacaoDosGatilhos> = {}): void {
+  const g: GatilhosLigados = G.ligarGatilhos({
+    sessao: () => a.sessao,
+    pedirSync: () => {
+      void S.rodarSync(a.raiz, UID, a.dadosRef.current)
+    },
+    ultimoSyncNaRede: () => a.ultimoSyncNaRede(),
+    palco: foto,
+    ...extra,
+  })
+  a.raiz.segurarDeNovo = () => g.segurarDeNovo()
+  desligar = g
+}
+
 /** A sessão como o `App.tsx` a monta: os gatilhos ligados, o sync da abertura, e o relógio 10 min adiante. */
 async function sessao(): Promise<void> {
   __limparAppState()
@@ -80,17 +116,19 @@ async function sessao(): Promise<void> {
   a = new Arnes(UID)
   a.registrar()
   vi.setSystemTime(AGORA)
-  desligar = G.ligarGatilhos({
-    sessao: () => a.sessao,
-    pedirSync: () => {
-      void S.rodarSync(a.raiz, UID, a.dadosRef.current)
-    },
-    ultimoSyncNaRede: () => a.ultimoSyncNaRede(),
-  })
+  foto = F.criarFotoDaSessao()
+  ligar()
   await S.rodarSync(a.raiz, UID, SEM_DADOS)
   await a.quieto()
   passar(10 * 60_000)
 }
+
+/** O palco: a setlist da sessão (o `acharSetlist` do `navigation.tsx`), entrar de fora, sair a S1/S2. */
+const acharSetlist = (id: string) => SETLISTS.find((s) => s.id === id)
+const abrirPalco = (): Promise<void> => evento(() => foto.entrar(SL, acharSetlist))
+const sairDoPalco = (): Promise<void> => evento(() => foto.sair())
+/** A linha `sync trigger` esperada (SY-D28; `stage-exit`, `again` e `hold-stage` são da SY-D49, os nomes propostos pela PR-4). */
+const T = (motivo: string, decisao: string): string => `sync trigger reason=${motivo} decision=${decisao}`
 
 let caso = ''
 function contar(i0: number, esperado: number, extra?: string): Veredito {
@@ -98,6 +136,17 @@ function contar(i0: number, esperado: number, extra?: string): Veredito {
   C.nota(caso, `sync start depois do cenário: ${n} (esperado ${esperado})`)
   if (extra !== undefined) return extra
   return n === esperado ? null : `${n} sync(s), esperado ${esperado}`
+}
+
+/** SY-PR4 — a contagem de `sync start` E as linhas `sync trigger`, na ordem (o "→ 0" é uma linha, não a ausência dela). */
+function confere(i0: number, esperado: number, linhas: string[], extra?: string): Veredito {
+  const n = a.starts(i0)
+  const vistas = a.desde(i0, 'sync trigger')
+  C.nota(caso, `sync start: ${n} (esperado ${esperado}) · sync trigger: ${JSON.stringify(vistas)}`)
+  if (extra !== undefined) return extra
+  if (n !== esperado) return `${n} sync(s), esperado ${esperado}`
+  if (JSON.stringify(vistas) !== JSON.stringify(linhas)) return `linhas sync trigger ${JSON.stringify(vistas)}, esperado ${JSON.stringify(linhas)}`
+  return null
 }
 
 async function rodar(id: string, f: () => Promise<Veredito>): Promise<void> {
@@ -117,6 +166,7 @@ beforeAll(async () => {
   vi.useFakeTimers({ toFake: ['Date'] })
   S = await import('../src/sincronizador')
   G = await import('../src/gatilhos')
+  F = await import('../src/foto-do-palco')
 })
 
 afterAll(async () => {
@@ -252,13 +302,7 @@ describe('gate (i) — os gatilhos (SY-D4, SY-D17, SY-D18; A2.3, A2.4)', () => {
       desligar()
       __redeSemEvento(true)
       const i0 = a.marca()
-      desligar = G.ligarGatilhos({
-        sessao: () => a.sessao,
-        pedirSync: () => {
-          void S.rodarSync(a.raiz, UID, a.dadosRef.current)
-        },
-        ultimoSyncNaRede: () => a.ultimoSyncNaRede(),
-      })
+      ligar()
       await a.quieto()
       await redeVolta()
       return contar(i0, 0)
@@ -348,6 +392,219 @@ describe('gate (i) — os gatilhos (SY-D4, SY-D17, SY-D18; A2.3, A2.4)', () => {
       await a.quieto()
       base(mock.porta)
       return contar(i0, 1) // o que falhou, e mais nenhum
+    })
+  })
+
+  // ------------------------------------------------------------------------------------------------ SY-PR4, commit 1
+
+  it('SY-D28: os gatilhos que NÃO disparam deixam a linha — skip-short, skip-interval, skip-offline, skip-background', async () => {
+    await rodar('linhas-sem-disparo', async () => {
+      const i0 = a.marca()
+      await fundo()
+      passar(10_000)
+      await frente() // a volta curta, sem a marca
+      await syncDireto()
+      passar(5_000)
+      await redeCai()
+      await redeVolta() // dentro do intervalo
+      await fundo()
+      await redeCai()
+      passar(31_000)
+      await frente() // a volta longa, sem rede
+      await fundo()
+      await redeVolta() // a rede volta em segundo plano: a marca
+      return confere(i0, 1, [
+        T('foreground', 'skip-short'),
+        T('net', 'skip-interval'),
+        T('foreground', 'skip-offline'),
+        T('net', 'skip-background'),
+      ])
+    })
+  })
+
+  it('A-SY-23: com o palco aberto, a rede volta → 0 sync e a marca (hold-stage)', async () => {
+    await rodar('palco-rede', async () => {
+      await abrirPalco()
+      const i0 = a.marca()
+      await redeCai()
+      await redeVolta()
+      return confere(i0, 0, [T('net', 'hold-stage')])
+    })
+  })
+
+  it('A-SY-23: com o palco aberto, a volta do segundo plano depois de 30 s → 0 sync e a marca', async () => {
+    await rodar('palco-fundo', async () => {
+      await abrirPalco()
+      const i0 = a.marca()
+      await fundo()
+      passar(31_000)
+      await frente()
+      return confere(i0, 0, [T('foreground', 'hold-stage')])
+    })
+  })
+
+  it('A-SY-23: o índice do palco por cima (a mesma sessão, E6) → os dois gatilhos seguram', async () => {
+    await rodar('palco-indice-por-cima', async () => {
+      await abrirPalco()
+      await evento(() => foto.focoDoIndice(3)) // o salto ao índice do palco: o foco do `Index` COM `posicaoAtual`
+      const i0 = a.marca()
+      await redeCai()
+      await redeVolta()
+      await fundo()
+      passar(31_000)
+      await frente()
+      return confere(i0, 0, [T('net', 'hold-stage'), T('foreground', 'hold-stage')])
+    })
+  })
+
+  it('A-SY-23: sair do palco com a marca → 1 sync (stage-exit, as regras de sempre)', async () => {
+    await rodar('palco-sair-com-marca', async () => {
+      await abrirPalco()
+      const i0 = a.marca()
+      await redeCai()
+      await redeVolta()
+      passar(5_000)
+      await sairDoPalco()
+      return confere(i0, 1, [T('net', 'hold-stage'), T('stage-exit', 'run')])
+    })
+  })
+
+  it('A-SY-23: sair do palco DENTRO do intervalo → 0 (skip-interval), e a marca se consome', async () => {
+    await rodar('palco-sair-no-intervalo', async () => {
+      await abrirPalco()
+      await syncDireto() // o *Tentar de novo* com o palco aberto: roda como hoje, e termina agora
+      const i0 = a.marca()
+      passar(5_000)
+      await redeCai()
+      await redeVolta()
+      passar(5_000)
+      await sairDoPalco()
+      passar(60_000)
+      await sairDoPalco() // um segundo foco de S1/S2: a marca já se consumiu, nada
+      return confere(i0, 0, [T('net', 'hold-stage'), T('stage-exit', 'skip-interval')])
+    })
+  })
+
+  it('A-SY-23: sair do palco SEM rede → 0 (skip-offline), a marca se consome, e a rede que volta depois dispara', async () => {
+    await rodar('palco-sair-sem-rede', async () => {
+      await abrirPalco()
+      const i0 = a.marca()
+      await redeCai()
+      await redeVolta()
+      await redeCai()
+      await sairDoPalco()
+      const noMeio = a.starts(i0)
+      await redeVolta() // o palco já fechou: é o gatilho da rede de sempre
+      return confere(
+        i0,
+        1,
+        [T('net', 'hold-stage'), T('stage-exit', 'skip-offline'), T('net', 'run')],
+        noMeio !== 0 ? `${noMeio} sync(s) ao sair sem rede` : undefined,
+      )
+    })
+  })
+
+  it('A-SY-23: sair do palco SEM marca → 0, e nenhuma linha', async () => {
+    await rodar('palco-sair-sem-marca', async () => {
+      await abrirPalco()
+      const i0 = a.marca()
+      passar(5_000)
+      await sairDoPalco()
+      return confere(i0, 0, [])
+    })
+  })
+
+  it('A-SY-23: V aberta (fora da sessão do palco) → o gatilho roda', async () => {
+    await rodar('palco-v-aberta', async () => {
+      await abrirPalco()
+      await sairDoPalco() // de volta a S1; de lá a L e V — nenhuma delas entra na sessão
+      const i0 = a.marca()
+      await redeCai()
+      await redeVolta()
+      return confere(i0, 1, [T('net', 'run')])
+    })
+  })
+
+  it('A-SY-23: o "de novo" de um sync em voo quando o palco abre no meio → espera (again), e roda ao sair', async () => {
+    await rodar('palco-de-novo-espera', async () => {
+      const i0 = a.marca()
+      const { lido, soltar } = segurarConteudo()
+      const voo = S.rodarSync(a.raiz, UID, a.dadosRef.current)
+      await comPrazo(lido, 5_000, 'o sync não chegou a ler o conteúdo')
+      await act(async () => {
+        __rede(false)
+      })
+      await act(async () => {
+        __rede(true) // o palco ainda fechado: queued, o "de novo" marcado no voo
+      })
+      await act(async () => {
+        foto.entrar(SL, acharSetlist) // o palco abre no meio do voo
+      })
+      soltar()
+      await voo
+      await a.quieto()
+      const noPalco = a.starts(i0)
+      passar(31_000)
+      await sairDoPalco()
+      return confere(
+        i0,
+        2,
+        [T('net', 'queued'), T('again', 'hold-stage'), T('stage-exit', 'run')],
+        noPalco !== 1 ? `${noPalco} sync(s) com o palco aberto (esperado 1: só o que voava)` : undefined,
+      )
+    })
+  })
+
+  it('A-SY-23: o sync da abertura e o *Tentar de novo* com o palco aberto → rodam como hoje, sem linha sync trigger', async () => {
+    await rodar('palco-abertura-e-tentar', async () => {
+      await abrirPalco()
+      const i0 = a.marca()
+      await S.rodarSync(a.raiz, UID, a.dadosRef.current) // a abertura (o `App.tsx` chama o executor direto)
+      await a.quieto()
+      passar(5_000)
+      await syncDireto() // o *Tentar de novo*
+      return confere(i0, 2, [])
+    })
+  })
+
+  it('SY-D56: o palco avulso sem hospedeira montado segura os gatilhos; desmontado, o marcado roda', async () => {
+    await rodar('palco-avulso', async () => {
+      const i0 = a.marca()
+      let fechar: () => void = () => undefined
+      await act(async () => {
+        fechar = foto.abrirAvulso() // ▶ na L ou em V: `Stage { avulsa, origem }`
+      })
+      await redeCai()
+      await redeVolta()
+      passar(5_000)
+      await evento(() => fechar()) // o voltar desempilha o avulso
+      return confere(i0, 1, [T('net', 'hold-stage'), T('stage-exit', 'run')])
+    })
+  })
+
+  it('SY-D44: o último sync de OUTRA sessão não segura o gatilho desta (logout e login no meio)', async () => {
+    await rodar('logout-intervalo-de-outra-sessao', async () => {
+      const B = 'sy-gatilhos-b'
+      desligar()
+      // a ligação que o `App.tsx` faz: o `ultimoSyncNaRede` do EXECUTOR, e o pedido pela sessão de agora
+      ligar({
+        pedirSync: () => {
+          const uid = a.sessao
+          if (uid !== null) void S.rodarSync(a.raiz, uid, a.dadosRef.current)
+        },
+        ultimoSyncNaRede: () => S.ultimoSyncNaRede(),
+      })
+      await syncDireto() // a sessão A sai à rede e termina
+      passar(2_000)
+      a.sair() // o logout
+      a.sessao = B // o login de outra conta
+      await redeCai()
+      await S.rodarSync(a.raiz, B, SEM_DADOS) // a abertura de B, sem rede: `sync skip`, nada sai à rede
+      await a.quieto()
+      const i0 = a.marca()
+      passar(3_000)
+      await redeVolta()
+      return confere(i0, 1, [T('net', 'run')])
     })
   })
 

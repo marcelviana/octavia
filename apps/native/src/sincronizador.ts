@@ -45,20 +45,27 @@ export interface RaizDoSync {
    * velha pediu. Era contrato inerte na SY-PR1 (opcional e ignorado); obrigatório desde a PR-2.
    */
   sessaoAtual: () => string | null
+  /**
+   * SY-PR4 (SY-D49 (2)) — perguntado quando o "de novo" do voo IA rodar: `true` = o palco está aberto, o pedido ficou
+   * marcado para o fechar dele (os gatilhos, `segurarDeNovo`), e o "de novo" se cancela aqui. Opcional: sem ele, o "de
+   * novo" roda como na PR-2. **Commit 1 da PR-4: declarado e ainda não lido** (o executor o lê no commit 4).
+   */
+  segurarDeNovo?: () => boolean
 }
 
 /** O voo (a máquina do core) e o "de novo" marcado: QUEM pediu por último — a raiz e o uid da sessão daquele pedido. */
 let voo: EstadoDoVoo = VOO_OCIOSO
 let deNovo: { raiz: RaizDoSync; uid: string } | null = null
 
-/** O último sync que SAIU À REDE (emitiu `sync start`): quando começou, quando terminou (`null` = em voo) e como. */
+/** O último sync que SAIU À REDE (emitiu `sync start`): de que sessão, quando começou, quando terminou (`null` = em voo) e como. */
 let ultimo: SyncNaRede | null = null
 
 /**
  * SY-D33 — o último sync que saiu à rede, de qualquer origem (a abertura, o *Tentar de novo*, o "de novo"): a definição
  * da A2.4 (`SY-PRECHECK.md`) — começou na linha `sync start`, terminou na `sync ok` ou na `sync fail`, e `falhaDeRede`
  * quando a falha saiu com `code=network`. O `sync skip reason=offline` não conta (não houve requisição). Os gatilhos da
- * PR-4 o leem para o intervalo de 30 s (SY-D18); nesta PR, nada o lê.
+ * PR-4 o leem para o intervalo de 30 s (SY-D18). SY-PR4 (SY-D44): ele carrega o `uid` da sessão que pediu, e NÃO se zera
+ * no logout — quem decide é quem o consome: os gatilhos só o contam contra a sessão de agora.
  */
 export function ultimoSyncNaRede(): SyncNaRede | null {
   return ultimo === null ? null : { ...ultimo }
@@ -111,7 +118,7 @@ async function rodarUm(raiz: RaizDoSync, uid: string, anterior: Dados): Promise<
     anterior.temCache ? { content: anterior.content, setlists: anterior.setlists } : null,
     {
       aoComecar: () => {
-        ultimo = { inicioMs: Date.now(), fimMs: null, falhaDeRede: false }
+        ultimo = { uid, inicioMs: Date.now(), fimMs: null, falhaDeRede: false }
       },
       // SY-D26 — a aplicação na raiz DENTRO do bloco síncrono do sync (o gancho é chamado antes de o `sincronizar`
       // devolver, sem `await` desde a leitura das confirmadas do favoritar): a janela da A6.1 deixa de existir.

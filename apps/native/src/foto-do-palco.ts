@@ -20,11 +20,18 @@
  * no `StageScreen.tsx` e no `VisualizacaoScreen.tsx`), e a estrela de V fica viva (SY-D21).
  */
 import type { SetlistDTO } from '@octavia/core'
+import type { PalcoDosGatilhos } from './gatilhos'
 
 /** A busca de hoje: a setlist viva da raiz pelo id (`acharSetlist`, `navigation.tsx`). */
 export type AcharSetlist = (setlistId: string) => SetlistDTO | undefined
 
-export interface FotoDaSessao {
+/**
+ * SY-PR4 (SY-D49, SY-D56) — a foto é também o que os gatilhos leem para saber se o PALCO está aberto (o
+ * `PalcoDosGatilhos`): a sessão do palco (de `entrar` a `sair`) ou um palco avulso sem hospedeira montado
+ * (`abrirAvulso`). Um estado só, aqui, sem cópia na raiz. **Commit 1 da PR-4: contrato inerte** — `palcoAberto` diz
+ * sempre `false`, nada avisa, e o `focoDoIndice` não solta; a lógica entra no commit 4.
+ */
+export interface FotoDaSessao extends PalcoDosGatilhos {
   /** Entrar no palco DE FORA (de S2; de S1 pelo índice sem posição): tira a foto desta setlist. */
   entrar(setlistId: string, achar: AcharSetlist): void
   /**
@@ -34,6 +41,13 @@ export interface FotoDaSessao {
   setlistDaSessao(setlistId: string, achar: AcharSetlist): SetlistDTO | undefined
   /** Voltar a S1/S2: solta a foto. */
   sair(): void
+  /**
+   * O foco do `Index`: sem `posicaoAtual` é S2 (sai da sessão); com ela é o índice DO PALCO (a mesma sessão, E6). A
+   * regra que o `navigation.tsx` tinha no próprio ouvinte (SY-PR3), num lugar que o gate monta.
+   */
+  focoDoIndice(posicaoAtual: number | undefined): void
+  /** SY-D56 — um palco avulso sem hospedeira montou: o palco está aberto até o desligar devolvido. */
+  abrirAvulso(): () => void
 }
 
 /** Uma foto por sessão de navegação — o `navigation.tsx` cria uma e a guarda. */
@@ -47,5 +61,9 @@ export function criarFotoDaSessao(): FotoDaSessao {
     sair: () => {
       foto = null
     },
+    focoDoIndice: () => undefined,
+    abrirAvulso: () => () => undefined,
+    palcoAberto: () => false,
+    aoFecharPalco: () => () => undefined,
   }
 }
