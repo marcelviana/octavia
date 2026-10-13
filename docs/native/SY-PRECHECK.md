@@ -207,6 +207,12 @@ dois casos. Vale: o segundo evento **depois do fim** do primeiro sync → **1** 
 o primeiro → **2** syncs (o "de novo" do voo único). O texto da tabela fica como está; o gate (i) mede as duas leituras
 (`dois-eventos`, `de-novo-fora-do-intervalo`), `SY-PR1-anexos/README.md` §3 e §13.)*
 
+*(Nota da SY-PR4 — ponteiro, sem reescrever o texto acima: os gatilhos estão feitos na PR-4 — `apps/native/src/gatilhos.ts`,
+ligados no `App.tsx` ao executor —, com o palco aberto segurando-os (SY-D49; o avulso sem hospedeira também, SY-D56; a
+fonte é a foto da sessão) e o intervalo contado só contra a sessão de agora (SY-D44). O AVD mediu a A2.3 e a A2.4 (A-SY-12),
+a tela apagada como segundo plano (A-SY-18: conta) e o evento de rede em segundo plano (A-SY-19: chega em 7 de 8; 1 sync nas
+duas ordens). A falha automática com cache mostra o S1e de hoje (SY-D57). `SY-PR4-anexos/README.md` §4, §8, §9.)*
+
 **A2.4 — o intervalo mínimo** (SY-D5; pergunta Q2):
 
 - **Contado de quê**: do **fim** do último sync **que saiu à rede** (o que emitiu `sync start` e terminou em `sync ok` ou

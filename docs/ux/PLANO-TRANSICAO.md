@@ -1601,3 +1601,9 @@ automaticamente.
 > **Nota do aval da PR-3 do SY (2026-10-12)** — sem reescrever a nota acima. A PR-3 do SY (#381) tem aval (SY-D49…D55
 > `[Marcel, 2026-10-12]`, `docs/native/SY-PR3-anexos/README.md` §16); a **SY-D6** caiu para *"nenhum gatilho com o palco
 > aberto"*; **a próxima é a PR-4, os gatilhos.**
+
+> **Nota da PR-4 do SY (2026-10-13)** — sem reescrever a nota acima. A PR-4 do SY (os gatilhos;
+> `docs/native/SY-PR4-anexos/README.md`) está **aberta, aguardando o aval**: a sincronização automática passa a existir (a
+> rede que volta com o app aberto, a volta do segundo plano depois de 30 s), o palco aberto a segura (SY-D49; o avulso sem
+> hospedeira também, SY-D56) e a lista dos gates do SY ficou vazia. Duas decisões na sessão (SY-D56, SY-D57). **Depois do
+> aval e do merge, o encerramento do SY, com o release no Tab** (SY-D16).
