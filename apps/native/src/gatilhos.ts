@@ -2,31 +2,37 @@
  * Os gatilhos do sync automático — o T1-R13 passo 4 (SY-D4): **a rede volta com o app aberto**, e **a volta do segundo
  * plano depois de 30 s**. Sem sync periódico, sem gesto manual.
  *
- * **SY-PR1: CONTRATO INERTE.** Só a assinatura e os tipos: `ligarGatilhos` não liga nada e o desligar não desliga nada
- * — nenhum gatilho dispara, e o app faz o que fazia (sincroniza na entrada da sessão e no *Tentar de novo*). O
- * `App.tsx` **não** o chama nesta PR (a ligação é da PR-4). Existe para o gate (i) (`test/sy-gatilhos.test.tsx`) ter o
- * que importar; os casos "→ 1" reprovam pela lista `test/sy-reprovados.txt`, e a **PR-4** esvazia a parte deles
- * implementando ESTE arquivo — sem mudar a assinatura, salvo errata declarada no aval.
+ * As regras (`docs/native/SY-PRECHECK.md` A2.3 e A2.4; SY-D17, SY-D18, SY-D28, SY-D39), como este arquivo as aplica:
+ *   - **a rede**: a transição `false → true` do ouvinte do `expo-network`, reduzida pelo MESMO `alcancavel` do `useOnline`
+ *     (`net.ts`); nunca a primeira leitura (`null → true`) nem o evento repetido (`true → true`);
+ *   - **o segundo plano**: o `AppState` deixando o `active` marca a hora; a volta a `active` mede a ausência pelo relógio
+ *     (`Date.now()`); 30 s ou mais é o gatilho (`AUSENCIA_MINIMA_MS`); menos, sem a marca, é `skip-short`;
+ *   - **a marca**: a rede que volta com o app em segundo plano não dispara (`skip-background`) e deixa a marca; a volta
+ *     curta com a marca conta como "a rede voltou" (`reason=net`); a marca se apaga quando qualquer sync sai à rede
+ *     depois dela (SY-D17 (1)) — e se consome na volta;
+ *   - **sem rede na volta**: `skip-offline`, e nenhuma chamada ao executor (nenhum `sync skip`); a rede, quando voltar,
+ *     é o gatilho da rede. A rede da volta se lê na hora (`estaOnline`), não a do último evento;
+ *   - **sem sessão**: nada, e nenhuma linha (a `sessao()` da raiz);
+ *   - **o voo**: um sync em voo → `queued` — o pedido vai ao executor, e o voo único o marca "de novo" (SY-D9; o "de
+ *     novo" fica fora do intervalo, SY-D18, SY-D39);
+ *   - **o intervalo** (SY-D18): 30 s do FIM do último sync que saiu à rede (`ultimoSyncNaRede`), para os dois gatilhos;
+ *     não vale depois de falha de rede (`falhaDeRede`); vale depois de falha com status → `skip-interval`;
+ *   - **a linha** `sync trigger reason=<motivo> decision=<decisão>` (SY-D28): uma por gatilho AVALIADO, inclusive os que
+ *     não disparam; nenhuma para a primeira leitura, o evento repetido e a falta de sessão. O `sync start` não muda.
+ *     G3 70 → 71: é a única linha de log nova da PR-4 (o coletor do G3 lê comentário, div. 83: aqui nenhum a cita).
+ *   - **nada tenta de novo sozinho** (SY-D32 (4)): os gatilhos são EVENTOS (a transição da rede, a volta do `AppState`),
+ *     e a falha de um sync não é evento de nenhum dos dois.
  *
- * **SY-PR4, commit 1 — o contrato cresce, ainda inerte** (declarado; pergunta do aval): a SY-D49 (o palco aberto segura
- * os gatilhos), a SY-D56 (o avulso sem hospedeira também é palco) e a SY-D44 (o intervalo de uma sessão não segura o
- * gatilho de outra) pedem três coisas que a forma da SY-D33 não tinha: (1) `palco` na ligação — de onde os gatilhos
- * sabem que o palco está aberto e quando ele fecha (a foto da sessão, `foto-do-palco.ts`: nenhum estado duplicado);
- * (2) o `uid` no `SyncNaRede`; (3) o desligar devolvido ganha o `segurarDeNovo`, que o executor pergunta antes de rodar
- * o "de novo" do voo (SY-D49 (2)). E os valores novos da linha `sync trigger`: `reason=stage-exit|again`,
- * `decision=hold-stage` (os nomes são proposta desta PR, SY-D49 (3)).
- *
- * O que a PR-4 implementa aqui (as regras: `docs/native/SY-PRECHECK.md` A2.3 e A2.4; SY-D17, SY-D18, SY-D28, SY-D49):
- *   - a rede: a transição `false → true` do ouvinte do `expo-network`; nunca a primeira leitura (`null → true`);
- *   - o segundo plano: o `AppState` de `background` a `active`, com a ausência medida pelo relógio (`Date.now()`);
- *   - a rede que volta em segundo plano não dispara e deixa a MARCA; a volta antes de 30 s com a marca conta como "a
- *     rede voltou"; a marca se apaga quando qualquer sync sai à rede;
- *   - o intervalo de 30 s, contado do fim do último sync que saiu à rede, para os dois gatilhos; não vale depois de
- *     falha de rede; vale depois de falha com status;
- *   - sem sessão, nada; sem rede na volta, nada — e nenhuma chamada ao executor;
- *   - com o palco aberto, nenhum gatilho dispara: fica marcado e passa pelas regras ao fechar o palco (SY-D49);
- *   - a linha `sync trigger reason=… decision=…` (SY-D28; G3 70 → 71, adição declarada na PR-4).
+ * **O contrato** (SY-D33): `ligarGatilhos({ sessao, pedirSync, ultimoSyncNaRede, palco }) → desligar`, com o `AppState` e
+ * o `expo-network` assinados AQUI DENTRO. O commit 1 da SY-PR4 o estendeu (o `palco`, o `uid` do `SyncNaRede`, o
+ * `segurarDeNovo` — declarado, pergunta do aval). **Commit 3: os gatilhos de verdade, ainda sem o palco** — o `palco` da
+ * ligação não se lê, o `segurarDeNovo` diz sempre `false`, e o intervalo lê o último sync de qualquer sessão; o palco
+ * (SY-D49, SY-D56) e a sessão do intervalo (SY-D44) entram no commit 4.
  */
+import { AppState } from 'react-native'
+import * as Network from 'expo-network'
+import { log } from './log'
+import { alcancavel, estaOnline } from './net'
 
 /**
  * O que disparou (o `reason=` da linha `sync trigger`, SY-D28): a rede, a volta do segundo plano, e — SY-PR4, SY-D49 —
@@ -93,10 +99,99 @@ export interface GatilhosLigados {
   segurarDeNovo(): boolean
 }
 
-/**
- * Liga os dois gatilhos e devolve o desligar. **Inerte** (SY-PR1; o contrato estendido no commit 1 da SY-PR4) — não
- * assina o `AppState` nem a rede, não chama nada, e não segura nada. Implementado no commit 3 da PR-4.
- */
-export function ligarGatilhos(_ligacao: LigacaoDosGatilhos): GatilhosLigados {
-  return Object.assign(() => undefined, { segurarDeNovo: () => false })
+/** A linha do gatilho avaliado (SY-D28) — a única linha de log deste arquivo. */
+function linha(motivo: MotivoDoGatilho, decisao: DecisaoDoGatilho): void {
+  log(`sync trigger reason=${motivo} decision=${decisao}`)
+}
+
+/** Liga os dois gatilhos e devolve o desligar. Uma ligação por raiz; desligada, nada mais sai. */
+export function ligarGatilhos(l: LigacaoDosGatilhos): GatilhosLigados {
+  let vivo = true
+  /** O último estado de rede visto: `null` antes da primeira leitura — e a primeira leitura não é volta. */
+  let online: boolean | null = null
+  /** Desde quando o app está fora do `active` (`null` = na frente). */
+  let foraDesde: number | null = AppState.currentState === 'active' ? null : Date.now()
+  /** A rede voltou com o app em segundo plano: de que sessão, e quando (SY-D17). */
+  let marcaDoFundo: { uid: string; t: number } | null = null
+
+  /** Um sync saiu à rede depois de `t`: a marca já foi atendida (SY-D17 (1)). */
+  const saiuDepois = (t: number): boolean => {
+    const u = l.ultimoSyncNaRede()
+    return u !== null && u.inicioMs >= t
+  }
+
+  /** O gatilho valeu (sessão de pé, rede de pé): o voo e o intervalo decidem. */
+  const decidir = (motivo: MotivoDoGatilho): void => {
+    const u = l.ultimoSyncNaRede()
+    if (u !== null && u.fimMs === null) {
+      linha(motivo, 'queued')
+      l.pedirSync(motivo)
+      return
+    }
+    if (u !== null && u.fimMs !== null && !u.falhaDeRede && Date.now() - u.fimMs < INTERVALO_MINIMO_MS) {
+      linha(motivo, 'skip-interval')
+      return
+    }
+    linha(motivo, 'run')
+    l.pedirSync(motivo)
+  }
+
+  /** Com a rede lida AGORA (a volta do segundo plano): sem rede, a linha e nada mais; com rede, decide. */
+  const comRede = (uid: string, motivo: MotivoDoGatilho): void => {
+    void estaOnline().then((temRede) => {
+      if (!vivo || l.sessao() !== uid) return
+      if (!temRede) {
+        linha(motivo, 'skip-offline')
+        return
+      }
+      decidir(motivo)
+    })
+  }
+
+  void estaOnline().then((v) => {
+    if (vivo && online === null) online = v
+  })
+
+  const rede = Network.addNetworkStateListener((estado) => {
+    if (!vivo) return
+    const agora = alcancavel(estado)
+    const antes = online
+    online = agora
+    if (antes !== false || !agora) return // só a transição false → true
+    const uid = l.sessao()
+    if (uid === null) return
+    if (AppState.currentState !== 'active') {
+      marcaDoFundo = { uid, t: Date.now() }
+      linha('net', 'skip-background')
+      return
+    }
+    decidir('net')
+  })
+
+  const app = AppState.addEventListener('change', (estado) => {
+    if (!vivo) return
+    if (estado !== 'active') {
+      if (foraDesde === null) foraDesde = Date.now()
+      return
+    }
+    if (foraDesde === null) return
+    const ausencia = Date.now() - foraDesde
+    foraDesde = null
+    const marca = marcaDoFundo
+    marcaDoFundo = null
+    const uid = l.sessao()
+    if (uid === null) return
+    const comMarca = marca !== null && marca.uid === uid && !saiuDepois(marca.t)
+    if (ausencia >= AUSENCIA_MINIMA_MS) comRede(uid, 'foreground')
+    else if (comMarca) comRede(uid, 'net')
+    else linha('foreground', 'skip-short')
+  })
+
+  const desligar = (): void => {
+    vivo = false
+    marcaDoFundo = null
+    rede.remove()
+    app.remove()
+  }
+  return Object.assign(desligar, { segurarDeNovo: () => false })
 }

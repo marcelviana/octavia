@@ -14,7 +14,7 @@ import { DarkTheme, NavigationContainer, type Theme } from '@react-navigation/na
 import { createNativeStackNavigator, type NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { StyleSheet, Text, View } from 'react-native'
 import type { ContentDTO, SetlistDTO } from '@octavia/core'
-import { criarFotoDaSessao } from './foto-do-palco'
+import type { FotoDaSessao } from './foto-do-palco'
 import { EndScreen } from './screens/EndScreen'
 import { IndexScreen, type AvisoDeSaida } from './screens/IndexScreen'
 import { LibraryScreen } from './screens/LibraryScreen'
@@ -85,6 +85,11 @@ function Placeholder({ titulo, nota }: { titulo: string; nota: string }): React.
 
 export interface NavigationProps {
   signedIn: boolean
+  /**
+   * SY-PR4 — a foto da sessão do palco (SY-D22), criada na raiz: os gatilhos a leem para saber se o palco está aberto
+   * (SY-D49). A navegação a liga, como desde a PR-3.
+   */
+  foto: FotoDaSessao
   setlists: SetlistsScreenProps
   /** Dados que S2/S3/S5 consomem — os mesmos do cache já carregado. */
   dados: {
@@ -117,7 +122,7 @@ function ir(navigation: NativeStackNavigationProp<RootStackParamList>, d: Destin
   else navigation.navigate('Search', d.params)
 }
 
-export function Navigation({ signedIn, setlists, dados }: NavigationProps): React.JSX.Element {
+export function Navigation({ signedIn, foto, setlists, dados }: NavigationProps): React.JSX.Element {
   const acharSetlist = (id: string): SetlistDTO | undefined => dados.lista.find((s) => s.id === id)
 
   /**
@@ -126,9 +131,8 @@ export function Navigation({ signedIn, setlists, dados }: NavigationProps): Reac
    * sessão. A foto se tira nas ações que abrem o palco de fora (a posição tocada em S2; o resultado da busca aberta de
    * S2) e se solta no FOCO de S1 e de S2 — o `Index` sem `posicaoAtual`; com ela, o mesmo `Index` é o índice do palco
    * (E6: o salto pelo índice desempilha o palco, e voltar a ele não é sair da sessão). S1 e S2 leem a setlist VIVA: o
-   * músico edita o que está no servidor.
+   * músico edita o que está no servidor. SY-PR4: a foto vem da raiz (`App.tsx`), que a dá também aos gatilhos.
    */
-  const [foto] = useState(criarFotoDaSessao)
   const daSessao = (id: string): SetlistDTO | undefined => foto.setlistDaSessao(id, acharSetlist)
 
   /**

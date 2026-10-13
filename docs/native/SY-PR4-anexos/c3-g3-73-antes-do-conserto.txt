@@ -1,0 +1,10 @@
+# SY-PR4 commit 3 — a 1ª verificação, ANTES do commit (rastro; a verificação que vale é a c3-verificacao.txt)
+# O G3 contou 70 → 73: o coletor lê comentário (a decisão da div. 83; o caso 41), e dois comentários do gatilhos.ts
+# citavam a cadeia `log(`. Os dois foram reescritos sem ela; a linha nova é uma só (70 → 71). Trecho da saída:
+G3 — linhas log( antes=70  depois=73
+      — nenhuma linha de log pode sumir nesta PR
+  G3: nenhuma linha sumiu ✓
+  linhas NOVAS (declarar no commit e no catálogo):
+      apps/native/src/gatilhos.ts	*     G3 70 → 71: é a única linha `log(` nova da PR-4.
+      apps/native/src/gatilhos.ts	/** A linha do gatilho avaliado (SY-D28) — a única `log(` deste arquivo. */
+      apps/native/src/gatilhos.ts	log(`sync trigger reason=${motivo} decision=${decisao}`)

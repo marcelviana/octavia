@@ -4,17 +4,12 @@
 # reprovações sem mudar os gates. O que passa hoje NÃO está aqui: a prova daqueles casos é o controle negativo
 # plantado (`docs/native/SY-PR1-anexos/instrumentos/cn-sy.sh`). Comentário e linha em branco são ignorados.
 
-# (i) os gatilhos — sy-gatilhos.test.tsx — esvazia na PR-4 (o `de-novo-fora-do-intervalo` precisa também do voo, PR-2)
-i:rede-volta-na-frente
-i:fundo-mais-de-30s
-i:marca-volta-curta
-i:dois-eventos
-i:apos-falha-de-rede
-i:de-novo-fora-do-intervalo
-# SY-PR4, commit 1 — os casos novos (SY-D49 (3), SY-D44, SY-D28, SY-D56), entrando reprovados; esvaziam no commit 3 (as
-# linhas, o logout) e no commit 4 (o palco, o avulso). O `palco-sair-sem-marca` e o `palco-abertura-e-tentar` passam
-# hoje e ficam FORA: a prova deles é o controle negativo (`docs/native/SY-PR4-anexos/instrumentos/cn-sy-pr4.sh`).
-i:linhas-sem-disparo
+# (i) os gatilhos — sy-gatilhos.test.tsx — esvazia na PR-4 (as 6 da PR-1 saíram no commit 3 da SY-PR4: os gatilhos de
+# verdade, sem o palco)
+# SY-PR4, commit 1 — os casos novos (SY-D49 (3), SY-D44, SY-D28, SY-D56), entrando reprovados. O commit 3 (os gatilhos)
+# tirou o `linhas-sem-disparo` e o `palco-v-aberta` (V não está na sessão: passa assim que o gatilho roda); as do palco e
+# a do logout saem no commit 4. O `palco-sair-sem-marca` e o `palco-abertura-e-tentar` passam desde o commit 1 e ficam
+# FORA: a prova deles é o controle negativo (`docs/native/SY-PR4-anexos/instrumentos/cn-sy-pr4.sh`).
 i:logout-intervalo-de-outra-sessao
 i:palco-rede
 i:palco-fundo
@@ -22,15 +17,9 @@ i:palco-indice-por-cima
 i:palco-sair-com-marca
 i:palco-sair-no-intervalo
 i:palco-sair-sem-rede
-i:palco-v-aberta
 i:palco-de-novo-espera
 i:palco-avulso
-# (i), a família tela- — sy-gatilhos-telas.test.tsx (SY-D52, SY-D57): esvazia no commit 3 (o gatilho chega à tela)
-i:tela-s2-reordenar
-i:tela-s2-folha
-i:tela-banner-some
-i:tela-banner-nao-desfaz-s1
-i:tela-banner-nao-desfaz-l
+# (i), a família tela- — sy-gatilhos-telas.test.tsx (SY-D52, SY-D57): vazia desde o commit 3 da SY-PR4 (o gatilho chega à tela)
 
 # (ii) o voo único — sy-voo.test.ts — esvazia na PR-2 (vazia desde o commit 5 da SY-PR2: o voo e a sessão no 2, as escritas no 4, o prazo no 5)
 
@@ -38,7 +27,4 @@ i:tela-banner-nao-desfaz-l
 
 # (iv) a janela da naoRegredir — sy-nao-regredir.test.ts — esvazia na PR-2 (vazia desde o commit 3 da SY-PR2: a aplicação síncrona)
 
-# (v) a contagem — sy-requisicoes.test.tsx — esvazia na PR-4
-v:rede-volta-100
-v:rede-volta-101
-v:fundo-100
+# (v) a contagem — sy-requisicoes.test.tsx — esvazia na PR-4 (vazia desde o commit 3 da SY-PR4: os gatilhos de verdade)

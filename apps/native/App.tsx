@@ -15,6 +15,8 @@ import type { ContentDTO, SetlistDTO } from '@octavia/core'
 import { ligarPrefetchAposEscrita } from './src/apos-escrita'
 import type { EstadoLocal } from './src/escrita'
 import { ligarCacheDoFavoritar } from './src/favoritar'
+import { criarFotoDaSessao } from './src/foto-do-palco'
+import { ligarGatilhos, type GatilhosLigados } from './src/gatilhos'
 import { useLinhaDaFaixa } from './src/useFaixa'
 import { ligarSondaDeRede, presentUrls, sanearArquivos, setFilesUser } from './src/files'
 import { log } from './src/log'
@@ -23,7 +25,7 @@ import { estaOnline, useOnline } from './src/net'
 import { aplicarLru, baixarSetlist, prefetchDaBiblioteca } from './src/prefetch'
 import type { SyncState } from './src/screens/SetlistsScreen'
 import { onAuth, signedInThisRun, type User } from './src/session'
-import { rodarSync as executarSync, type Dados } from './src/sincronizador'
+import { rodarSync as executarSync, ultimoSyncNaRede, type Dados } from './src/sincronizador'
 import { load } from './src/store'
 import { dark } from './src/theme'
 
@@ -172,6 +174,8 @@ export default function App(): React.JSX.Element {
    * `await`, e o que vale é o instante, não o último render. Posto no `onAuth`, antes de qualquer `set…`.
    */
   const sessaoRef = useRef<string | null>(null)
+  /** SY-PR4 — os gatilhos ligados (abaixo), para o executor perguntar o `segurarDeNovo`. */
+  const gatilhosRef = useRef<GatilhosLigados | null>(null)
 
   useEffect(() => {
     return onAuth((user) => {
@@ -200,12 +204,48 @@ export default function App(): React.JSX.Element {
   const rodarSync = useCallback(
     (uid: string, anterior: Dados): Promise<void> =>
       executarSync(
-        { setSync, setDados, dadosRef, prefetchEArrumar, sessaoAtual: () => sessaoRef.current },
+        {
+          setSync,
+          setDados,
+          dadosRef,
+          prefetchEArrumar,
+          sessaoAtual: () => sessaoRef.current,
+          segurarDeNovo: () => gatilhosRef.current?.segurarDeNovo() ?? false,
+        },
         uid,
         anterior,
       ),
     [prefetchEArrumar],
   )
+
+  /**
+   * SY-PR4 — a foto da sessão do palco (SY-D22) mora AQUI, e não no `navigation.tsx`: ela é também o que os gatilhos
+   * leem para saber se o palco está aberto (SY-D49, SY-D56) — um estado só, que a navegação liga e os gatilhos leem.
+   */
+  const [foto] = useState(criarFotoDaSessao)
+
+  /**
+   * SY-PR4 — **os gatilhos do T1-R13 passo 4** (`src/gatilhos.ts`): a rede que volta com o app aberto e a volta do
+   * segundo plano depois de 30 s pedem um sync ao MESMO executor (`rodarSync`, a entrada de todo pedido, SY-D35), pela
+   * sessão de agora e com os dados de agora (o `dadosRef`). Uma ligação para a vida da raiz: sem sessão, os gatilhos não
+   * fazem nada. O executor pergunta a eles, pelo `segurarDeNovo`, antes de rodar o "de novo" do voo (SY-D49 (2)).
+   */
+  useEffect(() => {
+    const g = ligarGatilhos({
+      sessao: () => sessaoRef.current,
+      pedirSync: () => {
+        const uid = sessaoRef.current
+        if (uid !== null) void rodarSync(uid, dadosRef.current)
+      },
+      ultimoSyncNaRede,
+      palco: foto,
+    })
+    gatilhosRef.current = g
+    return () => {
+      gatilhosRef.current = null
+      g()
+    }
+  }, [rodarSync, foto])
 
   useEffect(() => {
     if (estado.fase !== 'dentro') return
@@ -305,6 +345,7 @@ export default function App(): React.JSX.Element {
         ) : (
           <Navigation
             signedIn={estado.fase === 'dentro'}
+            foto={foto}
             dados={{
               lista: dados.setlists,
               contents: dados.content,
