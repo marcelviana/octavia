@@ -1,0 +1,51 @@
+# SY-PR4 · AVD · c14-palco — o palco na Letra longa, a rolagem ligada; a rede volta; a volta longa; sair
+# 2026-10-13 11:25:19 -0300 · a fixture /private/tmp/claude-501/-Users-marcelviana-projects-octavia/d912b538-91de-4450-bb5e-3712bb2d4c23/scratchpad/fx4
+O PISO e a JANELA da rede, no `uiautomator events` (o ScrollY por evento; SY-D36 (c): a maior lacuna na janela ≤ a do
+piso + 100 ms; o controle: a janela não pode vir VAZIA, SY-D55 (1)).
+DECLARADO ANTES:
+  linhas: ['sync trigger reason=net decision=hold-stage']
+  sync_start: 0
+  GET: 0
+  rádio DESLIGADO: ping → 'connect: Network is unreachable'
+  rádio LIGADO: ping → 'rtt min/avg/max/mdev = 18.253/18.253/18.253/0.000 ms'
+  PISO   [34607, 49733]: eventos 27 · maior lacuna 159 ms · andou 375 px
+  JANELA [linha −5 s, +10 s]: eventos 0 · maior lacuna None ms · andou 0 px
+  ✗ JANELA VAZIA — o instrumento não mediu nada (SY-D55 (1))
+MEDIDO:
+  1791901554314  net offline
+  1791901566097  net online
+  1791901566105  sync trigger reason=net decision=hold-stage
+  1791901569337  prefetch plan n=0 reason=demand
+  → sync trigger: ['sync trigger reason=net decision=hold-stage']
+  → sync start: 0 · GET: 0 · fim: []
+VEREDITO: confere com o declarado ✓
+DECLARADO ANTES:
+  linhas: ['sync trigger reason=foreground decision=hold-stage']
+  sync_start: 0
+  GET: 0
+MEDIDO:
+  1791901620010  sync trigger reason=foreground decision=hold-stage
+  → sync trigger: ['sync trigger reason=foreground decision=hold-stage']
+  → sync start: 0 · GET: 0 · fim: []
+VEREDITO: confere com o declarado ✓
+DECLARADO ANTES:
+  linhas: ['sync trigger reason=stage-exit decision=run']
+  sync_start: 1
+  GET: 2
+MEDIDO:
+  1791901662208  keepawake off
+  1791901662220  sync trigger reason=stage-exit decision=run
+  1791901662444  sync start
+  1791901662445  auth refresh=cached
+  1791901662501  api status=200 path=/api/setlists n=1 ms=57
+  1791901662574  auth refresh=cached
+  1791901662590  api status=200 path=/api/content n=1 ms=16
+  1791901662598  cache write kind=setlists n=15 invalidated=1
+  1791901662601  cache write kind=content n=5 invalidated=0
+  1791901662601  sync ok setlists=15 content=5 pages=1 t=157
+  1791901662605  prefetch plan n=0 reason=library
+  1791901662806  prefetch plan n=0 reason=demand
+  → sync trigger: ['sync trigger reason=stage-exit decision=run']
+  → sync start: 1 · GET: 2 · fim: ['sync ok setlists=15 content=5 pages=1 t=157']
+VEREDITO: confere com o declarado ✓
+  (espera 27 s: o intervalo de 30 s desde o fim do último sync)

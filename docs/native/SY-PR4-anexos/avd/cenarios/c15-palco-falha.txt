@@ -1,0 +1,47 @@
+# SY-PR4 · AVD · c15-palco-falha — o palco aberto e o mock em 500: a rede volta; sair
+# 2026-10-13 11:28:28 -0300 · a fixture /private/tmp/claude-501/-Users-marcelviana-projects-octavia/d912b538-91de-4450-bb5e-3712bb2d4c23/scratchpad/fx4
+  mock: 500-pagina-1 · fixture a
+DECLARADO ANTES:
+  linhas: ['sync trigger reason=net decision=hold-stage']
+  sync_start: 0
+  GET: 0
+  rádio DESLIGADO: ping → 'connect: Network is unreachable'
+  rádio LIGADO: ping → 'rtt min/avg/max/mdev = 29.175/29.175/29.175/0.000 ms'
+  o palco: os resource-id iguais antes e depois da rede: True (15 nós com id)
+MEDIDO:
+  1791901708188  index open
+  1791901711286  index jump n=1
+  1791901711366  keepawake on
+  1791901711367  prefetch plan n=0 reason=demand
+  1791901720077  net offline
+  1791901729055  net online
+  1791901729074  sync trigger reason=net decision=hold-stage
+  1791901736362  prefetch plan n=0 reason=demand
+  1791901736800  prefetch plan n=0 reason=demand
+  → sync trigger: ['sync trigger reason=net decision=hold-stage']
+  → sync start: 0 · GET: 0 · fim: []
+VEREDITO: confere com o declarado ✓
+DECLARADO ANTES:
+  linhas: ['sync trigger reason=stage-exit decision=run']
+  sync_start: 1
+  GET: 2
+  em S1 depois de sair: tentar-banner PRESENTE
+MEDIDO:
+  1791901752989  keepawake off
+  1791901752994  sync trigger reason=stage-exit decision=run
+  1791901753356  sync start
+  1791901753358  auth refresh=cached
+  1791901753470  api status=200 path=/api/setlists n=1 ms=113
+  1791901753473  auth refresh=cached
+  1791901753481  api status=500 path=/api/content n=1 ms=8
+  1791901753485  sync fail stage=content page=1 code=INTERNAL_ERROR status=500
+  1791901753488  prefetch plan n=0 reason=library
+  → sync trigger: ['sync trigger reason=stage-exit decision=run']
+  → sync start: 1 · GET: 2 · fim: ['sync fail stage=content page=1 code=INTERNAL_ERROR status=500']
+VEREDITO: confere com o declarado ✓
+  mock: normal · fixture a
+  (espera 21 s: o intervalo de 30 s desde o fim do último sync)
+  (a falha do cenário anterior ainda na tela: um sync ok antes, pela rede — fora da contagem deste cenário)
+  rádio DESLIGADO: ping → 'connect: Network is unreachable'
+  rádio LIGADO: ping → 'rtt min/avg/max/mdev = 51.998/51.998/51.998/0.000 ms'
+  (espera 23 s: o intervalo de 30 s desde o fim do último sync)

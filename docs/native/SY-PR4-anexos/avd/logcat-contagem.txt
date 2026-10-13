@@ -1,0 +1,15 @@
+# a contagem do logcat da sessão inteira (desde o logcat -c de 2026-10-13 10:55:10 -0300)
+sync start: 35
+sync ok: 25
+sync fail: 10
+sync skip: 1
+sync trigger: 63
+api status=: 60
+auth refresh=cached: 65
+auth refresh=forced: 0
+write op=: 0
+octavia.rocks: 0
+file src=download: 0
+octavia.rocks no logcat INTEIRO: 0
+api fora do mock (sem localhost? as linhas api não trazem host — todas são do app com o bundle conferido):
+0

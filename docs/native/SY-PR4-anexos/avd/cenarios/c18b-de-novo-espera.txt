@@ -1,0 +1,47 @@
+# SY-PR4 · AVD · c18b-de-novo-espera — o voo no atraso, a rede pisca duas vezes (run, queued), o palco abre no meio do voo
+# 2026-10-13 11:38:37 -0300 · a fixture /private/tmp/claude-501/-Users-marcelviana-projects-octavia/d912b538-91de-4450-bb5e-3712bb2d4c23/scratchpad/fx4
+  mock: atraso · fixture a
+DECLARADO ANTES:
+  linhas: ['sync trigger reason=net decision=run', 'sync trigger reason=net decision=queued', 'sync trigger reason=again decision=hold-stage', 'sync trigger reason=stage-exit decision=run']
+  sync_start: 2
+  GET: 2
+  o palco tocado 29.0 s depois do 1º sync start (o voo dura 20 s)
+  em voo e depois: ['sync trigger reason=net decision=run', 'sync start', 'sync trigger reason=net decision=queued', 'keepawake on', 'sync fail stage=setlists page=1 code=network status=-', 'sync trigger reason=again decision=hold-stage']
+  mock: normal · fixture a
+MEDIDO:
+  1791902320398  index open
+  1791902324364  net offline
+  1791902331700  net online
+  1791902331738  sync trigger reason=net decision=run
+  1791902343782  sync start
+  1791902343789  auth refresh=cached
+  1791902343808  net offline
+  1791902344041  prefetch plan n=0 reason=demand
+  1791902344462  prefetch plan n=0 reason=demand
+  1791902344687  prefetch plan n=0 reason=demand
+  1791902361573  net online
+  1791902361598  sync trigger reason=net decision=queued
+  1791902379554  index jump n=1
+  1791902380571  prefetch plan n=0 reason=demand
+  1791902380739  prefetch plan n=0 reason=demand
+  1791902380804  prefetch plan n=0 reason=demand
+  1791902381697  keepawake on
+  1791902381698  prefetch plan n=0 reason=demand
+  1791902384126  sync fail stage=setlists page=1 code=network status=-
+  1791902384133  prefetch plan n=0 reason=library
+  1791902384169  sync trigger reason=again decision=hold-stage
+  1791902415590  keepawake off
+  1791902415662  sync trigger reason=stage-exit decision=run
+  1791902417309  sync start
+  1791902417312  auth refresh=cached
+  1791902417868  api status=200 path=/api/setlists n=1 ms=557
+  1791902417877  auth refresh=cached
+  1791902417912  api status=200 path=/api/content n=1 ms=36
+  1791902417930  cache write kind=setlists n=15 invalidated=0
+  1791902417934  cache write kind=content n=5 invalidated=0
+  1791902417934  sync ok setlists=15 content=5 pages=1 t=625
+  1791902417938  prefetch plan n=0 reason=library
+  → sync trigger: ['sync trigger reason=net decision=run', 'sync trigger reason=net decision=queued', 'sync trigger reason=again decision=hold-stage', 'sync trigger reason=stage-exit decision=run']
+  → sync start: 2 · GET: 2 · fim: ['sync fail stage=setlists page=1 code=network status=-', 'sync ok setlists=15 content=5 pages=1 t=625']
+VEREDITO: confere com o declarado ✓
+  mock: DERRUBADO (nada na 8788)

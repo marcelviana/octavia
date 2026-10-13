@@ -1,0 +1,29 @@
+# SY-PR4 · AVD · c10-banner-some — o mock volta ao normal; o próximo sync automático (a rede) tira o banner
+# 2026-10-13 11:12:13 -0300 · a fixture /private/tmp/claude-501/-Users-marcelviana-projects-octavia/d912b538-91de-4450-bb5e-3712bb2d4c23/scratchpad/fx4
+  mock: normal · fixture a
+  (espera 24 s: o intervalo de 30 s desde o fim do último sync)
+  antes: tentar-banner PRESENTE
+DECLARADO ANTES:
+  linhas: ['sync trigger reason=net decision=run']
+  sync_start: 1
+  GET: 2
+  rádio DESLIGADO: ping → 'connect: Network is unreachable'
+  rádio LIGADO: ping → 'rtt min/avg/max/mdev = 12.341/12.341/12.341/0.000 ms'
+  depois: tentar-banner AUSENTE
+MEDIDO:
+  1791900756974  net offline
+  1791900759985  net online
+  1791900759985  sync trigger reason=net decision=run
+  1791900760126  sync start
+  1791900760130  auth refresh=cached
+  1791900760224  api status=200 path=/api/setlists n=1 ms=97
+  1791900760234  auth refresh=cached
+  1791900760260  api status=200 path=/api/content n=1 ms=31
+  1791900760286  cache write kind=setlists n=15 invalidated=0
+  1791900760291  cache write kind=content n=5 invalidated=0
+  1791900760291  sync ok setlists=15 content=5 pages=1 t=169
+  1791900760292  prefetch plan n=0 reason=library
+  → sync trigger: ['sync trigger reason=net decision=run']
+  → sync start: 1 · GET: 2 · fim: ['sync ok setlists=15 content=5 pages=1 t=169']
+VEREDITO: confere com o declarado ✓
+  (espera 24 s: o intervalo de 30 s desde o fim do último sync)

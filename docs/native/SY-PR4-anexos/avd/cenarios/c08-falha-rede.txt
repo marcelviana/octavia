@@ -1,0 +1,19 @@
+# SY-PR4 · AVD · c08-falha-rede — a falha por rede (o mock derrubado) com cache, em S1
+# 2026-10-13 11:09:59 -0300 · a fixture /private/tmp/claude-501/-Users-marcelviana-projects-octavia/d912b538-91de-4450-bb5e-3712bb2d4c23/scratchpad/fx4
+  mock: DERRUBADO (nada na 8788)
+  antes: tentar-banner presente
+DECLARADO ANTES:
+  linhas: ['sync trigger reason=foreground decision=run']
+  sync_start: 1
+  GET: 0
+  depois: tentar-banner PRESENTE
+MEDIDO:
+  1791900633955  sync trigger reason=foreground decision=run
+  1791900634252  sync start
+  1791900634254  auth refresh=cached
+  1791900634278  sync fail stage=setlists page=1 code=network status=-
+  1791900634279  prefetch plan n=0 reason=library
+  → sync trigger: ['sync trigger reason=foreground decision=run']
+  → sync start: 1 · GET: 0 · fim: ['sync fail stage=setlists page=1 code=network status=-']
+VEREDITO: confere com o declarado ✓
+  (espera 25 s: o intervalo de 30 s desde o fim do último sync)

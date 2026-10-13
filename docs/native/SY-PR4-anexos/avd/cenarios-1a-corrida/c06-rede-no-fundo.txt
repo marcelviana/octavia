@@ -1,0 +1,27 @@
+# SY-PR4 · AVD · c06-rede-no-fundo — a rede cai e volta com o app em segundo plano; a volta em menos de 30 s
+# 2026-10-13 10:59:04 -0300 · a fixture /private/tmp/claude-501/-Users-marcelviana-projects-octavia/d912b538-91de-4450-bb5e-3712bb2d4c23/scratchpad/fx4
+HIPÓTESE A MEDIR: o evento chega ao JS em segundo plano → `net offline`/`net online` e `sync trigger reason=net
+decision=skip-background` com o app fora, e na volta curta `reason=net decision=run` (a marca). Se não chega, as
+linhas só saem na volta.
+DECLARADO ANTES:
+  linhas: ['sync trigger reason=net decision=skip-background', 'sync trigger reason=net decision=run']
+  sync_start: 1
+  GET: 2
+  rádio DESLIGADO: ping → 'connect: Network is unreachable'
+  rádio LIGADO: ping → 'rtt min/avg/max/mdev = 12.152/12.152/12.152/0.000 ms'
+  ausência até aqui: 8.8 s (tem de ser < 30 s)
+QUANDO cada linha saiu, contra a volta à frente:
+  EM SEGUNDO PLANO (-7.2 s)  net offline
+  EM SEGUNDO PLANO (-2.2 s)  net online
+  EM SEGUNDO PLANO (-2.2 s)  sync trigger reason=net decision=skip-background
+MEDIDO:
+  1791899942610  net offline
+  1791899947585  net online
+  1791899947586  sync trigger reason=net decision=skip-background
+  → sync trigger: ['sync trigger reason=net decision=skip-background']
+  → sync start: 0 · GET: 0 · fim: []
+  ✗ as linhas sync trigger diferem do declarado
+  ✗ sync start 0 ≠ 1
+  ✗ GET 0 ≠ 2
+VEREDITO: NÃO confere ✗
+  mock: DERRUBADO (nada na 8788)

@@ -1,0 +1,6 @@
+c01: confere
+c02: confere
+c03: NÃO confere
+c04: NÃO confere
+c05: NÃO confere
+c06: NÃO confere

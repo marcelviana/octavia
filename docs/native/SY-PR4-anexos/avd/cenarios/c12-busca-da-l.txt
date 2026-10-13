@@ -1,0 +1,27 @@
+# SY-PR4 · AVD · c12-busca-da-l — a L com uma busca digitada; a falha automática (500) põe a linha de aviso
+# 2026-10-13 11:19:02 -0300 · a fixture /private/tmp/claude-501/-Users-marcelviana-projects-octavia/d912b538-91de-4450-bb5e-3712bb2d4c23/scratchpad/fx4
+  antes: lib-campo text='Letra' · aviso-motivo ausente
+  mock: 500-pagina-1 · fixture a
+DECLARADO ANTES:
+  linhas: ['sync trigger reason=net decision=run']
+  sync_start: 1
+  GET: 2
+  rádio DESLIGADO: ping → 'connect: Network is unreachable'
+  rádio LIGADO: ping → 'rtt min/avg/max/mdev = 15.569/15.569/15.569/0.000 ms'
+  depois: lib-campo text='Letra' · aviso-motivo PRESENTE
+MEDIDO:
+  1791901155823  net offline
+  1791901163041  net online
+  1791901163061  sync trigger reason=net decision=run
+  1791901165362  sync start
+  1791901165449  auth refresh=cached
+  1791901166583  api status=200 path=/api/setlists n=1 ms=1189
+  1791901166622  auth refresh=cached
+  1791901166841  api status=500 path=/api/content n=1 ms=225
+  1791901166874  sync fail stage=content page=1 code=INTERNAL_ERROR status=500
+  1791901166908  prefetch plan n=0 reason=library
+  → sync trigger: ['sync trigger reason=net decision=run']
+  → sync start: 1 · GET: 2 · fim: ['sync fail stage=content page=1 code=INTERNAL_ERROR status=500']
+VEREDITO: confere com o declarado ✓
+  mock: normal · fixture a
+  (espera 14 s: o intervalo de 30 s desde o fim do último sync)

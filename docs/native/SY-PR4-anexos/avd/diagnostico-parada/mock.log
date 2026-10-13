@@ -1,0 +1,3 @@
+fixture: servidor em :8788 modo=normal setlists=15 content=5 paginas=[5]
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent

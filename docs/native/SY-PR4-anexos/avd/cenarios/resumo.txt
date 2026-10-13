@@ -1,0 +1,23 @@
+c03: confere
+c04: confere
+c05: confere
+c06: NÃO confere
+c06b: confere
+c07: confere
+c08: confere
+c09: confere
+c10: confere
+c11: confere
+c12: confere
+c13: NÃO confere
+c12: confere
+c13: NÃO confere
+c13: confere
+c14: confere
+c15: confere
+c16: confere
+c17: confere
+c18: NÃO confere
+c18b: confere
+c14b: NÃO confere
+c14c: confere

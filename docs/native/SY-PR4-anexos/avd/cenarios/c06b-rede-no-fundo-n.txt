@@ -1,0 +1,40 @@
+# SY-PR4 · AVD · c06b-rede-no-fundo-n — a rede em segundo plano, n rodadas, a volta 5 s e 12 s depois de a rede voltar
+# 2026-10-13 11:04:10 -0300 · a fixture /private/tmp/claude-501/-Users-marcelviana-projects-octavia/d912b538-91de-4450-bb5e-3712bb2d4c23/scratchpad/fx4
+  rádio DESLIGADO: ping → 'connect: Network is unreachable'
+  rádio LIGADO: ping → 'rtt min/avg/max/mdev = 13.576/13.576/13.576/0.000 ms'
+  rodada 1: espera 5 s · ausência 10.7 s · a rede de pé 5.0 s antes da volta
+    net offline: fundo (-9.3 s) · net online: fundo (-4.3 s) · ['reason=net decision=skip-background', 'reason=net decision=run'] · sync start 1 · GET 2
+  (espera 28 s: o intervalo de 30 s desde o fim do último sync)
+  rádio DESLIGADO: ping → 'connect: Network is unreachable'
+  rádio LIGADO: ping → 'rtt min/avg/max/mdev = 12.683/12.683/12.683/0.000 ms'
+  rodada 2: espera 12 s · ausência 17.8 s · a rede de pé 12.1 s antes da volta
+    net offline: fundo (-16.6 s) · net online: fundo (-11.5 s) · ['reason=net decision=skip-background', 'reason=net decision=run'] · sync start 1 · GET 2
+  (espera 28 s: o intervalo de 30 s desde o fim do último sync)
+  rádio DESLIGADO: ping → 'connect: Network is unreachable'
+  rádio LIGADO: ping → 'rtt min/avg/max/mdev = 243.835/243.835/243.835/0.000 ms'
+  rodada 3: espera 5 s · ausência 12.7 s · a rede de pé 5.3 s antes da volta
+    net offline: fundo (-11.4 s) · net online: fundo (-6.5 s) · ['reason=net decision=skip-background', 'reason=net decision=run'] · sync start 1 · GET 2
+  (espera 28 s: o intervalo de 30 s desde o fim do último sync)
+  rádio DESLIGADO: ping → 'connect: Network is unreachable'
+  rádio LIGADO: ping → 'rtt min/avg/max/mdev = 18.007/18.007/18.007/0.000 ms'
+  rodada 4: espera 12 s · ausência 17.9 s · a rede de pé 12.1 s antes da volta
+    net offline: fundo (-16.5 s) · net online: fundo (-11.4 s) · ['reason=net decision=skip-background', 'reason=net decision=run'] · sync start 1 · GET 2
+  (espera 27 s: o intervalo de 30 s desde o fim do último sync)
+  rádio DESLIGADO: ping → 'connect: Network is unreachable'
+  rádio LIGADO: ping → 'rtt min/avg/max/mdev = 217.240/217.240/217.240/0.000 ms'
+  rodada 5: espera 5 s · ausência 12.0 s · a rede de pé 5.0 s antes da volta
+    net offline: fundo (-10.7 s) · net online: fundo (-4.8 s) · ['reason=net decision=skip-background', 'reason=net decision=run'] · sync start 1 · GET 2
+  (espera 27 s: o intervalo de 30 s desde o fim do último sync)
+  rádio DESLIGADO: ping → 'connect: Network is unreachable'
+  rádio LIGADO: ping → 'rtt min/avg/max/mdev = 234.391/234.391/234.391/0.000 ms'
+  rodada 6: espera 12 s · ausência 19.1 s · a rede de pé 12.1 s antes da volta
+    net offline: fundo (-17.8 s) · net online: fundo (-11.5 s) · ['reason=net decision=skip-background', 'reason=net decision=run'] · sync start 1 · GET 2
+RESUMO (rodada · espera · ausência · rede de pé antes da volta · net offline · net online · linhas · sync start · GET):
+  (1, 5, 10.65, 5.039, 'fundo (-9.3 s)', 'fundo (-4.3 s)', ['reason=net decision=skip-background', 'reason=net decision=run'], 1, 2)
+  (2, 12, 17.831, 12.058, 'fundo (-16.6 s)', 'fundo (-11.5 s)', ['reason=net decision=skip-background', 'reason=net decision=run'], 1, 2)
+  (3, 5, 12.725, 5.285, 'fundo (-11.4 s)', 'fundo (-6.5 s)', ['reason=net decision=skip-background', 'reason=net decision=run'], 1, 2)
+  (4, 12, 17.88, 12.099, 'fundo (-16.5 s)', 'fundo (-11.4 s)', ['reason=net decision=skip-background', 'reason=net decision=run'], 1, 2)
+  (5, 5, 12.009, 5.043, 'fundo (-10.7 s)', 'fundo (-4.8 s)', ['reason=net decision=skip-background', 'reason=net decision=run'], 1, 2)
+  (6, 12, 19.093, 12.053, 'fundo (-17.8 s)', 'fundo (-11.5 s)', ['reason=net decision=skip-background', 'reason=net decision=run'], 1, 2)
+VEREDITO: 1 sync em 6 de 6 rodadas (a SY-D17: a volta curta com a rede que voltou → 1)
+  mock: DERRUBADO (nada na 8788)

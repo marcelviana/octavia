@@ -1,0 +1,13 @@
+# o mock alcançável pelo túnel com o rádio DESLIGADO? (a hipótese da A9) · 2026-10-13 12:43:17 -0300
+$ adb shell ping -c 1 -W 2 8.8.8.8
+connect: Network is unreachable
+$ adb shell which nc toybox curl
+/system/bin/nc
+/system/bin/toybox
+$ adb shell "printf 'GET /api/setlists HTTP/1.0
+
+' | nc -w 3 127.0.0.1 8788 | head -1"
+exit=0
+o log do mock (a requisição chegou?):
+fixture: servidor em :8788 modo=normal setlists=15 content=5 paginas=[5]
+REQ /api/setlists auth=NAO sortBy=-

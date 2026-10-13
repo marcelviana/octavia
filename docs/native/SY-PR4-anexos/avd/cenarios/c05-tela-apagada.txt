@@ -1,0 +1,28 @@
+# SY-PR4 · AVD · c05-tela-apagada — apagar a tela com o app na frente: 10 s, e depois 35 s
+# 2026-10-13 11:02:02 -0300 · a fixture /private/tmp/claude-501/-Users-marcelviana-projects-octavia/d912b538-91de-4450-bb5e-3712bb2d4c23/scratchpad/fx4
+HIPÓTESE A MEDIR: se a tela apagada conta como segundo plano, a volta de 10 s deixa `skip-short` e a de 35 s
+`foreground run` (1 sync, 2 GET); se não conta, nenhuma linha nas duas.
+DECLARADO ANTES:
+  linhas: ['sync trigger reason=foreground decision=skip-short', 'sync trigger reason=foreground decision=run']
+  sync_start: 1
+  GET: 2
+  tela apagada: mWakefulness=Asleep · 10 s
+  tela acesa: mWakefulness=Awake · o app na frente: True
+  tela apagada: mWakefulness=Asleep · 35 s
+  tela acesa: mWakefulness=Awake · o app na frente: True
+MEDIDO:
+  1791900130098  sync trigger reason=foreground decision=skip-short
+  1791900171530  sync trigger reason=foreground decision=run
+  1791900171833  sync start
+  1791900171834  auth refresh=cached
+  1791900171856  api status=200 path=/api/setlists n=1 ms=23
+  1791900171858  auth refresh=cached
+  1791900171870  api status=200 path=/api/content n=1 ms=13
+  1791900171877  cache write kind=setlists n=15 invalidated=0
+  1791900171880  cache write kind=content n=5 invalidated=0
+  1791900171880  sync ok setlists=15 content=5 pages=1 t=47
+  1791900171881  prefetch plan n=0 reason=library
+  → sync trigger: ['sync trigger reason=foreground decision=skip-short', 'sync trigger reason=foreground decision=run']
+  → sync start: 1 · GET: 2 · fim: ['sync ok setlists=15 content=5 pages=1 t=47']
+VEREDITO: confere com o declarado ✓
+  (espera 23 s: o intervalo de 30 s desde o fim do último sync)

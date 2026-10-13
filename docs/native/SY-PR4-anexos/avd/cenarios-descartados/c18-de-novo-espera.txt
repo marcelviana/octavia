@@ -1,0 +1,37 @@
+# SY-PR4 · AVD · c18-de-novo-espera — um sync em voo (o mock no atraso), a rede volta (queued), o palco abre, o voo cai
+# 2026-10-13 11:33:44 -0300 · a fixture /private/tmp/claude-501/-Users-marcelviana-projects-octavia/d912b538-91de-4450-bb5e-3712bb2d4c23/scratchpad/fx4
+  mock: atraso · fixture a
+DECLARADO ANTES:
+  linhas: ['sync trigger reason=foreground decision=run', 'sync trigger reason=net decision=queued', 'sync trigger reason=again decision=hold-stage', 'sync trigger reason=stage-exit decision=run']
+  sync_start: 2
+  GET: 2
+  rádio DESLIGADO: ping → 'connect: Network is unreachable'
+  rádio LIGADO: ping → 'rtt min/avg/max/mdev = 18.578/18.578/18.578/0.000 ms'
+  o palco abriu 54.3 s depois do sync start
+  mock: normal · fixture a
+MEDIDO:
+  1791902025435  index open
+  1791902063108  sync trigger reason=foreground decision=run
+  1791902063280  sync start
+  1791902063346  auth refresh=cached
+  1791902078263  net offline
+  1791902090025  net online
+  1791902090062  sync trigger reason=net decision=queued
+  1791902090243  sync fail stage=setlists page=1 code=network status=-
+  1791902090323  prefetch plan n=0 reason=library
+  1791902092684  sync start
+  1791902092697  auth refresh=cached
+  1791902112221  prefetch plan n=0 reason=demand
+  1791902112578  prefetch plan n=0 reason=demand
+  1791902118976  sync fail stage=setlists page=1 code=network status=-
+  1791902119031  prefetch plan n=0 reason=library
+  1791902119111  index jump n=1
+  1791902120948  keepawake on
+  1791902120951  prefetch plan n=0 reason=demand
+  1791902136046  keepawake off
+  → sync trigger: ['sync trigger reason=foreground decision=run', 'sync trigger reason=net decision=queued']
+  → sync start: 2 · GET: 0 · fim: ['sync fail stage=setlists page=1 code=network status=-', 'sync fail stage=setlists page=1 code=network status=-']
+  ✗ as linhas sync trigger diferem do declarado
+  ✗ GET 0 ≠ 2
+VEREDITO: NÃO confere ✗
+  mock: DERRUBADO (nada na 8788)

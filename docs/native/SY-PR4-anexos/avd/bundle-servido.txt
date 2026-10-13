@@ -1,0 +1,15 @@
+# o bundle servido — antes da 1ª abertura · a árvore d1e050b · 2026-10-13 10:54:49 -0300
+$ curl -s "http://127.0.0.1:8081/apps/native/index.bundle?platform=android&dev=true" | grep -c …
+bytes: 7515218
+localhost:8788: 1
+octavia.rocks: 0
+sync trigger reason=: 2
+ligarGatilhos: 5
+segurarDeNovo: 9
+abrirAvulso: 3
+focoDoIndice: 3
+aoFecharPalco: 3
+$ adb -s emulator-5554 reverse --list
+host-54 tcp:8081 tcp:8081
+host-54 tcp:8788 tcp:8788
+
