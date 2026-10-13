@@ -13,10 +13,19 @@
  *   - **sem rede na volta**: `skip-offline`, e nenhuma chamada ao executor (nenhum `sync skip`); a rede, quando voltar,
  *     é o gatilho da rede. A rede da volta se lê na hora (`estaOnline`), não a do último evento;
  *   - **sem sessão**: nada, e nenhuma linha (a `sessao()` da raiz);
+ *   - **o palco aberto** (SY-D49, SY-D56): nenhum gatilho dispara — `hold-stage`, e o pedido fica MARCADO (uma marca só,
+ *     da sessão de agora). "Palco aberto" é o que a foto da sessão diz (`palco.palcoAberto()`): a sessão do palco, de
+ *     entrar de fora até voltar a S1/S2 (com o índice ou a busca por cima), ou um palco avulso sem hospedeira montado;
+ *     V não conta. **Ao fechar o palco**, o marcado passa pelas regras de sempre (SY-D49 (2)), com `reason=stage-exit`:
+ *     a rede lida na hora (`skip-offline`; a rede, quando voltar, é o gatilho da rede), o voo, o intervalo. Fechar sem
+ *     marca: nada, nenhuma linha. O sync da abertura e o *Tentar de novo* não passam por aqui e não mudam;
+ *   - **o "de novo" do voo** (SY-D49 (2)): o executor pergunta `segurarDeNovo()` antes de rodá-lo; com o palco aberto, ele
+ *     vira a marca do palco (`reason=again decision=hold-stage`) e roda ao fechar, pelas mesmas regras;
  *   - **o voo**: um sync em voo → `queued` — o pedido vai ao executor, e o voo único o marca "de novo" (SY-D9; o "de
  *     novo" fica fora do intervalo, SY-D18, SY-D39);
  *   - **o intervalo** (SY-D18): 30 s do FIM do último sync que saiu à rede (`ultimoSyncNaRede`), para os dois gatilhos;
- *     não vale depois de falha de rede (`falhaDeRede`); vale depois de falha com status → `skip-interval`;
+ *     não vale depois de falha de rede (`falhaDeRede`); vale depois de falha com status → `skip-interval`. **Só conta um
+ *     sync da sessão de agora** (SY-D44): o `ultimoSyncNaRede` do executor não se zera no logout, e carrega o `uid`;
  *   - **a linha** `sync trigger reason=<motivo> decision=<decisão>` (SY-D28): uma por gatilho AVALIADO, inclusive os que
  *     não disparam; nenhuma para a primeira leitura, o evento repetido e a falta de sessão. O `sync start` não muda.
  *     G3 70 → 71: é a única linha de log nova da PR-4 (o coletor do G3 lê comentário, div. 83: aqui nenhum a cita).
@@ -25,9 +34,8 @@
  *
  * **O contrato** (SY-D33): `ligarGatilhos({ sessao, pedirSync, ultimoSyncNaRede, palco }) → desligar`, com o `AppState` e
  * o `expo-network` assinados AQUI DENTRO. O commit 1 da SY-PR4 o estendeu (o `palco`, o `uid` do `SyncNaRede`, o
- * `segurarDeNovo` — declarado, pergunta do aval). **Commit 3: os gatilhos de verdade, ainda sem o palco** — o `palco` da
- * ligação não se lê, o `segurarDeNovo` diz sempre `false`, e o intervalo lê o último sync de qualquer sessão; o palco
- * (SY-D49, SY-D56) e a sessão do intervalo (SY-D44) entram no commit 4.
+ * `segurarDeNovo` — declarado, pergunta do aval). O commit 3 trouxe os gatilhos; o commit 4, o palco e a sessão do
+ * intervalo.
  */
 import { AppState } from 'react-native'
 import * as Network from 'expo-network'
@@ -113,6 +121,8 @@ export function ligarGatilhos(l: LigacaoDosGatilhos): GatilhosLigados {
   let foraDesde: number | null = AppState.currentState === 'active' ? null : Date.now()
   /** A rede voltou com o app em segundo plano: de que sessão, e quando (SY-D17). */
   let marcaDoFundo: { uid: string; t: number } | null = null
+  /** Um gatilho (ou o "de novo") segurado pelo palco aberto, da sessão que o pediu (SY-D49): roda ao fechar o palco. */
+  let marcaDoPalco: { uid: string } | null = null
 
   /** Um sync saiu à rede depois de `t`: a marca já foi atendida (SY-D17 (1)). */
   const saiuDepois = (t: number): boolean => {
@@ -120,15 +130,21 @@ export function ligarGatilhos(l: LigacaoDosGatilhos): GatilhosLigados {
     return u !== null && u.inicioMs >= t
   }
 
-  /** O gatilho valeu (sessão de pé, rede de pé): o voo e o intervalo decidem. */
-  const decidir = (motivo: MotivoDoGatilho): void => {
+  /** O gatilho valeu (sessão de pé, rede de pé): o palco, o voo e o intervalo decidem. */
+  const decidir = (uid: string, motivo: MotivoDoGatilho): void => {
+    if (l.palco.palcoAberto()) {
+      marcaDoPalco = { uid }
+      linha(motivo, 'hold-stage')
+      return
+    }
     const u = l.ultimoSyncNaRede()
     if (u !== null && u.fimMs === null) {
       linha(motivo, 'queued')
       l.pedirSync(motivo)
       return
     }
-    if (u !== null && u.fimMs !== null && !u.falhaDeRede && Date.now() - u.fimMs < INTERVALO_MINIMO_MS) {
+    // SY-D44: o intervalo só conta um sync DESTA sessão — o de outra (o logout no meio) não segura nada.
+    if (u !== null && u.uid === uid && u.fimMs !== null && !u.falhaDeRede && Date.now() - u.fimMs < INTERVALO_MINIMO_MS) {
       linha(motivo, 'skip-interval')
       return
     }
@@ -144,7 +160,7 @@ export function ligarGatilhos(l: LigacaoDosGatilhos): GatilhosLigados {
         linha(motivo, 'skip-offline')
         return
       }
-      decidir(motivo)
+      decidir(uid, motivo)
     })
   }
 
@@ -165,7 +181,7 @@ export function ligarGatilhos(l: LigacaoDosGatilhos): GatilhosLigados {
       linha('net', 'skip-background')
       return
     }
-    decidir('net')
+    decidir(uid, 'net')
   })
 
   const app = AppState.addEventListener('change', (estado) => {
@@ -187,11 +203,32 @@ export function ligarGatilhos(l: LigacaoDosGatilhos): GatilhosLigados {
     else linha('foreground', 'skip-short')
   })
 
+  // SY-D49 (2): o palco fechou — o marcado passa pelas regras de sempre, com a rede lida agora.
+  const palco = l.palco.aoFecharPalco(() => {
+    const marca = marcaDoPalco
+    marcaDoPalco = null
+    if (!vivo || marca === null) return
+    if (l.sessao() !== marca.uid) return // outra sessão (ou nenhuma): a marca era da que saiu
+    comRede(marca.uid, 'stage-exit')
+  })
+
+  /** O executor pergunta antes de rodar o "de novo" do voo: com o palco aberto, ele vira a marca do palco. */
+  const segurarDeNovo = (): boolean => {
+    if (!vivo || !l.palco.palcoAberto()) return false
+    const uid = l.sessao()
+    if (uid === null) return false
+    marcaDoPalco = { uid }
+    linha('again', 'hold-stage')
+    return true
+  }
+
   const desligar = (): void => {
     vivo = false
     marcaDoFundo = null
+    marcaDoPalco = null
     rede.remove()
     app.remove()
+    palco()
   }
-  return Object.assign(desligar, { segurarDeNovo: () => false })
+  return Object.assign(desligar, { segurarDeNovo })
 }

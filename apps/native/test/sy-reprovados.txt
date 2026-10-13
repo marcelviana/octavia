@@ -5,20 +5,12 @@
 # plantado (`docs/native/SY-PR1-anexos/instrumentos/cn-sy.sh`). Comentário e linha em branco são ignorados.
 
 # (i) os gatilhos — sy-gatilhos.test.tsx — esvazia na PR-4 (as 6 da PR-1 saíram no commit 3 da SY-PR4: os gatilhos de
-# verdade, sem o palco)
-# SY-PR4, commit 1 — os casos novos (SY-D49 (3), SY-D44, SY-D28, SY-D56), entrando reprovados. O commit 3 (os gatilhos)
-# tirou o `linhas-sem-disparo` e o `palco-v-aberta` (V não está na sessão: passa assim que o gatilho roda); as do palco e
-# a do logout saem no commit 4. O `palco-sair-sem-marca` e o `palco-abertura-e-tentar` passam desde o commit 1 e ficam
-# FORA: a prova deles é o controle negativo (`docs/native/SY-PR4-anexos/instrumentos/cn-sy-pr4.sh`).
-i:logout-intervalo-de-outra-sessao
-i:palco-rede
-i:palco-fundo
-i:palco-indice-por-cima
-i:palco-sair-com-marca
-i:palco-sair-no-intervalo
-i:palco-sair-sem-rede
-i:palco-de-novo-espera
-i:palco-avulso
+# verdade, sem o palco; vazia desde o commit 4)
+# SY-PR4, commit 1 — os casos novos (SY-D49 (3), SY-D44, SY-D28, SY-D56), entrando reprovados (16): o commit 3 (os
+# gatilhos) tirou o `linhas-sem-disparo`, o `palco-v-aberta` e as 5 `tela-`; o commit 4 (o palco, o avulso, o "de novo"
+# que espera, a sessão do intervalo) tirou as 9 do palco e do logout — vazia. O `palco-sair-sem-marca` e o
+# `palco-abertura-e-tentar` passam desde o commit 1 e nunca entraram: a prova deles é o controle negativo
+# (`docs/native/SY-PR4-anexos/instrumentos/cn-sy-pr4.sh`).
 # (i), a família tela- — sy-gatilhos-telas.test.tsx (SY-D52, SY-D57): vazia desde o commit 3 da SY-PR4 (o gatilho chega à tela)
 
 # (ii) o voo único — sy-voo.test.ts — esvazia na PR-2 (vazia desde o commit 5 da SY-PR2: o voo e a sessão no 2, as escritas no 4, o prazo no 5)

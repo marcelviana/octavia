@@ -8,7 +8,10 @@
  *     vez, ao terminar, com os dados de AGORA (o `dadosRef`), e pela raiz de quem pediu por último;
  *   - **a sessão conferida** (SY-D17): o resultado de um sync cuja sessão mudou enquanto ele voava se descarta — nada
  *     chega à raiz —, e o "de novo" pedido pela sessão velha se cancela;
- *   - **o último sync que saiu à rede** (SY-D33, `ultimoSyncNaRede`): para os gatilhos da PR-4. Só exposto; nada o lê.
+ *   - **o último sync que saiu à rede** (SY-D33, `ultimoSyncNaRede`): o que os gatilhos (SY-PR4) leem para o intervalo,
+ *     com o `uid` da sessão que pediu (SY-D44);
+ *   - **o "de novo" que espera o palco** (SY-PR4, SY-D49 (2)): antes de rodar o "de novo", o executor pergunta à raiz
+ *     (`segurarDeNovo`); com o palco aberto, ele não roda aqui — os gatilhos o rodam ao fechar o palco.
  *
  * O que a raiz entrega (`RaizDoSync`) é o que o `rodarSync` usava por fechamento: os dois `set` do estado, o
  * `dadosRef` e o `prefetchEArrumar` — e, desde a PR-2, a sessão de agora. O `sincronizar` é importado aqui, como o
@@ -48,7 +51,7 @@ export interface RaizDoSync {
   /**
    * SY-PR4 (SY-D49 (2)) — perguntado quando o "de novo" do voo IA rodar: `true` = o palco está aberto, o pedido ficou
    * marcado para o fechar dele (os gatilhos, `segurarDeNovo`), e o "de novo" se cancela aqui. Opcional: sem ele, o "de
-   * novo" roda como na PR-2. **Commit 1 da PR-4: declarado e ainda não lido** (o executor o lê no commit 4).
+   * novo" roda como na PR-2.
    */
   segurarDeNovo?: () => boolean
 }
@@ -97,9 +100,10 @@ export async function rodarSync(raiz: RaizDoSync, uid: string, anterior: Dados):
     }
     const marcado = deNovo
     deNovo = null
-    const fim = terminouVoo(voo, {
-      cancelarDeNovo: marcado === null || marcado.raiz.sessaoAtual() !== marcado.uid,
-    })
+    const roda = marcado !== null && marcado.raiz.sessaoAtual() === marcado.uid
+    // SY-D49 (2): com o palco aberto, o "de novo" espera — vira a marca do palco (os gatilhos) e se cancela aqui.
+    const espera = roda && (marcado.raiz.segurarDeNovo?.() ?? false)
+    const fim = terminouVoo(voo, { cancelarDeNovo: !roda || espera })
     voo = fim.estado
     if (fim.acao !== 'rodar' || marcado === null) return
     // O "de novo" parte do que a raiz tem AGORA — o sync que acabou de terminar já atualizou o `dadosRef` à mão.

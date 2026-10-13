@@ -9,7 +9,7 @@
  * ela sobrevive à rotação do device sem estado extra (T1-R27: "girar na
  * música 4 → continua na 4").
  */
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState, type ReactNode } from 'react'
 import { DarkTheme, NavigationContainer, type Theme } from '@react-navigation/native'
 import { createNativeStackNavigator, type NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { StyleSheet, Text, View } from 'react-native'
@@ -72,6 +72,15 @@ const navTheme: Theme = {
     border: dark.line,
     notification: dark.error,
   },
+}
+
+/**
+ * SY-PR4 (SY-D56) — o palco avulso SEM hospedeira (o ▶ na L ou em V) não abre a sessão da foto, mas é palco: enquanto
+ * ele está montado, a foto diz "palco aberto" e os gatilhos seguram (SY-D49). O voltar o desempilha, e o desmontar solta.
+ */
+function PalcoAvulsoAberto({ foto, children }: { foto: FotoDaSessao; children: ReactNode }): React.JSX.Element {
+  useEffect(() => foto.abrirAvulso(), [foto])
+  return <>{children}</>
 }
 
 function Placeholder({ titulo, nota }: { titulo: string; nota: string }): React.JSX.Element {
@@ -198,12 +207,13 @@ export function Navigation({ signedIn, foto, setlists, dados }: NavigationProps)
             <Stack.Screen
               name="Index"
               listeners={({ navigation, route }) => ({
-                // S2 (o `Index` sem `posicaoAtual`) solta a foto; o índice do palco (com ela) é a mesma sessão. Os
-                // params se leem do estado no instante do foco: o salto do palco ao índice os troca na mesma ação.
+                // S2 (o `Index` sem `posicaoAtual`) solta a foto; o índice do palco (com ela) é a mesma sessão — a regra
+                // mora na foto desde a SY-PR4 (`focoDoIndice`), onde o gate a monta. Os params se leem do estado no
+                // instante do foco: o salto do palco ao índice os troca na mesma ação.
                 focus: () => {
                   const agora = navigation.getState().routes.find((r) => r.key === route.key)
                   const params = agora?.params as RootStackParamList['Index'] | undefined
-                  if (params?.posicaoAtual === undefined) foto.sair()
+                  foto.focoDoIndice(params?.posicaoAtual)
                 },
               })}
             >
@@ -259,20 +269,22 @@ export function Navigation({ signedIn, foto, setlists, dados }: NavigationProps)
                 // então zero setlists abre igual (div. 1001).
                 if ('origem' in p) {
                   return (
-                    <StageScreen
-                      setlist={null}
-                      contentById={dados.contentById}
-                      posicao={1}
-                      avulsaContentId={p.avulsa}
-                      origemDoAvulso={p.origem}
-                      online={dados.online}
-                      onPosicao={() => undefined}
-                      onFim={() => undefined}
-                      onIndice={() => undefined}
-                      onBusca={() => ir(navigation, destinoDaBuscaDoPalco(null, 1))}
-                      onSair={() => navigation.goBack()}
-                      onArquivosMudaram={dados.onArquivosMudaram}
-                    />
+                    <PalcoAvulsoAberto foto={foto}>
+                      <StageScreen
+                        setlist={null}
+                        contentById={dados.contentById}
+                        posicao={1}
+                        avulsaContentId={p.avulsa}
+                        origemDoAvulso={p.origem}
+                        online={dados.online}
+                        onPosicao={() => undefined}
+                        onFim={() => undefined}
+                        onIndice={() => undefined}
+                        onBusca={() => ir(navigation, destinoDaBuscaDoPalco(null, 1))}
+                        onSair={() => navigation.goBack()}
+                        onArquivosMudaram={dados.onArquivosMudaram}
+                      />
+                    </PalcoAvulsoAberto>
                   )
                 }
                 const setlist = daSessao(p.setlistId)
