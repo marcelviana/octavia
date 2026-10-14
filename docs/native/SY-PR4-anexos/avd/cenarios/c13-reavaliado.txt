@@ -1,0 +1,8 @@
+# SY-PR4 · c13 REAVALIADO sobre os dumps gravados na corrida (o app não mudou): a ordem pelo título de cada linha
+# (a corrida leu o content-desc das alças, igual nas cinco — não media ordem; o instrumento consertado: ordem_do_modo)
+o modo aberto, antes do arrasto (a ordem do servidor): ['Lanterna da fixture', 'Cais da fixture', 'Letra longa da fixture', 'Cifra do acorde longo', 'Tab da fixture QL']
+depois do arrasto, antes do sync:                      ['Cais da fixture', 'Letra longa da fixture', 'Lanterna da fixture', 'Cifra do acorde longo', 'Tab da fixture QL']
+depois do sync (a setlist renomeada no site):         ['Cais da fixture', 'Letra longa da fixture', 'Lanterna da fixture', 'Cifra do acorde longo', 'Tab da fixture QL']
+o arrasto mudou a ordem: True · depois do sync a ordem é a do arrasto: True
+o título do modo depois do sync: ['REORDENAR · ENSAIO DA QUEBRA, RENOMEADA NO SITE']
+VEREDITO: o arrasto ficou (não se perdeu nem pulou) ✓

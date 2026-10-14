@@ -38,6 +38,7 @@ let servidor: Server
 let porta = 0
 let S: typeof import('../src/sincronizador')
 let G: typeof import('../src/gatilhos')
+let F: typeof import('../src/foto-do-palco')
 let a: Arnes
 let desligar: () => void = () => undefined
 const C = new Checagens('v', 'a contagem')
@@ -88,6 +89,8 @@ async function sessao(n: number): Promise<void> {
       void S.rodarSync(a.raiz, UID, a.dadosRef.current)
     },
     ultimoSyncNaRede: () => a.ultimoSyncNaRede(),
+    // SY-PR4 (o contrato do palco, SY-D49): a foto fechada — nenhum caso deste gate abre o palco
+    palco: F.criarFotoDaSessao(),
   })
   await S.rodarSync(a.raiz, UID, SEM_DADOS)
   await a.quieto()
@@ -109,6 +112,7 @@ beforeAll(async () => {
   vi.useFakeTimers({ toFake: ['Date'] })
   S = await import('../src/sincronizador')
   G = await import('../src/gatilhos')
+  F = await import('../src/foto-do-palco')
 })
 
 afterAll(async () => {
@@ -169,5 +173,6 @@ describe('gate (v) — a contagem de GET por evento de gatilho (A2.5)', () => {
     expect(j.casos, 'gate sem casos: não mediu nada (regra 4)').toBeGreaterThan(0)
     expect(j.naoDeclaradas, 'reprovação NÃO DECLARADA').toEqual([])
     expect(j.orfas, 'declaração ÓRFÃ').toEqual([])
+    expect(j.listaNaoVazia, 'lista não vazia: desde a SY-PR4 reprovação declarada não é mais aceita').toEqual([])
   })
 })

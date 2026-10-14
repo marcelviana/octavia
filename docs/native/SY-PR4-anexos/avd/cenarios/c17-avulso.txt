@@ -1,0 +1,32 @@
+# SY-PR4 · AVD · c17-avulso — o ▶ na L abre o palco avulso; a rede volta; o voltar
+# 2026-10-13 11:32:02 -0300 · a fixture /private/tmp/claude-501/-Users-marcelviana-projects-octavia/d912b538-91de-4450-bb5e-3712bb2d4c23/scratchpad/fx4
+DECLARADO ANTES:
+  linhas: ['sync trigger reason=net decision=hold-stage', 'sync trigger reason=stage-exit decision=run']
+  sync_start: 1
+  GET: 2
+  rádio DESLIGADO: ping → 'connect: Network is unreachable'
+  rádio LIGADO: ping → 'rtt min/avg/max/mdev = 858.657/858.657/858.657/0.000 ms'
+MEDIDO:
+  1791901923701  keepawake on
+  1791901923702  prefetch plan n=0 reason=demand
+  1791901928002  net offline
+  1791901941305  net online
+  1791901941411  sync trigger reason=net decision=hold-stage
+  1791901956171  prefetch plan n=0 reason=demand
+  1791901956953  prefetch plan n=0 reason=demand
+  1791901957310  prefetch plan n=0 reason=demand
+  1791901959955  keepawake off
+  1791901960811  sync trigger reason=stage-exit decision=run
+  1791901970624  sync start
+  1791901970631  auth refresh=cached
+  1791901971434  api status=200 path=/api/setlists n=1 ms=784
+  1791901971462  auth refresh=cached
+  1791901971700  api status=200 path=/api/content n=1 ms=246
+  1791901971830  cache write kind=setlists n=15 invalidated=0
+  1791901971918  cache write kind=content n=5 invalidated=0
+  1791901971921  sync ok setlists=15 content=5 pages=1 t=1344
+  1791901971939  prefetch plan n=0 reason=library
+  → sync trigger: ['sync trigger reason=net decision=hold-stage', 'sync trigger reason=stage-exit decision=run']
+  → sync start: 1 · GET: 2 · fim: ['sync ok setlists=15 content=5 pages=1 t=1344']
+VEREDITO: confere com o declarado ✓
+  (espera 22 s: o intervalo de 30 s desde o fim do último sync)

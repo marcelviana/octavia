@@ -150,14 +150,17 @@ export class Arnes {
     return max
   }
 
-  /** A definição da A2.4, lida nas linhas: o último `sync start`, o fim dele e se a falha foi de rede. */
+  /**
+   * A definição da A2.4, lida nas linhas: o último `sync start`, o fim dele e se a falha foi de rede. O `uid` é o do
+   * arnês (SY-PR4: o contrato o pede, SY-D44) — as linhas não dizem a sessão; o caso que troca de sessão lê o do executor.
+   */
   ultimoSyncNaRede(): SyncNaRede | null {
     let ultimo: SyncNaRede | null = null
     for (const { t, l } of this.linhas) {
-      if (l === 'sync start') ultimo = { inicioMs: t, fimMs: null, falhaDeRede: false }
+      if (l === 'sync start') ultimo = { uid: this.uid, inicioMs: t, fimMs: null, falhaDeRede: false }
       else if (ultimo !== null && ultimo.fimMs === null && (l.startsWith('sync ok') || l.startsWith('sync fail'))) {
         const inicioMs: number = ultimo.inicioMs
-        ultimo = { inicioMs, fimMs: t, falhaDeRede: l.startsWith('sync fail') && l.includes('code=network') }
+        ultimo = { uid: this.uid, inicioMs, fimMs: t, falhaDeRede: l.startsWith('sync fail') && l.includes('code=network') }
       }
     }
     return ultimo

@@ -1,0 +1,27 @@
+# cn-sy-pr4.sh — 2026-10-13 12:53:51 -0300 · árvore d1e050b0035fa629c7b88ad6633ecc052ba2498c
+# Leitura: com o defeito plantado, o gate tem de ACUSAR a checagem daquela regra (uma REPROVA NÃO DECLARADA).
+==================================================================================================
+CN r-1 — o n-5 da PR-2: o "de novo" da sessão velha roda depois do logout
+  defeito: de-novo-apos-logout
+  plantado em apps/native/src/sincronizador.ts (1×): 'const roda = marcado !== null && marcado.raiz.sessaoAtual() === marcad' → 'const roda = marcado !== null'
+  gate ii (o voo único) — casos 8
+    REPROVA             ii:logout-cancela-de-novo
+          1 sync(s) começaram depois do logout
+    ✗ reprovação NÃO DECLARADA: ii:logout-cancela-de-novo
+  gate ii: ✗
+   Test Files  1 failed (1)
+        Tests  1 failed | 5 passed (6)
+==================================================================================================
+CN r-2 — o c-4 da PR-3: a foto da sessão não solta ao voltar a S1/S2
+  defeito: sessao-nunca-solta
+  plantado em apps/native/src/foto-do-palco.ts (1×): 'mudar(() => {\n      foto = null\n      emSessao = false\n    })' → 'mudar(() => {\n      emSessao = false\n    })'
+  gate iii (a foto) — casos 23
+    REPROVA             iii:sessao-solta
+          a foto não se soltou ao sair do palco
+    ✗ reprovação NÃO DECLARADA: iii:sessao-solta
+  gate iii: ✗
+   Test Files  1 failed (1)
+        Tests  1 failed | 6 passed (7)
+==================================================================================================
+$ git status --short -- apps/native   (vazio = os arquivos voltaram)
+exit=0

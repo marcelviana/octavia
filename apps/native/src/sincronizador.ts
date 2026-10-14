@@ -8,7 +8,10 @@
  *     vez, ao terminar, com os dados de AGORA (o `dadosRef`), e pela raiz de quem pediu por último;
  *   - **a sessão conferida** (SY-D17): o resultado de um sync cuja sessão mudou enquanto ele voava se descarta — nada
  *     chega à raiz —, e o "de novo" pedido pela sessão velha se cancela;
- *   - **o último sync que saiu à rede** (SY-D33, `ultimoSyncNaRede`): para os gatilhos da PR-4. Só exposto; nada o lê.
+ *   - **o último sync que saiu à rede** (SY-D33, `ultimoSyncNaRede`): o que os gatilhos (SY-PR4) leem para o intervalo,
+ *     com o `uid` da sessão que pediu (SY-D44);
+ *   - **o "de novo" que espera o palco** (SY-PR4, SY-D49 (2)): antes de rodar o "de novo", o executor pergunta à raiz
+ *     (`segurarDeNovo`); com o palco aberto, ele não roda aqui — os gatilhos o rodam ao fechar o palco.
  *
  * O que a raiz entrega (`RaizDoSync`) é o que o `rodarSync` usava por fechamento: os dois `set` do estado, o
  * `dadosRef` e o `prefetchEArrumar` — e, desde a PR-2, a sessão de agora. O `sincronizar` é importado aqui, como o
@@ -45,20 +48,27 @@ export interface RaizDoSync {
    * velha pediu. Era contrato inerte na SY-PR1 (opcional e ignorado); obrigatório desde a PR-2.
    */
   sessaoAtual: () => string | null
+  /**
+   * SY-PR4 (SY-D49 (2)) — perguntado quando o "de novo" do voo IA rodar: `true` = o palco está aberto, o pedido ficou
+   * marcado para o fechar dele (os gatilhos, `segurarDeNovo`), e o "de novo" se cancela aqui. Opcional: sem ele, o "de
+   * novo" roda como na PR-2.
+   */
+  segurarDeNovo?: () => boolean
 }
 
 /** O voo (a máquina do core) e o "de novo" marcado: QUEM pediu por último — a raiz e o uid da sessão daquele pedido. */
 let voo: EstadoDoVoo = VOO_OCIOSO
 let deNovo: { raiz: RaizDoSync; uid: string } | null = null
 
-/** O último sync que SAIU À REDE (emitiu `sync start`): quando começou, quando terminou (`null` = em voo) e como. */
+/** O último sync que SAIU À REDE (emitiu `sync start`): de que sessão, quando começou, quando terminou (`null` = em voo) e como. */
 let ultimo: SyncNaRede | null = null
 
 /**
  * SY-D33 — o último sync que saiu à rede, de qualquer origem (a abertura, o *Tentar de novo*, o "de novo"): a definição
  * da A2.4 (`SY-PRECHECK.md`) — começou na linha `sync start`, terminou na `sync ok` ou na `sync fail`, e `falhaDeRede`
  * quando a falha saiu com `code=network`. O `sync skip reason=offline` não conta (não houve requisição). Os gatilhos da
- * PR-4 o leem para o intervalo de 30 s (SY-D18); nesta PR, nada o lê.
+ * PR-4 o leem para o intervalo de 30 s (SY-D18). SY-PR4 (SY-D44): ele carrega o `uid` da sessão que pediu, e NÃO se zera
+ * no logout — quem decide é quem o consome: os gatilhos só o contam contra a sessão de agora.
  */
 export function ultimoSyncNaRede(): SyncNaRede | null {
   return ultimo === null ? null : { ...ultimo }
@@ -90,13 +100,27 @@ export async function rodarSync(raiz: RaizDoSync, uid: string, anterior: Dados):
     }
     const marcado = deNovo
     deNovo = null
-    const fim = terminouVoo(voo, {
-      cancelarDeNovo: marcado === null || marcado.raiz.sessaoAtual() !== marcado.uid,
-    })
+    const roda = marcado !== null && marcado.raiz.sessaoAtual() === marcado.uid
+    // SY-D49 (2): com o palco aberto, o "de novo" espera — vira a marca do palco (os gatilhos) e se cancela aqui.
+    const espera = roda && segura(marcado.raiz)
+    const fim = terminouVoo(voo, { cancelarDeNovo: !roda || espera })
     voo = fim.estado
     if (fim.acao !== 'rodar' || marcado === null) return
     // O "de novo" parte do que a raiz tem AGORA — o sync que acabou de terminar já atualizou o `dadosRef` à mão.
     vez = { raiz: marcado.raiz, uid: marcado.uid, anterior: marcado.raiz.dadosRef.current }
+  }
+}
+
+/**
+ * SY-D66 — o `segurarDeNovo` corre FORA do `try` do sync, entre o fim de um e o `terminouVoo`: se ele lançasse, o voo
+ * ficaria em curso para sempre e todo pedido seguinte só marcaria (a classe de trinco da div. 1258). Um que lança conta
+ * como NÃO segurar: o "de novo" roda, e o voo se libera como em qualquer fim.
+ */
+function segura(raiz: RaizDoSync): boolean {
+  try {
+    return raiz.segurarDeNovo?.() ?? false
+  } catch {
+    return false
   }
 }
 
@@ -111,7 +135,7 @@ async function rodarUm(raiz: RaizDoSync, uid: string, anterior: Dados): Promise<
     anterior.temCache ? { content: anterior.content, setlists: anterior.setlists } : null,
     {
       aoComecar: () => {
-        ultimo = { inicioMs: Date.now(), fimMs: null, falhaDeRede: false }
+        ultimo = { uid, inicioMs: Date.now(), fimMs: null, falhaDeRede: false }
       },
       // SY-D26 — a aplicação na raiz DENTRO do bloco síncrono do sync (o gancho é chamado antes de o `sincronizar`
       // devolver, sem `await` desde a leitura das confirmadas do favoritar): a janela da A6.1 deixa de existir.

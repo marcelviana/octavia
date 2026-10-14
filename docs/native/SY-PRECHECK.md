@@ -64,6 +64,10 @@ fica como está; as mudadas por decisão posterior:)*
 | SY-D7 (o alcance da foto) | **SY-D49** | a versão nova chega ao tablet ao sair do palco, e não entre duas músicas (SY-D49) |
 | SY-D28 (a linha `sync trigger`) | **SY-D49** | um valor a mais de `decision`: o gatilho segurado pelo palco aberto (o nome é proposta da PR-4) |
 | SY-D27 (o rascunho da regra 38) | **SY-D49** | o rascunho da regra 38 e a linha do `APARATO.md` ganham *"com o palco aberto, o gatilho não dispara"* no texto final do encerramento |
+| SY-D28 (a linha `sync trigger`) | **SY-D58** | os nomes: `decision=hold-stage`, `reason=stage-exit` e `reason=again` (`SY-PR4-anexos/README.md` §19) |
+| SY-D33, SY-D35 (o contrato dos gatilhos; a entrada do executor) | **SY-D59** | estendidos: o `palco` na ligação, o `uid` no `SyncNaRede`, o `segurarDeNovo` (no desligar devolvido e no `RaizDoSync`), a foto nascendo no `App.tsx`, o `focoDoIndice`, o `alcancavel` no `net.ts` |
+| SY-D44 (o `ultimoSyncNaRede` no logout) | **SY-D60** | fechada: não se zera; carrega o `uid`, e os gatilhos só contam o intervalo contra a sessão de agora |
+| SY-D49 (o palco aberto segura os gatilhos) | **SY-D56**, **SY-D61** | o avulso sem hospedeira também é palco aberto (SY-D56); o "de novo" segurado pelo palco passa pelo intervalo ao sair (SY-D61) |
 
 ---
 
@@ -206,6 +210,12 @@ encerramento do QL acrescentou o caso 44 ao `LOGS-OCTAVIA.md`. **Nenhuma afirma�
 dois casos. Vale: o segundo evento **depois do fim** do primeiro sync → **1** sync (o intervalo segura); o segundo **durante**
 o primeiro → **2** syncs (o "de novo" do voo único). O texto da tabela fica como está; o gate (i) mede as duas leituras
 (`dois-eventos`, `de-novo-fora-do-intervalo`), `SY-PR1-anexos/README.md` §3 e §13.)*
+
+*(Nota da SY-PR4 — ponteiro, sem reescrever o texto acima: os gatilhos estão feitos na PR-4 — `apps/native/src/gatilhos.ts`,
+ligados no `App.tsx` ao executor —, com o palco aberto segurando-os (SY-D49; o avulso sem hospedeira também, SY-D56; a
+fonte é a foto da sessão) e o intervalo contado só contra a sessão de agora (SY-D44). O AVD mediu a A2.3 e a A2.4 (A-SY-12),
+a tela apagada como segundo plano (A-SY-18: conta) e o evento de rede em segundo plano (A-SY-19: chega em 7 de 8; 1 sync nas
+duas ordens). A falha automática com cache mostra o S1e de hoje (SY-D57). `SY-PR4-anexos/README.md` §4, §8, §9.)*
 
 **A2.4 — o intervalo mínimo** (SY-D5; pergunta Q2):
 

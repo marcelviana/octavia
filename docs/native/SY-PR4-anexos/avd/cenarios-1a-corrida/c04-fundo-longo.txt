@@ -1,0 +1,13 @@
+# SY-PR4 · AVD · c04-fundo-longo — segundo plano por 35 s
+# 2026-10-13 10:56:24 -0300 · a fixture /private/tmp/claude-501/-Users-marcelviana-projects-octavia/d912b538-91de-4450-bb5e-3712bb2d4c23/scratchpad/fx4
+DECLARADO ANTES:
+  linhas: ['sync trigger reason=foreground decision=run']
+  sync_start: 1
+  GET: 2
+MEDIDO:
+  → sync trigger: []
+  → sync start: 0 · GET: 0 · fim: []
+  ✗ as linhas sync trigger diferem do declarado
+  ✗ sync start 0 ≠ 1
+  ✗ GET 0 ≠ 2
+VEREDITO: NÃO confere ✗

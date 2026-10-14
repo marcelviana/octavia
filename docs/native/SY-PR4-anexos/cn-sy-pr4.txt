@@ -1,0 +1,300 @@
+# cn-sy-pr4.sh — 2026-10-13 10:48:48 -0300 · árvore d1e050b0035fa629c7b88ad6633ecc052ba2498c
+# Leitura: com o defeito plantado, o gate tem de ACUSAR a checagem daquela regra (uma REPROVA NÃO DECLARADA).
+==================================================================================================
+CN g-1 — o gatilho que ignora o palco
+  defeito: ignora-o-palco
+  plantado em apps/native/src/gatilhos.ts (1×): 'if (l.palco.palcoAberto()) {\n      marcaDoPalco = { uid }' → 'if (false) {\n      marcaDoPalco = { uid }'
+  gate v (a contagem) — casos 3
+  gate v: zero reprovações, lista vazia (SY-PR4) ✓
+  gate i (os gatilhos, com a tela aberta, família tela-) — casos 5
+  gate i: zero reprovações, lista vazia (SY-PR4) ✓
+  gate i (os gatilhos) — casos 29
+    REPROVA             i:palco-rede
+          1 sync(s), esperado 0
+    REPROVA             i:palco-fundo
+          1 sync(s), esperado 0
+    REPROVA             i:palco-indice-por-cima
+          2 sync(s), esperado 0
+    REPROVA             i:palco-sair-com-marca
+          linhas sync trigger ["sync trigger reason=net decision=run"], esperado ["sync trigger reason=net decision=hold-stage","sync trigger reason=stage-exit decision=run"]
+    REPROVA             i:palco-sair-no-intervalo
+          linhas sync trigger ["sync trigger reason=net decision=skip-interval"], esperado ["sync trigger reason=net decision=hold-stage","sync trigger reason=stage-exit decision=skip-interval"]
+    REPROVA             i:palco-sair-sem-rede
+          1 sync(s) ao sair sem rede
+    REPROVA             i:palco-avulso
+          linhas sync trigger ["sync trigger reason=net decision=run"], esperado ["sync trigger reason=net decision=hold-stage","sync trigger reason=stage-exit decision=run"]
+    ✗ reprovação NÃO DECLARADA: i:palco-rede
+    ✗ reprovação NÃO DECLARADA: i:palco-fundo
+    ✗ reprovação NÃO DECLARADA: i:palco-indice-por-cima
+    ✗ reprovação NÃO DECLARADA: i:palco-sair-com-marca
+    ✗ reprovação NÃO DECLARADA: i:palco-sair-no-intervalo
+    ✗ reprovação NÃO DECLARADA: i:palco-sair-sem-rede
+    ✗ reprovação NÃO DECLARADA: i:palco-avulso
+  gate i: ✗
+   Test Files  1 failed | 2 passed (3)
+        Tests  1 failed | 40 passed (41)
+==================================================================================================
+CN g-2 — o que dispara ao sair do palco sem marca
+  defeito: dispara-ao-sair-sem-marca
+  plantado em apps/native/src/gatilhos.ts (1×): 'if (!vivo || marca === null) return\n    if (l.sessao() !== marca.uid) ' → 'const uid = marca?.uid ?? l.sessao()\n    if (!vivo || uid === null) re'
+  gate v (a contagem) — casos 3
+  gate v: zero reprovações, lista vazia (SY-PR4) ✓
+  gate i (os gatilhos, com a tela aberta, família tela-) — casos 5
+  gate i: zero reprovações, lista vazia (SY-PR4) ✓
+  gate i (os gatilhos) — casos 29
+    REPROVA             i:palco-sair-sem-marca
+          1 sync(s), esperado 0
+    REPROVA             i:palco-v-aberta
+          0 sync(s), esperado 1
+    ✗ reprovação NÃO DECLARADA: i:palco-sair-sem-marca
+    ✗ reprovação NÃO DECLARADA: i:palco-v-aberta
+  gate i: ✗
+   Test Files  1 failed | 2 passed (3)
+        Tests  1 failed | 40 passed (41)
+==================================================================================================
+CN g-3 — o que conta a primeira leitura (null → true)
+  defeito: conta-null-true
+  plantado em apps/native/src/gatilhos.ts (1×): 'if (vivo && online === null) online = v' → 'if (vivo && online === null) {\n      online = v\n      const uid = l.se'
+  gate v (a contagem) — casos 3
+  gate v: zero reprovações, lista vazia (SY-PR4) ✓
+  gate i (os gatilhos, com a tela aberta, família tela-) — casos 5
+  gate i: zero reprovações, lista vazia (SY-PR4) ✓
+  gate i (os gatilhos) — casos 29
+    REPROVA             i:primeira-leitura
+          1 sync(s), esperado 0
+    ✗ reprovação NÃO DECLARADA: i:primeira-leitura
+  gate i: ✗
+   Test Files  2 failed | 1 passed (3)
+        Tests  2 failed | 39 passed (41)
+==================================================================================================
+CN g-4 — o que ignora o intervalo
+  defeito: ignora-o-intervalo
+  plantado em apps/native/src/gatilhos.ts (1×): 'if (u !== null && u.uid === uid && u.fimMs !== null && !u.falhaDeRede ' → 'if (false) {'
+  gate v (a contagem) — casos 3
+  gate v: zero reprovações, lista vazia (SY-PR4) ✓
+  gate i (os gatilhos, com a tela aberta, família tela-) — casos 5
+  gate i: zero reprovações, lista vazia (SY-PR4) ✓
+  gate i (os gatilhos) — casos 29
+    REPROVA             i:dois-eventos
+          2 sync(s), esperado 1
+    REPROVA             i:dentro-do-intervalo
+          1 sync(s), esperado 0
+    REPROVA             i:apos-falha-com-status
+          1 sync(s), esperado 0
+    REPROVA             i:linhas-sem-disparo
+          2 sync(s), esperado 1
+    REPROVA             i:palco-sair-no-intervalo
+          1 sync(s), esperado 0
+    ✗ reprovação NÃO DECLARADA: i:dois-eventos
+    ✗ reprovação NÃO DECLARADA: i:dentro-do-intervalo
+    ✗ reprovação NÃO DECLARADA: i:apos-falha-com-status
+    ✗ reprovação NÃO DECLARADA: i:linhas-sem-disparo
+    ✗ reprovação NÃO DECLARADA: i:palco-sair-no-intervalo
+  gate i: ✗
+   Test Files  1 failed | 2 passed (3)
+        Tests  1 failed | 40 passed (41)
+==================================================================================================
+CN g-5 — o que tenta de novo sozinho depois de uma falha de rede
+  defeito: tenta-de-novo-sozinho
+  plantado em apps/native/src/gatilhos.ts (1×): '/** Um sync saiu à rede depois de `t`: a marca já foi atendida (SY-D17' → 'let visto: number | null = null\n  const retentar = setInterval(() => {'
+  gate v (a contagem) — casos 3
+  gate v: zero reprovações, lista vazia (SY-PR4) ✓
+  gate i (os gatilhos, com a tela aberta, família tela-) — casos 5
+  gate i: zero reprovações, lista vazia (SY-PR4) ✓
+  gate i (os gatilhos) — casos 29
+    REPROVA             i:falha-de-rede-nao-retenta
+          2 sync(s), esperado 1
+    ✗ reprovação NÃO DECLARADA: i:falha-de-rede-nao-retenta
+  gate i: ✗
+   Test Files  1 failed | 2 passed (3)
+        Tests  1 failed | 40 passed (41)
+==================================================================================================
+CN g-6 — o que dispara em segundo plano
+  defeito: dispara-em-segundo-plano
+  plantado em apps/native/src/gatilhos.ts (1×): "if (AppState.currentState !== 'active') {\n      marcaDoFundo = { uid, " → 'if (false) {\n      marcaDoFundo = { uid, t: Date.now() }'
+  gate v (a contagem) — casos 3
+  gate v: zero reprovações, lista vazia (SY-PR4) ✓
+  gate i (os gatilhos, com a tela aberta, família tela-) — casos 5
+  gate i: zero reprovações, lista vazia (SY-PR4) ✓
+  gate i (os gatilhos) — casos 29
+    REPROVA             i:rede-volta-no-fundo
+          1 sync(s), esperado 0
+    REPROVA             i:linhas-sem-disparo
+          2 sync(s), esperado 1
+    ✗ reprovação NÃO DECLARADA: i:rede-volta-no-fundo
+    ✗ reprovação NÃO DECLARADA: i:linhas-sem-disparo
+  gate i: ✗
+   Test Files  1 failed | 2 passed (3)
+        Tests  1 failed | 40 passed (41)
+==================================================================================================
+CN g-7 — o "de novo" que roda com o palco aberto
+  defeito: de-novo-com-palco-aberto
+  plantado em apps/native/src/sincronizador.ts (1×): 'const espera = roda && (marcado.raiz.segurarDeNovo?.() ?? false)' → 'const espera = false'
+  gate v (a contagem) — casos 3
+  gate v: zero reprovações, lista vazia (SY-PR4) ✓
+  gate i (os gatilhos, com a tela aberta, família tela-) — casos 5
+  gate i: zero reprovações, lista vazia (SY-PR4) ✓
+  gate i (os gatilhos) — casos 29
+    REPROVA             i:palco-de-novo-espera
+          2 sync(s) com o palco aberto (esperado 1: só o que voava)
+    ✗ reprovação NÃO DECLARADA: i:palco-de-novo-espera
+  gate i: ✗
+   Test Files  1 failed | 2 passed (3)
+        Tests  1 failed | 40 passed (41)
+==================================================================================================
+CN g-8 — a linha sync trigger que falta num caso que não dispara (skip-short)
+  defeito: linha-falta-no-skip-short
+  plantado em apps/native/src/gatilhos.ts (1×): "else linha('foreground', 'skip-short')" → 'else void 0'
+  gate v (a contagem) — casos 3
+  gate v: zero reprovações, lista vazia (SY-PR4) ✓
+  gate i (os gatilhos, com a tela aberta, família tela-) — casos 5
+  gate i: zero reprovações, lista vazia (SY-PR4) ✓
+  gate i (os gatilhos) — casos 29
+    REPROVA             i:linhas-sem-disparo
+          linhas sync trigger ["sync trigger reason=net decision=skip-interval","sync trigger reason=foreground decision=skip-offline","sync trigger reason=net decision=skip-background"], esperado ["sync trigger reason=foreground decision=skip-short","sync trigger reason=net decision=skip-interval","sync trigger reason=foreground decision=skip-offline","sync trigger reason=net decision=skip-background"]
+    ✗ reprovação NÃO DECLARADA: i:linhas-sem-disparo
+  gate i: ✗
+   Test Files  1 failed | 2 passed (3)
+        Tests  1 failed | 40 passed (41)
+==================================================================================================
+CN g-9 — o último sync de outra sessão segura o gatilho (SY-D44)
+  defeito: intervalo-de-qualquer-sessao
+  plantado em apps/native/src/gatilhos.ts (1×): 'u !== null && u.uid === uid && u.fimMs !== null' → 'u !== null && u.fimMs !== null'
+  gate v (a contagem) — casos 3
+  gate v: zero reprovações, lista vazia (SY-PR4) ✓
+  gate i (os gatilhos, com a tela aberta, família tela-) — casos 5
+  gate i: zero reprovações, lista vazia (SY-PR4) ✓
+  gate i (os gatilhos) — casos 29
+    REPROVA             i:logout-intervalo-de-outra-sessao
+          0 sync(s), esperado 1
+    ✗ reprovação NÃO DECLARADA: i:logout-intervalo-de-outra-sessao
+  gate i: ✗
+   Test Files  1 failed | 2 passed (3)
+        Tests  1 failed | 40 passed (41)
+==================================================================================================
+CN g-10 — o avulso sem hospedeira não abre o palco (SY-D56)
+  defeito: avulso-nao-conta
+  plantado em apps/native/src/foto-do-palco.ts (1×): 'const aberto = (): boolean => emSessao || avulsos > 0' → 'const aberto = (): boolean => emSessao'
+  gate v (a contagem) — casos 3
+  gate v: zero reprovações, lista vazia (SY-PR4) ✓
+  gate i (os gatilhos, com a tela aberta, família tela-) — casos 5
+  gate i: zero reprovações, lista vazia (SY-PR4) ✓
+  gate i (os gatilhos) — casos 29
+    REPROVA             i:palco-avulso
+          linhas sync trigger ["sync trigger reason=net decision=run"], esperado ["sync trigger reason=net decision=hold-stage","sync trigger reason=stage-exit decision=run"]
+    ✗ reprovação NÃO DECLARADA: i:palco-avulso
+  gate i: ✗
+   Test Files  1 failed | 2 passed (3)
+        Tests  1 failed | 40 passed (41)
+==================================================================================================
+CN g-11 — o foco do índice do palco solta a sessão
+  defeito: indice-solta-a-sessao
+  plantado em apps/native/src/foto-do-palco.ts (1×): 'if (posicaoAtual === undefined) sair()' → 'void posicaoAtual\n      sair()'
+  gate v (a contagem) — casos 3
+  gate v: zero reprovações, lista vazia (SY-PR4) ✓
+  gate i (os gatilhos, com a tela aberta, família tela-) — casos 5
+  gate i: zero reprovações, lista vazia (SY-PR4) ✓
+  gate i (os gatilhos) — casos 29
+    REPROVA             i:palco-indice-por-cima
+          2 sync(s), esperado 0
+    ✗ reprovação NÃO DECLARADA: i:palco-indice-por-cima
+  gate i: ✗
+   Test Files  1 failed | 2 passed (3)
+        Tests  1 failed | 40 passed (41)
+==================================================================================================
+CN g-12 — o executor segura a abertura e o Tentar de novo com o palco aberto
+  defeito: segura-todo-pedido
+  plantado em apps/native/src/sincronizador.ts (1×): 'const pedido = pedirVoo(voo)' → 'if (raiz.segurarDeNovo?.() === true) return\n  const pedido = pedirVoo('
+  gate v (a contagem) — casos 3
+  gate v: zero reprovações, lista vazia (SY-PR4) ✓
+  gate i (os gatilhos, com a tela aberta, família tela-) — casos 5
+  gate i: zero reprovações, lista vazia (SY-PR4) ✓
+  gate i (os gatilhos) — casos 29
+    REPROVA             i:palco-sair-no-intervalo
+          1 sync(s), esperado 0
+    REPROVA             i:palco-abertura-e-tentar
+          0 sync(s), esperado 2
+    ✗ reprovação NÃO DECLARADA: i:palco-sair-no-intervalo
+    ✗ reprovação NÃO DECLARADA: i:palco-abertura-e-tentar
+  gate i: ✗
+   Test Files  1 failed | 2 passed (3)
+        Tests  1 failed | 40 passed (41)
+==================================================================================================
+CN t-1 — o sync que dá certo não tira o banner (SY-D57 (1))
+  defeito: ok-nao-tira-a-falha
+  plantado em apps/native/src/sincronizador.ts (2×): "setSync({ fase: 'ok', syncedAtMs: a.syncedAtMs })" → "setSync({ fase: 'falha', syncedAtMs: a.syncedAtMs, messageKey: 'erro.d"
+  gate v (a contagem) — casos 3
+  gate v: zero reprovações, lista vazia (SY-PR4) ✓
+  gate i (os gatilhos, com a tela aberta, família tela-) — casos 5
+    REPROVA             i:tela-banner-some
+          o banner já estava na tela antes — o cenário não se montou
+    ✗ reprovação NÃO DECLARADA: i:tela-banner-some
+  gate i: ✗
+  gate i (os gatilhos) — casos 29
+  gate i: zero reprovações, lista vazia (SY-PR4) ✓
+   Test Files  1 failed | 2 passed (3)
+        Tests  1 failed | 40 passed (41)
+==================================================================================================
+CN t-2 — a lista de S1 se remonta com o banner (SY-D57 (2))
+  defeito: s1-remonta-a-lista
+  plantado em apps/native/src/screens/SetlistsScreen.tsx (1×): '<FlatList\n          data={setlists}' → "<FlatList\n          key={comBanner ? 'com-banner' : 'sem-banner'}\n    "
+  gate v (a contagem) — casos 3
+  gate v: zero reprovações, lista vazia (SY-PR4) ✓
+  gate i (os gatilhos, com a tela aberta, família tela-) — casos 5
+    REPROVA             i:tela-banner-nao-desfaz-s1
+          a lista de S1 foi remontada com o banner (a rolagem voltaria ao topo)
+    ✗ reprovação NÃO DECLARADA: i:tela-banner-nao-desfaz-s1
+  gate i: ✗
+  gate i (os gatilhos) — casos 29
+  gate i: zero reprovações, lista vazia (SY-PR4) ✓
+   Test Files  1 failed | 2 passed (3)
+        Tests  1 failed | 40 passed (41)
+==================================================================================================
+CN t-3 — a L apaga a busca digitada quando o sync muda (SY-D57 (2))
+  defeito: l-apaga-a-busca
+  plantado em apps/native/src/screens/LibraryScreen.tsx (1×): "const [termo, setTermo] = useState('')" → "const [termo, setTermo] = useState('')\n  useEffect(() => setTermo(''),"
+  gate v (a contagem) — casos 3
+  gate v: zero reprovações, lista vazia (SY-PR4) ✓
+  gate i (os gatilhos, com a tela aberta, família tela-) — casos 5
+    REPROVA             i:tela-banner-nao-desfaz-l
+          o termo digitado se perdeu: ""
+    ✗ reprovação NÃO DECLARADA: i:tela-banner-nao-desfaz-l
+  gate i: ✗
+  gate i (os gatilhos) — casos 29
+  gate i: zero reprovações, lista vazia (SY-PR4) ✓
+   Test Files  1 failed | 2 passed (3)
+        Tests  1 failed | 40 passed (41)
+==================================================================================================
+CN t-4 — o arrasto pula quando a setlist nova chega (SY-D52)
+  defeito: reordenar-segue-as-props
+  plantado em apps/native/src/screens/ModoDeReordenar.tsx (1×): 'const [ordem, setOrdem] = useState<SetlistSongDTO[]>(() => ordenadas(s' → 'const [ordem, setOrdem] = useState<SetlistSongDTO[]>(() => ordenadas(s'
+  gate v (a contagem) — casos 3
+  gate v: zero reprovações, lista vazia (SY-PR4) ✓
+  gate i (os gatilhos, com a tela aberta, família tela-) — casos 5
+    REPROVA             i:tela-s2-reordenar
+          a ordem pulou: ["1SY música 1","2SY música 2","3SY música 3","4SY música 4","5SY música 5"] (o arrasto: ["1SY música 2","2SY música 3","3SY música 1","4SY música 4","5SY música 5"])
+    ✗ reprovação NÃO DECLARADA: i:tela-s2-reordenar
+  gate i: ✗
+  gate i (os gatilhos) — casos 29
+  gate i: zero reprovações, lista vazia (SY-PR4) ✓
+   Test Files  1 failed | 2 passed (3)
+        Tests  1 failed | 40 passed (41)
+==================================================================================================
+CN l-1 — uma linha na lista vazia, com o defeito que a faz reprovar (o commit 5)
+  defeito: lista-declara-o-logout
+  plantado em apps/native/src/gatilhos.ts (1×): 'u !== null && u.uid === uid && u.fimMs !== null' → 'u !== null && u.fimMs !== null'
+  acrescentado a apps/native/test/sy-reprovados.txt: i:logout-intervalo-de-outra-sessao
+  gate v (a contagem) — casos 3
+  gate v: zero reprovações, lista vazia (SY-PR4) ✓
+  gate i (os gatilhos, com a tela aberta, família tela-) — casos 5
+  gate i: zero reprovações, lista vazia (SY-PR4) ✓
+  gate i (os gatilhos) — casos 29
+    REPROVA (declarado) i:logout-intervalo-de-outra-sessao
+          0 sync(s), esperado 1
+    ✗ LISTA NÃO VAZIA (1): desde a SY-PR4 (os gatilhos) reprovação declarada não é mais aceita — sy-reprovados.txt tem de estar vazio
+  gate i: ✗
+   Test Files  1 failed | 2 passed (3)
+        Tests  1 failed | 40 passed (41)
+==================================================================================================
+$ git status --short -- apps/native   (vazio = os arquivos voltaram)
+exit=0

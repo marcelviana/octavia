@@ -1,0 +1,81 @@
+# SY-PR4 commit 1 — a 1ª corrida do gate (i) com os casos novos AINDA NÃO declarados (a lista com as 9 da PR-3) · 2026-10-13 10:31:49 -0300 · árvore 5ace6384986019545cb72b918ba81dd5a3d106dc + o commit 1 no worktree
+$ pnpm exec vitest run apps/native/test/sy-gatilhos.test.tsx apps/native/test/sy-gatilhos-telas.test.tsx
+gate i (os gatilhos, com a tela aberta, família tela-) — casos 5 · passam 0 · reprovam 5
+  REPROVA             i:tela-s2-reordenar · sync start: 0 · a raiz com a renomeada: false · modo aberto: true · ordem igual ao arrasto: true · salvar ativo: true
+        0 sync(s) e a raiz sem a setlist renomeada — o gatilho não chegou à tela
+  REPROVA             i:tela-s2-folha · sync start: 0 · a folha aberta: true · o campo: "nome digitado pelo músico"
+        0 sync(s), esperado 1 — o gatilho não chegou à tela
+  REPROVA             i:tela-banner-some · sem banner antes: true · sync start: 0 (fail 0, ok 0) · banner depois da falha: false · sem banner depois do ok: true
+        0 sync(s) (fail 0, ok 0), esperado 2 (1 falha, 1 ok)
+  REPROVA             i:tela-banner-nao-desfaz-s1 · sync start: 0 · banner: false · a lista é o mesmo nó: true
+        a falha automática não pôs o banner — o cenário não se montou
+  REPROVA             i:tela-banner-nao-desfaz-l · sync start: 0 · a busca filtrou antes: true · a linha de aviso: false · o termo: "música 2" · o resultado segue: true
+        a falha automática não pôs a linha de aviso na L
+  ✗ reprovação NÃO DECLARADA: i:tela-s2-reordenar
+  ✗ reprovação NÃO DECLARADA: i:tela-s2-folha
+  ✗ reprovação NÃO DECLARADA: i:tela-banner-some
+  ✗ reprovação NÃO DECLARADA: i:tela-banner-nao-desfaz-s1
+  ✗ reprovação NÃO DECLARADA: i:tela-banner-nao-desfaz-l
+gate i: ✗
+gate i (os gatilhos) — casos 29 · passam 12 · reprovam 17
+  REPROVA (declarado) i:rede-volta-na-frente · sync start depois do cenário: 0 (esperado 1)
+        0 sync(s), esperado 1
+  REPROVA (declarado) i:fundo-mais-de-30s · sync start depois do cenário: 0 (esperado 1)
+        0 sync(s), esperado 1
+  passa               i:fundo-menos-de-30s · sync start depois do cenário: 0 (esperado 0)
+  passa               i:rede-volta-no-fundo · sync start depois do cenário: 0 (esperado 0)
+  REPROVA (declarado) i:marca-volta-curta · sync start depois do cenário: 0 (esperado 1)
+        0 sync(s), esperado 1
+  passa               i:marca-apaga-com-sync · sync start depois do cenário: 0 (esperado 0)
+  REPROVA (declarado) i:dois-eventos · sync start depois do cenário: 0 (esperado 1)
+        0 sync(s), esperado 1
+  passa               i:volta-sem-rede · sync start depois do cenário: 0 (esperado 0)
+  passa               i:sem-sessao · sync start depois do cenário: 0 (esperado 0)
+  passa               i:primeira-leitura · sync start depois do cenário: 0 (esperado 0)
+  passa               i:dentro-do-intervalo · sync start depois do cenário: 0 (esperado 0)
+  REPROVA (declarado) i:apos-falha-de-rede · sync start depois do cenário: 0 (esperado 1)
+        0 sync(s), esperado 1
+  passa               i:apos-falha-com-status · sync start depois do cenário: 0 (esperado 0)
+  REPROVA (declarado) i:de-novo-fora-do-intervalo · sync start depois do cenário: 1 (esperado 2)
+        1 sync(s), esperado 2
+  passa               i:tentar-de-novo-fora-do-intervalo · sync start depois do cenário: 1 (esperado 1)
+  passa               i:falha-de-rede-nao-retenta · sync start depois do cenário: 1 (esperado 1)
+  REPROVA             i:linhas-sem-disparo · sync start: 1 (esperado 1) · sync trigger: []
+        linhas sync trigger [], esperado ["sync trigger reason=foreground decision=skip-short","sync trigger reason=net decision=skip-interval","sync trigger reason=foreground decision=skip-offline","sync trigger reason=net decision=skip-background"]
+  REPROVA             i:palco-rede · sync start: 0 (esperado 0) · sync trigger: []
+        linhas sync trigger [], esperado ["sync trigger reason=net decision=hold-stage"]
+  REPROVA             i:palco-fundo · sync start: 0 (esperado 0) · sync trigger: []
+        linhas sync trigger [], esperado ["sync trigger reason=foreground decision=hold-stage"]
+  REPROVA             i:palco-indice-por-cima · sync start: 0 (esperado 0) · sync trigger: []
+        linhas sync trigger [], esperado ["sync trigger reason=net decision=hold-stage","sync trigger reason=foreground decision=hold-stage"]
+  REPROVA             i:palco-sair-com-marca · sync start: 0 (esperado 1) · sync trigger: []
+        0 sync(s), esperado 1
+  REPROVA             i:palco-sair-no-intervalo · sync start: 0 (esperado 0) · sync trigger: []
+        linhas sync trigger [], esperado ["sync trigger reason=net decision=hold-stage","sync trigger reason=stage-exit decision=skip-interval"]
+  REPROVA             i:palco-sair-sem-rede · sync start: 0 (esperado 1) · sync trigger: []
+        0 sync(s), esperado 1
+  passa               i:palco-sair-sem-marca · sync start: 0 (esperado 0) · sync trigger: []
+  REPROVA             i:palco-v-aberta · sync start: 0 (esperado 1) · sync trigger: []
+        0 sync(s), esperado 1
+  REPROVA             i:palco-de-novo-espera · sync start: 1 (esperado 2) · sync trigger: []
+        1 sync(s), esperado 2
+  passa               i:palco-abertura-e-tentar · sync start: 2 (esperado 2) · sync trigger: []
+  REPROVA             i:palco-avulso · sync start: 0 (esperado 1) · sync trigger: []
+        0 sync(s), esperado 1
+  REPROVA             i:logout-intervalo-de-outra-sessao · sync start: 0 (esperado 1) · sync trigger: []
+        0 sync(s), esperado 1
+  ✗ reprovação NÃO DECLARADA: i:linhas-sem-disparo
+  ✗ reprovação NÃO DECLARADA: i:palco-rede
+  ✗ reprovação NÃO DECLARADA: i:palco-fundo
+  ✗ reprovação NÃO DECLARADA: i:palco-indice-por-cima
+  ✗ reprovação NÃO DECLARADA: i:palco-sair-com-marca
+  ✗ reprovação NÃO DECLARADA: i:palco-sair-no-intervalo
+  ✗ reprovação NÃO DECLARADA: i:palco-sair-sem-rede
+  ✗ reprovação NÃO DECLARADA: i:palco-v-aberta
+  ✗ reprovação NÃO DECLARADA: i:palco-de-novo-espera
+  ✗ reprovação NÃO DECLARADA: i:palco-avulso
+  ✗ reprovação NÃO DECLARADA: i:logout-intervalo-de-outra-sessao
+gate i: ✗
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+ Test Files  2 failed (2)
+      Tests  2 failed | 34 passed (36)

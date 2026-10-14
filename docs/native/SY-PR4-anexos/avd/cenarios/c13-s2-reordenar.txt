@@ -1,0 +1,31 @@
+# SY-PR4 · AVD · c13-s2-reordenar — S2 reordenando, um arrasto feito; a rede volta e o sync traz a setlist renomeada
+# 2026-10-13 11:23:31 -0300 · a fixture /private/tmp/claude-501/-Users-marcelviana-projects-octavia/d912b538-91de-4450-bb5e-3712bb2d4c23/scratchpad/fx4
+  a ordem do modo depois do arrasto (content-desc das alças): ['Arrastar para mudar a posição', 'Arrastar para mudar a posição', 'Arrastar para mudar a posição', 'Arrastar para mudar a posição', 'Arrastar para mudar a posição']
+  mock: normal · fixture c
+DECLARADO ANTES:
+  linhas: ['sync trigger reason=net decision=run']
+  sync_start: 1
+  GET: 2
+  rádio DESLIGADO: ping → 'connect: Network is unreachable'
+  rádio LIGADO: ping → 'rtt min/avg/max/mdev = 18.859/18.859/18.859/0.000 ms'
+  depois do sync: o modo ABERTO · a ordem: ['Arrastar para mudar a posição', 'Arrastar para mudar a posição', 'Arrastar para mudar a posição', 'Arrastar para mudar a posição', 'Arrastar para mudar a posição']
+  a ordem é a do arrasto: True · `Salvar a ordem` ativo: true
+MEDIDO:
+  1791901411567  index open
+  1791901425250  net offline
+  1791901433186  net online
+  1791901433225  sync trigger reason=net decision=run
+  1791901434707  sync start
+  1791901434762  auth refresh=cached
+  1791901435615  api status=200 path=/api/setlists n=1 ms=904
+  1791901435647  auth refresh=cached
+  1791901435746  api status=200 path=/api/content n=1 ms=104
+  1791901435900  cache write kind=setlists n=15 invalidated=1
+  1791901435928  cache write kind=content n=5 invalidated=0
+  1791901435929  sync ok setlists=15 content=5 pages=1 t=1222
+  1791901435943  prefetch plan n=0 reason=library
+  → sync trigger: ['sync trigger reason=net decision=run']
+  → sync start: 1 · GET: 2 · fim: ['sync ok setlists=15 content=5 pages=1 t=1222']
+VEREDITO: confere com o declarado ✓
+  mock: normal · fixture a
+  mock: DERRUBADO (nada na 8788)

@@ -1,0 +1,19 @@
+# SY-PR4 · AVD · c05-tela-apagada — apagar a tela com o app na frente: 10 s, e depois 35 s
+# 2026-10-13 10:57:33 -0300 · a fixture /private/tmp/claude-501/-Users-marcelviana-projects-octavia/d912b538-91de-4450-bb5e-3712bb2d4c23/scratchpad/fx4
+HIPÓTESE A MEDIR: se a tela apagada conta como segundo plano, a volta de 10 s deixa `skip-short` e a de 35 s
+`foreground run` (1 sync, 2 GET); se não conta, nenhuma linha nas duas.
+DECLARADO ANTES:
+  linhas: ['sync trigger reason=foreground decision=skip-short', 'sync trigger reason=foreground decision=run']
+  sync_start: 1
+  GET: 2
+  tela apagada: mWakefulness=Asleep · 10 s
+  tela acesa: mWakefulness=Awake · o app na frente: False
+  tela apagada: mWakefulness=Asleep · 35 s
+  tela acesa: mWakefulness=Awake · o app na frente: False
+MEDIDO:
+  → sync trigger: []
+  → sync start: 0 · GET: 0 · fim: []
+  ✗ as linhas sync trigger diferem do declarado
+  ✗ sync start 0 ≠ 1
+  ✗ GET 0 ≠ 2
+VEREDITO: NÃO confere ✗

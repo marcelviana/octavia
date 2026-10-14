@@ -1,0 +1,26 @@
+# SY-PR4 · AVD · c01-abrir-e-rede — abrir em avião, desligar o avião com o app aberto
+# 2026-10-13 10:55:10 -0300 · a fixture /private/tmp/claude-501/-Users-marcelviana-projects-octavia/d912b538-91de-4450-bb5e-3712bb2d4c23/scratchpad/fx4
+O mock alcançável com o rádio desligado? (o túnel do `adb reverse` não passa pelo rádio, a hipótese da A9)
+  $ adb shell "printf 'GET /api/setlists …' | toybox nc 127.0.0.1 8788 | head -1"  (EM AVIÃO) → ''
+  ping em avião → 'connect: Network is unreachable'
+  a abertura em avião: ['sync skip reason=offline'] · net: ['net offline']
+DECLARADO ANTES:
+  linhas: ['sync trigger reason=net decision=run']
+  sync_start: 1
+  GET: 2
+  rádio LIGADO: ping → 'rtt min/avg/max/mdev = 247.250/247.250/247.250/0.000 ms'
+MEDIDO:
+  1791899725692  net online
+  1791899725696  sync trigger reason=net decision=run
+  1791899725772  sync start
+  1791899734141  auth refresh=cached
+  1791899734378  api status=200 path=/api/setlists n=1 ms=8603
+  1791899734391  auth refresh=cached
+  1791899734405  api status=200 path=/api/content n=1 ms=15
+  1791899734495  cache write kind=setlists n=15 invalidated=15
+  1791899734515  cache write kind=content n=5 invalidated=5
+  1791899734516  sync ok setlists=15 content=5 pages=1 t=8744
+  1791899734541  prefetch plan n=0 reason=library
+  → sync trigger: ['sync trigger reason=net decision=run']
+  → sync start: 1 · GET: 2 · fim: ['sync ok setlists=15 content=5 pages=1 t=8744']
+VEREDITO: confere com o declarado ✓

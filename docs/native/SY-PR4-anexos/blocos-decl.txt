@@ -1,0 +1,13 @@
+# os extratores sobre os blocos do corpo da PR (antes de abrir a PR) · 2026-10-13 12:49:35 -0300
+$ sh apps/native/scripts/gates-decl.sh < <blocos>
+g1a: apps/native/src/gatilhos.ts
+g1a: apps/native/src/foto-do-palco.ts
+g1a: apps/native/src/sincronizador.ts
+g1a: apps/native/src/net.ts
+g1a: apps/native/App.tsx
+g1a: apps/native/src/navigation.tsx
+exit=0
+$ sh scripts/gates-web/gates-web-decl.sh < <blocos>
+exit=0
+$ git diff --stat origin/main -- apps/native/package.json apps/native/app.json pnpm-lock.yaml   (vazio = nenhum módulo nativo novo)
+exit=0

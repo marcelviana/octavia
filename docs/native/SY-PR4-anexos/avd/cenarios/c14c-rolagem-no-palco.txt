@@ -1,0 +1,42 @@
+# SY-PR4 · AVD · c14c-rolagem-no-palco — a rolagem do palco andando enquanto a rede volta — sensor de quadros e uiautomator, 5 rodadas
+# 2026-10-13 11:47:40 -0300 · a fixture /private/tmp/claude-501/-Users-marcelviana-projects-octavia/d912b538-91de-4450-bb5e-3712bb2d4c23/scratchpad/fx4
+O CONTROLE (a) do sensor (o da SY-PR1): uma tarefa plantada de 200 ms no JS tem de aparecer com o tamanho dela.
+  o controle: 239 quadros · o maior intervalo 206.1 ms (a tarefa: 200 ms)
+DECLARADO ANTES: por rodada, 0 sync, 0 GET, e uma `sync trigger reason=net decision=hold-stage` por `net online`.
+  rodada 1: {"instalado":true,"base":1791879884680.6724}
+  rádio DESLIGADO: ping → 'connect: Network is unreachable'
+  rádio LIGADO: ping → 'rtt min/avg/max/mdev = 231.690/231.690/231.690/0.000 ms'
+    net online 1 · hold-stage 1 · outras [] · sync start 0
+    SENSOR (quadros · maior intervalo ms · > 100 ms): piso (568, 304.4, 6) · janela (53, 16814.5, 16)
+    UIAUTOMATOR (eventos · maior lacuna ms · andou px): piso (115, 342, 1332) · janela (5, 2141, 23)
+  rodada 2: {"instalado":true,"base":1791879884680.8389}
+  rádio DESLIGADO: ping → 'connect: Network is unreachable'
+  rádio LIGADO: ping → 'rtt min/avg/max/mdev = 18.228/18.228/18.228/0.000 ms'
+    net online 1 · hold-stage 1 · outras [] · sync start 0
+    SENSOR (quadros · maior intervalo ms · > 100 ms): piso (690, 140.6, 5) · janela (64, 15053.6, 14)
+    UIAUTOMATOR (eventos · maior lacuna ms · andou px): piso (114, 203, 1521) · janela (6, 7559, 18)
+  rodada 3: {"instalado":true,"base":1791879884681.0674}
+  rádio DESLIGADO: ping → 'connect: Network is unreachable'
+  rádio LIGADO: ping → 'rtt min/avg/max/mdev = 16.668/16.668/16.668/0.000 ms'
+    net online 1 · hold-stage 1 · outras [] · sync start 0
+    SENSOR (quadros · maior intervalo ms · > 100 ms): piso (837, 44.5, 0) · janela (71, 5133.2, 8)
+    UIAUTOMATOR (eventos · maior lacuna ms · andou px): piso (123, 148, 1874) · janela (10, 5210, 29)
+  rodada 4: {"instalado":true,"base":1791879884681.1475}
+  rádio DESLIGADO: ping → 'connect: Network is unreachable'
+  rádio LIGADO: ping → 'rtt min/avg/max/mdev = 32.316/32.316/32.316/0.000 ms'
+    net online 1 · hold-stage 1 · outras [] · sync start 0
+    SENSOR (quadros · maior intervalo ms · > 100 ms): piso (482, 239.3, 10) · janela (67, 33579.9, 22)
+    UIAUTOMATOR (eventos · maior lacuna ms · andou px): piso (108, 267, 1096) · janela (9, 2506, 23)
+  rodada 5: {"instalado":true,"base":1791879884680.6948}
+  rádio DESLIGADO: ping → 'connect: Network is unreachable'
+  rádio LIGADO: ping → 'rtt min/avg/max/mdev = 26.333/26.333/26.333/0.000 ms'
+    net online 2 · hold-stage 2 · outras [] · sync start 0
+    SENSOR (quadros · maior intervalo ms · > 100 ms): piso (464, 203.3, 11) · janela (74, 32164.1, 25)
+    UIAUTOMATOR (eventos · maior lacuna ms · andou px): piso (110, 267, 1073) · janela (2, 4427, 2)
+RESUMO (n = 5, dev client, AVD — indicação, não referência):
+  sensor, maior intervalo: piso mediana 203.3 ms · janela mediana 16814.5 ms
+  sensor, > 100 ms: piso mediana 6 · janela mediana 16
+  uiautomator, maior lacuna: piso mediana 267 ms · janela mediana 4427 ms
+VEREDITO das linhas: uma hold-stage por net online, nenhum sync, em 5 de 5 ✓
+  ao sair: ['sync trigger reason=stage-exit decision=run'] · ['sync ok setlists=15 content=5 pages=1 t=931']
+  mock: DERRUBADO (nada na 8788)

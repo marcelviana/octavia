@@ -1,0 +1,3 @@
+# o apps/native/.env por cp -p do checkout principal, SEM ABRIR — conferido por sha256 (os 12 primeiros) · 2026-10-13 10:54:35 -0300
+principal: f2bfa179cd8e
+esta árvore: f2bfa179cd8e

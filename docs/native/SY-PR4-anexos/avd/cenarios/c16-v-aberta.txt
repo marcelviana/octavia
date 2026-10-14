@@ -1,0 +1,32 @@
+# SY-PR4 · AVD · c16-v-aberta — V aberta na Letra longa; a rede volta e o sync traz o corpo novo (fixture b)
+# 2026-10-13 11:31:01 -0300 · a fixture /private/tmp/claude-501/-Users-marcelviana-projects-octavia/d912b538-91de-4450-bb5e-3712bb2d4c23/scratchpad/fx4
+  mock: normal · fixture b
+DECLARADO ANTES:
+  linhas: ['sync trigger reason=net decision=run']
+  sync_start: 1
+  GET: 2
+  rádio DESLIGADO: ping → 'connect: Network is unreachable'
+  rádio LIGADO: ping → 'rtt min/avg/max/mdev = 239.985/239.985/239.985/0.000 ms'
+  o corpo de V (o texto do projeto): 4890 caracteres antes, 4890 depois · igual: True
+  (a versão b troca `a` por `e` na Letra longa: o corpo NOVO teria 725 'a' a menos)
+MEDIDO:
+  1791901883090  net offline
+  1791901886481  net online
+  1791901886489  sync trigger reason=net decision=run
+  1791901887139  prefetch plan n=0 reason=demand
+  1791901887155  prefetch plan n=0 reason=demand
+  1791901887205  sync start
+  1791901887207  auth refresh=cached
+  1791901887610  api status=200 path=/api/setlists n=1 ms=404
+  1791901887612  auth refresh=cached
+  1791901887628  api status=200 path=/api/content n=1 ms=16
+  1791901887641  cache write kind=setlists n=15 invalidated=0
+  1791901887643  cache write kind=content n=5 invalidated=1
+  1791901887643  sync ok setlists=15 content=5 pages=1 t=438
+  1791901887646  prefetch plan n=0 reason=library
+  1791901888092  prefetch plan n=0 reason=demand
+  1791901888104  prefetch plan n=0 reason=demand
+  → sync trigger: ['sync trigger reason=net decision=run']
+  → sync start: 1 · GET: 2 · fim: ['sync ok setlists=15 content=5 pages=1 t=438']
+VEREDITO: confere com o declarado ✓
+  (espera 20 s: o intervalo de 30 s desde o fim do último sync)

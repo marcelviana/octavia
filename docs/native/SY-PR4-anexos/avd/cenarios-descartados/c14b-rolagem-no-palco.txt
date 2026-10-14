@@ -1,0 +1,57 @@
+# SY-PR4 · AVD · c14b-rolagem-no-palco — a rolagem do palco andando enquanto a rede volta — o piso e a janela, 3 rodadas
+# 2026-10-13 11:40:50 -0300 · a fixture /private/tmp/claude-501/-Users-marcelviana-projects-octavia/d912b538-91de-4450-bb5e-3712bb2d4c23/scratchpad/fx4
+DECLARADO ANTES:
+  linhas: ['sync trigger reason=net decision=hold-stage', 'sync trigger reason=net decision=hold-stage', 'sync trigger reason=net decision=hold-stage']
+  sync_start: 0
+  GET: 0
+  rodada 1: PISO eventos 111 · maior lacuna 224 ms · andou 1361 px | JANELA eventos 25 · maior lacuna 27548 ms · andou 123 px · a linha presente
+  rodada 2: PISO eventos 115 · maior lacuna 224 ms · andou 1674 px | JANELA eventos 136 · maior lacuna 2569 ms · andou 1798 px · a linha presente
+  rodada 3: PISO eventos 0 · maior lacuna None ms · andou 0 px | JANELA eventos 0 · maior lacuna None ms · andou 0 px · a linha presente
+  ✗ PISO ou JANELA VAZIOS — o instrumento não mediu (SY-D55 (1))
+MEDIDO:
+  1791902457271  index open
+  1791902460612  index jump n=3
+  1791902460830  keepawake on
+  1791902460832  prefetch plan n=0 reason=demand
+  1791902470081  autoscroll on t=780
+  1791902506556  net offline
+  1791902533703  net online
+  1791902533713  sync trigger reason=net decision=hold-stage
+  1791902533714  net offline
+  1791902537283  net online
+  1791902537307  sync trigger reason=net decision=hold-stage
+  1791902565119  prefetch plan n=0 reason=demand
+  1791902565534  prefetch plan n=0 reason=demand
+  1791902565684  prefetch plan n=0 reason=demand
+  1791902566103  prefetch plan n=0 reason=demand
+  1791902566436  prefetch plan n=0 reason=demand
+  1791902567068  autoscroll off t=0
+  1791902572998  autoscroll on t=196
+  1791902597269  net offline
+  1791902605008  net online
+  1791902605014  sync trigger reason=net decision=hold-stage
+  1791902606487  prefetch plan n=0 reason=demand
+  1791902606502  prefetch plan n=0 reason=demand
+  1791902606535  prefetch plan n=0 reason=demand
+  1791902606557  prefetch plan n=0 reason=demand
+  1791902606577  prefetch plan n=0 reason=demand
+  1791902626537  autoscroll off t=0
+  1791902631517  autoscroll on t=138
+  1791902670230  net offline
+  1791902721184  net online
+  1791902721188  sync trigger reason=net decision=hold-stage
+  1791902721207  net offline
+  1791902725208  net online
+  1791902725224  sync trigger reason=net decision=hold-stage
+  1791902744746  autoscroll off t=0
+  1791902744872  prefetch plan n=0 reason=demand
+  1791902745376  prefetch plan n=0 reason=demand
+  1791902745602  prefetch plan n=0 reason=demand
+  1791902745675  prefetch plan n=0 reason=demand
+  1791902745752  prefetch plan n=0 reason=demand
+  → sync trigger: ['sync trigger reason=net decision=hold-stage', 'sync trigger reason=net decision=hold-stage', 'sync trigger reason=net decision=hold-stage', 'sync trigger reason=net decision=hold-stage', 'sync trigger reason=net decision=hold-stage']
+  → sync start: 0 · GET: 0 · fim: []
+  ✗ as linhas sync trigger diferem do declarado
+VEREDITO: NÃO confere ✗
+  ao sair: ['sync trigger reason=stage-exit decision=run']
+  mock: DERRUBADO (nada na 8788)

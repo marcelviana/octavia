@@ -20,11 +20,19 @@
  * no `StageScreen.tsx` e no `VisualizacaoScreen.tsx`), e a estrela de V fica viva (SY-D21).
  */
 import type { SetlistDTO } from '@octavia/core'
+import type { PalcoDosGatilhos } from './gatilhos'
 
 /** A busca de hoje: a setlist viva da raiz pelo id (`acharSetlist`, `navigation.tsx`). */
 export type AcharSetlist = (setlistId: string) => SetlistDTO | undefined
 
-export interface FotoDaSessao {
+/**
+ * SY-PR4 (SY-D49, SY-D56) — a foto é também o que os gatilhos leem para saber se o PALCO está aberto (o
+ * `PalcoDosGatilhos`): **a sessão do palco** (de `entrar` a `sair` — com o índice ou a busca por cima, que não a soltam)
+ * **ou um palco avulso sem hospedeira montado** (`abrirAvulso`, até o desligar dele). Um estado só, aqui, sem cópia na
+ * raiz nem nos gatilhos. Quem quer saber quando o palco FECHA assina `aoFecharPalco`: o aviso sai uma vez, na passagem
+ * de aberto a fechado, depois de o estado já ser o novo. V não conta: ela não entra aqui.
+ */
+export interface FotoDaSessao extends PalcoDosGatilhos {
   /** Entrar no palco DE FORA (de S2; de S1 pelo índice sem posição): tira a foto desta setlist. */
   entrar(setlistId: string, achar: AcharSetlist): void
   /**
@@ -34,18 +42,65 @@ export interface FotoDaSessao {
   setlistDaSessao(setlistId: string, achar: AcharSetlist): SetlistDTO | undefined
   /** Voltar a S1/S2: solta a foto. */
   sair(): void
+  /**
+   * O foco do `Index`: sem `posicaoAtual` é S2 (sai da sessão); com ela é o índice DO PALCO (a mesma sessão, E6). A
+   * regra que o `navigation.tsx` tinha no próprio ouvinte (SY-PR3), num lugar que o gate monta.
+   */
+  focoDoIndice(posicaoAtual: number | undefined): void
+  /** SY-D56 — um palco avulso sem hospedeira montou: o palco está aberto até o desligar devolvido. */
+  abrirAvulso(): () => void
 }
 
 /** Uma foto por sessão de navegação — o `navigation.tsx` cria uma e a guarda. */
 export function criarFotoDaSessao(): FotoDaSessao {
   let foto: SetlistDTO | null = null
-  return {
-    entrar: (setlistId, achar) => {
-      foto = achar(setlistId) ?? null
-    },
-    setlistDaSessao: (setlistId, achar) => (foto !== null && foto.id === setlistId ? foto : achar(setlistId)),
-    sair: () => {
+  /** Entre `entrar` e `sair`: a sessão do palco (a foto pode ser `null`, se a setlist não estava no cache). */
+  let emSessao = false
+  /** Quantos palcos avulsos sem hospedeira estão montados (SY-D56). */
+  let avulsos = 0
+  const aoFechar = new Set<() => void>()
+  const aberto = (): boolean => emSessao || avulsos > 0
+  /** Muda o estado e, se o palco passou de aberto a fechado, avisa quem assinou. */
+  const mudar = (f: () => void): void => {
+    const antes = aberto()
+    f()
+    if (antes && !aberto()) for (const g of [...aoFechar]) g()
+  }
+  const sair = (): void =>
+    mudar(() => {
       foto = null
+      emSessao = false
+    })
+  return {
+    entrar: (setlistId, achar) =>
+      mudar(() => {
+        foto = achar(setlistId) ?? null
+        emSessao = true
+      }),
+    setlistDaSessao: (setlistId, achar) => (foto !== null && foto.id === setlistId ? foto : achar(setlistId)),
+    sair,
+    focoDoIndice: (posicaoAtual) => {
+      if (posicaoAtual === undefined) sair()
+    },
+    abrirAvulso: () => {
+      mudar(() => {
+        avulsos++
+      })
+      let solto = false
+      return () => {
+        if (solto) return
+        solto = true
+        mudar(() => {
+          avulsos--
+        })
+      }
+    },
+    palcoAberto: aberto,
+    aoFecharPalco: (f) => {
+      aoFechar.add(f)
+      return () => {
+        aoFechar.delete(f)
+      }
     },
   }
 }

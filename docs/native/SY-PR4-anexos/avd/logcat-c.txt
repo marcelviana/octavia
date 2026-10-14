@@ -1,0 +1,5 @@
+# logcat — 2026-10-13 10:55:10 -0300
+$ adb -s emulator-5554 logcat -G 16M
+exit=0
+$ adb -s emulator-5554 logcat -c   (uma vez, antes da rodada — regra 36)
+exit=0

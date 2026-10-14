@@ -1,0 +1,108 @@
+fixture: servidor em :8788 modo=normal setlists=15 content=5 paginas=[5]
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+fixture: servidor em :8788 modo=normal setlists=15 content=5 paginas=[5]
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+fixture: servidor em :8788 modo=normal setlists=15 content=5 paginas=[5]
+fixture: servidor em :8788 modo=500-pagina-1 setlists=15 content=5 paginas=[5]
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+fixture: servidor em :8788 modo=atraso setlists=15 content=5 paginas=[5]
+REQ /api/setlists auth=sim sortBy=-
+fixture: servidor em :8788 modo=normal setlists=15 content=5 paginas=[5]
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+fixture: servidor em :8788 modo=500-pagina-1 setlists=15 content=5 paginas=[5]
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+fixture: servidor em :8788 modo=normal setlists=15 content=5 paginas=[5]
+fixture: servidor em :8788 modo=500-pagina-1 setlists=15 content=5 paginas=[5]
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+fixture: servidor em :8788 modo=normal setlists=15 content=5 paginas=[5]
+fixture: servidor em :8788 modo=normal setlists=15 content=5 paginas=[5]
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+fixture: servidor em :8788 modo=500-pagina-1 setlists=15 content=5 paginas=[5]
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+fixture: servidor em :8788 modo=normal setlists=15 content=5 paginas=[5]
+fixture: servidor em :8788 modo=normal setlists=15 content=5 paginas=[5]
+fixture: servidor em :8788 modo=normal setlists=15 content=5 paginas=[5]
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+fixture: servidor em :8788 modo=normal setlists=15 content=5 paginas=[5]
+fixture: servidor em :8788 modo=normal setlists=15 content=5 paginas=[5]
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+fixture: servidor em :8788 modo=500-pagina-1 setlists=15 content=5 paginas=[5]
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+fixture: servidor em :8788 modo=normal setlists=15 content=5 paginas=[5]
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+fixture: servidor em :8788 modo=normal setlists=15 content=5 paginas=[5]
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+fixture: servidor em :8788 modo=atraso setlists=15 content=5 paginas=[5]
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/setlists auth=sim sortBy=-
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 49808)
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py", line 692, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py", line 424, in handle_one_request
+    method()
+  File "/Users/marcelviana/projects/octavia-sy-pr4/apps/native/src/fixtures/aceite.py", line 619, in do_GET
+    self._json(200, modelo.setlists)
+  File "/Users/marcelviana/projects/octavia-sy-pr4/apps/native/src/fixtures/aceite.py", line 450, in _json
+    self.end_headers()
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py", line 538, in end_headers
+    self.flush_headers()
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py", line 542, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py", line 840, in write
+    self._sock.sendall(b)
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+fixture: servidor em :8788 modo=normal setlists=15 content=5 paginas=[5]
+fixture: servidor em :8788 modo=normal setlists=15 content=5 paginas=[5]
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+fixture: servidor em :8788 modo=atraso setlists=15 content=5 paginas=[5]
+REQ /api/setlists auth=sim sortBy=-
+fixture: servidor em :8788 modo=normal setlists=15 content=5 paginas=[5]
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+fixture: servidor em :8788 modo=normal setlists=15 content=5 paginas=[5]
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent
+fixture: servidor em :8788 modo=normal setlists=15 content=5 paginas=[5]
+REQ /api/setlists auth=sim sortBy=-
+REQ /api/content?pageSize=100&page=1&sortBy=recent auth=sim sortBy=recent

@@ -1,0 +1,16 @@
+# cn-sy-pr4.sh — 2026-10-14 08:28:13 -0300 · árvore 7bb9a3c0cde7575a21f3b4d72d0d24a616daf906
+# Leitura: com o defeito plantado, o gate tem de ACUSAR a checagem daquela regra (uma REPROVA NÃO DECLARADA).
+==================================================================================================
+CN r-3 — SY-D66: o segurarDeNovo chamado sem a proteção (o voo preso)
+  defeito: segurar-sem-protecao
+  plantado em apps/native/src/sincronizador.ts (1×): 'const espera = roda && segura(marcado.raiz)' → 'const espera = roda && (marcado.raiz.segurarDeNovo?.() ?? false)'
+  gate ii (o voo único) — casos 9
+    REPROVA             ii:segurar-que-lanca-libera-o-voo
+          1 sync(s) até o fim do voo, esperado 2 (o "de novo" não rodou)
+    ✗ reprovação NÃO DECLARADA: ii:segurar-que-lanca-libera-o-voo
+  gate ii: ✗
+   Test Files  1 failed (1)
+        Tests  1 failed | 6 passed (7)
+==================================================================================================
+$ git status --short -- apps/native   (vazio = os arquivos voltaram)
+exit=0

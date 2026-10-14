@@ -1,0 +1,28 @@
+# SY-PR4 · AVD · c11-banner-e-rolagem — a lista de S1 rolada; a falha automática (500) põe o banner
+# 2026-10-13 11:13:14 -0300 · a fixture /private/tmp/claude-501/-Users-marcelviana-projects-octavia/d912b538-91de-4450-bb5e-3712bb2d4c23/scratchpad/fx4
+  antes (resource-id, topo em dp, altura em dp): [('setlist-5a5a0002', 144.0, 71.6), ('setlist-5a5a0003', 227.6, 132.0), ('setlist-5a5a0004', 371.6, 132.0), ('setlist-5a5a0005', 515.6, 132.0)]
+  mock: 500-pagina-1 · fixture a
+DECLARADO ANTES:
+  linhas: ['sync trigger reason=net decision=run']
+  sync_start: 1
+  GET: 2
+  rádio DESLIGADO: ping → 'connect: Network is unreachable'
+  rádio LIGADO: ping → 'rtt min/avg/max/mdev = 13.137/13.137/13.137/0.000 ms'
+  depois: [('setlist-5a5a0003', 237.8, 112.0), ('setlist-5a5a0004', 361.8, 112.0), ('setlist-5a5a0005', 485.8, 112.0), ('setlist-5a5a0006', 609.8, 41.3)]
+  o primeiro cartão visível: antes ('setlist-5a5a0002', 144.0, 71.6) · depois ('setlist-5a5a0003', 237.8, 112.0)
+MEDIDO:
+  1791900797342  net offline
+  1791900800521  net online
+  1791900800522  sync trigger reason=net decision=run
+  1791900800654  sync start
+  1791900800657  auth refresh=cached
+  1791900800797  api status=200 path=/api/setlists n=1 ms=142
+  1791900800799  auth refresh=cached
+  1791900800838  api status=500 path=/api/content n=1 ms=40
+  1791900800847  sync fail stage=content page=1 code=INTERNAL_ERROR status=500
+  1791900800857  prefetch plan n=0 reason=library
+  → sync trigger: ['sync trigger reason=net decision=run']
+  → sync start: 1 · GET: 2 · fim: ['sync fail stage=content page=1 code=INTERNAL_ERROR status=500']
+VEREDITO: confere com o declarado ✓
+  mock: normal · fixture a
+  (espera 24 s: o intervalo de 30 s desde o fim do último sync)

@@ -1,24 +1,28 @@
+# SY-PR4 (commit 5): a lista ficou VAZIA, e vazia é a CONDIÇÃO FIXA dos cinco gates (o molde do gate da quebra,
+# QL-PR2): qualquer linha aqui reprova o gate, mesmo a de uma checagem que de fato reprova — reprovação declarada não é
+# mais aceita (`sy-lista.ts`, `listaNaoVazia`). O histórico abaixo fica como registro.
+#
 # SY-PR1 — os gates do SY (SY-D13): o que DEVE reprovar hoje, uma checagem por linha, <gate>:<caso>.
 # O juiz é o `sy-lista.ts`: reprovação fora daqui (NÃO DECLARADA) e linha que passa ou não existe (ÓRFÃ) reprovam o
 # gate (regra 14). Cada PR do SY esvazia a sua parte (a PR ao lado de cada bloco); vazia, a lista exige zero
 # reprovações sem mudar os gates. O que passa hoje NÃO está aqui: a prova daqueles casos é o controle negativo
 # plantado (`docs/native/SY-PR1-anexos/instrumentos/cn-sy.sh`). Comentário e linha em branco são ignorados.
 
-# (i) os gatilhos — sy-gatilhos.test.tsx — esvazia na PR-4 (o `de-novo-fora-do-intervalo` precisa também do voo, PR-2)
-i:rede-volta-na-frente
-i:fundo-mais-de-30s
-i:marca-volta-curta
-i:dois-eventos
-i:apos-falha-de-rede
-i:de-novo-fora-do-intervalo
+# (i) os gatilhos — sy-gatilhos.test.tsx — esvazia na PR-4 (as 6 da PR-1 saíram no commit 3 da SY-PR4: os gatilhos de
+# verdade, sem o palco; vazia desde o commit 4)
+# SY-PR4, commit 1 — os casos novos (SY-D49 (3), SY-D44, SY-D28, SY-D56), entrando reprovados (16): o commit 3 (os
+# gatilhos) tirou o `linhas-sem-disparo`, o `palco-v-aberta` e as 5 `tela-`; o commit 4 (o palco, o avulso, o "de novo"
+# que espera, a sessão do intervalo) tirou as 9 do palco e do logout — vazia. O `palco-sair-sem-marca` e o
+# `palco-abertura-e-tentar` passam desde o commit 1 e nunca entraram: a prova deles é o controle negativo
+# (`docs/native/SY-PR4-anexos/instrumentos/cn-sy-pr4.sh`).
+# (i), a família tela- — sy-gatilhos-telas.test.tsx (SY-D52, SY-D57): vazia desde o commit 3 da SY-PR4 (o gatilho chega à tela)
 
 # (ii) o voo único — sy-voo.test.ts — esvazia na PR-2 (vazia desde o commit 5 da SY-PR2: o voo e a sessão no 2, as escritas no 4, o prazo no 5)
+# SY-PR4, o aval (SY-D66): o `segurarDeNovo` que lança não pode prender o voo — entrou reprovando no commit A (vermelho
+# de propósito, SY-D69) e saiu no B (a proteção no executor): a lista voltou a vazia
 
 # (iii) a foto — sy-foto.test.tsx — esvazia na PR-3 (a foto da sessão, commit 2 da SY-PR3, fechou as da sessão, o topo, a rolagem e a barra; a do conteúdo no palco, commit 3, as outras do palco; a de V, commit 4 — vazia)
 
 # (iv) a janela da naoRegredir — sy-nao-regredir.test.ts — esvazia na PR-2 (vazia desde o commit 3 da SY-PR2: a aplicação síncrona)
 
-# (v) a contagem — sy-requisicoes.test.tsx — esvazia na PR-4
-v:rede-volta-100
-v:rede-volta-101
-v:fundo-100
+# (v) a contagem — sy-requisicoes.test.tsx — esvazia na PR-4 (vazia desde o commit 3 da SY-PR4: os gatilhos de verdade)

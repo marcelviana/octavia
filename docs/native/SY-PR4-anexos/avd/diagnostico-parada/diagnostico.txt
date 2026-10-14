@@ -1,0 +1,36 @@
+# SY-PR4 · AVD · diagnostico — o foco da janela durante a troca de rádio, com o palco aberto e a rolagem ligada
+# 2026-10-13 12:09:42 -0300 · a fixture /private/tmp/claude-501/-Users-marcelviana-projects-octavia/d912b538-91de-4450-bb5e-3712bb2d4c23/scratchpad/fx4
+  antes: mCurrentFocus=Window{9c521bf u0 rocks.octavia.app/rocks.octavia.app.MainActivity} · topResumedActivity=ActivityRecord{f99f4e1 u0 rocks.octavia.app/.MainActivity t134}
+  aviao-03s: mCurrentFocus=Window{9c521bf u0 rocks.octavia.app/rocks.octavia.app.MainActivity} · topResumedActivity=ActivityRecord{f99f4e1 u0 rocks.octavia.app/.MainActivity t134}
+  aviao-06s: mCurrentFocus=Window{9c521bf u0 rocks.octavia.app/rocks.octavia.app.MainActivity} · topResumedActivity=ActivityRecord{f99f4e1 u0 rocks.octavia.app/.MainActivity t134}
+  aviao-09s: mCurrentFocus=Window{9c521bf u0 rocks.octavia.app/rocks.octavia.app.MainActivity} · topResumedActivity=ActivityRecord{f99f4e1 u0 rocks.octavia.app/.MainActivity t134}
+  aviao-12s: mCurrentFocus=Window{9c521bf u0 rocks.octavia.app/rocks.octavia.app.MainActivity} · topResumedActivity=ActivityRecord{f99f4e1 u0 rocks.octavia.app/.MainActivity t134}
+  aviao-15s: mCurrentFocus=Window{9c521bf u0 rocks.octavia.app/rocks.octavia.app.MainActivity} · topResumedActivity=ActivityRecord{f99f4e1 u0 rocks.octavia.app/.MainActivity t134}
+  aviao-18s: mCurrentFocus=Window{9c521bf u0 rocks.octavia.app/rocks.octavia.app.MainActivity} · topResumedActivity=ActivityRecord{f99f4e1 u0 rocks.octavia.app/.MainActivity t134}
+  religado-03s: mCurrentFocus=Window{9c521bf u0 rocks.octavia.app/rocks.octavia.app.MainActivity} · topResumedActivity=ActivityRecord{f99f4e1 u0 rocks.octavia.app/.MainActivity t134}
+  religado-06s: mCurrentFocus=Window{9c521bf u0 rocks.octavia.app/rocks.octavia.app.MainActivity} · topResumedActivity=ActivityRecord{f99f4e1 u0 rocks.octavia.app/.MainActivity t134}
+  religado-09s: mCurrentFocus=Window{9c521bf u0 rocks.octavia.app/rocks.octavia.app.MainActivity} · topResumedActivity=ActivityRecord{f99f4e1 u0 rocks.octavia.app/.MainActivity t134}
+  religado-12s: mCurrentFocus=Window{9c521bf u0 rocks.octavia.app/rocks.octavia.app.MainActivity} · topResumedActivity=ActivityRecord{f99f4e1 u0 rocks.octavia.app/.MainActivity t134}
+  religado-15s: mCurrentFocus=Window{9c521bf u0 rocks.octavia.app/rocks.octavia.app.MainActivity} · topResumedActivity=ActivityRecord{f99f4e1 u0 rocks.octavia.app/.MainActivity t134}
+  religado-18s: mCurrentFocus=Window{9c521bf u0 rocks.octavia.app/rocks.octavia.app.MainActivity} · topResumedActivity=ActivityRecord{f99f4e1 u0 rocks.octavia.app/.MainActivity t134}
+  religado-21s: mCurrentFocus=Window{9c521bf u0 rocks.octavia.app/rocks.octavia.app.MainActivity} · topResumedActivity=ActivityRecord{f99f4e1 u0 rocks.octavia.app/.MainActivity t134}
+  religado-24s: mCurrentFocus=Window{9c521bf u0 rocks.octavia.app/rocks.octavia.app.MainActivity} · topResumedActivity=ActivityRecord{f99f4e1 u0 rocks.octavia.app/.MainActivity t134}
+  religado-27s: mCurrentFocus=Window{9c521bf u0 rocks.octavia.app/rocks.octavia.app.MainActivity} · topResumedActivity=ActivityRecord{f99f4e1 u0 rocks.octavia.app/.MainActivity t134}
+  religado-30s: mCurrentFocus=Window{9c521bf u0 rocks.octavia.app/rocks.octavia.app.MainActivity} · topResumedActivity=ActivityRecord{f99f4e1 u0 rocks.octavia.app/.MainActivity t134}
+as linhas do app no diagnóstico:
+  1791904210343  index open
+  1791904213106  index jump n=3
+  1791904213281  keepawake on
+  1791904213282  prefetch plan n=0 reason=demand
+  1791904219338  autoscroll on t=104
+  1791904223796  net offline
+  1791904264012  net online
+  1791904264025  sync trigger reason=net decision=hold-stage
+  1791904286524  prefetch plan n=0 reason=demand
+  1791904286837  prefetch plan n=0 reason=demand
+  1791904287184  prefetch plan n=0 reason=demand
+  1791904287351  prefetch plan n=0 reason=demand
+  1791904287450  prefetch plan n=0 reason=demand
+  1791904287607  prefetch plan n=0 reason=demand
+  1791904287716  prefetch plan n=0 reason=demand
+  mock: DERRUBADO (nada na 8788)

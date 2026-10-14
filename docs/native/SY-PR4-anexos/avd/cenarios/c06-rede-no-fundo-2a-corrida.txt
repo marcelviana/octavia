@@ -1,0 +1,36 @@
+# SY-PR4 · AVD · c06-rede-no-fundo — a rede cai e volta com o app em segundo plano; a volta em menos de 30 s
+# 2026-10-13 11:03:26 -0300 · a fixture /private/tmp/claude-501/-Users-marcelviana-projects-octavia/d912b538-91de-4450-bb5e-3712bb2d4c23/scratchpad/fx4
+HIPÓTESE A MEDIR: o evento chega ao JS em segundo plano → `net offline`/`net online` e `sync trigger reason=net
+decision=skip-background` com o app fora, e na volta curta `reason=net decision=run` (a marca). Se não chega, as
+linhas só saem na volta.
+DECLARADO ANTES:
+  linhas: ['sync trigger reason=net decision=skip-background', 'sync trigger reason=net decision=run']
+  sync_start: 1
+  GET: 2
+  rádio DESLIGADO: ping → 'connect: Network is unreachable'
+  rádio LIGADO: ping → 'rtt min/avg/max/mdev = 12.831/12.831/12.831/0.000 ms'
+  ausência até aqui: 10.4 s (tem de ser < 30 s)
+QUANDO cada linha saiu, contra a volta à frente:
+  EM SEGUNDO PLANO (-9.1 s)  net offline
+  na frente (+0.2 s)  sync trigger reason=foreground decision=skip-short
+  na frente (+0.6 s)  net online
+  na frente (+0.6 s)  sync trigger reason=net decision=run
+MEDIDO:
+  1791900204353  net offline
+  1791900213615  sync trigger reason=foreground decision=skip-short
+  1791900214037  net online
+  1791900214038  sync trigger reason=net decision=run
+  1791900214155  sync start
+  1791900214158  auth refresh=cached
+  1791900214200  api status=200 path=/api/setlists n=1 ms=43
+  1791900214204  auth refresh=cached
+  1791900214218  api status=200 path=/api/content n=1 ms=15
+  1791900214230  cache write kind=setlists n=15 invalidated=0
+  1791900214234  cache write kind=content n=5 invalidated=0
+  1791900214234  sync ok setlists=15 content=5 pages=1 t=79
+  1791900214236  prefetch plan n=0 reason=library
+  → sync trigger: ['sync trigger reason=foreground decision=skip-short', 'sync trigger reason=net decision=run']
+  → sync start: 1 · GET: 2 · fim: ['sync ok setlists=15 content=5 pages=1 t=79']
+  ✗ as linhas sync trigger diferem do declarado
+VEREDITO: NÃO confere ✗
+  mock: DERRUBADO (nada na 8788)

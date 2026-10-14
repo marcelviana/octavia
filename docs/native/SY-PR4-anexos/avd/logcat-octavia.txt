@@ -1,0 +1,654 @@
+         1791899718.011 20955 21064 I ReactNativeJS: OCTAVIA: faixa=C w=1137.8 h=711.1
+         1791899718.024 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791899718.108 20955 21064 I ReactNativeJS: OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+         1791899718.321 20955 21064 I ReactNativeJS: OCTAVIA: sync skip reason=offline
+         1791899718.324 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791899725.692 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791899725.696 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=run
+         1791899725.772 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791899734.141 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791899734.378 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=8603
+         1791899734.391 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791899734.405 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=15
+         1791899734.495 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=15 invalidated=15
+         1791899734.515 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=content n=5 invalidated=5
+         1791899734.516 20955 21064 I ReactNativeJS: OCTAVIA: sync ok setlists=15 content=5 pages=1 t=8744
+         1791899734.541 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791899739.068 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791899742.577 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791899742.583 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=skip-interval
+         1791899942.610 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791899947.585 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791899947.586 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=skip-background
+         1791900005.295 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=foreground decision=run
+         1791900005.540 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791900005.542 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791900005.569 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=29
+         1791900005.577 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791900005.588 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=13
+         1791900005.601 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=15 invalidated=0
+         1791900005.606 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=content n=5 invalidated=0
+         1791900005.607 20955 21064 I ReactNativeJS: OCTAVIA: sync ok setlists=15 content=5 pages=1 t=67
+         1791900005.609 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791900046.937 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=foreground decision=skip-short
+         1791900087.324 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=foreground decision=run
+         1791900087.656 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791900087.657 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791900087.682 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=25
+         1791900087.690 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791900087.706 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=17
+         1791900087.716 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=15 invalidated=0
+         1791900087.720 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=content n=5 invalidated=0
+         1791900087.720 20955 21064 I ReactNativeJS: OCTAVIA: sync ok setlists=15 content=5 pages=1 t=64
+         1791900087.721 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791900130.098 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=foreground decision=skip-short
+         1791900171.530 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=foreground decision=run
+         1791900171.833 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791900171.834 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791900171.856 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=23
+         1791900171.858 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791900171.870 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=13
+         1791900171.877 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=15 invalidated=0
+         1791900171.880 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=content n=5 invalidated=0
+         1791900171.880 20955 21064 I ReactNativeJS: OCTAVIA: sync ok setlists=15 content=5 pages=1 t=47
+         1791900171.881 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791900204.353 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791900213.615 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=foreground decision=skip-short
+         1791900214.037 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791900214.038 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=run
+         1791900214.155 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791900214.158 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791900214.200 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=43
+         1791900214.204 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791900214.218 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=15
+         1791900214.230 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=15 invalidated=0
+         1791900214.234 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=content n=5 invalidated=0
+         1791900214.234 20955 21064 I ReactNativeJS: OCTAVIA: sync ok setlists=15 content=5 pages=1 t=79
+         1791900214.236 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791900248.117 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791900253.138 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791900253.138 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=skip-background
+         1791900257.610 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=run
+         1791900257.827 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791900257.829 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791900257.862 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=35
+         1791900257.866 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791900257.878 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=12
+         1791900257.889 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=15 invalidated=0
+         1791900257.892 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=content n=5 invalidated=0
+         1791900257.893 20955 21064 I ReactNativeJS: OCTAVIA: sync ok setlists=15 content=5 pages=1 t=65
+         1791900257.893 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791900290.274 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791900295.376 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791900295.376 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=skip-background
+         1791900307.059 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=run
+         1791900307.295 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791900307.297 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791900307.322 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=27
+         1791900307.324 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791900307.337 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=12
+         1791900307.346 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=15 invalidated=0
+         1791900307.349 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=content n=5 invalidated=0
+         1791900307.350 20955 21064 I ReactNativeJS: OCTAVIA: sync ok setlists=15 content=5 pages=1 t=54
+         1791900307.351 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791900339.776 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791900344.720 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791900344.721 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=skip-background
+         1791900351.521 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=run
+         1791900351.797 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791900351.798 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791900351.833 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=35
+         1791900351.839 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791900351.855 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=16
+         1791900351.865 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=15 invalidated=0
+         1791900351.870 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=content n=5 invalidated=0
+         1791900351.871 20955 21064 I ReactNativeJS: OCTAVIA: sync ok setlists=15 content=5 pages=1 t=74
+         1791900351.874 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791900384.458 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791900389.568 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791900389.569 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=skip-background
+         1791900401.127 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=run
+         1791900401.324 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791900401.326 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791900401.347 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=23
+         1791900401.351 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791900401.375 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=25
+         1791900401.382 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=15 invalidated=0
+         1791900401.388 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=content n=5 invalidated=0
+         1791900401.389 20955 21064 I ReactNativeJS: OCTAVIA: sync ok setlists=15 content=5 pages=1 t=65
+         1791900401.389 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791900433.867 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791900439.775 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791900439.776 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=skip-background
+         1791900444.648 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=run
+         1791900444.771 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791900444.773 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791900444.790 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=17
+         1791900444.792 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791900444.808 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=16
+         1791900444.817 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=15 invalidated=0
+         1791900444.820 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=content n=5 invalidated=0
+         1791900444.822 20955 21064 I ReactNativeJS: OCTAVIA: sync ok setlists=15 content=5 pages=1 t=51
+         1791900444.823 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791900477.268 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791900483.546 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791900483.546 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=skip-background
+         1791900495.223 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=run
+         1791900495.499 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791900495.502 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791900495.523 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=24
+         1791900495.525 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791900495.536 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=10
+         1791900495.549 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=15 invalidated=0
+         1791900495.555 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=content n=5 invalidated=0
+         1791900495.555 20955 21064 I ReactNativeJS: OCTAVIA: sync ok setlists=15 content=5 pages=1 t=56
+         1791900495.556 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791900564.800 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=foreground decision=run
+         1791900565.024 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791900565.025 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791900565.058 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=34
+         1791900565.061 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791900565.075 20955 21064 I ReactNativeJS: OCTAVIA: api status=500 path=/api/content n=1 ms=15
+         1791900565.104 20955 21064 I ReactNativeJS: OCTAVIA: sync fail stage=content page=1 code=INTERNAL_ERROR status=500
+         1791900565.105 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791900633.955 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=foreground decision=run
+         1791900634.252 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791900634.254 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791900634.278 20955 21064 I ReactNativeJS: OCTAVIA: sync fail stage=setlists page=1 code=network status=-
+         1791900634.279 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791900703.115 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=foreground decision=run
+         1791900703.370 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791900703.371 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791900723.393 20955 21064 I ReactNativeJS: OCTAVIA: sync fail stage=setlists page=1 code=network status=-
+         1791900723.394 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791900756.974 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791900759.985 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791900759.985 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=run
+         1791900760.126 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791900760.130 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791900760.224 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=97
+         1791900760.234 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791900760.260 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=31
+         1791900760.286 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=15 invalidated=0
+         1791900760.291 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=content n=5 invalidated=0
+         1791900760.291 20955 21064 I ReactNativeJS: OCTAVIA: sync ok setlists=15 content=5 pages=1 t=169
+         1791900760.292 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791900797.342 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791900800.521 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791900800.522 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=run
+         1791900800.654 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791900800.657 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791900800.797 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=142
+         1791900800.799 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791900800.838 20955 21064 I ReactNativeJS: OCTAVIA: api status=500 path=/api/content n=1 ms=40
+         1791900800.847 20955 21064 I ReactNativeJS: OCTAVIA: sync fail stage=content page=1 code=INTERNAL_ERROR status=500
+         1791900800.857 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791900846.578 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791900853.635 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791900853.640 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=run
+         1791900855.920 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791900855.951 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791900857.612 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=1690
+         1791900857.640 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791900858.004 20955 21064 I ReactNativeJS: OCTAVIA: api status=500 path=/api/content n=1 ms=370
+         1791900858.072 20955 21064 I ReactNativeJS: OCTAVIA: sync fail stage=content page=1 code=INTERNAL_ERROR status=500
+         1791900858.404 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791901096.117 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791901103.728 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791901103.733 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=run
+         1791901105.721 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791901105.859 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791901107.221 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=1484
+         1791901107.245 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791901107.415 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=177
+         1791901107.583 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=15 invalidated=0
+         1791901107.604 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=content n=5 invalidated=0
+         1791901107.606 20955 21064 I ReactNativeJS: OCTAVIA: sync ok setlists=15 content=5 pages=1 t=1899
+         1791901107.634 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791901155.823 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791901163.041 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791901163.061 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=run
+         1791901165.362 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791901165.449 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791901166.583 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=1189
+         1791901166.622 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791901166.841 20955 21064 I ReactNativeJS: OCTAVIA: api status=500 path=/api/content n=1 ms=225
+         1791901166.874 20955 21064 I ReactNativeJS: OCTAVIA: sync fail stage=content page=1 code=INTERNAL_ERROR status=500
+         1791901166.908 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791901411.567 20955 21064 I ReactNativeJS: OCTAVIA: index open
+         1791901425.250 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791901433.186 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791901433.225 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=run
+         1791901434.707 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791901434.762 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791901435.615 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=904
+         1791901435.647 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791901435.746 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=104
+         1791901435.900 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=15 invalidated=1
+         1791901435.928 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=content n=5 invalidated=0
+         1791901435.929 20955 21064 I ReactNativeJS: OCTAVIA: sync ok setlists=15 content=5 pages=1 t=1222
+         1791901435.943 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791901518.771 20955 21064 I ReactNativeJS: OCTAVIA: index open
+         1791901522.002 20955 21064 I ReactNativeJS: OCTAVIA: index jump n=3
+         1791901522.109 20955 21064 I ReactNativeJS: OCTAVIA: keepawake on
+         1791901522.114 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791901528.409 20955 21064 I ReactNativeJS: OCTAVIA: autoscroll on t=35
+         1791901554.314 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791901566.097 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791901566.105 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=hold-stage
+         1791901569.337 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791901620.010 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=foreground decision=hold-stage
+         1791901662.208 20955 21064 I ReactNativeJS: OCTAVIA: keepawake off
+         1791901662.220 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=stage-exit decision=run
+         1791901662.444 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791901662.445 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791901662.501 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=57
+         1791901662.574 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791901662.590 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=16
+         1791901662.598 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=15 invalidated=1
+         1791901662.601 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=content n=5 invalidated=0
+         1791901662.601 20955 21064 I ReactNativeJS: OCTAVIA: sync ok setlists=15 content=5 pages=1 t=157
+         1791901662.605 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791901662.806 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791901708.188 20955 21064 I ReactNativeJS: OCTAVIA: index open
+         1791901711.286 20955 21064 I ReactNativeJS: OCTAVIA: index jump n=1
+         1791901711.366 20955 21064 I ReactNativeJS: OCTAVIA: keepawake on
+         1791901711.367 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791901720.077 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791901729.055 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791901729.074 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=hold-stage
+         1791901736.362 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791901736.800 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791901752.989 20955 21064 I ReactNativeJS: OCTAVIA: keepawake off
+         1791901752.994 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=stage-exit decision=run
+         1791901753.356 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791901753.358 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791901753.470 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=113
+         1791901753.473 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791901753.481 20955 21064 I ReactNativeJS: OCTAVIA: api status=500 path=/api/content n=1 ms=8
+         1791901753.485 20955 21064 I ReactNativeJS: OCTAVIA: sync fail stage=content page=1 code=INTERNAL_ERROR status=500
+         1791901753.488 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791901796.855 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791901807.518 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791901807.533 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=run
+         1791901807.554 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791901808.265 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791901808.274 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=run
+         1791901808.305 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791901808.326 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791901818.686 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=10326
+         1791901818.763 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791901819.741 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791901819.915 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791901820.054 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=1290
+         1791901820.205 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=15 invalidated=0
+         1791901820.269 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=content n=5 invalidated=0
+         1791901820.272 20955 21064 I ReactNativeJS: OCTAVIA: sync ok setlists=15 content=5 pages=1 t=11968
+         1791901820.315 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791901826.286 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791901826.299 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791901826.637 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=348
+         1791901826.663 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791901826.762 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=100
+         1791901826.803 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=15 invalidated=0
+         1791901826.850 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=content n=5 invalidated=0
+         1791901826.852 20955 21064 I ReactNativeJS: OCTAVIA: sync ok setlists=15 content=5 pages=1 t=565
+         1791901826.861 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791901883.090 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791901886.481 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791901886.489 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=run
+         1791901887.139 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791901887.155 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791901887.205 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791901887.207 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791901887.610 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=404
+         1791901887.612 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791901887.628 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=16
+         1791901887.641 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=15 invalidated=0
+         1791901887.643 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=content n=5 invalidated=1
+         1791901887.643 20955 21064 I ReactNativeJS: OCTAVIA: sync ok setlists=15 content=5 pages=1 t=438
+         1791901887.646 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791901888.092 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791901888.104 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791901923.701 20955 21064 I ReactNativeJS: OCTAVIA: keepawake on
+         1791901923.702 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791901928.002 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791901941.305 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791901941.411 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=hold-stage
+         1791901956.171 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791901956.953 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791901957.310 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791901959.955 20955 21064 I ReactNativeJS: OCTAVIA: keepawake off
+         1791901960.811 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=stage-exit decision=run
+         1791901970.624 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791901970.631 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791901971.434 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=784
+         1791901971.462 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791901971.700 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=246
+         1791901971.830 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=15 invalidated=0
+         1791901971.918 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=content n=5 invalidated=0
+         1791901971.921 20955 21064 I ReactNativeJS: OCTAVIA: sync ok setlists=15 content=5 pages=1 t=1344
+         1791901971.939 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791902025.435 20955 21064 I ReactNativeJS: OCTAVIA: index open
+         1791902063.108 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=foreground decision=run
+         1791902063.280 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791902063.346 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791902078.263 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791902090.025 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791902090.062 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=queued
+         1791902090.243 20955 21064 I ReactNativeJS: OCTAVIA: sync fail stage=setlists page=1 code=network status=-
+         1791902090.323 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791902092.684 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791902092.697 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791902112.221 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902112.578 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902118.976 20955 21064 I ReactNativeJS: OCTAVIA: sync fail stage=setlists page=1 code=network status=-
+         1791902119.031 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791902119.111 20955 21064 I ReactNativeJS: OCTAVIA: index jump n=1
+         1791902120.948 20955 21064 I ReactNativeJS: OCTAVIA: keepawake on
+         1791902120.951 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902136.046 20955 21064 I ReactNativeJS: OCTAVIA: keepawake off
+         1791902245.038 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791902267.807 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791902267.820 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=run
+         1791902268.138 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791902268.149 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791902269.588 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=1446
+         1791902277.554 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791902277.701 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902277.798 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902277.935 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902282.130 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=4601
+         1791902282.514 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=15 invalidated=0
+         1791902282.526 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=content n=5 invalidated=1
+         1791902282.526 20955 21064 I ReactNativeJS: OCTAVIA: sync ok setlists=15 content=5 pages=1 t=14389
+         1791902282.541 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791902286.043 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902286.125 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902286.194 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902320.398 20955 21064 I ReactNativeJS: OCTAVIA: index open
+         1791902324.364 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791902331.700 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791902331.738 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=run
+         1791902343.782 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791902343.789 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791902343.808 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791902344.041 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902344.462 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902344.687 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902361.573 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791902361.598 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=queued
+         1791902379.554 20955 21064 I ReactNativeJS: OCTAVIA: index jump n=1
+         1791902380.571 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902380.739 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902380.804 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902381.697 20955 21064 I ReactNativeJS: OCTAVIA: keepawake on
+         1791902381.698 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902384.126 20955 21064 I ReactNativeJS: OCTAVIA: sync fail stage=setlists page=1 code=network status=-
+         1791902384.133 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791902384.169 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=again decision=hold-stage
+         1791902415.590 20955 21064 I ReactNativeJS: OCTAVIA: keepawake off
+         1791902415.662 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=stage-exit decision=run
+         1791902417.309 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791902417.312 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791902417.868 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=557
+         1791902417.877 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791902417.912 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=36
+         1791902417.930 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=15 invalidated=0
+         1791902417.934 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=content n=5 invalidated=0
+         1791902417.934 20955 21064 I ReactNativeJS: OCTAVIA: sync ok setlists=15 content=5 pages=1 t=625
+         1791902417.938 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791902457.271 20955 21064 I ReactNativeJS: OCTAVIA: index open
+         1791902460.612 20955 21064 I ReactNativeJS: OCTAVIA: index jump n=3
+         1791902460.830 20955 21064 I ReactNativeJS: OCTAVIA: keepawake on
+         1791902460.832 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902470.081 20955 21064 I ReactNativeJS: OCTAVIA: autoscroll on t=780
+         1791902506.556 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791902533.703 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791902533.713 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=hold-stage
+         1791902533.714 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791902537.283 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791902537.307 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=hold-stage
+         1791902565.119 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902565.534 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902565.684 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902566.103 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902566.436 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902567.068 20955 21064 I ReactNativeJS: OCTAVIA: autoscroll off t=0
+         1791902572.998 20955 21064 I ReactNativeJS: OCTAVIA: autoscroll on t=196
+         1791902597.269 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791902605.008 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791902605.014 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=hold-stage
+         1791902606.487 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902606.502 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902606.535 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902606.557 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902606.577 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902626.537 20955 21064 I ReactNativeJS: OCTAVIA: autoscroll off t=0
+         1791902631.517 20955 21064 I ReactNativeJS: OCTAVIA: autoscroll on t=138
+         1791902670.230 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791902721.184 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791902721.188 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=hold-stage
+         1791902721.207 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791902725.208 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791902725.224 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=hold-stage
+         1791902744.746 20955 21064 I ReactNativeJS: OCTAVIA: autoscroll off t=0
+         1791902744.872 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902745.376 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902745.602 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902745.675 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902745.752 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902751.905 20955 21064 I ReactNativeJS: OCTAVIA: keepawake off
+         1791902751.959 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=stage-exit decision=run
+         1791902752.784 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791902752.792 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791902753.014 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=228
+         1791902753.015 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791902753.030 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=16
+         1791902753.047 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=15 invalidated=0
+         1791902753.049 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=content n=5 invalidated=0
+         1791902753.049 20955 21064 I ReactNativeJS: OCTAVIA: sync ok setlists=15 content=5 pages=1 t=265
+         1791902753.053 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791902864.943 20955 21064 I ReactNativeJS: OCTAVIA: index open
+         1791902868.408 20955 21064 I ReactNativeJS: OCTAVIA: index jump n=3
+         1791902868.621 20955 21064 I ReactNativeJS: OCTAVIA: keepawake on
+         1791902868.623 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791902874.230 20955 21064 I ReactNativeJS: OCTAVIA: zoom dp=26
+         1791902878.032 20955 21064 I ReactNativeJS: OCTAVIA: zoom dp=32
+         1791902881.873 20955 21064 I ReactNativeJS: OCTAVIA: zoom dp=40
+         1791902885.787 20955 21064 I ReactNativeJS: OCTAVIA: autoscroll on t=52
+         1791903136.999 20955 21064 I ReactNativeJS: OCTAVIA: autoscroll off t=0
+         1791903140.880 20955 21064 I ReactNativeJS: OCTAVIA: nav n=4/5 setlist=0000000a t=179
+         1791903140.881 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903145.663 20955 21064 I ReactNativeJS: OCTAVIA: nav n=3/5 setlist=0000000a t=173
+         1791903145.664 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903151.341 20955 21064 I ReactNativeJS: OCTAVIA: autoscroll on t=87
+         1791903175.255 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791903194.676 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791903194.684 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=hold-stage
+         1791903215.214 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903215.395 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903215.829 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903216.149 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903216.447 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903216.596 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903455.598 20955 21064 I ReactNativeJS: OCTAVIA: autoscroll off t=0
+         1791903459.808 20955 21064 I ReactNativeJS: OCTAVIA: nav n=4/5 setlist=0000000a t=165
+         1791903459.809 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903464.728 20955 21064 I ReactNativeJS: OCTAVIA: nav n=3/5 setlist=0000000a t=213
+         1791903464.729 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903470.940 20955 21064 I ReactNativeJS: OCTAVIA: autoscroll on t=132
+         1791903494.809 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791903512.652 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791903512.666 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=hold-stage
+         1791903521.450 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903521.631 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903521.800 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903521.928 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903522.024 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903522.098 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903595.814 20955 21064 I ReactNativeJS: OCTAVIA: autoscroll off t=0
+         1791903600.395 20955 21064 I ReactNativeJS: OCTAVIA: nav n=4/5 setlist=0000000a t=390
+         1791903600.396 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903605.590 20955 21064 I ReactNativeJS: OCTAVIA: nav n=3/5 setlist=0000000a t=311
+         1791903605.591 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903612.038 20955 21064 I ReactNativeJS: OCTAVIA: autoscroll on t=188
+         1791903635.409 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791903639.870 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791903639.874 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=hold-stage
+         1791903645.615 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903645.648 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903645.679 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903645.718 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903645.743 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903645.768 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903803.237 20955 21064 I ReactNativeJS: OCTAVIA: autoscroll off t=0
+         1791903807.358 20955 21064 I ReactNativeJS: OCTAVIA: nav n=4/5 setlist=0000000a t=166
+         1791903807.359 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903812.350 20955 21064 I ReactNativeJS: OCTAVIA: nav n=3/5 setlist=0000000a t=205
+         1791903812.351 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903818.231 20955 21064 I ReactNativeJS: OCTAVIA: autoscroll on t=104
+         1791903844.154 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791903880.352 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791903880.370 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=hold-stage
+         1791903898.782 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903898.987 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903899.108 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903899.205 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903899.330 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903899.426 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903934.170 20955 21064 I ReactNativeJS: OCTAVIA: autoscroll off t=0
+         1791903938.083 20955 21064 I ReactNativeJS: OCTAVIA: nav n=4/5 setlist=0000000a t=143
+         1791903938.083 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903943.063 20955 21064 I ReactNativeJS: OCTAVIA: nav n=3/5 setlist=0000000a t=199
+         1791903943.064 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791903948.954 20955 21064 I ReactNativeJS: OCTAVIA: autoscroll on t=79
+         1791903976.404 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791904012.368 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791904012.444 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=hold-stage
+         1791904012.472 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791904014.887 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791904014.903 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=hold-stage
+         1791904025.898 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791904025.976 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791904026.047 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791904026.125 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791904026.216 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791904026.338 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791904045.864 20955 21064 I ReactNativeJS: OCTAVIA: autoscroll off t=0
+         1791904050.010 20955 21064 I ReactNativeJS: OCTAVIA: keepawake off
+         1791904050.022 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=stage-exit decision=run
+         1791904050.648 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791904051.530 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791904051.553 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=905
+         1791904051.556 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791904051.565 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=10
+         1791904051.576 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=15 invalidated=0
+         1791904051.579 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=content n=5 invalidated=0
+         1791904051.579 20955 21064 I ReactNativeJS: OCTAVIA: sync ok setlists=15 content=5 pages=1 t=931
+         1791904051.580 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791904210.343 20955 21064 I ReactNativeJS: OCTAVIA: index open
+         1791904213.106 20955 21064 I ReactNativeJS: OCTAVIA: index jump n=3
+         1791904213.281 20955 21064 I ReactNativeJS: OCTAVIA: keepawake on
+         1791904213.282 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791904219.338 20955 21064 I ReactNativeJS: OCTAVIA: autoscroll on t=104
+         1791904223.796 20955 21064 I ReactNativeJS: OCTAVIA: net offline
+         1791904264.012 20955 21064 I ReactNativeJS: OCTAVIA: net online
+         1791904264.025 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=net decision=hold-stage
+         1791904286.524 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791904286.837 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791904287.184 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791904287.351 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791904287.450 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791904287.607 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791904287.716 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791904385.249 20955 21064 I ReactNativeJS: OCTAVIA: autoscroll off t=0
+         1791904389.508 20955 21064 I ReactNativeJS: OCTAVIA: keepawake off
+         1791904389.529 20955 21064 I ReactNativeJS: OCTAVIA: sync trigger reason=stage-exit decision=run
+         1791904390.218 20955 21064 I ReactNativeJS: OCTAVIA: sync start
+         1791904390.219 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791904390.361 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=143
+         1791904390.440 20955 21064 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791904390.453 20955 21064 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=14
+         1791904390.467 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=15 invalidated=0
+         1791904390.470 20955 21064 I ReactNativeJS: OCTAVIA: cache write kind=content n=5 invalidated=0
+         1791904390.470 20955 21064 I ReactNativeJS: OCTAVIA: sync ok setlists=15 content=5 pages=1 t=252
+         1791904390.475 20955 21064 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791904548.245  9993 10082 I ReactNativeJS: OCTAVIA: faixa=C w=1137.8 h=711.1
+         1791904548.301  9993 10082 I ReactNativeJS: OCTAVIA: net online
+         1791904550.204  9993 10082 I ReactNativeJS: OCTAVIA: auth uid=Pw3bxXZw0iT3WwyL7kxGtGJIJH83 src=restored
+         1791904551.719  9993 10082 I ReactNativeJS: OCTAVIA: cache hit kind=setlists n=15
+         1791904551.720  9993 10082 I ReactNativeJS: OCTAVIA: cache hit kind=content n=5
+         1791904553.153  9993 10082 I ReactNativeJS: OCTAVIA: sync start
+         1791904553.198  9993 10082 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791904553.373  9993 10082 I ReactNativeJS: OCTAVIA: api status=200 path=/api/setlists n=1 ms=206
+         1791904553.393  9993 10082 I ReactNativeJS: OCTAVIA: auth refresh=cached
+         1791904553.558  9993 10082 I ReactNativeJS: OCTAVIA: api status=200 path=/api/content n=1 ms=171
+         1791904553.640  9993 10082 I ReactNativeJS: OCTAVIA: cache write kind=setlists n=15 invalidated=0
+         1791904553.661  9993 10082 I ReactNativeJS: OCTAVIA: cache write kind=content n=5 invalidated=0
+         1791904553.663  9993 10082 I ReactNativeJS: OCTAVIA: sync ok setlists=15 content=5 pages=1 t=511
+         1791904553.674  9993 10082 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=library
+         1791904588.334  9993 10082 I ReactNativeJS: OCTAVIA: index open
+         1791904591.370  9993 10082 I ReactNativeJS: OCTAVIA: index jump n=3
+         1791904591.435  9993 10082 I ReactNativeJS: OCTAVIA: keepawake on
+         1791904591.438  9993 10082 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791904596.703  9993 10082 I ReactNativeJS: OCTAVIA: zoom dp=26
+         1791904600.087  9993 10082 I ReactNativeJS: OCTAVIA: zoom dp=32
+         1791904603.453  9993 10082 I ReactNativeJS: OCTAVIA: zoom dp=40
+         1791904606.823  9993 10082 I ReactNativeJS: OCTAVIA: autoscroll on t=20
+         1791904816.917  9993 10082 I ReactNativeJS: OCTAVIA: autoscroll off t=0
+         1791904820.318  9993 10082 I ReactNativeJS: OCTAVIA: nav n=4/5 setlist=0000000a t=43
+         1791904820.320  9993 10082 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791904824.621  9993 10082 I ReactNativeJS: OCTAVIA: nav n=3/5 setlist=0000000a t=35
+         1791904824.622  9993 10082 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791904830.017  9993 10082 I ReactNativeJS: OCTAVIA: autoscroll on t=44
+         1791904854.042  9993 10082 I ReactNativeJS: OCTAVIA: net offline
+         1791904859.839  9993 10082 I ReactNativeJS: OCTAVIA: net online
+         1791904859.840  9993 10082 I ReactNativeJS: OCTAVIA: net offline
+         1791904871.180  9993 10082 I ReactNativeJS: OCTAVIA: net online
+         1791904875.903  9993 10082 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791905077.935  9993 10082 I ReactNativeJS: OCTAVIA: autoscroll off t=0
+         1791905081.357  9993 10082 I ReactNativeJS: OCTAVIA: nav n=4/5 setlist=0000000a t=37
+         1791905081.358  9993 10082 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791905085.696  9993 10082 I ReactNativeJS: OCTAVIA: nav n=3/5 setlist=0000000a t=43
+         1791905085.698  9993 10082 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791905091.068  9993 10082 I ReactNativeJS: OCTAVIA: autoscroll on t=48
+         1791905114.422  9993 10082 I ReactNativeJS: OCTAVIA: net offline
+         1791905126.760  9993 10082 I ReactNativeJS: OCTAVIA: net online
+         1791905139.824  9993 10082 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791905231.070  9993 10082 I ReactNativeJS: OCTAVIA: autoscroll off t=0
+         1791905234.801  9993 10082 I ReactNativeJS: OCTAVIA: nav n=4/5 setlist=0000000a t=42
+         1791905234.802  9993 10082 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791905239.131  9993 10082 I ReactNativeJS: OCTAVIA: nav n=3/5 setlist=0000000a t=44
+         1791905239.132  9993 10082 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791905244.477  9993 10082 I ReactNativeJS: OCTAVIA: autoscroll on t=42
+         1791905275.086  9993 10082 I ReactNativeJS: OCTAVIA: net offline
+         1791905283.451  9993 10082 I ReactNativeJS: OCTAVIA: net online
+         1791905283.491  9993 10082 I ReactNativeJS: OCTAVIA: net offline
+         1791905286.442  9993 10082 I ReactNativeJS: OCTAVIA: net online
+         1791905295.097  9993 10082 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791905588.417  9993 10082 I ReactNativeJS: OCTAVIA: autoscroll off t=0
+         1791905591.794  9993 10082 I ReactNativeJS: OCTAVIA: nav n=4/5 setlist=0000000a t=41
+         1791905591.795  9993 10082 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791905596.230  9993 10082 I ReactNativeJS: OCTAVIA: nav n=3/5 setlist=0000000a t=42
+         1791905596.231  9993 10082 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791905601.587  9993 10082 I ReactNativeJS: OCTAVIA: autoscroll on t=50
+         1791905635.695  9993 10082 I ReactNativeJS: OCTAVIA: net offline
+         1791905656.256  9993 10082 I ReactNativeJS: OCTAVIA: net online
+         1791905664.220  9993 10082 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791905765.140  9993 10082 I ReactNativeJS: OCTAVIA: autoscroll off t=0
+         1791905768.583  9993 10082 I ReactNativeJS: OCTAVIA: nav n=4/5 setlist=0000000a t=46
+         1791905768.583  9993 10082 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791905772.967  9993 10082 I ReactNativeJS: OCTAVIA: nav n=3/5 setlist=0000000a t=45
+         1791905772.968  9993 10082 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791905778.383  9993 10082 I ReactNativeJS: OCTAVIA: autoscroll on t=64
+         1791905803.181  9993 10082 I ReactNativeJS: OCTAVIA: net offline
+         1791905811.290  9993 10082 I ReactNativeJS: OCTAVIA: net online
+         1791905811.291  9993 10082 I ReactNativeJS: OCTAVIA: net offline
+         1791905816.973  9993 10082 I ReactNativeJS: OCTAVIA: net online
+         1791905822.170  9993 10082 I ReactNativeJS: OCTAVIA: prefetch plan n=0 reason=demand
+         1791906129.056  9993 10082 I ReactNativeJS: OCTAVIA: autoscroll off t=0
+         1791906132.667  9993 10082 I ReactNativeJS: OCTAVIA: keepawake off
+         1791906198.972  9993 10082 I ReactNativeJS: OCTAVIA: net offline
+         1791906208.085  9993 10082 I ReactNativeJS: OCTAVIA: net online
+         1791906208.087  9993 10082 I ReactNativeJS: OCTAVIA: net offline
