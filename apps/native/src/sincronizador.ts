@@ -102,12 +102,25 @@ export async function rodarSync(raiz: RaizDoSync, uid: string, anterior: Dados):
     deNovo = null
     const roda = marcado !== null && marcado.raiz.sessaoAtual() === marcado.uid
     // SY-D49 (2): com o palco aberto, o "de novo" espera — vira a marca do palco (os gatilhos) e se cancela aqui.
-    const espera = roda && (marcado.raiz.segurarDeNovo?.() ?? false)
+    const espera = roda && segura(marcado.raiz)
     const fim = terminouVoo(voo, { cancelarDeNovo: !roda || espera })
     voo = fim.estado
     if (fim.acao !== 'rodar' || marcado === null) return
     // O "de novo" parte do que a raiz tem AGORA — o sync que acabou de terminar já atualizou o `dadosRef` à mão.
     vez = { raiz: marcado.raiz, uid: marcado.uid, anterior: marcado.raiz.dadosRef.current }
+  }
+}
+
+/**
+ * SY-D66 — o `segurarDeNovo` corre FORA do `try` do sync, entre o fim de um e o `terminouVoo`: se ele lançasse, o voo
+ * ficaria em curso para sempre e todo pedido seguinte só marcaria (a classe de trinco da div. 1258). Um que lança conta
+ * como NÃO segurar: o "de novo" roda, e o voo se libera como em qualquer fim.
+ */
+function segura(raiz: RaizDoSync): boolean {
+  try {
+    return raiz.segurarDeNovo?.() ?? false
+  } catch {
+    return false
   }
 }
 

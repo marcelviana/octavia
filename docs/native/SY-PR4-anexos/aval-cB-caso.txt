@@ -1,0 +1,3 @@
+gate ii (o voo único) — casos 9 · passam 9 · reprovam 0
+  passa               ii:segurar-que-lanca-libera-o-voo · sync start: 2 até o fim do voo e do "de novo" (esperado 2) · 3 com o pedido seguinte (esperado 3)
+gate ii: zero reprovações, lista vazia (SY-PR4) ✓
