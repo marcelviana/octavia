@@ -1,0 +1,61 @@
+# os checks das duas pontas da PR #382 · 2026-10-14 08:40:43 -0300
+$ gh run list --branch sy/pr4-gatilhos --commit <sha>
+== 2b3b9d0
+gates	38426336248	success
+gates-web	38426336590	success
+CI	38426336068	success
+native	38426336333	success
+== 7bb9a3c
+gates	38556849986	success
+gates-web	38556849878	success
+CI	38556849973	success
+native	38556849894	success
+$ gh run view 38426336333 --json jobs
+mudou-nativo	success	2026-10-13T15:56:34Z	2026-10-13T15:56:49Z
+android-debug-apk	success	2026-10-13T15:56:51Z	2026-10-13T16:05:45Z
+$ gh run view 38556849894 --json jobs
+mudou-nativo	success	2026-10-14T11:28:53Z	2026-10-14T11:29:04Z
+android-debug-apk	success	2026-10-14T11:29:06Z	2026-10-14T11:39:57Z
+$ gh run view 38426336248 --log | grep (gates-nativos)
+gates-nativos	UNKNOWN STEP	2026-10-13T15:56:46.4121274Z echo "declarações ($(grep -c . "$RUNNER_TEMP/decl" || true) linhas):"
+gates-nativos	UNKNOWN STEP	2026-10-13T15:56:47.2821924Z declarações (6 linhas):
+gates-nativos	UNKNOWN STEP	2026-10-13T15:56:47.2833563Z   g1a: apps/native/src/gatilhos.ts
+gates-nativos	UNKNOWN STEP	2026-10-13T15:56:47.3063028Z declarações: do corpo da PR (GATES_DECL=/home/runner/work/_temp/decl)
+gates-nativos	UNKNOWN STEP	2026-10-13T15:56:47.3254795Z         apps/native/src/gatilhos.ts
+gates-nativos	UNKNOWN STEP	2026-10-13T15:56:47.3378555Z   G1a: DIFF VAZIO ✓ (e nenhum arquivo novo no escopo)
+gates-nativos	UNKNOWN STEP	2026-10-13T15:56:47.3848971Z   G1b: só adição ✓
+gates-nativos	UNKNOWN STEP	2026-10-13T15:56:49.1528142Z G2 — testIDs  antes=124  depois=124
+gates-nativos	UNKNOWN STEP	2026-10-13T15:56:49.1577171Z G3 — declarações: do corpo da PR (GATES_DECL=/home/runner/work/_temp/decl)
+gates-nativos	UNKNOWN STEP	2026-10-13T15:56:49.1603078Z G3 — linhas log( antes=70  depois=71
+gates-nativos	UNKNOWN STEP	2026-10-13T15:56:49.1605935Z       — nenhuma linha de log pode sumir nesta PR
+gates-nativos	UNKNOWN STEP	2026-10-13T15:56:49.1698386Z   G3: nenhuma linha sumiu ✓
+$ gh run view 38556849986 --log | grep (gates-nativos)
+gates-nativos	As declarações — o bloco ```gates do corpo da PR (W4-b2, H3)	﻿2026-10-14T11:29:03.5395322Z ##[group]Run set -e
+gates-nativos	As declarações — o bloco ```gates do corpo da PR (W4-b2, H3)	2026-10-14T11:29:03.5395617Z set -e
+gates-nativos	As declarações — o bloco ```gates do corpo da PR (W4-b2, H3)	2026-10-14T11:29:03.5395837Z if [ -n "$PR" ]; then
+gates-nativos	As declarações — o bloco ```gates do corpo da PR (W4-b2, H3)	2026-10-14T11:29:03.5396284Z   gh api "repos/$GITHUB_REPOSITORY/pulls/$PR" --jq '.body // ""' > "$RUNNER_TEMP/corpo"
+gates-nativos	As declarações — o bloco ```gates do corpo da PR (W4-b2, H3)	2026-10-14T11:29:03.5396734Z else
+gates-nativos	As declarações — o bloco ```gates do corpo da PR (W4-b2, H3)	2026-10-14T11:29:03.5397031Z   gh api "repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA/pulls" \
+gates-nativos	As declarações — o bloco ```gates do corpo da PR (W4-b2, H3)	2026-10-14T11:29:03.5397891Z     --jq "[.[] | select(.merge_commit_sha == \"$GITHUB_SHA\")][0].body // \"\"" > "$RUNNER_TEMP/corpo"
+gates-nativos	As declarações — o bloco ```gates do corpo da PR (W4-b2, H3)	2026-10-14T11:29:03.5398337Z fi
+gates-nativos	As declarações — o bloco ```gates do corpo da PR (W4-b2, H3)	2026-10-14T11:29:03.5398694Z sh apps/native/scripts/gates-decl.sh < "$RUNNER_TEMP/corpo" > "$RUNNER_TEMP/decl"
+gates-nativos	As declarações — o bloco ```gates do corpo da PR (W4-b2, H3)	2026-10-14T11:29:03.5399362Z echo "GATES_DECL=$RUNNER_TEMP/decl" >> "$GITHUB_ENV"
+gates-nativos	As declarações — o bloco ```gates do corpo da PR (W4-b2, H3)	2026-10-14T11:29:03.5399825Z echo "declarações ($(grep -c . "$RUNNER_TEMP/decl" || true) linhas):"
+gates-nativos	As declarações — o bloco ```gates do corpo da PR (W4-b2, H3)	2026-10-14T11:29:03.5400243Z sed 's/^/  /' "$RUNNER_TEMP/decl"
+$ gh run view 38556849973 --log | grep (build: os juízes do SY e a suíte)
+build	Test — a suíte, e com ela os gates embrulhados (W3, div. 129)	2026-10-14T11:29:46.0436492Z gate iv: zero reprovações, lista vazia (SY-PR4) ✓
+build	Test — a suíte, e com ela os gates embrulhados (W3, div. 129)	2026-10-14T11:30:00.4312673Z gate ii: zero reprovações, lista vazia (SY-PR4) ✓
+build	Test — a suíte, e com ela os gates embrulhados (W3, div. 129)	2026-10-14T11:30:12.5335536Z gate iii: zero reprovações, lista vazia (SY-PR4) ✓
+build	Test — a suíte, e com ela os gates embrulhados (W3, div. 129)	2026-10-14T11:30:15.6105940Z gate i: zero reprovações, lista vazia (SY-PR4) ✓
+build	Test — a suíte, e com ela os gates embrulhados (W3, div. 129)	2026-10-14T11:30:18.8666534Z gate i: zero reprovações, lista vazia (SY-PR4) ✓
+build	Test — a suíte, e com ela os gates embrulhados (W3, div. 129)	2026-10-14T11:30:22.8550393Z gate v: zero reprovações, lista vazia (SY-PR4) ✓
+build	Test — a suíte, e com ela os gates embrulhados (W3, div. 129)	2026-10-14T11:30:56.9390596Z  Test Files  158 passed | 3 skipped (161)
+build	Test — a suíte, e com ela os gates embrulhados (W3, div. 129)	2026-10-14T11:30:56.9396336Z       Tests  1934 passed | 59 skipped (1993)
+build	Test coverage	2026-10-14T11:31:12.2106211Z gate iv: zero reprovações, lista vazia (SY-PR4) ✓
+build	Test coverage	2026-10-14T11:31:22.4396411Z gate ii: zero reprovações, lista vazia (SY-PR4) ✓
+build	Test coverage	2026-10-14T11:31:27.0652793Z gate i: zero reprovações, lista vazia (SY-PR4) ✓
+build	Test coverage	2026-10-14T11:31:37.2372200Z gate i: zero reprovações, lista vazia (SY-PR4) ✓
+build	Test coverage	2026-10-14T11:31:43.6850343Z gate v: zero reprovações, lista vazia (SY-PR4) ✓
+build	Test coverage	2026-10-14T11:31:44.9799381Z gate iii: zero reprovações, lista vazia (SY-PR4) ✓
+build	Test coverage	2026-10-14T11:32:23.4720590Z  ↓  web  tests/security/auth-security.test.ts > Auth Security Tests - TEMPORARILY DISABLED > All auth security tests temporarily disabled - needs fetch mock refactoring
+build	Test coverage	2026-10-14T11:32:23.6536111Z  ↓  web  tests/security/cors-security.test.ts > CORS Security Tests - TEMPORARILY DISABLED > All CORS tests temporarily disabled - needs enhanced-security-headers fix

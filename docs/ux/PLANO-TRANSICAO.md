@@ -1607,3 +1607,7 @@ automaticamente.
 > rede que volta com o app aberto, a volta do segundo plano depois de 30 s), o palco aberto a segura (SY-D49; o avulso sem
 > hospedeira também, SY-D56) e a lista dos gates do SY ficou vazia. Duas decisões na sessão (SY-D56, SY-D57). **Depois do
 > aval e do merge, o encerramento do SY, com o release no Tab** (SY-D16).
+
+> **Nota do aval da PR-4 do SY (2026-10-14)** — sem reescrever a nota acima. A PR-4 do SY (#382) tem aval (SY-D58…D68
+> `[Marcel, 2026-10-13]`, `docs/native/SY-PR4-anexos/README.md` §19), com o conserto do `segurarDeNovo` (SY-D66) na mesma PR;
+> **as quatro PRs de código estão prontas; a próxima é o encerramento, com o release no Tab.**

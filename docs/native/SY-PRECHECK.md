@@ -64,6 +64,10 @@ fica como está; as mudadas por decisão posterior:)*
 | SY-D7 (o alcance da foto) | **SY-D49** | a versão nova chega ao tablet ao sair do palco, e não entre duas músicas (SY-D49) |
 | SY-D28 (a linha `sync trigger`) | **SY-D49** | um valor a mais de `decision`: o gatilho segurado pelo palco aberto (o nome é proposta da PR-4) |
 | SY-D27 (o rascunho da regra 38) | **SY-D49** | o rascunho da regra 38 e a linha do `APARATO.md` ganham *"com o palco aberto, o gatilho não dispara"* no texto final do encerramento |
+| SY-D28 (a linha `sync trigger`) | **SY-D58** | os nomes: `decision=hold-stage`, `reason=stage-exit` e `reason=again` (`SY-PR4-anexos/README.md` §19) |
+| SY-D33, SY-D35 (o contrato dos gatilhos; a entrada do executor) | **SY-D59** | estendidos: o `palco` na ligação, o `uid` no `SyncNaRede`, o `segurarDeNovo` (no desligar devolvido e no `RaizDoSync`), a foto nascendo no `App.tsx`, o `focoDoIndice`, o `alcancavel` no `net.ts` |
+| SY-D44 (o `ultimoSyncNaRede` no logout) | **SY-D60** | fechada: não se zera; carrega o `uid`, e os gatilhos só contam o intervalo contra a sessão de agora |
+| SY-D49 (o palco aberto segura os gatilhos) | **SY-D56**, **SY-D61** | o avulso sem hospedeira também é palco aberto (SY-D56); o "de novo" segurado pelo palco passa pelo intervalo ao sair (SY-D61) |
 
 ---
 

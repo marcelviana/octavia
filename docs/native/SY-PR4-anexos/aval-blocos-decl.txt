@@ -1,0 +1,11 @@
+# os extratores sobre o corpo da #382 com a linha do aval · 2026-10-14 08:41:42 -0300
+$ gh pr view 382 --json body -q .body | sh apps/native/scripts/gates-decl.sh
+g1a: apps/native/src/gatilhos.ts
+g1a: apps/native/src/foto-do-palco.ts
+g1a: apps/native/src/sincronizador.ts
+g1a: apps/native/src/net.ts
+g1a: apps/native/App.tsx
+g1a: apps/native/src/navigation.tsx
+exit=0
+$ gh pr view 382 --json body -q .body | sh scripts/gates-web/gates-web-decl.sh
+exit=0

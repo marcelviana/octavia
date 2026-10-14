@@ -1,0 +1,19 @@
+# a verificação do commit de docs do aval · 2026-10-14 08:30:35 -0300
+$ git grep -ohE "^\| \*\*SY-D[0-9]+\*\*" -- docs | sort -u | wc -l   (as decisões em linha de tabela)
+      67
+as que faltam de 1 a 69 em linha de tabela:
+  SY-D32: 
+  SY-D69: 
+SY-D32: em citação no §5.1 do SY-PR1-anexos/README.md (como o §12.1 de lá registra)
+SY-D56, SY-D57: no §0 deste README (decididas na sessão); SY-D69: na nota do §19
+35:## 0. As decisões do Marcel durante a sessão — SY-D56 e SY-D57 `[Marcel, 2026-10-13]`
+42:| **SY-D56** | (o avulso) **O palco avulso sem hospedeira também conta como palco aberto.** A SY-D49 (1) define o palco aberto como "a sessão do palco, a mesma da foto"; o avulso sem hospedeira (o ▶ na L ou em V, `Stage { avulsa, origem }`) não abre sessão de foto, e é o mesmo `StageScreen` com rolagem (as mesmas pausas). Fica: **"palco aberto" = a sessão da foto OU um palco avulso sem hospedeira montado**; a foto da sessão (`foto-do-palco.ts`) é a única fonte que os gatilhos leem. |
+56:| 8 | `e87b834` | **o aval (SY-D66) — o caso entrando reprovado**: `ii:segurar-que-lanca-libera-o-voo`; **vermelho de propósito** (a lista vazia é condição fixa: o juiz acusa a lista não vazia — SY-D69, div. 1307) | 0 → **1** |
+134:*(Nota do aval — SY-D66, SY-D69: o conserto do `segurarDeNovo` levou a lista a **1** no commit A (`e87b834`, a linha
+$ grep -c "→ \*\*Respondida: SY-D" docs/native/SY-PR4-anexos/README.md
+10
+$ grep -cvE "^\s*(#|$)" apps/native/test/sy-reprovados.txt
+0
+
+$ git diff --stat 7bb9a3c -- . ':!docs'   (vazio = o commit de docs só toca docs)
+exit=0

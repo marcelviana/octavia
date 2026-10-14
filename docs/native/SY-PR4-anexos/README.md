@@ -27,6 +27,7 @@ a regra do palco aberto (SY-D49) e a linha `sync trigger`. Nenhum pixel, nenhuma
 | [`cn-sy-pr4.txt`](cn-sy-pr4.txt) · [`cn-sy-pr4-r.txt`](cn-sy-pr4-r.txt) · [`cn-sy-pr1-sobre-pr4.txt`](cn-sy-pr1-sobre-pr4.txt) · [`cn-sy-pr2-sobre-pr4.txt`](cn-sy-pr2-sobre-pr4.txt) · [`cn-sy-pr3-sobre-pr4.txt`](cn-sy-pr3-sobre-pr4.txt) | os controles negativos novos (`instrumentos/cn-sy-pr4.sh`, `plantar.py`) e os roteiros das três PRs anteriores sobre o código novo |
 | [`gates-existentes.txt`](gates-existentes.txt) · [`gates-web.txt`](gates-web.txt) · [`blocos-decl.txt`](blocos-decl.txt) | os gates que já existiam, os do web, os extratores sobre o corpo da PR |
 | [`avd/`](avd/) | o AVD: o estado antes e depois (`estado-diff.txt` vazio), o `ram.bin`, a receita, o bundle servido, o `.env` por sha, os cenários (`cenarios/`, um arquivo por cenário com o declarado antes e o medido), o controle da base (`controle-base/`), o diagnóstico da parada (`diagnostico-parada/`), o mock em avião, as quedas, o logcat; o que foi descartado e por quê, como rastro (`cenarios-1a-corrida/`, `cenarios-descartados/`) |
+| [`aval-cA-verificacao.txt`](aval-cA-verificacao.txt) · [`aval-cB-verificacao.txt`](aval-cB-verificacao.txt) · [`aval-cB-caso.txt`](aval-cB-caso.txt) · [`aval-cn-r3.txt`](aval-cn-r3.txt) · [`aval-verificacao.txt`](aval-verificacao.txt) · [`aval-blocos-decl.txt`](aval-blocos-decl.txt) · [`ci-log.txt`](ci-log.txt) | o aval: o conserto da SY-D66 (o A vermelho de propósito, o B, o caso, o CN r-3) e a verificação do commit de docs (§19) |
 | [`instrumentos/`](instrumentos/) | `verifica.sh`, `cn-sy-pr4.sh` + `plantar.py`, `avd/` (`fixture-pr4.py`, `gatilhos-avd.py`, `bundle.sh`, `diagnostico-parada.py`) |
 
 ---
@@ -52,6 +53,9 @@ antes do commit 1 e respondidas pelo Marcel; o texto é o da resposta.
 | 5 | `d1e050b` | **a lista vazia vira condição** dos cinco gates (o molde do gate da quebra) | 0 |
 | 6 | (os de anexo) | o aparelho (o AVD), os CN | — |
 | 7 | (o de docs) | este README e as erratas de ponteiro | — |
+| 8 | `e87b834` | **o aval (SY-D66) — o caso entrando reprovado**: `ii:segurar-que-lanca-libera-o-voo`; **vermelho de propósito** (a lista vazia é condição fixa: o juiz acusa a lista não vazia — SY-D69, div. 1307) | 0 → **1** |
+| 9 | `7bb9a3c` | **o aval (SY-D66) — a proteção**: o `segurarDeNovo` que lança conta como não segurar (`sincronizador.ts`, `segura`) | 1 → **0** |
+| 10 | (o de docs do aval) | o §19, as notas do aval neste README, a tabela das mudadas do `SY-PRECHECK.md`, o `PLANO-TRANSICAO.md` | 0 |
 
 ## 2. A leitura obrigatória — o que o músico vê quando um sync automático falha com cache (SY-D43) `[lido: 5ace638]`
 
@@ -127,6 +131,10 @@ antes e depois.
 
 **A conta**: 9 → **25** (c1) → **9** (c3: −16) → **0** (c4: −9). Os juízes na ponta: (i) 0 · (i) `tela-` 0 · (ii) 0 · (iii) 0 · (iv) 0 · (v) 0 — *"zero reprovações, lista vazia (SY-PR4) ✓"* nos seis (`c5-verificacao.txt`).
 
+*(Nota do aval — SY-D66, SY-D69: o conserto do `segurarDeNovo` levou a lista a **1** no commit A (`e87b834`, a linha
+`ii:segurar-que-lanca-libera-o-voo`, vermelho de propósito) e de volta a **0** no B (`7bb9a3c`); na ponta, os seis juízes
+seguem *"zero reprovações, lista vazia"* (`aval-cB-verificacao.txt`; §19.1).)*
+
 ## 4. O que entrou, e as respostas que o prompt pede
 
 ### 4.1 Os gatilhos (`apps/native/src/gatilhos.ts`)
@@ -165,6 +173,10 @@ O executor (`sincronizador.ts`) pergunta `raiz.segurarDeNovo?.()` antes de rodar
 | suíte | `157 passed \| 3 skipped (160)` · `1914 passed \| 59 skipped (1973)` (`SY-PR3-anexos` §1.1); medida nesta sessão com **1 vermelho do web** (div. 1292) | `158 passed \| 3 skipped (161)` · `1933 passed \| 59 skipped (1992)` | **+1 arquivo** (`sy-gatilhos-telas.test.tsx`), **+19 testes** (13 casos novos no gate (i) e 6 na família `tela-`: 5 casos e o juiz); os 59 pulados, os mesmos |
 | G2 — `testID` | 124 | **124** | nenhum nó novo |
 | G3 — linhas `log(` | 70 | **71**, *"nenhuma linha sumiu ✓"* | **uma adição**: `apps/native/src/gatilhos.ts` `` log(`sync trigger reason=${motivo} decision=${decisao}`) `` — a saída do gate a lista em *"linhas NOVAS"*; nenhuma errata, nenhuma remoção |
+
+*(Nota do aval — depois do conserto da SY-D66 (`7bb9a3c`): suíte `158 passed | 3 skipped (161)` · **`1934 passed | 59 skipped
+(1993)`** — **+1 teste** contra a entrega (o caso novo do gate (ii)); G2 124 = 124; G3 **71 = 71**, nenhuma linha nova
+(`aval-cB-verificacao.txt`).)*
 
 Os quatro `tsc` (raiz, core, identidade, nativo, de dentro de cada pacote) 0 e o lint `✔` em todo commit de código. **Nenhum módulo nativo novo**: `git diff --stat origin/main -- apps/native/package.json apps/native/app.json pnpm-lock.yaml` → vazio (`blocos-decl.txt`).
 
@@ -217,6 +229,12 @@ mudança; o `git status` do fim de cada um, limpo.
 - **PR-3** (`cn-sy-pr3.sh`): c-1, c-3, c-5, c-6, c-7, c-8 acusam como na PR-3; c-2 (o laboratório sem defeito) dá a lista vazia;
   c-9 passa no gate e os dois testes de V o acusam (como na PR-3). O **c-4 não plantou**: o `sair` da foto mudou (ele avisa o
   fechar do palco). **Replantado** (**r-2**): acusa `iii:sessao-solta`.
+
+### 6.3 O controle negativo do aval (SY-D66) `[medido: aval-cn-r3.txt]`
+
+| CN | o defeito plantado | o que acusou |
+|---|---|---|
+| r-3 | o `segurarDeNovo` chamado **sem a proteção** (a chamada de antes do commit B) | `ii:segurar-que-lanca-libera-o-voo` — *"1 sync(s) até o fim do voo, esperado 2 (o "de novo" não rodou)"* |
 
 ## 7. Os gates que já existiam
 
@@ -301,6 +319,7 @@ Nas duas, **a rolagem para de 5 a 34 s quando o rádio do emulador troca** — e
 | árvores | `../octavia-sy-pr3` removida sem `--force`; `../octavia-sy-pr4` criada; **`../octavia-sy-pr4-base`** (o `5ace638` destacado, só para o controle do c14c) criada e **removida sem `--force`** |
 | perguntas ao Marcel durante a sessão | **1** (duas questões juntas) — o avulso e a falha automática: SY-D56, SY-D57 (§0) |
 | agentes | **0** |
+| **os commits do aval** (2026-10-13/14) | o A (`e87b834`), o B (`7bb9a3c`) e o de docs: 0 requisições a prod, 0 logins, 0 `.env*`, **nenhum aparelho**, 0 agentes; a suíte rodou em A e em B (`aval-cA/cB-verificacao.txt`), o gate (ii) isolado e o CN r-3; GitHub: `git fetch origin` (a `main` em `5ace638`, não andou), `gh pr checks 382` e `gh run view` (§17), os pushes e o `gh pr edit 382` (a linha do aval); **1 pergunta** ao Marcel (o commit A, SY-D69) |
 | regra 4 do catálogo sobre os anexos | `grep -rn eyJ` e `grep -rln <email>`: nenhuma linha (fora esta, que descreve o comando) |
 | texto nos anexos | só o do projeto (a fixture da QL-PR4 via SY-PR1; as setlists "de rolagem" desta PR) |
 
@@ -316,22 +335,32 @@ Nas duas, **a rolagem para de 5 a 34 s quando o rádio do emulador troca** — e
 | **A-SY-19** | o evento de rede em segundo plano chega ao JS? medido | **medido: chega em 7 de 8**; 1 sync em 7 de 7 voltas | c06, c06b; §9 |
 | **A-SY-23** | com o palco aberto, um gatilho → 0 sync e a marca; ao sair → 1, sujeito à rede e ao intervalo; o "de novo" espera o palco | **cumprido no gate e no AVD** (c14, c14c, c15, c17, c18b); **a rolagem sem pausa além do piso: não se pode afirmar no AVD** — a troca de rádio para o desenho com e sem a PR (div. 1303) | §3, §8; Q6 |
 
-## 13. O que o encerramento herda desta PR
+*(Nota do aval — **SY-D63** `[Marcel, 2026-10-13]`, na linha do A-SY-23, sem mudar o critério: **o A-SY-23 fica fechado como
+"cumprido nas linhas e na contagem; a rolagem na troca de rádio não se mede no AVD"**, com a medida no Tab, duas vezes — o
+controle com o `ea5e891` antes do release novo —, como entrada obrigatória do encerramento (§13).)*
 
-| o quê | origem | destino proposto |
+## 13. O que o encerramento herda — a lista única
+
+*(Refeita no commit do aval: a tabela da entrega, completada com as entradas das SY-D58…SY-D68 e juntada às que vinham
+das PRs anteriores (o §17 do `SY-PR3-anexos/README.md`), para o encerramento ter uma lista só. A da entrega fica no rastro
+do git, `2b3b9d0`.)*
+
+| o quê | origem | destino |
 |---|---|---|
-| **o release no Tab, a regra 38 (c)/(d) remedida** (A-SY-15): o avião desligado com o app aberto → 1 sync; o segundo plano > 30 s → 1, < 30 s → 0; a contagem declarada antes | SY-D16, SY-D27 | encerramento |
-| **o destravar do Marcel com o app na frente depois de 30 s é um sync** — medido no AVD (A-SY-18); o texto do `APARATO.md` o escreve conforme o release | A-SY-18, SY-D27 | encerramento (o texto final da regra 38 e do `APARATO.md`) |
-| **com o palco aberto, o gatilho não dispara**: fica marcado (`hold-stage`) e roda ao sair (`stage-exit`); o "de novo" também espera (`again`); o avulso sem hospedeira conta (SY-D56) | SY-D49, SY-D56 | encerramento (a regra 38 e o `APARATO.md`) |
-| **a ordem das linhas na volta curta** depende de o `net online` chegar em segundo plano (7 de 8) ou só na frente (1 de 8); o resultado é o mesmo | A-SY-19 | encerramento (o texto da regra 38: contar `sync start`, não a ordem) |
-| **a parada do desenho na troca de rádio** (5–34 s no dev client do AVD, com e sem a PR) — medir no release, no Tab, com o palco aberto e o Wi-Fi trocando, pelo `uiautomator events` com o controle da janela vazia | div. 1303 | encerramento |
-| **o Wi-Fi que oscila dá dois gatilhos** em segundos; com um sync em voo, o "de novo" — 2 syncs, 4 GET por oscilação, fora do intervalo | div. 1304 | encerramento (medir no Tab); se pesar, pergunta de produto ao bloco seguinte |
-| **o primeiro `GET` depois da rede voltar** (8,6 s, o token dentro do prazo) | div. 1305, div. 1269, A-SY-21 | encerramento (o `ms=` do release) |
-| **os cartões compactos de S1 com o banner** (c11) | div. 1302, SY-D57 (2) | o aval (Q5); se for "desfazer", bloco da identidade |
-| **o "sem conexão" com a rede de pé** e a frase do placeholder | div. 1278, SY-D43, SY-D23 (c) | encerramento (já herdados) |
-| **o instrumento do release no Tab** com a base de tempo consertada e o controle da janela vazia | SY-D55 (1), div. 1290 | encerramento (já herdado); esta PR mostra o controle acusando (c14, c14b) |
-| **a linha da série no `CI-FAIXA.md`** | regra 22 | encerramento |
-| **a errata da citação do `PRD-TELA-1.md:158`** sobre o web | div. 1257 | o aval (Q8) |
+| **o release no Tab, a regra 38 (c)/(d) remedida** (A-SY-15): o avião desligado com o app aberto → 1 sync; o segundo plano > 30 s → 1, < 30 s → 0; a contagem de `GET` declarada antes | SY-D16, SY-D27 | encerramento |
+| **o texto final da regra 38 e do `APARATO.md`** com o palco aberto: o gatilho não dispara, fica marcado (`hold-stage`) e roda ao sair (`stage-exit`); o "de novo" também espera (`again`); o avulso sem hospedeira conta | SY-D49, SY-D56, SY-D58, SY-D27; `SY-PR3-anexos` §17 | encerramento |
+| **a troca de rádio com o palco aberto e a rolagem andando, medida no Tab DUAS vezes**: **antes** de instalar o release novo, com o `ea5e891` que está lá (o controle), e depois, com o novo — pelo `uiautomator events` com o controle da janela vazia. Congela também com o `ea5e891` → defeito anterior ao SY, herança com destino; **congela só com o novo → é do SY: o encerramento para e pergunta antes de deixar o release novo no Tab** | SY-D63, div. 1303 | encerramento (**obrigatória**) |
+| **o instrumento do release no Tab** (o `uiautomator events`) com a base de tempo consertada e **um controle que reprove quando a janela vier vazia** | SY-D55 (1), div. 1290; `SY-PR3-anexos` §17 | encerramento |
+| **a tela apagada conta como segundo plano** (destravar o Tab com o app na frente depois de 30 s é um sync) e **a ordem das linhas na volta curta varia** — o texto registra o medido; a regra 38 conta `sync start`, não a ordem; as duas se remedem no release | SY-D64, A-SY-18, A-SY-19 | encerramento |
+| **a errata da citação do `PRD-TELA-1.md:158` sobre o web**, como nota no T1-R13 | SY-D65, div. 1257 | encerramento |
+| **o Wi-Fi que oscila**: 2 syncs por oscilação, pelo "de novo" — medir no release do Tab e decidir lá; a saída provável é aceitar os 2 `GET` a mais como custo declarado (passar o "de novo" pelo intervalo contraria a SY-D9) | SY-D67, div. 1304 | encerramento |
+| **o primeiro `GET` depois de o rádio voltar** (8,6 s no AVD, quase tudo no token): o A-SY-21 mede no Tab; **se passar do corte de 5 s, a pergunta da SY-D32 se reabre** | SY-D68 (1), div. 1305, div. 1269 | encerramento |
+| **o "sem conexão" com a rede de pé** e a frase do placeholder da música apagada nunca aberta | div. 1278, SY-D43, SY-D23 (c) | encerramento (destino proposto lá) |
+| **"cada tentativa baixa a página inteira de novo"**, junto do ETag | SY-D32 (3), SY-D11 | encerramento (destino proposto lá) |
+| **a linha da série no `CI-FAIXA.md`** (as corridas do bloco) | regra 22 | encerramento |
+| **o roteiro de controles negativos da PR-1** (`cn-sy.sh`), obsoleto para o gate (i) — o contrato mudou de forma; os que valem são os da PR-4 | SY-D68 (2) | **W5** |
+| **o teste do web instável** (`lib-salvo.test.tsx`) na `main` | SY-D68 (3), div. 1292, div. 845 | **W5** |
+| **as quedas nativas do dev client no AVD** | SY-D55 (2), div. 1291 | **W5** (já herdada) |
 
 ## 14. As perguntas para o aval
 
@@ -339,23 +368,43 @@ Numeradas, com opções e recomendação. **O executor prepara; quem decide é o
 
 **Q1 — os nomes novos da linha `sync trigger`** (SY-D49 (3)). (a) **`decision=hold-stage`** para o gatilho segurado pelo palco; **`reason=stage-exit`** para o sync que o fechar do palco avalia; **`reason=again`** para o "de novo" do voo segurado pelo palco; (b) sem `again`: o "de novo" segurado não deixa linha (a do `queued` já disse que houve gatilho), e ao sair aparece só o `stage-exit`; (c) outros nomes. **Recomendo (a)**: no logcat, cada sync que o palco adiou fica com a sua linha, e o aceite do release conta o que segurou e o que rodou sem inferir.
 
+→ **Respondida: SY-D58** (§19)
+
 **Q2 — o contrato dos gatilhos estendido** (§4; o cabeçalho do `gatilhos.ts` pedia errata declarada no aval). O que mudou na forma da SY-D33/SY-D35: o `palco` na ligação (o `PalcoDosGatilhos`, que a foto implementa); o `uid` no `SyncNaRede`; o desligar devolvido ganhou o `segurarDeNovo` (e o `RaizDoSync`, o `segurarDeNovo?` opcional); a foto nasce no `App.tsx` e o `navigation.tsx` a recebe; a regra do foco do índice mudou de casa (`focoDoIndice`); o `alcancavel` exposto no `net.ts`. (a) **aceitar**; (b) outra forma (por exemplo, o palco como estado de React). **Recomendo (a)**: um estado só, que o gate monta.
+
+→ **Respondida: SY-D59** (§19)
 
 **Q3 — o `ultimoSyncNaRede` no logout** (SY-D44). (a) **como está**: não se zera; carrega o `uid`, e os gatilhos só contam o intervalo contra a sessão de agora; (b) zerar no `onAuth(null)` — mais um ponto de acoplamento na raiz, e um sync da sessão velha que termina **depois** do logout o regravaria. **Recomendo (a)**.
 
+→ **Respondida: SY-D60** (§19)
+
 **Q4 — o "de novo" segurado pelo palco passa pelo intervalo ao sair?** (a) **sim, como está** — a leitura literal da SY-D49 (2) ("ao sair, as regras de sempre"); um palco fechado nos 30 s depois do fim do voo dá `stage-exit skip-interval`; (b) não: o "de novo" mantém a isenção da SY-D18 (roda ao sair se houver rede). **Recomendo (a)**: na prática a sessão do palco dura minutos e a diferença é rara; uma regra só no fechar.
+
+→ **Respondida: SY-D61** (§19)
 
 **Q5 — os cartões compactos de S1 quando o banner aparece** (c11, div. 1302; a condição 2 da SY-D57). A lista não se remonta e a rolagem não volta ao topo, mas os cartões encolhem de 132 para 112 dp e o conteúdo desloca ~10 dp; o cartão cortado no topo sai da vista. (a) **não conta como "desfazer"**: é o S1e de hoje, com a lista no lugar — fica; (b) conta — sem cartões compactos quando o banner nasce de um sync automático (tela, fora do SY). **Recomendo (a)**, com as capturas `c11-antes.png`/`c11-depois.png` à vista.
 
+→ **Respondida: SY-D62** (§19)
+
 **Q6 — o A-SY-23, a rolagem** (§8, div. 1303). Com o palco aberto, o gatilho só escreve a linha; a parada de 5–34 s acontece na troca de rádio do AVD **também na base**. (a) **fechar o A-SY-23 como "cumprido nas linhas e na contagem; a rolagem na troca de rádio não se mede no AVD (a base para igual) — herança do release"**; (b) manter o A-SY-23 aberto até o release do Tab. **Recomendo (a)**, com a medida no Tab como entrada obrigatória do encerramento.
+
+→ **Respondida: SY-D63** (§19)
 
 **Q7 — o A-SY-18 e o A-SY-19** (§9). Registro, sem opção salvo esta: (a) **o texto do encerramento** diz que a tela apagada é segundo plano (o destravar com o app na frente depois de 30 s é um sync) e que a ordem das linhas na volta curta varia; (b) outro. **Recomendo (a)**.
 
+→ **Respondida: SY-D64** (§19)
+
 **Q8 — a errata da citação do `PRD-TELA-1.md:158` sobre o web** (div. 1257: o PRD cita `hooks/use-setlist-data.ts:172`; hoje é o `:132`, e o web conta 30 s entre focos, não a ausência). (a) **entra no encerramento**, como nota no T1-R13, junto do texto da regra 38; (b) entra agora; (c) fica só registrada. **Recomendo (a)**: o encerramento já reescreve os textos do T1-R13 com os números do release.
+
+→ **Respondida: SY-D65** (§19)
 
 **Q9 — os extras desta PR, declarados**: o arquivo novo `sy-gatilhos-telas.test.tsx` e a família no `sy-lista.ts`; o `alcancavel` no `net.ts`; o `focoDoIndice` e o `PalcoAvulsoAberto`; a sessão do gate (i) que passou a ligar o `palco` e o `segurarDeNovo` (os casos da PR-1 sem mudança de cenário nem de asserção). (a) **aceitar**; (b) tirar algum. **Recomendo (a)**. *E uma pergunta pequena que o roteiro da PR-1 levantou (§6.2): o executor chama o `segurarDeNovo` fora do `try` do sync; um `segurarDeNovo` que lançasse prenderia o voo. No app ele não lança (é a ligação da raiz). (c) pô-lo dentro de uma proteção (lançou → `false`) num commit novo desta PR; (d) deixar. **Recomendo (d)**: a defesa seria contra um defeito que só o laboratório antigo tem.*
 
+→ **Respondida: SY-D66** (§19)
+
 **Q10 — a oscilação do Wi-Fi** (div. 1304): duas transições `false → true` em segundos com um sync em voo dão o "de novo" — 2 syncs por oscilação, fora do intervalo. (a) **medir no release do Tab e decidir lá**; (b) decidir já que o "de novo" pedido por um gatilho passa pelo intervalo. **Recomendo (a)**: no AVD foi a troca de rádio do emulador que oscilou; o Wi-Fi de palco de verdade é o que importa.
+
+→ **Respondida: SY-D67** (§19)
 
 ## 15. Divergências — 1292 a 1306
 
@@ -380,6 +429,17 @@ A última usada era a **1291** (`SY-PR3-anexos/README.md` §12) `[medido: git gr
 | **1306** | T | O 1º teste do mock alcançável em avião (`toybox nc …`) devolveu vazio — inconclusivo | refeito com o `nc` do sistema e o log do mock: a requisição chegou (`mock-em-aviao.txt`) |
 
 **Contagem** `[medido: a coluna]`: **15 — P 2 · T 8 · A 5** (P: 1293, 1294 · T: 1292, 1295, 1296, 1297, 1298, 1299, 1300, 1306 · A: 1301, 1302, 1303, 1304, 1305). **A próxima livre é a 1307.**
+
+### 15.1 Divergências do aval (os commits A, B e o de docs)
+
+A última usada era a **1306** (§15) `[medido: git grep -ohE "^\| \*\*1[0-9]{3}\*\*" -- docs | sort -u | tail → 1306; nenhum
+número ≥ 1307 em tabela de docs/]`.
+
+| div. | origem | o quê | destino |
+|---|---|---|---|
+| **1307** | P | O prompt do aval manda o commit A do conserto entrar com *"a lista vai de 0 a 1 linha; o juiz diz 'reprova exatamente a lista esperada'"*: desde o commit 5 desta PR (`d1e050b`) a lista vazia é **condição fixa**, e a linha declarada faz o juiz dizer *"LISTA NÃO VAZIA"* — fazê-lo dizer o que o prompt pede exigiria mudar uma asserção existente (o caso de parada do §1 do prompt) | **parado e perguntado**; a resposta é a **SY-D69** (o A vermelho de propósito, A e B no mesmo push); §19, §19.1 |
+
+**Contagem** `[medido: a coluna]`: **1 — P 1** (P: 1307). **A próxima livre é a 1308.**
 
 ## 16. Os blocos de declaração desta PR (a cópia que a regra do W4-b2 pede)
 
@@ -406,7 +466,19 @@ extratores sobre este bloco: `blocos-decl.txt` (as 6 linhas `g1a:`; o `gates-web
 
 ## 17. Os checks da PR
 
-<!-- CHECKS -->
+`[medido: gh pr checks 382; gh run list/view; ci-log.txt]` (duração no nível do **job**; `n=1` cada — não é referência; a
+faixa do regime 2 no `CI-FAIXA.md`: n=135, mín 8m09s, Q1 11m03s, mediana 12m30s, máx 14m32s).
+
+| ponta | `build` (`ci.yml`) | `gates-nativos` | `g-back` · `g-palco` · `g-tok` · `g-faixa` | `mudou-nativo` | **`android-debug-apk`** | Vercel |
+|---|---|---|---|---|---|---|
+| `2b3b9d0` (a entrega) | pass · `38426336068` · 4m11s | pass · `38426336248` · 19s | pass · `38426336590` · 37s · 23s · 45s · 25s | pass · 15s | **pass · `38426336333` · 8m54s** (15:56:51 → 16:05:45 UTC) — dentro da faixa, entre o mínimo e o Q1 | pass |
+| `7bb9a3c` (o conserto, A + B no mesmo push) | pass · `38556849973` · 4m11s | pass · `38556849986` · 18s | pass · `38556849878` · 30s · 20s · 37s · 23s | pass · 11s | **pass · `38556849894` · 10m51s** (11:29:06 → 11:39:57 UTC) — dentro da faixa, abaixo do Q1 | pass |
+
+**No log** (`ci-log.txt`): o `gates-nativos` leu as **6 declarações** do corpo, `G1a: DIFF VAZIO ✓`, `G1b: só adição ✓`, `G2 — testIDs
+antes=124 depois=124`, `G3 — linhas log( antes=70 depois=71`, `nenhuma linha sumiu ✓`; o `build` da ponta rodou os seis juízes
+do SY (no teste e na cobertura) — *"zero reprovações, lista vazia (SY-PR4)"* — e a suíte `158 passed | 3 skipped (161)` ·
+`1934 passed | 59 skipped (1993)`, igual à local. **O commit A (`e87b834`) não teve corrida própria**: subiu junto com o B
+(SY-D69), e o CI só viu a ponta. O commit de docs do aval sobe **depois** do APK verde (regra 18).
 
 ## 18. As erratas de ponteiro — neste commit
 
@@ -414,3 +486,49 @@ extratores sobre este bloco: `blocos-decl.txt` (as 6 linhas `g1a:`; o `gates-web
 |---|---|---|
 | `docs/native/SY-PRECHECK.md` | a A2 (os gatilhos), depois da errata da SY-D39 | os gatilhos feitos na PR-4 (`gatilhos.ts`, a ligação no `App.tsx`), o palco (SY-D49, SY-D56), a sessão do intervalo (SY-D44), e o que o AVD mediu (A-SY-12, A-SY-18, A-SY-19, A-SY-23) — `SY-PR4-anexos/README.md` §4, §8, §9 |
 | `docs/ux/PLANO-TRANSICAO.md` | "Sequência", depois da nota do aval da PR-3 | a PR-4 aberta, aguardando o aval; o próximo é o encerramento com o release no Tab |
+| `docs/native/SY-PRECHECK.md` | a tabela das mudadas do §0 — **o commit do aval** | a SY-D28 com os nomes da SY-D58; a SY-D33 e a SY-D35 estendidas pela SY-D59; a SY-D44 fechada pela SY-D60; a SY-D49 com a SY-D56 e a SY-D61 |
+| `docs/ux/PLANO-TRANSICAO.md` | depois da nota da PR-4 — **o commit do aval** | a PR-4 tem aval (SY-D58…D68); as quatro PRs de código prontas; a próxima é o encerramento com o release no Tab |
+
+## 19. O aval da PR-4 — SY-D58…SY-D68 `[Marcel, 2026-10-13]`
+
+As dez perguntas do §14, na ordem, e um registro sem pergunta; o texto da decisão é este (o "→ Respondida" de cada
+pergunta aponta para cá).
+
+| # | decisão (pergunta) |
+|---|---|
+| **SY-D58** | (Q1) **(a): os nomes da linha `sync trigger`** — `decision=hold-stage` para o gatilho segurado pelo palco; `reason=stage-exit` para o sync que o fechar do palco avalia; `reason=again` para o "de novo" do voo segurado pelo palco. É o acréscimo à SY-D28 que a SY-D49 (3) pedia. |
+| **SY-D59** | (Q2) **(a): o contrato dos gatilhos estendido fica aceito** — o `palco` na ligação, o `uid` no `SyncNaRede`, o `segurarDeNovo`, a foto nascendo no `App.tsx` e recebida pelo `navigation.tsx`, o `focoDoIndice`, o `alcancavel` no `net.ts`. É errata declarada da forma da SY-D33 e da SY-D35. |
+| **SY-D60** | (Q3) **(a): o `ultimoSyncNaRede` não se zera no logout**; ele carrega o `uid`, e os gatilhos só contam o intervalo contra a sessão de agora. Fecha a entrada da SY-D44. |
+| **SY-D61** | (Q4) **(a): o "de novo" segurado pelo palco passa pelo intervalo ao sair**, como todo sync que o fechar do palco avalia (SY-D49 (2)). |
+| **SY-D62** | (Q5) **(a): os cartões de S1 que encolhem quando o banner aparece não contam como desfazer a rolagem** (div. 1302). É o estado de falha com cache de hoje; a condição (2) da SY-D57 fica cumprida. |
+| **SY-D63** | (Q6) **(a): o A-SY-23 fica fechado como "cumprido nas linhas e na contagem; a rolagem na troca de rádio não se mede no AVD".** **Entrada obrigatória do encerramento:** a troca de rádio com o palco aberto e a rolagem andando se mede **no Tab, duas vezes** — **antes** de instalar o release novo, com o release `ea5e891` que está lá (o controle), e depois, com o novo —, pelo `uiautomator events` com o controle da janela vazia. Se o Tab congelar o desenho também com o `ea5e891`, é defeito anterior ao SY e vira herança, com destino; **se congelar só com o novo, é do SY: o encerramento para e traz a pergunta antes de deixar o release novo no Tab.** |
+| **SY-D64** | (Q7) **(a): o texto do encerramento registra o medido** — a tela apagada conta como segundo plano (destravar o Tab com o app na frente depois de 30 s é um sync), e a ordem das linhas na volta curta varia; a regra 38 conta `sync start`, não a ordem. No Tab, as duas coisas se remedem no release. |
+| **SY-D65** | (Q8) **(a): a errata da citação do `PRD-TELA-1.md` sobre o web (div. 1257) entra no encerramento**, como nota no T1-R13. |
+| **SY-D66** | (Q9) **(a): os extras ficam aceitos** — o `sy-gatilhos-telas.test.tsx`, a família no `sy-lista.ts`, o `alcancavel`, o `focoDoIndice`, o `PalcoAvulsoAberto`, a sessão do gate (i) ligando o `palco` e o `segurarDeNovo`. **Na pergunta pequena, (c): o `segurarDeNovo` fica protegido** — se lançar, conta como não segurar, e o voo se libera. Um voo preso até o app fechar é a classe de trinco da div. 1258; a proteção entra nesta PR, com o caso do gate e o controle negativo dele. |
+| **SY-D67** | (Q10) **(a): o Wi-Fi que oscila (div. 1304: 2 syncs por oscilação, pelo "de novo") se mede no release do Tab e se decide lá.** Registrado: fazer o "de novo" dos gatilhos passar pelo intervalo desligaria o "de novo" na prática e contraria a SY-D9; se o Tab confirmar a oscilação, a saída provável é aceitar os 2 `GET` a mais como custo declarado. |
+| **SY-D68** | **Registros, sem pergunta:** (1) a **div. 1305** — o primeiro `GET` depois de o rádio voltar levou 8,6 s no AVD, quase tudo no token; passa do corte de 5 s da SY-D32, e **o A-SY-21 do release mede no Tab; se repetir, a pergunta da SY-D32 se reabre no encerramento**; (2) **o roteiro de controles negativos da PR-1 ficou obsoleto para o gate (i)** (o contrato mudou de forma); os que valem são os da PR-4; o roteiro velho vira **herança do W5**; (3) a **div. 1292** (um teste do web instável na `main`) é **herança do W5**; (4) a **SY-D56** e a **SY-D57**, decididas no meio da sessão, ficam como estão no §0 do README. |
+
+*(Decisão na sessão do aval — **SY-D69** `[Marcel, 2026-10-14]`, fora da tabela do aval e sem mudar o texto dela: o commit A
+da SY-D66, como o prompt do aval o escrevia (*"a lista vai de 0 a 1 linha; o juiz diz 'reprova exatamente a lista
+esperada'"*), não cabia — a lista vazia é condição fixa desde o commit 5 (`d1e050b`), e a linha declarada faz o juiz dizer
+*"LISTA NÃO VAZIA"* (div. 1307). A pergunta foi feita na hora, e a resposta, verbatim: **"A vermelho, push A+B juntos"** —
+o commit A declara a linha e fica **vermelho de propósito** (o caso reprova por medida, e o juiz acusa a lista não vazia),
+com a saída no anexo; o B conserta e tira a linha; os dois sobem juntos, e o CI só vê a ponta verde. Nenhuma asserção
+mudou.)*
+
+### 19.1 O conserto da SY-D66, em dois commits `[medido: aval-cA-verificacao.txt, aval-cB-verificacao.txt, aval-cB-caso.txt, aval-cn-r3.txt]`
+
+- **O caso** (`apps/native/test/sy-voo.test.ts`, `ii:segurar-que-lanca-libera-o-voo`, **por último** no arquivo: o estado do voo
+  é do módulo, e com o voo preso nenhum caso depois dele rodaria): a raiz com um `segurarDeNovo` que lança; um sync segurado
+  (`segurarConteudo`), um pedido durante ele (o "de novo"), o sync solto, e depois um pedido seguinte. **Esperado**: 2 `sync
+  start` até o fim do voo e do "de novo" (o que lança conta como não segurar), 3 com o pedido seguinte (o voo livre).
+- **Commit A** (`e87b834`, a linha declarada, 0 → 1): **obtido 1 e 1** — *"1 sync(s) até o fim do voo, esperado 2 (o "de novo"
+  não rodou)"*, e a promessa do voo rejeitou com o erro do `segurarDeNovo`: a reprovação é **por medida**. O juiz: o caso
+  `REPROVA (declarado)` e **`✗ LISTA NÃO VAZIA (1)`** — o commit fica vermelho de propósito (SY-D69): a suíte `1 failed | 157
+  passed | 3 skipped (161)` · `1 failed | 1933 passed | 59 skipped (1993)`, e o vermelho é o juiz do gate (ii) e só ele.
+- **Commit B** (`7bb9a3c`, a proteção, 1 → 0): no `sincronizador.ts`, o `segurarDeNovo` passa por `segura(raiz)` — um `try` que
+  devolve `false` quando ele lança; o resto do laço não muda. **Obtido 2 e 3**: o caso passa e sai da lista; a lista vazia
+  volta a ser a condição, os seis juízes *"zero reprovações, lista vazia"*. Nenhuma linha de log nova, nenhum nó, nenhum
+  arquivo novo, nenhuma declaração nova (o `sincronizador.ts` já está no bloco).
+- **O controle negativo** (`cn-sy-pr4.sh`, **r-3**, o `plantar.py` `segurar-sem-protecao`: a chamada sem a proteção, como antes
+  do B): **acusa** `ii:segurar-que-lanca-libera-o-voo` — *"1 sync(s) até o fim do voo, esperado 2"*; o `src` devolvido.

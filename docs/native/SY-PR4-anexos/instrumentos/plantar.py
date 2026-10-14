@@ -64,6 +64,8 @@ def plantar(d):
         trocar(S, "const roda = marcado !== null && marcado.raiz.sessaoAtual() === marcado.uid", "const roda = marcado !== null")
     elif d == 'sessao-nunca-solta':           # o c-4 da PR-3, na âncora nova: `sair` não solta a foto
         trocar(F, "    mudar(() => {\n      foto = null\n      emSessao = false\n    })", "    mudar(() => {\n      emSessao = false\n    })")
+    elif d == 'segurar-sem-protecao':         # SY-D66: o `segurarDeNovo` chamado sem a proteção (o de antes do commit B)
+        trocar(S, "const espera = roda && segura(marcado.raiz)", "const espera = roda && (marcado.raiz.segurarDeNovo?.() ?? false)")
     elif d == 'lista-declara-o-logout':       # uma linha na lista vazia (com o defeito que a faz reprovar de fato)
         plantar('intervalo-de-qualquer-sessao')
         with open(LISTA, 'a') as f:

@@ -51,6 +51,9 @@ rodar l-1  lista-declara-o-logout       'uma linha na lista vazia, com o defeito
 export TESTES="$T/sy-voo.test.ts";  rodar r-1 de-novo-apos-logout 'o n-5 da PR-2: o "de novo" da sessão velha roda depois do logout'
 export TESTES="$T/sy-foto.test.tsx"; rodar r-2 sessao-nunca-solta 'o c-4 da PR-3: a foto da sessão não solta ao voltar a S1/S2'
 
+# o aval (SY-D66): a proteção do `segurarDeNovo` retirada
+export TESTES="$T/sy-voo.test.ts";  rodar r-3 segurar-sem-protecao 'SY-D66: o segurarDeNovo chamado sem a proteção (o voo preso)'
+
 echo "=================================================================================================="
 echo "\$ git status --short -- apps/native   (vazio = os arquivos voltaram)"
 git status --short -- apps/native
