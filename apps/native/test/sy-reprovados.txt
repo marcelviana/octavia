@@ -18,6 +18,8 @@
 # (i), a família tela- — sy-gatilhos-telas.test.tsx (SY-D52, SY-D57): vazia desde o commit 3 da SY-PR4 (o gatilho chega à tela)
 
 # (ii) o voo único — sy-voo.test.ts — esvazia na PR-2 (vazia desde o commit 5 da SY-PR2: o voo e a sessão no 2, as escritas no 4, o prazo no 5)
+# SY-PR4, o aval (SY-D66): o `segurarDeNovo` que lança não pode prender o voo — entra reprovando no commit A, sai no B
+ii:segurar-que-lanca-libera-o-voo
 
 # (iii) a foto — sy-foto.test.tsx — esvazia na PR-3 (a foto da sessão, commit 2 da SY-PR3, fechou as da sessão, o topo, a rolagem e a barra; a do conteúdo no palco, commit 3, as outras do palco; a de V, commit 4 — vazia)
 

@@ -279,6 +279,39 @@ describe('gate (ii) — o voo único (SY-D9, SY-D25)', () => {
     })
   }, 60_000)
 
+  // SY-PR4, o aval (SY-D66): por ÚLTIMO no arquivo — hoje o voo fica preso no módulo, e um caso depois deste não rodaria.
+  it('SY-D66: um `segurarDeNovo` que lança conta como não segurar — o "de novo" roda, o voo se libera e o pedido seguinte roda', async () => {
+    await C.caso('segurar-que-lanca-libera-o-voo', async () => {
+      await comCache()
+      a.raiz.segurarDeNovo = () => {
+        throw new Error('o segurarDeNovo lançou (o caso da SY-D66)')
+      }
+      const i0 = a.marca()
+      const { lido, soltar } = segurarConteudo()
+      const voo = pedir()
+      await lido
+      const deNovo = pedir() // durante o voo: o "de novo"
+      await new Promise((r) => setTimeout(r, 50))
+      soltar()
+      let lancou = ''
+      await Promise.all([voo, deNovo]).catch((e: unknown) => {
+        lancou = e instanceof Error ? e.message : String(e)
+      })
+      await a.quieto()
+      const antesDoSeguinte = a.starts(i0)
+      await pedir().catch(() => undefined) // o pedido seguinte (um gatilho, o *Tentar de novo*)
+      await a.quieto()
+      const n = a.starts(i0)
+      C.nota(
+        'segurar-que-lanca-libera-o-voo',
+        `sync start: ${antesDoSeguinte} até o fim do voo e do "de novo" (esperado 2) · ${n} com o pedido seguinte (esperado 3)${lancou ? ` · a promessa do voo rejeitou: ${lancou}` : ''}`,
+      )
+      if (antesDoSeguinte !== 2) return `${antesDoSeguinte} sync(s) até o fim do voo, esperado 2 (o "de novo" não rodou)`
+      if (n !== 3) return `${n} sync(s) com o pedido seguinte, esperado 3 (o voo ficou preso)`
+      return null
+    })
+  })
+
   it('reprova exatamente a lista de sy-reprovados.txt', () => {
     const j = C.julgar()
     console.info(j.texto)
